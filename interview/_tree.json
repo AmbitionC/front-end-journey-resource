@@ -1,0 +1,551 @@
+[
+  {
+    "label": "腾讯",
+    "key": "Tencent",
+    "children": [
+      {
+        "label": "总部",
+        "key": "tencent-base",
+        "children": [
+          {
+            "label": "腾讯实习一面",
+            "key": "tencent-base-1",
+            "isLeaf": true,
+            "filePath": "tencent/base",
+            "tags": [
+              "JavaScript",
+              "CSS",
+              "手写题"
+            ]
+          }
+        ]
+      },
+      {
+        "label": "云与智慧产业CSIG",
+        "key": "tencent-csig",
+        "children": [
+          {
+            "label": "腾讯云智前端一面",
+            "key": "tencent-csig-1",
+            "isLeaf": true,
+            "filePath": "tencent/csig",
+            "tags": [
+              "JavaScript",
+              "React",
+              "手写题"
+            ]
+          },
+          {
+            "label": "腾讯云智前端一面",
+            "key": "tencent-csig-2",
+            "isLeaf": true,
+            "filePath": "tencent/csig",
+            "tags": [
+              "TypeScript",
+              "Vue",
+              "工程化"
+            ]
+          },
+          {
+            "label": "腾讯云智前端二面",
+            "key": "tencent-csig-3",
+            "isLeaf": true,
+            "filePath": "tencent/csig",
+            "tags": [
+              "JavaScript",
+              "系统设计",
+              "React"
+            ]
+          }
+        ]
+      },
+      {
+        "label": "平台与内容PCG",
+        "key": "tencent-pcg",
+        "children": [
+          {
+            "label": "腾讯QQ日常实习三面",
+            "key": "tencent-pcg-1",
+            "isLeaf": true,
+            "filePath": "tencent/pcg",
+            "tags": [
+              "JavaScript",
+              "算法",
+              "系统设计"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "字节跳动",
+    "key": "Bytedance",
+    "children": [
+      {
+        "label": "总部",
+        "key": "bytedance-base",
+        "children": [
+          {
+            "label": "字节前端二面",
+            "key": "bytedance-base-1",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "JavaScript",
+              "算法",
+              "手写题"
+            ]
+          },
+          {
+            "label": "字节前端实习",
+            "key": "bytedance-base-2",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "CSS",
+              "React",
+              "JavaScript"
+            ]
+          },
+          {
+            "label": "字节跳动前端一面",
+            "key": "bytedance-base-3",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "JavaScript",
+              "TypeScript",
+              "Vue"
+            ]
+          },
+          {
+            "label": "字节跳动前端二面",
+            "key": "bytedance-base-4",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "JavaScript",
+              "算法",
+              "手写题"
+            ]
+          }
+        ]
+      },
+      {
+        "label": "抖音",
+        "key": "bytedance-douyin",
+        "children": [
+          {
+            "label": "字节抖音前端一面",
+            "key": "bytedance-douyin-1",
+            "isLeaf": true,
+            "filePath": "bytedance/douyin",
+            "tags": [
+              "React",
+              "JavaScript",
+              "工程化"
+            ]
+          }
+        ]
+      },
+      {
+        "label": "智创",
+        "key": "bytedance-create",
+        "children": [
+          {
+            "label": "字节智创前端二面",
+            "key": "bytedance-create-1",
+            "isLeaf": true,
+            "filePath": "bytedance/create",
+            "tags": [
+              "Vue",
+              "JavaScript",
+              "系统设计"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "阿里巴巴",
+    "key": "Alibaba",
+    "children": [
+      {
+        "label": "淘天集团",
+        "key": "alibaba-taotian",
+        "children": [
+          {
+            "label": "阿里淘天前端一面",
+            "key": "alibaba-taotian-1",
+            "isLeaf": true,
+            "filePath": "alibaba/taotian",
+            "tags": [
+              "JavaScript",
+              "CSS",
+              "手写题"
+            ]
+          }
+        ]
+      },
+      {
+        "label": "阿里云",
+        "key": "alibaba-cloud",
+        "children": [
+          {
+            "label": "阿里云前端秋招一面",
+            "key": "alibaba-cloud-1",
+            "isLeaf": true,
+            "filePath": "alibaba/cloud",
+            "tags": [
+              "JavaScript",
+              "React",
+              "工程化"
+            ]
+          },
+          {
+            "label": "阿里云前端实习一面",
+            "key": "alibaba-cloud-2",
+            "isLeaf": true,
+            "filePath": "alibaba/cloud",
+            "tags": [
+              "CSS",
+              "JavaScript",
+              "TypeScript"
+            ]
+          }
+        ]
+      },
+      {
+        "label": "本地生活",
+        "key": "alibaba-local",
+        "children": [
+          {
+            "label": "阿里飞猪前端实习二面",
+            "key": "alibaba-local-1",
+            "isLeaf": true,
+            "filePath": "alibaba/local",
+            "tags": [
+              "JavaScript",
+              "算法",
+              "React"
+            ]
+          },
+          {
+            "label": "阿里飞猪前端实习一面",
+            "key": "alibaba-local-2",
+            "isLeaf": true,
+            "filePath": "alibaba/local",
+            "tags": [
+              "CSS",
+              "JavaScript",
+              "Vue"
+            ]
+          },
+          {
+            "label": "阿里饿了么前端一面",
+            "key": "alibaba-local-3",
+            "isLeaf": true,
+            "filePath": "alibaba/local",
+            "tags": [
+              "JavaScript",
+              "React",
+              "手写题"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "蚂蚁金服",
+    "value": "Antfin",
+    "children": [
+      {
+        "label": "总部",
+        "key": "antfin-base",
+        "children": [
+          {
+            "label": "蚂蚁前端秋招一面",
+            "key": "antfin-base-1",
+            "isLeaf": true,
+            "filePath": "antfin/base",
+            "tags": [
+              "JavaScript",
+              "TypeScript",
+              "React",
+              "系统设计"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "美团",
+    "value": "Meituan",
+    "children": [
+      {
+        "label": "总部",
+        "key": "meituan-base",
+        "children": [
+          {
+            "label": "美团前端实习一面",
+            "key": "meituan-base-1",
+            "isLeaf": true,
+            "filePath": "meituan/base",
+            "tags": [
+              "JavaScript",
+              "CSS",
+              "手写题"
+            ]
+          },
+          {
+            "label": "美团前端实习一面",
+            "key": "meituan-base-2",
+            "isLeaf": true,
+            "filePath": "meituan/base",
+            "tags": [
+              "JavaScript",
+              "Vue",
+              "算法"
+            ]
+          },
+          {
+            "label": "美团前端一面",
+            "key": "meituan-base-3",
+            "isLeaf": true,
+            "filePath": "meituan/base",
+            "tags": [
+              "JavaScript",
+              "CSS",
+              "工程化"
+            ]
+          },
+          {
+            "label": "美团大前端一面",
+            "key": "meituan-base-4",
+            "isLeaf": true,
+            "filePath": "meituan/base",
+            "tags": [
+              "JavaScript",
+              "Node.js",
+              "系统设计"
+            ]
+          }
+        ]
+      },
+      {
+        "label": "美团SaaS",
+        "key": "meituan-saas",
+        "children": [
+          {
+            "label": "美团SaaS前端一面",
+            "key": "meituan-saas-1",
+            "isLeaf": true,
+            "filePath": "meituan/saas",
+            "tags": [
+              "JavaScript",
+              "React",
+              "TypeScript"
+            ]
+          },
+          {
+            "label": "美团SaaS前端实习一面",
+            "key": "meituan-saas-2",
+            "isLeaf": true,
+            "filePath": "meituan/saas",
+            "tags": [
+              "CSS",
+              "JavaScript",
+              "Vue"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "小红书",
+    "value": "Redbook",
+    "children": [
+      {
+        "label": "总部",
+        "key": "redbook-base",
+        "children": [
+          {
+            "label": "小红书日常实习一面",
+            "key": "redbook-base-1",
+            "isLeaf": true,
+            "filePath": "redbook/base",
+            "tags": [
+              "JavaScript",
+              "React",
+              "手写题"
+            ]
+          },
+          {
+            "label": "小红书日常实习二面",
+            "key": "redbook-base-2",
+            "isLeaf": true,
+            "filePath": "redbook/base",
+            "tags": [
+              "算法",
+              "JavaScript",
+              "系统设计"
+            ]
+          },
+          {
+            "label": "小红书前端一面",
+            "key": "redbook-base-3",
+            "isLeaf": true,
+            "filePath": "redbook/base",
+            "tags": [
+              "React",
+              "TypeScript",
+              "工程化"
+            ]
+          },
+          {
+            "label": "小红书前端二面",
+            "key": "redbook-base-4",
+            "isLeaf": true,
+            "filePath": "redbook/base",
+            "tags": [
+              "JavaScript",
+              "CSS",
+              "算法"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "滴滴",
+    "value": "Didi",
+    "children": [
+      {
+        "label": "总部",
+        "key": "didi-base",
+        "children": [
+          {
+            "label": "滴滴前端一面",
+            "key": "didi-base-1",
+            "isLeaf": true,
+            "filePath": "didi/base",
+            "tags": [
+              "JavaScript",
+              "Vue",
+              "手写题"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "携程",
+    "value": "Ctrip",
+    "children": [
+      {
+        "label": "总部",
+        "key": "ctrip-base",
+        "children": [
+          {
+            "label": "携程前端一面",
+            "key": "ctrip-base-1",
+            "isLeaf": true,
+            "filePath": "ctrip/base",
+            "tags": [
+              "JavaScript",
+              "CSS",
+              "React"
+            ]
+          },
+          {
+            "label": "携程前端二面",
+            "key": "ctrip-base-2",
+            "isLeaf": true,
+            "filePath": "ctrip/base",
+            "tags": [
+              "算法",
+              "JavaScript",
+              "系统设计"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "OPPO",
+    "key": "OPPO",
+    "children": [
+      {
+        "label": "总部",
+        "key": "oppo-base",
+        "children": [
+          {
+            "label": "OPPO前端暑期实习一面",
+            "key": "oppo-base-1",
+            "isLeaf": true,
+            "filePath": "oppo/base",
+            "tags": [
+              "JavaScript",
+              "CSS",
+              "Vue"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "蔚来",
+    "key": "Nio",
+    "children": [
+      {
+        "label": "总部",
+        "key": "nio-base",
+        "children": [
+          {
+            "label": "蔚来前端日常实习",
+            "key": "nio-base-1",
+            "isLeaf": true,
+            "filePath": "nio/base",
+            "tags": [
+              "JavaScript",
+              "React",
+              "工程化"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "金山",
+    "key": "Kingsoft",
+    "children": [
+      {
+        "label": "总部",
+        "key": "kingsoft-base",
+        "children": [
+          {
+            "label": "金山前端面试总结",
+            "key": "kingsoft-base-1",
+            "isLeaf": true,
+            "filePath": "kingsoft/base",
+            "tags": [
+              "JavaScript",
+              "TypeScript",
+              "CSS"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

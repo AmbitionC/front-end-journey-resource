@@ -1,0 +1,12 @@
+{
+  "name": "front-end-journey-resource",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "migrate:tree": "node scripts/migrate-tree.mjs",
+    "validate:tree": "node scripts/validate-tree.mjs"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0"
+  }
+}
