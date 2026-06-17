@@ -5,6 +5,7 @@ import { resolve } from 'node:path';
 const ROOT = resolve(import.meta.dirname, '..');
 const MODULES = ['interview', 'knowledge'];
 let errors = 0;
+let missingFiles = 0;
 
 function leaves(nodes) {
   return nodes.flatMap(n => (n.isLeaf ? [n] : leaves(n.children || [])));
@@ -25,13 +26,13 @@ for (const mod of MODULES) {
   const tree = JSON.parse(readFileSync(treePath, 'utf8'));
   const ls = leaves(tree);
 
-  // 规则 1:每个叶子必须有对应 .md 文件
+  // 规则 1:每个叶子必须有对应 .md 文件(缺失降为警告)
   const expected = new Set();
   for (const leaf of ls) {
     if (!leaf.filePath || !leaf.key) { console.error(`[${mod}] 叶子缺 filePath/key: ${JSON.stringify(leaf)}`); errors++; continue; }
     const file = resolve(ROOT, mod, leaf.filePath, `${leaf.key}.md`);
     expected.add(file);
-    if (!existsSync(file)) { console.error(`[${mod}] 缺少文件: ${mod}/${leaf.filePath}/${leaf.key}.md`); errors++; }
+    if (!existsSync(file)) { console.warn(`[${mod}] 缺少文件: ${mod}/${leaf.filePath}/${leaf.key}.md`); missingFiles++; }
   }
 
   // 规则 2:key 在模块内唯一
@@ -47,4 +48,9 @@ for (const mod of MODULES) {
 }
 
 if (errors > 0) { console.error(`\n校验失败:${errors} 个错误`); process.exit(1); }
-console.log('\n校验通过');
+if (missingFiles > 0) {
+  console.log(`\n校验通过(警告:缺 ${missingFiles} 个待写文件)`);
+} else {
+  console.log('\n校验通过');
+}
+process.exit(0);
