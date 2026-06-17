@@ -1,0 +1,32 @@
+name: sync-content
+on:
+  push:
+    branches: [master]
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Validate manifest
+        run: |
+          npm install
+          npm run validate:tree
+      - name: Trigger faas sync
+        env:
+          FAAS_SYNC_URL: ${{ secrets.FAAS_SYNC_URL }}
+          FAAS_SYNC_SECRET: ${{ secrets.FAAS_SYNC_SECRET }}
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+        run: |
+          curl -sS -X POST "$FAAS_SYNC_URL" \
+            -H "x-sync-secret: $FAAS_SYNC_SECRET" \
+            -H "Content-Type: application/json" \
+            -d "{\"beforeSha\":\"$BEFORE\",\"afterSha\":\"$AFTER\"}" \
+            -w "\nHTTP %{http_code}\n" | tee /tmp/resp.txt
+          grep -q '"success":true' /tmp/resp.txt
