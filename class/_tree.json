@@ -1,151 +1,205 @@
 [
   {
-    "label": "课程介绍",
-    "key": "intro",
+    "label": "Agent 工程师成长路径",
+    "key": "agent-growth-path",
     "children": [
       {
-        "label": "课程导读与作者介绍",
-        "key": "course-overview",
+        "label": "Agent 工程师成长路径·导读",
+        "key": "agent-course-intro",
         "isLeaf": true,
         "currRank": 1
-      }
-    ]
-  },
-  {
-    "label": "职业目标与认知",
-    "key": "goal",
-    "children": [
+      },
       {
-        "label": "如何选择求职方向",
-        "key": "career-direction-choice",
+        "label": "Agent 工程师到底做什么",
+        "key": "agent-role-landscape",
         "isLeaf": true,
         "currRank": 2
       },
       {
-        "label": "备战求职的心态管理",
-        "key": "mindset-management",
+        "label": "Agent 工程师技能图谱",
+        "key": "agent-skill-map",
         "isLeaf": true,
         "currRank": 3
-      }
-    ]
-  },
-  {
-    "label": "学习规划",
-    "key": "plan",
-    "children": [
+      },
       {
-        "label": "前端学习路径总览",
-        "key": "learning-paths-overview",
+        "label": "学习路线图:从 0 到能做 Agent",
+        "key": "agent-learning-roadmap",
         "isLeaf": true,
         "currRank": 4
       },
       {
-        "label": "高效备战面试的策略",
-        "key": "efficient-preparation-strategy",
+        "label": "做出能打的 Agent 作品集",
+        "key": "agent-project-portfolio",
         "isLeaf": true,
         "currRank": 5
-      }
-    ]
-  },
-  {
-    "label": "系统学习体系",
-    "key": "system",
-    "children": [
+      },
       {
-        "label": "计算机系统与网络基础",
-        "key": "computer-system-and-network",
+        "label": "AI/Agent 岗位的简历与面试",
+        "key": "agent-resume-interview",
         "isLeaf": true,
         "currRank": 6
       },
       {
-        "label": "HTML 与 CSS 基础",
-        "key": "html-and-css-fundamentals",
+        "label": "结语:成为持续进化的 Agent 工程师",
+        "key": "agent-course-closing",
         "isLeaf": true,
         "currRank": 7
-      },
-      {
-        "label": "JavaScript / ES6 / TypeScript",
-        "key": "javascript-es6-typescript",
-        "isLeaf": true,
-        "currRank": 8
-      },
-      {
-        "label": "前端框架：React 与 Vue",
-        "key": "frontend-frameworks-react-vue",
-        "isLeaf": true,
-        "currRank": 9
-      },
-      {
-        "label": "数据结构与算法",
-        "key": "data-structures-and-algorithms",
-        "isLeaf": true,
-        "currRank": 10
-      },
-      {
-        "label": "前端垂直领域纵深",
-        "key": "frontend-vertical-domains",
-        "isLeaf": true,
-        "currRank": 11
       }
     ]
   },
   {
-    "label": "简历准备",
-    "key": "resume",
+    "label": "前端求职第一课(可选)",
+    "key": "frontend-course",
     "children": [
       {
-        "label": "简历制作核心原则",
-        "key": "resume-making-principles",
-        "isLeaf": true,
-        "currRank": 12
+        "label": "课程介绍",
+        "key": "intro",
+        "children": [
+          {
+            "label": "课程导读与作者介绍",
+            "key": "course-overview",
+            "isLeaf": true,
+            "currRank": 1
+          }
+        ]
       },
       {
-        "label": "如何丰富项目经历",
-        "key": "project-experience-enhancement",
-        "isLeaf": true,
-        "currRank": 13
-      }
-    ]
-  },
-  {
-    "label": "面试准备",
-    "key": "interview",
-    "children": [
-      {
-        "label": "面试前的准备工作",
-        "key": "pre-interview-preparation",
-        "isLeaf": true,
-        "currRank": 14
+        "label": "职业目标与认知",
+        "key": "goal",
+        "children": [
+          {
+            "label": "如何选择求职方向",
+            "key": "career-direction-choice",
+            "isLeaf": true,
+            "currRank": 2
+          },
+          {
+            "label": "备战求职的心态管理",
+            "key": "mindset-management",
+            "isLeaf": true,
+            "currRank": 3
+          }
+        ]
       },
       {
-        "label": "HR 面试常见问题与答题指南",
-        "key": "hr-interview-qa-guide",
-        "isLeaf": true,
-        "currRank": 15
-      }
-    ]
-  },
-  {
-    "label": "Offer 选择",
-    "key": "offer",
-    "children": [
+        "label": "学习规划",
+        "key": "plan",
+        "children": [
+          {
+            "label": "前端学习路径总览",
+            "key": "learning-paths-overview",
+            "isLeaf": true,
+            "currRank": 4
+          },
+          {
+            "label": "高效备战面试的策略",
+            "key": "efficient-preparation-strategy",
+            "isLeaf": true,
+            "currRank": 5
+          }
+        ]
+      },
       {
-        "label": "Offer 选择的分析方法",
-        "key": "offer-selection-analysis",
-        "isLeaf": true,
-        "currRank": 16
-      }
-    ]
-  },
-  {
-    "label": "结语",
-    "key": "ending",
-    "children": [
+        "label": "系统学习体系",
+        "key": "system",
+        "children": [
+          {
+            "label": "计算机系统与网络基础",
+            "key": "computer-system-and-network",
+            "isLeaf": true,
+            "currRank": 6
+          },
+          {
+            "label": "HTML 与 CSS 基础",
+            "key": "html-and-css-fundamentals",
+            "isLeaf": true,
+            "currRank": 7
+          },
+          {
+            "label": "JavaScript / ES6 / TypeScript",
+            "key": "javascript-es6-typescript",
+            "isLeaf": true,
+            "currRank": 8
+          },
+          {
+            "label": "前端框架：React 与 Vue",
+            "key": "frontend-frameworks-react-vue",
+            "isLeaf": true,
+            "currRank": 9
+          },
+          {
+            "label": "数据结构与算法",
+            "key": "data-structures-and-algorithms",
+            "isLeaf": true,
+            "currRank": 10
+          },
+          {
+            "label": "前端垂直领域纵深",
+            "key": "frontend-vertical-domains",
+            "isLeaf": true,
+            "currRank": 11
+          }
+        ]
+      },
       {
-        "label": "课程结语",
-        "key": "course-closing",
-        "isLeaf": true,
-        "currRank": 17
+        "label": "简历准备",
+        "key": "resume",
+        "children": [
+          {
+            "label": "简历制作核心原则",
+            "key": "resume-making-principles",
+            "isLeaf": true,
+            "currRank": 12
+          },
+          {
+            "label": "如何丰富项目经历",
+            "key": "project-experience-enhancement",
+            "isLeaf": true,
+            "currRank": 13
+          }
+        ]
+      },
+      {
+        "label": "面试准备",
+        "key": "interview",
+        "children": [
+          {
+            "label": "面试前的准备工作",
+            "key": "pre-interview-preparation",
+            "isLeaf": true,
+            "currRank": 14
+          },
+          {
+            "label": "HR 面试常见问题与答题指南",
+            "key": "hr-interview-qa-guide",
+            "isLeaf": true,
+            "currRank": 15
+          }
+        ]
+      },
+      {
+        "label": "Offer 选择",
+        "key": "offer",
+        "children": [
+          {
+            "label": "Offer 选择的分析方法",
+            "key": "offer-selection-analysis",
+            "isLeaf": true,
+            "currRank": 16
+          }
+        ]
+      },
+      {
+        "label": "结语",
+        "key": "ending",
+        "children": [
+          {
+            "label": "课程结语",
+            "key": "course-closing",
+            "isLeaf": true,
+            "currRank": 17
+          }
+        ]
       }
     ]
   }
