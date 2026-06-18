@@ -1,165 +1,265 @@
 # Embedding 原理与向量相似度
 
-Embedding（嵌入）是将文本（或图像、音频）映射为一个数值向量的技术，它是语义搜索和 RAG 系统的基础。理解 embedding 的工作原理，能帮助你正确选择相似度度量方式，避免 RAG 效果差的常见陷阱。
+## 1. 什么是 Embedding（嵌入）
 
-## 什么是 Embedding
+在自然语言处理（NLP）中，计算机无法直接理解文字，必须将文字转换为数值表示。早期方案使用 **one-hot 编码**：词表有 10 万个词，每个词就是一个 10 万维的稀疏向量，其中只有一个位置为 1，其余全为 0。这种表示有两个致命缺点：维度爆炸，且任意两个词之间的余弦相似度都为 0，无法捕捉语义关系。
 
-直观理解：把"苹果"和"梨"都变成高维空间中的一个点，语义相近的词/句子，在空间中的距离也相近。
+**Embedding（稠密向量表示）** 解决了这个问题。它将文本（词、句子、文档）映射为一个**固定长度的稠密向量**，例如 768 维或 1536 维。语义相近的文本在高维空间中距离更近，语义相反的文本距离更远。
 
-一个句子经过 embedding 模型处理后，得到的是一个固定长度的浮点数数组，例如 1536 维（OpenAI text-embedding-3-small）或 1024 维（其他模型）。这个向量捕捉了文本的语义信息，而不只是关键词。
+> 直觉上，可以把 Embedding 空间想象成一个多维地图："苹果"和"橙子"在水果区，"北京"和"上海"在城市区，它们各自相互靠近，但两组之间距离较远。
 
+核心特性：
+- **语义相似性（Semantic Similarity）**：语义相近的文本向量余弦相似度高
+- **向量运算（Vector Arithmetic）**：经典示例 `king - man + woman ≈ queen`
+- **固定维度（Fixed Dimension）**：无论输入长短，输出向量维度相同
+- **稠密表示（Dense Representation）**：大多数维度都有非零值，信息压缩表达
+
+---
+
+## 2. Embedding 模型工作原理
+
+现代 Sentence Embedding 模型基于 **Transformer Encoder** 架构（如 BERT、RoBERTa）。其核心流程如下：
+
+```mermaid
+flowchart TD
+    A["输入文本\n'语义搜索效果好'"] --> B["分词器 Tokenizer\n→ token ids + attention mask"]
+    B --> C["Token Embedding 层\n词嵌入 + 位置编码"]
+    C --> D["Transformer Encoder\n多层 Multi-Head Attention\n+ Feed-Forward Network"]
+    D --> E["最终隐藏层输出\n(seq_len × hidden_dim)"]
+    E --> F{"Pooling 策略"}
+    F -->|CLS Token| G["取 [CLS] 位置向量"]
+    F -->|Mean Pooling| H["对所有 token 向量\n取加权平均"]
+    G --> I["L2 归一化\nnorm = vector / ||vector||₂"]
+    H --> I
+    I --> J["输出: 固定维度稠密向量\n例如 [0.12, -0.34, ..., 0.07]"]
 ```
-"今天天气真好" → [0.023, -0.147, 0.891, ..., 0.034]  // 1536 个浮点数
-"The weather is great today" → [0.019, -0.152, 0.884, ..., 0.041]  // 语义相近，向量也相近
-"量子力学基础" → [-0.312, 0.445, -0.023, ..., 0.178]  // 语义不同，向量差异大
-```
 
-## Embedding 模型如何工作
+### 关键步骤解析
 
-大致流程（概念层面）：
+**分词（Tokenization）**：使用 BPE（Byte Pair Encoding）或 WordPiece 算法将文本切分为子词单元（subword tokens）。例如 "embedding" 可能被切分为 `["em", "##bed", "##ding"]`。
 
-```
-输入文本
-  ↓
-Tokenization（分词为 token）
-  ↓
-Transformer Encoder（多层注意力机制）
-  ↓
-Pooling（将所有 token 的表示聚合为一个向量）
-  ↓
-固定维度向量（通常已 L2 归一化）
-```
+**多层自注意力（Multi-Head Self-Attention）**：每一层都让每个 token 关注序列中其他所有 token，捕捉长距离依赖关系。经过多层堆叠，上层向量已融合了丰富的上下文语义。
 
-Encoder-only 架构（如 BERT 的变体）是 embedding 模型的主流选择，与 GPT 的 decoder-only 架构不同，它的目标是理解而非生成。
+**池化（Pooling）**：将变长序列压缩为一个固定向量。主流方案：
+- **CLS Pooling**：取 `[CLS]` 特殊符号的向量，BERT 原始设计用于分类任务
+- **Mean Pooling**：对所有非 padding token 的向量取均值，实践中对语义相似度任务效果更稳定
 
-## 向量相似度度量
+**L2 归一化（L2 Normalization）**：将向量归一化到单位超球面上，使余弦相似度等价于点积，便于后续检索。
 
-获得向量后，需要计算两个向量的"相似程度"。三种常用方式：
+---
+
+## 3. 向量相似度度量
+
+获得文本向量后，需要一种数值度量来衡量两个向量的"相似程度"。常用指标有三种：
 
 ### 余弦相似度（Cosine Similarity）
 
-**最常用**。衡量两个向量方向的一致性，与向量长度无关。
+$$\cos(\theta) = \frac{\mathbf{a} \cdot \mathbf{b}}{|\mathbf{a}| \cdot |\mathbf{b}|} = \frac{\sum_{i} a_i b_i}{\sqrt{\sum_i a_i^2} \cdot \sqrt{\sum_i b_i^2}}$$
 
-```
-cos(θ) = (A · B) / (|A| × |B|)
-```
-
-取值范围 [-1, 1]，值越大越相似。若向量已 L2 归一化（|A| = |B| = 1），余弦相似度等价于点积。
-
-**适用场景**：文本语义相似度、RAG 检索，大多数 embedding 模型输出的是归一化向量，直接用余弦相似度即可。
+只关注向量方向，忽略模长。归一化向量的余弦相似度等于点积。
 
 ### 点积（Dot Product）
 
-```
-A · B = Σ(Aᵢ × Bᵢ)
-```
+$$\text{score} = \mathbf{a} \cdot \mathbf{b} = \sum_{i} a_i b_i$$
 
-当向量已归一化时与余弦相似度等价，计算更快。部分模型（如 OpenAI 的 embedding API）官方推荐用点积（以官方文档为准）。
-
-**适用场景**：向量已归一化的场景，以及某些需要用向量长度编码"重要性"的场景（如推荐系统）。
+当向量已 L2 归一化时，点积与余弦相似度完全等价，计算速度更快（少两次开方）。
 
 ### 欧氏距离（Euclidean Distance / L2 Distance）
 
+$$d(\mathbf{a}, \mathbf{b}) = \|\mathbf{a} - \mathbf{b}\|_2 = \sqrt{\sum_i (a_i - b_i)^2}$$
+
+衡量空间中两点的绝对距离，距离越小越相似。
+
+### 三种指标对比
+
+| 指标 | 公式 | 取值范围 | 是否受模长影响 | 推荐场景 |
+|------|------|----------|---------------|----------|
+| 余弦相似度（Cosine Similarity） | $\cos(\theta) = \frac{\mathbf{a} \cdot \mathbf{b}}{\|\mathbf{a}\|\|\mathbf{b}\|}$ | [-1, 1] | 否（归一化方向） | 语义相似度、RAG 检索（最通用） |
+| 点积（Dot Product） | $\mathbf{a} \cdot \mathbf{b}$ | $(-\infty, +\infty)$ | 是 | 向量已归一化时与余弦等价，ANN 加速检索 |
+| 欧氏距离（Euclidean Distance） | $\|\mathbf{a}-\mathbf{b}\|_2$ | $[0, +\infty)$ | 是 | 聚类（K-Means）、异常检测 |
+
+实际工程中，**余弦相似度**是语义检索最常见选择。向量数据库（如 Faiss、Milvus、Qdrant）通常对已归一化向量默认使用内积（等价于余弦）以利用 SIMD 加速。
+
+---
+
+## 4. Python 代码示例
+
+以下示例展示调用 Embedding API、手动计算余弦相似度、以及批量检索。
+
+```python
+# 注意：OpenAI SDK 和模型名称以官方文档为准，以下为示意代码骨架
+import numpy as np
+from openai import OpenAI
+
+client = OpenAI()  # 默认读取 OPENAI_API_KEY 环境变量
+
+
+def get_embedding(text: str, model: str = "text-embedding-3-small") -> list[float]:
+    """获取单条文本的 embedding 向量"""
+    text = text.replace("\n", " ")  # 避免换行影响分词
+    response = client.embeddings.create(input=[text], model=model)
+    return response.data[0].embedding
+
+
+def get_embeddings_batch(texts: list[str], model: str = "text-embedding-3-small") -> list[list[float]]:
+    """批量获取 embedding，减少 API 调用次数"""
+    texts = [t.replace("\n", " ") for t in texts]
+    response = client.embeddings.create(input=texts, model=model)
+    # 按原始顺序返回（API 不保证顺序，需用 index 排序）
+    embeddings = sorted(response.data, key=lambda x: x.index)
+    return [e.embedding for e in embeddings]
+
+
+def cosine_similarity(vec_a: list[float], vec_b: list[float]) -> float:
+    """手动计算余弦相似度"""
+    a = np.array(vec_a)
+    b = np.array(vec_b)
+    # 分母加 1e-10 防止除以零
+    return float(np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b) + 1e-10))
+
+
+def batch_search(query: str, corpus: list[str], top_k: int = 3) -> list[dict]:
+    """
+    简单批量检索：对语料库做 embedding，找出与 query 最相似的 top_k 条
+    生产环境应使用向量数据库替代暴力搜索
+    """
+    all_texts = [query] + corpus
+    all_embeddings = get_embeddings_batch(all_texts)
+
+    query_vec = np.array(all_embeddings[0])
+    corpus_vecs = np.array(all_embeddings[1:])
+
+    # 向量归一化后用点积替代余弦相似度，等价且更快
+    query_norm = query_vec / (np.linalg.norm(query_vec) + 1e-10)
+    corpus_norms = corpus_vecs / (np.linalg.norm(corpus_vecs, axis=1, keepdims=True) + 1e-10)
+    scores = corpus_norms @ query_norm  # shape: (len(corpus),)
+
+    top_indices = np.argsort(scores)[::-1][:top_k]
+    return [
+        {"text": corpus[i], "score": float(scores[i])}
+        for i in top_indices
+    ]
+
+
+# --- 示例调用 ---
+if __name__ == "__main__":
+    query = "如何提高向量检索的召回率？"
+    docs = [
+        "混合检索结合稀疏和稠密向量可以提升召回率。",
+        "今天天气很好，适合出门散步。",
+        "调整 chunk size 和 overlap 可以改善 RAG 效果。",
+        "余弦相似度是衡量向量相似性的常用指标。",
+    ]
+
+    results = batch_search(query, docs, top_k=2)
+    for r in results:
+        print(f"[{r['score']:.4f}] {r['text']}")
 ```
-d(A, B) = √(Σ(Aᵢ - Bᵢ)²)
+
+---
+
+## 5. 模型选型考量
+
+### 维度与性能权衡
+
+向量维度直接影响存储开销和检索速度：
+- **维度越高**：表达能力更强，但存储空间和计算量线性增长。1 亿条 1536 维 float32 向量约占 **576 GB**。
+- **维度越低**：速度快、存储省，但信息损失可能影响精度。
+
+常见维度：`text-embedding-3-small` 为 1536 维，可截断至 512；BGE-large-zh 为 1024 维；BGE-M3 支持最高 1024 维稠密向量。
+
+### 模型选型对比
+
+| 场景 | 推荐模型 | 备注 |
+|------|----------|------|
+| 中文语义检索 | BGE-large-zh-v1.5、text2vec-large-chinese | BAAI 开源，中文效果优秀 |
+| 多语言/中英混合 | multilingual-e5-large、BGE-M3 | M3 支持 100+ 语言，稀疏+稠密混合 |
+| 商业 API（英文为主） | text-embedding-3-small / 3-large | OpenAI，支持 MRL 维度截断 |
+| 低延迟/端侧部署 | BGE-small-zh-v1.5、paraphrase-MiniLM | 轻量化，牺牲少量精度换速度 |
+
+### 稀疏检索 vs 稠密检索
+
+| 维度 | 稀疏检索（Sparse Retrieval） | 稠密检索（Dense Retrieval） |
+|------|-----------------------------|-----------------------------|
+| 代表算法 | BM25、TF-IDF | Sentence-BERT、BGE、E5 |
+| 向量形式 | 高维稀疏（数万维，大多为 0） | 低维稠密（256-4096 维） |
+| 关键词匹配 | 精确匹配，召回率高 | 语义匹配，泛化能力强 |
+| 领域外效果 | 稳定 | 依赖训练数据分布 |
+| 存储开销 | 倒排索引，较小 | 向量索引，较大 |
+| 推荐使用 | 专业术语、代码、法律文本 | 日常语言、问答、语义搜索 |
+
+生产中常采用**混合检索（Hybrid Search）**：同时运行 BM25 和稠密向量检索，用 RRF（Reciprocal Rank Fusion）融合排序结果，兼顾精确匹配与语义泛化。
+
+---
+
+## 6. Matryoshka 表示学习（MRL）
+
+**Matryoshka Representation Learning（俄罗斯套娃表示学习，MRL）** 是 OpenAI `text-embedding-3` 系列使用的关键技术（参考论文：Kusupati et al., 2022）。
+
+核心思想：训练时使用多尺度损失函数，使得向量的**前 k 维就是完整向量截断到 k 维后的最优表示**。换言之，1536 维向量的前 256 维已经包含了足够有意义的语义信息。
+
+**实际价值**：
+- 无需重新训练模型，直接截断向量维度即可降低存储和计算成本
+- 例如 `text-embedding-3-large`（3072 维）截断至 256 维后，性能仍优于老版 `text-embedding-ada-002`（1536 维）
+- 支持按需选择维度，实现**成本-精度弹性权衡**
+
+```python
+# MRL 截断示例（以官方文档为准）
+response = client.embeddings.create(
+    input="MRL 截断示例",
+    model="text-embedding-3-small",
+    dimensions=512  # 指定截断维度，API 直接返回 512 维向量
+)
 ```
 
-值越小越相似（注意方向和余弦相似度相反）。
+---
 
-**适用场景**：图像 embedding、需要捕捉绝对位置差异的场景。对于归一化的文本 embedding，效果通常不如余弦相似度。
+## 7. 常见误区与最佳实践
 
-### 三者对比
+### 误区一：长文档直接 Embedding 效果差
 
-| 指标 | 计算复杂度 | 范围 | 是否受向量长度影响 | 推荐场景 |
-|------|-----------|------|------------------|---------|
-| 余弦相似度 | O(n) | [-1, 1] | 否 | 文本语义搜索 |
-| 点积 | O(n) | 无界 | 是 | 归一化向量场景 |
-| 欧氏距离 | O(n) | [0, ∞) | 是 | 图像/音频 embedding |
+Transformer Encoder 有输入长度限制（通常 512 tokens），超出部分会被截断，导致后半段内容完全丢失。
 
-## TypeScript 示例：调用 Embedding API 并计算余弦相似度
+**最佳实践**：对长文档进行合理的 **chunking（分块）**，每块保持在模型最大输入长度的 80% 以内，相邻块设置适当的 overlap（重叠）以保留上下文连贯性。
 
-```typescript
-// 以 OpenAI 为例，其他提供商 API 形式类似，以官方文档为准
-async function getEmbedding(text: string): Promise<number[]> {
-  const response = await fetch('https://api.openai.com/v1/embeddings', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: 'text-embedding-3-small',
-      input: text,
-    }),
-  });
+### 误区二：Embedding 空间各向异性（Anisotropy）
 
-  if (!response.ok) throw new Error(`Embedding API error: ${response.status}`);
-  const data = await response.json();
-  return data.data[0].embedding as number[];
-}
+研究发现（Ethayarajh, 2019），BERT 类模型的 token 向量分布高度非均匀，集中在一个狭窄锥形区域，导致随机两个向量余弦相似度普遍偏高（很多在 0.8 以上）。
 
-function cosineSimilarity(a: number[], b: number[]): number {
-  if (a.length !== b.length) throw new Error('Vector dimensions must match');
+**影响**：相似度分数的区分度下降，难以设置合理的相似度阈值。
 
-  let dot = 0;
-  let normA = 0;
-  let normB = 0;
+**最佳实践**：优先选择专门微调过句向量任务的模型（如 BGE、E5、Sentence-BERT），而非直接使用预训练语言模型的原始 CLS 向量；必要时可使用 **Whitening 后处理**消除各向异性。
 
-  for (let i = 0; i < a.length; i++) {
-    dot += a[i] * b[i];
-    normA += a[i] * a[i];
-    normB += b[i] * b[i];
-  }
+### 误区三：使用余弦相似度前未归一化
 
-  const denominator = Math.sqrt(normA) * Math.sqrt(normB);
-  if (denominator === 0) return 0;
-  return dot / denominator;
-}
+余弦相似度的数学定义已包含归一化，但在自行实现或使用某些库时容易忘记。未归一化直接使用点积，会导致模长大的向量得分虚高。
 
-// 使用示例
-async function semanticSearch(query: string, documents: string[]) {
-  const queryEmbedding = await getEmbedding(query);
-  const docEmbeddings = await Promise.all(documents.map(getEmbedding));
+**最佳实践**：存入向量数据库前统一做 L2 归一化，此后使用点积即等价于余弦相似度，且计算更快。
 
-  const scores = docEmbeddings.map((docEmb, i) => ({
-    document: documents[i],
-    score: cosineSimilarity(queryEmbedding, docEmb),
-  }));
+### 误区四：相似度高不等于语义完全相同
 
-  // 按相似度降序排列
-  return scores.sort((a, b) => b.score - a.score);
-}
-```
+高相似度表示语义方向接近，但不保证内容等价。"苹果很好吃"和"苹果公司股价上涨"在某些模型中相似度可能不低，因为它们共享"苹果"这一词。在严格的语义匹配场景下，应结合 **re-ranking（重排序）** 模型做精细化过滤。
 
-## 维度与性能权衡
-
-Embedding 维度越高，通常携带的信息越丰富，但也带来更高的存储和计算开销：
-
-- **存储**：一个 1536 维的 float32 向量占 6KB，百万级文档就是 6GB
-- **检索延迟**：向量数据库（如 Pinecone、Qdrant、pgvector）使用 HNSW 等近似最近邻算法，在精度和速度间取得平衡
-- **降维**：部分场景可以用 PCA 或 Matryoshka 嵌套向量（OpenAI 支持截断维度）在保留大部分语义的同时降低开销
-
-## 稀疏检索 vs 稠密检索
-
-RAG 系统通常同时使用两种检索方式：
-
-| 类型 | 代表 | 原理 | 优势 | 劣势 |
-|------|------|------|------|------|
-| 稀疏检索 | BM25、TF-IDF | 关键词词频统计，向量极稀疏（大部分为 0） | 精确关键词匹配、可解释、无需 GPU | 无法理解语义，"汽车"和"轿车"是两个词 |
-| 稠密检索 | Embedding + 向量数据库 | 语义向量，全部维度有值 | 语义理解、跨语言、同义词匹配 | 需要 embedding 模型，存储成本高 |
-
-**混合检索（Hybrid Search）**：结合两者，用 BM25 处理精确关键词，用 embedding 处理语义相似，通过 RRF（Reciprocal Rank Fusion）融合排名，是目前 RAG 的主流实践。
+---
 
 ## 面试常问
 
-**Q：余弦相似度为什么比欧氏距离更适合文本 embedding？**
-A：文本长度不同会导致向量的"模"（长度）不同，欧氏距离受此影响大。余弦相似度只关注方向，与长度无关，更能反映语义相似性。
+**Q1：余弦相似度和欧氏距离有什么区别，分别适用什么场景？**
 
-**Q：embedding 向量和 one-hot 编码有什么本质区别？**
-A：one-hot 是稀疏向量，每个词独立，无法表达语义关系。embedding 是稠密向量，通过训练学习语义关系，"国王"减"男人"加"女人"约等于"女王"——这种语义运算在 one-hot 中不可能实现。
+余弦相似度衡量向量的**方向差异**，不受向量模长影响；欧氏距离衡量向量在空间中的**绝对距离**，受模长影响。对于语义检索任务，文本向量经 L2 归一化后模长为 1，此时两者等价（$d_{L2}^2 = 2(1 - \cos\theta)$）。实际选型：语义相似度/RAG 检索优先余弦相似度；K-Means 聚类等几何意义明确的任务可用欧氏距离。
 
-**Q：RAG 中 chunk 的大小对 embedding 质量有什么影响？**
-A：chunk 太小丢失上下文，embedding 的语义代表性差；chunk 太大语义混杂，检索时噪声多。常见策略是 256–512 token 一个 chunk，并做 overlap（相邻 chunk 有重叠），防止关键信息被截断在边界。
+**Q2：one-hot 编码和 Embedding 的核心区别是什么？**
 
-**Q：如果两段文本余弦相似度很高，是否意味着它们表达的信息相同？**
-A：不一定。"今天天气好"和"今天天气不好"在 embedding 空间中可能相近（都含"天气"语义），但语义相反。这是 embedding 检索的已知局限，需要结合 re-ranker 模型做二次精排。
+one-hot 编码是高维稀疏向量，维度等于词表大小（通常数万到数十万），任意两个词向量正交，无法表达语义关系，且维度随词表膨胀。Embedding 是低维稠密向量（几百到几千维），通过模型训练习得语义表示，语义相近的词向量距离更近。本质上，one-hot 是索引，Embedding 是经过信息压缩的语义坐标。
+
+**Q3：RAG 中 chunk 大小如何影响 Embedding 质量？**
+
+chunk 太大：超出模型最大输入长度会截断，且单个向量需压缩过多信息，语义焦点分散，检索精度下降。chunk 太小：单个块缺乏上下文，可能包含不完整语义，匹配时噪声增多。一般建议：chunk 大小控制在 256-512 tokens，相邻块保留 10%-15% 的 overlap，对于结构化文档（如代码、表格）可按自然边界分块而非固定长度。
+
+**Q4：两段文本相似度很高，是否意味着语义完全相同？**
+
+不一定。高相似度仅表示两段文本在 Embedding 空间的方向接近，存在以下反例：（1）**多义词混淆**：不同语境下的"苹果"被表示为相近向量；（2）**表层词汇重叠**：共享大量词汇但逻辑相反的句子（如"今天涨价了"vs"今天没有涨价"）相似度可能偏高；（3）**模型训练偏差**：领域外文本的 Embedding 可能落入相近区域。解决方案：在检索后增加**交叉编码器（Cross-Encoder）重排序**步骤，Cross-Encoder 将 query 和 document 一起输入，直接建模两者交互，精度远高于双编码器。
+
+---
+
+> 部分内容参考《Hello-Agents》(datawhalechina)整理。
