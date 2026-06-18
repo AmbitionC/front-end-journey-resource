@@ -1648,50 +1648,134 @@
         ]
       },
       {
-        "label": "Agent 框架",
+        "label": "AI 智能体",
         "key": "llm-agent",
         "children": [
           {
-            "label": "AI Agent 架构模式总览",
-            "key": "agent-architecture",
-            "isLeaf": true,
-            "filePath": "llm/agent"
+            "label": "入门",
+            "key": "agent-stage-intro",
+            "children": [
+              {
+                "label": "初识智能体:定义 / 类型 / PEAS / Agent Loop",
+                "key": "agent-architecture",
+                "isLeaf": true,
+                "filePath": "llm/agent"
+              },
+              {
+                "label": "动手:5 分钟实现第一个智能体(Thought-Action-Observation)",
+                "key": "agent-first-demo",
+                "isLeaf": true,
+                "filePath": "llm/agent"
+              },
+              {
+                "label": "智能体发展史",
+                "key": "agent-history",
+                "isLeaf": true,
+                "filePath": "llm/agent"
+              }
+            ]
           },
           {
-            "label": "Agent 记忆系统设计",
-            "key": "agent-memory",
-            "isLeaf": true,
-            "filePath": "llm/agent"
+            "label": "原理与经典范式",
+            "key": "agent-stage-paradigm",
+            "children": [
+              {
+                "label": "ReAct:推理与行动框架",
+                "key": "agent-react",
+                "isLeaf": true,
+                "filePath": "llm/agent"
+              },
+              {
+                "label": "经典范式:Reflection / Plan-and-Execute / Tool-Use",
+                "key": "agent-paradigms",
+                "isLeaf": true,
+                "filePath": "llm/agent"
+              },
+              {
+                "label": "上下文工程(Context Engineering)",
+                "key": "context-engineering",
+                "isLeaf": true,
+                "filePath": "llm/agent"
+              },
+              {
+                "label": "记忆与检索",
+                "key": "agent-memory",
+                "isLeaf": true,
+                "filePath": "llm/agent"
+              }
+            ]
           },
           {
-            "label": "ReAct 推理与行动框架",
-            "key": "agent-react",
-            "isLeaf": true,
-            "filePath": "llm/agent"
+            "label": "框架与工程",
+            "key": "agent-stage-framework",
+            "children": [
+              {
+                "label": "从零构建你的 Agent 框架",
+                "key": "build-agent-framework",
+                "isLeaf": true,
+                "filePath": "llm/agent"
+              },
+              {
+                "label": "LangChain.js 入门与实战",
+                "key": "langchain-js",
+                "isLeaf": true,
+                "filePath": "llm/agent"
+              },
+              {
+                "label": "Vercel AI SDK 深度使用",
+                "key": "vercel-ai-sdk",
+                "isLeaf": true,
+                "filePath": "llm/agent"
+              },
+              {
+                "label": "智能体通信协议:MCP / A2A",
+                "key": "mcp-protocol",
+                "isLeaf": true,
+                "filePath": "llm/agent"
+              }
+            ]
           },
           {
-            "label": "LangChain.js 入门与实战",
-            "key": "langchain-js",
-            "isLeaf": true,
-            "filePath": "llm/agent"
+            "label": "多体协作与进阶",
+            "key": "agent-stage-advanced",
+            "children": [
+              {
+                "label": "多智能体协作:CrewAI / AutoGen / MetaGPT / LangGraph",
+                "key": "multi-agent",
+                "isLeaf": true,
+                "filePath": "llm/agent"
+              },
+              {
+                "label": "Agentic RL:用强化学习训练智能体",
+                "key": "agentic-rl",
+                "isLeaf": true,
+                "filePath": "llm/agent"
+              },
+              {
+                "label": "智能体性能评估",
+                "key": "agent-evaluation",
+                "isLeaf": true,
+                "filePath": "llm/agent"
+              }
+            ]
           },
           {
-            "label": "Vercel AI SDK 深度使用",
-            "key": "vercel-ai-sdk",
-            "isLeaf": true,
-            "filePath": "llm/agent"
-          },
-          {
-            "label": "MCP 协议原理与 MCP Server 开发",
-            "key": "mcp-protocol",
-            "isLeaf": true,
-            "filePath": "llm/agent"
-          },
-          {
-            "label": "多 Agent 编排：AutoGen / LangGraph",
-            "key": "multi-agent",
-            "isLeaf": true,
-            "filePath": "llm/agent"
+            "label": "实战",
+            "key": "agent-stage-practice",
+            "children": [
+              {
+                "label": "低代码平台搭建智能体",
+                "key": "agent-lowcode",
+                "isLeaf": true,
+                "filePath": "llm/agent"
+              },
+              {
+                "label": "实战:自动化深度研究智能体",
+                "key": "agent-deep-research",
+                "isLeaf": true,
+                "filePath": "llm/agent"
+              }
+            ]
           }
         ]
       },

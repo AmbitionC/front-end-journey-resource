@@ -1,172 +1,311 @@
-# ReAct 推理与行动框架
+# ReAct：推理与行动框架
 
-ReAct（Reasoning + Acting）是目前最广泛使用的 Agent 推理框架，通过交替生成推理链和工具行动，让 LLM 能够有根据地完成需要外部信息的复杂任务。
+ReAct（Reasoning + Acting）是智能体领域最具影响力的范式之一，由 Shunyu Yao 等人于 2022 年在论文《ReAct: Synergizing Reasoning and Acting in Language Models》中提出。它的核心洞见很朴素：**让 LLM 同时具备"想"和"做"的能力，而不是二选一**。
 
-## 核心思想
+## 从 CoT 到 ReAct：为什么需要行动？
 
-ReAct 来源于 2022 年的论文《ReAct: Synergizing Reasoning and Acting in Language Models》。其核心洞察是：**推理（CoT）和行动（工具调用）应该交织在一起，而不是分开进行**。
+在 ReAct 诞生之前，LLM 增强推理的主流方向是 Chain-of-Thought（思维链，CoT）。CoT 通过引导模型逐步展开中间步骤，显著提升了复杂推理任务的准确率。但 CoT 有一个根本性的缺陷：**它是封闭的**。模型只能依赖训练时的参数记忆，无法获取外部的实时信息，也无法调用计算器、数据库等精确工具，因此在知识时效性和计算准确性上存在天花板。
 
-纯 CoT（Chain-of-Thought）只让模型推理，无法获取外部信息，容易产生幻觉。ReAct 在推理过程中穿插真实的行动（调用搜索、计算、数据库等），用真实结果锚定推理，显著降低幻觉风险。
+另一条路线是"纯行动"型（Action-only），直接让模型输出要执行的指令。这种方式能调用工具，但缺乏显式的推理过程，模型没法在行动失败后有条理地重新规划。
 
-| 特性 | 纯 LLM | CoT | ReAct |
-|------|--------|-----|-------|
-| 推理能力 | 弱 | 强 | 强 |
-| 外部信息获取 | 无 | 无 | 有 |
-| 幻觉风险 | 高 | 中 | 低 |
-| 多步骤任务 | 难 | 有限 | 适合 |
-| token 消耗 | 低 | 中 | 高 |
+ReAct 融合了两者：**推理（Reasoning）指导行动更有目的性，行动（Acting）为推理提供真实的外部依据**。
 
-## Thought-Action-Observation 循环
+| 维度 | 纯 LLM | 纯 CoT | 纯行动 | ReAct |
+|------|--------|--------|--------|-------|
+| 复杂推理 | 弱 | 强 | 弱 | 强 |
+| 外部信息获取 | 无 | 无 | 有 | 有 |
+| 推理可解释性 | 低 | 高 | 低 | 高 |
+| 幻觉风险 | 高 | 中 | 低 | 低 |
+| 动态纠错能力 | 无 | 无 | 有限 | 有 |
+| token 消耗 | 低 | 中 | 低 | 高 |
 
-ReAct 的输出格式由三种节拍交替组成：
+## Thought-Action-Observation：三节拍循环
 
-- **Thought**：LLM 的内部推理，分析当前状态，决定下一步
-- **Action**：调用某个工具，指定工具名和参数
-- **Observation**：工具执行后的真实返回结果
+ReAct 的核心是一个严格的三段式格式，每一轮循环由以下三部分组成：
 
-```
-Thought: 我需要查询今天的天气来回答用户问题
-Action: search("上海今日天气")
-Observation: 晴，28°C，东南风3级
+- **Thought（思考）**：LLM 的"内心独白"，分析当前状态、拆解问题、判断下一步应当做什么。这段文字对外部不可见，是推理透明性的来源。
+- **Action（行动）**：LLM 决定调用的具体工具及其输入参数，格式通常是 `工具名[输入]` 或结构化 JSON。
+- **Observation（观察）**：工具实际执行后返回的结果，由外部系统写入，再传回 LLM 作为下一轮推理的上下文。
 
-Thought: 已获得天气信息，可以回答了
-Action: finish("上海今天晴天，28摄氏度，东南风3级，适合户外活动")
-```
+形式上，可以把整个过程表达为：在时间步 $t$，智能体的策略（即 LLM）根据原始问题 $q$ 和历史轨迹 $(a_1, o_1), \ldots, (a_{t-1}, o_{t-1})$，生成本轮的思考 $th_t$ 和行动 $a_t$：
+
+$$
+(th_t, a_t) = \pi\bigl(q,\,(a_1,o_1),\ldots,(a_{t-1},o_{t-1})\bigr)
+$$
+
+工具 $T$ 执行行动后返回观察：
+
+$$
+o_t = T(a_t)
+$$
+
+循环不断进行，直到 LLM 在 Thought 中判断任务已完成并输出 `Finish[最终答案]`。
 
 ```mermaid
 flowchart TD
-    U[用户问题] --> T1[Thought\n分析问题，制定行动计划]
-    T1 --> A1[Action\n调用工具]
-    A1 --> O1[Observation\n获取工具返回结果]
-    O1 --> T2[Thought\n分析结果，决定继续或结束]
-    T2 -->|需要更多信息| A2[Action\n调用另一个工具]
-    T2 -->|任务完成| F[Final Answer\n返回最终答案]
+    Q[用户问题] --> TH1[Thought\n分析问题，制定行动计划]
+    TH1 --> A1[Action\n调用工具]
+    A1 --> O1[Observation\n工具真实返回结果]
+    O1 --> TH2[Thought\n分析结果，决定继续或结束]
+    TH2 -->|需要更多信息| A2[Action\n调用另一个或相同工具]
+    TH2 -->|任务完成| FIN[Finish\n输出最终答案]
     A2 --> O2[Observation]
-    O2 --> T2
+    O2 --> TH2
 
-    style T1 fill:#6366f1,color:#fff
-    style T2 fill:#6366f1,color:#fff
+    style TH1 fill:#6366f1,color:#fff
+    style TH2 fill:#6366f1,color:#fff
     style A1 fill:#059669,color:#fff
     style A2 fill:#059669,color:#fff
     style O1 fill:#d97706,color:#fff
     style O2 fill:#d97706,color:#fff
-    style F fill:#dc2626,color:#fff
+    style FIN fill:#dc2626,color:#fff
 ```
 
-## TypeScript 伪代码：ReAct Loop
+一次典型的运行轨迹看起来是这样的（以查询某款手机最新信息为例）：
 
-```ts
-interface ReActStep {
-  thought: string;
-  action?: { tool: string; params: unknown };
-  observation?: string;
-}
+```
+Thought: 用户问的是华为最新旗舰机，这涉及时效性信息，我需要先搜索。
+Action: Search[华为最新旗舰手机 2025]
+Observation: [1] HUAWEI Mate 70 — 顶级拍照，全焦段覆盖；[2] HUAWEI Pura 80 Pro+ — 先锋影像技术...
 
-async function reactLoop(
-  userQuery: string,
-  tools: Map<string, Tool>,
-  llm: LLMClient,
-  maxIterations = 10
-): Promise<string> {
-  const history: ReActStep[] = [];
-  const messages: Message[] = [
-    { role: 'system', content: buildReActSystemPrompt(tools) },
-    { role: 'user', content: userQuery },
-  ];
+Thought: 搜索结果提到了两个系列，需要确认哪款更新。我再搜一次发布时间。
+Action: Search[华为 Mate 70 与 Pura 80 发布日期对比]
+Observation: Mate 70 于 2024 年 11 月发布，Pura 80 Pro+ 于 2025 年 4 月发布。
 
-  for (let i = 0; i < maxIterations; i++) {
-    // 1. 让 LLM 生成下一个 Thought + Action
-    const rawOutput = await llm.generate(messages);
-    const parsed = parseReActOutput(rawOutput); // 解析 Thought/Action/Final Answer
-
-    // 2. 如果是 Final Answer，结束循环
-    if (parsed.type === 'final_answer') {
-      return parsed.answer;
-    }
-
-    // 3. 执行 Action（调用工具）
-    const tool = tools.get(parsed.action.tool);
-    if (!tool) {
-      // 工具不存在，将错误作为 Observation 返回
-      const observation = `Error: tool "${parsed.action.tool}" not found`;
-      messages.push({ role: 'assistant', content: rawOutput });
-      messages.push({ role: 'tool', content: observation });
-      continue;
-    }
-
-    const observation = await tool.execute(parsed.action.params);
-
-    // 4. 将 Observation 加入消息历史，进入下一轮
-    messages.push({ role: 'assistant', content: rawOutput });
-    messages.push({ role: 'tool', content: String(observation) });
-
-    history.push({
-      thought: parsed.thought,
-      action: parsed.action,
-      observation: String(observation),
-    });
-  }
-
-  throw new Error('Reached max iterations without final answer');
-}
+Thought: Pura 80 Pro+ 更新，卖点是影像。已有足够信息可以作答。
+Action: Finish[华为目前最新旗舰是 Pura 80 Pro+，于 2025 年 4 月发布，主打先锋影像技术。]
 ```
 
-## 在框架中的实现
+## 提示词设计
 
-### LangChain（概念）
+ReAct 的全部机制建立在提示词之上。一个典型的系统提示词需要包含以下四个要素：
 
-LangChain 的 `createReactAgent` 封装了 ReAct 循环：
-- 自动构建包含工具描述的 system prompt
-- 解析 LLM 输出中的 Action/Action Input
-- 调用对应工具并将 Observation 反馈
-- 检测 "Final Answer:" 前缀作为停止条件
+```python
+REACT_PROMPT_TEMPLATE = """
+你是一个能够调用外部工具的智能助手。
 
-开发者主要工作是：定义工具列表、选择 LLM 模型、配置 max_iterations。
+可用工具如下:
+{tools}
 
-### 原生 Function Calling 方式
+请严格按照以下格式进行回应:
 
-现代 LLM 的 Function Calling（Tool Use）是对 ReAct 的原生支持：
-- Thought 隐式包含在模型内部，不一定显式输出
-- Action 通过结构化 JSON 返回（而非文本解析）
-- 更稳定，不需要手动 parse LLM 的文本输出
+Thought: 你的思考过程，分析问题和规划下一步行动。
+Action: 必须是以下格式之一:
+  - {{tool_name}}[{{tool_input}}]  调用工具
+  - Finish[最终答案]               任务完成时输出答案
 
-## 优缺点与适用场景
+现在请解决以下问题:
+Question: {question}
+History: {history}
+"""
+```
 
-### 优点
+- **工具清单（`{tools}`）**：告诉 LLM 有哪些工具可用。工具描述的质量直接决定 LLM 能否正确选择工具，这是最容易踩坑的地方。
+- **格式规约（Thought/Action）**：强制输出结构化格式，让代码可以用正则表达式可靠地解析。
+- **动态上下文（`{question}`/`{history}`）**：每一轮都把完整历史注入，让 LLM 可以"看到"之前的所有行动和观察。
 
-- **可解释性强**：每步 Thought 都可以追踪推理过程
-- **幻觉风险低**：用工具返回的真实信息锚定推理
-- **灵活性高**：工具可以动态扩展
-- **实现简单**：核心逻辑不超过百行代码
+## 从零实现一个 ReAct Agent
 
-### 缺点
+下面的 Python 代码展示了 ReAct 循环的完整骨架，以供理解原理（实际生产项目建议使用 LangChain、LangGraph 等框架，以官方文档为准）。
 
-- **token 消耗大**：每一步都要输出 Thought，多工具调用时成本高
-- **延迟高**：串行的 Thought-Action-Observation 循环无法并行
-- **对 prompt 质量敏感**：工具描述不清楚会导致错误工具选择
-- **停止条件脆弱**：LLM 可能不按预期格式输出 Final Answer
+### 工具管理器
 
-### 适用场景
+```python
+import re
+from typing import Dict, Any, Callable, Optional
 
-- 需要查询外部信息才能回答的问题（搜索、数据库查询）
-- 多步骤推理任务（先查 A，再根据 A 查 B）
-- 代码执行、数学计算等需要精确结果的场景
-- **不适合**：纯文本生成任务、实时性要求极高的场景
+class ToolExecutor:
+    """统一管理和调度工具。"""
+
+    def __init__(self):
+        self.tools: Dict[str, Dict[str, Any]] = {}
+
+    def register(self, name: str, description: str, func: Callable):
+        self.tools[name] = {"description": description, "func": func}
+
+    def execute(self, name: str, tool_input: str) -> str:
+        tool = self.tools.get(name)
+        if not tool:
+            return f"Error: tool '{name}' not found"
+        try:
+            return tool["func"](tool_input)
+        except Exception as e:
+            return f"Error executing tool: {e}"
+
+    def get_descriptions(self) -> str:
+        return "\n".join(
+            f"- {name}: {info['description']}"
+            for name, info in self.tools.items()
+        )
+```
+
+### ReAct Agent 核心循环
+
+```python
+class ReActAgent:
+    def __init__(self, llm_client, tool_executor: ToolExecutor, max_steps: int = 8):
+        self.llm = llm_client
+        self.tools = tool_executor
+        self.max_steps = max_steps
+
+    def run(self, question: str) -> Optional[str]:
+        history: list[str] = []
+
+        for step in range(1, self.max_steps + 1):
+            print(f"\n--- Step {step} ---")
+
+            # 1. 构建提示词并调用 LLM
+            prompt = REACT_PROMPT_TEMPLATE.format(
+                tools=self.tools.get_descriptions(),
+                question=question,
+                history="\n".join(history) if history else "(无)"
+            )
+            response = self.llm.think([{"role": "user", "content": prompt}])
+            if not response:
+                break
+
+            # 2. 解析 Thought 和 Action
+            thought, action_text = self._parse_output(response)
+            if thought:
+                print(f"Thought: {thought}")
+            if not action_text:
+                print("Warning: no action parsed, stopping.")
+                break
+
+            # 3. 判断是否完成
+            finish_match = re.match(r"Finish\[(.*)\]", action_text, re.DOTALL)
+            if finish_match:
+                final_answer = finish_match.group(1)
+                print(f"\nFinal Answer: {final_answer}")
+                return final_answer
+
+            # 4. 执行工具，获取 Observation
+            tool_match = re.match(r"(\w+)\[(.*)\]", action_text, re.DOTALL)
+            if not tool_match:
+                observation = "Error: invalid action format"
+            else:
+                tool_name, tool_input = tool_match.group(1), tool_match.group(2)
+                print(f"Action: {tool_name}[{tool_input}]")
+                observation = self.tools.execute(tool_name, tool_input)
+
+            print(f"Observation: {observation}")
+
+            # 5. 将本轮 Action + Observation 追加到历史
+            history.append(f"Action: {action_text}")
+            history.append(f"Observation: {observation}")
+
+        print("Reached max steps.")
+        return None
+
+    def _parse_output(self, text: str):
+        thought_m = re.search(r"Thought:\s*(.*?)(?=\nAction:|$)", text, re.DOTALL)
+        action_m  = re.search(r"Action:\s*(.*?)$", text, re.DOTALL)
+        thought = thought_m.group(1).strip() if thought_m else None
+        action  = action_m.group(1).strip()  if action_m  else None
+        return thought, action
+```
+
+### 运行示例
+
+```python
+from dotenv import load_dotenv
+load_dotenv()
+
+# 假设 HelloAgentsLLM 已按第四章方式封装
+llm = HelloAgentsLLM()
+
+executor = ToolExecutor()
+executor.register(
+    name="Search",
+    description="网页搜索引擎，用于查询时事、事实等知识库之外的信息",
+    func=lambda query: web_search(query)  # 对接真实搜索 API
+)
+executor.register(
+    name="Calculator",
+    description="数学计算工具，接受数学表达式字符串并返回计算结果",
+    func=lambda expr: str(eval(expr))  # 生产环境请使用沙箱执行
+)
+
+agent = ReActAgent(llm, executor, max_steps=6)
+result = agent.run("华为最新旗舰手机是哪款？它的主摄像素是多少？")
+```
+
+## ReAct 与 CoT 的关键差异
+
+```mermaid
+graph LR
+    subgraph CoT["纯 CoT"]
+        direction TB
+        Q1[问题] --> R1[推理步骤1]
+        R1 --> R2[推理步骤2]
+        R2 --> R3[推理步骤3]
+        R3 --> A1[答案（可能有幻觉）]
+    end
+
+    subgraph ReAct["ReAct"]
+        direction TB
+        Q2[问题] --> T1[Thought1]
+        T1 --> AC1[Action1]
+        AC1 --> OB1[Observation1\n真实工具结果]
+        OB1 --> T2[Thought2]
+        T2 --> AC2[Action2]
+        AC2 --> OB2[Observation2]
+        OB2 --> A2[Finish\n答案有据可查]
+    end
+
+    style OB1 fill:#d97706,color:#fff
+    style OB2 fill:#d97706,color:#fff
+```
+
+CoT 的推理完全在 LLM 参数空间内完成，错误会沿推理链累积放大；而 ReAct 每隔一步就用真实的 Observation 锚定推理，将错误控制在单步范围内。
+
+## 优缺点
+
+### 主要优势
+
+1. **高透明性**：每一步 Thought 都可以追溯，方便调试和可解释性分析。
+2. **动态纠错**：Observation 的反馈让智能体可以在中途修正方向，不像一次性规划那样"滑铁卢就全完了"。
+3. **工具协同**：LLM 负责推理，工具负责精确执行（搜索、计算、API 调用），各司其职。
+4. **实现简洁**：核心逻辑百行以内，没有复杂状态机。
+
+### 固有局限
+
+1. **串行效率低**：Thought → Action → Observation 是严格顺序的，无法并发执行多个工具调用，对于需要大量工具调用的任务延迟较高。
+2. **高度依赖底层 LLM**：格式遵循能力差的模型会频繁输出无法解析的响应，导致整个循环中断。
+3. **提示词脆弱性**：工具描述稍有歧义，或提示词格式稍微变化，都可能引发模型行为大幅变动。
+4. **缺乏全局规划**：步进式决策容易陷入局部最优，对需要提前规划十步以上的复杂任务力不从心。
+5. **上下文膨胀**：每步累积的 Thought + Action + Observation 会快速消耗 context window，多步任务成本显著。
+
+## 常见误区与最佳实践
+
+**误区一：工具描述越短越好。**
+工具描述是 LLM 做工具选择的唯一依据，太简短会导致选错工具。好的描述应说明"何时用"和"不应在什么情况下用"，例如：`"网页搜索，适用于需要最新时事信息的问题；不适合数学计算"`。
+
+**误区二：不限制 max_steps。**
+不设上限的循环会在模型陷入死循环时无限消耗 token 和 API 费用。生产环境一定要同时设置 `max_steps` 和 token 总预算双重保险。
+
+**误区三：忽视输出解析的鲁棒性。**
+基于正则表达式的解析在模型输出格式轻微变化时很容易失败。更稳健的做法是使用 LLM 的原生 Function Calling / Tool Use 接口，用结构化 JSON 代替文本解析。
+
+**最佳实践总结：**
+- 工具描述明确区分适用 / 不适用场景
+- 同时设置步数上限和 token 预算
+- 优先使用框架（LangChain、LangGraph）的成熟实现，而非手写解析
+- 生产环境使用 Function Calling 而非文本格式解析
+- 加入 few-shot 示例（1-2 个完整 TAO 循环）以提升格式遵循稳定性
 
 ## 面试常问
 
-**ReAct 如何防止幻觉？**
+**Q：ReAct 如何防止幻觉？**
+核心在于 Observation 来自真实工具执行，LLM 无法伪造。每次推理都必须面对外部事实，而不是在参数空间里"自说自话"，幻觉的传播被截断在单步范围内。
 
-核心机制是用工具的真实返回结果（Observation）来约束后续推理。LLM 无法凭空捏造工具结果（工具是在外部真实执行的），每一个 Thought 都必须面对真实的 Observation 来调整判断，避免了纯 CoT 中"一推到底"的幻觉累积问题。
+**Q：ReAct 和 Plan-and-Execute 怎么选？**
+ReAct 适合探索性任务，每步行动取决于上一步结果，无法提前全局规划。Plan-and-Execute 更适合结构清晰、可以提前分解的任务，执行效率更高，但失去了 ReAct 的中途纠错灵活性。实践中两者可以结合：外层用规划范式制定计划，内层每步用 ReAct 动态执行。
 
-**ReAct 的停止条件是什么？**
+**Q：Thought 是否会被用户看到？**
+在原始 ReAct 实现中 Thought 会出现在 LLM 响应里，对接口调用方是可见的。生产系统通常会在 UI 层将其过滤，或使用 Function Calling 让 Thought 隐式进行（模型内部推理），只暴露最终 Action 和 Answer。
 
-通常有两类停止条件：
-1. **主动停止**：LLM 判断任务完成，输出 `Final Answer:` 格式的回复
-2. **被动停止**：达到最大迭代次数（max_iterations）或总 token 预算
+**Q：ReAct 循环失败最常见的原因是什么？**
+三类：(1) 格式解析失败（模型不遵循 Thought/Action 格式）；(2) 工具执行出错（参数格式错误、网络超时等）；(3) 陷入无意义的重复循环（同样的 Action 被执行多次但 Observation 没有新信息）。建议在循环中检测重复 Action，视为死循环并提前退出。
 
-生产环境通常两者并用，避免无限循环导致的高额费用。
-
-**ReAct 和 Plan-and-Execute 怎么选？**
-
-ReAct 更适合动态任务，每步决策依赖上一步结果，无法提前规划全部步骤。Plan-and-Execute 适合任务结构固定、可提前分解的场景，执行效率更高，但对规划器的要求也更高。
+> 本文参考《Hello-Agents》(datawhalechina) 整理。

@@ -1,290 +1,394 @@
 # Vercel AI SDK 深度使用
 
-Vercel AI SDK 是面向 Next.js/React 生态的 AI 集成库，提供统一的 API 来调用多个 LLM 提供商，并内置了流式输出、React hooks 和工具调用等前端常用能力。它把"LLM 接入 Web 应用"这个链路的工程复杂度显著降低。
+Vercel AI SDK 是专为 Next.js / React 生态设计的 AI 集成库，核心目标是让"把 LLM 接入 Web 应用"这件事变得像接一个普通 API 一样简单。它内置了流式输出、React Hooks、工具调用（Tool Calling）和多模型支持，是前端工程师进入 AI 开发最顺畅的起点。
 
-> 以下内容基于 Vercel AI SDK 的核心设计，具体 API 签名以[官方文档](https://sdk.vercel.ai/docs)为准。
+> 以下内容基于 Vercel AI SDK 核心设计，具体 API 签名以 [官方文档](https://sdk.vercel.ai/docs) 最新版本为准。
 
-## 核心模块
+---
 
-AI SDK 分为两层：
+## 为什么选 Vercel AI SDK
 
-- **`ai` 核心包**：提供与框架无关的 LLM 调用函数（`generateText`、`streamText`、`generateObject` 等）
-- **`@ai-sdk/[provider]`**：各提供商适配器（`@ai-sdk/openai`、`@ai-sdk/anthropic`、`@ai-sdk/google` 等）
-- **`ai/react`**：React hooks（`useChat`、`useCompletion`）
+与直接调用 OpenAI API 或使用 LangChain 相比：
 
-```mermaid
-graph LR
-    subgraph 应用层
-        R[React 组件\nuseChat / useCompletion]
-        S[Server 函数\ngenerateText / streamText]
-    end
-    subgraph AI SDK 核心
-        C[ai 核心包]
-    end
-    subgraph 提供商适配器
-        O[@ai-sdk/openai]
-        A[@ai-sdk/anthropic]
-        G[@ai-sdk/google]
-    end
-    R --> C
-    S --> C
-    C --> O & A & G
+| 对比维度 | 裸 OpenAI SDK | LangChain.js | Vercel AI SDK |
+|----------|--------------|--------------|---------------|
+| 流式输出 | 需手动处理 | 支持 | 一等公民，开箱即用 |
+| React Hooks | 无 | 无 | `useChat` / `useCompletion` |
+| Next.js 集成 | 手动 | 手动 | 原生 Route Handler |
+| 多模型切换 | 手动适配 | Provider 层 | `@ai-sdk/openai`, `@ai-sdk/anthropic`... |
+| 打包体积 | 小 | 较大 | 轻量 |
+| 工具调用 | 手动解析 | 封装 | 内置 `tool()` + 类型安全 |
+
+---
+
+## 安装
+
+```bash
+# 核心运行时
+npm install ai
+
+# 选择你的模型 Provider（可多选）
+npm install @ai-sdk/openai
+npm install @ai-sdk/anthropic
+npm install @ai-sdk/google
 ```
 
-## 核心函数
+环境变量：
 
-### generateText — 非流式文本生成
+```bash
+OPENAI_API_KEY=sk-...
+ANTHROPIC_API_KEY=sk-ant-...
+```
 
-适合不需要流式输出的场景（分类、提取、后台任务）：
+---
+
+## generateText：一次性文本生成
+
+适合不需要流式输出的场景（批量处理、后台任务）：
 
 ```ts
-import { generateText } from 'ai';
-import { openai } from '@ai-sdk/openai';
+import { generateText } from "ai";
+import { openai } from "@ai-sdk/openai";
 
 const { text, usage, finishReason } = await generateText({
-  model: openai('gpt-4o-mini'),
-  system: '你是一个代码审查助手',
-  prompt: '请检查以下代码是否有 bug：\nconst x = null; x.toString();',
+  model: openai("gpt-4o-mini"),
+  prompt: "用一句话解释什么是向量数据库",
 });
 
 console.log(text);
-console.log(usage); // { promptTokens, completionTokens, totalTokens }
+console.log(`Token 消耗: ${usage.totalTokens}`);
 ```
 
-### streamText — 流式文本生成
+带系统提示词：
 
-服务端生成流式响应，配合 `toDataStreamResponse()` 直接作为 Next.js Route Handler 的返回值：
+```ts
+const { text } = await generateText({
+  model: openai("gpt-4o-mini"),
+  system: "你是一名资深前端工程师，回答简洁且实用。",
+  messages: [
+    { role: "user", content: "React 18 的 Concurrent Mode 解决了什么问题？" },
+  ],
+});
+```
+
+---
+
+## streamText：流式文本生成
+
+流式输出是 AI 聊天体验的核心，`streamText` 让它在 Node.js 和 Edge Runtime 上同样简单：
+
+```ts
+import { streamText } from "ai";
+import { openai } from "@ai-sdk/openai";
+
+const result = streamText({
+  model: openai("gpt-4o-mini"),
+  prompt: "请详细解释 CSS 容器查询（Container Queries）的使用场景",
+});
+
+// 方式一：AsyncIterator，逐 chunk 消费
+for await (const chunk of result.textStream) {
+  process.stdout.write(chunk);
+}
+
+// 方式二：等待全部完成
+const fullText = await result.text;
+```
+
+### 在 Next.js Route Handler 中使用
 
 ```ts
 // app/api/chat/route.ts
-import { streamText } from 'ai';
-import { openai } from '@ai-sdk/openai';
+import { streamText } from "ai";
+import { openai } from "@ai-sdk/openai";
 
 export async function POST(req: Request) {
   const { messages } = await req.json();
 
   const result = streamText({
-    model: openai('gpt-4o'),
-    messages, // CoreMessage[] 格式
-    system: '你是一个前端技术助手',
-    maxTokens: 1024,
+    model: openai("gpt-4o-mini"),
+    system: "你是一个有帮助的 AI 助手。",
+    messages,
   });
 
-  // toDataStreamResponse() 将 stream 转为符合 AI SDK 协议的 HTTP 响应
+  // toDataStreamResponse() 将流转为前端 useChat 可消费的格式
   return result.toDataStreamResponse();
 }
 ```
 
-### generateObject — 结构化输出
+---
 
-让 LLM 直接返回符合 TypeScript 类型的对象，底层使用 JSON Schema 约束输出：
+## useChat：前端对话 Hook
 
-```ts
-import { generateObject } from 'ai';
-import { openai } from '@ai-sdk/openai';
-import { z } from 'zod';
-
-const { object } = await generateObject({
-  model: openai('gpt-4o-mini'),
-  schema: z.object({
-    sentiment: z.enum(['positive', 'negative', 'neutral']),
-    score: z.number().min(0).max(1),
-    keywords: z.array(z.string()).max(5),
-  }),
-  prompt: '分析以下评论的情绪：这个产品太好用了，强烈推荐！',
-});
-
-console.log(object.sentiment); // "positive"
-console.log(object.score);     // 如 0.95
-```
-
-## React Hooks
-
-### useChat — 对话界面
-
-`useChat` 封装了消息管理、流式更新和 API 请求，是构建对话 UI 的最快路径：
+`useChat` 是 Vercel AI SDK 最有价值的部分——它封装了消息状态管理、流式渲染、错误处理和中断控制：
 
 ```tsx
-'use client';
-import { useChat } from 'ai/react';
+"use client";
+import { useChat } from "ai/react";
 
-export function ChatInterface() {
+export function ChatUI() {
   const {
-    messages,
-    input,
+    messages,     // Message[] 对话历史
+    input,        // string 当前输入框内容
     handleInputChange,
-    handleSubmit,
-    isLoading,
-    error,
-    stop,        // 停止流式输出
-    reload,      // 重新生成最后一条回复
+    handleSubmit, // 发送消息
+    isLoading,    // 是否正在等待响应
+    stop,         // 中断流式输出
+    error,        // 错误信息
   } = useChat({
-    api: '/api/chat',           // 对应的 Route Handler
-    initialMessages: [],
-    onFinish: (message) => {
-      console.log('完成', message);
+    api: "/api/chat",          // 对应 Route Handler
+    initialMessages: [],        // 预设初始消息
+    onFinish: (message) => {    // 生成完成回调
+      console.log("AI 回复完成:", message.content);
     },
     onError: (err) => {
-      console.error('出错', err);
+      console.error("出错了:", err);
     },
   });
 
   return (
-    <div>
-      <div className="messages">
-        {messages.map(m => (
-          <div key={m.id} className={`message ${m.role}`}>
-            <span className="role">{m.role}</span>
-            <p>{m.content}</p>
+    <div className="flex flex-col h-screen">
+      {/* 消息列表 */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        {messages.map((msg) => (
+          <div
+            key={msg.id}
+            className={`p-3 rounded-lg ${
+              msg.role === "user" ? "bg-blue-100 ml-auto" : "bg-gray-100"
+            }`}
+          >
+            {msg.content}
           </div>
         ))}
-        {isLoading && <div className="loading">思考中...</div>}
+        {isLoading && <div className="text-gray-400">AI 正在思考...</div>}
       </div>
 
-      <form onSubmit={handleSubmit}>
+      {/* 输入框 */}
+      <form onSubmit={handleSubmit} className="p-4 border-t flex gap-2">
         <input
           value={input}
           onChange={handleInputChange}
           placeholder="输入消息..."
-          disabled={isLoading}
+          className="flex-1 border rounded px-3 py-2"
         />
         <button type="submit" disabled={isLoading}>发送</button>
-        {isLoading && <button type="button" onClick={stop}>停止</button>}
+        {isLoading && (
+          <button type="button" onClick={stop}>停止</button>
+        )}
       </form>
     </div>
   );
 }
 ```
 
-### useCompletion — 单次补全
-
-适合文本补全、翻译、摘要等单次任务场景（非对话）：
+### useCompletion：单次文本补全 Hook
 
 ```tsx
-'use client';
-import { useCompletion } from 'ai/react';
+"use client";
+import { useCompletion } from "ai/react";
 
-export function SummaryTool() {
-  const { completion, input, handleInputChange, handleSubmit, isLoading } =
-    useCompletion({ api: '/api/completion' });
+export function TextCompletion() {
+  const { completion, complete, isLoading } = useCompletion({
+    api: "/api/completion",
+  });
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <textarea value={input} onChange={handleInputChange} rows={6} />
-        <button type="submit" disabled={isLoading}>生成摘要</button>
-      </form>
-      {completion && <div className="result">{completion}</div>}
+      <button onClick={() => complete("请帮我优化这段代码：...")}>
+        优化代码
+      </button>
+      {isLoading ? "生成中..." : <pre>{completion}</pre>}
     </div>
   );
 }
 ```
 
-## 工具调用（Tool Use）
+---
 
-AI SDK 提供了类型安全的工具定义方式，工具结果可以自动返回给 LLM 继续推理（`maxSteps` 控制循环次数）：
+## Tool Calling：让 AI 调用你的函数
+
+Vercel AI SDK 的工具调用使用 `tool()` 配合 Zod 定义结构化参数，LLM 会自动决定何时调用：
 
 ```ts
-import { streamText, tool } from 'ai';
-import { openai } from '@ai-sdk/openai';
-import { z } from 'zod';
+import { streamText, tool } from "ai";
+import { openai } from "@ai-sdk/openai";
+import { z } from "zod";
 
+const result = streamText({
+  model: openai("gpt-4o"),  // 工具调用建议用较强模型
+  system: "你是一个旅行助手，可以查询天气和汇率。",
+  prompt: "我要去东京旅行，今天天气如何？另外 1 人民币等于多少日元？",
+  tools: {
+    getWeather: tool({
+      description: "获取指定城市的当前天气",
+      parameters: z.object({
+        city: z.string().describe("城市名称，英文，如 Tokyo"),
+        unit: z.enum(["celsius", "fahrenheit"]).default("celsius"),
+      }),
+      execute: async ({ city, unit }) => {
+        // 真实场景调用天气 API
+        return { city, temperature: 22, condition: "晴", unit };
+      },
+    }),
+
+    getExchangeRate: tool({
+      description: "查询两种货币之间的汇率",
+      parameters: z.object({
+        from: z.string().describe("源货币代码，如 CNY"),
+        to: z.string().describe("目标货币代码，如 JPY"),
+      }),
+      execute: async ({ from, to }) => {
+        // 真实场景调用汇率 API
+        return { from, to, rate: 20.5 };
+      },
+    }),
+  },
+  maxSteps: 5,  // 允许多轮工具调用（工具结果 → 继续推理 → 再调用工具）
+});
+
+for await (const chunk of result.textStream) {
+  process.stdout.write(chunk);
+}
+```
+
+### 工具调用流程
+
+```mermaid
+sequenceDiagram
+    participant User as 用户
+    participant SDK as streamText
+    participant LLM as GPT-4o
+    participant Tool as execute()
+
+    User->>SDK: prompt + tools 定义
+    SDK->>LLM: 发送消息 + tools schema
+    LLM-->>SDK: tool_call: getWeather({city: "Tokyo"})
+    SDK->>Tool: 执行 execute({ city: "Tokyo" })
+    Tool-->>SDK: { temperature: 22, condition: "晴" }
+    SDK->>LLM: tool result 追加到消息
+    LLM-->>SDK: tool_call: getExchangeRate(...)
+    SDK->>Tool: 执行 execute(...)
+    Tool-->>SDK: { rate: 20.5 }
+    SDK->>LLM: 再次追加结果
+    LLM-->>SDK: 最终文字回复（整合两个结果）
+    SDK-->>User: 流式输出
+```
+
+### 在 Next.js Route Handler 中暴露工具 API
+
+```ts
 // app/api/agent/route.ts
+import { streamText, tool } from "ai";
+import { openai } from "@ai-sdk/openai";
+import { z } from "zod";
+
 export async function POST(req: Request) {
   const { messages } = await req.json();
 
   const result = streamText({
-    model: openai('gpt-4o'),
+    model: openai("gpt-4o"),
     messages,
-    maxSteps: 5, // 允许最多 5 轮工具调用
     tools: {
-      getWeather: tool({
-        description: '获取指定城市的天气信息',
-        parameters: z.object({
-          city: z.string().describe('城市名称'),
-        }),
-        execute: async ({ city }) => {
-          // 实际调用天气 API
-          return { city, temperature: 28, condition: '晴' };
-        },
-      }),
       searchDatabase: tool({
-        description: '搜索内部数据库',
+        description: "在产品数据库中搜索商品",
         parameters: z.object({
           query: z.string(),
-          limit: z.number().optional().default(5),
+          category: z.string().optional(),
         }),
-        execute: async ({ query, limit }) => {
+        execute: async ({ query, category }) => {
           // 实际查询数据库
-          return { results: [], total: 0 };
+          return [{ id: 1, name: "示例商品", price: 99 }];
         },
       }),
     },
+    maxSteps: 3,
   });
 
   return result.toDataStreamResponse();
 }
 ```
 
-客户端 `useChat` 无需额外配置即可处理工具调用流程，SDK 自动处理 tool result 的往返。
+前端的 `useChat` 无需额外配置即可接收工具调用结果并展示最终回答。
 
-## Streaming 原理
+---
 
-AI SDK 的流式传输基于 **ReadableStream + Server-Sent Events（SSE）** 的混合协议：
+## 结构化输出：generateObject
 
-```mermaid
-sequenceDiagram
-    participant C as 客户端\n(useChat)
-    participant S as Next.js\nRoute Handler
-    participant L as LLM API
-
-    C->>S: POST /api/chat (messages)
-    S->>L: stream request
-    L-->>S: chunk 1 (token)
-    S-->>C: SSE: data chunk 1
-    L-->>S: chunk 2 (token)
-    S-->>C: SSE: data chunk 2
-    L-->>S: [DONE]
-    S-->>C: SSE: [DONE]
-    C->>C: 更新 messages 状态
-```
-
-`toDataStreamResponse()` 将 LLM 的流转换为符合 AI SDK 数据流协议的 HTTP 响应，客户端 `useChat` 内部自动解析该协议，将 token 追加到消息内容中实时渲染。
-
-## 多 Provider 支持
-
-切换 provider 只需替换模型实例，其余代码不变：
+有时不需要自由文本，而是需要符合特定 Schema 的 JSON 输出：
 
 ```ts
-import { anthropic } from '@ai-sdk/anthropic';
-import { google } from '@ai-sdk/google';
-import { openai } from '@ai-sdk/openai';
+import { generateObject } from "ai";
+import { openai } from "@ai-sdk/openai";
+import { z } from "zod";
 
-// 按需切换，接口完全一致
-const model = process.env.AI_PROVIDER === 'anthropic'
-  ? anthropic('claude-3-5-sonnet-20241022')
-  : process.env.AI_PROVIDER === 'google'
-    ? google('gemini-1.5-pro')
-    : openai('gpt-4o');
+const { object } = await generateObject({
+  model: openai("gpt-4o-mini"),
+  schema: z.object({
+    title: z.string(),
+    summary: z.string().max(200),
+    tags: z.array(z.string()).max(5),
+    sentiment: z.enum(["positive", "negative", "neutral"]),
+  }),
+  prompt: "分析这段文字：'Vercel AI SDK 让前端接入 AI 变得非常简单，大大提升了开发效率。'",
+});
 
-const { text } = await generateText({ model, prompt: '...' });
+console.log(object.tags);     // ["AI", "开发效率", "前端"]
+console.log(object.sentiment); // "positive"
 ```
+
+---
+
+## 多模型支持
+
+```ts
+import { openai } from "@ai-sdk/openai";
+import { anthropic } from "@ai-sdk/anthropic";
+import { google } from "@ai-sdk/google";
+
+// 按需切换，业务代码不变
+const models = {
+  fast: openai("gpt-4o-mini"),
+  smart: anthropic("claude-3-5-sonnet-20241022"),
+  gemini: google("gemini-1.5-flash"),
+};
+
+async function generate(tier: keyof typeof models, prompt: string) {
+  const { text } = await generateText({
+    model: models[tier],
+    prompt,
+  });
+  return text;
+}
+```
+
+---
+
+## 常见误区与最佳实践
+
+**误区一：在客户端直接调用 LLM**
+所有 LLM 调用（包括 `generateText` / `streamText`）必须在服务端（Route Handler / Server Action）执行，客户端只与自己的 API 通信，避免暴露 API Key。
+
+**误区二：不设置 `maxSteps`**
+工具调用默认只执行一次。如果你的任务需要多轮工具调用（Agent Loop），必须设置 `maxSteps > 1`。
+
+**误区三：忽略 `onFinish` 做持久化**
+流式响应完成后，完整消息只在 `onFinish` 回调中才能获取，应在这里做数据库写入。
+
+**最佳实践**：
+- 前后端消息格式统一用 `Message[]`（`role` + `content`），`useChat` 和 Route Handler 天然匹配
+- 使用 Zod 定义工具参数，获得类型安全 + 更好的 LLM 参数理解
+- `streamText` 配合 `toDataStreamResponse()` 是 Next.js 最简路径
+- 生产环境在工具的 `execute` 中加错误处理，工具失败不应让整个对话崩溃
+
+---
 
 ## 面试常问
 
-**Streaming 是如何实现的？**
+- **`useChat` 的消息如何持久化？** `useChat` 的消息只在内存中，需要在 `onFinish` 回调里调接口存数据库，刷新后用 `initialMessages` 恢复。
+- **`maxSteps` 的作用？** 控制工具调用的最大轮次。每次工具调用 + LLM 继续推理算一步，不设此值则只会调用一次工具。
+- **`generateText` vs `streamText`？** 前者等待全部生成完再返回，适合后台任务；后者逐 token 推送，适合实时聊天体验。
+- **与 LangChain.js 怎么选？** 场景以 Next.js + React 为主且追求体验流畅度选 Vercel AI SDK；需要复杂 Agent 编排、向量检索或社区工具集成选 LangChain.js。
 
-服务端使用 `ReadableStream` 将 LLM 的 token 逐片推送，通过 HTTP 的 chunked transfer encoding 或 Server-Sent Events 传输到客户端。AI SDK 在服务端用 `toDataStreamResponse()` 序列化流，客户端 `useChat` 用 `fetch` 的 `response.body` 读取 `ReadableStream`，逐 chunk 解析并触发 React 状态更新，实现实时渲染效果。
+---
 
-**与直接调用 OpenAI SDK 的区别？**
-
-| 维度 | 直接调用 OpenAI SDK | Vercel AI SDK |
-|------|-------------------|---------------|
-| 多 provider | 需要分别集成 | 统一接口，一键切换 |
-| React 集成 | 需自己管理状态 | useChat/useCompletion 开箱即用 |
-| 流式处理 | 需手写 SSE 逻辑 | toDataStreamResponse() 一行搞定 |
-| 工具调用循环 | 需手动实现 loop | maxSteps 自动处理 |
-| 类型安全 | 较弱 | Zod schema 强类型 |
-| 灵活性 | 高（直接操控） | 中（封装有取舍） |
-
-对于纯 Node.js 后端或非 React 项目，直接用 provider SDK 更合适；Next.js/React 项目推荐 AI SDK。
+> 本文参考《Hello-Agents》(datawhalechina) 整理。

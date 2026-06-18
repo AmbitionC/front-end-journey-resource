@@ -1,256 +1,374 @@
-# MCP 协议原理与 MCP Server 开发
+# 智能体通信协议：MCP 与 A2A
 
-MCP（Model Context Protocol）是 Anthropic 提出的开放协议，目标是让 AI 模型与外部工具、数据源之间的通信标准化。它解决了"每个 AI 应用都要重新实现工具集成"的重复建设问题，让工具提供方只需实现一次 MCP Server，就能被任意支持 MCP 的 AI 应用使用。
+构建完一个能推理、会用工具的单体 Agent 之后，下一个挑战是：**如何让 Agent 与更广泛的外部世界高效沟通，以及如何让多个 Agent 之间相互协作？** 这正是智能体通信协议要解决的问题。本文聚焦目前业界最成熟、生态最活跃的两种协议：MCP（Model Context Protocol）和 A2A（Agent-to-Agent Protocol）。
 
-## 为什么需要 MCP
+---
 
-在 MCP 出现之前，每个 AI 应用（Claude Desktop、Cursor、自研 Agent）都需要：
+## 为什么需要通信协议
 
-1. 为每个工具单独编写集成代码
-2. 维护不同 LLM 的 Function Calling 格式差异
-3. 处理工具的生命周期、错误、权限等各种细节
+在没有标准协议之前，每接入一个新服务，都需要手写一个适配器：
 
-MCP 将这个问题标准化：**工具提供方实现 MCP Server，AI 应用实现 MCP Client，两者通过标准协议通信**，解耦工具与应用。
+```python
+class GitHubTool(BaseTool):
+    def run(self, repo_url): ...   # 手写 GitHub API 适配
+
+class DatabaseTool(BaseTool):
+    def run(self, query): ...      # 手写数据库适配
+
+class WeatherTool(BaseTool):
+    def run(self, location): ...   # 手写天气 API 适配
+```
+
+这带来三个痛点：**代码重复**（每个工具都要处理认证、错误处理）、**无法复用**（别人写的工具和你的接口不兼容）、**扩展性差**（接100个服务就写100个适配器）。
+
+通信协议的本质是一套**标准化接口规范**，服务提供方只需实现一次协议，所有支持该协议的 Agent 都能无缝调用——就像 USB-C 统一了设备连接方式一样。
+
+---
+
+## 三种协议的定位
 
 ```mermaid
-graph LR
-    subgraph AI 应用层 (MCP Client)
-        CD[Claude Desktop]
-        CU[Cursor]
-        CA[自研 Agent]
+graph TD
+    subgraph "协议分层"
+        ANP[ANP\n大规模网络服务发现]
+        A2A[A2A\nAgent 间点对点协作]
+        MCP[MCP\nAgent 与工具/资源通信]
     end
-    subgraph MCP 协议
-        P((MCP))
-    end
-    subgraph 工具层 (MCP Server)
-        FS[文件系统 Server]
-        DB[数据库 Server]
-        API[自定义 API Server]
-        GH[GitHub Server]
-    end
-    CD & CU & CA <-->|标准协议| P
-    P <--> FS & DB & API & GH
+
+    ANP --> A2A --> MCP
 ```
 
-## 核心概念
+| 协议 | 提出方 | 解决什么问题 | 成熟度 |
+|------|--------|------------|--------|
+| **MCP** | Anthropic | Agent ↔ 工具/数据源 标准化通信 | 生态成熟，推荐使用 |
+| **A2A** | Google | Agent ↔ Agent 点对点协作 | 发展中，Sample Code 阶段 |
+| **ANP** | 开源社区 | 大规模 Agent 网络服务发现 | 概念验证阶段 |
 
-### Client 与 Server
+选择指南：
+- 需要访问外部服务（文件、数据库、API）→ 选 **MCP**
+- 多个 Agent 需要相互委托任务 → 考虑 **A2A**
+- 构建大规模 Agent 生态系统 → 参考 **ANP**
 
-- **MCP Client**：AI 应用侧，负责发现 Server 能力、发起工具调用请求
-- **MCP Server**：能力提供方，暴露工具（Tools）、资源（Resources）、提示词（Prompts）
+---
 
-### 三类能力
+## MCP：智能体的"USB-C"
 
-| 能力类型 | 说明 | 典型用途 |
-|----------|------|----------|
-| **Tools** | 可执行的函数，LLM 主动调用 | 搜索、写文件、调 API |
-| **Resources** | 可读取的数据，类似 REST 资源 | 读文件内容、获取数据库记录 |
-| **Prompts** | 预定义的 prompt 模板 | 代码审查 prompt、文档生成 prompt |
+### 核心设计理念
 
-Tools 是最常用的能力类型，Resources 用于 LLM 需要上下文数据但不需要"执行"的场景。
+MCP 不仅仅是一个 RPC（远程过程调用）协议，它更强调**上下文共享**。当 Agent 访问代码仓库时，MCP Server 不仅返回文件内容，还能提供代码结构、依赖关系、提交历史等丰富上下文，让 Agent 做出更智能的决策。
 
-### 与 Function Calling 的关系
+### Host / Client / Server 三层架构
 
-MCP 不是 Function Calling 的替代品，而是更高层的协议：
+```mermaid
+sequenceDiagram
+    participant User as 用户
+    participant Host as Host (Claude Desktop / 你的应用)
+    participant Client as MCP Client
+    participant Server as MCP Server (文件系统/GitHub/数据库)
 
-| 维度 | Function Calling | MCP |
-|------|-----------------|-----|
-| 层级 | LLM API 层 | 应用协议层 |
-| 范围 | 单次请求内 | 跨会话、独立进程 |
-| 工具定义 | 每次请求携带 | Server 独立声明 |
-| 运行方式 | 在调用方进程内 | 独立 Server 进程 |
-| 标准化程度 | 各家格式略有差异 | 统一协议 |
-| 发现机制 | 无（需手动配置） | 自动发现 Server 能力 |
-
-可以理解为：**Function Calling 是 LLM 宣告"我要调用工具"的机制，MCP 是工具以独立进程存在并被发现和调用的协议**。
-
-## 传输方式
-
-MCP 支持两种传输层：
-
-### stdio（标准输入输出）
-
-Client 以子进程方式启动 Server，通过标准输入输出传递 JSON-RPC 消息。适合本地开发工具（如 Claude Desktop、Cursor）集成本地工具。
-
-```
-Client Process
-    ↓ stdin (JSON-RPC request)
-MCP Server Process
-    ↓ stdout (JSON-RPC response)
-Client Process
+    User->>Host: "我桌面上有哪些文档？"
+    Host->>Client: 激活 MCP Client
+    Client->>Server: list_tools()
+    Server-->>Client: [read_file, list_directory, ...]
+    Client->>Host: 将工具描述注入 LLM 上下文
+    Host->>Client: call_tool("list_directory", {path: "~/Desktop"})
+    Client->>Server: 执行工具
+    Server-->>Client: ["report.pdf", "notes.md", ...]
+    Client-->>Host: 工具结果
+    Host-->>User: "你桌面上有 report.pdf 和 notes.md..."
 ```
 
-### HTTP + SSE（Server-Sent Events）
+三层职责清晰：
+- **Host**：用户界面，管理对话流程
+- **Client**：协议通信，负责与 Server 建连、发请求
+- **Server**：功能实现，提供具体的工具/资源/提示词
 
-Server 作为独立 HTTP 服务运行，Client 通过 HTTP 请求和 SSE 流通信。适合远程部署、云端工具服务、需要多 Client 共享的场景。
+### MCP 的三大核心能力
 
-## 开发一个 MCP Server
+| 能力 | 特性 | 典型场景 |
+|------|------|----------|
+| **Tools（工具）** | 主动的，执行操作，有副作用 | 写文件、调 API、执行代码 |
+| **Resources（资源）** | 被动的，提供数据，只读 | 读文件内容、数据库记录 |
+| **Prompts（提示模板）** | 指导性的，提供预定义模板 | 代码 Review 模板、总结模板 |
 
-> 以下骨架使用 `@modelcontextprotocol/sdk`，具体 API 以[官方文档](https://modelcontextprotocol.io)为准。
+### MCP vs Function Calling
 
-### 安装依赖
+很多人会问：我已经用 Function Calling 了，为什么还需要 MCP？
 
-```bash
-npm install @modelcontextprotocol/sdk zod
+```python
+# Function Calling：为不同模型重复实现
+openai_tools = [{"type": "function", "function": {"name": "search_github", ...}}]
+claude_tools = [{"name": "search_github", "input_schema": {...}}]  # 格式不同！
+
+# MCP：一套实现，所有模型通用
+github_client = MCPClient(["npx", "-y", "@modelcontextprotocol/server-github"])
+tools = await github_client.list_tools()  # 自动发现，格式统一
 ```
 
-### 基础 Server 骨架（TypeScript）
+两者是互补关系：**Function Calling 是 LLM 的能力**（知道何时调用函数）；**MCP 是工程基础设施**（规范工具如何被描述和调用）。类比：Function Calling 是"会打电话"的技能，MCP 是"全球统一电话标准"。
 
-```ts
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { z } from 'zod';
+### 用代码使用 MCP 客户端
 
-// 创建 MCP Server 实例
-const server = new McpServer({
-  name: 'my-tools-server',
-  version: '1.0.0',
-});
+以 Python 的 HelloAgents 框架为例（以官方 MCP SDK 为准）：
 
-// 定义 Tool：查询天气
-server.tool(
-  'get_weather',                          // 工具名称
-  '获取指定城市的实时天气信息',             // 工具描述（LLM 依赖此决定何时调用）
-  {
-    city: z.string().describe('城市名称，如"上海"'),
-    unit: z.enum(['celsius', 'fahrenheit']).optional().default('celsius'),
-  },
-  async ({ city, unit }) => {
-    // 实际调用天气 API
-    const weather = await fetchWeatherAPI(city);
+```python
+import asyncio
+from hello_agents.protocols import MCPClient
 
-    return {
-      content: [
-        {
-          type: 'text',
-          text: JSON.stringify({
-            city,
-            temperature: unit === 'celsius' ? weather.tempC : weather.tempF,
-            condition: weather.condition,
-            humidity: weather.humidity,
-          }),
-        },
-      ],
-    };
-  }
-);
+async def use_mcp():
+    # 连接到文件系统 MCP Server（通过 npx 启动官方 Server）
+    client = MCPClient([
+        "npx", "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "."  # 指定根目录
+    ])
 
-// 定义 Tool：读取文件
-server.tool(
-  'read_file',
-  '读取本地文件内容',
-  {
-    path: z.string().describe('文件的绝对路径'),
-    encoding: z.enum(['utf-8', 'base64']).optional().default('utf-8'),
-  },
-  async ({ path, encoding }) => {
-    const fs = await import('fs/promises');
-    try {
-      const content = await fs.readFile(path, encoding as BufferEncoding);
-      return {
-        content: [{ type: 'text', text: content }],
-      };
-    } catch (error) {
-      return {
-        content: [{ type: 'text', text: `Error: ${(error as Error).message}` }],
-        isError: true,
-      };
-    }
-  }
-);
+    async with client:
+        # 1. 发现可用工具
+        tools = await client.list_tools()
+        for tool in tools:
+            print(f"{tool['name']}: {tool.get('description', '')}")
 
-// 定义 Resource：暴露配置信息
-server.resource(
-  'config://app',
-  'app configuration',
-  async (uri) => ({
-    contents: [
-      {
-        uri: uri.href,
-        mimeType: 'application/json',
-        text: JSON.stringify({ version: '1.0.0', env: process.env.NODE_ENV }),
-      },
-    ],
-  })
-);
+        # 2. 调用工具
+        content = await client.call_tool("read_file", {"path": "README.md"})
+        print(content)
 
-// 启动 Server（stdio 传输）
-async function main() {
-  const transport = new StdioServerTransport();
-  await server.connect(transport);
-  // Server 现在监听 stdin，响应通过 stdout 发送
-}
+        # 3. 访问资源
+        resources = await client.list_resources()
 
-main().catch(console.error);
+        # 4. 获取提示模板
+        prompts = await client.list_prompts()
+
+asyncio.run(use_mcp())
 ```
 
-### HTTP + SSE 传输方式骨架
+### 将 MCP 工具集成到 Agent
 
-```ts
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
-import express from 'express';
+```python
+from hello_agents import SimpleAgent, HelloAgentsLLM
+from hello_agents.tools import MCPTool
 
-const app = express();
-const server = new McpServer({ name: 'remote-tools', version: '1.0.0' });
+agent = SimpleAgent(name="文件助手", llm=HelloAgentsLLM())
 
-// ... 注册工具（同 stdio 版本）
+# MCPTool 会自动展开 Server 提供的所有工具
+fs_tool = MCPTool(
+    name="fs",
+    description="本地文件系统操作",
+    server_command=["npx", "-y", "@modelcontextprotocol/server-filesystem", "."]
+)
+agent.add_tool(fs_tool)
+# 展开后：fs_read_file, fs_write_file, fs_list_directory...
 
-// SSE 连接端点
-app.get('/sse', async (req, res) => {
-  const transport = new SSEServerTransport('/messages', res);
-  await server.connect(transport);
-});
-
-// 消息端点（Client 发送请求）
-app.post('/messages', express.json(), async (req, res) => {
-  // transport 处理消息路由
-});
-
-app.listen(3000, () => {
-  console.log('MCP Server running on http://localhost:3000');
-});
+# Agent 现在可以直接操作文件
+response = agent.run("请读取 README.md 并总结其主要内容")
 ```
 
-### 在 Claude Desktop 中配置 MCP Server
+### MCP 社区生态
 
-```json
-// ~/Library/Application Support/Claude/claude_desktop_config.json
-{
-  "mcpServers": {
-    "my-tools": {
-      "command": "node",
-      "args": ["/path/to/my-mcp-server/dist/index.js"],
-      "env": {
-        "API_KEY": "your-api-key"
-      }
-    }
-  }
-}
+MCP 的一大优势是**开箱即用的社区服务器**，无需自己实现工具：
+
+| 服务 | npm 包 | 能力 |
+|------|--------|------|
+| 文件系统 | `@modelcontextprotocol/server-filesystem` | 读写本地文件 |
+| GitHub | `@modelcontextprotocol/server-github` | 搜索仓库、读取代码 |
+| PostgreSQL | `@modelcontextprotocol/server-postgres` | 执行 SQL 查询 |
+| Playwright | `@playwright/mcp` | 浏览器自动化 |
+| Slack | `@modelcontextprotocol/server-slack` | 发送消息、读频道 |
+
+社区资源：
+- [Awesome MCP Servers](https://github.com/punkpeye/awesome-mcp-servers) — 社区精选列表
+- [mcpservers.org](https://mcpservers.org/) — 官方目录
+- [Anthropic 官方 Servers](https://github.com/modelcontextprotocol/servers) — 最高质量
+
+### 传输方式对比
+
+MCP 支持多种传输层（Transport Agnostic 特性）：
+
+| 传输方式 | 场景 | 示例 |
+|----------|------|------|
+| Stdio | 本地进程，开发调试 | `MCPClient(["python", "server.py"])` |
+| Memory | 单元测试，快速原型 | `MCPTool()`（内置演示服务器）|
+| HTTP | 生产环境，远程服务 | `MCPClient("http://api.example.com/mcp")` |
+| SSE | 实时通信，流式处理 | `MCPClient("http://host/sse", transport_type="sse")` |
+
+---
+
+## A2A：Agent 间的点对点协作
+
+### 设计动机
+
+MCP 解决了 Agent 与工具的通信，但当任务复杂到需要**多个专业 Agent 分工协作**时（研究员 + 撰写员 + 编辑），MCP 不足以支撑这种场景。
+
+传统的中央协调器方案（星型拓扑）有三个问题：
+- **单点故障**：协调器崩溃，系统整体瘫痪
+- **性能瓶颈**：所有流量经过中心节点
+- **扩展困难**：增减 Agent 需要改动中心逻辑
+
+A2A 采用**点对点（P2P）架构**，每个 Agent 既是服务提供方，也是消费方。
+
+### 核心概念：Task 与 Artifact
+
+A2A 与 MCP 最大的区别在于两个核心抽象：
+
+| 概念 | MCP 对应 | A2A 概念 | 说明 |
+|------|----------|----------|------|
+| 请求单元 | Tool Call | **Task（任务）** | 有状态的工作单元，可跟踪进度 |
+| 输出结果 | Tool Result | **Artifact（工件）** | 任务产出物，可传递给其他 Agent |
+
+Task 有完整的生命周期状态机：`创建 → 协商 → 执行中 → 完成 / 失败`。
+
+### A2A 实战骨架
+
+```python
+from hello_agents.protocols import A2AServer, A2AClient
+import threading, time
+
+# ===== Agent 服务端 =====
+researcher = A2AServer(
+    name="researcher",
+    description="研究员 Agent，负责信息搜集",
+    version="1.0.0"
+)
+
+@researcher.skill("research")
+def do_research(text: str) -> str:
+    """处理研究请求"""
+    topic = text.replace("research", "").strip()
+    return str({
+        "topic": topic,
+        "findings": f"关于 {topic} 的研究结果...",
+        "sources": ["来源1", "来源2"]
+    })
+
+# 后台启动服务
+threading.Thread(
+    target=lambda: researcher.run(host="localhost", port=5000),
+    daemon=True
+).start()
+time.sleep(1)
+
+# ===== Agent 客户端 =====
+client = A2AClient("http://localhost:5000")
+response = client.execute_skill("research", "research AI在医疗领域的应用")
+print(response.get("result"))
 ```
 
-## 典型使用场景
+### 多 Agent 协作网络
 
-- **文件系统访问**：让 AI 读写本地文件，实现代码助手、文档处理
-- **数据库查询**：AI 直接查询 MySQL/PostgreSQL/MongoDB，回答数据相关问题
-- **内部 API 集成**：将公司内部服务暴露为 MCP Server，不需要每个 AI 工具单独集成
-- **开发工具**：Cursor、Claude Desktop 通过 MCP 集成 git、npm、测试运行器等
-- **知识库检索**：将向量数据库封装为 MCP Server，为 AI 提供语义搜索能力
+```python
+# 研究员 → 撰写员 → 编辑 的流水线
+def create_content(topic: str):
+    researcher_client = A2AClient("http://localhost:5000")
+    writer_client = A2AClient("http://localhost:5001")
+    editor_client = A2AClient("http://localhost:5002")
+
+    # 步骤1：研究
+    research = researcher_client.execute_skill("research", f"research {topic}")
+    research_data = research.get("result", "")
+
+    # 步骤2：撰写（基于研究结果）
+    article = writer_client.execute_skill("write", f"write {research_data}")
+    article_content = article.get("result", "")
+
+    # 步骤3：编辑润色
+    final = editor_client.execute_skill("edit", f"edit {article_content}")
+    return final.get("result", "")
+
+result = create_content("AI 在教育领域的应用")
+```
+
+### A2A 请求生命周期
+
+```mermaid
+sequenceDiagram
+    participant CA as Client Agent
+    participant Auth as 认证服务
+    participant SA as Server Agent
+
+    CA->>SA: 发现服务（.well-known/agent-description）
+    SA-->>CA: Agent Card（能力描述）
+    CA->>Auth: 获取认证 Token（基于 DID）
+    Auth-->>CA: 签名的 Token
+    CA->>SA: POST /tasks（附 Token）
+    SA-->>CA: Task ID + 状态: submitted
+    CA->>SA: GET /tasks/{id}（轮询）
+    SA-->>CA: 状态: completed + Artifact
+```
+
+---
+
+## ANP：去中心化 Agent 网络（概念展望）
+
+ANP（Agent Network Protocol）是面向**大规模 Agent 生态**的基础设施协议，目前仍在早期发展阶段。它解决的核心问题是：在一个包含成百上千个 Agent 的网络中，如何发现你需要的服务？
+
+关键设计：
+1. **DID（去中心化身份）**：每个 Agent 有唯一身份标识，基于公私钥对，无需中心化注册机构
+2. **标准端点**：每个 Agent 暴露 `.well-known/agent-description`，描述自身能力
+3. **语义搜索发现**：基于自然语言描述查找匹配 Agent，而非预先配置
+
+```python
+from hello_agents.protocols import ANPDiscovery, register_service
+
+# 注册 Agent 到发现中心
+discovery = ANPDiscovery()
+register_service(
+    discovery=discovery,
+    service_id="nlp_agent_1",
+    service_type="nlp",
+    capabilities=["text_analysis", "sentiment_analysis"],
+    endpoint="http://localhost:8001",
+    metadata={"load": 0.3, "price": 0.01}
+)
+
+# 发现服务：按类型查找，按负载选优
+nlp_services = discovery.discover_services(service_type="nlp")
+best = min(nlp_services, key=lambda s: s.metadata.get("load", 1.0))
+print(f"最佳服务：{best.service_name}（负载：{best.metadata['load']}）")
+```
+
+---
+
+## 协议选型建议
+
+```mermaid
+flowchart TD
+    Start([我的需求]) --> Q1{需要访问外部工具/服务？}
+    Q1 -->|是| MCP[使用 MCP\n生态成熟，优先选择]
+    Q1 -->|否| Q2{多个 Agent 分工协作？}
+    Q2 -->|是| A2A[考虑 A2A\n注意生态仍在发展中]
+    Q2 -->|否| Q3{需要大规模服务发现？}
+    Q3 -->|是| ANP[参考 ANP 设计思想\n目前无成熟实现]
+    Q3 -->|否| Simple[直接用框架内置工具]
+```
+
+---
+
+## 常见误区与最佳实践
+
+**误区一：用 MCP 替代 Function Calling**
+两者不是竞争关系。MCP 是工具描述和访问的标准化；Function Calling 是 LLM 理解何时使用工具的能力。实际上 MCP 客户端内部也依赖 Function Calling 来驱动工具选择。
+
+**误区二：A2A 等于微服务**
+A2A 中的 Agent 有自己的推理能力和自主性，不是简单的函数调用。Agent 之间可以协商、拒绝任务、提出反方案。
+
+**误区三：所有工具都要 MCP 化**
+简单的内部工具（如格式化字符串、简单计算）直接用函数就行，不需要走 MCP 协议开销。MCP 的价值在于**跨团队、跨系统的工具复用**。
+
+**最佳实践**：
+- 优先使用 Anthropic 官方维护的 MCP Server，质量和文档更有保障
+- MCP Server 中写清晰的工具描述，这是 LLM 正确调用工具的关键
+- A2A 服务端做好幂等处理，同一 Task 重复执行结果一致
+- 本地开发用 Stdio 传输，生产环境考虑 HTTP/SSE 传输
+
+---
 
 ## 面试常问
 
-**MCP 解决了什么核心问题？**
+- **MCP 和 Function Calling 的关系？** 互补，不是竞争。Function Calling 是 LLM 能力，MCP 是工程协议标准，前者决定"何时调用"，后者规范"如何描述和执行"。
+- **MCP 的三种原语？** Tools（执行操作）、Resources（读取数据）、Prompts（提示模板）。Tools 有副作用，Resources 只读，Prompts 是预定义模板。
+- **A2A 与传统 API 调用的区别？** A2A 中的 Agent 有自主性和推理能力；Task 有状态生命周期；支持 Agent 间协商能力边界；而传统 API 只是被动执行函数。
+- **为什么 MCP 选择 Stdio 作为默认传输？** 启动简单，无需部署服务，本地进程间通信性能好，适合开发调试。生产环境可切换为 HTTP/SSE。
 
-解决了 AI 工具集成的 **M×N 问题**：M 个 AI 应用 × N 个工具，原本需要 M×N 个集成。MCP 将其降为 M + N：每个工具实现一次 MCP Server，每个 AI 应用实现一次 MCP Client，通过标准协议连接。同时，MCP Server 作为独立进程运行，天然隔离了权限和安全边界。
+---
 
-**MCP 与直接 Function Calling 的区别？**
-
-Function Calling 是在单次 LLM API 请求中临时定义工具，工具逻辑运行在调用方进程内，每次都需要传递工具定义。MCP Server 是独立进程，持续运行，通过标准协议被发现和调用，无需每次传递定义，也无需了解调用方是哪个 LLM。MCP 更适合需要复用工具、跨应用共享工具、或工具需要维护状态的场景。
-
-**MCP Server 的安全性如何保证？**
-
-- stdio 模式下，Server 只能被启动它的进程访问，天然隔离
-- 工具应遵守最小权限原则，只暴露必要能力
-- 敏感操作（写文件、执行命令）应该在工具描述中明确告知，让用户知情
-- 生产环境的 HTTP 模式需要增加认证（API Key、OAuth）
-- Server 应校验所有输入参数（使用 Zod 等），防止注入攻击
+> 本文参考《Hello-Agents》(datawhalechina) 整理。
