@@ -1,200 +1,347 @@
-LLM API 按 token 计费，生产环境下不加控制很容易让成本失控。理解成本构成、系统性地应用优化策略，可以在不损失太多质量的前提下大幅降低开支。
+LLM API 按 token 计费，生产环境不加控制极易造成成本失控。系统性地应用路由、缓存、压缩、批处理等策略，可以在质量几乎不变的前提下将调用费用降低 50%–80%。
 
-## LLM 成本构成
+## 成本结构分析
 
-| 类型 | 说明 | 典型占比 |
-|------|------|---------|
-| Input Token | 发送给模型的 Prompt（含 system prompt） | 通常占多数 |
-| Output Token | 模型生成的内容 | 单价通常高于 Input |
-| Embedding | 文本向量化，用于 RAG 检索 | 单次便宜，量大时可观 |
-| Fine-tuning | 微调训练费用 + 微调模型推理费用 | 一次性 + 持续 |
+理解成本来源是优化的第一步。LLM 的计费模型通常由三个维度叠加：
 
-Output token 的单价通常是 Input token 的数倍，控制输出长度往往比压缩 Prompt 效果更显著。
+| 费用类型 | 计费单位 | 典型单价区间（每百万 token） | 占比特征 |
+|----------|----------|----------------------------|----------|
+| Input Token | 输入 prompt 的 token 数 | $0.15 – $15 | 请求量大时是主要成本 |
+| Output Token | 模型生成的 token 数 | $0.60 – $75 | 单价是 Input 的 3–5 倍 |
+| 请求次数（API Calls） | 按次计费（较少见） | 依提供商而定 | 高并发场景不可忽视 |
+| Embedding | 向量化 token 数 | $0.02 – $0.13 | RAG 管道中量大时显著 |
 
-## 策略一：模型选择与降级路由
+**关键结论**：Output token 单价远高于 Input token，控制输出长度的 ROI（投入产出比）通常高于压缩 Prompt。在多轮对话场景中，随着上下文窗口不断增长，Input token 成本会呈线性甚至超线性增长，上下文裁剪因此成为多轮对话系统的必选项。
 
-不同任务对模型能力的需求差异巨大。"用最贵的模型做所有事"是最大的浪费。
+## 模型分级路由（Model Routing）
 
-```ts
-type TaskComplexity = "simple" | "medium" | "complex";
+不同任务对模型能力的需求差异悬殊。将所有请求都发送给最强模型，是生产环境中最常见的浪费。模型路由（Model Routing）的核心思路是：用任务复杂度匹配模型能力，而非用一把锤子敲所有钉子。
 
-function selectModel(complexity: TaskComplexity): string {
-  const modelMap: Record<TaskComplexity, string> = {
-    simple: "gpt-4o-mini",      // 分类、摘要、格式化
-    medium: "gpt-4o",            // 一般问答、代码生成
-    complex: "claude-opus-4",    // 复杂推理、长文档分析
-  };
-  return modelMap[complexity];
+```
+任务复杂度分级示例：
+- 简单（Simple）：意图分类、格式转换、关键词提取、情感判断
+- 中等（Medium）：一般问答、代码补全、RAG 综合回答
+- 复杂（Complex）：多步推理、长文档深度分析、代码架构设计
+```
+
+**成本对比**：以 Anthropic 模型为例，claude-haiku-3-5 与 claude-opus-4 的 Input token 单价差距可达 20 倍以上。即便只有 30% 的请求可以降级到小模型，整体成本也能降低约 15%–25%。
+
+路由器本身应使用最小模型完成分类，避免"用昂贵模型决定是否用昂贵模型"的悖论：
+
+```typescript
+type TaskTier = "simple" | "medium" | "complex";
+
+interface RoutingConfig {
+  simple: string;
+  medium: string;
+  complex: string;
 }
 
-// 通过启发式规则或轻量分类器判断任务复杂度
-async function routeRequest(userMessage: string) {
-  const complexity = await classifyComplexity(userMessage); // 用小模型分类
-  const model = selectModel(complexity);
-  return callLLM(model, userMessage);
+const MODEL_ROUTING: RoutingConfig = {
+  simple: "claude-haiku-3-5",    // 分类、格式化、摘要
+  medium: "claude-sonnet-4",     // 问答、代码生成
+  complex: "claude-opus-4",      // 复杂推理、长文档
+};
+
+// 用轻量模型 + 少样本提示做路由分类
+async function classifyTaskTier(userMessage: string): Promise<TaskTier> {
+  const response = await callLLM("claude-haiku-3-5", {
+    system: `Classify the user request into one tier:
+- simple: formatting, classification, keyword extraction
+- medium: Q&A, code completion, summarization
+- complex: multi-step reasoning, architecture design, long document analysis
+Reply with only the tier name.`,
+    user: userMessage,
+    maxTokens: 10,
+  });
+  return response.trim() as TaskTier;
+}
+
+async function routedRequest(userMessage: string): Promise<string> {
+  const tier = await classifyTaskTier(userMessage);
+  const model = MODEL_ROUTING[tier];
+  return callLLM(model, { user: userMessage });
 }
 ```
 
-**实践原则：**
-- 意图分类、格式化、简单问答 → 小模型
-- 代码生成、RAG 问答 → 中等模型
-- 复杂多步推理、长文档理解 → 强模型
-- 用小模型做路由器本身的成本极低
+**实践要点**：路由分类本身应在 P95 延迟 100ms 以内完成，否则延迟代价可能抵消成本收益。可以用规则引擎（消息长度、关键词匹配）做快速预筛，只有模糊边界情况才调用 LLM 分类器。
 
-## 策略二：Prompt 优化
+## 语义缓存（Semantic Cache）
 
-Prompt 长度直接决定 Input token 数量。
+精确匹配（Exact Cache）只能命中完全相同的 Prompt，在生产环境命中率通常低于 5%。语义缓存（Semantic Cache）通过向量相似度匹配语义相近的历史请求，命中率可提升至 20%–40%。
 
-- **移除冗余描述**：删掉"你是一个有帮助的 AI 助手"之类的废话
-- **System Prompt 复用**：利用 Prompt Cache（见下文），避免重复计费
-- **Few-shot 精简**：3 个示例通常比 10 个效果差不多，但省了 70% 的 token
-- **指令压缩**：用精确的动词替代冗长描述，如"列出 3 条" 替代 "请你帮我找一下并整理出三条"
+**原理**：将每次请求的 Prompt 编码为向量（Embedding），存入向量数据库。新请求到来时，计算其向量与库中历史向量的余弦相似度（Cosine Similarity）。相似度超过阈值则直接返回缓存答案，跳过 LLM 调用。
 
-## 策略三：Caching
-
-### Prompt Cache（原生缓存）
-
-主流 LLM 提供商（Anthropic、OpenAI）支持 Prompt Cache：当 Prompt 前缀完全相同时，缓存计算结果，后续请求只对新增部分计费。对于有长 System Prompt 的应用，可节省大量 Input token 费用。
-
-### Semantic Cache（语义缓存）
-
-对语义相近的问题返回缓存答案，无需再次调用 LLM：
-
-```ts
-import { createClient } from "redis";
-
+```typescript
 interface CacheEntry {
+  id: string;
   question: string;
   answer: string;
   embedding: number[];
   createdAt: number;
+  ttl: number; // seconds
 }
 
 class SemanticCache {
+  private readonly SIMILARITY_THRESHOLD = 0.92;
+
   constructor(
-    private redis: ReturnType<typeof createClient>,
-    private embedFn: (text: string) => Promise<number[]>,
-    private similarityThreshold = 0.92
+    private vectorStore: VectorStore,
+    private embedFn: (text: string) => Promise<number[]>
   ) {}
 
   async get(question: string): Promise<string | null> {
-    const queryEmbedding = await this.embedFn(question);
-    // 在 Redis Vector Search 或向量库中查找最近邻
-    const similar = await this.findSimilar(queryEmbedding);
-    if (similar && similar.score >= this.similarityThreshold) {
-      return similar.answer;
+    const embedding = await this.embedFn(question);
+    const results = await this.vectorStore.search(embedding, { topK: 1 });
+
+    if (
+      results.length > 0 &&
+      results[0].score >= this.SIMILARITY_THRESHOLD &&
+      !this.isExpired(results[0].entry)
+    ) {
+      return results[0].entry.answer;
     }
     return null;
   }
 
-  async set(question: string, answer: string): Promise<void> {
+  async set(question: string, answer: string, ttlSeconds = 3600): Promise<void> {
     const embedding = await this.embedFn(question);
-    const entry: CacheEntry = {
+    await this.vectorStore.upsert({
+      id: crypto.randomUUID(),
       question,
       answer,
       embedding,
       createdAt: Date.now(),
-    };
-    // 存入向量库，设置 TTL
-    await this.store(entry);
+      ttl: ttlSeconds,
+    });
   }
 
-  private async findSimilar(_embedding: number[]) {
-    // 实际实现依赖具体向量库，以官方文档为准
-    throw new Error("implement with your vector store");
+  private isExpired(entry: CacheEntry): boolean {
+    return Date.now() > entry.createdAt + entry.ttl * 1000;
+  }
+}
+
+// 在 LLM 调用链中嵌入语义缓存
+async function cachedLLMCall(question: string, cache: SemanticCache): Promise<string> {
+  const cached = await cache.get(question);
+  if (cached) {
+    return cached; // 缓存命中，0 token 成本
   }
 
-  private async store(_entry: CacheEntry) {
-    throw new Error("implement with your vector store");
-  }
+  const answer = await callLLM("claude-sonnet-4", { user: question });
+  await cache.set(question, answer);
+  return answer;
 }
 ```
 
-### Exact Cache
+**阈值选择**：相似度阈值是语义缓存最关键的超参数。阈值 0.99 几乎等同于精确匹配；阈值 0.80 则可能把"北京天气"和"上海天气"视为同一问题。推荐从 0.92 开始，通过人工抽检缓存命中样本来校准，并持续监控"缓存误命中率"（返回了错误答案的比例）。
 
-对完全相同的请求（同 Prompt + 同参数）直接缓存响应，用 Redis 实现，TTL 根据内容时效性设置。
+## Prompt 压缩（Prompt Compression）
 
-## 策略四：输出长度控制
+压缩输入 Prompt 是降低 Input token 成本的直接手段，有三个层次：
 
-Output token 贵，减少不必要的输出：
+**层次一：去冗余（Deduplication）**
 
-```ts
-const response = await openai.chat.completions.create({
-  model: "gpt-4o",
-  messages: [...],
-  max_tokens: 500,            // 硬限制
-  // 使用结构化输出，避免 LLM 自由发挥格式
-  response_format: { type: "json_object" },
-});
+移除废话、重复说明和不必要的礼貌用语：
+
+```
+❌ 冗余版本（约 45 token）：
+"你是一个非常有帮助、知识渊博的 AI 助手。请你帮我把下面这段文字翻译成英文，
+谢谢你的帮助。文字内容如下："
+
+✅ 压缩版本（约 8 token）：
+"Translate to English:"
 ```
 
-**技巧：**
-- 明确要求"简洁回答"、"不超过 X 字"
-- 用 JSON Schema 约束输出结构，减少 LLM 添加多余解释
-- 流式输出（streaming）配合前端显示，可在用户满意时提前停止
+**层次二：结构化压缩（Structured Compression）**
 
-## 策略五：批处理与异步
+用紧凑的结构替代自然语言描述，减少歧义的同时降低 token 数：
 
-对于不需要实时响应的任务，批处理可以降低成本（部分提供商的 Batch API 有价格折扣）：
+```python
+# 原始：自然语言描述（~120 token）
+original_prompt = """
+请分析以下用户评论，判断其情感倾向是正面、负面还是中性。
+同时提取出评论中提到的产品功能点，以及用户的主要诉求。
+最后给出一个综合评分（1-5分）。
+"""
 
-```ts
-// 非实时场景：文章摘要、数据提取等
-async function batchSummarize(articles: string[]): Promise<string[]> {
-  // OpenAI Batch API 示例骨架（以官方文档为准）
-  const requests = articles.map((article, i) => ({
-    custom_id: `summary-${i}`,
-    method: "POST",
-    url: "/v1/chat/completions",
-    body: {
-      model: "gpt-4o-mini",
-      messages: [{ role: "user", content: `Summarize: ${article}` }],
-      max_tokens: 200,
-    },
+# 压缩：结构化指令（~40 token）
+compressed_prompt = """
+Analyze comment. Return JSON:
+{
+  "sentiment": "positive|negative|neutral",
+  "features": ["string"],
+  "score": 1-5
+}
+"""
+```
+
+**层次三：摘要替换（Summarization）**
+
+在多轮对话中，用摘要替换早期的详细历史记录：
+
+```python
+def compress_history(messages: list[dict], max_tokens: int = 2000) -> list[dict]:
+    """当历史消息超过阈值时，用摘要替换早期消息"""
+    total = count_tokens(messages)
+    if total <= max_tokens:
+        return messages
+
+    # 保留最近 N 轮，对更早的历史生成摘要
+    recent = messages[-6:]  # 保留最近 3 轮对话
+    older = messages[:-6]
+
+    summary_response = call_llm(
+        model="claude-haiku-3-5",  # 用小模型做摘要，成本极低
+        messages=[
+            {"role": "user", "content": f"Summarize this conversation history in 3 sentences:\n{format_messages(older)}"}
+        ]
+    )
+
+    summary_message = {
+        "role": "system",
+        "content": f"[Earlier conversation summary]: {summary_response}"
+    }
+
+    return [summary_message] + recent
+```
+
+**LLMLingua 等工具**：学术界提出了基于小模型打分的 token 级别压缩方案（如微软的 LLMLingua），可在保留语义的前提下将 Prompt 压缩 3–20 倍，适合超长文档场景。
+
+## 批处理（Batch API）
+
+对于不需要实时返回的离线任务，批处理（Batch API）是最省力的降本手段。主流提供商的 Batch API 定价约为实时 API 的 50%，延迟换成本。
+
+适合批处理的典型场景：数据集标注、文章批量摘要、日志分析、离线推荐生成。
+
+```typescript
+interface BatchRequest {
+  customId: string;
+  model: string;
+  messages: Message[];
+  maxTokens: number;
+}
+
+async function batchProcess(articles: string[]): Promise<Map<string, string>> {
+  const requests: BatchRequest[] = articles.map((article, i) => ({
+    customId: `article-${i}`,
+    model: "claude-haiku-3-5",
+    messages: [{ role: "user", content: `Summarize in 2 sentences: ${article}` }],
+    maxTokens: 150,
   }));
 
-  // 提交批处理任务，异步等待结果
-  // 具体 API 以 OpenAI 官方文档为准
-  return submitBatch(requests);
+  // 提交批处理任务（异步，通常 1 小时内完成）
+  const batchId = await submitBatch(requests);
+
+  // 轮询或 Webhook 等待完成
+  const results = await pollBatchResults(batchId);
+
+  return new Map(results.map(r => [r.customId, r.content]));
 }
 ```
 
-## 策略六：RAG 替代 Long Context
+**注意**：批处理任务通常有 24 小时完成时限，并非所有模型都支持 Batch API。提交前确认任务对延迟不敏感。
 
-将知识库外部化，按需检索，而非每次把整个知识库塞进 Prompt：
+## 上下文裁剪（Context Pruning）
 
+多轮对话中，历史消息会随轮次线性累积，使每次调用的 Input token 成倍增长。上下文裁剪（Context Pruning）通过三种策略控制上下文窗口大小：
+
+**策略 A：滑动窗口（Sliding Window）**  
+保留最近 N 轮对话，丢弃更早的历史。实现简单，但可能丢失重要的早期上下文。
+
+**策略 B：重要性采样（Importance Sampling）**  
+对每条历史消息打分，优先保留用户明确提及的偏好、关键决策点和错误纠正。可用小模型或启发式规则打分。
+
+**策略 C：摘要替换（Summary Compression）**  
+如上文 Prompt 压缩层次三所示，定期将早期对话压缩为摘要，以摘要形式注入后续对话。这是多轮对话系统中最平衡质量与成本的策略。
+
+三种策略通常组合使用：滑动窗口作为硬性上限，重要性采样在窗口内决定保留哪些消息，摘要替换处理超出窗口的远古历史。
+
+## 成本优化链路总览
+
+```mermaid
+flowchart TD
+    A[用户请求] --> B{规则预筛\n关键词/长度}
+    B -->|简单规则命中| C[路由到小模型]
+    B -->|需要 LLM 分类| D[轻量分类器\nclaude-haiku]
+    D -->|Simple| C
+    D -->|Medium| E[中等模型]
+    D -->|Complex| F[强模型]
+
+    C --> G{语义缓存\n查询}
+    E --> G
+    F --> G
+
+    G -->|命中 ≥ 0.92| H[返回缓存结果\n0 token 成本]
+    G -->|未命中| I[Prompt 压缩\n去冗余 + 结构化]
+
+    I --> J{实时 or 离线?}
+    J -->|离线任务| K[Batch API\n50% 折扣]
+    J -->|实时请求| L[上下文裁剪\n滑动窗口 + 摘要]
+
+    L --> M[LLM 调用]
+    K --> M
+    M --> N[写入语义缓存]
+    N --> O[返回结果]
+    H --> O
+
+    style H fill:#d4edda,stroke:#28a745
+    style K fill:#cce5ff,stroke:#004085
+    style M fill:#fff3cd,stroke:#856404
 ```
-❌ 低效：system_prompt + 100页文档 + 用户问题 → 极长 context，每次都付完整费用
-✅ 高效：向量检索相关片段（Top-K）→ 只传 3-5 段相关内容
-```
 
-RAG 不仅减少 token，还能提升回答质量（减少无关信息干扰）。
+## 各策略横向对比
 
-## 成本监控：设置预算告警
+| 策略 | 实现难度 | 潜在节省幅度 | 延迟影响 | 质量风险 | 最适用场景 |
+|------|----------|-------------|----------|----------|-----------|
+| 模型路由 | 中 | 20%–60% | 轻微增加（分类延迟） | 低（需校验降级质量） | 请求类型多样的通用应用 |
+| 语义缓存 | 中高 | 10%–40% | 缓存命中时大幅降低 | 中（阈值设置不当有误答风险） | 高重复率的问答/客服系统 |
+| Prompt 压缩 | 低 | 10%–30% | 无影响 | 低 | 所有场景，优先实施 |
+| Batch API | 低 | 约 50% | 高（小时级延迟） | 无 | 离线数据处理、标注、分析 |
+| 上下文裁剪 | 中 | 30%–70% | 轻微增加（摘要计算） | 中（摘要可能丢失细节） | 多轮对话、长会话系统 |
+| Prompt Cache（原生） | 低 | 50%–90%（前缀部分） | 无 | 无 | 有固定长 System Prompt 的应用 |
 
-```ts
-interface CostAlert {
-  userId: string;
-  dailyBudget: number;  // USD
-  currentSpend: number;
-}
+## 常见误区
 
-async function checkBudget(alert: CostAlert): Promise<"ok" | "warning" | "exceeded"> {
-  const ratio = alert.currentSpend / alert.dailyBudget;
-  if (ratio >= 1.0) return "exceeded";
-  if (ratio >= 0.8) return "warning";  // 80% 时告警
-  return "ok";
-}
-```
+**误区一：只关注 Input token，忽视 Output token 成本**  
+Output token 的单价通常是 Input 的 3–5 倍。在 Prompt 中明确约束输出格式和长度（如"用 JSON 格式回答，不超过 200 字"），效果往往比压缩 System Prompt 更显著。
 
-在可观测平台（LangSmith / Langfuse）中设置成本指标告警，异常飙升时立即触发通知。
+**误区二：语义缓存阈值一次设定永不调整**  
+语义相似度阈值需要根据业务语料持续校准。初期设置 0.92 只是起点，应建立"缓存误命中率"监控指标，定期人工抽检，在高质量要求的场景下适当提高阈值。
 
-## 面试常问
+**误区三：对所有任务使用相同的模型路由规则**  
+不同业务模块的"复杂度"定义不同：电商客服里的退款问题可能是"简单"，但医疗问答里的相同词汇可能需要"强模型"处理。路由规则应按业务域分别配置，而非全局统一。
 
-**Q：如何在质量和成本间权衡？**
-核心是任务分层：通过启发式规则或轻量分类器判断任务复杂度，简单任务用小模型，只有真正需要强推理能力的任务才调用昂贵模型。同时建立评估基准，确认降级后质量仍在可接受范围内。
+**误区四：批处理适合所有非实时任务**  
+Batch API 通常有 1–24 小时的处理延迟，且并非所有模型都支持。在任务量不足时，批处理的管理开销（任务提交、状态轮询、结果拼接）可能超过节省的成本。建议单次批处理量超过 100 个请求时再考虑使用。
 
-**Q：Prompt Cache 是什么？**
-Prompt Cache 是提供商级别的缓存机制。当多次请求的 Prompt 前缀相同时（如相同的 System Prompt），提供商缓存前缀的 KV 计算结果，后续请求只需计算新增部分的 token，缓存命中的前缀部分费率大幅降低（有些低至原价的 10%）。Anthropic 和 OpenAI 均支持此功能，具体折扣比例以官方定价为准。
+**误区五：Prompt 压缩是一次性工作**  
+随着功能迭代，System Prompt 容易累积大量历史遗留描述。应将 Prompt 长度（token 数）纳入 CI 检测指标，在 Prompt 超过特定阈值时触发告警，定期审查和精简。
 
-**Q：Semantic Cache 的阈值如何设定？**
-阈值过高（如 0.99）几乎没有缓存命中；过低（如 0.8）可能返回语义相近但问题不同的答案。通常从 0.90~0.95 开始，结合业务场景和人工抽检逐步调整，并记录缓存命中率和错误率。
+## 最佳实践
+
+1. **先监控，后优化**：在任何优化之前，先接入可观测平台（如 Langfuse、LangSmith），建立每请求成本基线。没有数据就没有优化方向。
+
+2. **优先实施低风险策略**：Prompt 精简和结构化输出约束几乎零风险，应优先实施。语义缓存和模型路由需要充分测试才能上线。
+
+3. **为每个优化策略建立回滚机制**：模型路由降级可能导致质量下降，语义缓存可能出现误命中。每个策略都应支持通过配置开关快速关闭。
+
+4. **分阶段上线模型路由**：先在 10%–20% 的流量上灰度路由规则，观察质量指标（用户反馈、自动评估分数）无明显下降后再全量开放。
+
+5. **区分"省成本"和"省预算"**：某些策略（如语义缓存）需要额外的向量数据库基础设施投入，应计算净节省而非毛节省。ROI = (节省的 LLM 费用) / (新增基础设施费用 + 开发维护成本)。
+
+6. **输出长度约束与结构化输出结合使用**：`max_tokens` 设置硬上限，JSON Schema 约束格式，两者配合可以将 Output token 消耗降低 30%–50%，且通常不影响业务逻辑。
+
+## 面试常问要点
+
+**Q：如何系统性地降低 LLM 生产成本，从哪里入手？**  
+答：先接入可观测平台获取成本基线，分析成本结构（Input/Output 各占多少比例、哪些接口调用量最大）。通常按优先级：①Prompt 精简和输出约束（低风险、立竿见影）→ ②Prompt Cache 配置（对有长 System Prompt 的应用效果显著）→ ③模型分级路由（需评估）→ ④语义缓存（需向量基础设施）→ ⑤批处理（适合离线任务）。
+
+**Q：语义缓存和 Prompt Cache 有什么区别？**  
+答：Prompt Cache 是提供商原生功能，当多次请求的 Prompt 前缀完全相同时，提供商缓存 KV 计算结果，后续请求的前缀部分以折扣价计费（如 Anthropic 为原价的 10%），无需任何客户端改造。语义缓存是应用层实现，通过向量相似度匹配语义相近的历史请求，完全跳过 LLM 调用（成本为 0），但需要自建向量数据库，且存在误命中风险。两者互补：Prompt Cache 解决固定前缀的重复计算，语义缓存解决相似问题的重复调用。
+
+**Q：模型路由中如何保证降级后的质量？**  
+答：核心是建立自动化质量评估体系。具体做法：①在灰度阶段对同一批请求同时调用大模型和小模型，用大模型的输出作为 ground truth 评估小模型的输出质量；②建立任务维度的质量基准（如代码生成的编译通过率、问答的 BERTScore）；③设置质量告警阈值，当小模型在某类任务上质量下降超过 5% 时，自动回退到大模型。质量评估应该是持续运行的，而非一次性的上线审批。
+
+**Q：多轮对话中如何控制上下文成本增长？**  
+答：三种策略组合使用：①滑动窗口作为硬性上限（如保留最近 8 条消息）；②对超出窗口的早期消息用小模型生成摘要，以 system message 形式注入；③对消息按重要性评分（用户明确偏好、关键决策优先保留）。关键指标是"每轮对话平均 Input token 数"，应监控其是否随轮次线性增长，若增长说明裁剪策略未生效。

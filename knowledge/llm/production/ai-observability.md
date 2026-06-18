@@ -1,93 +1,303 @@
-LLM 应用上线后，调用链不透明、成本失控、质量无从评估是三大核心痛点。可观测性（Observability）让你能够回答"这次请求为什么慢"、"这条回答为什么差"、"上个月花了多少钱"。
+LLM 应用上线后，调用链不透明、成本失控、质量无从评估是三大核心痛点。可观测性（Observability）让你能够回答「这次请求为什么慢」「这条回答为什么差」「上个月花了多少钱」，是 AI 系统从实验走向生产的必要基础设施。
 
-## 为什么 AI 应用需要可观测性
+## 为什么 LLM 应用需要专门的可观测性
 
-传统 Web 应用的可观测性已经成熟，但 LLM 应用有其独特挑战：
+传统 Web 服务的可观测性三支柱——日志（Logs）、指标（Metrics）、链路追踪（Traces）——已有成熟工具链（Prometheus、Jaeger、OpenTelemetry）。但 LLM 应用有其特殊挑战，导致传统方案不足以应对：
 
-- **调用不透明**：一次用户请求可能触发多次 LLM 调用、工具调用、RAG 检索，中间链路难以追踪
-- **成本不可控**：token 计费模型下，单次 Agent 调用可能消耗数千 token，没有监控就无法发现异常
-- **质量难评估**：LLM 输出是自然语言，没有明确的"通过/失败"标准，需要专门的评估机制
-- **非确定性**：同样的输入可能产生不同输出，需要大量样本才能判断系统整体质量
+**非确定性输出**：同一个 Prompt 在不同时间可能产生截然不同的回答。没有明确的"通过/失败"断言，质量判断需要语义层面的评估，而非简单的状态码检查。
 
-## 核心观测维度
+**多步调用链**：一次用户请求可能触发意图识别、RAG 检索、多轮 LLM 调用、工具执行等十余个步骤。传统 APM 工具可以追踪 HTTP 调用延迟，但无法将 Prompt 内容、token 消耗、模型选择与最终输出质量关联起来。
 
-### Traces 与 Spans
+**以 token 计费的成本模型**：一次 Agent 循环可能消耗数千 token，单个异常请求可能带来数十倍成本放大。没有实时的 token 粒度监控，成本问题往往在月账单时才被发现。
 
-Trace 是一次完整请求的调用链，由多个 Span 组成。每个 Span 代表一个操作节点：
+**Prompt 迭代与回归**：修改一个 Prompt 可能在某类问题上提升效果，却在另一类问题上退步。需要系统化的评估闭环，而非依赖工程师的人工感知。
+
+### 与传统监控的核心差异
+
+| 维度 | 传统服务监控 | LLM 应用可观测性 |
+|------|-------------|----------------|
+| 核心关注点 | 延迟、错误率、吞吐量 | 上述指标 + token 消耗、输出质量、Prompt 版本 |
+| 成功判断标准 | HTTP 200、业务异常码 | 语义正确性、任务完成率、用户满意度 |
+| 调试方式 | 查日志、看堆栈 | 回放完整 Prompt、重现对话上下文 |
+| 成本单位 | 机器资源（CPU/内存） | 每次调用的 token 数量 × 模型单价 |
+| 质量保障 | 单元测试、集成测试 | 数据集评估、LLM-as-Judge、人工标注 |
+
+## 核心概念：Trace 与 Span 的层级结构
+
+LLM 可观测平台借鉴了分布式追踪的 Trace/Span 模型，并针对 LLM 做了扩展。
+
+**Trace（追踪）**：代表一次完整的用户请求生命周期，从用户输入到最终输出。每个 Trace 有全局唯一的 `trace_id`，可挂载元数据（userId、sessionId、环境标签等）。
+
+**Span（跨度）**：Trace 内的单个操作节点，记录起止时间和输入/输出。Span 之间可以形成父子关系，反映调用的嵌套结构。
+
+**Generation（生成，LLM 特有）**：Span 的特殊子类型，专门用于记录 LLM 调用，额外携带：
+- 模型名称与版本（model）
+- 输入 Prompt 与输出内容（input / output）
+- token 用量（prompt_tokens / completion_tokens / total_tokens）
+- 计算成本（cost，由平台根据模型单价换算）
+- 首 token 延迟（time_to_first_token，流式场景关键指标）
+
+### LLM 特有的关键指标
+
+| 指标 | 含义 | 监控价值 |
+|------|------|---------|
+| P50/P95 TTFT | Time to First Token 的分位数 | 流式体验的感知延迟 |
+| Token/请求 | 每次调用的平均 token 消耗 | 成本趋势、Prompt 效率 |
+| Cost/会话 | 每个对话的平均费用 | 按用户/功能拆分成本 |
+| 错误率 | LLM 调用失败或超时比例 | 稳定性基线 |
+| 评分分布 | 自动或人工评估分数分布 | 输出质量趋势 |
+| 工具调用次数 | Agent 单次运行的平均工具调用轮数 | 识别失控的 Agent 循环 |
+
+### 一次 Agent 调用的完整 Trace 结构
+
+```mermaid
+sequenceDiagram
+    participant U as 用户
+    participant T as Trace (agent-run)
+    participant S1 as Span: intent-classify
+    participant G1 as Generation: llm-plan
+    participant S2 as Span: rag-retrieval
+    participant G2 as Generation: llm-answer
+    participant S3 as Span: tool-search
+
+    U->>T: 用户输入 query
+    T->>S1: 意图识别
+    S1-->>T: intent=Q&A
+    T->>G1: 规划步骤 (LLM 调用)
+    Note over G1: model=gpt-4o<br/>tokens=320/180
+    G1-->>T: plan=[retrieve, answer]
+    T->>S2: RAG 向量检索
+    S2-->>T: docs × 5
+    T->>S3: 工具调用 web-search
+    S3-->>T: search results
+    T->>G2: 生成最终回答 (LLM 调用)
+    Note over G2: model=gpt-4o<br/>tokens=1240/520<br/>cost=$0.0088
+    G2-->>T: answer text
+    T-->>U: 返回最终回答
+```
 
 ```mermaid
 graph TD
-  A[用户请求 Trace] --> B[意图识别 Span]
-  A --> C[RAG 检索 Span]
-  A --> D[LLM 调用 Span]
-  D --> E[Tool Call: search Span]
-  D --> F[Tool Call: calculator Span]
-  A --> G[回复生成 Span]
+    TR["🔷 Trace: agent-run<br/>duration=4.2s | cost=$0.011"]
+    S1["Span: intent-classify<br/>200ms"]
+    G1["Generation: llm-plan<br/>model=gpt-4o | 320+180 tokens"]
+    S2["Span: rag-retrieval<br/>380ms | top-k=5"]
+    S3["Span: tool-search<br/>1200ms"]
+    G2["Generation: llm-answer<br/>model=gpt-4o | 1240+520 tokens"]
+
+    TR --> S1
+    TR --> G1
+    TR --> S2
+    TR --> S3
+    TR --> G2
 ```
 
-每个 Span 记录：开始/结束时间、输入输出、token 用量、错误信息。
+## LangSmith：LangChain 官方可观测平台
 
-### 关键指标定义
+LangSmith 由 LangChain 团队开发，与 LangChain / LangGraph 生态深度集成，是使用 LangChain 技术栈时的默认选择。
 
-| 指标 | 含义 | 典型监控方式 |
-|------|------|-------------|
-| P50/P95 延迟 | 50%/95% 请求的响应时间 | 直方图统计 |
-| Token/请求 | 每次请求的平均 token 消耗 | 累计求平均 |
-| Cost/会话 | 每个用户会话的平均成本 | token 数 × 单价 |
-| 错误率 | LLM 调用失败 / 超时比例 | 计数器 |
-| 评分分布 | 用户反馈 / 自动评估分数 | 评分直方图 |
+### 架构要点
 
-## LangSmith
+LangSmith 采用 SaaS 优先的架构，数据上报到 `api.smith.langchain.com`。企业版支持私有化部署（Self-Hosted），底层使用 ClickHouse 存储追踪数据，PostgreSQL 存储元数据。
 
-LangSmith 是 LangChain 官方可观测平台，与 LangChain / LangGraph 深度集成。
+核心模块：
+- **Tracing**：自动或手动捕获调用链
+- **Datasets & Evaluation**：构建测试数据集，批量运行评估实验
+- **Prompt Hub**：中央化 Prompt 版本管理
+- **Playground**：在 UI 上交互式调试 Prompt
 
-**核心特性：**
-- 自动追踪 LangChain 链路，零代码侵入（设置环境变量即可）
-- 支持构建数据集，批量运行评估（Evaluation）
-- 内置 Prompt Hub，管理和版本化 Prompt
-- 支持人工标注与 LLM-as-Judge 自动评估
+### Python SDK 接入（自动追踪 LangChain）
 
-**快速接入（LangChain 项目）：**
+使用 LangChain 的项目只需设置环境变量，框架会自动 hook 所有 LLM 调用：
 
-```ts
-// 设置环境变量即可，无需修改业务代码
-process.env.LANGCHAIN_TRACING_V2 = "true";
-process.env.LANGCHAIN_API_KEY = "your-api-key";
-process.env.LANGCHAIN_PROJECT = "my-project";
+```python
+import os
+os.environ["LANGCHAIN_TRACING_V2"] = "true"
+os.environ["LANGCHAIN_API_KEY"] = "ls__your_api_key"
+os.environ["LANGCHAIN_PROJECT"] = "production-agent"
 
-// 之后所有 LangChain 调用自动上报
+from langchain_openai import ChatOpenAI
+from langchain_core.prompts import ChatPromptTemplate
+
+# 以下所有调用自动上报到 LangSmith，无需修改业务逻辑
+llm = ChatOpenAI(model="gpt-4o")
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "你是一个专业的技术问答助手"),
+    ("user", "{question}"),
+])
+chain = prompt | llm
+result = chain.invoke({"question": "什么是 RAG？"})
 ```
 
-## Langfuse
+对于非 LangChain 代码，使用 `@traceable` 装饰器手动标注：
 
-Langfuse 是开源可观测平台，支持任意 LLM 框架，可自托管（Docker / Kubernetes）。
+```python
+from langsmith import traceable, Client
 
-**核心特性：**
-- 框架无关：支持 OpenAI、Anthropic、LangChain、自定义 HTTP 调用
-- 完整开源，可部署在自有基础设施（数据不出域）
-- 支持 Prompt 版本管理、A/B 测试
-- 内置评分系统（人工标注 + 自动评分）
+client = Client()
 
-**TypeScript 集成骨架**（以 Langfuse SDK 为例，以官方文档为准）：
+@traceable(name="rag-retrieval", run_type="retriever")
+def retrieve_documents(query: str) -> list[dict]:
+    # 向量检索逻辑
+    return vector_store.similarity_search(query, k=5)
 
-```ts
+@traceable(name="llm-generate", run_type="llm")
+def generate_answer(question: str, context: str) -> str:
+    response = openai_client.chat.completions.create(
+        model="gpt-4o",
+        messages=[
+            {"role": "system", "content": f"基于以下上下文回答：{context}"},
+            {"role": "user", "content": question},
+        ]
+    )
+    return response.choices[0].message.content
+
+@traceable(name="qa-pipeline")
+def qa_pipeline(question: str) -> str:
+    docs = retrieve_documents(question)
+    context = "\n".join(d["content"] for d in docs)
+    return generate_answer(question, context)
+```
+
+### TypeScript SDK 接入
+
+```typescript
+import { Client, traceable } from "langsmith";
+
+const client = new Client({
+  apiKey: process.env.LANGCHAIN_API_KEY,
+});
+
+// 使用 wrapOpenAI 自动追踪 OpenAI 调用
+import OpenAI from "openai";
+import { wrapOpenAI } from "langsmith/wrappers";
+
+const openai = wrapOpenAI(new OpenAI());
+
+// 手动创建 run tree 管理复杂链路
+import { RunTree } from "langsmith";
+
+async function agentRun(userInput: string) {
+  const rt = new RunTree({
+    name: "agent-run",
+    run_type: "chain",
+    inputs: { userInput },
+  });
+
+  const retrievalRt = await rt.createChild({
+    name: "rag-retrieval",
+    run_type: "retriever",
+    inputs: { query: userInput },
+  });
+  const docs = await retrieveDocuments(userInput);
+  await retrievalRt.end({ outputs: { docs } });
+  await retrievalRt.postRun();
+
+  const llmRt = await rt.createChild({
+    name: "llm-generate",
+    run_type: "llm",
+    inputs: { messages: [{ role: "user", content: userInput }] },
+  });
+  const response = await openai.chat.completions.create({
+    model: "gpt-4o",
+    messages: [{ role: "user", content: userInput }],
+  });
+  await llmRt.end({ outputs: { response } });
+  await llmRt.postRun();
+
+  await rt.end({ outputs: { answer: response.choices[0].message.content } });
+  await rt.postRun();
+}
+```
+
+## Langfuse：开源框架无关的可观测平台
+
+Langfuse 完全开源（MIT 协议），架构上将前端 UI、后端 API、数据存储完全解耦，支持 Docker Compose 一键自托管，是数据主权要求高（金融、医疗、政府）场景的首选。
+
+### 架构要点
+
+Langfuse 服务端架构：
+- **Ingestion API**：接收 SDK 上报的追踪数据，支持批量写入
+- **PostgreSQL**：存储 Trace、Span、Generation 元数据
+- **ClickHouse**（可选，生产推荐）：存储高频写入的事件流，支持 OLAP 分析查询
+- **S3/MinIO**（可选）：大体积 Prompt/输出内容的对象存储
+
+核心功能：
+- **Observations**：Trace 下的 Span 和 Generation 统称 Observation
+- **Scores（评分）**：可在任意 Observation 上打分，支持 numeric / boolean / categorical 类型
+- **Prompt Management**：版本化 Prompt，支持 A/B 测试流量分配
+- **Datasets**：构建测试集，运行 Dataset Runs（评估实验）
+
+### Python SDK 接入
+
+```python
+from langfuse import Langfuse
+from langfuse.decorators import observe, langfuse_context
+
+langfuse = Langfuse(
+    public_key="pk-lf-...",
+    secret_key="sk-lf-...",
+    host="https://cloud.langfuse.com",  # 或自托管地址
+)
+
+# @observe 装饰器自动创建 Trace/Span，层级由调用栈决定
+@observe(name="qa-pipeline")
+def qa_pipeline(question: str) -> str:
+    docs = retrieve_documents(question)
+    answer = generate_answer(question, docs)
+    
+    # 在当前 span 上记录额外元数据
+    langfuse_context.update_current_observation(
+        metadata={"doc_count": len(docs)},
+        tags=["production", "v2"],
+    )
+    return answer
+
+@observe(name="rag-retrieval")
+def retrieve_documents(query: str) -> list[dict]:
+    return vector_store.similarity_search(query, k=5)
+
+@observe(name="llm-generate", as_type="generation")
+def generate_answer(question: str, docs: list[dict]) -> str:
+    context = "\n".join(d["page_content"] for d in docs)
+    response = openai_client.chat.completions.create(
+        model="gpt-4o",
+        messages=[
+            {"role": "system", "content": f"上下文：{context}"},
+            {"role": "user", "content": question},
+        ],
+    )
+    # 上报 token 用量
+    langfuse_context.update_current_observation(
+        usage={
+            "input": response.usage.prompt_tokens,
+            "output": response.usage.completion_tokens,
+        },
+        model="gpt-4o",
+    )
+    return response.choices[0].message.content
+```
+
+### TypeScript SDK 接入
+
+```typescript
 import Langfuse from "langfuse";
 
 const langfuse = new Langfuse({
-  publicKey: "pk-...",
-  secretKey: "sk-...",
-  baseUrl: "https://cloud.langfuse.com", // 或自托管地址
+  publicKey: process.env.LANGFUSE_PUBLIC_KEY!,
+  secretKey: process.env.LANGFUSE_SECRET_KEY!,
+  baseUrl: process.env.LANGFUSE_HOST ?? "https://cloud.langfuse.com",
 });
 
-async function handleUserQuery(userId: string, query: string) {
-  // 创建 Trace
+async function handleUserQuery(userId: string, query: string): Promise<string> {
   const trace = langfuse.trace({
     name: "user-query",
     userId,
     input: { query },
+    tags: ["production"],
   });
 
-  // 创建 Span：RAG 检索
+  // RAG 检索 Span
   const retrievalSpan = trace.span({
     name: "rag-retrieval",
     input: { query },
@@ -95,78 +305,177 @@ async function handleUserQuery(userId: string, query: string) {
   const docs = await retrieveDocuments(query);
   retrievalSpan.end({ output: { docCount: docs.length } });
 
-  // 创建 Generation：LLM 调用
+  // LLM 调用 Generation（记录 token 消耗和成本）
   const generation = trace.generation({
-    name: "llm-call",
+    name: "llm-answer",
     model: "gpt-4o",
-    input: [{ role: "user", content: query }],
+    modelParameters: { temperature: 0.7, maxTokens: 1024 },
+    input: [
+      { role: "system", content: buildSystemPrompt(docs) },
+      { role: "user", content: query },
+    ],
   });
-  const response = await callLLM(query, docs);
+
+  const response = await openai.chat.completions.create({
+    model: "gpt-4o",
+    messages: [
+      { role: "system", content: buildSystemPrompt(docs) },
+      { role: "user", content: query },
+    ],
+  });
+
+  const answer = response.choices[0].message.content ?? "";
   generation.end({
-    output: response.content,
+    output: answer,
     usage: {
-      promptTokens: response.usage.input_tokens,
-      completionTokens: response.usage.output_tokens,
+      promptTokens: response.usage?.prompt_tokens,
+      completionTokens: response.usage?.completion_tokens,
+      totalTokens: response.usage?.total_tokens,
     },
   });
 
-  // 更新 Trace 输出
-  trace.update({ output: { answer: response.content } });
+  trace.update({ output: { answer } });
 
-  // 确保数据上报
+  // 确保所有事件在进程退出前已上报
   await langfuse.flushAsync();
-  return response.content;
+  return answer;
+}
+
+// 事后打分（如用户点赞/踩，或 LLM-as-Judge 结果）
+async function scoreTrace(traceId: string, score: number) {
+  await langfuse.score({
+    traceId,
+    name: "user-feedback",
+    value: score,        // 0.0 ~ 1.0
+    comment: "thumbs up",
+  });
 }
 ```
 
-## LangSmith vs Langfuse 对比
+## LangSmith vs Langfuse 深度对比
 
 | 维度 | LangSmith | Langfuse |
 |------|-----------|----------|
-| 开源性 | 商业闭源（有免费层） | 完全开源（Apache 2.0） |
-| 自托管 | 企业版支持 | 官方支持，文档完善 |
-| 集成方式 | 与 LangChain 深度集成，也支持通用 SDK | 框架无关，SDK 覆盖主流语言 |
-| 评估功能 | 数据集评估、Prompt Playground | 评分系统、人工标注、LLM-as-Judge |
-| Prompt 管理 | Prompt Hub，支持版本化 | Prompt 版本管理，支持 A/B 测试 |
-| 适用场景 | LangChain 技术栈为主 | 任意框架，数据主权要求高 |
+| 开源协议 | 商业闭源（客户端 SDK 开源） | 完全开源（MIT） |
+| 自托管 | 企业版支持（需购买许可） | 官方 Docker Compose，文档完善 |
+| 数据主权 | SaaS 默认数据上传至 LangChain 服务器 | 自托管时数据完全在本地 |
+| LangChain 集成 | 原生零配置，环境变量即可 | 需要额外配置 LangChain Callback |
+| 非 LangChain 框架 | 支持，但体验不如原生 | 框架无关，SDK 覆盖全面 |
+| Prompt 管理 | Prompt Hub，支持版本化 + 共享 | 版本化 + A/B 测试流量分配 |
+| 评估功能 | 数据集 + Evaluator（内置多种） | Dataset Runs + 自定义评分函数 |
+| LLM-as-Judge | 内置，支持多种评估标准 | 支持，需自行定义评估 Prompt |
+| 价格模型 | 按 Trace 数量计费，有免费层 | 开源免费，Cloud 版按用量计费 |
+| 适用团队规模 | 中小团队，LangChain 技术栈 | 企业级，数据合规要求高 |
+| 社区活跃度 | LangChain 生态背书 | 独立开源社区，增长快速 |
 
-## 多步 Agent 调用链追踪
+**选型建议**：技术栈以 LangChain 为主且无数据主权要求，选 LangSmith 体验更丝滑；有私有化部署需求或使用多种 LLM 框架，选 Langfuse；两者 API 风格相近，迁移成本不高。
 
-Agent 执行时，调用链可能涉及多轮 LLM 调用和工具调用。正确的追踪姿势是将所有操作挂载到同一个 Trace 下：
+## 评估闭环（Evaluation Loop）
 
-```ts
-async function runAgent(userInput: string) {
-  const trace = langfuse.trace({ name: "agent-run", input: { userInput } });
+可观测性的最终价值不是看仪表盘，而是驱动持续改进。生产级评估闭环分为四个阶段：
 
-  let step = 0;
-  while (true) {
-    const thinkSpan = trace.span({ name: `think-step-${step}` });
-    const decision = await llmDecide(userInput);
-    thinkSpan.end({ output: decision });
-
-    if (decision.action === "finish") break;
-
-    const toolSpan = trace.span({ name: `tool-${decision.tool}` });
-    const toolResult = await executeTool(decision.tool, decision.args);
-    toolSpan.end({ output: toolResult });
-
-    step++;
-  }
-
-  await langfuse.flushAsync();
-}
+```mermaid
+flowchart LR
+    A["线上采样\nOnline Sampling"] --> B["数据集构建\nDataset Building"]
+    B --> C["离线评估\nOffline Evaluation"]
+    C --> D["回归对比\nRegression Analysis"]
+    D -->|"发现退步"| E["Prompt / 模型修复"]
+    E --> A
+    D -->|"确认改进"| F["发布新版本"]
+    F --> A
 ```
 
-## 面试常问
+**第一阶段：线上采样**。不可能对所有生产流量做评估，通常按以下策略采样：
+- 随机采样（5%~10% 流量）保证统计代表性
+- 错误优先采样：低置信度、用户负反馈、耗时异常的请求优先纳入
+- 覆盖率采样：确保不同 intent 类别均有代表
 
-**Q：如何追踪多步 Agent 调用链？**
-将整个 Agent 运行绑定到一个 Trace，每次 LLM 调用和工具调用创建子 Span，并记录完整的输入/输出。关键是保持 trace_id 在整个执行过程中的一致性，方便在可观测平台上还原完整调用路径。
+**第二阶段：数据集构建**。将采样到的 Trace 转化为 `(input, expected_output)` 对，形成有标注的 Golden Dataset。Langfuse 支持直接从 Trace 创建 Dataset Item；LangSmith 同样支持从 Run 添加到 Dataset。
 
-**Q：如何评估 LLM 输出质量？**
-主要有三种方式：
-1. **人工标注**：成本高但准确，适合构建黄金数据集
-2. **LLM-as-Judge**：用另一个强模型（如 GPT-4）对输出打分，需注意偏差问题
-3. **确定性断言**：对结构化输出验证格式、关键字段是否存在
+**第三阶段：离线评估**。在 CI/CD 流水线中，对每次 Prompt 变更或模型切换运行 Dataset Evaluation：
 
-**Q：可观测性数据如何存储和查询？**
-Trace 数据通常存储在时序数据库或列存储中，配合可观测平台的查询界面。自托管 Langfuse 使用 PostgreSQL + ClickHouse，前者存元数据，后者做分析查询。
+```python
+# 使用 LangSmith 运行数据集评估
+from langsmith import Client
+from langsmith.evaluation import evaluate
+
+client = Client()
+
+def qa_target(inputs: dict) -> dict:
+    """被评估的目标函数"""
+    answer = qa_pipeline(inputs["question"])
+    return {"answer": answer}
+
+def correctness_evaluator(run, example) -> dict:
+    """自定义评估函数"""
+    score = llm_judge(
+        question=example.inputs["question"],
+        expected=example.outputs["expected_answer"],
+        actual=run.outputs["answer"],
+    )
+    return {"key": "correctness", "score": score}
+
+results = evaluate(
+    qa_target,
+    data="golden-dataset-v3",          # Dataset 名称
+    evaluators=[correctness_evaluator],
+    experiment_prefix="gpt-4o-v2-prompt",
+)
+```
+
+**第四阶段：回归对比**。将新实验结果与基准实验对比，关注：
+- 整体平均分变化（是否显著高于基准）
+- 分类别明细（避免某类问题退步被平均数掩盖）
+- 成本变化（新 Prompt 是否导致 token 消耗增加）
+
+## 常见误区
+
+**误区一：把 LangSmith/Langfuse 当纯日志工具**。很多团队只接入了 Tracing，从未使用 Dataset 和 Evaluation 功能。可观测性的核心价值是评估闭环，不是存日志。
+
+**误区二：追踪粒度太粗**。只在顶层创建一个 Trace，内部没有 Span 拆分。当出现延迟问题时，无法定位是 RAG 慢还是 LLM 慢，调试价值大打折扣。
+
+**误区三：忘记调用 flush**。SDK 通常异步批量上报数据。服务端应用（如 Serverless 函数）如果进程在 flush 之前退出，会丢失追踪数据。必须在请求结束前显式调用 `flushAsync()`。
+
+**误区四：在 Span 输入里记录敏感数据**。用户的手机号、身份证号等 PII 数据不应直接记录到 Trace 中。应在上报前脱敏，或配置字段过滤规则。
+
+**误区五：只看平均值，不看分位数**。P95/P99 延迟往往才是用户体验的真实反映。LLM 调用存在明显长尾效应（偶发性的重试或超长生成），仅看 P50 会漏掉严重的慢请求。
+
+**误区六：LLM-as-Judge 的偏差问题**。使用 GPT-4 评估 GPT-4 的输出，存在自我偏好（self-preference）问题。应混合人工标注校验 LLM-as-Judge 的评分质量，或使用与目标模型不同厂商的模型做评估。
+
+## 最佳实践
+
+**命名规范统一**：Span 名称采用 `{功能}-{操作}` 格式（如 `rag-retrieval`、`llm-plan`），便于跨项目聚合查询。Trace 名称反映业务场景（如 `customer-support-qa`），而非技术实现。
+
+**打标签（Tags）区分环境**：生产、预发、开发的 Trace 应打不同标签，避免测试流量污染生产评估数据。
+
+**关联用户 ID 和会话 ID**：在 Trace 上记录 `userId` 和 `sessionId`，支持按用户维度分析成本和质量，并能在出现投诉时快速还原完整会话。
+
+**设置成本告警**：基于 token 消耗的告警规则（如单 Trace cost 超过 $0.1 触发告警），及早发现 Agent 失控循环。
+
+**Prompt 变更必须跑评估**：将 Dataset Evaluation 纳入 CI 流程，Prompt 变更的 PR 必须附上评估报告，并与基准实验的分数对比后才允许合并。
+
+**定期更新 Golden Dataset**：生产数据分布会随时间漂移，每季度至少从线上流量重新采样更新数据集，避免评估结果脱离现实。
+
+**离线评估与在线监控结合**：离线评估验证变更安全性，在线监控（用户反馈率、自动质量评分）反映真实用户体验。两者配合，形成双重质量保障。
+
+## 面试常问要点
+
+**Q：LLM 应用可观测性与传统 APM 有什么本质区别？**
+
+传统 APM 关注确定性系统：延迟、错误率、吞吐量，用状态码判断成功与否。LLM 应用的核心挑战是非确定性输出和语义质量评估——请求没有报错，但回答质量差，传统工具无法感知。此外，LLM 应用以 token 计费，需要额外的成本维度监控。
+
+**Q：Trace 和 Span 的关系是什么？如何在 Agent 中正确使用？**
+
+Trace 是一次完整请求的根节点，Span 是其中的子操作节点，两者形成树状层级结构。Agent 中应将整个运行周期绑定到一个 Trace，每次 LLM 调用和工具调用创建子 Span（Generation 类型），通过 `parent_id` 维持层级关系。关键是全程传递同一个 `trace_id`，包括跨服务调用场景。
+
+**Q：如何实现评估闭环？**
+
+四步：线上采样（策略性抽取有代表性的请求）→ 数据集构建（标注期望输出，形成 Golden Dataset）→ 离线评估（CI 中对每次变更运行评估，使用 LLM-as-Judge 或确定性评估函数）→ 回归对比（新实验与基准对比，确认无退步后才发布）。
+
+**Q：LangSmith 和 Langfuse 如何选择？**
+
+主要看三个维度：技术栈（LangChain 为主选 LangSmith，框架无关选 Langfuse）、数据主权要求（有私有化部署需求选 Langfuse 开源版）、团队规模（小团队 SaaS 免费层足够，企业级考虑自托管和许可费用）。
+
+**Q：如何避免 Token 消耗失控？**
+
+三个层面：一是接入可观测平台，设置单 Trace 成本告警阈值；二是在 Agent 设计上限制最大工具调用轮数（max_iterations）；三是定期分析 token 消耗分布，识别高消耗的请求类型（如上下文过长的会话），针对性优化 Prompt 或上下文压缩策略。
