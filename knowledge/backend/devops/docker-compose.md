@@ -1,176 +1,309 @@
-Docker Compose 用一个 YAML 文件声明式地定义和管理多容器应用，一条命令启动整个开发环境（应用服务 + 数据库 + 缓存 + 消息队列），告别"十步启动教程"。
+Docker Compose 用一个 YAML 文件声明式地定义和管理多容器应用，一条命令启动整个本地开发环境（Agent API + Redis + PostgreSQL + 向量数据库），告别"十步启动教程"。对于 AI/Agent 工程师来说，Compose 是本地调试多服务 Agent 系统的标准工具。
 
-## 核心概念
+## 定位：本地开发与测试的多容器编排
 
-- **Service（服务）**：Compose 管理的基本单元，对应一个容器类型（可多副本）。
-- **Network（网络）**：Compose 默认为每个项目创建独立网络，同项目服务通过**服务名**直接互通（如 `postgres:5432`）。
-- **Volume（数据卷）**：持久化数据，数据库数据存在 volume 中，容器重建不丢失。
+Docker Compose 的核心价值在于**本地开发和集成测试**，而不是生产部署。它解决的问题是：一个 Agent 系统往往依赖多个基础服务（LLM 代理、任务队列、向量检索、关系存储），手动逐一启动和配置既繁琐又容易出错。
 
-## 典型配置示例
+| 场景 | 推荐方案 |
+|------|---------|
+| 本地开发 / CI 集成测试 | Docker Compose |
+| 单机生产部署 | Docker Compose（有限场景）+ 手动备份 |
+| 多机生产 / 高可用 | Kubernetes / 云托管服务 |
 
-以 Node.js API + PostgreSQL + Redis 为例：
+## compose.yaml 核心字段
+
+Compose V2 推荐使用 `compose.yaml`（或 `compose.yml`），不再需要 `version` 字段。
 
 ```yaml
-# docker-compose.yml
-version: '3.9'
+# compose.yaml 顶层字段结构
+services:       # 必填：每个服务的配置
+networks:       # 可选：自定义网络（默认自动创建 bridge 网络）
+volumes:        # 可选：命名 volume，持久化数据
+configs:        # 可选：只读配置文件注入
+secrets:        # 可选：敏感数据注入
+```
 
+核心服务字段：
+
+| 字段 | 作用 |
+|------|------|
+| `image` / `build` | 指定镜像或构建上下文 |
+| `ports` | 宿主机:容器端口映射 |
+| `environment` / `env_file` | 环境变量注入 |
+| `depends_on` | 声明启动顺序与条件 |
+| `healthcheck` | 定义服务就绪探针 |
+| `volumes` | 挂载目录或命名卷 |
+| `networks` | 加入指定网络 |
+| `restart` | 容器退出后的重启策略 |
+
+## 完整示例：Agent 服务栈
+
+以 Node.js Agent API + Redis（任务队列）+ PostgreSQL（业务数据）+ Qdrant（向量数据库）为例：
+
+```yaml
+# compose.yaml
 services:
-  # ---- 应用服务 ----
-  api:
+  # ---- Agent API 服务 ----
+  agent-api:
     build:
       context: .
       dockerfile: Dockerfile
-      target: runner          # 多阶段构建指定 stage
+      target: dev              # 多阶段构建，开发 stage
     ports:
       - "3000:3000"
+    env_file:
+      - .env                   # 从 .env 文件加载所有变量
     environment:
       NODE_ENV: development
-      DATABASE_URL: postgresql://pguser:pgpass@postgres:5432/mydb
-      REDIS_URL: redis://redis:6379
+      DATABASE_URL: postgresql://pguser:pgpass@postgres:5432/agentdb
+      REDIS_URL: redis://:redispass@redis:6379
+      QDRANT_URL: http://qdrant:6333
     depends_on:
       postgres:
-        condition: service_healthy  # 等 postgres 健康检查通过再启动
+        condition: service_healthy
       redis:
-        condition: service_started
+        condition: service_healthy
+      qdrant:
+        condition: service_healthy
     volumes:
-      - ./src:/app/src           # 挂载源码，开发时热更新
+      - ./src:/app/src          # 挂载源码，支持热重载
     networks:
-      - app-net
+      - agent-net
     restart: unless-stopped
 
-  # ---- PostgreSQL ----
+  # ---- PostgreSQL：业务数据存储 ----
   postgres:
     image: postgres:16-alpine
     environment:
       POSTGRES_USER: pguser
       POSTGRES_PASSWORD: pgpass
-      POSTGRES_DB: mydb
+      POSTGRES_DB: agentdb
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql  # 初始化脚本
+      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U pguser -d mydb"]
+      test: ["CMD-SHELL", "pg_isready -U pguser -d agentdb"]
       interval: 5s
       timeout: 5s
       retries: 5
+      start_period: 10s
     networks:
-      - app-net
+      - agent-net
 
-  # ---- Redis ----
+  # ---- Redis：任务队列与缓存 ----
   redis:
     image: redis:7-alpine
     command: redis-server --requirepass redispass --appendonly yes
     volumes:
       - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "redispass", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
     networks:
-      - app-net
+      - agent-net
+
+  # ---- Qdrant：向量数据库 ----
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports:
+      - "6333:6333"            # REST API
+      - "6334:6334"            # gRPC
+    volumes:
+      - qdrantdata:/qdrant/storage
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:6333/healthz || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    networks:
+      - agent-net
 
 volumes:
   pgdata:
   redisdata:
+  qdrantdata:
 
 networks:
-  app-net:
+  agent-net:
     driver: bridge
 ```
 
-## 常用命令
+## 服务依赖关系图
 
-```bash
-# 启动所有服务（-d 后台，--build 强制重新构建镜像）
-docker compose up -d --build
+```mermaid
+graph TD
+    A[agent-api<br/>:3000] -->|DATABASE_URL| B[(postgres<br/>:5432)]
+    A -->|REDIS_URL| C[(redis<br/>:6379)]
+    A -->|QDRANT_URL| D[(qdrant<br/>:6333)]
 
-# 查看所有服务状态
-docker compose ps
+    B -->|healthcheck<br/>pg_isready| B
+    C -->|healthcheck<br/>redis-cli ping| C
+    D -->|healthcheck<br/>curl /healthz| D
 
-# 查看某服务日志（-f 实时跟踪）
-docker compose logs -f api
-
-# 进入某服务容器
-docker compose exec api sh
-
-# 停止并删除容器（保留 volume 和 image）
-docker compose down
-
-# 停止并删除容器 + volume（谨慎：数据库数据会丢失）
-docker compose down -v
-
-# 只重启某个服务
-docker compose restart api
-
-# 扩展服务副本数
-docker compose up -d --scale api=3
+    style A fill:#4A90D9,color:#fff
+    style B fill:#336791,color:#fff
+    style C fill:#DC382D,color:#fff
+    style D fill:#FF6B35,color:#fff
 ```
 
-## 开发与生产环境分离
-
-不同环境共享基础配置，用 override 文件覆盖差异项：
-
-```yaml
-# docker-compose.override.yml（开发专用，自动加载）
-services:
-  api:
-    build:
-      target: base           # 开发 stage，含 devDependencies
-    command: pnpm dev        # 热更新命令
-    volumes:
-      - .:/app               # 挂载整个项目目录
-    environment:
-      NODE_ENV: development
-      DEBUG: "app:*"
-```
-
-```yaml
-# docker-compose.prod.yml（生产，需手动指定）
-services:
-  api:
-    image: registry.cn-hangzhou.aliyuncs.com/myapp/api:${TAG}
-    deploy:
-      replicas: 2
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 512M
-    environment:
-      NODE_ENV: production
-```
-
-```bash
-# 生产启动（合并基础 + 生产配置）
-docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
-```
-
-## 健康检查与依赖顺序
-
-`depends_on` 只保证容器**启动顺序**，不保证服务就绪。配合 `healthcheck` 确保下游服务真正可用：
-
-```yaml
-healthcheck:
-  test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
-  interval: 10s
-  timeout: 5s
-  retries: 3
-  start_period: 30s  # 容器启动后等待 30s 再开始健康检查
-```
+`agent-api` 在三个依赖服务全部通过 healthcheck 后才会启动，避免了连接失败导致的启动崩溃。
 
 ## 环境变量管理
 
+### .env 文件与 env_file 指令
+
 ```bash
-# .env 文件（同目录自动加载，不提交 Git）
+# .env（同目录自动加载，不提交 Git，加入 .gitignore）
 POSTGRES_PASSWORD=secret123
 REDIS_PASSWORD=redispass
+OPENAI_API_KEY=sk-xxxx
 TAG=v1.2.3
 ```
 
 ```yaml
-# docker-compose.yml 中引用
-environment:
-  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+# 方式一：env_file 批量加载
+services:
+  agent-api:
+    env_file:
+      - .env
+      - .env.local             # 可叠加多个文件，后者覆盖前者
+
+# 方式二：environment 单独声明，引用 .env 中的变量
+services:
+  agent-api:
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      NODE_ENV: development    # 直接写死不依赖 .env
 ```
 
-## 面试常问
+`env_file` 将文件中所有键值对注入容器；`environment` 优先级更高，可以覆盖 `env_file` 中的同名变量。
 
-- **`depends_on` 能保证服务启动完毕吗**：不能，只保证容器启动顺序。应用需要自行实现重试逻辑（如 `wait-for-it.sh` 脚本或 healthcheck + condition）。
-- **开发和生产为什么分开 Compose 文件**：开发环境挂载源码、暴露调试端口、使用 devDependencies；生产环境用已构建镜像、不暴露多余端口、配置资源限制。
-- **`docker compose down -v` 的风险**：会删除 named volumes，数据库数据永久丢失，生产环境严禁随意执行。
-- **服务间如何通信**：同一 Compose 网络内，服务通过**服务名**作为 hostname 互相访问（如 `postgres:5432`），无需知道 IP。
+## 服务间通信：DNS 服务名发现
+
+Compose 为同一项目下的所有服务创建共享网络，**服务名自动作为 hostname** 注册到内置 DNS，无需知道容器 IP：
+
+```javascript
+// agent-api 代码中直接使用服务名
+const redisClient = createClient({ url: 'redis://:redispass@redis:6379' });
+const pgPool = new Pool({ host: 'postgres', port: 5432, database: 'agentdb' });
+const qdrantClient = new QdrantClient({ url: 'http://qdrant:6333' });
+```
+
+宿主机访问容器服务需要通过映射的 `ports`（如 `localhost:6333`），容器之间则通过服务名直接通信。
+
+## Volume 挂载：开发热重载 vs 生产数据持久化
+
+```yaml
+volumes:
+  # 开发：挂载宿主机目录实现热重载（bind mount）
+  - ./src:/app/src             # 源码改动实时同步进容器
+
+  # 生产：命名卷持久化数据（named volume）
+  - pgdata:/var/lib/postgresql/data   # 容器重建数据不丢失
+
+  # 只读配置注入（:ro 标记）
+  - ./nginx.conf:/etc/nginx/nginx.conf:ro
+```
+
+bind mount 的路径以 `./` 或 `/` 开头，named volume 直接写卷名。开发环境挂载整个项目目录时注意排除 `node_modules`（在 Dockerfile 中单独处理，或使用匿名卷覆盖）。
+
+## depends_on + healthcheck 保证启动顺序
+
+`depends_on` 有两种模式：
+
+```yaml
+depends_on:
+  postgres:
+    condition: service_started    # 仅等容器启动（默认）
+  redis:
+    condition: service_healthy    # 等 healthcheck 通过（推荐）
+  migrations:
+    condition: service_completed_successfully  # 等一次性任务完成
+```
+
+`healthcheck` 配置要点：
+
+```yaml
+healthcheck:
+  test: ["CMD-SHELL", "pg_isready -U pguser"]  # 探针命令，非零退出码=不健康
+  interval: 5s        # 检查间隔
+  timeout: 5s         # 单次超时
+  retries: 5          # 连续失败 5 次后标记 unhealthy
+  start_period: 10s   # 容器启动后的宽限期，期间失败不计入 retries
+```
+
+## 常用命令速查
+
+```bash
+# 启动所有服务（-d 后台运行，--build 强制重新构建镜像）
+docker compose up -d --build
+
+# 只启动指定服务及其依赖
+docker compose up -d agent-api
+
+# 查看所有服务状态
+docker compose ps
+
+# 实时跟踪某服务日志
+docker compose logs -f agent-api
+
+# 进入运行中的容器
+docker compose exec agent-api sh
+
+# 停止并删除容器（保留 volume 和镜像）
+docker compose down
+
+# 停止并删除容器 + volume（⚠️ 数据库数据会丢失）
+docker compose down -v
+
+# 只重启某个服务（不重建镜像）
+docker compose restart agent-api
+
+# 水平扩展服务副本
+docker compose up -d --scale agent-api=3
+
+# 查看服务配置的最终合并结果（调试 override 文件）
+docker compose config
+```
+
+## Compose V2 vs V1
+
+| 对比项 | V1（docker-compose） | V2（docker compose） |
+|--------|---------------------|---------------------|
+| 命令格式 | `docker-compose up` | `docker compose up`（空格） |
+| 安装方式 | 独立 Python 包 | Docker Desktop 内置插件 |
+| 配置文件 | `docker-compose.yml` | `compose.yaml`（推荐）/ `compose.yml` |
+| `version` 字段 | 必填（`'3.9'` 等） | 废弃，不再需要 |
+| 性能 | 较慢 | 更快，Go 实现 |
+| 维护状态 | 已停止维护 | 当前官方版本 |
+
+现在应该统一使用 `docker compose`（V2），`docker-compose`（V1）已于 2023 年停止维护。
+
+---
+
+## 常见误区 / 最佳实践 / 面试要点
+
+### 常见误区
+
+- **误区：生产环境直接用 Compose 部署多实例服务**。Compose 没有跨主机调度、自动故障转移和负载均衡能力。多副本场景应使用 Kubernetes、Docker Swarm 或云托管服务（如 Cloud Run、ECS）。
+- **误区：不配置 healthcheck，只用 `depends_on: service_started`**。`service_started` 只等容器进程启动，数据库初始化可能需要数秒，此时连接必然失败。必须配合 healthcheck 使用 `condition: service_healthy`。
+- **误区：把 `.env` 文件提交到 Git**。`.env` 通常含有数据库密码和 API Key，必须加入 `.gitignore`，用 `.env.example` 提供模板。
+- **误区：开发时挂载 `./:/app` 后 node_modules 被宿主机目录覆盖**。正确做法是在 `volumes` 中额外添加 `- /app/node_modules` 匿名卷，让容器内的 node_modules 不被覆盖。
+
+### 最佳实践
+
+- 使用 `compose.yaml`（V2 格式），去掉 `version` 字段，服务都配置 healthcheck。
+- 敏感变量通过 `.env` 注入，代码库只保留 `.env.example`。
+- 开发/生产配置用 override 文件分离：`compose.yaml`（基础）+ `compose.override.yaml`（开发自动加载）+ `compose.prod.yaml`（生产手动指定）。
+- 数据库等有状态服务始终使用 named volume，不用 bind mount 存储数据。
+
+### 面试要点
+
+- **`depends_on` 能保证服务就绪吗**：不能，只保证容器启动顺序。需配合 `healthcheck` + `condition: service_healthy` 才能保证下游服务真正可用。
+- **服务间如何互相访问**：同一 Compose 网络内，服务通过服务名作为 hostname 直接通信（如 `postgres:5432`），Docker 内置 DNS 负责解析，无需知道 IP。
+- **Compose V1 和 V2 的主要区别**：命令从 `docker-compose` 变为 `docker compose`，配置文件从 `docker-compose.yml` 变为 `compose.yaml`，`version` 字段废弃，V2 由 Go 实现性能更好。
+- **Volume bind mount 和 named volume 的区别**：bind mount 映射宿主机目录，适合开发热重载；named volume 由 Docker 管理，适合生产数据持久化，容器重建后数据不丢失。
+- **`docker compose down -v` 的风险**：会同时删除 named volumes，数据库数据永久丢失，生产环境严禁随意执行。

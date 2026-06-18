@@ -1,202 +1,336 @@
-数据工程中 80% 的时间都花在读写和清洗数据上，选错格式会让后续处理付出数倍代价。
+在 AI 工程链路中，数据格式的选择直接影响训练速度、推理吞吐和 RAG 系统的检索质量。一个训练集如果用低效格式存储，加载本身就可能成为 GPU 利用率的瓶颈；一个 RAG 流水线如果格式转换不当，可能在向量化前悄悄截断文本或丢失元数据。JSON、CSV、Parquet 是 AI 数据工程中最高频出现的三种格式，弄清它们的内部机制、适用场景和陷阱，是 Agent 工程师必备的基础技能。
 
-## JSON
+## JSON：灵活但有代价
 
-JSON 是最通用的文本格式，Python 内置 `json` 模块即可处理，无需安装依赖。它是自描述的（字段名随数据一起存储）、人类可读、跨语言通用，特别适合表达嵌套和层级结构，因此成为 Web API 的事实标准。代价是体积偏大、没有内置类型系统（数字、日期都以文本表达，需自行约定），不适合存储海量结构化数据。
+JSON（JavaScript Object Notation）是 LLM 应用中最常见的数据交换格式。Agent 的 Tool Call 返回值、RAG 文档的元数据、多轮对话历史，几乎无处不在。
 
-### 基本用法
+### 标准库 vs 高性能库
+
+Python 标准库 `json` 模块功能完备但速度有限。当需要处理百万级 JSON 记录时，应考虑替代方案：
+
+```python
+import json
+import ujson     # pip install ujson
+import orjson    # pip install orjson
+
+data = {"messages": [{"role": "user", "content": "你好"}], "tokens": 12}
+
+# 标准库
+text = json.dumps(data, ensure_ascii=False)
+obj  = json.loads(text)
+
+# ujson：速度约为标准库的 3-5x，API 兼容
+text = ujson.dumps(data, ensure_ascii=False)
+
+# orjson：速度约为标准库的 5-10x，dumps 返回 bytes
+text = orjson.dumps(data)               # bytes
+obj  = orjson.loads(text)               # 接受 bytes/str
+```
+
+性能对比（单条 1KB JSON，百万次操作）：
+
+| 库 | dumps | loads | 特点 |
+|---|---|---|---|
+| json (stdlib) | 基准 1x | 基准 1x | 无依赖，随处可用 |
+| ujson | ~4x | ~3x | API 兼容，C 扩展 |
+| orjson | ~8x | ~6x | 最快，支持 dataclass/datetime/numpy |
+
+**工程建议**：对话历史缓存、工具调用序列化用 `orjson`；对外 API 接口、配置文件用标准库，保证最大兼容性。
+
+### 复杂嵌套结构的处理
+
+LLM 的 Function Calling 返回往往是深层嵌套结构。用 `jmespath` 提取比手写多层索引更健壮：
+
+```python
+import jmespath  # pip install jmespath
+
+response = {
+    "choices": [{
+        "message": {
+            "tool_calls": [{
+                "function": {"name": "search", "arguments": '{"query": "AI"}'}
+            }]
+        }
+    }]
+}
+
+# 安全提取，避免 KeyError
+name = jmespath.search("choices[0].message.tool_calls[0].function.name", response)
+# → "search"
+```
+
+## JSON Lines：LLM 微调数据集的事实标准
+
+JSON Lines（`.jsonl`）格式是每行一个独立 JSON 对象，没有外层数组括号。它之所以成为 LLM 训练/微调数据集的标准格式，有三个关键原因：
+
+1. **流式友好**：可以逐行读取，无需把整个文件载入内存
+2. **追加安全**：新数据直接 `append`，不破坏已有内容
+3. **工具链支持**：Hugging Face `datasets`、OpenAI 微调 API、LLaMA-Factory 全部原生支持 `.jsonl`
 
 ```python
 import json
 
-# 从字符串解析
-data = json.loads('{"name": "Alice", "age": 30}')
+# 写入 JSONL（微调数据集，Alpaca 风格）
+samples = [
+    {"instruction": "翻译成英文", "input": "你好世界", "output": "Hello World"},
+    {"instruction": "写一首诗", "input": "", "output": "春风送暖入屠苏..."},
+]
 
-# 序列化为字符串
-text = json.dumps(data, ensure_ascii=False, indent=2)
+with open("train.jsonl", "w", encoding="utf-8") as f:
+    for sample in samples:
+        f.write(json.dumps(sample, ensure_ascii=False) + "\n")
 
-# 文件读写
-with open("data.json", "r", encoding="utf-8") as f:
-    data = json.load(f)
-
-with open("output.json", "w", encoding="utf-8") as f:
-    json.dump(data, f, ensure_ascii=False, indent=2)
+# 流式读取（大文件场景，避免 OOM）
+def iter_jsonl(path):
+    with open(path, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                yield json.loads(line)
 ```
 
-### 处理特殊类型
+OpenAI 微调 API 要求的 Chat 格式 JSONL，每行一条对话：
 
-`json` 模块不支持 `datetime`、`Decimal`、`numpy` 类型，需要自定义编码器：
-
-```python
-import json
-from datetime import datetime
-from decimal import Decimal
-
-class CustomEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, datetime):
-            return obj.isoformat()
-        if isinstance(obj, Decimal):
-            return float(obj)
-        return super().default(obj)
-
-data = {"ts": datetime.now(), "price": Decimal("9.99")}
-print(json.dumps(data, cls=CustomEncoder))
+```json
+{"messages": [{"role": "system", "content": "你是助手"}, {"role": "user", "content": "问题"}, {"role": "assistant", "content": "答案"}]}
+{"messages": [{"role": "user", "content": "另一个问题"}, {"role": "assistant", "content": "另一个答案"}]}
 ```
 
-### 常见陷阱
+## CSV：简单背后的陷阱
 
-- `ensure_ascii=True`（默认）会把中文转义为 `\uXXXX`，读起来正常但文件体积膨胀；写文件时务必加 `ensure_ascii=False`
-- 嵌套层级深的 JSON 用 `json.loads` 解析时全部载入内存，遇到 GB 级文件应改用流式解析（`ijson` 库）
-- JSON 不支持注释，也不支持尾随逗号，从配置文件手工复制粘贴时容易引入语法错误
+CSV（Comma-Separated Values）看起来最简单，却是实际工程中踩坑最多的格式。
 
----
-
-## CSV
-
-CSV 是表格数据的最小公分母，几乎所有工具都支持，但细节问题最多。
-
-### csv 模块 vs pandas
+### 编码陷阱与引号转义
 
 ```python
 import csv
-
-# 标准库写法，适合流式处理大文件
-with open("data.csv", "r", encoding="utf-8-sig", newline="") as f:
-    reader = csv.DictReader(f)
-    for row in reader:
-        print(row["name"])
-
-# pandas，适合分析和转换
 import pandas as pd
 
+# 标准库写 CSV：正确处理引号与换行
+rows = [
+    ["id", "text", "label"],
+    [1, 'He said "hello"', "positive"],   # 含双引号
+    [2, "line1\nline2", "neutral"],        # 含换行
+    [3, "中文内容，带逗号", "neutral"],    # 含分隔符
+]
+
+with open("data.csv", "w", newline="", encoding="utf-8-sig") as f:
+    # utf-8-sig 添加 BOM，Excel 打开不乱码
+    writer = csv.writer(f, quoting=csv.QUOTE_MINIMAL)
+    writer.writerows(rows)
+
+# pandas 读取时的关键参数
 df = pd.read_csv(
     "data.csv",
-    encoding="utf-8-sig",   # 处理 Windows 导出的 BOM 头
-    dtype={"id": str},       # 防止长数字 ID 被转为 float
-    na_values=["N/A", "-"],  # 自定义空值标记
+    encoding="utf-8-sig",
+    dtype={"id": str},          # 防止前导零被吞掉
+    na_values=["", "NULL", "N/A"],
+    keep_default_na=False,
 )
 ```
 
-### 编码与引号转义
+**常见陷阱**：
+- 不指定 `newline=""` 写 CSV 会导致 Windows 下出现空行
+- Excel 默认 GBK 编码，读取 UTF-8 文件必须加 BOM 或显式指定编码
+- 字段内含逗号/换行未正确引用，会导致列偏移
+- 18 位数字 ID 被 pandas 推断为 `float64` 后精度丢失，必须用 `dtype` 显式指定为 `str`
 
-```python
-# 写 CSV 时处理含逗号的字段
-with open("output.csv", "w", encoding="utf-8", newline="") as f:
-    writer = csv.writer(f, quoting=csv.QUOTE_MINIMAL)
-    writer.writerow(["name", "address"])
-    writer.writerow(["Alice", "Beijing, Chaoyang"])  # 自动加引号
-```
+### csv 模块 vs pandas
 
-### 常见陷阱
+| 场景 | 推荐方案 | 原因 |
+|---|---|---|
+| 文件 < 100MB，需要分析 | `pandas.read_csv` | API 丰富，类型推断 |
+| 文件 > 1GB | `csv` 模块逐行读取 | 避免 OOM |
+| 生成供 Excel 查看的报告 | `pandas` + `utf-8-sig` | BOM 保证兼容性 |
+| 与外部系统交换结构化数据 | `csv` 模块 | 无额外依赖 |
 
-- 不传 `newline=""` 打开文件会导致 Windows 上每行多一个空行
-- Excel 导出的 CSV 默认 GBK 编码，用 `utf-8-sig` 读可以兼容 BOM
-- 数字型 ID（如 18 位身份证号）被 pandas 自动推断为 `float64` 后精度丢失，必须用 `dtype` 指定为 `str`
+## Parquet：AI 数据工程的基石
 
----
-
-## Parquet
-
-Parquet 是列式存储格式，专为大规模数据分析设计，Hadoop/Spark 生态的标配。
+Parquet 是 Apache 开源的列式存储格式，是大规模 AI 数据集存储的首选。Hugging Face Hub 上绝大多数数据集都以 Parquet 分发。
 
 ### 列式存储原理
 
-行式存储（CSV/JSON）把同一行的所有字段放在一起；列式存储把同一列的所有值放在一起。当查询只涉及少数几列时，列式存储可以跳过其他列的 I/O，同时同类型数据放在一起压缩比更高。
+行式存储（CSV/JSON）按行将数据写在一起；列式存储（Parquet）将同一列的所有值连续存放：
 
 ```
-行式（CSV）：[id,name,age] [id,name,age] [id,name,age] ...
-列式（Parquet）：[id,id,id,...] [name,name,name,...] [age,age,age,...]
+行式存储（CSV）：
+[id=1, name="Alice", age=25] [id=2, name="Bob", age=30] ...
+
+列式存储（Parquet）：
+[id: 1, 2, 3, ...] [name: "Alice", "Bob", ...] [age: 25, 30, ...]
 ```
 
-### pyarrow 读写
+当查询只需要 `name` 列时，列式存储可以跳过所有其他列的 IO。同列数据类型相同，还能用 Run-Length Encoding、字典编码等专门算法大幅压缩。
+
+### 读写与分区
 
 ```python
 import pandas as pd
-import pyarrow as pa
 import pyarrow.parquet as pq
 
-# 写 Parquet
-df = pd.DataFrame({"id": [1, 2, 3], "name": ["a", "b", "c"]})
-pq.write_table(pa.Table.from_pandas(df), "data.parquet", compression="snappy")
+df = pd.DataFrame({
+    "doc_id": range(1000),
+    "text":   ["文档内容..." for _ in range(1000)],
+    "source": ["wiki"] * 500 + ["arxiv"] * 500,
+})
 
-# 读全量
-df2 = pd.read_parquet("data.parquet", engine="pyarrow")
+# 基础写法
+df.to_parquet("docs.parquet", engine="pyarrow", compression="snappy")
 
-# 只读指定列（列裁剪，节省 I/O）
-df3 = pd.read_parquet("data.parquet", columns=["id"])
+# 分区写法（按 source 分区，查询时可跳过无关分区）
+df.to_parquet(
+    "docs_partitioned/",
+    engine="pyarrow",
+    partition_cols=["source"],
+    compression="zstd",   # zstd 压缩率高于 snappy，推荐用于归档
+)
 
-# 读 Parquet 目录（Hive 分区）
-dataset = pq.ParquetDataset("data_dir/", filters=[("date", "=", "2024-01-01")])
-df4 = dataset.read_pandas().to_pandas()
+# 只读需要的列（列剪枝，Column Pruning）
+df_text = pd.read_parquet("docs.parquet", columns=["doc_id", "text"])
+
+# 读取分区数据集，自动按 filter 过滤
+df_wiki = pd.read_parquet(
+    "docs_partitioned/",
+    filters=[("source", "=", "wiki")],
+)
+
+# 流式批量读取，适合超大文件
+parquet_file = pq.ParquetFile("docs.parquet")
+for batch in parquet_file.iter_batches(batch_size=256, columns=["doc_id", "text"]):
+    df_batch = batch.to_pandas()
+    # 处理每批...
 ```
 
-### 为什么适合大数据
+**压缩算法选择**：
 
-- 内置 Snappy/ZSTD 等压缩，同等数据量比 CSV 体积小 3–10 倍
-- 支持谓词下推（Predicate Pushdown），读取时在存储层过滤，减少传输量
-- 保存 schema 信息，不会丢失列类型（CSV 每次读都要重新推断类型）
+| 算法 | 压缩率 | 速度 | 推荐场景 |
+|---|---|---|---|
+| snappy | 中 | 最快 | 频繁读写的热数据 |
+| zstd | 高 | 快 | 归档、冷数据 |
+| gzip | 高 | 慢 | 与外部系统兼容 |
+| uncompressed | 无 | 最快 | 调试、内存映射 |
 
----
+## 格式对比总览
 
-## 三种格式对比
+| 维度 | JSON | JSONL | CSV | Parquet |
+|---|---|---|---|---|
+| 存储方式 | 行式（嵌套） | 行式（流式） | 行式（扁平） | 列式 |
+| 可读性 | 高 | 高 | 高 | 低（二进制） |
+| 压缩率 | 低 | 低 | 低 | 高（3-10x） |
+| 流式读取 | 困难 | 原生支持 | 支持 | 支持（按列批次） |
+| 类型保真 | 中（无日期类型） | 中 | 低（全字符串） | 高（强类型） |
+| 嵌套结构 | 原生支持 | 原生支持 | 不支持 | 有限支持（struct） |
+| AI 训练数据集 | 小规模配置 | 标准格式 | 不推荐 | 大规模首选 |
+| RAG 文档存储 | 适合（含元数据） | 适合 | 仅纯文本 | 适合大规模 |
+| Agent 工具调用 | 标准格式 | 不适用 | 不适用 | 不适用 |
 
-| 维度 | JSON | CSV | Parquet |
-|------|------|-----|---------|
-| 数据结构 | 嵌套/任意 | 扁平表格 | 扁平表格 |
-| 可读性 | 高 | 高 | 二进制，不可直读 |
-| 压缩比 | 低 | 低 | 高（3–10x） |
-| 读取速度（大文件） | 慢 | 中 | 快（列裁剪） |
-| Schema 保留 | 否 | 否 | 是 |
-| 嵌套支持 | 原生 | 不支持 | 有限支持 |
-| 典型场景 | API 响应、配置、日志 | 报表导出、小数据集 | 数仓、离线分析、ML 特征 |
-| 生态支持 | 全平台 | 全平台 | Spark/Pandas/Arrow |
+## AI 数据流格式选型决策树
 
----
+```mermaid
+flowchart TD
+    A[需要存储/传输数据] --> B{数据结构类型}
+    B -->|嵌套/结构化| C{数据规模}
+    B -->|扁平表格| D{数据规模}
 
-## JSONL：AI 数据集的通用格式
+    C -->|小于 10MB，需要可读| E[JSON]
+    C -->|任意规模，逐条处理| F[JSONL]
+    C -->|大于 100MB，分析查询| G[Parquet]
 
-JSONL（JSON Lines）每行是一个独立的 JSON 对象，文件扩展名为 `.jsonl` 或 `.ndjson`。
+    D -->|与外部系统交换| H[CSV]
+    D -->|内部存储 / 分析| G
+
+    E -->|LLM 微调数据集| F
+    F -->|预处理后入向量库| I[向量 + Parquet 元数据]
+    G -->|特征工程后训练| J[Parquet 分区存储]
+
+    style E fill:#f9f,stroke:#333
+    style F fill:#f9f,stroke:#333
+    style G fill:#bbf,stroke:#333
+    style I fill:#bfb,stroke:#333
+    style J fill:#bfb,stroke:#333
+```
+
+## AI/RAG 场景格式链路
+
+一个典型的 RAG 系统，每个阶段都有最优的格式选择：
 
 ```python
-# 写 JSONL
-records = [{"prompt": "你好", "response": "你好！"}, {"prompt": "再见", "response": "再见！"}]
-with open("dataset.jsonl", "w", encoding="utf-8") as f:
-    for rec in records:
-        f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+import json
+import pandas as pd
+import pyarrow.parquet as pq
 
-# 读 JSONL（流式，不全量载入内存）
-with open("dataset.jsonl", "r", encoding="utf-8") as f:
-    for line in f:
-        line = line.strip()
-        if line:
-            rec = json.loads(line)
-            print(rec["prompt"])
+# 阶段 1：原始数据收集 → JSONL（流式写入，不怕中断）
+with open("raw_docs.jsonl", "a", encoding="utf-8") as f:
+    doc = {
+        "id": "doc_001",
+        "text": "文档正文...",
+        "source": "arxiv",
+        "created_at": "2024-01-15",
+    }
+    f.write(json.dumps(doc, ensure_ascii=False) + "\n")
+
+# 阶段 2：清洗 + 分块 → Parquet（持久化中间结果，节省重复计算）
+chunks = []
+for doc in iter_jsonl("raw_docs.jsonl"):
+    for i, chunk in enumerate(split_text(doc["text"], size=512)):
+        chunks.append({
+            "chunk_id": f"{doc['id']}_chunk_{i}",
+            "doc_id":   doc["id"],
+            "text":     chunk,
+            "source":   doc["source"],
+        })
+
+pd.DataFrame(chunks).to_parquet("chunks.parquet", compression="zstd")
+
+# 阶段 3：向量化 → 从 Parquet 流式批量读取，控制内存占用
+parquet_file = pq.ParquetFile("chunks.parquet")
+for batch in parquet_file.iter_batches(batch_size=256, columns=["chunk_id", "text"]):
+    df_batch = batch.to_pandas()
+    embeddings = embed_model.encode(df_batch["text"].tolist())
+    vector_db.upsert(ids=df_batch["chunk_id"].tolist(), vectors=embeddings)
 ```
 
-JSONL 在 LLM 微调（SFT）数据集中几乎是标准格式（OpenAI fine-tuning API、Hugging Face datasets 均支持），原因有三：可流式读取、便于 `wc -l` 统计条数、追加写入不破坏已有数据。
+核心原则：**写入用 JSONL（流式安全），中间态用 Parquet（压缩+类型+可查询），接口传输用 JSON（通用兼容）**。
 
----
+## 常见误区
 
-## 常见问题与面试要点
+**误区 1：JSON 适合存储大规模数据集**。JSON 没有列式压缩，100GB 的 JSON 文件用 Parquet 存储通常只需 10-20GB，且查询速度快 10 倍以上。大规模数据集请用 Parquet，不要用 JSON 数组文件。
 
-**Q：CSV 和 JSON 数据量大了该怎么办？**
-超过几百 MB 的表格数据应转为 Parquet；如果是日志类嵌套 JSON，可以先用 pandas `json_normalize` 展平后存 Parquet。
+**误区 2：CSV 类型安全**。CSV 所有列本质上都是字符串，`1`、`"1"`、`01` 读进来可能被推断成不同类型。用 Pandas 读 CSV 后必须检查 `df.dtypes`，必要时显式指定 `dtype` 参数，尤其是 ID 类字段。
 
-**Q：如何判断 CSV 的编码？**
-用 `chardet` 或 `charset-normalizer` 库检测：`chardet.detect(open("f","rb").read(10000))`，再传给 `encoding` 参数。
+**误区 3：JSONL 和 JSON 可以混用**。`.jsonl` 文件不能直接用 `json.load()` 解析（会报错），必须逐行处理。反过来，`.json` 文件也不能用 JSONL 阅读器逐行读取。两者是不同的格式，文件首字节是 `[` 则是 JSON 数组，是 `{` 则通常是 JSONL。
 
-**Q：Parquet 文件如何分区？**
-```python
-pq.write_to_dataset(table, root_path="output/", partition_cols=["year", "month"])
-```
-分区后查询时可按目录过滤，避免全量扫描。
+**误区 4：Parquet 不支持追加写入**。标准 Parquet 文件确实不支持原地追加，但"多文件分区目录"完全可以：每批数据写一个新文件，查询时 `pd.read_parquet("dir/")` 自动合并所有分区。
 
-**Q：fastparquet vs pyarrow 怎么选？**
-优先 `pyarrow`：与 Arrow 内存格式直接互转，速度更快，兼容性更好；`fastparquet` 在某些 Dask 场景下仍有使用。
+**误区 5：`ensure_ascii=True` 是安全的默认值**。默认值虽然不会报错，但会把所有中文转义为 `\uXXXX`，文件体积膨胀约 3 倍，可读性极差。AI 工程中涉及中文数据时，永远加 `ensure_ascii=False`。
 
-**面试高频考点：**
-- 列式存储为什么压缩比高（同质数据、字典编码、Run-Length Encoding）
-- `json.loads` 与 `json.load` 的区别（字符串 vs 文件对象）
-- CSV `newline=""` 的必要性
-- JSONL 相比 JSON 数组的流式处理优势
+## 最佳实践
+
+- **LLM 微调数据集**：始终用 `.jsonl`，保留完整元数据字段，用 `json.dumps(ensure_ascii=False)` 保留 Unicode；验证时用 `wc -l` 快速统计条数
+- **大规模特征/文档存储**：用 Parquet + `zstd` 压缩，按时间或类别分区，读取时用 `columns` 参数做列剪枝（Column Pruning）
+- **CSV 跨系统交换**：写入时加 BOM（`utf-8-sig`），用 `csv.QUOTE_MINIMAL` 最小化引号，读取时显式指定 `dtype`，不依赖自动类型推断
+- **Agent 工具调用序列化**：用 `orjson` 提速，用 `jmespath` 安全提取深层字段，避免裸 `dict["key"]["key"]` 链式访问
+- **格式转换大文件**：Parquet → JSONL 用 `iter_batches` 流式转换，避免一次性 `to_dict('records')` 撑爆内存
+- **Hugging Face 数据集上传**：推送前转为 Parquet，Hub 会自动生成列统计、数据预览和 SQL 查询界面
+
+## 面试常问
+
+**Q：JSON 和 JSONL 的区别是什么？各自适合什么场景？**
+
+JSON 是一个完整文档（对象或数组），必须全量解析；JSONL 每行一个独立 JSON 对象，天然支持流式读取和追加写入。JSON 适合配置文件、API 响应；JSONL 是 LLM 训练/微调数据集的事实标准。
+
+**Q：为什么 Parquet 在 AI 数据工程中比 CSV 更受欢迎？**
+
+四点核心优势：(1) 列式存储只读需要的列，IO 减少数倍；(2) 内置强类型系统，不存在 CSV 的类型推断问题；(3) 压缩率高（通常 3-10x），存储成本低；(4) 支持谓词下推（Predicate Pushdown），查询时自动跳过无关分区。
+
+**Q：`orjson` 相比标准 `json` 库有什么优势？有什么限制？**
+
+优势：序列化速度快 5-10 倍，原生支持 `datetime`、`numpy` 数组、Python `dataclass`，无需自定义 Encoder。限制：`dumps` 返回 `bytes` 而非 `str`（需 `.decode()` 转换）；不支持 `cls` 参数（改用 `default` 回调）。
+
+**Q：处理含中文的 CSV 文件时，如何保证 Excel 正确打开？**
+
+写入时使用 `encoding="utf-8-sig"`，在文件头部添加 UTF-8 BOM（Byte Order Mark），Excel 读到 BOM 会识别为 UTF-8，而不是系统默认的 GBK 编码。
+
+**Q：Parquet 列式存储为什么压缩率高？**
+
+同一列的值类型相同，重复值多，天然适合字典编码（Dictionary Encoding）和游程编码（Run-Length Encoding，RLE）。例如 `source` 列只有 `"wiki"`/`"arxiv"` 两种值，RLE 可以把 500 个连续相同值压缩成一条记录，而行式存储无法利用这一规律。

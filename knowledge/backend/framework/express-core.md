@@ -1,217 +1,349 @@
-Express 是 Node.js 生态中使用最广泛的 Web 框架，以极简的设计著称——核心不过几千行代码，通过中间件和路由系统提供扩展能力。理解其内部原理，有助于写出更健壮的应用，并在选型时做出正确判断。
+Express 是 Node.js 生态中历史最悠久、使用最广泛的 Web 框架，以"最小化、无主见（unopinionated）"为设计哲学——核心只提供路由和中间件管道，不强制约定目录结构、ORM 或任何业务逻辑组织方式。理解其内部运行机制，有助于写出更健壮的应用，也是面试中被频繁考察的知识点。
 
-## 路由系统：Router、Layer 与 Route
+## 请求生命周期总览
 
-Express 的路由由三层结构组成：
+```mermaid
+flowchart LR
+    Client -->|HTTP Request| App["app\n(Application-level\nmiddlewares)"]
+    App --> Router["Router\n(express.Router())"]
+    Router --> MW["Route Middleware\n(router-level)"]
+    MW --> Handler["Route Handler\n(req, res, next)"]
+    Handler -->|调用 next(err)| ErrMW["Error Middleware\n(err, req, res, next)"]
+    Handler -->|res.send/json/end| Client
+    ErrMW --> Client
 
-```
-Application
-  └── Router（主路由器）
-        ├── Layer（/users, GET）  → Route
-        │                              └── Layer（处理函数）
-        ├── Layer（/users/:id, GET）→ Route
-        └── Layer（中间件函数，无路径绑定）
-```
-
-- **Router**：路由容器，维护一个 `stack: Layer[]` 数组，请求进来时依次匹配
-- **Layer**：对路径和处理函数的封装，持有编译后的路径正则
-- **Route**：具体路由对象，一个 Route 可以绑定多个 HTTP 方法的处理函数
-
-```typescript
-import express, { Router } from 'express';
-
-const router = Router();
-
-// router.get() 内部：创建 Route，再在 Route 上绑定 GET 处理函数
-// router.stack 中添加一个指向该 Route 的 Layer
-router.get('/users', (req, res) => {
-  res.json([]);
-});
-
-// 同一路径不同方法，使用 Route 链式调用
-router.route('/users/:id')
-  .get((req, res) => res.json({ id: req.params.id }))
-  .put((req, res) => res.json({ updated: true }))
-  .delete((req, res) => res.status(204).send());
+    style ErrMW fill:#f96,stroke:#c00
 ```
 
-## 中间件管道执行
+请求进入 Express 后依次经过：Application-level 中间件 → Router 匹配 → Router-level 中间件 → Route Handler。任何环节调用 `next(err)` 都会跳过剩余普通中间件，直接进入最近的错误处理中间件。
 
-Express 中间件本质上是一个函数 `(req, res, next) => void`，所有中间件和路由处理函数都挂载在同一个 `stack` 数组上，按注册顺序依次执行。
+## 中间件类型详解
 
-```typescript
-import express from 'express';
-const app = express();
+Express 的中间件本质是一个函数 `(req, res, next) => void`，按注册顺序串联为管道。
 
-// 全局中间件：每个请求都会经过
-app.use(express.json());
-
-// 路径匹配中间件
-app.use('/api', (req, res, next) => {
-  console.log('API request:', req.path);
-  next(); // 不调用 next() 则请求在此终止
-});
-
-// 路由处理
-app.get('/api/hello', (req, res) => {
-  res.send('Hello');
-});
-
-// 如果没有路由匹配，最终到达 404 处理
-app.use((req, res) => {
-  res.status(404).json({ error: 'Not Found' });
-});
-```
-
-**执行机制**：Express 遍历 `stack`，对每个 Layer 测试路径是否匹配。匹配则调用处理函数，不匹配则跳过继续遍历。`next()` 触发遍历向前推进。
-
-## req/res 的 prototype 扩展
-
-Express 通过原型链扩展了 Node.js 原生的 `IncomingMessage` 和 `ServerResponse`，提供了更多便捷方法：
-
-- `req.params`、`req.query`、`req.body`（body-parser 注入）
-- `res.json()`、`res.status()`、`res.send()`、`res.redirect()`
-
-这意味着你可以在 Express 应用启动前修改原型来全局扩展 req/res：
-
-```typescript
-import express, { Request, Response } from 'express';
-
-// 在 TypeScript 中扩展类型声明
-declare global {
-  namespace Express {
-    interface Request {
-      userId?: number;
-    }
-  }
-}
-
-// 扩展请求对象的实际行为
-const app = express();
-
-app.use((req, res, next) => {
-  // 解析 JWT 后将 userId 挂在 req 上
-  req.userId = parseTokenUserId(req.headers.authorization);
-  next();
-});
-
-app.get('/profile', (req: Request, res: Response) => {
-  res.json({ userId: req.userId });
-});
-```
-
-## 错误处理中间件：四参数签名
-
-Express 通过函数参数个数来区分普通中间件和错误处理中间件——当函数有 **4 个参数** `(err, req, res, next)` 时，Express 将其识别为错误处理中间件。
+### 应用级中间件（Application-level）
 
 ```typescript
 import express, { Request, Response, NextFunction } from 'express';
 const app = express();
 
-// 业务路由
-app.get('/data', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const data = await fetchData();
-    res.json(data);
-  } catch (err) {
-    next(err); // 将错误传递给错误处理中间件
-  }
-});
+// 无路径过滤：每个请求都经过
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// 错误处理中间件必须放在所有路由之后
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.error(err.stack);
-  res.status(500).json({
-    error: err.message || 'Internal Server Error',
-  });
+// 带路径前缀：仅匹配 /api/* 的请求
+app.use('/api', (req: Request, res: Response, next: NextFunction) => {
+  console.log(`[API] ${req.method} ${req.path}`);
+  next(); // 必须调用，否则请求挂起
 });
 ```
 
-注意：**异步路由中的错误必须手动 `next(err)`**，Express 4 不会自动捕获 async 函数中的 rejected Promise（Express 5 改进了这一点）。
-
-## Router 挂载与子应用
-
-Express 支持将 Router 作为独立模块挂载，实现路由的模块化组织：
+### 路由级中间件（Router-level）
 
 ```typescript
-// routes/users.ts
 import { Router } from 'express';
+
+const agentRouter = Router();
+
+// Router 级别的鉴权中间件，只影响此 Router 内的路由
+agentRouter.use(authMiddleware);
+
+agentRouter.post('/chat', async (req: Request, res: Response) => {
+  const result = await agentService.chat(req.body.message);
+  res.json({ data: result });
+});
+
+app.use('/api/agent', agentRouter);
+```
+
+### 错误处理中间件（Error-handling，4 参数）
+
+Express 通过**参数个数**识别错误处理中间件——必须声明 4 个参数，缺一不可：
+
+```typescript
+import { ErrorRequestHandler } from 'express';
+
+const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+  console.error(err.stack);
+  
+  const status  = err.status  ?? err.statusCode ?? 500;
+  const message = err.expose  ?? status < 500
+    ? err.message
+    : 'Internal Server Error';
+  
+  res.status(status).json({ error: message });
+};
+
+// 必须注册在所有路由和中间件之后
+app.use(errorHandler);
+```
+
+### 常用内置与三方中间件
+
+| 中间件 | 来源 | 作用 | Agent 服务典型用途 |
+|--------|------|------|-------------------|
+| `express.json()` | 内置 | 解析 `application/json` Body | 接收 Agent 工具调用参数 |
+| `express.urlencoded()` | 内置 | 解析表单 Body | 后台管理页面 |
+| `express.static()` | 内置 | 静态文件服务 | 前端资产 |
+| `cors` | 三方 | 跨域资源共享 | Agent 前端直连 API |
+| `helmet` | 三方 | 设置安全相关 HTTP 头 | 生产环境安全加固 |
+| `morgan` | 三方 | HTTP 请求日志 | 请求审计 |
+| `compression` | 三方 | gzip/brotli 响应压缩 | 大型 JSON 响应 |
+
+## Router：模块化路由
+
+`express.Router()` 是一个迷你版 `express` 应用，支持独立的中间件栈和路由，适合按业务域拆分：
+
+```typescript
+// routes/agent.ts
+import { Router, Request, Response } from 'express';
+
+interface ChatRequest extends Request {
+  body: { message: string; sessionId: string };
+}
+
 const router = Router();
 
-router.get('/', (req, res) => res.json({ list: [] }));
-router.get('/:id', (req, res) => res.json({ id: req.params.id }));
+router.post('/chat', async (req: ChatRequest, res: Response, next) => {
+  try {
+    const { message, sessionId } = req.body;
+    const response = await agentService.chat(sessionId, message);
+    res.json({ data: response });
+  } catch (err) {
+    next(err); // 转发给错误处理中间件
+  }
+});
+
+router.get('/sessions/:id', async (req, res, next) => {
+  try {
+    const session = await agentService.getSession(req.params.id);
+    if (!session) return res.status(404).json({ error: 'Session not found' });
+    res.json({ data: session });
+  } catch (err) {
+    next(err);
+  }
+});
 
 export default router;
 
 // app.ts
-import express from 'express';
-import usersRouter from './routes/users';
-
-const app = express();
-app.use('/api/users', usersRouter); // 挂载，路径前缀会被剥离后传给 router
-
-// 完整路径 /api/users/:id 在 usersRouter 内看到的 req.path 是 /:id
+import agentRouter from './routes/agent';
+app.use('/api/agent', agentRouter);
 ```
 
-还可以用 `express()` 创建完全独立的子应用（sub-application），拥有独立的中间件栈、错误处理和设置，适合微前端或模块化大型应用。
+## TypeScript 集成：泛型与类型扩展
 
-## TypeScript 类型化实战
+Express 的 `Request` 和 `Response` 支持泛型参数，可精确描述各端的类型：
 
 ```typescript
-import express, { Request, Response, NextFunction } from 'express';
+// Request<Params, ResBody, ReqBody, Query>
+import { Request, Response } from 'express';
 
-interface User {
-  id: number;
-  name: string;
-  email: string;
+interface AgentChatBody {
+  message: string;
+  sessionId: string;
 }
 
-// 使用泛型参数为 req.params / req.body / req.query 提供类型
-type GetUserParams = { id: string };
-type CreateUserBody = Omit<User, 'id'>;
+interface AgentChatResponse {
+  data: { reply: string; toolsUsed: string[] };
+}
 
-const router = express.Router();
-
-router.get(
-  '/:id',
-  async (req: Request<GetUserParams>, res: Response<User | { error: string }>, next: NextFunction) => {
-    const id = parseInt(req.params.id, 10);
-    if (isNaN(id)) {
-      res.status(400).json({ error: 'Invalid ID' });
-      return;
-    }
-    // 模拟数据库查询
-    const user: User = { id, name: 'Alice', email: 'alice@example.com' };
-    res.json(user);
-  }
-);
-
-router.post(
-  '/',
-  async (req: Request<{}, User, CreateUserBody>, res: Response<User>, next: NextFunction) => {
-    const newUser: User = { id: Date.now(), ...req.body };
-    res.status(201).json(newUser);
-  }
-);
+// 完整类型化的 Handler
+async function chatHandler(
+  req: Request<{}, AgentChatResponse, AgentChatBody>,
+  res: Response<AgentChatResponse>
+) {
+  const { message, sessionId } = req.body; // 已推断类型
+  const reply = await agentService.chat(sessionId, message);
+  res.json({ data: reply });
+}
 ```
 
-## Express 的优势与局限
+### 扩展 Request 类型（Augmentation）
 
-| 维度 | Express 的表现 |
-|------|---------------|
-| 学习成本 | 极低，API 简单，文档丰富 |
-| 灵活性 | 高，不约束项目结构 |
-| 生态 | 庞大，几乎所有功能都有对应中间件 |
-| TypeScript 支持 | 需要 `@types/express`，类型推断有限 |
-| 异步错误处理 | 需手动 `next(err)`，Express 4 有坑 |
-| 大型项目组织 | 无官方规范，项目结构容易混乱 |
-| 内置功能 | 极少，路由 + 中间件，其余靠第三方 |
+在多个路由中共享认证信息时，通过声明合并扩展 `Request`：
 
-与 NestJS、MidwayJS 等框架相比，Express 更像是一个"工具箱"而非"框架"。它在快速原型、小型项目、或作为其他框架底层（如 NestJS 默认使用 Express 适配器）时表现出色；但在需要团队统一规范、大规模项目或强 TypeScript 类型安全的场景下，更有主张性（opinionated）的框架会是更好的选择。
+```typescript
+// types/express.d.ts
+import 'express';
 
-## 面试常问
+declare global {
+  namespace Express {
+    interface Request {
+      user?: {
+        id: string;
+        email: string;
+        role: 'admin' | 'user';
+      };
+      agentContext?: {
+        sessionId: string;
+        startedAt: number;
+      };
+    }
+  }
+}
 
-- Express 如何区分普通中间件和错误中间件？（函数形参个数：3 个是普通中间件，4 个是错误中间件）
-- `app.use()` 和 `app.get()` 的区别？（`app.use()` 匹配所有 HTTP 方法，且路径是前缀匹配；`app.get()` 只匹配 GET 且是精确路径匹配）
-- Express 4 中 async 路由的错误为什么不会被捕获？（Express 4 中路由处理函数的返回值被忽略，rejected Promise 不会触发错误中间件，必须用 try/catch + next(err)）
-- Router 和 sub-application 的区别？（Router 是轻量的路由容器，共享父应用的设置；sub-application 是完整的独立应用实例，拥有独立配置）
+// auth.middleware.ts
+import { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
+
+export function authMiddleware(req: Request, res: Response, next: NextFunction) {
+  const token = req.headers.authorization?.replace('Bearer ', '');
+  if (!token) return res.status(401).json({ error: 'No token' });
+
+  try {
+    req.user = jwt.verify(token, process.env.JWT_SECRET!) as Express.Request['user'];
+    next();
+  } catch {
+    res.status(401).json({ error: 'Invalid token' });
+  }
+}
+```
+
+## Express + Agent 后端：工具调用端点
+
+AI Agent 框架（如 LangChain、自研 Agent）经常需要通过 HTTP 调用宿主服务提供的"工具（Tools）"。Express 非常适合构建这类工具端点：
+
+```typescript
+import express from 'express';
+import { z } from 'zod';
+
+const app = express();
+app.use(express.json());
+
+// Tool: 搜索知识库
+const searchSchema = z.object({
+  query: z.string().min(1),
+  topK:  z.number().int().min(1).max(20).default(5),
+});
+
+app.post('/tools/search', async (req, res, next) => {
+  const parsed = searchSchema.safeParse(req.body);
+  if (!parsed.success) {
+    return res.status(400).json({ error: parsed.error.flatten() });
+  }
+  
+  try {
+    const results = await vectorDB.search(parsed.data.query, parsed.data.topK);
+    res.json({ results });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// Tool: 执行代码
+app.post('/tools/execute', async (req, res, next) => {
+  try {
+    const { code, language } = req.body as { code: string; language: string };
+    const output = await sandboxService.run(code, language);
+    res.json({ output, exitCode: 0 });
+  } catch (err: any) {
+    // 工具执行失败不一定是服务错误，返回结构化错误供 Agent 判断
+    res.json({ output: err.message, exitCode: 1 });
+  }
+});
+
+// 全局错误处理（必须最后注册）
+app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  res.status(err.status ?? 500).json({ error: err.message ?? 'Internal Server Error' });
+});
+```
+
+## 路由路径匹配与参数
+
+Express 的路由路径支持字符串、字符串模式和正则三种形式，底层由 `path-to-regexp` 将路径编译为正则表达式进行匹配。理解这一点能避免很多"路由不生效"的困惑：
+
+```typescript
+// 路径参数 :param —— 通过 req.params 读取
+app.get('/tools/:toolName/runs/:runId', (req, res) => {
+  const { toolName, runId } = req.params; // { toolName, runId }
+  res.json({ toolName, runId });
+});
+
+// 可选参数（Express 5 语法）
+app.get('/sessions{/:id}', handler);
+
+// 正则匹配，例如只匹配数字 ID
+app.get(/^\/users\/(\d+)$/, handler);
+
+// 通配挂载：app.use 是"前缀匹配"，而 app.get 是"完整匹配"
+app.use('/api', router);     // /api、/api/x、/api/x/y 都会进入
+app.get('/api', handler);    // 仅精确匹配 /api
+```
+
+路由的注册顺序即匹配优先级，Express 一旦命中第一个匹配的路由就不再向下查找（除非该 Handler 调用 `next('route')` 主动放行）。把更具体的路由放在更通用的通配路由之前，是避免覆盖问题的关键。
+
+## 应用与响应局部状态：app.locals 与 res.locals
+
+Express 提供两个跨中间件传递数据的官方位置：`app.locals` 是应用级单例（整个进程共享，适合放配置、数据库连接句柄），`res.locals` 是单次请求级（仅在当前请求生命周期内有效，适合放当前用户、请求追踪 ID）：
+
+```typescript
+// 应用级：进程内全局共享
+app.locals.llmClient = new Anthropic();
+app.locals.appVersion = '1.0.0';
+
+// 请求级：在中间件中写入，后续 Handler 和模板可读取
+app.use((req, res, next) => {
+  res.locals.requestId = crypto.randomUUID();
+  res.locals.user = req.user;
+  next();
+});
+```
+
+在 Agent 服务中，`res.locals.requestId` 常用于把同一次请求里多次 LLM 调用、工具调用的日志串成一条链路，便于排查问题。注意切勿把请求级数据误放进 `app.locals`，否则会造成请求间的数据串扰（典型的并发 Bug）。
+
+## 中间件执行顺序详解
+
+```mermaid
+flowchart TD
+    A[请求进入] --> B[app.use 全局中间件\ncors/helmet/morgan]
+    B --> C[express.json\n解析 Body]
+    C --> D[authMiddleware\n验证 Token]
+    D -->|token 无效 → res.status401| END1[响应返回]
+    D -->|token 有效| E[Router 匹配\napp.use /api/agent]
+    E -->|未匹配| F[404 Handler]
+    E -->|匹配| G[Router-level 中间件]
+    G --> H[Route Handler\nasync function]
+    H -->|成功 → res.json| END2[响应返回]
+    H -->|抛出异常 → next err| I[错误处理中间件\n4 个参数]
+    I --> END3[错误响应返回]
+
+    style I fill:#f96,stroke:#c00
+    style END1 fill:#9f9,stroke:#090
+    style END2 fill:#9f9,stroke:#090
+    style END3 fill:#f99,stroke:#c00
+```
+
+## 常见误区
+
+- **误区：async 路由中的异常会自动传给错误处理中间件** — Express 4.x **不**自动捕获 async 函数抛出的错误，必须显式 `try/catch` + `next(err)`，或使用 `express-async-errors` 补丁。Express 5.x 起原生支持 async 错误转发。
+
+- **误区：错误处理中间件可以注册在任何位置** — 必须注册在所有路由和普通中间件之后，Express 按注册顺序执行，提前注册的错误中间件不会接收到后续路由的错误。
+
+- **误区：next() 调用后 Handler 立即停止** — `next()` 只是触发下一个中间件，当前函数并未结束。不加 `return next()` 时，后续代码仍会执行，可能导致"headers already sent"错误。
+
+- **误区：Router 就是 app 的子集，可以随意互换** — `Router` 没有 `listen()`、没有全局错误处理链，不能独立运行，只能挂载到 `app` 或另一个 `Router`。
+
+## 最佳实践
+
+- 所有 async 路由 Handler 统一用 `try/catch` + `next(err)` 包裹，或全局引入 `express-async-errors`。
+- 错误处理中间件必须声明 4 个参数，且注册在所有路由之后。
+- 用 `express.Router()` 按业务域（agent、auth、admin）拆分路由文件，通过 `app.use('/api/xxx', router)` 挂载。
+- 用声明合并（`declare global namespace Express`）扩展 `Request` 类型，避免到处使用 `(req as any).user`。
+- 输入校验在 Route Handler 入口处统一用 `zod` 或 `class-validator` 处理，校验失败立即返回 400，不进入业务逻辑。
+- 生产环境错误响应不暴露 stack trace，开发环境可以在错误中间件中附加调试信息。
+- Agent 工具端点的错误响应应区分"服务异常（5xx）"和"工具执行失败（业务错误，仍 2xx 但含 exitCode）"，让 Agent 能正确判断是否重试。
+
+## 面试要点
+
+- **Q：Express 中间件是如何串联执行的？**  
+  A：Express 内部维护一个中间件数组，每次 `app.use(fn)` 将函数压入数组。收到请求时，按注册顺序逐个调用中间件，每个中间件通过调用 `next()` 将控制权传给下一个。调用链是同步驱动的，`next()` 本质是调用数组中的下一个函数。
+
+- **Q：如何正确处理 Express 中 async 路由的错误？**  
+  A：Express 4.x 不捕获 async 函数的 rejected Promise，需要 `try/catch` + `next(err)`，或使用 `express-async-errors` 包自动 monkey-patch。Express 5.x 原生支持 async 错误转发，不再需要额外处理。
+
+- **Q：`app.use()` 和 `app.get()` 的区别是什么？**  
+  A：`app.use()` 匹配以指定路径**开头**的所有请求（任意 HTTP 方法），常用于挂载中间件和 Router。`app.get()` 精确匹配路径且仅匹配 GET 方法，常用于注册具体路由处理器。
+
+- **Q：在构建 AI Agent 工具服务时，Express 有哪些注意事项？**  
+  A：工具调用的参数校验要做严格的 schema 验证（防止 Prompt Injection 带来的恶意参数）；工具执行失败应返回结构化结果而非 5xx，让 Agent 能自主决策是否重试；LLM 流式响应端点需要在路由层手动管理 `res.write` 和 `res.end`，或考虑迁移到 Koa（`ctx.body = stream`）获得更好的流处理体验。

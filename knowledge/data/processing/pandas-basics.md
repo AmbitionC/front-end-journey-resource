@@ -1,200 +1,345 @@
-Pandas 是 Python 数据分析的核心库，提供了高性能的表格数据结构与丰富的操作 API，掌握它是数据工程和分析岗位的基本门槛。
+在 AI 工程化的流水线（Pipeline）中，数据处理往往占据 60% 以上的工时。无论是训练前的特征工程（Feature Engineering）、RAG 系统的文档元数据管理，还是 Agent 工具链里的结构化数据分析，pandas 都是 Python 生态里最不可绕开的库之一。它的设计哲学是"表格即对象"——把关系数据库的行列概念与 NumPy 的向量化计算融合在一起，用极少的代码完成数据清洗、聚合和转换。
 
-## 核心数据结构
+## pandas 在 AI 数据工程中的定位
 
-### Series
+```mermaid
+flowchart LR
+    A[原始数据\nCSV / JSON / Parquet] --> B[pandas EDA\n探索性分析]
+    B --> C[数据清洗\n缺失值 / 异常值]
+    C --> D[特征工程\n编码 / 归一化 / 派生列]
+    D --> E[模型训练\nDataset / DataLoader]
+    D --> F[RAG 文档元数据\nchunk_id / token_count / source]
+    F --> G[向量数据库\nPinecone / Weaviate / Milvus]
+```
 
-Series 是一维带标签的数组，可以把它理解为有索引的列表：
+对 AI/Agent 工程师而言，pandas 的核心使用场景有三类：
+
+| 场景 | 典型操作 |
+|------|----------|
+| EDA（Exploratory Data Analysis） | `describe`、`value_counts`、`corr` |
+| 数据清洗与预处理 | `dropna`、`fillna`、`astype`、`apply` |
+| RAG 元数据管理 | 批量构造 chunk DataFrame，追踪 embedding 状态 |
+
+## Series 与 DataFrame 核心概念
+
+### 索引机制（Index）
+
+pandas 中最容易被忽视的设计就是**索引**。Series 和 DataFrame 都有显式的行索引（Index），它不同于数组的位置下标：
 
 ```python
 import pandas as pd
 
-s = pd.Series([10, 20, 30], index=['a', 'b', 'c'])
-print(s['b'])   # 20
-print(s.values) # array([10, 20, 30])
-print(s.index)  # Index(['a', 'b', 'c'], dtype='object')
+s = pd.Series([88.5, 92.0, 78.3], index=['alice', 'bob', 'charlie'])
+print(s['bob'])      # 92.0  —— 按标签访问
+print(s.iloc[1])     # 92.0  —— 按位置访问
 ```
 
-### DataFrame
+索引的意义在于：做 `merge`、`join`、`align` 时，pandas 会自动按索引对齐，避免因行序不同而产生错位。理解这一点能解释很多"结果行数不对"的 Bug。
 
-DataFrame 是二维带标签的表格，每列是一个 Series，共享同一个行索引。它的设计借鉴了关系数据库的表和 R 的 data.frame：行用行索引（index）标识，列用列名标识，列与列之间可以是不同的数据类型，但同一列内部类型一致。理解"一列即一个 Series"这一点很关键，它解释了为什么按列操作（向量化）远比按行操作高效——Pandas 底层基于 NumPy 数组，整列运算可以直接交给 C 实现的批量计算。
+### dtype 与内存
 
 ```python
 df = pd.DataFrame({
-    'name': ['Alice', 'Bob', 'Charlie'],
-    'age':  [25, 30, 35],
-    'score': [88.5, 92.0, 78.3]
+    'doc_id':   ['d001', 'd002', 'd003'],
+    'chunk':    ['...', '...', '...'],
+    'tokens':   [128, 256, 512],
+    'embedded': [False, True, False],
 })
+
+df.dtypes
+# doc_id      object
+# chunk       object
+# tokens       int64
+# embedded      bool
 ```
 
-DataFrame 的列类型（dtype）在创建时自动推断，后续可用 `df.dtypes` 查看。
+`object` dtype 本质是 Python 字符串的指针数组，内存开销高；对重复值多的类别列（如来源文件名、标签），改用 `category` dtype 可节省 50–90% 内存。
 
-## 读取数据
+## 数据读取
 
-Pandas 支持多种数据源，最常用的三种：
+pandas 支持几乎所有主流格式，生产中最常见的三种：
 
 ```python
-# CSV：最通用，支持指定编码和分隔符
-df = pd.read_csv('data.csv', encoding='utf-8', sep=',')
+# CSV：通用，但类型推断不可靠
+df = pd.read_csv('docs.csv', encoding='utf-8', dtype={'doc_id': str})
 
-# JSON：自动处理嵌套结构（orient 参数控制格式）
-df = pd.read_json('data.json', orient='records')
+# JSON：orient='records' 对应 [{...}, {...}] 的列表格式
+df = pd.read_json('docs.json', orient='records')
 
-# Parquet：列式存储，读写速度远快于 CSV，适合大数据集
-df = pd.read_parquet('data.parquet', engine='pyarrow')
+# Parquet：列式存储，类型保真，读取速度比 CSV 快 5-10 倍
+df = pd.read_parquet('docs.parquet', engine='pyarrow')
 ```
 
-**最佳实践**：生产环境优先使用 Parquet，它体积小、类型保真、读取快；CSV 仅用于与外部系统交换数据。读 CSV 时常见的坑是类型推断不准确，例如以 0 开头的编号被当成整数从而丢失前导零，可用 `dtype={'id': str}` 显式指定；超大文件还可用 `usecols` 只读需要的列、用 `nrows` 先抽样观察结构，避免一次性把整个文件载入内存。
+**格式选型建议**：与外部系统交换数据用 CSV/JSON；内部流水线存储用 Parquet；需要 SQL 查询大文件时考虑 DuckDB 直接读取 Parquet，绕开 pandas 的内存限制。
 
-## 数据探索
-
-拿到新数据集，标准探索流程如下：
+超大文件（> 内存的 1/5）用 `chunksize` 分批处理：
 
 ```python
-df.head(5)        # 前 5 行，快速目测结构
-df.tail(3)        # 后 3 行，检查尾部是否有脏数据
-df.info()         # 列名、非空计数、dtype，一眼看出哪些列有缺失
-df.describe()     # 数值列的均值/标准差/分位数
-df['status'].value_counts()          # 类别列的频次分布
-df['status'].value_counts(normalize=True)  # 转为占比
+chunks = []
+for chunk in pd.read_csv('big_corpus.csv', chunksize=50_000):
+    chunk = chunk[chunk['language'] == 'zh']   # 先过滤，减少内存
+    chunks.append(chunk)
+df = pd.concat(chunks, ignore_index=True)
 ```
 
-`info()` 输出中，若某列的 Non-Null Count 小于总行数，说明存在缺失值，需要处理。`describe()` 默认只统计数值列，加上 `include='all'` 参数可以同时给出类别列的唯一值数、出现最频繁的值等信息。探索阶段的目标是快速建立对数据规模、字段含义、分布形态和脏数据位置的整体认知，而不是急于建模；很多后续问题（如离群点、编码不一致）在这一步就能暴露出来。
+## 数据探索（EDA）
 
-## 缺失值处理
+拿到新数据集的标准流程：
 
 ```python
-# 检测缺失值
-df.isnull().sum()         # 每列缺失数量
-df.isnull().mean() * 100  # 每列缺失率（%）
+df.shape          # (行数, 列数)
+df.head(5)        # 目测结构
+df.info()         # dtype、非空计数——一眼定位缺失列
+df.describe()     # 数值列统计：均值、标准差、四分位数
+df.describe(include='all')  # 含类别列
 
-# 删除含缺失值的行（谨慎使用，可能丢失信息）
-df.dropna(subset=['age', 'score'], inplace=True)
-
-# 填充缺失值
-df['score'].fillna(df['score'].median(), inplace=True)  # 数值列用中位数
-df['city'].fillna('unknown', inplace=True)              # 类别列用占位符
-df.fillna(method='ffill', inplace=True)                 # 时序数据向前填充
+df['source'].value_counts()              # 频次分布
+df['source'].value_counts(normalize=True)  # 归一化为占比
+df.nunique()      # 每列唯一值数量，快速判断是否为 ID 列或枚举列
 ```
 
-**常见陷阱**：`fillna(method='ffill')` 在 Pandas 2.x 中已废弃，改用 `ffill()` 方法直接调用：
+`info()` 中 Non-Null Count 小于总行数时，该列存在缺失值，需决策处理策略。
+
+## 数据选取
+
+### iloc 与 loc
 
 ```python
-df['price'] = df['price'].ffill()
+# loc：基于标签，切片两端均包含
+df.loc[10:20, ['doc_id', 'tokens']]
+
+# iloc：基于整数位置，遵循 Python 左闭右开
+df.iloc[0:5, 1:3]
+
+# 条件过滤（布尔索引）
+df[df['tokens'] > 512]
+
+# 多条件：必须用 & / |，每个条件加括号
+df[(df['tokens'] > 256) & (df['embedded'] == False)]
+
+# query：可读性更强，适合动态拼接条件字符串
+df.query("tokens > 256 and embedded == False")
 ```
 
-## 数据筛选与变换
+> **原则**：优先用 `loc` + 布尔索引，避免 `iloc` 依赖位置顺序；动态条件拼接用 `query`，它内部会编译为 numexpr 表达式，比布尔索引稍快。
 
-### loc 与 iloc
+## 数据变换
 
-```python
-# loc：基于标签（行索引名 / 列名）
-df.loc[df['age'] > 28, ['name', 'score']]
-
-# iloc：基于整数位置
-df.iloc[0:3, 1:3]  # 前3行的第2、3列
-```
-
-**原则**：能用 `loc` 就不用 `iloc`，标签比位置更不易因数据顺序变化而出错。布尔索引是 Pandas 最常用的筛选方式，本质是用一个与行数等长的布尔 Series 去过滤；多条件组合时必须用 `&`、`|` 并给每个条件加括号，例如 `df[(df['age'] > 28) & (df['score'] > 80)]`，不能用 Python 的 `and`/`or`，因为后者无法对数组逐元素求值。
-
-### apply 与 map
+### assign / rename / astype
 
 ```python
-# apply：对列/行执行自定义函数，可以返回标量或 Series
-df['score_level'] = df['score'].apply(lambda x: 'A' if x >= 90 else 'B')
-
-# map：Series 专用，适合值替换或映射字典
-status_map = {0: '未激活', 1: '活跃', 2: '注销'}
-df['status_label'] = df['status'].map(status_map)
-```
-
-### groupby 聚合
-
-```python
-# 按部门统计平均分和人数
-summary = (
-    df.groupby('department')
-    .agg(avg_score=('score', 'mean'), headcount=('name', 'count'))
-    .reset_index()
+df = (
+    df
+    .rename(columns={'chunk': 'content', 'tokens': 'token_count'})
+    .assign(
+        char_count=lambda d: d['content'].str.len(),
+        token_ratio=lambda d: d['token_count'] / d['char_count']
+    )
+    .astype({'token_count': 'int32'})
 )
 ```
 
-`reset_index()` 将分组键从索引还原为普通列，方便后续操作。
+`assign` 返回新 DataFrame（不修改原对象），支持链式调用，是特征工程的推荐写法。
 
-## 合并与连接
+### fillna / dropna
+
+```python
+df['source'].fillna('unknown', inplace=True)          # 类别列补占位符
+df['token_count'].fillna(df['token_count'].median())  # 数值列补中位数
+df.dropna(subset=['content'], inplace=True)           # 内容为空的行直接删除
+```
+
+Pandas 2.x 中 `fillna(method='ffill')` 已废弃，改用：
+
+```python
+df['price'] = df['price'].ffill()  # 时序向前填充
+```
+
+### apply 与向量化的取舍
+
+```python
+# 能用向量化就不用 apply
+df['is_long'] = df['token_count'] > 512                    # 向量化：快
+df['is_long'] = df['token_count'].apply(lambda x: x > 512) # apply：慢 10x+
+
+# apply 的合理场景：复杂逻辑、多列联合计算
+def build_prompt(row):
+    return f"[{row['source']}] {row['content'][:200]}"
+
+df['prompt'] = df.apply(build_prompt, axis=1)
+```
+
+`map` 是 Series 专属，适合值映射：
+
+```python
+lang_map = {'zh': '中文', 'en': '英文', 'ja': '日文'}
+df['lang_label'] = df['lang'].map(lang_map)
+```
+
+## 分组聚合（groupby + agg）
+
+```python
+# 统计每个来源的文档数和平均 token 数
+stats = (
+    df.groupby('source')
+    .agg(
+        doc_count=('doc_id', 'count'),
+        avg_tokens=('token_count', 'mean'),
+        total_tokens=('token_count', 'sum'),
+    )
+    .reset_index()
+    .sort_values('doc_count', ascending=False)
+)
+```
+
+`transform` 与 `agg` 的区别：`agg` 压缩行数，`transform` 保持原长度并回填，常用于添加分组统计列：
+
+```python
+df['source_avg_tokens'] = df.groupby('source')['token_count'].transform('mean')
+```
+
+## 合并操作（merge / concat / join）
 
 ```python
 # merge：类似 SQL JOIN，按键列对齐
-result = pd.merge(df_orders, df_users, on='user_id', how='left')
+df_meta = pd.merge(df_chunks, df_files, on='file_id', how='left')
 
-# concat：沿轴方向拼接，结构相同的多个 DataFrame 纵向堆叠
-combined = pd.concat([df_2023, df_2024], ignore_index=True)
+# concat：同结构 DataFrame 纵向堆叠
+df_all = pd.concat([df_batch1, df_batch2], ignore_index=True)
+
+# join：按行索引对齐（适合特征矩阵拼接）
+df_features = df_tfidf.join(df_embedding, how='inner')
 ```
 
-| 场景 | 推荐方法 |
-|------|----------|
-| 按共同字段关联两张表 | `merge` |
-| 同结构数据纵向追加 | `concat` |
-| 按行/列索引对齐运算 | `join` / `align` |
+| 操作 | 对齐依据 | SQL 等价 |
+|------|----------|----------|
+| `merge` | 指定列 | JOIN |
+| `concat` | 不对齐，直接追加 | UNION ALL |
+| `join` | 行索引 | JOIN ON index |
 
-**常见陷阱**：`merge` 默认是 inner join，若键列有空值或重复，结果行数可能与预期偏差较大，用完要立即检查 `len(result)` 是否合理。
+**陷阱**：`merge` 默认 inner join，键列有重复值时会产生笛卡尔积，合并后立即检查 `len(result)` 是否合理。
 
-## 性能陷阱
+## 性能优化
 
-### 禁用 iterrows
-
-`iterrows()` 每次迭代都会创建 Series 对象，百万行数据可能慢几百倍：
+### 向量化优先，远离 iterrows
 
 ```python
-# 错误做法：极慢
+# 错误：iterrows 每次迭代创建 Series，百万行慢数十倍
 for idx, row in df.iterrows():
-    df.at[idx, 'tax'] = row['salary'] * 0.2
+    df.at[idx, 'cost'] = row['tokens'] * 0.002
 
-# 正确做法：向量化运算
-df['tax'] = df['salary'] * 0.2
+# 正确：整列运算，底层为 C 的 NumPy 操作
+df['cost'] = df['token_count'] * 0.002
 ```
 
-### 链式赋值警告（ChainedAssignment）
+### 字符串操作用 .str 向量化接口
 
 ```python
-# 危险写法：可能修改的是副本而非原 DataFrame
-df[df['age'] > 30]['score'] = 0  # SettingWithCopyWarning
+# 错误：apply + Python 字符串
+df['title'] = df['content'].apply(lambda x: x[:50].strip())
 
-# 正确写法：使用 loc
+# 正确：str accessor
+df['title'] = df['content'].str[:50].str.strip()
+```
+
+### 内存优化三步法
+
+```python
+# 1. 读取时只加载需要的列
+df = pd.read_csv('corpus.csv', usecols=['doc_id', 'content', 'tokens'])
+
+# 2. 类别列转 category
+for col in ['source', 'language', 'status']:
+    df[col] = df[col].astype('category')
+
+# 3. 整数列降精度
+df['token_count'] = df['token_count'].astype('int32')
+
+print(df.memory_usage(deep=True).sum() / 1e6, 'MB')
+```
+
+## AI/RAG 场景实战
+
+在 RAG（Retrieval-Augmented Generation）系统中，pandas 常用于管理文档 chunk 的元数据和批量处理 embedding 输入：
+
+```python
+import pandas as pd
+
+# 构造 chunk 元数据 DataFrame
+chunks_df = pd.DataFrame({
+    'chunk_id':   [f'c{i:04d}' for i in range(1000)],
+    'doc_id':     ['doc_001'] * 500 + ['doc_002'] * 500,
+    'content':    ['...'] * 1000,
+    'token_count': [128] * 1000,
+    'embedded':   [False] * 1000,
+})
+
+# 找出尚未 embedding 的 chunk，按 token 数排序（小的先处理，节省 API 费用）
+pending = (
+    chunks_df[~chunks_df['embedded']]
+    .sort_values('token_count')
+    .reset_index(drop=True)
+)
+
+# 批量构造 embedding 请求（batch_size=32）
+batch_size = 32
+for i in range(0, len(pending), batch_size):
+    batch = pending.iloc[i:i+batch_size]
+    texts = batch['content'].tolist()
+    # embeddings = embed_model.encode(texts)
+    # 回写状态
+    chunks_df.loc[
+        chunks_df['chunk_id'].isin(batch['chunk_id']), 'embedded'
+    ] = True
+
+# 查询某文档的 embedding 覆盖率
+coverage = chunks_df.groupby('doc_id')['embedded'].mean()
+print(coverage)
+```
+
+这套模式在 Agent 工具链中同样适用——把工具调用的输入/输出、Token 消耗、耗时等结构化为 DataFrame，便于后续分析和成本优化。
+
+## 常见误区
+
+**误区 1：inplace=True 更高效**
+`inplace=True` 并不会节省内存，pandas 内部仍会创建中间对象；且 Copy-on-Write（Pandas 2.0+）下行为更复杂。推荐始终使用赋值写法：`df = df.dropna()`。
+
+**误区 2：链式索引赋值**
+```python
+# 危险：修改的可能是副本
+df[df['age'] > 30]['score'] = 0   # SettingWithCopyWarning
+
+# 安全：使用 loc
 df.loc[df['age'] > 30, 'score'] = 0
 ```
 
-Pandas 2.0 对此行为更严格，建议全局开启 `pd.options.mode.copy_on_write = True`（Copy-on-Write 模式），在 3.0 中将成为默认。
+**误区 3：apply 是万能的**
+`apply` 逐元素调用 Python 函数，无法享受向量化加速，在大数据集上是性能杀手。优先考虑 `str` accessor、`np.where`、`pd.cut` 等内置向量化方案。
 
-### 类型优化
+**误区 4：忽视 merge 后的行数膨胀**
+键列有重复值时，`merge` 会产生笛卡尔积。合并后必须断言行数在预期范围内。
 
-```python
-# 类别列用 category dtype 可节省大量内存
-df['city'] = df['city'].astype('category')
+## 最佳实践
 
-# 整数列避免使用 object，显式指定 int32/int64
-df['age'] = df['age'].astype('int32')
-```
+- **链式调用（Method Chaining）**：用括号包裹多步变换，保持代码可读性，避免创建大量中间变量。
+- **尽早过滤**：在读取阶段用 `usecols`、`nrows` 或条件过滤减小 DataFrame 体积，后续操作都会更快。
+- **生产格式用 Parquet**：类型保真、压缩高效，配合 `pyarrow` 读写速度比 CSV 快 5–10 倍。
+- **超大数据考虑 Polars/DuckDB**：pandas 的内存占用约为数据本身的 5–10 倍；GB 级数据推荐切换到 Polars（lazy evaluation）或 DuckDB（SQL on Parquet）。
+- **开启 Copy-on-Write**：`pd.options.mode.copy_on_write = True`，消除链式赋值歧义，Pandas 3.0 将默认启用。
 
-## 面试要点
+## 面试常问
 
-**Q：loc 和 iloc 的区别？**
-`loc` 基于标签索引，支持布尔数组；`iloc` 基于整数位置，切片遵循 Python 左闭右开规则，但 `loc` 的切片是两端都包含的。
+**Q：`loc` 和 `iloc` 的切片边界有何不同？**
+`loc` 按标签切片，两端均包含；`iloc` 按整数位置切片，左闭右开（与 Python 列表一致）。
 
-**Q：如何高效处理大文件？**
-使用 `chunksize` 参数分批读取，或直接改用 Polars / DuckDB 处理 GB 级数据，Pandas 的内存占用约为数据本身的 5-10 倍。
+**Q：`apply` 和向量化操作的性能差距有多大？**
+对于简单算术，向量化比 `apply` 快 10–100 倍，因为向量化底层调用 C 实现的 NumPy，而 `apply` 在 Python 层循环。
 
-```python
-for chunk in pd.read_csv('big.csv', chunksize=100_000):
-    process(chunk)
-```
+**Q：`groupby` 中 `agg` 和 `transform` 的区别？**
+`agg` 返回每组一行的压缩结果；`transform` 返回与原 DataFrame 等长的结果，可直接赋值为新列，常用于添加分组统计特征。
 
-**Q：merge 的几种 how 类型？**
-`inner`（默认）、`left`、`right`、`outer`，对应 SQL 的 INNER/LEFT/RIGHT/FULL OUTER JOIN。
+**Q：`merge` 的 `how` 参数有哪些，分别对应 SQL 的什么？**
+`inner`（默认）= INNER JOIN，`left` = LEFT JOIN，`right` = RIGHT JOIN，`outer` = FULL OUTER JOIN。
 
-**Q：groupby 后如何同时保留原列和聚合结果？**
-使用 `transform` 代替 `agg`，它返回与原 DataFrame 等长的结果，可直接赋值为新列：
-
-```python
-df['dept_avg'] = df.groupby('department')['score'].transform('mean')
-```
+**Q：如何处理 pandas 读取 GB 级 CSV 文件内存溢出的问题？**
+三个方向：① `chunksize` 分批读取后聚合；② `usecols` + `dtype` 减少单次加载体积；③ 换用 Polars 或 DuckDB 直接 SQL 查询，彻底绕开 pandas 的内存模型。

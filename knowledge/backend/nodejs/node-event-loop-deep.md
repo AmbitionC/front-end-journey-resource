@@ -1,165 +1,227 @@
-Node.js 事件循环是其异步非阻塞 I/O 的核心机制，理解它的各阶段执行顺序是写出可预期异步代码、排查诡异执行顺序问题的关键。
+Node.js 之所以能以单线程处理数以万计的并发连接，根本在于它的事件循环 (Event Loop) 机制——理解每个阶段的执行顺序与微任务插入时机，是写出可预期异步代码、排查诡异 Bug、以及正确评估 AI Agent 服务吞吐量上限的必备前提。
+
+## 为什么 Node.js 选择单线程非阻塞 I/O
+
+传统多线程服务器（如 Apache）为每个请求创建一个线程，线程上下文切换成本随并发量线性增长，且每个线程都要独占栈内存（通常 8 MB），高并发时内存消耗极大。Node.js 采用"单线程事件循环 + libuv 异步 I/O"模型：JavaScript 代码运行在单一主线程，所有 I/O（文件、网络、数据库）操作委托给操作系统内核或 libuv 线程池异步执行，完成后通过回调通知主线程。
+
+这个模型的核心优势在于：I/O 等待期间主线程可以继续处理其他事件，而不是白白阻塞。对于 AI Agent 服务来说，并发调用多个 LLM API（如 OpenAI、Claude）时，每个 HTTP 请求在等待模型响应的几秒内，事件循环可以同时派发其他请求、处理 webhook、写日志——这直接决定了服务的并发吞吐上限。
 
 ## 事件循环的六个阶段
 
-Node.js 事件循环由 libuv 库驱动，每次循环（tick）按顺序经历以下六个阶段：
+libuv 驱动的事件循环每次迭代（tick）按严格顺序经历以下六个阶段：
 
-```
-   ┌───────────────────────────┐
-┌─>│        timers             │  ← setTimeout / setInterval
-│  └─────────────┬─────────────┘
-│  ┌─────────────┴─────────────┐
-│  │    pending callbacks      │  ← 上一轮循环延迟的 I/O 回调
-│  └─────────────┬─────────────┘
-│  ┌─────────────┴─────────────┐
-│  │    idle, prepare          │  ← 内部使用
-│  └─────────────┬─────────────┘
-│  ┌─────────────┴─────────────┐
-│  │           poll            │  ← 获取新的 I/O 事件，执行 I/O 回调
-│  └─────────────┬─────────────┘
-│  ┌─────────────┴─────────────┐
-│  │          check            │  ← setImmediate 回调
-│  └─────────────┬─────────────┘
-│  ┌─────────────┴─────────────┐
-└──┤    close callbacks        │  ← socket.on('close', ...)
-   └───────────────────────────┘
+```mermaid
+graph TD
+    A[timers\n执行 setTimeout / setInterval 回调] --> B[pending callbacks\n上一轮延迟的 I/O 错误回调]
+    B --> C[idle / prepare\n内部使用，用户代码不可见]
+    C --> D[poll\n获取新 I/O 事件，执行 I/O 回调\n若队列空则等待新事件]
+    D --> E[check\n执行 setImmediate 回调]
+    E --> F[close callbacks\n执行 socket.on close 等关闭回调]
+    F --> G{还有待处理任务?}
+    G -- 是 --> A
+    G -- 否 --> H[退出进程]
+
+    style A fill:#4a90d9,color:#fff
+    style D fill:#27ae60,color:#fff
+    style E fill:#e67e22,color:#fff
 ```
 
-### timers 阶段
+### 阶段详解
 
-执行 `setTimeout` 和 `setInterval` 的到期回调。注意：这里的"到期"指的是操作系统调度允许的最早时机，而非精确的延迟时间。
+**1. timers（定时器）**
+执行所有到期的 `setTimeout` 和 `setInterval` 回调。"到期"是指回调的延迟时间已过，但 Node.js 不保证精确时刻——如果 poll 阶段耗时过长，timers 回调会相应推迟。
 
-### poll 阶段
+**2. pending callbacks（挂起回调）**
+执行上一轮事件循环中被推迟的 I/O 回调，通常是某些 TCP 错误（如 `ECONNREFUSED`）的回调。
 
-这是最重要的阶段。事件循环在这里：
-1. 计算应该阻塞等待 I/O 的时间
-2. 处理 poll 队列中的事件（文件读取、网络请求等 I/O 回调）
+**3. idle / prepare**
+仅供 libuv 内部使用，Node.js 用户代码不会在此阶段执行。
 
-当 poll 队列为空时：
-- 如果有 `setImmediate` 回调，进入 check 阶段
-- 如果没有，等待新的 I/O 事件，直到 timers 阶段有到期任务
+**4. poll（轮询）**
+这是最核心的阶段，分两件事：
+- 计算阻塞等待 I/O 的时长
+- 处理 poll 队列中的 I/O 回调（文件读写、网络响应等）
 
-### check 阶段
+当 poll 队列清空且没有 `setImmediate` 任务时，事件循环会在此阶段短暂等待新的 I/O 事件；一旦有 timers 即将到期，便结束等待回到 timers 阶段。
 
-专门执行 `setImmediate` 的回调，在 poll 阶段完成后立即运行。
+**5. check（检查）**
+执行所有 `setImmediate` 回调。`setImmediate` 专为"I/O 回调之后、timers 之前"这个时机设计。
 
-## 微任务（Microtasks）vs 宏任务（Macrotasks）
+**6. close callbacks（关闭回调）**
+执行 `socket.on('close', ...)` 等资源关闭事件的回调。
 
-宏任务（Macrotasks）是事件循环各阶段处理的回调，每个阶段各有自己的队列。微任务在**每个宏任务之后、进入下一个事件循环阶段之前**立即清空。
+## 微任务队列 (Microtask Queue)
 
-```
-宏任务执行 → 清空微任务队列 → 下一个宏任务 → 清空微任务队列 → ...
-```
+微任务队列不属于上述六个阶段，而是在**每个阶段结束后**（以及 timers 阶段每个回调执行后）立即清空，优先级高于下一阶段的宏任务。
 
-Node.js 中的微任务有两类，执行优先级不同：
+Node.js 有两类微任务，按优先级排序：
 
-| 微任务类型 | API | 优先级 |
-|-----------|-----|-------|
-| nextTick 队列 | `process.nextTick()` | 高（先执行） |
-| Promise 队列 | `Promise.then/catch/finally` | 低（后执行） |
-
-### 为什么 process.nextTick 比 Promise 先执行？
-
-这是 Node.js 的设计决策，非 V8 规范要求。`process.nextTick` 的回调放入独立的 nextTick 队列，在微任务队列（Promise）之前被清空。
+1. `process.nextTick` 队列（更高优先级）
+2. Promise 微任务队列（`Promise.resolve().then(...)`）
 
 ```typescript
-Promise.resolve().then(() => console.log('Promise'));
-process.nextTick(() => console.log('nextTick'));
-console.log('同步代码');
+// 执行顺序演示
+import { setImmediate as setImmediateNode } from 'timers';
+
+console.log('1: 同步代码');
+
+setTimeout(() => console.log('2: setTimeout'), 0);
+
+setImmediateNode(() => console.log('3: setImmediate'));
+
+Promise.resolve().then(() => console.log('4: Promise.then'));
+
+process.nextTick(() => console.log('5: process.nextTick'));
+
+console.log('6: 同步代码结束');
 
 // 输出顺序：
-// 同步代码
-// nextTick
-// Promise
+// 1: 同步代码
+// 6: 同步代码结束
+// 5: process.nextTick     ← 微任务，nextTick 队列先清空
+// 4: Promise.then         ← 微任务，Promise 队列后清空
+// 2: setTimeout           ← 宏任务（timers 阶段）
+// 3: setImmediate         ← 宏任务（check 阶段）
 ```
 
-## 各 API 执行顺序完整示例
+## setImmediate vs setTimeout 的顺序不确定性
+
+在主模块顶层（非 I/O 回调内）调用 `setTimeout(fn, 0)` 和 `setImmediate(fn)` 时，两者的顺序是**不确定的**，取决于进程启动后的耗时与定时器精度：
 
 ```typescript
-import { readFile } from 'fs';
+// 顶层调用 — 顺序不确定
+setTimeout(() => console.log('timeout'), 0);
+setImmediate(() => console.log('immediate'));
+// 可能输出 timeout → immediate，也可能 immediate → timeout
 
-setTimeout(() => console.log('1. setTimeout'), 0);
-setImmediate(() => console.log('2. setImmediate'));
-
-Promise.resolve().then(() => console.log('3. Promise'));
-process.nextTick(() => console.log('4. nextTick'));
-
-readFile(__filename, () => {
-  // 在 poll 阶段的 I/O 回调中
-  setTimeout(() => console.log('5. I/O 内 setTimeout'), 0);
-  setImmediate(() => console.log('6. I/O 内 setImmediate'));
-  process.nextTick(() => console.log('7. I/O 内 nextTick'));
-  Promise.resolve().then(() => console.log('8. I/O 内 Promise'));
+// 在 I/O 回调内调用 — 顺序确定，setImmediate 先于 setTimeout
+import fs from 'fs';
+fs.readFile('/etc/hostname', () => {
+  setTimeout(() => console.log('timeout'), 0);
+  setImmediate(() => console.log('immediate'));
+  // 始终输出：immediate → timeout
+  // 原因：readFile 回调在 poll 阶段执行，poll 阶段结束后下一个是 check 阶段
 });
-
-console.log('0. 同步代码');
 ```
 
-**输出顺序：**
+## libuv 线程池与 I/O 集成
+
+虽然 JavaScript 运行在单线程，libuv 内部维护一个默认大小为 4 的线程池（可通过环境变量 `UV_THREADPOOL_SIZE` 扩大至 1024），用于处理：
+
+- 文件系统操作（`fs.readFile` 等）
+- DNS 解析（`dns.lookup`）
+- 部分加密操作（`crypto` 模块的同步哈希等）
+- 用户自定义的本地插件（Native Addons）
+
+网络 I/O（TCP/UDP）直接使用操作系统的非阻塞 socket + `epoll`/`kqueue`/`IOCP`，不占用线程池。
+
+```mermaid
+sequenceDiagram
+    participant JS as 主线程 (JS)
+    participant LP as libuv 线程池
+    participant OS as 操作系统内核
+
+    JS->>OS: HTTP 请求 (非阻塞 socket)
+    JS->>LP: fs.readFile (委托给线程池)
+    Note over JS: 主线程继续执行其他事件
+    OS-->>JS: 网络响应 (epoll 通知，poll 阶段)
+    LP-->>JS: 文件读完 (线程池任务完成，poll 阶段)
 ```
-0. 同步代码
-4. nextTick
-3. Promise
-1. setTimeout       ← 不保证先于 setImmediate（主模块中不确定）
-2. setImmediate     ← 不保证先于 setTimeout（主模块中不确定）
-7. I/O 内 nextTick
-8. I/O 内 Promise
-6. I/O 内 setImmediate  ← I/O 回调中 setImmediate 保证先于 setTimeout
-5. I/O 内 setTimeout
-```
 
-### setTimeout(fn, 0) vs setImmediate 的不确定性
+## nextTick 洪泛导致的饥饿 (Starvation)
 
-在主模块（非 I/O 回调）中，`setTimeout(fn, 0)` 和 `setImmediate` 的顺序**不确定**，取决于进程启动时的性能状态。但在 I/O 回调内部，`setImmediate` **始终先于** `setTimeout(fn, 0)` 执行，因为 I/O 回调在 poll 阶段，下一步就是 check 阶段（setImmediate），而 timers 阶段要等到下一轮循环。
-
-## 嵌套 process.nextTick 的风险
+`process.nextTick` 在每个阶段结束后无条件清空，如果在 nextTick 回调内递归调用 `process.nextTick`，会造成**事件循环饥饿**——后续所有 I/O、定时器永远得不到执行：
 
 ```typescript
-function recursiveNextTick() {
-  process.nextTick(recursiveNextTick); // 危险！
+// 危险：无限 nextTick 递归，I/O 永远无法响应
+function dangerousRecursion() {
+  process.nextTick(dangerousRecursion); // 永远不会让出控制权
 }
-recursiveNextTick();
-// I/O 回调永远无法执行，事件循环被"饿死"
+dangerousRecursion();
+
+// 正确：需要递归处理时，用 setImmediate 让出给 I/O
+function safeRecursion(items: string[], index = 0) {
+  if (index >= items.length) return;
+  processItem(items[index]);
+  setImmediate(() => safeRecursion(items, index + 1)); // 每次迭代都允许 I/O 插入
+}
 ```
 
-Node.js 为 `process.nextTick` 设有递归深度上限（默认 1000），超过会抛出 `RangeError: Maximum call stack size exceeded`。
+## AI Agent 服务中的意义
 
-## 实际应用：何时选择哪个 API
+在构建 AI Agent 后端时，事件循环健康度直接影响服务质量：
 
 ```typescript
-// 场景一：需要在当前操作完成后、I/O 之前执行
-// → 使用 process.nextTick
-class EventEmitter {
-  emit(event: string) {
-    process.nextTick(() => {
-      // 确保在调用 emit 的代码执行完后才触发监听器
-      this.listeners.forEach(fn => fn());
-    });
-  }
+import OpenAI from 'openai';
+
+const client = new OpenAI();
+
+// 正确：并发发起多个 LLM 调用，事件循环在等待响应时处理其他请求
+async function parallelAgentCalls(prompts: string[]): Promise<string[]> {
+  // Promise.all 让所有 HTTP 请求几乎同时发出，等待期间事件循环自由运转
+  const results = await Promise.all(
+    prompts.map(prompt =>
+      client.chat.completions.create({
+        model: 'gpt-4o',
+        messages: [{ role: 'user', content: prompt }],
+      })
+    )
+  );
+  return results.map(r => r.choices[0].message.content ?? '');
 }
 
-// 场景二：需要在当前 I/O 轮次完成后执行
-// → 使用 setImmediate（对 I/O 更友好，不会饿死事件循环）
-function processLargeData(data: Buffer[]) {
-  const chunk = data.shift();
-  if (!chunk) return;
-  process(chunk);
-  setImmediate(() => processLargeData(data)); // 允许其他 I/O 穿插执行
+// 错误：在 LLM 回调中做大量 CPU 计算，阻塞事件循环
+async function blockedHandler(prompt: string) {
+  const result = await client.chat.completions.create({
+    model: 'gpt-4o',
+    messages: [{ role: 'user', content: prompt }],
+  });
+  // 假设这里有 200ms 的向量计算 — 阻塞期间其他所有请求卡住
+  const embedding = computeEmbeddingSync(result.choices[0].message.content!);
+  return embedding;
 }
-
-// 场景三：需要延迟一定时间
-// → 使用 setTimeout
-setTimeout(() => cleanup(), 5000);
 ```
 
-## 常见面试题
+Agent 服务的吞吐量瓶颈往往不在 LLM 调用速度，而在于：
+- 回调中是否有同步 CPU 操作（应移至 Worker Threads）
+- nextTick/Promise 是否被滥用导致 I/O 响应延迟
+- libuv 线程池是否被 `dns.lookup` 或文件操作耗尽
 
-- **`setTimeout(fn, 0)` 和 `setImmediate` 谁先执行？** 在主模块不确定，在 I/O 回调中 `setImmediate` 先执行。
+## 四种异步 API 对比
 
-- **`process.nextTick` 和 `Promise.then` 谁先执行？** `process.nextTick` 先，因为 nextTick 队列在微任务队列（Promise）之前被清空。
+| API | 队列类型 | 执行时机 | 优先级 | 适用场景 |
+|---|---|---|---|---|
+| `process.nextTick(fn)` | nextTick 队列（微任务） | 当前阶段结束后立即 | 最高 | 确保回调在当前操作完成后、I/O 之前执行；错误传播 |
+| `Promise.resolve().then(fn)` | Promise 微任务队列 | nextTick 队列清空后立即 | 次高 | 链式异步操作；async/await 底层机制 |
+| `setTimeout(fn, 0)` | timers 队列（宏任务） | 下一次 timers 阶段（不精确） | 中 | 延迟执行；与浏览器兼容的异步代码 |
+| `setImmediate(fn)` | check 队列（宏任务） | 当前 poll 阶段之后 | 中 | I/O 回调后立即执行；避免 setTimeout 不确定性 |
 
-- **微任务何时执行？** 每个宏任务（事件循环阶段的回调）执行完毕后立即执行，先清空 nextTick 队列再清空 Promise 队列，然后才进入下一个事件循环阶段。
+## 常见误解
 
-- **为什么 Node.js 是单线程但能处理高并发？** 事件循环将 I/O 操作委托给 libuv 的线程池（默认 4 个线程），主线程不阻塞，通过回调处理完成的 I/O，实现非阻塞并发。
+**误解 1：`setTimeout(fn, 0)` 是"立即"执行**
+实际上 Node.js 会将最小延迟截断为约 1ms，且必须等待 timers 阶段到来才执行，期间 poll 阶段可能阻塞数毫秒。
 
-- **`setImmediate` 的典型使用场景是什么？** 将耗时的 CPU 计算拆分成小块，每块之间插入 `setImmediate`，避免阻塞 I/O 处理；或者在 I/O 回调中安排后续操作，确保比任何 setTimeout 先执行。
+**误解 2：Promise 比 process.nextTick 更快**
+恰好相反——`process.nextTick` 的优先级高于 Promise 微任务。在 Node.js v11 之前两者行为还有阶段性差异，v11+ 之后才统一到"每个宏任务后清空所有微任务"。
+
+**误解 3：Node.js 完全是单线程的**
+主线程（JavaScript 执行）是单线程，但 libuv 线程池、操作系统异步 I/O、以及 `worker_threads` 允许真正的多线程。
+
+**误解 4：大量 async/await 会绕过事件循环**
+`async/await` 是 Promise 的语法糖，每个 `await` 都会向 Promise 微任务队列注册一个延续，仍然完全受事件循环调度。
+
+## 最佳实践
+
+- **不要在热路径上滥用 `process.nextTick`**：频繁使用会推迟 I/O 响应，用 `queueMicrotask` 或 `Promise` 替代无特殊需求的场景。
+- **CPU 密集操作移出主线程**：超过 ~10ms 的同步计算应放入 Worker Threads，否则影响所有并发请求的响应时间。
+- **扩大 libuv 线程池**：如果 Agent 服务大量使用 `fs` 或 `crypto`，设置 `UV_THREADPOOL_SIZE=16`（或更大）避免线程池成为瓶颈。
+- **监控事件循环延迟**：使用 `perf_hooks` 的 `monitorEventLoopDelay` 或 APM 工具（如 Clinic.js）检测 lag，及时发现阻塞操作。
+- **I/O 回调内优先选 `setImmediate`**：顺序可预测，避免 `setTimeout(fn, 0)` 的不确定性。
+
+## 面试重点
+
+1. **描述事件循环六个阶段及各自的职责**，重点说清 poll 阶段的等待逻辑。
+2. **微任务 vs 宏任务**：nextTick > Promise > setImmediate ≈ setTimeout 的优先级关系，以及 nextTick 洪泛的危险。
+3. **`setImmediate` vs `setTimeout(fn, 0)` 在 I/O 回调内为何顺序确定？** 答：I/O 回调在 poll 阶段执行，poll 之后紧接 check 阶段（setImmediate），timers 要等下一轮。
+4. **libuv 线程池处理哪些操作？** 文件 I/O、DNS lookup、部分 crypto；网络 I/O 不走线程池。
+5. **如何诊断事件循环阻塞？** 使用 `perf_hooks.monitorEventLoopDelay`、`--prof` 火焰图、或 Clinic.js Doctor。
