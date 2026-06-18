@@ -1,5 +1,3 @@
-# Few-Shot 与 Zero-Shot 提示
-
 Zero-Shot 和 Few-Shot 是 Prompt 设计的两种基本范式，描述了"向模型提供多少示例"来引导任务完成。理解两者的适用边界与动态示例选择（Dynamic Few-Shot）策略，是工程化 Prompt 的核心能力。
 
 ## 基本概念
@@ -260,4 +258,3 @@ def dynamic_few_shot(query: str, example_pool: list[dict], k: int = 3) -> str:
 - Recency Bias 对示例排序有什么影响，如何利用这一特性？
 - Few-Shot Prompting 和 In-Context Learning 是同一回事吗？
 
-> 部分内容参考《Hello-Agents》(datawhalechina)整理。

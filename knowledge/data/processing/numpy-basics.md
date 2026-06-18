@@ -1,5 +1,3 @@
-# NumPy 数值计算基础
-
 NumPy 是 Python 科学计算的基石，几乎所有机器学习框架（PyTorch、TensorFlow、scikit-learn）底层都依赖它的多维数组结构。理解 NumPy 不只是为了用好它，更是理解向量化思想的入口。
 
 ## ndarray 核心概念

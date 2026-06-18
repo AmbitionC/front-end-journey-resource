@@ -1,5 +1,3 @@
-# Matplotlib & Seaborn 可视化
-
 Matplotlib 是 Python 数据可视化的基础库，几乎所有图表需求都能用它完成；Seaborn 建立在 Matplotlib 之上，专为统计图表设计，用更少的代码生成更美观的结果。理解两者的定位和协作方式，是数据分析工作流的必备技能。
 
 ## Matplotlib vs Seaborn：定位对比

@@ -1,5 +1,3 @@
-# Anthropic Claude SDK 使用指南
-
 `@anthropic-ai/sdk` 是 Anthropic 官方提供的 TypeScript/Node.js SDK，用于调用 Claude 系列模型（Opus、Sonnet、Haiku）。与 OpenAI SDK 设计类似但有几处关键区别，了解这些差异能避免踩坑，也是面试中考察 LLM 接入经验的常见切入点。
 
 ## 安装与初始化

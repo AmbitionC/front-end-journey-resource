@@ -1,5 +1,3 @@
-# Chain-of-Thought 思维链技巧
-
 Chain-of-Thought（CoT，思维链）是一种让 LLM 在给出最终答案之前，先输出完整推理过程的 Prompt 技术。研究表明，CoT 能显著提升模型在数学计算、逻辑推理、多步决策等复杂任务上的准确率。
 
 ## 为什么 CoT 有效
@@ -208,4 +206,3 @@ ToT（Yao et al. 2023）是 CoT 的进一步扩展：
 - Tree of Thoughts 与 CoT 的本质区别是什么？适合解决哪类问题？
 - 如何在生产环境中使用 CoT 同时控制成本和延迟？
 
-> 部分内容参考《Hello-Agents》(datawhalechina)整理。

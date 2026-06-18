@@ -1,5 +1,3 @@
-# 智能体通信协议：MCP 与 A2A
-
 构建完一个能推理、会用工具的单体 Agent 之后，下一个挑战是：**如何让 Agent 与更广泛的外部世界高效沟通，以及如何让多个 Agent 之间相互协作？** 这正是智能体通信协议要解决的问题。本文聚焦目前业界最成熟、生态最活跃的两种协议：MCP（Model Context Protocol）和 A2A（Agent-to-Agent Protocol）。
 
 ---
@@ -371,4 +369,3 @@ A2A 中的 Agent 有自己的推理能力和自主性，不是简单的函数调
 
 ---
 
-> 本文参考《Hello-Agents》(datawhalechina) 整理。

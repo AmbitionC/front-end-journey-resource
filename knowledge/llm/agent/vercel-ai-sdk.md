@@ -1,5 +1,3 @@
-# Vercel AI SDK 深度使用
-
 Vercel AI SDK 是专为 Next.js / React 生态设计的 AI 集成库，核心目标是让"把 LLM 接入 Web 应用"这件事变得像接一个普通 API 一样简单。它内置了流式输出、React Hooks、工具调用（Tool Calling）和多模型支持，是前端工程师进入 AI 开发最顺畅的起点。
 
 > 以下内容基于 Vercel AI SDK 核心设计，具体 API 签名以 [官方文档](https://sdk.vercel.ai/docs) 最新版本为准。
@@ -391,4 +389,3 @@ async function generate(tier: keyof typeof models, prompt: string) {
 
 ---
 
-> 本文参考《Hello-Agents》(datawhalechina) 整理。

@@ -1,5 +1,3 @@
-# Token、Context Window 与 KV Cache
-
 Token 是 LLM 处理文本的最小单位，Context Window 决定模型在一次推理中能"看到"多长的上下文，KV Cache 则是让自回归推理从理论可行变为工程可用的关键优化。三者相互关联，共同决定了 LLM 的能力边界、延迟表现和使用成本。
 
 ## 什么是 Token
@@ -242,4 +240,3 @@ graph TB
 - Prefill 和 Decode 阶段的性能瓶颈分别是什么？
 - 为什么长上下文推理比短上下文成本高得多？
 
-> 部分内容参考《Hello-Agents》(datawhalechina) 整理。

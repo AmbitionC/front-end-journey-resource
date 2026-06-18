@@ -1,5 +1,3 @@
-# 向量数据库选型：Pinecone / Chroma / pgvector
-
 ## 一、为什么需要向量数据库
 
 在检索增强生成（RAG, Retrieval-Augmented Generation）系统中，文本、图像等非结构化数据首先经过嵌入模型（Embedding Model）转换为高维浮点向量，再通过**相似性搜索**（Similarity Search）找到语义上最接近的文档片段。这一流程的核心挑战在于：如何在数百万乃至数十亿条向量中，快速找到与查询向量距离最近的若干条记录。
@@ -296,4 +294,3 @@ A：隔离强度与成本之间存在权衡。行级隔离（如 pgvector 的 `t
 
 ---
 
-> 部分内容参考《Hello-Agents》(datawhalechina)整理。

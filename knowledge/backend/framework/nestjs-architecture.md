@@ -1,5 +1,3 @@
-# NestJS 企业级架构
-
 NestJS 是一个构建高效、可扩展 Node.js 服务端应用的框架，通过强制性的模块化架构、TypeScript 装饰器和依赖注入，将 Angular 的设计理念带入了后端开发，特别适合需要严格规范的企业级项目。
 
 ## 核心三元组：Module / Controller / Provider

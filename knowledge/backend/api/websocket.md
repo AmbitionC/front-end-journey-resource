@@ -1,5 +1,3 @@
-# WebSocket 实时通信
-
 WebSocket 是一种在单个 TCP 连接上提供全双工通信的协议，解决了 HTTP 轮询的效率问题，是实现实时功能（聊天、协同编辑、实时推送）的核心技术。
 
 ## WebSocket 与 HTTP 的关系

@@ -1,5 +1,3 @@
-# Worker Threads 多线程模型
-
 Node.js 的单线程模型在处理 CPU 密集型任务时会阻塞事件循环，导致所有 I/O 请求卡住。`worker_threads` 模块提供了真正的多线程能力，让 CPU 密集型计算可以在独立线程中运行，不影响主线程的响应性。
 
 ## 为什么需要 Worker Threads

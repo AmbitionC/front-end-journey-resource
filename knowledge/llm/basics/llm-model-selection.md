@@ -1,5 +1,3 @@
-# 如何选择合适的模型和版本
-
 LLM 产品线日益丰富，每家厂商都提供从"轻量快速"到"旗舰强大"的多个版本，新模型几乎每月都有发布。在这种环境下，**系统化的选型框架**比盲目跟随最新旗舰模型更有价值。本文提供一套从任务分析到生产落地的完整决策流程。
 
 > 本文只给出决策框架和定性分析，**不列具体跑分数字与价格**——这些数据变化快，以各官方最新文档和第三方评测（如 LMSYS Chatbot Arena、LiveCodeBench）为准。
@@ -279,4 +277,3 @@ async function callWithFallback(prompt: string): Promise<string> {
 - Model Routing 是什么思路，有哪些常见实现方式？
 - 多供应商备份策略在技术实现上有哪些挑战？
 
-> 部分内容参考《Hello-Agents》(datawhalechina) 整理。

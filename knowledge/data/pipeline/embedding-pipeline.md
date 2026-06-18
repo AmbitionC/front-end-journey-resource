@@ -1,5 +1,3 @@
-# Embedding 管道自动化
-
 Embedding pipeline 是将原始文本（或图像）转化为向量表示、并持久化到向量数据库的完整自动化流程，是 RAG（Retrieval-Augmented Generation）系统的核心基础设施。构建好这条管道，直接决定了后续相似度检索的质量和系统的可维护性。
 
 ## 整体架构

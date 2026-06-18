@@ -1,5 +1,3 @@
-# LLM 推理参数：Temperature / Top-P / Top-K
-
 LLM 每次生成 Token 时，先通过模型计算词表上所有 Token 的概率分布（Logits → Softmax），再按某种策略从中**采样**出下一个 Token。Temperature、Top-P、Top-K 是控制这一采样过程的核心参数，它们直接决定了输出的确定性、多样性和创意程度。理解这些参数的原理，是精准调控 LLM 行为的基础。
 
 ## 从 Logits 到概率分布
@@ -220,4 +218,3 @@ const response = await client.chat.completions.create({
 - 生产环境中如何系统地确定最优 Temperature 值？
 - Top-P 和 Top-K 同时设置时，最终候选集是并集还是交集？
 
-> 部分内容参考《Hello-Agents》(datawhalechina) 整理。

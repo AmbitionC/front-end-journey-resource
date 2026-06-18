@@ -1,5 +1,3 @@
-# 记忆与检索
-
 Agent 的记忆系统决定了它能否跨轮次保持上下文、积累经验、从历史中学习。没有记忆，每次对话都是一次性的——Agent 不知道你是谁，也不记得上一轮说过什么。本文从认知科学的类比出发，系统梳理 Agent 记忆的分类、存储与召回机制、向量检索的核心原理，以及记忆压缩与遗忘策略。
 
 ---
@@ -308,4 +306,3 @@ def calculate_recency_score(timestamp: str) -> float:
 
 ---
 
-> 本文参考《Hello-Agents》(datawhalechina) 整理。

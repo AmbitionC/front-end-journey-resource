@@ -1,5 +1,3 @@
-# 上下文工程（Context Engineering）
-
 在构建基于 LLM 的 Agent 系统时，仅靠精心设计的 Prompt 是不够的。随着任务复杂度提升、交互轮次增加，真正的瓶颈在于：**每次调用模型前，如何系统性地为它准备最优的输入上下文**。这正是上下文工程（Context Engineering）要解决的问题——它是提示工程（Prompt Engineering）的自然演进，也是构建稳健 Agent 的工程基础。
 
 ---
@@ -340,4 +338,3 @@ def calculate_relevance(content: str, query: str) -> float:
 
 ---
 
-> 本文参考《Hello-Agents》(datawhalechina) 整理。

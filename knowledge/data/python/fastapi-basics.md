@@ -1,5 +1,3 @@
-# FastAPI 快速构建 AI 后端
-
 FastAPI 是当前构建 AI 后端最主流的 Python 框架，原生支持 async/await、自动生成 OpenAPI 文档，配合 Pydantic 的类型校验，能让接口定义和 LLM 流式返回写得极其简洁。
 
 ## 核心特性

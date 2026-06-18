@@ -1,5 +1,3 @@
-# SSE 服务端推送事件
-
 SSE（Server-Sent Events）是基于 HTTP 的单向实时推送技术，服务端可以持续向客户端推送数据流，无需客户端反复轮询，也不需要 WebSocket 的双向连接。
 
 ## SSE 的工作原理

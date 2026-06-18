@@ -1,5 +1,3 @@
-# Prompt 设计基础与原则
-
 Prompt（提示词）是与大语言模型（LLM, Large Language Model）交互的主要接口——写好 Prompt 不是"凑词"，而是一门系统性的工程实践，清晰的指令、充足的上下文、合理的结构，能大幅提升模型输出的质量和一致性。
 
 ## 什么是 Prompt
@@ -301,4 +299,3 @@ A：Prompt Engineering 成本低、迭代快，适合大多数任务；Fine-tuni
 **Q："幻觉"（Hallucination）用 Prompt 能在多大程度上缓解？**
 A：可以通过"仅根据以下内容回答，若不确定请说不知道"等约束减少幻觉，但无法完全消除；需要结合 RAG（检索增强生成）或输出验证机制。
 
-> 部分内容参考《Hello-Agents》(datawhalechina)整理。

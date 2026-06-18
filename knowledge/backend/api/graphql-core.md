@@ -1,5 +1,3 @@
-# GraphQL 核心概念与使用
-
 GraphQL 是 Facebook 开源的 API 查询语言，让客户端精确声明所需数据，彻底解决 REST API 中常见的过度获取（over-fetching）和获取不足（under-fetching）问题。
 
 ## GraphQL vs REST

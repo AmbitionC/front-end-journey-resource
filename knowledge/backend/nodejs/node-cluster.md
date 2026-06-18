@@ -1,5 +1,3 @@
-# Cluster 集群模式
-
 Node.js 默认单进程运行，无法充分利用多核 CPU。`cluster` 模块允许创建多个子进程（Worker）共享同一个端口，通过多进程并行处理请求，显著提升吞吐量。
 
 ## Master/Worker 架构

@@ -1,5 +1,3 @@
-# 结构化输出与 JSON Schema
-
 LLM 默认输出自然语言，但程序需要结构化数据。结构化输出（Structured Output）技术让模型的回复直接符合预定义的 JSON Schema，省去解析自然语言的麻烦，是 LLM 集成到业务系统的关键环节。
 
 ## 为什么需要结构化输出
@@ -310,4 +308,3 @@ JSON Schema 本身也是 Prompt 的一部分，写得好能显著提升模型的
 - **JSON Schema 中 `description` 字段对模型有什么作用？**  
   `description` 直接出现在模型的上下文中，相当于字段级别的 Prompt，帮助模型理解字段语义，尤其对歧义字段（如 `score`、`type`、`status`）影响显著。
 
-> 部分内容参考《Hello-Agents》(datawhalechina)整理。

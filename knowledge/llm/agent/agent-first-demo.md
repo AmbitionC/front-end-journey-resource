@@ -1,5 +1,3 @@
-# 动手：5 分钟实现第一个智能体（Thought-Action-Observation）
-
 理论讲再多，不如亲手写一遍。本篇带你用 Python 从零搭建一个由真实 LLM 驱动的旅行助手智能体，完整走通 Thought-Action-Observation 循环。代码量不到 120 行，核心机制一目了然。
 
 ---
@@ -357,4 +355,3 @@ if "错误" in observation:
 
 ---
 
-> 本文参考《Hello-Agents》(datawhalechina) 整理。

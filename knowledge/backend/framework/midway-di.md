@@ -1,5 +1,3 @@
-# MidwayJS 框架与依赖注入
-
 MidwayJS 是阿里巴巴开源的 Node.js 全栈框架，以 TypeScript 为一等公民，通过装饰器驱动的 IoC 容器实现依赖注入，显著提升了 Node.js 服务的可维护性与可测试性。
 
 ## 核心概念：IoC 容器与装饰器

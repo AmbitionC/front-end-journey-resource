@@ -1,5 +1,3 @@
-# Agentic RL：用强化学习训练智能体
-
 提示词工程（Prompt Engineering）可以让 LLM 更好地遵循格式、调用工具，但它有一个根本天花板：模型只能在预训练知识的范围内发挥，无法超越训练数据的质量。强化学习（Reinforcement Learning，RL）提供了另一条路——让 Agent 通过**试错（Trial and Error）**自主学习，发现比人类标注更好的推理路径。这就是 **Agentic RL** 的核心价值。
 
 ## 从 LLM 训练到 Agentic RL
@@ -251,4 +249,3 @@ graph LR
 - **Q：SFT 和 Agentic RL 各自的适用边界是什么？**  
   SFT 适合教会模型新格式、新任务类型；Agentic RL 适合在 SFT 基础上进一步提升特定能力的上限。两者结合，SFT 打基础，RL 突破天花板。
 
-> 本文参考《Hello-Agents》(datawhalechina)整理。

@@ -1,5 +1,3 @@
-# pgvector：PostgreSQL 向量扩展
-
 pgvector 是 PostgreSQL 的开源向量扩展，让关系型数据库原生支持高维向量的存储与相似度检索，是构建 RAG（检索增强生成）系统时最低成本的向量存储方案之一。
 
 ## 安装与启用

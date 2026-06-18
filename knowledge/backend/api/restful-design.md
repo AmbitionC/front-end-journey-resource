@@ -1,5 +1,3 @@
-# RESTful API 设计规范
-
 REST（Representational State Transfer）是一种基于 HTTP 协议的 API 设计风格，以资源为中心，通过 HTTP 动词表达操作意图，是目前 Web API 的主流范式。
 
 ## 核心设计原则

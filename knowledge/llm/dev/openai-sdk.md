@@ -1,5 +1,3 @@
-# OpenAI SDK 完整使用指南
-
 OpenAI 官方提供了 Node.js/TypeScript SDK（npm 包名 `openai`），让开发者可以用几行代码调用 GPT 系列模型完成文本生成、对话、函数调用等任务。掌握它是对接 LLM 能力的基础，也是面试中经常被考察的实操知识点。
 
 ## 安装与初始化

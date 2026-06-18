@@ -1,5 +1,3 @@
-# Hybrid Search 混合检索
-
 纯向量检索（Dense Retrieval）在处理 GPT-4o、RFC 2616、HTTP 404 这类精确术语时往往失效——它们在嵌入空间里没有稳定的语义锚点；而纯 BM25 则在同义词、跨语言、口语化查询面前束手无策。混合检索（Hybrid Search）将两者并行，各取所长，是生产级 RAG 系统的默认选择。
 
 ---
@@ -370,4 +368,3 @@ A：核心指标是 **NDCG@K**（Normalized Discounted Cumulative Gain）和 **M
 
 ---
 
-> 部分内容参考《Hello-Agents》(datawhalechina)整理。

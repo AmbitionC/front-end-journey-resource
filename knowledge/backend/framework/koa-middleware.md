@@ -1,5 +1,3 @@
-# Koa 中间件机制
-
 Koa 是由 Express 原班人马打造的下一代 Node.js Web 框架，其核心创新是基于 async/await 的洋葱模型中间件机制，彻底解决了 Express 回调嵌套和错误处理的痛点。
 
 ## 洋葱模型（Onion Model）
