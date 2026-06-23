@@ -202,5 +202,41 @@
         ]
       }
     ]
+  },
+  {
+    "label": "计算机基础速通(八股冲刺)",
+    "key": "cs-track",
+    "children": [
+      {
+        "label": "计算机基础速通·导读",
+        "key": "cs-track-intro",
+        "isLeaf": true,
+        "currRank": 1
+      },
+      {
+        "label": "网络篇·高频考点与串讲",
+        "key": "cs-track-network",
+        "isLeaf": true,
+        "currRank": 2
+      },
+      {
+        "label": "操作系统篇·高频考点与串讲",
+        "key": "cs-track-os",
+        "isLeaf": true,
+        "currRank": 3
+      },
+      {
+        "label": "数据库与 MySQL 篇·高频考点与串讲",
+        "key": "cs-track-mysql",
+        "isLeaf": true,
+        "currRank": 4
+      },
+      {
+        "label": "Redis 与缓存篇·高频考点与串讲",
+        "key": "cs-track-redis",
+        "isLeaf": true,
+        "currRank": 5
+      }
+    ]
   }
 ]

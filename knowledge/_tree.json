@@ -804,6 +804,132 @@
     ]
   },
   {
+    "label": "计算机基础",
+    "key": "cs",
+    "children": [
+      {
+        "label": "操作系统",
+        "key": "cs-os",
+        "children": [
+          {
+            "label": "进程、线程与协程有什么区别?",
+            "key": "os-process-thread",
+            "isLeaf": true,
+            "filePath": "cs/os"
+          },
+          {
+            "label": "进程间通信(IPC)有哪些方式?",
+            "key": "os-ipc",
+            "isLeaf": true,
+            "filePath": "cs/os"
+          },
+          {
+            "label": "线程同步与互斥:锁、信号量与条件变量",
+            "key": "os-thread-sync",
+            "isLeaf": true,
+            "filePath": "cs/os"
+          },
+          {
+            "label": "死锁是如何产生的?如何预防和避免?",
+            "key": "os-deadlock",
+            "isLeaf": true,
+            "filePath": "cs/os"
+          },
+          {
+            "label": "虚拟内存与分页机制是怎么工作的?",
+            "key": "os-virtual-memory",
+            "isLeaf": true,
+            "filePath": "cs/os"
+          },
+          {
+            "label": "操作系统的进程调度算法有哪些?",
+            "key": "os-process-schedule",
+            "isLeaf": true,
+            "filePath": "cs/os"
+          }
+        ]
+      },
+      {
+        "label": "数据库与 MySQL",
+        "key": "cs-mysql",
+        "children": [
+          {
+            "label": "MySQL 索引为什么用 B+ 树?",
+            "key": "mysql-index-bptree",
+            "isLeaf": true,
+            "filePath": "cs/mysql"
+          },
+          {
+            "label": "如何优化索引?最左前缀、覆盖索引与索引失效",
+            "key": "mysql-index-optimize",
+            "isLeaf": true,
+            "filePath": "cs/mysql"
+          },
+          {
+            "label": "事务的 ACID 特性是如何保证的?",
+            "key": "mysql-transaction-acid",
+            "isLeaf": true,
+            "filePath": "cs/mysql"
+          },
+          {
+            "label": "事务隔离级别与 MVCC 原理",
+            "key": "mysql-isolation-mvcc",
+            "isLeaf": true,
+            "filePath": "cs/mysql"
+          },
+          {
+            "label": "MySQL 的锁机制:行锁、间隙锁与死锁",
+            "key": "mysql-lock",
+            "isLeaf": true,
+            "filePath": "cs/mysql"
+          },
+          {
+            "label": "redo log、undo log 与 binlog 有什么区别?",
+            "key": "mysql-logs",
+            "isLeaf": true,
+            "filePath": "cs/mysql"
+          }
+        ]
+      },
+      {
+        "label": "Redis 与缓存",
+        "key": "cs-redis",
+        "children": [
+          {
+            "label": "Redis 有哪些数据结构?各自适合什么场景?",
+            "key": "redis-data-types",
+            "isLeaf": true,
+            "filePath": "cs/redis"
+          },
+          {
+            "label": "Redis 持久化:RDB 与 AOF 怎么选?",
+            "key": "redis-persistence",
+            "isLeaf": true,
+            "filePath": "cs/redis"
+          },
+          {
+            "label": "缓存穿透、击穿、雪崩及解决方案",
+            "key": "redis-cache-problems",
+            "isLeaf": true,
+            "filePath": "cs/redis"
+          },
+          {
+            "label": "如何用 Redis 实现分布式锁?",
+            "key": "redis-distributed-lock",
+            "isLeaf": true,
+            "filePath": "cs/redis"
+          },
+          {
+            "label": "Redis 的过期删除与内存淘汰策略",
+            "key": "redis-expire-evict",
+            "isLeaf": true,
+            "filePath": "cs/redis"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "label": "前端开发(可选)",
     "key": "frontend",
     "children": [
