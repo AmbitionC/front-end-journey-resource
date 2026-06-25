@@ -2146,5 +2146,101 @@
         ]
       }
     ]
+  },
+  {
+    "label": "求职 & 职业发展",
+    "key": "career",
+    "children": [
+      {
+        "label": "Agent 工程师成长",
+        "key": "career-agent",
+        "children": [
+          {
+            "label": "Agent 工程师到底做什么",
+            "key": "agent-role-landscape",
+            "isLeaf": true,
+            "filePath": "career"
+          },
+          {
+            "label": "Agent 工程师技能图谱",
+            "key": "agent-skill-map",
+            "isLeaf": true,
+            "filePath": "career"
+          },
+          {
+            "label": "学习路线图：从 0 到能做 Agent",
+            "key": "agent-learning-roadmap",
+            "isLeaf": true,
+            "filePath": "career"
+          },
+          {
+            "label": "做出能打的 Agent 作品集",
+            "key": "agent-project-portfolio",
+            "isLeaf": true,
+            "filePath": "career"
+          },
+          {
+            "label": "AI/Agent 岗位的简历与面试",
+            "key": "agent-resume-interview",
+            "isLeaf": true,
+            "filePath": "career"
+          }
+        ]
+      },
+      {
+        "label": "前端求职与面试",
+        "key": "career-jobhunt",
+        "children": [
+          {
+            "label": "如何选择求职方向",
+            "key": "career-direction-choice",
+            "isLeaf": true,
+            "filePath": "career"
+          },
+          {
+            "label": "备战求职的心态管理",
+            "key": "mindset-management",
+            "isLeaf": true,
+            "filePath": "career"
+          },
+          {
+            "label": "高效备战面试的策略",
+            "key": "efficient-preparation-strategy",
+            "isLeaf": true,
+            "filePath": "career"
+          },
+          {
+            "label": "简历制作核心原则",
+            "key": "resume-making-principles",
+            "isLeaf": true,
+            "filePath": "career"
+          },
+          {
+            "label": "如何丰富项目经历",
+            "key": "project-experience-enhancement",
+            "isLeaf": true,
+            "filePath": "career"
+          },
+          {
+            "label": "面试前的准备工作",
+            "key": "pre-interview-preparation",
+            "isLeaf": true,
+            "filePath": "career"
+          },
+          {
+            "label": "HR 面试常见问题与答题指南",
+            "key": "hr-interview-qa-guide",
+            "isLeaf": true,
+            "filePath": "career"
+          },
+          {
+            "label": "Offer 选择的分析方法",
+            "key": "offer-selection-analysis",
+            "isLeaf": true,
+            "filePath": "career"
+          }
+        ]
+      }
+    ]
   }
 ]
