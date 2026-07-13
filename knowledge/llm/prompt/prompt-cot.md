@@ -1,208 +1,125 @@
-Chain-of-Thought（CoT，思维链）是一种让 LLM 在给出最终答案之前，先输出完整推理过程的 Prompt 技术。研究表明，CoT 能显著提升模型在数学计算、逻辑推理、多步决策等复杂任务上的准确率。
+Chain-of-Thought（CoT）最初指在示例或输出中展示中间推理步骤，以帮助语言模型处理多步问题。今天的推理模型已经能使用内部推理 Token 或 thinking 模式，因此工程重点不再是“强迫模型公开完整思维链”，而是分配合适的推理预算，并验证结论与证据。
 
-## 为什么 CoT 有效
+## CoT 解决什么问题
 
-LLM 是自回归模型（Autoregressive Model）——每个 token 只能依赖之前已生成的内容。如果直接要求输出答案，模型在生成过程中没有机会推演中间步骤。
+对需要多次状态转换的任务，直接猜最终答案容易遗漏中间约束。CoT 论文表明，带推理示例能提高部分大模型在算术、常识和符号推理基准上的表现。
 
-CoT 的核心洞察：**让模型把中间步骤写出来，等于给自己提供了可依赖的"草稿纸"（scratchpad）**。
+适合尝试的任务包括：
 
-```
-不用 CoT：
-Q: 一家店有 12 个苹果，卖出 3 个，又进货原来数量的一半，现在有几个？
-A: 13（错误）
+- 多步数学与逻辑；
+- 代码定位、规划和约束满足；
+- 需要比较多个候选方案的决策；
+- 必须先调用工具、再根据结果继续的 Agent 任务。
 
-用 CoT：
-Q: 一家店有 12 个苹果，卖出 3 个，又进货原来数量的一半，现在有几个？
-A: 先分步计算：
-   1. 卖出后：12 - 3 = 9 个
-   2. 进货量 = 原来 12 的一半 = 6 个
-   3. 现在 = 9 + 6 = 15 个
-   答案是 15 个。（正确）
-```
+简单分类、抽取或固定格式转换通常不需要长推理，强制展开会增加延迟、成本和出错机会。
 
-## CoT 流程 vs 直接回答
+![复杂问题经过推理预算、候选答案、可验证证据和检查器后得到最终答案](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/prompt-cot-verification-v2.png)
+*图：生产系统需要可核验的结论、引用、工具结果或测试，而不是依赖模型暴露私有思维过程。*
 
-下图展示了使用 CoT 与直接回答两种路径的对比：
+## 三种常见方式
 
-```mermaid
-graph LR
-    Q[Question] --> D[Direct Answer]
-    Q --> C[CoT Prompt]
-    C --> R1[Reasoning Step 1]
-    R1 --> R2[Reasoning Step 2]
-    R2 --> R3[...]
-    R3 --> A[Final Answer]
+### 1. Zero-Shot 分解
+
+对普通生成模型，可以要求先规划再回答，但最好指定**可观察产物**：
+
+```text
+先把任务分成不超过 5 个子问题。
+逐个求解；每个结论列出使用的数据或规则。
+最后只输出：结论、关键依据、无法确认的假设。
 ```
 
-直接回答路径短，但对复杂问题容易出错；CoT 路径更长，但每一步推理都作为下一步的上下文，大幅降低出错概率。
+这比泛泛的“请一步一步思考”更容易验证。
 
-## CoT 的触发方式
+### 2. Few-Shot CoT
 
-### Zero-Shot CoT（零样本思维链）
+提供带有正确中间步骤的示例，让模型学习任务分解方式。示例中的推理必须正确且与目标任务同分布；错误示例会同时污染方法和答案。
 
-最简单的方式：在 Prompt 末尾加入触发语句，无需提供任何示例。
+### 3. 推理模型的 reasoning / thinking
 
-```
-请逐步思考，然后给出答案。
-```
+新模型可能提供 `reasoning.effort`、adaptive thinking 或类似设置。内部推理 Token 可能计费，却不一定完整返回给应用。不同模型的支持方式变化很快，应按具体模型文档配置，不要把旧的 `temperature` 或手工 `<thinking>` 模板套到所有模型。
 
-英文场景下常用的经典触发短语（来自 Wei et al. 2022）：
+## 为什么不应依赖“完整公开思维链”
 
-```
-Let's think step by step.
-```
+模型生成的长解释不等于忠实记录了内部计算；它可能是事后合理化，也可能包含错误、敏感信息或无用冗余。部分平台只返回推理摘要，或明确保留内部推理。
 
-```python
-import anthropic
+生产接口更适合要求：
 
-client = anthropic.Anthropic()
+- 最终答案；
+- 简洁、可审计的关键依据；
+- 使用了哪些输入、引用和工具结果；
+- 可执行的计算、测试或验证步骤；
+- 不确定性与未验证假设。
 
-question = "一家店有 12 个苹果，卖出 3 个，又进货原来数量的一半，现在有几个？"
+对于数学题，返回公式和可重算结果；对于代码，返回补丁与测试；对于检索问答，返回引用。验证这些产物比阅读一段长“思考”更可靠。
 
-msg = client.messages.create(
-    model="claude-opus-4-5",
-    max_tokens=512,
-    messages=[
-        {
-            "role": "user",
-            "content": f"{question}\n\nLet's think step by step."
-        }
-    ]
-)
-print(msg.content[0].text)
-```
+## Self-Consistency：多路径聚合
 
-### Few-Shot CoT（少样本思维链）
+Self-Consistency 的核心是对同一问题采样多条不同推理路径，再按最终答案的一致性聚合。它可能改善有唯一可验证答案的推理任务，但成本近似随采样数增长。
 
-提供若干带有推理过程的完整示例，引导模型模仿推理格式：
+实施时应：
 
-```
-示例：
-问：小明有 5 元，买了 2 元的糖，又收到 3 元压岁钱，现在有多少钱？
-思考过程：
-  - 初始：5 元
-  - 买糖后：5 - 2 = 3 元
-  - 收到压岁钱后：3 + 3 = 6 元
-答案：6 元
+1. 只在高价值、难问题上启用；
+2. 对最终答案做规范化，避免 `15`、`15.0` 被误判为不同；
+3. 能用程序验证时优先验证，而不是只投票；
+4. 记录分歧率，分歧过高时转人工或换策略。
 
-现在你来回答：
-问：仓库有 100 件商品，出库 30 件，又入库原来库存量的 20%，现在有多少件？
-```
+现代部分模型不支持自定义采样参数，是否能产生足够多样的路径也要实测。
 
-Few-Shot CoT 效果通常优于 Zero-Shot CoT，但需要手工构造示例，成本更高。
+## 分解、搜索与验证
 
-## 三种 CoT 变体对比
+CoT 是线性分解；更复杂任务还可以使用：
 
-| 方法 | 触发方式 | 推理成本 | 准确率 | 推荐场景 |
-|------|---------|---------|--------|---------|
-| Zero-Shot CoT | `Let's think step by step` | 低 | 中 | 快速原型、通用推理任务 |
-| Few-Shot CoT | 提供带推理过程的示例 | 中 | 高 | 格式严格、需要特定推理风格 |
-| Self-Consistency | 多次采样 + 多数投票 | 高（N 次调用）| 最高 | 高精度需求、数学/逻辑题 |
+- **Least-to-Most**：先解决更简单的子问题，再逐步组合；
+- **候选搜索**：生成多个计划，用规则或评估器筛选；
+- **工具增强**：把计算、检索、代码执行交给确定性工具；
+- **反思/重试**：检查器发现具体错误后，带着错误反馈重新求解。
 
-## Self-Consistency（自一致性）
+Tree of Thoughts 等方法把中间状态组织为搜索树，但调用量、状态管理和评估器偏差都会增加。只有评测证明收益超过成本时才应采用。
 
-单次 CoT 采样可能走错推理路径。Self-Consistency（Wang et al. 2022）的做法：
+## 一个可验证的工程模板
 
-1. 用相同 Prompt 多次采样（temperature > 0 以获取多样性）
-2. 对每次推理链提取最终答案
-3. 多数投票（Majority Voting）选出最终答案
+```text
+任务：根据给定规则判断方案是否可行。
 
-```python
-import anthropic
-from collections import Counter
-
-
-def extract_answer(text: str) -> str:
-    """从推理文本的最后一行提取最终答案。"""
-    lines = text.strip().split("\n")
-    return lines[-1].strip()
-
-
-def self_consistency(question: str, n: int = 5) -> str:
-    client = anthropic.Anthropic()
-    answers = []
-    for _ in range(n):
-        msg = client.messages.create(
-            model="claude-opus-4-5",
-            max_tokens=512,
-            messages=[
-                {
-                    "role": "user",
-                    "content": (
-                        f"{question}\n\n"
-                        "Let's think step by step. "
-                        "最后一行只写最终答案（数字或选项字母）。"
-                    ),
-                }
-            ],
-            temperature=0.7,  # 以官方文档为准
-        )
-        # extract final answer from reasoning
-        answers.append(extract_answer(msg.content[0].text))
-
-    most_common, count = Counter(answers).most_common(1)[0]
-    print(f"[Self-Consistency] {n} 次采样结果：{Counter(answers)}")
-    print(f"多数投票答案：{most_common}（出现 {count} 次）")
-    return most_common
-
-
-if __name__ == "__main__":
-    q = "如果今天是周三，再过 100 天是周几？"
-    result = self_consistency(q, n=5)
-    print(f"最终答案：{result}")
+要求：
+1. 列出决定结果所需的输入事实；缺失则返回 NEED_MORE_INFO。
+2. 给出候选结论。
+3. 为每个关键结论提供规则编号或工具结果 ID。
+4. 使用检查清单验证所有硬约束。
+5. 最终只返回：status、answer、evidence_ids、open_questions。
 ```
 
-### 为什么多数投票有效
+应用随后验证 `evidence_ids` 是否真实存在、工具结果是否匹配、`status` 是否允许继续，而不是盲信模型文字。
 
-不同的推理路径（reasoning paths）因不同的中间步骤而产生误差，但正确答案往往更集中。错误路径相对分散，多数投票可以过滤掉偶发性的推理错误。
+## 成本与延迟控制
 
-## Tree of Thoughts（ToT，思维树）
+- 对简单任务跳过推理；
+- 按任务难度路由到不同 effort；
+- 限制候选数和最大输出；
+- 缓存稳定前缀与工具结果；
+- 在高风险步骤加入确定性检查器；
+- 监控推理 Token、TTFT、成功率和重试率。
 
-ToT（Yao et al. 2023）是 CoT 的进一步扩展：
+“推理更久”通常意味着更高成本，不保证单调提高质量。应在真实评测集上找稳定区间。
 
-- CoT 是**线性链**：一条推理路径到底
-- ToT 是**树形搜索**：在每个推理步骤生成多个候选分支，并使用启发式评估函数（或让模型自评）对各分支打分，通过 BFS/DFS 搜索最优解
+## 常见误区
 
-适合场景：需要回溯（backtracking）的规划类任务、创意写作的结构规划、复杂数学证明。
+- **CoT 必须完整展示给用户**：内部推理与用户可审计依据是两件事。
+- **写出步骤就一定正确**：流畅步骤也可能建立在错误事实上。
+- **所有任务都要 CoT**：简单任务可能更慢、更贵且更不稳定。
+- **固定一句触发词永久有效**：模型训练和接口已发生变化。
+- **多数投票等于事实验证**：多个样本可能共享同一系统性错误。
+- **用模型自己评分就足够**：关键结果仍需代码、规则、工具或人工校验。
 
-实现复杂度较高，通常只用于离线高质量生成场景，不适合实时 API 调用。
+## 小结
 
-## 适用场景与局限
+CoT 的价值在于为复杂任务提供额外计算和分解空间。现代工程实践应把重点放在推理预算、候选策略、可验证证据和失败回路上，而不是收集或展示完整私有思维过程。
 
-**适合 CoT：**
-- 数学计算、数量推理（Quantitative Reasoning）
-- 多步骤逻辑推断（Multi-step Logic）
-- 代码调试（逐步分析错误原因）
-- 复杂决策（利弊权衡、规划排序）
+## 参考资料
 
-**不适合 CoT：**
-- 简单分类、情感分析——CoT 反而可能引入噪声
-- 对延迟（latency）极敏感的实时场景——推理过程消耗大量 token
-- 创意写作——推理链可能让文本生硬、失去流畅性
-- 简单事实查询（"北京的首都是哪里？"）——直接回答更高效
-
-## 常见错误 / 最佳实践
-
-### 常见错误
-
-1. **对简单任务滥用 CoT**：在情感分类等任务上强制 CoT，反而可能降低准确率并浪费 token。
-2. **不验证推理链**：CoT 改善整体准确率，但不能保证每次推理正确。对关键任务要程序化验证结果，而不是盲目信任推理文本。
-3. **Self-Consistency 采样数太少**：n=2 时多数投票意义不大，通常 n≥5 才有效果。
-4. **Few-Shot 示例质量差**：示例中的推理过程如果有逻辑错误，会"教坏"模型。
-
-### 最佳实践
-
-- **先想后答**：要求模型把推理放在 `<thinking>` 标签内，最终答案放在 `<answer>` 标签，后处理时只取 `<answer>` 部分。
-- **控制推理长度**：用 `max_tokens` 限制，或在 Prompt 中指定"推理不超过 200 字"，避免无意义的冗长输出。
-- **temperature 与 Self-Consistency 配合**：采样时用 0.6–0.8，最终答案提取用 0（或直接取多数）。
-- **任务难度匹配**：简单任务用 Zero-Shot，中等任务用 Few-Shot CoT，高精度需求用 Self-Consistency。
-
-## 面试常问
-
-- 为什么 CoT 能提升推理准确率？从自回归模型的 token 生成机制角度解释。
-- Self-Consistency 和普通 CoT 有什么区别？多数投票为什么有效？
-- 什么情况下 CoT 可能降低效果或不值得使用？
-- Zero-Shot CoT 和 Few-Shot CoT 的触发方式有何差异，各自适合什么场景？
-- Tree of Thoughts 与 CoT 的本质区别是什么？适合解决哪类问题？
-- 如何在生产环境中使用 CoT 同时控制成本和延迟？
-
+- [Chain-of-Thought Prompting Elicits Reasoning in Large Language Models](https://arxiv.org/abs/2201.11903)
+- [Self-Consistency Improves Chain of Thought Reasoning in Language Models](https://arxiv.org/abs/2203.11171)
+- [Least-to-Most Prompting Enables Complex Reasoning](https://arxiv.org/abs/2205.10625)
+- [OpenAI API：Reasoning best practices](https://developers.openai.com/api/docs/guides/reasoning-best-practices)
+- [OpenAI API：Reasoning models](https://developers.openai.com/api/docs/guides/reasoning)
+- [Anthropic：Extended thinking](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking)

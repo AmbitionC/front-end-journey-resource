@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "selectionRule": "Before selecting a batch, exclude records with status=published unless the user explicitly requests an audit or refresh.",
+  "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
   "updatedAt": "2026-07-13",
   "records": [
     {
@@ -9,14 +9,13 @@
       "filePath": "llm/basics",
       "status": "published",
       "action": "updated",
-      "recordedAt": "2026-07-13",
-      "note": "Recorded after the previously completed publication so later directory-tree batches do not select it again."
+      "recordedAt": "2026-07-13"
     },
     {
       "key": "llm-token-context",
       "label": "Token、Context Window 与 KV Cache",
       "filePath": "llm/basics",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-07-13",
       "batch": "llm-basics-after-transformer-2026-07-13"
@@ -25,7 +24,7 @@
       "key": "llm-model-compare",
       "label": "主流模型对比：GPT / Claude / Qwen / DeepSeek",
       "filePath": "llm/basics",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-07-13",
       "batch": "llm-basics-after-transformer-2026-07-13"
@@ -34,10 +33,55 @@
       "key": "llm-inference-params",
       "label": "LLM 推理参数：Temperature / Top-P / Top-K",
       "filePath": "llm/basics",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-07-13",
       "batch": "llm-basics-after-transformer-2026-07-13"
+    },
+    {
+      "key": "llm-model-selection",
+      "label": "如何选择合适的模型和版本",
+      "filePath": "llm/basics",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-13",
+      "batch": "llm-model-selection-and-prompt-core-2026-07-13"
+    },
+    {
+      "key": "prompt-basics",
+      "label": "Prompt 设计基础与原则",
+      "filePath": "llm/prompt",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-13",
+      "batch": "llm-model-selection-and-prompt-core-2026-07-13"
+    },
+    {
+      "key": "prompt-cot",
+      "label": "Chain-of-Thought 思维链技巧",
+      "filePath": "llm/prompt",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-13",
+      "batch": "llm-model-selection-and-prompt-core-2026-07-13"
+    },
+    {
+      "key": "prompt-few-shot",
+      "label": "Few-Shot 与 Zero-Shot 提示",
+      "filePath": "llm/prompt",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-13",
+      "batch": "llm-model-selection-and-prompt-core-2026-07-13"
+    },
+    {
+      "key": "prompt-structured-output",
+      "label": "结构化输出与 JSON Schema",
+      "filePath": "llm/prompt",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-13",
+      "batch": "llm-model-selection-and-prompt-core-2026-07-13"
     }
   ]
 }
