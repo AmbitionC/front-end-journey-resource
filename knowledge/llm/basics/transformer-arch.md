@@ -292,3 +292,5 @@ Attention 负责“从哪里读取信息”，FFN 负责“如何变换当前位
 - [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135)
 - [The Llama 3 Herd of Models](https://arxiv.org/abs/2407.21783)
 - [PyTorch scaled_dot_product_attention](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html)
+
+<!-- content-sync: 2026-07-13 -->
