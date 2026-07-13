@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "selectionRule": "Before selecting a batch, exclude records with status=published unless the user explicitly requests an audit or refresh.",
+  "updatedAt": "2026-07-13",
+  "records": [
+    {
+      "key": "transformer-arch",
+      "label": "Transformer 架构原理",
+      "filePath": "llm/basics",
+      "status": "published",
+      "action": "updated",
+      "recordedAt": "2026-07-13",
+      "note": "Recorded after the previously completed publication so later directory-tree batches do not select it again."
+    },
+    {
+      "key": "llm-token-context",
+      "label": "Token、Context Window 与 KV Cache",
+      "filePath": "llm/basics",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-13",
+      "batch": "llm-basics-after-transformer-2026-07-13"
+    },
+    {
+      "key": "llm-model-compare",
+      "label": "主流模型对比：GPT / Claude / Qwen / DeepSeek",
+      "filePath": "llm/basics",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-13",
+      "batch": "llm-basics-after-transformer-2026-07-13"
+    },
+    {
+      "key": "llm-inference-params",
+      "label": "LLM 推理参数：Temperature / Top-P / Top-K",
+      "filePath": "llm/basics",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-13",
+      "batch": "llm-basics-after-transformer-2026-07-13"
+    }
+  ]
+}

@@ -1,225 +1,112 @@
-当前 LLM 生态形成了以 OpenAI、Anthropic、阿里云、深度求索为代表的多条主要产品线。本文从工程师视角做**定性多维对比**，聚焦架构取向、能力特点和适用场景，**不列具体跑分数字与精确价格**——这些数据随版本迭代快速变化，请以各官方最新文档和评测为准。
+GPT、Claude、Qwen 和 DeepSeek 都不是一个固定模型，而是持续演进的模型家族。真正可靠的选型方法不是背“谁最强”，而是先明确任务和约束，再用自己的数据评测当前可用版本。
 
-## 四大系列全景概览
+> 本文的产品状态以 **2026-07-13** 的官方文档为准。模型名称、上下文、价格和参数支持会变化；上线前应重新查询官方模型列表。
 
-```mermaid
-mindmap
-  root((主流 LLM))
-    GPT 系列
-      OpenAI
-      闭源商业 API
-      多模态完善
-      生态最成熟
-    Claude 系列
-      Anthropic
-      闭源商业 API
-      安全性强
-      长上下文突出
-    Qwen 系列
-      阿里云
-      开源 + 商业双轨
-      中文最强
-      国内部署友好
-    DeepSeek 系列
-      深度求索
-      开源 + 商业双轨
-      MoE 高性价比
-      推理能力强
-```
+## 先比较“产品线”，再比较具体版本
 
-## GPT 系列（OpenAI）
+同一厂商往往同时提供旗舰、均衡、低成本、推理、多模态或代码模型。品牌级结论会掩盖版本差异。正确的比较单位应包含：
 
-OpenAI 的 GPT 系列开创了当前大语言模型时代，从 GPT-3 到 GPT-4o、o 系列推理模型，形成了完整的产品矩阵。
+$$
+\text{厂商}+\text{模型 ID}+\text{版本/快照}+\text{API 形态}+\text{部署区域}
+$$
 
-**核心能力特点：**
+例如，同一个模型别名可能随时间指向新快照；同一家族的推理模型和低延迟模型也可能不接受相同参数。
 
-- **多模态体系完整**：文本、图像、语音、视频输入支持较为完善，且各模态集成紧密
-- **工具生态最早成熟**：Function Calling、Structured Outputs、Assistants API 等功能推出早、文档完善，大量第三方框架（LangChain、LlamaIndex 等）优先支持 OpenAI API 格式
-- **o 系列推理模型**：o1、o3 等"思维链推理"（Chain-of-Thought Reasoning）模型针对数学、科学、代码等需要逻辑推理的任务有专项优化，采用测试时计算（Test-Time Compute）扩展策略
-- **API 稳定性高**：作为行业标准制定者，OpenAI 的 API 格式被大量服务商兼容，迁移成本低
+![从任务需求、候选模型、统一评测集到生产路由策略的模型选型流程](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-model-compare-selection-v2.png)
+*图：先用统一评测集测量具体工作负载，再决定主模型、降级模型与版本锁定，而不是做品牌排名。*
 
-**典型适用场景：** 需要稳定生产级 API、多模态能力、第三方生态深度集成，或需要专项推理能力时。
+## 四个模型家族的工程定位
 
-**主要局限：**
-- 国内网络访问受限，需代理或中转
-- 数据发往境外服务器，数据主权敏感场景不适用
-- 旗舰模型成本相对较高
+### GPT：统一 API 与多模态工具生态
 
-```typescript
-// OpenAI SDK 调用骨架（以官方文档为准）
-import OpenAI from 'openai'
+OpenAI 当前模型文档将 GPT-5.6 系列划分为旗舰、平衡和高吞吐档位，并推荐新项目使用 Responses API。其工程优势通常在于统一的文本/图像输入、结构化输出、内置工具与成熟 SDK 组合。
 
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+选择时重点检查：目标模型是否支持所需工具、结构化输出、推理强度参数、区域与数据治理要求，以及别名是否适合生产版本锁定。
 
-const response = await client.chat.completions.create({
-  model: 'gpt-4o',  // 具体模型名以官方最新列表为准
-  messages: [
-    { role: 'system', content: '你是一名专业的前端工程师。' },
-    { role: 'user', content: '解释 React 的 Fiber 架构' },
-  ],
-  temperature: 0.7,
-})
-```
+### Claude：长程任务、工具使用与明确的模型迁移规则
 
-## Claude 系列（Anthropic）
+Anthropic 当前产品线包含 Opus、Sonnet 等档位，并持续调整 thinking、effort、上下文和采样参数。官方迁移文档明确指出，部分新模型不再接受非默认的 `temperature`、`top_p`、`top_k`，说明“API 字段存在”不等于“每个模型都支持”。
 
-Anthropic 由前 OpenAI 研究员创立，将"AI 安全"置于核心，Claude 系列以可靠性和长上下文能力著称。
+选择时重点检查：长上下文与最大输出、工具调用行为、提示缓存、thinking/effort 配置，以及迁移文档中的不兼容项。
 
-**核心能力特点：**
+### Qwen：云 API 与开放权重生态并行
 
-- **超长 Context Window**：是 Claude 的显著特色，支持数十万乃至更长的 Token 上下文，分析长文档、大型代码库时有明显优势
-- **指令遵循稳定**：在需要严格遵循系统提示（System Prompt）、保持角色一致性、处理复杂多步骤指令的任务中表现可靠
-- **代码理解能力**：对大型代码库的整体理解和跨文件上下文推理表现突出
-- **Constitutional AI 训练**：减少有害输出，安全性较高，但在某些边界内容上拒绝率相对较高，需注意场景匹配
-- **Computer Use 能力**：支持操控计算机界面的 Agent 能力（以官方最新支持状态为准）
+Qwen 同时提供阿里云 Model Studio / DashScope API 和多个开放权重版本，适合需要国内云接入、OpenAI 兼容接口或自托管评估的团队。Qwen3.7 等新版本继续强化多模态与智能体方向。
 
-**典型适用场景：** 超长文档分析（法律合同、学术论文）、大型代码库审查与生成、需要严格遵循系统指令的 Agent 任务。
+选择时要区分：云端商业模型 ID、开放权重仓库、量化版本和第三方托管版本。它们的上下文、工具调用、吞吐、许可证与运维责任可能不同。
 
-**主要局限：**
-- 国内同样访问受限
-- 部分创意生成任务因安全约束相对保守
+### DeepSeek：统一模型的思考/非思考模式与兼容接口
 
-```typescript
-// Anthropic SDK 调用骨架（以官方文档为准）
-import Anthropic from '@anthropic-ai/sdk'
+DeepSeek API 提供 OpenAI 兼容调用方式，并在当前文档中把思考模式与非思考模式纳入新的模型体系。官方已公告旧别名 `deepseek-chat`、`deepseek-reasoner` 将在 2026-07-24 停用，当前分别映射到 `deepseek-v4-flash` 的非思考与思考模式。
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+这类临近弃用信息说明：生产代码不能只写一个字符串后永久不管，必须把模型弃用检查纳入发布流程。
 
-const message = await client.messages.create({
-  model: 'claude-opus-4-5',  // 具体模型名以官方最新列表为准
-  max_tokens: 4096,
-  system: '你是一名专业的代码审查工程师。',
-  messages: [
-    { role: 'user', content: '请审查以下 TypeScript 代码...' },
-  ],
-})
-```
+## 用六个维度建立候选表
 
-## Qwen 系列（阿里云 / 通义千问）
+| 维度 | 应记录什么 | 为什么重要 |
+|---|---|---|
+| 任务质量 | 业务正确率、拒答、引用、代码测试通过率 | 公共榜单不能替代你的数据 |
+| 交互能力 | 结构化输出、工具调用、多模态、流式事件 | 决定应用架构复杂度 |
+| 延迟与吞吐 | TTFT、TPS、P50/P95、并发限制 | 平均值会隐藏尾延迟 |
+| 成本 | 输入、输出、缓存、推理 Token 与失败重试 | 标价不是完整单次任务成本 |
+| 合规与部署 | 数据区域、保留策略、私有化、许可证 | 可能直接排除候选项 |
+| 运维稳定性 | 版本快照、弃用周期、限流、降级路径 | 决定生产可控性 |
 
-Qwen（通义千问）是阿里巴巴的大语言模型系列，采用开源与商业 API 双轨策略，在中文场景下有突出优势。
+不要把“中文”“代码”“推理”等能力写成永久的品牌标签。应用层表现取决于具体版本、提示、上下文、工具、解码和评测集。
 
-**核心能力特点：**
+## 一套可复用的评测流程
 
-- **中文能力最强**：在中文理解、生成、文化背景处理上具备天然优势，对中文语境和表达习惯更自然
-- **开源可私有化部署**：Qwen2.5 等版本开源权重，可在本地运行，满足数据不出境要求
-- **多模态覆盖**：Qwen-VL（视觉语言）、Qwen-Audio 等变体支持图像、音频理解
-- **代码与数学**：Qwen-Coder 系列针对代码生成优化，在同量级模型中有竞争力
-- **国内低延迟**：通过阿里云 DashScope API 调用，国内访问延迟低，与阿里云技术栈集成方便
+### 1. 建立任务切片
 
-**典型适用场景：** 中文为主的业务、需要私有化部署满足合规要求、阿里云技术栈集成、国内用户面向产品。
+从真实日志中抽取有代表性的样本，并覆盖短输入、长输入、工具失败、格式约束、边界问题和高风险请求。开发集用于调提示，盲测集用于最终比较，二者不要混用。
 
-**主要局限：**
-- 英文及小语种能力相比 GPT/Claude 旗舰版仍有差距
-- 国际化生态工具链成熟度不及 OpenAI
+### 2. 固定可比条件
 
-```typescript
-// 通过 DashScope 调用 Qwen（与 OpenAI SDK 兼容接口，以官方文档为准）
-import OpenAI from 'openai'
+固定提示模板、工具 schema、最大输出、超时和重试策略。若某模型不支持同一参数，应记录差异，不能静默换成另一个设置后继续横比。
 
-const client = new OpenAI({
-  apiKey: process.env.DASHSCOPE_API_KEY,
-  baseURL: 'https://dashscope.aliyuncs.com/compatible-mode/v1',
-})
+### 3. 同时测质量、延迟与成本
 
-const response = await client.chat.completions.create({
-  model: 'qwen-plus',  // 具体模型名以官方最新列表为准
-  messages: [{ role: 'user', content: '用中文解释一下什么是 RAG' }],
-})
-```
+对每个样本记录：任务是否完成、结构是否可解析、工具参数是否正确、人工评分、输入/输出用量、TTFT、总时长和错误码。最终比较“完成一次有效任务”的成本，而不是只比较每百万 Token 单价。
 
-## DeepSeek 系列（深度求索）
+### 4. 建立路由与降级
 
-DeepSeek 以极具竞争力的性价比和开源策略在技术社区引发广泛关注，MoE 架构和专项推理模型是其技术亮点。
+常见生产策略是让低成本模型处理清晰的高频任务，让能力更强的模型处理复杂或失败样本；当主模型限流、超时或版本异常时切换降级模型。路由规则也要通过离线回放和线上监控验证。
 
-**核心能力特点：**
+### 5. 锁定版本并持续回归
 
-- **MoE 架构**：DeepSeek-V 系列采用稀疏混合专家（Mixture of Experts）架构。相比稠密模型，MoE 在推理时只激活部分专家（子网络），总参数量大但激活参数量小，计算效率高，推理成本低。
-- **DeepSeek-R 系列（推理增强）**：专注于数学、代码、逻辑推理类任务，采用强化学习训练出自洽的推理过程（类似 OpenAI o 系列思路），在数学竞赛、编程题等任务上表现突出
-- **与 OpenAI API 格式兼容**：接口设计与 OpenAI 高度兼容，迁移成本极低
-- **开源可商用**：主要模型版本开源（具体协议以官方为准），支持本地部署
+别名适合试用，固定快照更利于复现。订阅厂商变更日志，在模型升级、提示修改、工具 schema 修改时重跑同一套回归集。
 
-**典型适用场景：** 成本敏感的高并发批量处理、数学与代码推理任务、希望用开源模型自托管、从 OpenAI 迁移成本最小化。
+## 选型示例：客服工单归类
 
-**主要局限：**
-- 生态工具链相对较新，第三方集成深度不如 OpenAI
-- 数据合规与隐私政策需用户自行评估
+假设任务需要输出固定 JSON，并在置信度低时调用知识库：
 
-```typescript
-// DeepSeek API 与 OpenAI SDK 兼容（以官方文档为准）
-import OpenAI from 'openai'
+1. 先排除无法满足数据区域要求的部署。
+2. 对四家当前候选版本运行同一批历史工单。
+3. 统计 JSON 解析成功率、分类 F1、错误工具调用率、P95 延迟和每个成功工单成本。
+4. 用失败样本而不是平均分分析差异。
+5. 选择主模型与降级模型，并锁定快照。
 
-const client = new OpenAI({
-  apiKey: process.env.DEEPSEEK_API_KEY,
-  baseURL: 'https://api.deepseek.com',
-})
+这个流程可能在不同业务上得到完全不同的答案，这正是合理结果。
 
-const response = await client.chat.completions.create({
-  model: 'deepseek-chat',  // 或 deepseek-reasoner，以官方最新列表为准
-  messages: [{ role: 'user', content: '解释 MoE 架构的核心原理' }],
-})
-```
+## 常见误区
 
-## 横向对比：多维度定性分析
+- **用厂商名代替模型版本**：同一家族内部差异可能大于品牌之间的差异。
+- **引用一次公共榜单就完成选型**：榜单提示词、评分偏好和业务分布与你不同。
+- **只比较 Token 单价**：长推理、重试、缓存命中和失败率会改变真实成本。
+- **认为兼容 OpenAI 就完全兼容**：事件格式、工具调用、参数范围和错误语义仍可能不同。
+- **自动升级别名却没有回归**：质量、延迟和参数支持都可能改变。
 
-| 维度 | GPT 系列 | Claude 系列 | Qwen 系列 | DeepSeek 系列 |
-|------|---------|------------|----------|--------------|
-| **中文能力** | 良好 | 良好 | **优秀** | 良好 |
-| **英文能力** | **优秀** | 优秀 | 良好 | 良好 |
-| **长上下文** | 支持（很长） | **特别强** | 支持 | 支持 |
-| **推理能力** | 强（o 系列） | 强 | 良好 | **强（R 系列）** |
-| **代码能力** | 强 | 强 | 良好 | 强 |
-| **多模态** | **完善** | 支持 | 支持（VL） | 支持 |
-| **开源可选** | 否 | 否 | **是** | **是** |
-| **国内访问** | 受限 | 受限 | **友好** | **友好** |
-| **生态成熟度** | **最成熟** | 较成熟 | 成长中 | 成长中 |
-| **成本定性** | 中高 | 中高 | 中低 | **低** |
+## 小结
 
-> **注意**：以上均为定性评估，具体能力随版本快速迭代，**请以各官方最新文档、独立评测基准（如 LMSYS Chatbot Arena、LiveCodeBench）为准**。
+GPT、Claude、Qwen、DeepSeek 的差异应被转化为可测量的工程问题。先按合规和能力筛选，再用统一评测集比较具体版本，最后配套版本锁定、路由、降级和持续回归，才能形成可维护的模型选择。
 
-## 架构差异补充：MoE vs 稠密模型
+## 参考资料
 
-DeepSeek 采用 MoE 架构，值得单独说明其原理：
-
-```mermaid
-graph TB
-    subgraph "稠密模型（Dense）"
-        I1[输入] --> A1[全部 N 个参数激活]
-        A1 --> O1[输出]
-    end
-
-    subgraph "MoE 模型（Mixture of Experts）"
-        I2[输入] --> G[门控网络 Gating]
-        G --> E1[专家 1]
-        G --> E2[专家 2]
-        G -.->|未激活| E3[专家 3...N]
-        E1 --> O2[加权聚合]
-        E2 --> O2
-        O2 --> Out2[输出]
-    end
-```
-
-**MoE 的核心权衡**：
-- 总参数多（理论容量大）→ 模型能力强
-- 每次推理激活参数少 → 计算量低，成本低
-- 但：显存需要加载全部参数，硬件门槛不低；路由策略需精心设计防止专家负载不均
-
-## 选型快速导航
-
-```
-中文业务 + 数据合规要求高     → Qwen（私有化部署）
-国内高并发 + 成本敏感         → DeepSeek API / Qwen API
-数学/代码推理任务              → DeepSeek-R 系列 / GPT o 系列
-超长文档分析 + 复杂指令遵循   → Claude
-多模态 + 生态集成 + 国际化    → GPT
-开源自托管 + 灵活定制          → Qwen / DeepSeek
-```
-
-## 面试常问
-
-- MoE 架构为什么在推理成本上有优势，代价是什么？
-- Claude 的超长 Context Window 有哪些实际使用限制？（"Lost in the Middle" 效应）
-- 开源模型和闭源 API 在商业场景下如何取舍？
-- 为什么大多数模型的 API 格式都兼容 OpenAI 格式？有什么好处？
-- 如果要从 GPT 迁移到 DeepSeek，主要需要注意哪些兼容性问题？
-
+- [OpenAI API：Models](https://developers.openai.com/api/docs/models)
+- [OpenAI API：Model guidance](https://developers.openai.com/api/docs/guides/latest-model)
+- [Anthropic：What's new in Claude Opus 4.8](https://docs.anthropic.com/en/docs/about-claude/models/whats-new-claude-4-8)
+- [Anthropic：What's new in Claude Sonnet 5](https://docs.anthropic.com/en/docs/about-claude/models/whats-new-sonnet-5)
+- [Alibaba Cloud Model Studio：DashScope API Reference](https://www.alibabacloud.com/help/en/model-studio/qwen-api-via-dashscope)
+- [Qwen：Qwen3.7](https://qwen.ai/blog?id=qwen3.7)
+- [DeepSeek API Docs](https://api-docs.deepseek.com/)
+- [DeepSeek：Models & Pricing](https://api-docs.deepseek.com/quick_start/pricing/)
