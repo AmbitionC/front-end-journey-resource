@@ -30,3 +30,4 @@ jobs:
             -d "{\"beforeSha\":\"$BEFORE\",\"afterSha\":\"$AFTER\"}" \
             -w "\nHTTP %{http_code}\n" | tee /tmp/resp.txt
           grep -q '"success":true' /tmp/resp.txt
+          grep -q '"errors":\\[\\]' /tmp/resp.txt
