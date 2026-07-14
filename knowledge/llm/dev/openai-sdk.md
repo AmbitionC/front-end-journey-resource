@@ -39,7 +39,7 @@ console.log({
 
 `response.output` 是由不同类型条目组成的数组，可能包含文本消息、推理项和工具调用；`output_text` 是 SDK 提供的文本聚合便捷属性。不要假设所有结果都在 `output[0].content[0]`。
 
-![服务端通过 OpenAI SDK 调用 Responses API，处理模型输出或工具调用，并通过事件流接收增量结果](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/openai-sdk-responses-lifecycle-v2.png)
+![服务端通过 OpenAI SDK 调用 Responses API，处理模型输出或工具调用，并通过事件流接收增量结果](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/openai-sdk-responses-lifecycle-v3.webp)
 *图：密钥只在业务服务中；模型提出工具调用，业务服务校验并执行，再把工具结果交还模型。*
 
 ## 指令与多轮状态

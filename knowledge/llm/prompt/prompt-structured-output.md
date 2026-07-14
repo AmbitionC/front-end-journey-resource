@@ -14,7 +14,7 @@
 
 平台在解码阶段约束可生成 Token，使结果匹配支持的 JSON Schema 子集。它比 Prompt-only 可靠，但仍可能出现拒答、长度截断、API 错误，且 schema 支持范围因模型而异。
 
-![Prompt 和 JSON Schema 经过约束解码、Schema 校验与业务校验后得到可信对象](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/prompt-structured-output-pipeline-v2.png)
+![Prompt 和 JSON Schema 经过约束解码、Schema 校验与业务校验后得到可信对象](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/prompt-structured-output-pipeline-v3.webp)
 *图：Schema 合法只证明结构符合约束；事实、权限和业务规则仍需单独验证。*
 
 ## 先设计数据合同

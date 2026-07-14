@@ -4,7 +4,7 @@
 
 对于新建文本应用，OpenAI 官方推荐 Responses API。Chat Completions 仍受支持，但不应再作为新教程的默认起点。
 
-![从浏览器到 OpenAI Responses API 的请求链路](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/aigc-openai-responses-minimal-v2.png)
+![从浏览器到 OpenAI Responses API 的请求链路](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/aigc-openai-responses-minimal-v3.webp)
 
 ## 一、准备服务端环境
 

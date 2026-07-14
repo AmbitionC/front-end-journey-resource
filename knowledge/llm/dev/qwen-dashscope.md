@@ -10,7 +10,7 @@
 
 官方文档当前列出 OpenAI-compatible Chat Completions、OpenAI-compatible Responses、Anthropic-compatible Messages 和 DashScope 原生接口；其中原生接口提供最完整的能力集合。[Model Studio 文本生成接口总览](https://www.alibabacloud.com/help/en/model-studio/qwen-api-reference/)
 
-![业务服务先按地域与 Workspace 选择端点，再通过 OpenAI 兼容接口或 DashScope 原生接口调用 Qwen](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/qwen-dashscope-integration-v2.png)
+![业务服务先按地域与 Workspace 选择端点，再通过 OpenAI 兼容接口或 DashScope 原生接口调用 Qwen](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/qwen-dashscope-integration-v3.webp)
 *图：两条路径共享密钥保护、流式处理、工具校验、错误与用量监控，但请求参数和能力支持需要分别验证。*
 
 ## 方案一：OpenAI 兼容接口

@@ -10,7 +10,7 @@ $$
 
 同一家族的旗舰、均衡、轻量、推理和多模态版本可能有不同的参数、上下文、工具支持和价格。只写“用 GPT”或“用 Qwen”无法复现实验。
 
-![从业务任务、硬约束、候选版本、离线评测到灰度发布和回滚的模型选型闭环](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-model-selection-eval-loop-v2.png)
+![从业务任务、硬约束、候选版本、离线评测到灰度发布和回滚的模型选型闭环](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-model-selection-eval-loop-v3.webp)
 *图：任何模型或 Prompt 变更都应回到同一评测集，重新比较质量、尾延迟与单次成功成本。*
 
 ## 第一步：把业务任务写成可验收定义

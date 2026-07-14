@@ -43,7 +43,7 @@ console.log(message.usage, message.stop_reason);
 
 不要假设 `content[0]` 一定是文本，也不要忽略 `stop_reason`。`max_tokens` 达到上限、模型请求工具或正常结束，需要不同处理。
 
-![TypeScript 服务通过 Messages API 接收内容块，校验并执行 tool_use，再用 tool_result 继续对话](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/claude-sdk-messages-tools-v2.png)
+![TypeScript 服务通过 Messages API 接收内容块，校验并执行 tool_use，再用 tool_result 继续对话](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/claude-sdk-messages-tools-v3.webp)
 *图：只有 `tool_use` 路径进入参数校验和工具执行；普通 `text` 块可以直接组成回答。*
 
 ## 模型 ID 与推理配置
