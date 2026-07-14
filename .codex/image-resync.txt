@@ -1,34 +1,4 @@
-# OSS image repair manifest
-# Triggered after fe-journey-faas image integrity fix on 2026-07-14.
-# Keep paths versioned and auditable; changing this file re-enqueues them.
+# OSS image repair probe
+# Single small image to distinguish batch timeout from sync failure.
 
-images/transformer-arch-modern-decoder-block-v3.png
-images/transformer-arch-causal-attention-v3.png
-images/llm-token-context-kv-cache-v2.png
-images/llm-model-compare-selection-v2.png
-images/llm-inference-params-sampling-v2.png
-images/llm-model-selection-eval-loop-v2.png
-images/prompt-basics-contract-v2.png
-images/prompt-cot-verification-v2.png
-images/prompt-structured-output-pipeline-v2.png
-images/prompt-few-shot-strategies-v2.png
-images/prompt-system-boundaries-v2.png
-images/prompt-versioning-experiment-v2.png
-images/openai-sdk-responses-lifecycle-v2.png
-images/claude-sdk-messages-tools-v2.png
-images/qwen-dashscope-integration-v2.png
-images/aigc-application-bff-stream-v2.png
-images/llm-sse-streaming-boundaries-v2.png
-images/aigc-openai-responses-minimal-v2.png
-images/deepseek-api-thinking-tools-v2.png
-images/function-calling-execution-loop-v2.png
-images/aigc-frontend-scenarios-v2.png
-images/embedding-similarity-space-v2.png
-images/rag-chunking-strategies-v2.png
-images/vector-db-selection-matrix-v2.png
-images/rag-pipeline-production-loop-v2.png
-images/rag-hybrid-search-pipeline-v2.png
-images/rag-evaluation-diagnostic-loop-v2.png
-images/agent-architecture-peas-loop-v2.png
-images/agent-first-demo-loop-v2.png
 images/agent-history-timeline-v2.png
