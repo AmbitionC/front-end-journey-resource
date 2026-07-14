@@ -87,7 +87,7 @@
       "key": "prompt-system",
       "label": "System Prompt 设计模式",
       "filePath": "llm/prompt",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-07-14",
       "batch": "prompt-system-versioning-and-sdk-basics-2026-07-14"
@@ -96,7 +96,7 @@
       "key": "prompt-versioning",
       "label": "Prompt 版本管理与 A/B 测试",
       "filePath": "llm/prompt",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-07-14",
       "batch": "prompt-system-versioning-and-sdk-basics-2026-07-14"
@@ -105,7 +105,7 @@
       "key": "openai-sdk",
       "label": "OpenAI SDK 完整使用指南",
       "filePath": "llm/dev",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-07-14",
       "batch": "prompt-system-versioning-and-sdk-basics-2026-07-14"
@@ -114,7 +114,7 @@
       "key": "claude-sdk",
       "label": "Anthropic Claude SDK 使用指南",
       "filePath": "llm/dev",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-07-14",
       "batch": "prompt-system-versioning-and-sdk-basics-2026-07-14"
@@ -123,10 +123,55 @@
       "key": "qwen-dashscope",
       "label": "通义千问 DashScope API 接入",
       "filePath": "llm/dev",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-07-14",
       "batch": "prompt-system-versioning-and-sdk-basics-2026-07-14"
+    },
+    {
+      "key": "deepseek-api",
+      "label": "DeepSeek API 接入实践",
+      "filePath": "llm/dev",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-14",
+      "batch": "deepseek-streaming-tools-and-frontend-integration-2026-07-14"
+    },
+    {
+      "key": "llm-sse-streaming",
+      "label": "SSE 流式响应实现详解",
+      "filePath": "llm/dev",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-14",
+      "batch": "deepseek-streaming-tools-and-frontend-integration-2026-07-14"
+    },
+    {
+      "key": "function-calling",
+      "label": "Function Calling 工具调用",
+      "filePath": "llm/dev",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-14",
+      "batch": "deepseek-streaming-tools-and-frontend-integration-2026-07-14"
+    },
+    {
+      "key": "aigc-application",
+      "label": "如何集成大模型到前端应用",
+      "filePath": "llm/dev",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-14",
+      "batch": "deepseek-streaming-tools-and-frontend-integration-2026-07-14"
+    },
+    {
+      "key": "aigc-openai",
+      "label": "如何调用GPT的OpenAPI",
+      "filePath": "fe/aigc",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-14",
+      "batch": "deepseek-streaming-tools-and-frontend-integration-2026-07-14"
     }
   ]
 }
