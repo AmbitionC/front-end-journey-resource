@@ -1,0 +1,1988 @@
+{
+  "schemaVersion": 2,
+  "status": "proposal",
+  "theme": "Agent",
+  "generatedAt": "2026-07-14",
+  "targetTotal": 300,
+  "strategy": "300 个核心知识点构成默认学习地图；旧文章不直接删除，未入选内容进入扩展资料。",
+  "ratio": [
+    {
+      "key": "agent-llm",
+      "label": "Agent 与大模型核心",
+      "count": 165,
+      "percent": 55
+    },
+    {
+      "key": "server",
+      "label": "服务端工程",
+      "count": 45,
+      "percent": 15
+    },
+    {
+      "key": "data",
+      "label": "数据工程",
+      "count": 35,
+      "percent": 11.67
+    },
+    {
+      "key": "cs-algorithm",
+      "label": "计算机与算法基础",
+      "count": 25,
+      "percent": 8.33
+    },
+    {
+      "key": "frontend-core",
+      "label": "前端核心",
+      "count": 20,
+      "percent": 6.67
+    },
+    {
+      "key": "career",
+      "label": "项目与职业",
+      "count": 10,
+      "percent": 3.33
+    }
+  ],
+  "migrationRules": [
+    "Agent 与大模型知识占 55%，并按模型、Prompt、应用、RAG、Agent、评估、安全、生产逐级展开。",
+    "服务端、数据、计算机与算法合计 35%，只保留能支撑 Agent 系统落地的核心能力。",
+    "前端占 6.67%，聚焦 Agent 产品界面而非传统面试题全集。",
+    "现有文章默认保留；未进入核心地图的内容转入扩展资料，不直接删除。",
+    "新知识点必须先创建对应 Markdown，再进入正式 knowledge/_tree.json。",
+    "重命名优先保留稳定 key 与 filePath，避免破坏历史链接。",
+    "同一概念只在一个方向完整讲解，其他方向通过前置知识链接复用。"
+  ],
+  "groups": [
+    {
+      "key": "agent-llm",
+      "label": "Agent 与大模型核心",
+      "target": 165,
+      "percent": 55,
+      "children": [
+        {
+          "key": "llm-foundation",
+          "label": "LLM 基础",
+          "items": [
+            {
+              "key": "transformer-arch",
+              "label": "Transformer 架构原理",
+              "source": "existing",
+              "currentLabel": "Transformer 架构原理",
+              "currentFilePath": "llm/basics"
+            },
+            {
+              "key": "llm-token-context",
+              "label": "Token、Context Window 与 KV Cache",
+              "source": "existing",
+              "currentLabel": "Token、Context Window 与 KV Cache",
+              "currentFilePath": "llm/basics"
+            },
+            {
+              "key": "llm-inference-params",
+              "label": "LLM 推理参数：Temperature / Top-P / Top-K",
+              "source": "existing",
+              "currentLabel": "LLM 推理参数：Temperature / Top-P / Top-K",
+              "currentFilePath": "llm/basics"
+            },
+            {
+              "key": "llm-model-selection",
+              "label": "模型能力评估与选型",
+              "source": "existing",
+              "currentLabel": "如何选择合适的模型和版本",
+              "currentFilePath": "llm/basics"
+            },
+            {
+              "key": "llm-model-compare",
+              "label": "主流模型能力与适用场景对比",
+              "source": "existing",
+              "currentLabel": "主流模型对比：GPT / Claude / Qwen / DeepSeek",
+              "currentFilePath": "llm/basics"
+            },
+            {
+              "key": "llm-capability-boundaries",
+              "label": "大模型的能力边界、幻觉与不确定性",
+              "source": "planned"
+            },
+            {
+              "key": "llm-multimodal-basics",
+              "label": "多模态模型基础：文本 / 图像 / 音频",
+              "source": "planned"
+            },
+            {
+              "key": "llm-tokenizer",
+              "label": "Tokenizer、词表与子词切分",
+              "source": "planned"
+            },
+            {
+              "key": "llm-training-overview",
+              "label": "大模型训练全流程概览",
+              "source": "planned"
+            },
+            {
+              "key": "llm-pretraining",
+              "label": "预训练目标、数据与 Scaling",
+              "source": "planned"
+            },
+            {
+              "key": "llm-alignment",
+              "label": "模型对齐：SFT、偏好数据与安全",
+              "source": "planned"
+            },
+            {
+              "key": "llm-rlhf-dpo",
+              "label": "RLHF、RLAIF 与 DPO 的差异",
+              "source": "planned"
+            },
+            {
+              "key": "llm-quantization",
+              "label": "模型量化与精度权衡",
+              "source": "planned"
+            },
+            {
+              "key": "llm-moe",
+              "label": "MoE 混合专家模型原理",
+              "source": "planned"
+            },
+            {
+              "key": "llm-reasoning-models",
+              "label": "推理模型、思考预算与使用边界",
+              "source": "planned"
+            },
+            {
+              "key": "llm-long-context",
+              "label": "长上下文、注意力稀释与有效利用",
+              "source": "planned"
+            },
+            {
+              "key": "llm-open-source-deployment",
+              "label": "开源模型选型、推理与本地部署",
+              "source": "planned"
+            }
+          ]
+        },
+        {
+          "key": "prompt-context",
+          "label": "Prompt 与上下文工程",
+          "items": [
+            {
+              "key": "prompt-basics",
+              "label": "Prompt 设计基础与原则",
+              "source": "existing",
+              "currentLabel": "Prompt 设计基础与原则",
+              "currentFilePath": "llm/prompt"
+            },
+            {
+              "key": "prompt-system",
+              "label": "System Prompt 设计模式",
+              "source": "existing",
+              "currentLabel": "System Prompt 设计模式",
+              "currentFilePath": "llm/prompt"
+            },
+            {
+              "key": "prompt-few-shot",
+              "label": "Few-Shot 与 Zero-Shot 提示",
+              "source": "existing",
+              "currentLabel": "Few-Shot 与 Zero-Shot 提示",
+              "currentFilePath": "llm/prompt"
+            },
+            {
+              "key": "prompt-structured-output",
+              "label": "结构化输出与 JSON Schema",
+              "source": "existing",
+              "currentLabel": "结构化输出与 JSON Schema",
+              "currentFilePath": "llm/prompt"
+            },
+            {
+              "key": "prompt-cot",
+              "label": "推理提示策略与适用边界",
+              "source": "existing",
+              "currentLabel": "Chain-of-Thought 思维链技巧",
+              "currentFilePath": "llm/prompt"
+            },
+            {
+              "key": "context-engineering",
+              "label": "上下文工程（Context Engineering）",
+              "source": "existing",
+              "currentLabel": "上下文工程(Context Engineering)",
+              "currentFilePath": "llm/agent"
+            },
+            {
+              "key": "prompt-versioning",
+              "label": "Prompt 版本管理与 A/B 测试",
+              "source": "existing",
+              "currentLabel": "Prompt 版本管理与 A/B 测试",
+              "currentFilePath": "llm/prompt"
+            },
+            {
+              "key": "prompt-testing-debugging",
+              "label": "Prompt 调试、测试与回归验证",
+              "source": "planned"
+            },
+            {
+              "key": "prompt-role-boundaries",
+              "label": "System、Developer、User 消息的职责边界",
+              "source": "planned"
+            },
+            {
+              "key": "prompt-instruction-hierarchy",
+              "label": "指令优先级与冲突处理",
+              "source": "planned"
+            },
+            {
+              "key": "prompt-template-design",
+              "label": "Prompt 模板、变量与复用设计",
+              "source": "planned"
+            },
+            {
+              "key": "prompt-examples-selection",
+              "label": "示例选择、排序与动态 Few-Shot",
+              "source": "planned"
+            },
+            {
+              "key": "prompt-output-validation",
+              "label": "模型输出校验与自动修复",
+              "source": "planned"
+            },
+            {
+              "key": "prompt-context-compression",
+              "label": "上下文压缩、摘要与裁剪",
+              "source": "planned"
+            },
+            {
+              "key": "prompt-cache-design",
+              "label": "Prompt Cache 与稳定前缀设计",
+              "source": "planned"
+            }
+          ]
+        },
+        {
+          "key": "ai-application",
+          "label": "AI 应用开发",
+          "items": [
+            {
+              "key": "llm-api-basics",
+              "label": "大模型 API 通用模型：消息、响应与计费",
+              "source": "planned"
+            },
+            {
+              "key": "openai-sdk",
+              "label": "OpenAI SDK 核心使用",
+              "source": "existing",
+              "currentLabel": "OpenAI SDK 完整使用指南",
+              "currentFilePath": "llm/dev"
+            },
+            {
+              "key": "function-calling",
+              "label": "Function Calling 与工具调用",
+              "source": "existing",
+              "currentLabel": "Function Calling 工具调用",
+              "currentFilePath": "llm/dev"
+            },
+            {
+              "key": "llm-sse-streaming",
+              "label": "SSE 流式响应与增量渲染",
+              "source": "existing",
+              "currentLabel": "SSE 流式响应实现详解",
+              "currentFilePath": "llm/dev"
+            },
+            {
+              "key": "aigc-application",
+              "label": "将大模型集成到 Web 应用",
+              "source": "existing",
+              "currentLabel": "如何集成大模型到前端应用",
+              "currentFilePath": "llm/dev"
+            },
+            {
+              "key": "llm-conversation-state",
+              "label": "对话状态、会话与历史管理",
+              "source": "planned"
+            },
+            {
+              "key": "llm-multimodal-api",
+              "label": "多模态输入输出应用开发",
+              "source": "planned"
+            },
+            {
+              "key": "llm-error-retry-fallback",
+              "label": "超时、重试、Fallback 与错误处理",
+              "source": "planned"
+            },
+            {
+              "key": "llm-model-routing",
+              "label": "模型路由与多供应商适配",
+              "source": "planned"
+            },
+            {
+              "key": "llm-response-api-patterns",
+              "label": "Responses、Chat 与统一生成接口模式",
+              "source": "planned"
+            },
+            {
+              "key": "llm-stream-cancel-resume",
+              "label": "流式请求取消、续传与状态恢复",
+              "source": "planned"
+            },
+            {
+              "key": "llm-batch-api",
+              "label": "Batch 批处理与离线任务",
+              "source": "planned"
+            },
+            {
+              "key": "llm-file-input",
+              "label": "文件上传、解析与大文件处理",
+              "source": "planned"
+            },
+            {
+              "key": "llm-vision-app",
+              "label": "视觉理解与图像生成应用",
+              "source": "planned"
+            },
+            {
+              "key": "llm-audio-realtime",
+              "label": "语音、音频与 Realtime 应用",
+              "source": "planned"
+            },
+            {
+              "key": "llm-provider-abstraction",
+              "label": "模型供应商抽象层设计",
+              "source": "planned"
+            },
+            {
+              "key": "llm-api-security",
+              "label": "API Key、代理层与客户端安全",
+              "source": "planned"
+            },
+            {
+              "key": "llm-token-budget",
+              "label": "Token 预算、截断与上下文分配",
+              "source": "planned"
+            },
+            {
+              "key": "llm-user-feedback",
+              "label": "用户反馈采集与质量闭环",
+              "source": "planned"
+            },
+            {
+              "key": "claude-sdk",
+              "label": "Anthropic Claude SDK 核心使用",
+              "source": "existing",
+              "currentLabel": "Anthropic Claude SDK 使用指南",
+              "currentFilePath": "llm/dev"
+            },
+            {
+              "key": "qwen-dashscope",
+              "label": "通义千问 DashScope API 接入",
+              "source": "existing",
+              "currentLabel": "通义千问 DashScope API 接入",
+              "currentFilePath": "llm/dev"
+            },
+            {
+              "key": "deepseek-api",
+              "label": "DeepSeek API 接入实践",
+              "source": "existing",
+              "currentLabel": "DeepSeek API 接入实践",
+              "currentFilePath": "llm/dev"
+            },
+            {
+              "key": "aigc-openai",
+              "label": "OpenAI API 调用基础",
+              "source": "existing",
+              "currentLabel": "如何调用GPT的OpenAPI",
+              "currentFilePath": "fe/aigc"
+            },
+            {
+              "key": "aigc-frontend",
+              "label": "大模型与前端产品的结合场景",
+              "source": "existing",
+              "currentLabel": "大模型和前端有哪些结合场景",
+              "currentFilePath": "fe/aigc"
+            }
+          ]
+        },
+        {
+          "key": "rag-core",
+          "label": "RAG 与知识系统",
+          "items": [
+            {
+              "key": "embedding-basics",
+              "label": "Embedding 原理与向量相似度",
+              "source": "existing",
+              "currentLabel": "Embedding 原理与向量相似度",
+              "currentFilePath": "llm/rag"
+            },
+            {
+              "key": "rag-chunking",
+              "label": "文本分块策略（Chunking）",
+              "source": "existing",
+              "currentLabel": "文本分块策略（Chunking）",
+              "currentFilePath": "llm/rag"
+            },
+            {
+              "key": "vector-db-selection",
+              "label": "向量数据库选型",
+              "source": "existing",
+              "currentLabel": "向量数据库选型：Pinecone / Chroma / pgvector",
+              "currentFilePath": "llm/rag"
+            },
+            {
+              "key": "rag-pipeline",
+              "label": "RAG 完整流程实战",
+              "source": "existing",
+              "currentLabel": "RAG 完整流程实战",
+              "currentFilePath": "llm/rag"
+            },
+            {
+              "key": "rag-hybrid-search",
+              "label": "Hybrid Search 混合检索",
+              "source": "existing",
+              "currentLabel": "Hybrid Search 混合检索",
+              "currentFilePath": "llm/rag"
+            },
+            {
+              "key": "rag-evaluation",
+              "label": "RAG 评估与优化",
+              "source": "existing",
+              "currentLabel": "RAG 评估与优化",
+              "currentFilePath": "llm/rag"
+            },
+            {
+              "key": "rag-query-rewrite",
+              "label": "查询改写、分解与扩展",
+              "source": "planned"
+            },
+            {
+              "key": "rag-reranking",
+              "label": "Rerank 重排序原理与实践",
+              "source": "planned"
+            },
+            {
+              "key": "rag-metadata-filtering",
+              "label": "元数据过滤与结构化检索",
+              "source": "planned"
+            },
+            {
+              "key": "rag-citation-grounding",
+              "label": "引用溯源、Grounding 与事实一致性",
+              "source": "planned"
+            },
+            {
+              "key": "rag-access-control",
+              "label": "RAG 数据权限与多租户隔离",
+              "source": "planned"
+            },
+            {
+              "key": "rag-production-ingestion",
+              "label": "生产级文档解析、索引与增量更新",
+              "source": "planned"
+            },
+            {
+              "key": "rag-loader-parser",
+              "label": "文档 Loader、Parser 与版面解析",
+              "source": "planned"
+            },
+            {
+              "key": "rag-table-retrieval",
+              "label": "表格、数据库与结构化数据检索",
+              "source": "planned"
+            },
+            {
+              "key": "rag-image-retrieval",
+              "label": "图像、OCR 与多模态检索",
+              "source": "planned"
+            },
+            {
+              "key": "rag-code-retrieval",
+              "label": "代码仓库切分、索引与检索",
+              "source": "planned"
+            },
+            {
+              "key": "rag-graph-rag",
+              "label": "GraphRAG 与知识图谱增强检索",
+              "source": "planned"
+            },
+            {
+              "key": "rag-parent-child",
+              "label": "Parent-Child 与 Small-to-Big Retrieval",
+              "source": "planned"
+            },
+            {
+              "key": "rag-multi-query",
+              "label": "Multi-Query 与多路召回",
+              "source": "planned"
+            },
+            {
+              "key": "rag-routing",
+              "label": "查询路由与多索引选择",
+              "source": "planned"
+            },
+            {
+              "key": "rag-context-compression",
+              "label": "检索上下文压缩与去噪",
+              "source": "planned"
+            },
+            {
+              "key": "rag-deduplication",
+              "label": "文档去重、近重复检测与规范化",
+              "source": "planned"
+            },
+            {
+              "key": "rag-index-versioning",
+              "label": "索引版本、重建与回滚",
+              "source": "planned"
+            },
+            {
+              "key": "rag-cache",
+              "label": "Embedding、检索与答案缓存",
+              "source": "planned"
+            },
+            {
+              "key": "rag-latency-cost",
+              "label": "RAG 延迟、吞吐与成本优化",
+              "source": "planned"
+            },
+            {
+              "key": "rag-testing",
+              "label": "RAG 测试集、Golden Set 与回归测试",
+              "source": "planned"
+            },
+            {
+              "key": "rag-failure-debugging",
+              "label": "RAG 失败诊断：数据、召回、排序与生成",
+              "source": "planned"
+            }
+          ]
+        },
+        {
+          "key": "agent-principles",
+          "label": "Agent 原理与编排",
+          "items": [
+            {
+              "key": "agent-architecture",
+              "label": "智能体定义、类型、PEAS 与 Agent Loop",
+              "source": "existing",
+              "currentLabel": "初识智能体:定义 / 类型 / PEAS / Agent Loop",
+              "currentFilePath": "llm/agent"
+            },
+            {
+              "key": "agent-first-demo",
+              "label": "实现第一个 Thought-Action-Observation Agent",
+              "source": "existing",
+              "currentLabel": "动手:5 分钟实现第一个智能体(Thought-Action-Observation)",
+              "currentFilePath": "llm/agent"
+            },
+            {
+              "key": "agent-history",
+              "label": "智能体发展史",
+              "source": "existing",
+              "currentLabel": "智能体发展史",
+              "currentFilePath": "llm/agent"
+            },
+            {
+              "key": "agent-react",
+              "label": "ReAct：推理与行动框架",
+              "source": "existing",
+              "currentLabel": "ReAct:推理与行动框架",
+              "currentFilePath": "llm/agent"
+            },
+            {
+              "key": "agent-paradigms",
+              "label": "Reflection、Plan-and-Execute 与 Tool-Use",
+              "source": "existing",
+              "currentLabel": "经典范式:Reflection / Plan-and-Execute / Tool-Use",
+              "currentFilePath": "llm/agent"
+            },
+            {
+              "key": "agent-memory",
+              "label": "短期记忆、长期记忆与检索",
+              "source": "existing",
+              "currentLabel": "记忆与检索",
+              "currentFilePath": "llm/agent"
+            },
+            {
+              "key": "build-agent-framework",
+              "label": "从零构建 Agent 运行时",
+              "source": "existing",
+              "currentLabel": "从零构建你的 Agent 框架",
+              "currentFilePath": "llm/agent"
+            },
+            {
+              "key": "mcp-protocol",
+              "label": "MCP / A2A 智能体通信协议",
+              "source": "existing",
+              "currentLabel": "智能体通信协议:MCP / A2A",
+              "currentFilePath": "llm/agent"
+            },
+            {
+              "key": "multi-agent",
+              "label": "多智能体协作与适用边界",
+              "source": "existing",
+              "currentLabel": "多智能体协作:CrewAI / AutoGen / MetaGPT / LangGraph",
+              "currentFilePath": "llm/agent"
+            },
+            {
+              "key": "agent-evaluation",
+              "label": "智能体性能评估",
+              "source": "existing",
+              "currentLabel": "智能体性能评估",
+              "currentFilePath": "llm/agent"
+            },
+            {
+              "key": "agent-deep-research",
+              "label": "深度研究智能体实战",
+              "source": "existing",
+              "currentLabel": "实战:自动化深度研究智能体",
+              "currentFilePath": "llm/agent"
+            },
+            {
+              "key": "agent-tool-design",
+              "label": "Agent 工具契约、Schema 与错误语义",
+              "source": "planned"
+            },
+            {
+              "key": "agent-workflow-state",
+              "label": "工作流状态、检查点与断点续跑",
+              "source": "planned"
+            },
+            {
+              "key": "agent-planning",
+              "label": "任务规划、分解与动态重规划",
+              "source": "planned"
+            },
+            {
+              "key": "agent-handoff",
+              "label": "Handoff、Agent-as-Tool 与职责边界",
+              "source": "planned"
+            },
+            {
+              "key": "agent-human-in-loop",
+              "label": "Human-in-the-loop 审批与人工接管",
+              "source": "planned"
+            },
+            {
+              "key": "agent-sandbox",
+              "label": "代码执行、浏览器与文件操作沙箱",
+              "source": "planned"
+            },
+            {
+              "key": "agent-run-loop",
+              "label": "Agent Run Loop、轮次与终止条件",
+              "source": "planned"
+            },
+            {
+              "key": "agent-state-machine",
+              "label": "用状态机建模 Agent 行为",
+              "source": "planned"
+            },
+            {
+              "key": "agent-event-driven",
+              "label": "事件驱动 Agent 与异步编排",
+              "source": "planned"
+            },
+            {
+              "key": "agent-deterministic-workflow",
+              "label": "确定性 Workflow 与 Agent 的组合",
+              "source": "planned"
+            },
+            {
+              "key": "agent-dynamic-workflow",
+              "label": "动态工作流生成与执行",
+              "source": "planned"
+            },
+            {
+              "key": "agent-tool-selection",
+              "label": "工具发现、选择与路由",
+              "source": "planned"
+            },
+            {
+              "key": "agent-tool-result-validation",
+              "label": "工具结果校验、解析与反馈",
+              "source": "planned"
+            },
+            {
+              "key": "agent-tool-timeout",
+              "label": "工具超时、取消与重试",
+              "source": "planned"
+            },
+            {
+              "key": "agent-parallel-tools",
+              "label": "并行工具调用与依赖调度",
+              "source": "planned"
+            },
+            {
+              "key": "agent-subagents",
+              "label": "Subagent 子智能体设计",
+              "source": "planned"
+            },
+            {
+              "key": "agent-supervisor",
+              "label": "Supervisor 监督者模式",
+              "source": "planned"
+            },
+            {
+              "key": "agent-delegation",
+              "label": "任务委派、职责与结果合并",
+              "source": "planned"
+            },
+            {
+              "key": "agent-multi-agent-messaging",
+              "label": "多智能体消息、协议与状态同步",
+              "source": "planned"
+            },
+            {
+              "key": "agent-memory-architecture",
+              "label": "Agent 记忆系统架构设计",
+              "source": "planned"
+            },
+            {
+              "key": "agent-memory-summarization",
+              "label": "会话摘要、压缩与记忆提炼",
+              "source": "planned"
+            },
+            {
+              "key": "agent-memory-forgetting",
+              "label": "遗忘策略、冲突处理与记忆更新",
+              "source": "planned"
+            },
+            {
+              "key": "agent-browser-use",
+              "label": "Browser-use 网页操作智能体",
+              "source": "planned"
+            },
+            {
+              "key": "agent-computer-use",
+              "label": "Computer-use 桌面操作智能体",
+              "source": "planned"
+            },
+            {
+              "key": "agent-coding",
+              "label": "Coding Agent 的架构与执行循环",
+              "source": "planned"
+            },
+            {
+              "key": "agent-voice",
+              "label": "Voice Agent 与实时对话编排",
+              "source": "planned"
+            }
+          ]
+        },
+        {
+          "key": "agent-production",
+          "label": "生产级 Agent",
+          "items": [
+            {
+              "key": "ai-observability",
+              "label": "Agent 可观测性与全链路 Tracing",
+              "source": "existing",
+              "currentLabel": "AI 应用可观测性：LangSmith / Langfuse",
+              "currentFilePath": "llm/production"
+            },
+            {
+              "key": "llm-cost-optimize",
+              "label": "Token、延迟与成本优化",
+              "source": "existing",
+              "currentLabel": "LLM 成本优化策略",
+              "currentFilePath": "llm/production"
+            },
+            {
+              "key": "prompt-injection-defense",
+              "label": "Prompt Injection 与间接注入防御",
+              "source": "existing",
+              "currentLabel": "Prompt Injection 防御",
+              "currentFilePath": "llm/production"
+            },
+            {
+              "key": "ai-rate-limiting",
+              "label": "AI 应用限流、配额与背压",
+              "source": "existing",
+              "currentLabel": "AI 应用限流与配额控制",
+              "currentFilePath": "llm/production"
+            },
+            {
+              "key": "agent-eval-framework",
+              "label": "生产级 Agent 评估系统设计",
+              "source": "existing",
+              "currentLabel": "Agent 评估框架设计",
+              "currentFilePath": "llm/production"
+            },
+            {
+              "key": "agent-guardrails",
+              "label": "输入、输出与工具 Guardrails",
+              "source": "planned"
+            },
+            {
+              "key": "agent-permission-model",
+              "label": "最小权限、授权与工具调用确认",
+              "source": "planned"
+            },
+            {
+              "key": "agent-failure-recovery",
+              "label": "失败分类、重试、补偿与恢复",
+              "source": "planned"
+            },
+            {
+              "key": "agent-idempotency",
+              "label": "幂等性、重复执行与副作用控制",
+              "source": "planned"
+            },
+            {
+              "key": "agent-data-privacy",
+              "label": "敏感数据、日志脱敏与隐私保护",
+              "source": "planned"
+            },
+            {
+              "key": "agent-security-threat-model",
+              "label": "Agent 威胁建模与安全测试",
+              "source": "planned"
+            },
+            {
+              "key": "agent-deployment",
+              "label": "Agent 服务部署、扩缩容与版本发布",
+              "source": "planned"
+            },
+            {
+              "key": "agent-feedback-loop",
+              "label": "线上反馈、评估集与持续改进闭环",
+              "source": "planned"
+            },
+            {
+              "key": "agent-trace-model",
+              "label": "Trace、Span、Run 与工具调用事件模型",
+              "source": "planned"
+            },
+            {
+              "key": "agent-metrics",
+              "label": "成功率、质量、延迟、成本与业务指标",
+              "source": "planned"
+            },
+            {
+              "key": "agent-logs",
+              "label": "Agent 结构化日志与上下文关联",
+              "source": "planned"
+            },
+            {
+              "key": "agent-debugging",
+              "label": "Agent 调试方法与失败复现",
+              "source": "planned"
+            },
+            {
+              "key": "agent-test-pyramid",
+              "label": "Agent 单元、集成、场景与端到端测试",
+              "source": "planned"
+            },
+            {
+              "key": "agent-simulation",
+              "label": "用户模拟器与环境模拟测试",
+              "source": "planned"
+            },
+            {
+              "key": "agent-red-teaming",
+              "label": "Agent 红队测试与对抗样本",
+              "source": "planned"
+            },
+            {
+              "key": "agent-benchmark",
+              "label": "Agent Benchmark 的设计与解读",
+              "source": "planned"
+            },
+            {
+              "key": "agent-online-eval",
+              "label": "在线评估、抽样与质量监控",
+              "source": "planned"
+            },
+            {
+              "key": "agent-ab-testing",
+              "label": "Agent A/B 测试与实验设计",
+              "source": "planned"
+            },
+            {
+              "key": "agent-quality-gates",
+              "label": "发布质量门禁与回归阻断",
+              "source": "planned"
+            },
+            {
+              "key": "agent-prompt-regression",
+              "label": "Prompt、工具与模型升级回归测试",
+              "source": "planned"
+            },
+            {
+              "key": "agent-indirect-injection",
+              "label": "网页、文件与邮件中的间接 Prompt Injection",
+              "source": "planned"
+            },
+            {
+              "key": "agent-tool-poisoning",
+              "label": "工具描述、Schema 与返回值投毒",
+              "source": "planned"
+            },
+            {
+              "key": "agent-memory-poisoning",
+              "label": "记忆污染与持久化攻击",
+              "source": "planned"
+            },
+            {
+              "key": "agent-data-exfiltration",
+              "label": "数据外泄路径与阻断策略",
+              "source": "planned"
+            },
+            {
+              "key": "agent-identity-auth",
+              "label": "Agent 身份、用户身份与委托授权",
+              "source": "planned"
+            },
+            {
+              "key": "agent-secrets-management",
+              "label": "密钥、凭证与 Secret 生命周期",
+              "source": "planned"
+            },
+            {
+              "key": "agent-supply-chain",
+              "label": "模型、工具、MCP 与依赖供应链安全",
+              "source": "planned"
+            },
+            {
+              "key": "agent-network-egress",
+              "label": "网络出口、域名白名单与数据边界",
+              "source": "planned"
+            },
+            {
+              "key": "agent-sandbox-escape",
+              "label": "沙箱逃逸风险与纵深防御",
+              "source": "planned"
+            },
+            {
+              "key": "agent-audit-log",
+              "label": "不可抵赖审计日志与合规留痕",
+              "source": "planned"
+            },
+            {
+              "key": "agent-api-gateway",
+              "label": "Agent Gateway 与统一接入层",
+              "source": "planned"
+            },
+            {
+              "key": "agent-queue-worker",
+              "label": "队列、Worker 与长任务执行",
+              "source": "planned"
+            },
+            {
+              "key": "agent-concurrency",
+              "label": "并发控制、资源隔离与公平调度",
+              "source": "planned"
+            },
+            {
+              "key": "agent-timeout-budget",
+              "label": "端到端超时预算与 Deadline 传播",
+              "source": "planned"
+            },
+            {
+              "key": "agent-cache",
+              "label": "模型、工具、检索与结果缓存",
+              "source": "planned"
+            },
+            {
+              "key": "agent-model-fallback",
+              "label": "模型降级、Fallback 与熔断",
+              "source": "planned"
+            },
+            {
+              "key": "agent-disaster-recovery",
+              "label": "状态备份、灾难恢复与任务重放",
+              "source": "planned"
+            },
+            {
+              "key": "agent-canary-release",
+              "label": "灰度、Canary 与模型版本发布",
+              "source": "planned"
+            },
+            {
+              "key": "agent-slo",
+              "label": "Agent SLI、SLO 与错误预算",
+              "source": "planned"
+            },
+            {
+              "key": "agent-incident-response",
+              "label": "Agent 线上事故响应与复盘",
+              "source": "planned"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "server",
+      "label": "服务端工程",
+      "target": 45,
+      "percent": 15,
+      "children": [
+        {
+          "key": "server-runtime",
+          "label": "运行时与框架",
+          "items": [
+            {
+              "key": "node-knowledge",
+              "label": "Node.js 运行时与核心模块",
+              "source": "existing",
+              "currentLabel": "NodeJS基本概念与特点",
+              "currentFilePath": "fe/node"
+            },
+            {
+              "key": "node-event-loop-deep",
+              "label": "Node.js 事件循环与异步 I/O",
+              "source": "existing",
+              "currentLabel": "Node.js 事件循环深度解析",
+              "currentFilePath": "backend/nodejs"
+            },
+            {
+              "key": "node-stream",
+              "label": "Stream 流式处理原理与实践",
+              "source": "existing",
+              "currentLabel": "Stream 流式处理原理与实践",
+              "currentFilePath": "backend/nodejs"
+            },
+            {
+              "key": "fastapi-basics",
+              "label": "FastAPI 构建 AI 服务",
+              "source": "existing",
+              "currentLabel": "FastAPI 快速构建 AI 后端",
+              "currentFilePath": "data/python"
+            },
+            {
+              "key": "node-buffer",
+              "label": "Buffer、二进制与编码",
+              "source": "existing",
+              "currentLabel": "Buffer 与二进制数据处理",
+              "currentFilePath": "backend/nodejs"
+            },
+            {
+              "key": "node-worker-threads",
+              "label": "Worker Threads 与 CPU 密集任务",
+              "source": "existing",
+              "currentLabel": "Worker Threads 多线程模型",
+              "currentFilePath": "backend/nodejs"
+            },
+            {
+              "key": "express-core",
+              "label": "Express 核心原理与中间件",
+              "source": "existing",
+              "currentLabel": "Express 核心原理",
+              "currentFilePath": "backend/framework"
+            },
+            {
+              "key": "nestjs-architecture",
+              "label": "NestJS 模块化服务架构",
+              "source": "existing",
+              "currentLabel": "NestJS 企业级架构",
+              "currentFilePath": "backend/framework"
+            },
+            {
+              "key": "koa-middleware",
+              "label": "请求上下文与洋葱模型",
+              "source": "existing",
+              "currentLabel": "Koa 中间件机制",
+              "currentFilePath": "backend/framework"
+            }
+          ]
+        },
+        {
+          "key": "server-api",
+          "label": "API 与异步任务",
+          "items": [
+            {
+              "key": "restful-design",
+              "label": "RESTful API 设计规范",
+              "source": "existing",
+              "currentLabel": "RESTful API 设计规范",
+              "currentFilePath": "backend/api"
+            },
+            {
+              "key": "websocket",
+              "label": "WebSocket 实时通信",
+              "source": "existing",
+              "currentLabel": "WebSocket 实时通信",
+              "currentFilePath": "backend/api"
+            },
+            {
+              "key": "api-versioning",
+              "label": "API 版本管理与兼容性",
+              "source": "existing",
+              "currentLabel": "API 版本管理与兼容性",
+              "currentFilePath": "backend/api"
+            },
+            {
+              "key": "api-schema-validation",
+              "label": "API Schema 校验、错误码与契约测试",
+              "source": "planned"
+            },
+            {
+              "key": "async-job-queue",
+              "label": "消息队列、异步任务与后台 Job",
+              "source": "planned"
+            },
+            {
+              "key": "graphql-core",
+              "label": "GraphQL Schema、查询与 Resolver",
+              "source": "existing",
+              "currentLabel": "GraphQL 核心概念与使用",
+              "currentFilePath": "backend/api"
+            },
+            {
+              "key": "sse-server",
+              "label": "SSE 服务端推送与连接管理",
+              "source": "existing",
+              "currentLabel": "SSE 服务端推送事件",
+              "currentFilePath": "backend/api"
+            },
+            {
+              "key": "grpc-basics",
+              "label": "gRPC、Protobuf 与服务通信",
+              "source": "planned"
+            },
+            {
+              "key": "webhook-design",
+              "label": "Webhook 签名、重试与幂等",
+              "source": "planned"
+            },
+            {
+              "key": "file-upload-service",
+              "label": "文件上传、分片与对象存储",
+              "source": "planned"
+            },
+            {
+              "key": "api-pagination-filtering",
+              "label": "分页、过滤、排序与游标设计",
+              "source": "planned"
+            },
+            {
+              "key": "api-idempotency",
+              "label": "API 幂等键与重复请求处理",
+              "source": "planned"
+            }
+          ]
+        },
+        {
+          "key": "server-storage",
+          "label": "存储与状态",
+          "items": [
+            {
+              "key": "mysql-index",
+              "label": "数据库索引原理与查询优化",
+              "source": "existing",
+              "currentLabel": "MySQL 索引原理与优化",
+              "currentFilePath": "backend/database"
+            },
+            {
+              "key": "db-transaction-lock",
+              "label": "事务、隔离级别与锁",
+              "source": "existing",
+              "currentLabel": "事务与锁机制",
+              "currentFilePath": "backend/database"
+            },
+            {
+              "key": "redis-cache",
+              "label": "Redis 缓存策略与一致性",
+              "source": "existing",
+              "currentLabel": "Redis 缓存策略与穿透击穿雪崩",
+              "currentFilePath": "backend/database"
+            },
+            {
+              "key": "agent-state-storage",
+              "label": "Agent 会话、检查点与任务状态存储",
+              "source": "planned"
+            },
+            {
+              "key": "typeorm-entity",
+              "label": "ORM 实体、关系与查询边界",
+              "source": "existing",
+              "currentLabel": "TypeORM 实体设计与关联查询",
+              "currentFilePath": "backend/database"
+            },
+            {
+              "key": "redis-data-structure",
+              "label": "Redis 数据结构与使用场景",
+              "source": "existing",
+              "currentLabel": "Redis 数据结构与使用场景",
+              "currentFilePath": "backend/database"
+            },
+            {
+              "key": "db-sharding",
+              "label": "分库分表、读写分离与扩展",
+              "source": "existing",
+              "currentLabel": "分库分表与读写分离",
+              "currentFilePath": "backend/database"
+            },
+            {
+              "key": "postgresql-transaction",
+              "label": "PostgreSQL 事务、MVCC 与锁",
+              "source": "planned"
+            },
+            {
+              "key": "database-migration",
+              "label": "数据库 Migration、回滚与兼容发布",
+              "source": "planned"
+            },
+            {
+              "key": "object-storage",
+              "label": "对象存储、预签名 URL 与生命周期",
+              "source": "planned"
+            },
+            {
+              "key": "event-store",
+              "label": "事件存储、Outbox 与状态重建",
+              "source": "planned"
+            }
+          ]
+        },
+        {
+          "key": "server-security-ops",
+          "label": "安全与交付",
+          "items": [
+            {
+              "key": "jwt-auth",
+              "label": "JWT 认证机制",
+              "source": "existing",
+              "currentLabel": "JWT 认证机制深度解析",
+              "currentFilePath": "backend/auth"
+            },
+            {
+              "key": "oauth2",
+              "label": "OAuth 2.0 授权流程",
+              "source": "existing",
+              "currentLabel": "OAuth 2.0 授权流程",
+              "currentFilePath": "backend/auth"
+            },
+            {
+              "key": "rate-limit-circuit",
+              "label": "接口限流、熔断与降级",
+              "source": "existing",
+              "currentLabel": "接口限流与熔断",
+              "currentFilePath": "backend/auth"
+            },
+            {
+              "key": "docker-basics",
+              "label": "Docker 容器化基础",
+              "source": "existing",
+              "currentLabel": "Docker 容器化基础",
+              "currentFilePath": "backend/devops"
+            },
+            {
+              "key": "cicd-pipeline",
+              "label": "CI/CD 流水线与安全发布",
+              "source": "existing",
+              "currentLabel": "CI/CD 流水线设计",
+              "currentFilePath": "backend/devops"
+            },
+            {
+              "key": "password-encrypt",
+              "label": "密码哈希、Salt 与凭证存储",
+              "source": "existing",
+              "currentLabel": "密码加密与存储最佳实践",
+              "currentFilePath": "backend/auth"
+            },
+            {
+              "key": "sql-injection",
+              "label": "SQL 注入与参数化查询",
+              "source": "existing",
+              "currentLabel": "SQL 注入防御",
+              "currentFilePath": "backend/auth"
+            },
+            {
+              "key": "docker-compose",
+              "label": "Docker Compose 多服务开发环境",
+              "source": "existing",
+              "currentLabel": "Docker Compose 多服务编排",
+              "currentFilePath": "backend/devops"
+            },
+            {
+              "key": "nginx-proxy",
+              "label": "Nginx 反向代理与负载均衡",
+              "source": "existing",
+              "currentLabel": "Nginx 反向代理与负载均衡",
+              "currentFilePath": "backend/devops"
+            },
+            {
+              "key": "logging-monitoring",
+              "label": "日志、指标、Tracing 与告警",
+              "source": "existing",
+              "currentLabel": "日志收集与监控报警",
+              "currentFilePath": "backend/devops"
+            },
+            {
+              "key": "secrets-config",
+              "label": "配置、Secret 与环境隔离",
+              "source": "planned"
+            },
+            {
+              "key": "health-check",
+              "label": "健康检查、优雅启停与就绪探针",
+              "source": "planned"
+            },
+            {
+              "key": "backup-restore",
+              "label": "数据库备份、恢复与演练",
+              "source": "planned"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "data",
+      "label": "数据工程",
+      "target": 35,
+      "percent": 11.67,
+      "children": [
+        {
+          "key": "data-python-core",
+          "label": "Python 工程基础",
+          "items": [
+            {
+              "key": "python-env",
+              "label": "Python 环境与包管理",
+              "source": "existing",
+              "currentLabel": "Python 环境与包管理（pip / conda / uv）",
+              "currentFilePath": "data/python"
+            },
+            {
+              "key": "python-typing",
+              "label": "Python 类型注解与 Pydantic",
+              "source": "existing",
+              "currentLabel": "Python 类型注解与 Pydantic",
+              "currentFilePath": "data/python"
+            },
+            {
+              "key": "python-async",
+              "label": "Python 异步编程（asyncio）",
+              "source": "existing",
+              "currentLabel": "Python 异步编程（asyncio）",
+              "currentFilePath": "data/python"
+            },
+            {
+              "key": "python-oop",
+              "label": "Python 数据模型与面向对象",
+              "source": "existing",
+              "currentLabel": "Python 数据类型与面向对象",
+              "currentFilePath": "data/python"
+            },
+            {
+              "key": "numpy-basics",
+              "label": "NumPy 数值计算基础",
+              "source": "existing",
+              "currentLabel": "NumPy 数值计算基础",
+              "currentFilePath": "data/processing"
+            },
+            {
+              "key": "jupyter-practices",
+              "label": "Jupyter Notebook 工程实践",
+              "source": "existing",
+              "currentLabel": "Jupyter Notebook 工程实践",
+              "currentFilePath": "data/analysis"
+            }
+          ]
+        },
+        {
+          "key": "data-processing-core",
+          "label": "数据处理与质量",
+          "items": [
+            {
+              "key": "pandas-basics",
+              "label": "Pandas 数据清洗与分析",
+              "source": "existing",
+              "currentLabel": "Pandas 数据清洗与分析",
+              "currentFilePath": "data/processing"
+            },
+            {
+              "key": "data-formats",
+              "label": "JSON / CSV / Parquet 数据格式",
+              "source": "existing",
+              "currentLabel": "数据格式：JSON / CSV / Parquet",
+              "currentFilePath": "data/processing"
+            },
+            {
+              "key": "text-preprocessing",
+              "label": "文本预处理与清洗策略",
+              "source": "existing",
+              "currentLabel": "文本预处理与清洗策略",
+              "currentFilePath": "data/processing"
+            },
+            {
+              "key": "data-quality",
+              "label": "数据质量评估与异常检测",
+              "source": "existing",
+              "currentLabel": "数据质量评估与异常检测",
+              "currentFilePath": "data/processing"
+            },
+            {
+              "key": "data-labeling",
+              "label": "AI 数据采集、标注与审核",
+              "source": "existing",
+              "currentLabel": "AI 训练数据采集与标注",
+              "currentFilePath": "data/pipeline"
+            },
+            {
+              "key": "data-schema-evolution",
+              "label": "数据 Schema 演进与兼容性",
+              "source": "planned"
+            },
+            {
+              "key": "data-deduplication",
+              "label": "精确去重、近似去重与污染控制",
+              "source": "planned"
+            },
+            {
+              "key": "data-sampling",
+              "label": "数据采样、分层与代表性",
+              "source": "planned"
+            }
+          ]
+        },
+        {
+          "key": "data-storage-core",
+          "label": "数据存储与检索",
+          "items": [
+            {
+              "key": "sql-core",
+              "label": "SQL 核心语法与进阶查询",
+              "source": "existing",
+              "currentLabel": "SQL 核心语法与进阶查询",
+              "currentFilePath": "data/sql"
+            },
+            {
+              "key": "postgresql-features",
+              "label": "PostgreSQL 与 JSON 数据",
+              "source": "existing",
+              "currentLabel": "PostgreSQL 特性与 JSON 支持",
+              "currentFilePath": "data/sql"
+            },
+            {
+              "key": "pgvector-usage",
+              "label": "pgvector 向量存储与检索",
+              "source": "existing",
+              "currentLabel": "pgvector：PostgreSQL 向量扩展",
+              "currentFilePath": "data/vector"
+            },
+            {
+              "key": "ann-hnsw",
+              "label": "ANN 与 HNSW 向量检索算法",
+              "source": "existing",
+              "currentLabel": "向量检索：ANN 算法与 HNSW",
+              "currentFilePath": "data/vector"
+            },
+            {
+              "key": "sql-window-function",
+              "label": "窗口函数与分析查询",
+              "source": "existing",
+              "currentLabel": "窗口函数与分析函数",
+              "currentFilePath": "data/sql"
+            },
+            {
+              "key": "sql-index-optimize",
+              "label": "索引、执行计划与查询优化",
+              "source": "existing",
+              "currentLabel": "索引优化与执行计划",
+              "currentFilePath": "data/sql"
+            },
+            {
+              "key": "clickhouse-intro",
+              "label": "ClickHouse 与列式分析",
+              "source": "existing",
+              "currentLabel": "ClickHouse 列式数据库入门",
+              "currentFilePath": "data/sql"
+            },
+            {
+              "key": "embedding-models",
+              "label": "Embedding 模型评估与选型",
+              "source": "existing",
+              "currentLabel": "Embedding 模型选型与对比",
+              "currentFilePath": "data/vector"
+            },
+            {
+              "key": "vector-database-internals",
+              "label": "向量数据库索引、过滤与一致性",
+              "source": "planned"
+            }
+          ]
+        },
+        {
+          "key": "data-pipeline-core",
+          "label": "数据管道",
+          "items": [
+            {
+              "key": "etl-design",
+              "label": "ETL / ELT 流程设计",
+              "source": "existing",
+              "currentLabel": "ETL 流程设计与最佳实践",
+              "currentFilePath": "data/pipeline"
+            },
+            {
+              "key": "embedding-pipeline",
+              "label": "Embedding 管道自动化",
+              "source": "existing",
+              "currentLabel": "Embedding 管道自动化",
+              "currentFilePath": "data/pipeline"
+            },
+            {
+              "key": "dvc-basics",
+              "label": "数据集与数据版本管理",
+              "source": "existing",
+              "currentLabel": "数据版本管理（DVC）",
+              "currentFilePath": "data/pipeline"
+            },
+            {
+              "key": "batch-stream-processing",
+              "label": "批处理、流处理与 Lambda/Kappa 架构",
+              "source": "planned"
+            },
+            {
+              "key": "data-orchestration",
+              "label": "数据任务编排、依赖与重试",
+              "source": "planned"
+            },
+            {
+              "key": "data-lineage",
+              "label": "数据血缘、元数据与可追溯性",
+              "source": "planned"
+            },
+            {
+              "key": "data-observability",
+              "label": "数据新鲜度、完整性与管道可观测",
+              "source": "planned"
+            },
+            {
+              "key": "data-contracts",
+              "label": "Data Contract 与上下游协作",
+              "source": "planned"
+            }
+          ]
+        },
+        {
+          "key": "data-analysis-core",
+          "label": "分析与实验",
+          "items": [
+            {
+              "key": "matplotlib-seaborn",
+              "label": "Matplotlib / Seaborn 数据可视化",
+              "source": "existing",
+              "currentLabel": "Matplotlib & Seaborn 可视化",
+              "currentFilePath": "data/analysis"
+            },
+            {
+              "key": "python-data-report",
+              "label": "用 Python 构建可复现数据报告",
+              "source": "existing",
+              "currentLabel": "用 Python 构建数据报告",
+              "currentFilePath": "data/analysis"
+            },
+            {
+              "key": "experiment-analysis",
+              "label": "实验设计、显著性与效果分析",
+              "source": "planned"
+            },
+            {
+              "key": "feature-store",
+              "label": "特征、标签与 Feature Store 基础",
+              "source": "planned"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "cs-algorithm",
+      "label": "计算机与算法基础",
+      "target": 25,
+      "percent": 8.33,
+      "children": [
+        {
+          "key": "cs-core",
+          "label": "计算机基础",
+          "items": [
+            {
+              "key": "os-process-thread",
+              "label": "进程、线程与协程",
+              "source": "existing",
+              "currentLabel": "进程、线程与协程有什么区别?",
+              "currentFilePath": "cs/os"
+            },
+            {
+              "key": "os-virtual-memory",
+              "label": "内存、虚拟内存与分页",
+              "source": "existing",
+              "currentLabel": "虚拟内存与分页机制是怎么工作的?",
+              "currentFilePath": "cs/os"
+            },
+            {
+              "key": "tcpIp-model",
+              "label": "OSI、TCP/IP 与端到端通信",
+              "source": "existing",
+              "currentLabel": "OSI和TCP/IP模型是什么？",
+              "currentFilePath": "network/tcpIp"
+            },
+            {
+              "key": "http-message",
+              "label": "HTTP 请求、响应与报文结构",
+              "source": "existing",
+              "currentLabel": "HTTP的报文结构是什么？",
+              "currentFilePath": "network/http"
+            },
+            {
+              "key": "os-ipc",
+              "label": "进程间通信（IPC）",
+              "source": "existing",
+              "currentLabel": "进程间通信(IPC)有哪些方式?",
+              "currentFilePath": "cs/os"
+            },
+            {
+              "key": "os-thread-sync",
+              "label": "锁、信号量与并发同步",
+              "source": "existing",
+              "currentLabel": "线程同步与互斥:锁、信号量与条件变量",
+              "currentFilePath": "cs/os"
+            },
+            {
+              "key": "os-deadlock",
+              "label": "死锁、检测与避免",
+              "source": "existing",
+              "currentLabel": "死锁是如何产生的?如何预防和避免?",
+              "currentFilePath": "cs/os"
+            },
+            {
+              "key": "tcp-handshake",
+              "label": "TCP 建连、断开与连接状态",
+              "source": "existing",
+              "currentLabel": "TCP三次握手过程？",
+              "currentFilePath": "network/tcpIp"
+            },
+            {
+              "key": "tcp-udp",
+              "label": "TCP、UDP 与传输场景",
+              "source": "existing",
+              "currentLabel": "TCP与UDP的区别与场景？",
+              "currentFilePath": "network/tcpIp"
+            },
+            {
+              "key": "dns-analysis",
+              "label": "DNS 解析、缓存与容灾",
+              "source": "existing",
+              "currentLabel": "DNS解析时有什么算法和方式减少重复操作?",
+              "currentFilePath": "network/others"
+            }
+          ]
+        },
+        {
+          "key": "algorithm-core",
+          "label": "算法与数据结构",
+          "items": [
+            {
+              "key": "algorithm-complexity",
+              "label": "时间复杂度、空间复杂度与性能估算",
+              "source": "planned"
+            },
+            {
+              "key": "algorithm-array",
+              "label": "数组、字符串与双指针",
+              "source": "existing",
+              "currentLabel": "数据结构-数组",
+              "currentFilePath": "data-structure/algorithm"
+            },
+            {
+              "key": "algorithm-stack-queue",
+              "label": "栈、队列与任务调度",
+              "source": "planned"
+            },
+            {
+              "key": "algorithm-hash",
+              "label": "哈希表、缓存与去重",
+              "source": "existing",
+              "currentLabel": "哈希表的应用",
+              "currentFilePath": "data-structure/algorithm"
+            },
+            {
+              "key": "algorithm-tree",
+              "label": "树、图与遍历",
+              "source": "existing",
+              "currentLabel": "数据结构-树",
+              "currentFilePath": "data-structure/algorithm"
+            },
+            {
+              "key": "algorithm-loop",
+              "label": "递归、分治与搜索",
+              "source": "existing",
+              "currentLabel": "递归与分治",
+              "currentFilePath": "data-structure/algorithm"
+            },
+            {
+              "key": "algorithm-string",
+              "label": "字符串、匹配与文本处理",
+              "source": "existing",
+              "currentLabel": "数据结构-字符串",
+              "currentFilePath": "data-structure/algorithm"
+            },
+            {
+              "key": "algorithm-heap",
+              "label": "堆、优先队列与 Top-K",
+              "source": "planned"
+            },
+            {
+              "key": "algorithm-linked-list",
+              "label": "链表、指针与 LRU",
+              "source": "planned"
+            },
+            {
+              "key": "algorithm-trie",
+              "label": "Trie、前缀检索与自动补全",
+              "source": "planned"
+            },
+            {
+              "key": "algorithm-sorting",
+              "label": "排序算法、稳定性与外部排序",
+              "source": "planned"
+            },
+            {
+              "key": "algorithm-graph",
+              "label": "BFS、DFS、最短路与拓扑排序",
+              "source": "planned"
+            },
+            {
+              "key": "algorithm-backtracking",
+              "label": "回溯、剪枝与组合搜索",
+              "source": "planned"
+            },
+            {
+              "key": "linear-algebra-ai",
+              "label": "向量、矩阵与线性代数直觉",
+              "source": "planned"
+            },
+            {
+              "key": "probability-statistics-ai",
+              "label": "概率、分布、采样与统计估计",
+              "source": "planned"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "frontend-core",
+      "label": "前端核心",
+      "target": 20,
+      "percent": 6.67,
+      "children": [
+        {
+          "key": "web-foundation",
+          "label": "Web 基础",
+          "items": [
+            {
+              "key": "web-semantic-accessibility",
+              "label": "语义化 HTML 与 Web 可访问性",
+              "source": "planned"
+            },
+            {
+              "key": "responsive-layout",
+              "label": "现代 CSS 布局与响应式设计",
+              "source": "existing",
+              "currentLabel": "如何实现响应式布局",
+              "currentFilePath": "html-css/css"
+            },
+            {
+              "key": "event-loop",
+              "label": "浏览器事件循环、任务与渲染时机",
+              "source": "existing",
+              "currentLabel": "事件循环机制",
+              "currentFilePath": "js-es6-ts/js"
+            },
+            {
+              "key": "promise",
+              "label": "Promise、async/await 与异步控制流",
+              "source": "existing",
+              "currentLabel": "Promise概念",
+              "currentFilePath": "js-es6-ts/es6"
+            },
+            {
+              "key": "localStorage-sessionStorage",
+              "label": "Cookie、Storage 与浏览器状态",
+              "source": "existing",
+              "currentLabel": "LocalStorage、SessionStorage和Cookie的区别",
+              "currentFilePath": "network/others"
+            },
+            {
+              "key": "web-attack",
+              "label": "XSS、CSRF、CSP 与 Web 安全基础",
+              "source": "existing",
+              "currentLabel": "常见的Web攻击分类",
+              "currentFilePath": "network/security"
+            }
+          ]
+        },
+        {
+          "key": "frontend-engineering",
+          "label": "TypeScript 与 UI 工程",
+          "items": [
+            {
+              "key": "type-system",
+              "label": "TypeScript 类型系统与类型建模",
+              "source": "existing",
+              "currentLabel": "TypeScript的类型系统",
+              "currentFilePath": "js-es6-ts/ts"
+            },
+            {
+              "key": "react-hooks",
+              "label": "React 函数组件、Hooks 与状态",
+              "source": "existing",
+              "currentLabel": "React Hooks的作用及原理",
+              "currentFilePath": "framework/react"
+            },
+            {
+              "key": "design-components",
+              "label": "可复用组件、状态与通信设计",
+              "source": "existing",
+              "currentLabel": "如何设计一个高度封装的组件",
+              "currentFilePath": "fe/design"
+            },
+            {
+              "key": "vite-testing",
+              "label": "Vite、前端构建与测试基础",
+              "source": "planned"
+            },
+            {
+              "key": "ts-generics",
+              "label": "TypeScript 泛型与可复用类型",
+              "source": "existing",
+              "currentLabel": "TypeScript中的泛型有什么用途",
+              "currentFilePath": "js-es6-ts/ts"
+            },
+            {
+              "key": "useCallback-useMemo",
+              "label": "React 渲染、Memo 与性能优化",
+              "source": "existing",
+              "currentLabel": "useCallback和useMemo性能优化",
+              "currentFilePath": "framework/react"
+            },
+            {
+              "key": "design-state",
+              "label": "前端状态管理与服务端状态",
+              "source": "existing",
+              "currentLabel": "如何实现组件的状态管理",
+              "currentFilePath": "fe/design"
+            }
+          ]
+        },
+        {
+          "key": "agent-product-ui",
+          "label": "Agent 产品界面",
+          "items": [
+            {
+              "key": "agent-chat-ui",
+              "label": "Agent Chat UI、消息模型与会话列表",
+              "source": "planned"
+            },
+            {
+              "key": "agent-streaming-ui",
+              "label": "流式文本、光标、取消与继续生成",
+              "source": "planned"
+            },
+            {
+              "key": "agent-markdown-code-ui",
+              "label": "Markdown、代码块、图表与安全渲染",
+              "source": "planned"
+            },
+            {
+              "key": "agent-citation-ui",
+              "label": "引用、来源与检索证据展示",
+              "source": "planned"
+            },
+            {
+              "key": "agent-tool-approval-ui",
+              "label": "工具调用状态、参数预览与审批界面",
+              "source": "planned"
+            },
+            {
+              "key": "agent-error-retry-ui",
+              "label": "错误、重试、恢复与降级交互",
+              "source": "planned"
+            },
+            {
+              "key": "agent-ui-accessibility-testing",
+              "label": "Agent UI 可访问性、测试与跨端适配",
+              "source": "planned"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "career",
+      "label": "项目与职业",
+      "target": 10,
+      "percent": 3.33,
+      "children": [
+        {
+          "key": "career-agent-core",
+          "label": "Agent 工程师成长",
+          "items": [
+            {
+              "key": "agent-role-landscape",
+              "label": "Agent 工程师的职责与岗位方向",
+              "source": "existing",
+              "currentLabel": "Agent 工程师到底做什么",
+              "currentFilePath": "career"
+            },
+            {
+              "key": "agent-learning-roadmap",
+              "label": "从零到 Agent 工程师的学习路线",
+              "source": "existing",
+              "currentLabel": "学习路线图：从 0 到能做 Agent",
+              "currentFilePath": "career"
+            },
+            {
+              "key": "agent-project-portfolio",
+              "label": "Agent 项目与作品集设计",
+              "source": "existing",
+              "currentLabel": "做出能打的 Agent 作品集",
+              "currentFilePath": "career"
+            },
+            {
+              "key": "agent-resume-interview",
+              "label": "AI / Agent 岗位简历与面试",
+              "source": "existing",
+              "currentLabel": "AI/Agent 岗位的简历与面试",
+              "currentFilePath": "career"
+            },
+            {
+              "key": "agent-skill-map",
+              "label": "Agent 工程师技能图谱",
+              "source": "existing",
+              "currentLabel": "Agent 工程师技能图谱",
+              "currentFilePath": "career"
+            },
+            {
+              "key": "agent-project-requirements",
+              "label": "从真实需求定义 Agent 项目",
+              "source": "planned"
+            },
+            {
+              "key": "agent-project-evaluation",
+              "label": "用业务指标证明 Agent 项目价值",
+              "source": "planned"
+            },
+            {
+              "key": "agent-project-deployment",
+              "label": "将 Demo 做成可运行的线上项目",
+              "source": "planned"
+            },
+            {
+              "key": "agent-open-source-contribution",
+              "label": "参与 Agent 开源项目与技术社区",
+              "source": "planned"
+            },
+            {
+              "key": "agent-interview-system-design",
+              "label": "Agent 系统设计面试与案例拆解",
+              "source": "planned"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
