@@ -132,7 +132,7 @@
       "key": "deepseek-api",
       "label": "DeepSeek API 接入实践",
       "filePath": "llm/dev",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-07-14",
       "batch": "deepseek-streaming-tools-and-frontend-integration-2026-07-14"
@@ -141,7 +141,7 @@
       "key": "llm-sse-streaming",
       "label": "SSE 流式响应实现详解",
       "filePath": "llm/dev",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-07-14",
       "batch": "deepseek-streaming-tools-and-frontend-integration-2026-07-14"
@@ -150,7 +150,7 @@
       "key": "function-calling",
       "label": "Function Calling 工具调用",
       "filePath": "llm/dev",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-07-14",
       "batch": "deepseek-streaming-tools-and-frontend-integration-2026-07-14"
@@ -159,7 +159,7 @@
       "key": "aigc-application",
       "label": "如何集成大模型到前端应用",
       "filePath": "llm/dev",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-07-14",
       "batch": "deepseek-streaming-tools-and-frontend-integration-2026-07-14"
@@ -168,10 +168,55 @@
       "key": "aigc-openai",
       "label": "如何调用GPT的OpenAPI",
       "filePath": "fe/aigc",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-07-14",
       "batch": "deepseek-streaming-tools-and-frontend-integration-2026-07-14"
+    },
+    {
+      "key": "aigc-frontend",
+      "label": "大模型和前端有哪些结合场景",
+      "filePath": "fe/aigc",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-14",
+      "batch": "frontend-scenarios-and-rag-foundations-2026-07-14"
+    },
+    {
+      "key": "embedding-basics",
+      "label": "Embedding 原理与向量相似度",
+      "filePath": "llm/rag",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-14",
+      "batch": "frontend-scenarios-and-rag-foundations-2026-07-14"
+    },
+    {
+      "key": "rag-chunking",
+      "label": "文本分块策略（Chunking）",
+      "filePath": "llm/rag",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-14",
+      "batch": "frontend-scenarios-and-rag-foundations-2026-07-14"
+    },
+    {
+      "key": "vector-db-selection",
+      "label": "向量数据库选型：Pinecone / Chroma / pgvector",
+      "filePath": "llm/rag",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-14",
+      "batch": "frontend-scenarios-and-rag-foundations-2026-07-14"
+    },
+    {
+      "key": "rag-pipeline",
+      "label": "RAG 完整流程实战",
+      "filePath": "llm/rag",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-14",
+      "batch": "frontend-scenarios-and-rag-foundations-2026-07-14"
     }
   ]
 }
