@@ -1,0 +1,954 @@
+{
+  "generatedAt": "2026-07-14",
+  "requestedDeletes": 189,
+  "existingDeletes": 189,
+  "alreadyMissing": 0,
+  "files": [
+    {
+      "path": "knowledge/llm/agent/langchain-js.md",
+      "exists": true,
+      "sha": "788c717ab3ab1e2fe9c92250c5b7a38617d3cdb1"
+    },
+    {
+      "path": "knowledge/llm/agent/vercel-ai-sdk.md",
+      "exists": true,
+      "sha": "d305fe82295c10237298a96470c40643c5061682"
+    },
+    {
+      "path": "knowledge/llm/agent/agentic-rl.md",
+      "exists": true,
+      "sha": "e8658cd9dfe4c632d018e93b481dfd33b6053e0e"
+    },
+    {
+      "path": "knowledge/llm/agent/agent-lowcode.md",
+      "exists": true,
+      "sha": "cdd099bb2c2e052f7255f00d5d33dbec1849173b"
+    },
+    {
+      "path": "knowledge/data/vector/chroma-db.md",
+      "exists": true,
+      "sha": "00472e026eb2e0bb0ecac89d1c63f0d867e8a01b"
+    },
+    {
+      "path": "knowledge/data/vector/pinecone-usage.md",
+      "exists": true,
+      "sha": "4dadcfa3567d07ae3adcf7b7ca3ce72a3fb40fc1"
+    },
+    {
+      "path": "knowledge/backend/nodejs/node-child-process.md",
+      "exists": true,
+      "sha": "29322198945c2d403132032db8a35815e8124c94"
+    },
+    {
+      "path": "knowledge/backend/nodejs/node-cluster.md",
+      "exists": true,
+      "sha": "e77186540ac7db2bec0b2d4bd4aeff8e81c8ef9d"
+    },
+    {
+      "path": "knowledge/backend/nodejs/node-performance.md",
+      "exists": true,
+      "sha": "d21a1d135c63b3bc16a530bad679315f0fff4479"
+    },
+    {
+      "path": "knowledge/backend/framework/midway-di.md",
+      "exists": true,
+      "sha": "606ec01abb8e89e56df1df507b69c3b73b0dfdf8"
+    },
+    {
+      "path": "knowledge/backend/framework/serverless-intro.md",
+      "exists": true,
+      "sha": "312678cc62679e014af602d5adad66a2f48b34ea"
+    },
+    {
+      "path": "knowledge/backend/devops/aliyun-fc-deploy.md",
+      "exists": true,
+      "sha": "cdeb9ff5b3d16c29e234ea0b41f55e8fd8760b55"
+    },
+    {
+      "path": "knowledge/cs/os/os-process-schedule.md",
+      "exists": true,
+      "sha": "ebf12467be8206dd21be056f3a4f2daf796ed84a"
+    },
+    {
+      "path": "knowledge/cs/mysql/mysql-index-bptree.md",
+      "exists": true,
+      "sha": "f689b8038c077fd605bf1e6bdfad833bdec06095"
+    },
+    {
+      "path": "knowledge/cs/mysql/mysql-index-optimize.md",
+      "exists": true,
+      "sha": "5816025709fbcf2cc7a2e16cc92f2f0fb62c5f6c"
+    },
+    {
+      "path": "knowledge/cs/mysql/mysql-transaction-acid.md",
+      "exists": true,
+      "sha": "c10df8ce44c8e4dc08baae5b0b0c3e964526e92c"
+    },
+    {
+      "path": "knowledge/cs/mysql/mysql-isolation-mvcc.md",
+      "exists": true,
+      "sha": "f7cee3c7025d6f3534044f8a7650f0f1b1ced13b"
+    },
+    {
+      "path": "knowledge/cs/mysql/mysql-lock.md",
+      "exists": true,
+      "sha": "1e364faf34c240240b1a0454c3b976169379ce78"
+    },
+    {
+      "path": "knowledge/cs/mysql/mysql-logs.md",
+      "exists": true,
+      "sha": "2694678cd5b73876cd54447d9ea41cd4089a46f6"
+    },
+    {
+      "path": "knowledge/cs/redis/redis-data-types.md",
+      "exists": true,
+      "sha": "7bb9ae1849199e6ab77f1eab166046c8a9d26784"
+    },
+    {
+      "path": "knowledge/cs/redis/redis-persistence.md",
+      "exists": true,
+      "sha": "3498d27e09876e5196901f9f5d679666765e73dc"
+    },
+    {
+      "path": "knowledge/cs/redis/redis-cache-problems.md",
+      "exists": true,
+      "sha": "db1e414fd137defa39b8d34a28f624f9d56331c9"
+    },
+    {
+      "path": "knowledge/cs/redis/redis-distributed-lock.md",
+      "exists": true,
+      "sha": "60aa15d5d45e084d62a3a1b149f0bda4d310db89"
+    },
+    {
+      "path": "knowledge/cs/redis/redis-expire-evict.md",
+      "exists": true,
+      "sha": "e83a713308bc3b0ca646c9a47351a8760ecc7de9"
+    },
+    {
+      "path": "knowledge/intro/introduce.md",
+      "exists": true,
+      "sha": "6653166325e475fd62e9c643352019bcc86afcb3"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/macro-micro-task.md",
+      "exists": true,
+      "sha": "6232aa91720d81654b3b476e9c90f50846980330"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/setTimeout-error.md",
+      "exists": true,
+      "sha": "6ac37a362ff2cb8e46276695509e132b714e982f"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/data-type.md",
+      "exists": true,
+      "sha": "d395e9b32e8bce32fcda2cfaad6f53ad523c5615"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/array-function.md",
+      "exists": true,
+      "sha": "a4b26c63b9e99c256ea9dae0eeef639edfb8a62d"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/string-function.md",
+      "exists": true,
+      "sha": "78fc078db26f2cc45b8e5dc92340857b6d60502f"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/object-function.md",
+      "exists": true,
+      "sha": "eced66b813850d5b82c4a699c2f2e874ce3d4271"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/map-reduce.md",
+      "exists": true,
+      "sha": "5e7efb2e267e2fb142ba8e2119d7ba79bb1aea67"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/input-url.md",
+      "exists": true,
+      "sha": "acad02ce744368909486a9166c1a0345c6f0950c"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/array-sort.md",
+      "exists": true,
+      "sha": "b402f531bc78eccd4a3de7c5bd4bf06a3693ab97"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/deep-clone.md",
+      "exists": true,
+      "sha": "5b6856bc7948a68e99e1aa354aa7615b21d720ea"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/js-trunk.md",
+      "exists": true,
+      "sha": "770c244dfcc5045e74633af5c03b4984d252e0a6"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/js-scope.md",
+      "exists": true,
+      "sha": "92f70c09958524328e8d3869c330b66ba4afad0e"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/debounce-throttle.md",
+      "exists": true,
+      "sha": "77093714f8e20615e1c5b7db7da07acecf5ce903"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/prototype.md",
+      "exists": true,
+      "sha": "625a06c343a754ef08fa50fb00f88838a382384b"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/reflow-repaints.md",
+      "exists": true,
+      "sha": "f49561a51153a6502270167b0b9ea7eb46287a83"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/equals.md",
+      "exists": true,
+      "sha": "505de451333c32cf9de59c337c6eb250a3dff006"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/extends.md",
+      "exists": true,
+      "sha": "4c6ea056c95ac155e09269f5e71d53bd264ab67e"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/closure.md",
+      "exists": true,
+      "sha": "961ccf34ba92e2eaa74d058960fe6e247fae2522"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/arguments.md",
+      "exists": true,
+      "sha": "ee492d28b3e6e4536daca0453b62a9c64e6992cd"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/new-class.md",
+      "exists": true,
+      "sha": "2f22349dee8022748493cbcc0a20d7e4f7dc753a"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/dom-function.md",
+      "exists": true,
+      "sha": "f383c395f9ffa6ff54d93097149efdb2106c0c35"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/eventListener.md",
+      "exists": true,
+      "sha": "43f1bd3faea25aa466c9a98c7a7b7e449c8a6bbe"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/ajax-request.md",
+      "exists": true,
+      "sha": "174447dc92024996121e44ab6bf73de9d552eb82"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/bind-call.md",
+      "exists": true,
+      "sha": "667b720266c632d3b40d42f747e27cac1103bee3"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/origin-link-address.md",
+      "exists": true,
+      "sha": "71e593def45e3f0e83e63d515a583f9386af43de"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/this-pointer.md",
+      "exists": true,
+      "sha": "40947098f4ded65f2ec3d3d883f6436467f9cbff"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/new-object.md",
+      "exists": true,
+      "sha": "4730e7c7a16405195a21cf948e249f81f82ab4ca"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/bom-function.md",
+      "exists": true,
+      "sha": "8337b2ec14de932e6eaddffe703773b2dd0c1fdd"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/curry.md",
+      "exists": true,
+      "sha": "0baa7d2ba73a57b9189514827f8d0d4f29d37248"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/prototype-proto.md",
+      "exists": true,
+      "sha": "97543cd568dc9b1c73eb8985c7ac97bd3ff322fc"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/dom-location.md",
+      "exists": true,
+      "sha": "1f75bf9a0ff61848f998af2ef49436ac8dffdfaf"
+    },
+    {
+      "path": "knowledge/js-es6-ts/js/array-like-object.md",
+      "exists": true,
+      "sha": "53449cb699d5f24b5d9d265284f3fb94ab2daddf"
+    },
+    {
+      "path": "knowledge/js-es6-ts/es6/es6-deconstruction.md",
+      "exists": true,
+      "sha": "0deabac62dbca2f97cd5826c2042fa2477abeae4"
+    },
+    {
+      "path": "knowledge/js-es6-ts/es6/es6-arrow.md",
+      "exists": true,
+      "sha": "21289ffc4e251e45284a44c4c7ce5d740c8fff44"
+    },
+    {
+      "path": "knowledge/js-es6-ts/es6/promise-api.md",
+      "exists": true,
+      "sha": "a920910ce437c6af135b659b537e44a54f080ad1"
+    },
+    {
+      "path": "knowledge/js-es6-ts/es6/async-compare.md",
+      "exists": true,
+      "sha": "d4b856200094dcac5e936d5d523ad8b09677b57a"
+    },
+    {
+      "path": "knowledge/js-es6-ts/es6/commonjs-esmodule.md",
+      "exists": true,
+      "sha": "c4ac732c78519dd30d7229aa8b852b486b70058f"
+    },
+    {
+      "path": "knowledge/js-es6-ts/es6/iterator.md",
+      "exists": true,
+      "sha": "5c62f444a8b6f9cb8e4afee498d8fd165e35d614"
+    },
+    {
+      "path": "knowledge/js-es6-ts/es6/class.md",
+      "exists": true,
+      "sha": "99e81f96bdbe9ebdae5ad5f49b5839a857908b9b"
+    },
+    {
+      "path": "knowledge/js-es6-ts/es6/es6-loop.md",
+      "exists": true,
+      "sha": "6c7ce09b79da51862a607ed5c64fbc974ae2a13c"
+    },
+    {
+      "path": "knowledge/js-es6-ts/es6/let-const.md",
+      "exists": true,
+      "sha": "96f2967944c702e3c0dc76f01e28634a392e46df"
+    },
+    {
+      "path": "knowledge/js-es6-ts/es6/hoisting-tdz.md",
+      "exists": true,
+      "sha": "f260b924744d2ff4b9e7be0d57be7ed3212fcb78"
+    },
+    {
+      "path": "knowledge/js-es6-ts/es6/set-map.md",
+      "exists": true,
+      "sha": "39a89fe88a4b71820b895eec1326bf0b3cdf9a27"
+    },
+    {
+      "path": "knowledge/js-es6-ts/es6/async.md",
+      "exists": true,
+      "sha": "aba3f66f77efd1fa2f85a3079d3f80aa2bec5c8b"
+    },
+    {
+      "path": "knowledge/js-es6-ts/es6/proxy.md",
+      "exists": true,
+      "sha": "4278b882cbb927409271674cd2976fa74e7a2b03"
+    },
+    {
+      "path": "knowledge/js-es6-ts/es6/symbol.md",
+      "exists": true,
+      "sha": "9950f05dc1db896d9d7720d5f65c4e6da1ff269f"
+    },
+    {
+      "path": "knowledge/js-es6-ts/es6/generator.md",
+      "exists": true,
+      "sha": "702fbcfcf1a252a2d8ad3bcf4dc10e762cfdeaa4"
+    },
+    {
+      "path": "knowledge/js-es6-ts/es6/reflect.md",
+      "exists": true,
+      "sha": "86ea75b659d06ee8acbdd73252b7903639b038b5"
+    },
+    {
+      "path": "knowledge/js-es6-ts/ts/ts-js-difference.md",
+      "exists": true,
+      "sha": "ba50ed22ba52eb3a3db7de3b4246346e78626780"
+    },
+    {
+      "path": "knowledge/js-es6-ts/ts/ts-decorator.md",
+      "exists": true,
+      "sha": "1233f754074a54d4335f0c22af32062a4d489205"
+    },
+    {
+      "path": "knowledge/js-es6-ts/ts/ts-enums.md",
+      "exists": true,
+      "sha": "af49edced448d556197fcb9654948701681049c3"
+    },
+    {
+      "path": "knowledge/js-es6-ts/ts/ts-class-interface.md",
+      "exists": true,
+      "sha": "bfa4546ce719440fb89cfc5452ac3364be7780eb"
+    },
+    {
+      "path": "knowledge/js-es6-ts/ts/ts-compile.md",
+      "exists": true,
+      "sha": "339737e91f7a2736cae5d6b994c08b401a6f5d46"
+    },
+    {
+      "path": "knowledge/js-es6-ts/ts/ts-consturctor.md",
+      "exists": true,
+      "sha": "08c8f6449c8cee95b0f3d0e19e82bc851462a1fd"
+    },
+    {
+      "path": "knowledge/js-es6-ts/ts/ts-refactor-js.md",
+      "exists": true,
+      "sha": "6bac4c0af568aabb4c37ff75f6ca120108d34c96"
+    },
+    {
+      "path": "knowledge/js-es6-ts/ts/ts-interface-class.md",
+      "exists": true,
+      "sha": "8454020f2768e61a2d18ce163b29bee6d2405d08"
+    },
+    {
+      "path": "knowledge/js-es6-ts/ts/ts-operation.md",
+      "exists": true,
+      "sha": "d74be5f24efbfa67f5f6257b795a64ec8dc81585"
+    },
+    {
+      "path": "knowledge/js-es6-ts/ts/ts-async.md",
+      "exists": true,
+      "sha": "7a6923420790587264bb470622e87f86d7f9f41c"
+    },
+    {
+      "path": "knowledge/js-es6-ts/ts/ts-modules.md",
+      "exists": true,
+      "sha": "f0d428813b3dde4684186546ab007362f50ec8aa"
+    },
+    {
+      "path": "knowledge/html-css/html/h5-semantic-tag.md",
+      "exists": true,
+      "sha": "13d359f5b1d6ac9ecd98f5829384bf0314454cb3"
+    },
+    {
+      "path": "knowledge/html-css/html/html-new-feature.md",
+      "exists": true,
+      "sha": "91e6ce70f8d4cb9b68e9a754e4fb69bb4596805c"
+    },
+    {
+      "path": "knowledge/html-css/html/html-tag-a.md",
+      "exists": true,
+      "sha": "37882205540d5712d3981675199ce52758cbd3a6"
+    },
+    {
+      "path": "knowledge/html-css/html/html-type.md",
+      "exists": true,
+      "sha": "32934c4d0ac3447abbfb454c1e30981aa1e2a374"
+    },
+    {
+      "path": "knowledge/html-css/html/seo-concept.md",
+      "exists": true,
+      "sha": "89dba2352700ce21cfd73ec5e2e95e6fb57cf2fb"
+    },
+    {
+      "path": "knowledge/html-css/css/align-center.md",
+      "exists": true,
+      "sha": "38f03bfb55960cb3770c73a3d6aa6b9023b783da"
+    },
+    {
+      "path": "knowledge/html-css/css/css-weight.md",
+      "exists": true,
+      "sha": "1d8f67834b69d47bc19ec3fc57831ea485f9c074"
+    },
+    {
+      "path": "knowledge/html-css/css/css-import.md",
+      "exists": true,
+      "sha": "2cd7dbeaf55aec974c22fe603d077cce76b46fb6"
+    },
+    {
+      "path": "knowledge/html-css/css/less-sass-css.md",
+      "exists": true,
+      "sha": "69165d7cac9085f58c77b2843228f9c31ebbc376"
+    },
+    {
+      "path": "knowledge/html-css/css/css-position.md",
+      "exists": true,
+      "sha": "2feb1895eb22ebf525c7a7f068ec0303545b9ceb"
+    },
+    {
+      "path": "knowledge/html-css/css/css-position-property.md",
+      "exists": true,
+      "sha": "b2cc58d4397fead402f9de34b3d3a93975ada9a6"
+    },
+    {
+      "path": "knowledge/html-css/css/css3-animate.md",
+      "exists": true,
+      "sha": "34ab5a0f088764aa59559ecece5bbb3bca6a6627"
+    },
+    {
+      "path": "knowledge/html-css/css/px-em-rem.md",
+      "exists": true,
+      "sha": "efd7cdba19b6d2689ec1bea0d5663d4594661991"
+    },
+    {
+      "path": "knowledge/html-css/css/vh-vw.md",
+      "exists": true,
+      "sha": "d293e85504526140305d7bd08a62e9f48ffa3a4e"
+    },
+    {
+      "path": "knowledge/html-css/css/display-property.md",
+      "exists": true,
+      "sha": "bda7004c3adfd8ff5f6d497e6f8779c0be2a3152"
+    },
+    {
+      "path": "knowledge/html-css/css/grail-grid.md",
+      "exists": true,
+      "sha": "4c67dafa70129f35b8f30df7757e5a88012b2ea3"
+    },
+    {
+      "path": "knowledge/html-css/css/delphinium-grid.md",
+      "exists": true,
+      "sha": "07641fd126fab4929bc1ef9aadd0ce8712aafaa1"
+    },
+    {
+      "path": "knowledge/html-css/css/ifc-bfc.md",
+      "exists": true,
+      "sha": "d8a1b7f9e453cef38b5db91f6e106f9a2f93b95f"
+    },
+    {
+      "path": "knowledge/html-css/css/box-model.md",
+      "exists": true,
+      "sha": "5719aca3571c3f9eb2325e40fe2ebf850b724894"
+    },
+    {
+      "path": "knowledge/html-css/css/flex-display.md",
+      "exists": true,
+      "sha": "2eea9c926d79f2e9406f9dad33a3234eac1f57b8"
+    },
+    {
+      "path": "knowledge/html-css/css/float-model.md",
+      "exists": true,
+      "sha": "c85575b89ec59accfd601e2afa9e2c115fb4e1fe"
+    },
+    {
+      "path": "knowledge/html-css/css/margin-collapse.md",
+      "exists": true,
+      "sha": "395c92abfe069d574afce3ecb66d4076063fdbb2"
+    },
+    {
+      "path": "knowledge/html-css/css/css-triangle.md",
+      "exists": true,
+      "sha": "e145baffd6633bb27e9b1ebb8511dd311252810e"
+    },
+    {
+      "path": "knowledge/network/http/http-https.md",
+      "exists": true,
+      "sha": "42af25291f8940f8f4e95a4b6cce8e97e9310adb"
+    },
+    {
+      "path": "knowledge/network/http/http-status-code.md",
+      "exists": true,
+      "sha": "18b4f030a9682d5ff06c708a229491c00dde479d"
+    },
+    {
+      "path": "knowledge/network/http/http-response-code.md",
+      "exists": true,
+      "sha": "f2184ad42ea029960c2922f218cdd1dbb80c4830"
+    },
+    {
+      "path": "knowledge/network/http/http-header-key.md",
+      "exists": true,
+      "sha": "ad8ee7d17d3f0107f2217e201bffe78932f075b2"
+    },
+    {
+      "path": "knowledge/network/http/http-get-post.md",
+      "exists": true,
+      "sha": "28761cc441bc9a65f130d0172fff5c5b38e7914b"
+    },
+    {
+      "path": "knowledge/network/http/http-v1-v2.md",
+      "exists": true,
+      "sha": "3bcaf19399785f1250e464b16af0ec2fb0677496"
+    },
+    {
+      "path": "knowledge/network/http/http-long-short.md",
+      "exists": true,
+      "sha": "ccb6c2bc01b8fe64e7394f044f36d2981d1c26b2"
+    },
+    {
+      "path": "knowledge/network/http/http-cookie-session.md",
+      "exists": true,
+      "sha": "7d738c6c492d4b36cfaff1f2895839ea24871e79"
+    },
+    {
+      "path": "knowledge/network/http/http-https-connect.md",
+      "exists": true,
+      "sha": "de01f11a1552e7910043f1cfadb68355ea44b2f8"
+    },
+    {
+      "path": "knowledge/network/http/http-redirect.md",
+      "exists": true,
+      "sha": "f75ba156e9928b7abfcc7ebad5df4312a44a781c"
+    },
+    {
+      "path": "knowledge/network/http/http-header.md",
+      "exists": true,
+      "sha": "899470e0a3e40426a0ebb14878bdd32203386624"
+    },
+    {
+      "path": "knowledge/network/http/http-header-content.md",
+      "exists": true,
+      "sha": "7ef584aa653bf99340792b2dc78b746d8fadf4fd"
+    },
+    {
+      "path": "knowledge/network/http/http-symmetric-cryptography.md",
+      "exists": true,
+      "sha": "71cabe25b4ff1e74f3761ce169d127d9f963da48"
+    },
+    {
+      "path": "knowledge/network/http/http-none-symmetric-cryptography.md",
+      "exists": true,
+      "sha": "d4601bf50345ce34a28a9fe1acfa065b4ff3a53f"
+    },
+    {
+      "path": "knowledge/network/http/http-redirect-transfer.md",
+      "exists": true,
+      "sha": "9e5d1939c6cc4e75d8406427dcf5c84a75626dab"
+    },
+    {
+      "path": "knowledge/network/http/http-cookie.md",
+      "exists": true,
+      "sha": "4511800e4fad77ee5abf1eea2f2514975155d7e4"
+    },
+    {
+      "path": "knowledge/network/http/http-trace-proxy.md",
+      "exists": true,
+      "sha": "cec44725fb33c292c0626ef11e4b651f73c97e59"
+    },
+    {
+      "path": "knowledge/network/http/http-no-lose.md",
+      "exists": true,
+      "sha": "470132a66f7ba1b13df6812f1a230d90fe3eef14"
+    },
+    {
+      "path": "knowledge/network/tcpIp/tcpIp-protocal.md",
+      "exists": true,
+      "sha": "48be8ff9cd7d93112407c8c98a6b2b1030b668b4"
+    },
+    {
+      "path": "knowledge/network/tcpIp/tcp-three-shakehand.md",
+      "exists": true,
+      "sha": "5478e579cf5f8d0b42654e1cfbb885fb1a4d035a"
+    },
+    {
+      "path": "knowledge/network/tcpIp/tcp-wave-hand.md",
+      "exists": true,
+      "sha": "3b313b33d6def752293b55041d7e9092d7eca20f"
+    },
+    {
+      "path": "knowledge/network/tcpIp/network-level.md",
+      "exists": true,
+      "sha": "3bb1bc1685172a50a6635327f0061e04164e1b35"
+    },
+    {
+      "path": "knowledge/network/tcpIp/tcp-window-control.md",
+      "exists": true,
+      "sha": "dcfb5fcbdb02df1b0278c08ff1f361376cdfd1f7"
+    },
+    {
+      "path": "knowledge/network/tcpIp/tcp-sticky.md",
+      "exists": true,
+      "sha": "416c01af28b277014dc74c4a08da3a514b61d0f1"
+    },
+    {
+      "path": "knowledge/network/tcpIp/tcp-content.md",
+      "exists": true,
+      "sha": "486d019104a9fe831d8a05dfea5005afde35c1e7"
+    },
+    {
+      "path": "knowledge/network/tcpIp/udp-content.md",
+      "exists": true,
+      "sha": "8ee085b9da6ca2c6ebf65bc838cc1b60b0434f68"
+    },
+    {
+      "path": "knowledge/network/tcpIp/time-wait-close-wait.md",
+      "exists": true,
+      "sha": "d4bc4c1fbd80eedb6e8769b54532991bbf270c88"
+    },
+    {
+      "path": "knowledge/network/tcpIp/time-wait.md",
+      "exists": true,
+      "sha": "9f2273745d50995252e1772e5df010965f0db915"
+    },
+    {
+      "path": "knowledge/network/tcpIp/video-transfer.md",
+      "exists": true,
+      "sha": "416776d96ee590590222e8fb027c17217677c1c9"
+    },
+    {
+      "path": "knowledge/network/security/xss.md",
+      "exists": true,
+      "sha": "0d1f24fff1fcfc61ebeadd105b09ce9e001f6c66"
+    },
+    {
+      "path": "knowledge/network/security/csrf.md",
+      "exists": true,
+      "sha": "20f883d1dee284ff58fc8df5fdea55d7424d4cf9"
+    },
+    {
+      "path": "knowledge/network/others/other-input-url.md",
+      "exists": true,
+      "sha": "acad02ce744368909486a9166c1a0345c6f0950c"
+    },
+    {
+      "path": "knowledge/network/others/web-service.md",
+      "exists": true,
+      "sha": "299f58e09029068cb372086a65b0498ea013979d"
+    },
+    {
+      "path": "knowledge/framework/react/react-lifecycle.md",
+      "exists": true,
+      "sha": "2ff98eb8855ae92d3a27c1f357e7d6609f8c9fcb"
+    },
+    {
+      "path": "knowledge/framework/react/react-diff.md",
+      "exists": true,
+      "sha": "abd9dc9ebedb2667592f89bc6a1340e1cc10dd64"
+    },
+    {
+      "path": "knowledge/framework/react/virtual-dom.md",
+      "exists": true,
+      "sha": "bb5201cf25989347f262746ccc46f0ab910c9b4e"
+    },
+    {
+      "path": "knowledge/framework/react/react-flux.md",
+      "exists": true,
+      "sha": "79dbd8e03e16aeba02a876bda607cf48534e1ecb"
+    },
+    {
+      "path": "knowledge/framework/react/react-redux.md",
+      "exists": true,
+      "sha": "5cfc67df05c8bfd74b9c3f7064ca20360c5c9015"
+    },
+    {
+      "path": "knowledge/framework/react/enhance-component.md",
+      "exists": true,
+      "sha": "5b1e1b52954d5dbeef242fea164fcdade5f67a92"
+    },
+    {
+      "path": "knowledge/framework/react/react-fiber.md",
+      "exists": true,
+      "sha": "34659ffc9b5f6669cfc5c24ea08aacf0e02eaa05"
+    },
+    {
+      "path": "knowledge/framework/react/pure-component.md",
+      "exists": true,
+      "sha": "097371ff7d070fae67dd465aa13ca27ba317ee49"
+    },
+    {
+      "path": "knowledge/framework/react/controlled-component.md",
+      "exists": true,
+      "sha": "90b1dd8a562bfe72a3ef44e25ba5dd5f7163aa50"
+    },
+    {
+      "path": "knowledge/framework/react/react-vue-diff.md",
+      "exists": true,
+      "sha": "a650b83b3e823f5ff05ac3a73a96456ae5fb7f71"
+    },
+    {
+      "path": "knowledge/framework/react/react-properties.md",
+      "exists": true,
+      "sha": "2a7a28b6a47b4e81d0983675c5ea822380d5af0a"
+    },
+    {
+      "path": "knowledge/framework/vue/vue-core.md",
+      "exists": true,
+      "sha": "27b7227c5ca79c0762d87884534eaee04ad25346"
+    },
+    {
+      "path": "knowledge/framework/vue/vue-responsive.md",
+      "exists": true,
+      "sha": "45852f1c9568777e2653d9b67d9bca0c6ec4b54c"
+    },
+    {
+      "path": "knowledge/framework/vue/vue-lifecycle.md",
+      "exists": true,
+      "sha": "c2c9cd6d2ae3c2fd7c6fe875536546b924ec41c0"
+    },
+    {
+      "path": "knowledge/framework/vue/vue-performance.md",
+      "exists": true,
+      "sha": "6eae4cf28b7e74cc1b5567752ddde43494193750"
+    },
+    {
+      "path": "knowledge/framework/vue/vue-router.md",
+      "exists": true,
+      "sha": "ab6b61deda0d41da420cbdfdf47b29df75267e44"
+    },
+    {
+      "path": "knowledge/framework/vue/vue-vuex.md",
+      "exists": true,
+      "sha": "f32156487f8b4fde73f2377f48793879221a372e"
+    },
+    {
+      "path": "knowledge/framework/vue/vue-computed-listener.md",
+      "exists": true,
+      "sha": "394cf130f3055274175e7f200be48ee076d596c6"
+    },
+    {
+      "path": "knowledge/framework/vue/vue-vmodel.md",
+      "exists": true,
+      "sha": "6929cef94c431c9675d9b4e22bff76851f214787"
+    },
+    {
+      "path": "knowledge/data-structure/algorithm/algorithm-binary.md",
+      "exists": true,
+      "sha": "f5a9320d088ede7a8409136b540dc5f69c2ea3cd"
+    },
+    {
+      "path": "knowledge/data-structure/algorithm/algorithm-dynamic.md",
+      "exists": true,
+      "sha": "0258594fdc9abc7c4828c4579a87f4b88897a1d8"
+    },
+    {
+      "path": "knowledge/fe/project/project-flow.md",
+      "exists": true,
+      "sha": "0b6da7d480b8fb2788f532456b0a9bb376a55f2f"
+    },
+    {
+      "path": "knowledge/fe/project/project-webpack.md",
+      "exists": true,
+      "sha": "f69a3876e5451500c24a43ee8f254042996434d1"
+    },
+    {
+      "path": "knowledge/fe/project/project-ssr.md",
+      "exists": true,
+      "sha": "4b6b53c8db08e9b0bec76edca2bb33d2dc629e2e"
+    },
+    {
+      "path": "knowledge/fe/project/project-spa.md",
+      "exists": true,
+      "sha": "e37e6cfedae7406f684708fcb8536cb84870409b"
+    },
+    {
+      "path": "knowledge/fe/project/project-model.md",
+      "exists": true,
+      "sha": "25e932096533f4f6719c62e02ae24fdc8a4a77cc"
+    },
+    {
+      "path": "knowledge/fe/project/project-webpack-performance.md",
+      "exists": true,
+      "sha": "b54c75105cdd75e57037e4d9e3c8c89b079f7225"
+    },
+    {
+      "path": "knowledge/fe/project/project-loader-plugin.md",
+      "exists": true,
+      "sha": "041e764ca89b557f3f9f5162d3722a1f0e680d70"
+    },
+    {
+      "path": "knowledge/fe/design/design-common.md",
+      "exists": true,
+      "sha": "4778ba700463224d58ecc13fa1e4c79b0ca82dba"
+    },
+    {
+      "path": "knowledge/fe/design/design-communication.md",
+      "exists": true,
+      "sha": "a029a90df79816d71d094a89afb515ccacdb7a88"
+    },
+    {
+      "path": "knowledge/fe/design/design-performance.md",
+      "exists": true,
+      "sha": "92501905d821b2ae0e6898a2b67c38f3fc7f2db2"
+    },
+    {
+      "path": "knowledge/fe/visualization/canvas-svg.md",
+      "exists": true,
+      "sha": "ede34df67abd57ee2daa969e9b5a024be1eb10b3"
+    },
+    {
+      "path": "knowledge/fe/visualization/canvas-svg-select.md",
+      "exists": true,
+      "sha": "62765003fc8d32d200873668441a8e10a4482b92"
+    },
+    {
+      "path": "knowledge/fe/visualization/visual-projects.md",
+      "exists": true,
+      "sha": "946736c8b5cc84ab9424bc78160b2f8edf6bf73f"
+    },
+    {
+      "path": "knowledge/fe/visualization/echarts-design.md",
+      "exists": true,
+      "sha": "3d710382395c67a54dad28dee205a51587122779"
+    },
+    {
+      "path": "knowledge/fe/visualization/visual-components.md",
+      "exists": true,
+      "sha": "8b173be8f07b0eb806ff10c6016c106e3b91c257"
+    },
+    {
+      "path": "knowledge/fe/node/node-memory.md",
+      "exists": true,
+      "sha": "0f0ccc273a23f50f37a265ef816db372b1e8808a"
+    },
+    {
+      "path": "knowledge/fe/node/node-process.md",
+      "exists": true,
+      "sha": "829ce06f8a647e5ac7507cda8d838b804a0756ed"
+    },
+    {
+      "path": "knowledge/fe/node/commonjs.md",
+      "exists": true,
+      "sha": "3e1a3865715b81f138aad0bc7c3d627adc316bad"
+    },
+    {
+      "path": "knowledge/fe/node/node-web-service.md",
+      "exists": true,
+      "sha": "18ad2dc03b69d6f31fe4ed8abb0de471ad86469f"
+    },
+    {
+      "path": "knowledge/fe/node/node-async-io.md",
+      "exists": true,
+      "sha": "7dedc36b81e88b09b036aa375588c9a9b8fb9c10"
+    },
+    {
+      "path": "knowledge/career/career-direction-choice.md",
+      "exists": true,
+      "sha": "56907c8e114954017c17a5c272b5924148981914"
+    },
+    {
+      "path": "knowledge/career/mindset-management.md",
+      "exists": true,
+      "sha": "e0a7d19d76c0cce157ffa9a243d8ec63000278b5"
+    },
+    {
+      "path": "knowledge/career/efficient-preparation-strategy.md",
+      "exists": true,
+      "sha": "a9236aea6abfe3377aa534a701de0cedab21aeac"
+    },
+    {
+      "path": "knowledge/career/resume-making-principles.md",
+      "exists": true,
+      "sha": "a55558f81ec07556e0a0d13fc9c5cdaf1cdfda4b"
+    },
+    {
+      "path": "knowledge/career/project-experience-enhancement.md",
+      "exists": true,
+      "sha": "da3039fe424864ab6fee4fd82c3731f510b84bbf"
+    },
+    {
+      "path": "knowledge/career/pre-interview-preparation.md",
+      "exists": true,
+      "sha": "7c497974ea03ba3015fbb223eb20ef0de752d5bb"
+    },
+    {
+      "path": "knowledge/career/hr-interview-qa-guide.md",
+      "exists": true,
+      "sha": "ea972d9a1ccea3af1624ae7814282f94e38b1d4b"
+    },
+    {
+      "path": "knowledge/career/offer-selection-analysis.md",
+      "exists": true,
+      "sha": "0af64243d354699f169d6871cad5b90ee6ec1172"
+    }
+  ]
+}
+
