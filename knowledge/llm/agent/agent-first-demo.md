@@ -1,357 +1,296 @@
-理论讲再多，不如亲手写一遍。本篇带你用 Python 从零搭建一个由真实 LLM 驱动的旅行助手智能体，完整走通 Thought-Action-Observation 循环。代码量不到 120 行，核心机制一目了然。
+这一篇只做一件事：不用框架，亲手写出一个最小的 Thought–Action–Observation 循环。写完后你会发现，智能体最核心的部分不是一个神秘类名，而是**模型提出动作、程序执行工具、结果回到上下文、循环决定继续还是结束**。
 
----
+## 一、先理解三个词
 
-## 目标与任务定义
+- **Thought**：模型基于目标和当前轨迹选择下一步。工程上不需要保存或展示模型的私有长推理，只需保留可审计的决策摘要和结构化动作。
+- **Action**：模型提出的工具调用，例如查询天气、搜索文档或读取订单。
+- **Observation**：程序真实执行工具后得到的结果或错误，它会成为下一轮输入。
 
-我们要构建的智能体需要完成这个任务：
+ReAct 论文将推理轨迹与任务动作交错，让外部观察反过来更新后续计划。[ReAct 论文](https://arxiv.org/abs/2210.03629) 现代 API 通常以结构化 Tool Calling 实现 Action，不必让模型手写一行容易解析失败的文本。
 
-> 查询今天北京的天气，然后根据天气推荐一个合适的旅游景点。
+![最小智能体按照模型、Action、工具执行、Observation 的顺序循环，并由停止条件限制运行](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-first-demo-loop-v2.png)
 
-这个任务要求智能体展现**多步规划能力**：先查天气（工具调用一），把天气结果作为输入再查景点（工具调用二），最后综合信息输出答案。任何一步都依赖上一步的 Observation，无法跳过。
+## 二、我们要完成什么
 
----
+任务是：
 
-## 整体架构
+> 查询北京天气，并给出一句出行建议。
 
-```mermaid
-flowchart TD
-    U[用户输入] --> Loop
-    subgraph Loop[Agent Loop]
-        direction LR
-        T[Thought\nLLM 推理] --> A[Action\n解析执行]
-        A --> O[Observation\n工具结果]
-        O --> T
-    end
-    Loop --> |Finish| R[最终答案]
-```
+工具只有一个：getWeather。为了让示例可以直接运行，我们先用一个可预测的 demo model 模拟“模型决定”；之后只需把它替换为任意支持结构化工具调用的模型接口，循环本身不用改。
 
-四个核心部分：
+## 三、先定义结构化协议
 
-1. **System Prompt**：告诉 LLM 它的角色、可用工具和输出格式
-2. **工具函数**：真实调用外部 API 获取天气和景点数据
-3. **LLM 客户端**：兼容 OpenAI 接口规范的通用客户端
-4. **主循环**：驱动 Thought → Action → Observation 的迭代
+~~~ts
+type ToolName = "getWeather";
 
----
+type Decision =
+  | {
+      type: "action";
+      tool: ToolName;
+      args: { city: string };
+      summary: string;
+    }
+  | {
+      type: "final";
+      answer: string;
+    };
 
-## 第一步：设计 System Prompt
+type TraceItem =
+  | { type: "action"; tool: ToolName; args: { city: string } }
+  | { type: "observation"; tool: ToolName; result: unknown };
 
-System Prompt 是智能体的「说明书」，它定义了 LLM 的角色、工具清单和输出格式约定：
-
-```python
-AGENT_SYSTEM_PROMPT = """
-你是一个智能旅行助手。你的任务是分析用户的请求，使用可用工具一步步解决问题。
-
-# 可用工具
-- `get_weather(city: str)`: 查询指定城市的实时天气。
-- `get_attraction(city: str, weather: str)`: 根据城市和天气搜索推荐的旅游景点。
-
-# 输出格式（严格遵循）
-每次回复必须包含且仅包含一对 Thought 和 Action：
-
-Thought: [你的思考过程和下一步计划]
-Action: [具体行动]
-
-Action 格式二选一：
-1. 调用工具：function_name(arg_name="arg_value")
-2. 结束任务：Finish[最终答案]
-
-重要：每次只输出一对 Thought-Action，Action 必须在同一行。
-"""
-```
-
-**关键设计原则：**
-
-- 每轮只输出一对 Thought-Action，避免 LLM 一次性「规划过头」
-- 明确约定 `Finish[...]` 格式，让主循环能判断任务是否结束
-- 工具描述要清晰包含参数名和含义，LLM 才能正确生成调用语句
-
----
-
-## 第二步：实现工具函数
-
-### 工具一：查询真实天气
-
-使用免费的 `wttr.in` 服务，以 JSON 格式返回指定城市的天气数据：
-
-```python
-import requests
-
-def get_weather(city: str) -> str:
-    """通过 wttr.in API 查询真实天气信息。"""
-    url = f"https://wttr.in/{city}?format=j1"
-    try:
-        response = requests.get(url, timeout=10)
-        response.raise_for_status()
-        data = response.json()
-        condition = data['current_condition'][0]
-        desc = condition['weatherDesc'][0]['value']
-        temp = condition['temp_C']
-        return f"{city}当前天气：{desc}，气温 {temp} 摄氏度"
-    except requests.exceptions.RequestException as e:
-        return f"错误：查询天气时网络问题 - {e}"
-    except (KeyError, IndexError) as e:
-        return f"错误：解析天气数据失败，可能城市名无效 - {e}"
-```
-
-注意工具函数始终返回**字符串**——这是转化为 Observation 的最简形式，LLM 直接可读。
-
-### 工具二：搜索旅游景点
-
-使用 Tavily Search API 获取实时搜索结果（需在 [tavily.com](https://www.tavily.com/) 注册获取 API Key）：
-
-```python
-import os
-from tavily import TavilyClient
-
-def get_attraction(city: str, weather: str) -> str:
-    """根据城市和天气，搜索并返回景点推荐。"""
-    api_key = os.environ.get("TAVILY_API_KEY")
-    if not api_key:
-        return "错误：未配置 TAVILY_API_KEY 环境变量。"
-
-    tavily = TavilyClient(api_key=api_key)
-    query = f"'{city}' 在 '{weather}' 天气下最值得去的旅游景点推荐"
-
-    try:
-        result = tavily.search(
-            query=query,
-            search_depth="basic",
-            include_answer=True
-        )
-        if result.get("answer"):
-            return result["answer"]
-        # 降级：格式化原始结果
-        items = [f"- {r['title']}: {r['content']}" for r in result.get("results", [])]
-        return "根据搜索找到以下信息：\n" + "\n".join(items) if items else "未找到相关景点推荐。"
-    except Exception as e:
-        return f"错误：Tavily 搜索出错 - {e}"
-```
-
-将工具函数收入字典，供主循环按名称调用：
-
-```python
-available_tools = {
-    "get_weather": get_weather,
-    "get_attraction": get_attraction,
+interface Model {
+  decide(input: {
+    task: string;
+    trace: TraceItem[];
+    tools: ToolName[];
+  }): Promise<Decision>;
 }
-```
+~~~
 
----
+Decision 使用判别联合类型，程序不需要从自由文本里猜“这次到底是回答还是工具调用”。summary 只记录简短的决策理由，例如“需要先获取天气”，不是要求模型暴露隐藏思维链。
 
-## 第三步：实现 LLM 客户端
+## 四、实现工具注册表
 
-当前大多数 LLM 服务（OpenAI、Azure、Ollama、vLLM 等）都兼容 OpenAI 接口规范，封装一个通用客户端：
+~~~ts
+type ToolContext = {
+  userId: string;
+  signal: AbortSignal;
+};
 
-```python
-from openai import OpenAI
+type WeatherResult = {
+  city: string;
+  condition: "sunny" | "rainy";
+  temperatureC: number;
+};
 
-class OpenAICompatibleClient:
-    """可连接任何兼容 OpenAI 接口的 LLM 服务。"""
+const tools = {
+  async getWeather(
+    args: { city: string },
+    context: ToolContext,
+  ): Promise<WeatherResult> {
+    if (context.signal.aborted) {
+      throw new Error("ABORTED");
+    }
 
-    def __init__(self, model: str, api_key: str, base_url: str):
-        self.model = model
-        self.client = OpenAI(api_key=api_key, base_url=base_url)
+    if (!args.city.trim()) {
+      throw new Error("CITY_REQUIRED");
+    }
 
-    def generate(self, prompt: str, system_prompt: str) -> str:
-        """调用 LLM 生成回应。"""
-        try:
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=[
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": prompt},
-                ],
-                stream=False,
-            )
-            return response.choices[0].message.content
-        except Exception as e:
-            return f"错误：调用 LLM 时出错 - {e}"
-```
+    // 教学用固定结果；生产中改为真实天气 API。
+    return {
+      city: args.city,
+      condition: "sunny",
+      temperatureC: 28,
+    };
+  },
+};
+~~~
 
-实例化时需要三个参数：`API_KEY`、`BASE_URL`、`MODEL_ID`，根据你使用的服务商填写。
+工具函数不直接信任模型参数。即使只有一个 city，也要校验空值、超时和取消信号。真实写操作还应校验身份、权限、幂等键和审批状态。
 
----
+## 五、写一个可运行的 Demo Model
 
-## 第四步：主循环——驱动 TAO 迭代
+~~~ts
+const demoModel: Model = {
+  async decide({ task, trace }) {
+    const lastObservation = [...trace]
+      .reverse()
+      .find(
+        (item): item is Extract<TraceItem, { type: "observation" }> =>
+          item.type === "observation",
+      );
 
-这是整个智能体的核心，将上述组件串联起来：
+    if (!lastObservation) {
+      return {
+        type: "action",
+        tool: "getWeather",
+        args: { city: task.includes("北京") ? "北京" : "" },
+        summary: "回答前需要获取目标城市的天气。",
+      };
+    }
 
-```python
-import re
+    const weather = lastObservation.result as WeatherResult;
+    const advice =
+      weather.condition === "rainy"
+        ? "记得带伞，并预留通勤时间。"
+        : "天气晴朗，注意防晒和补水。";
 
-# 配置（替换为你的实际凭证）
-llm = OpenAICompatibleClient(
-    model="YOUR_MODEL_ID",
-    api_key="YOUR_API_KEY",
-    base_url="YOUR_BASE_URL",
-)
-os.environ["TAVILY_API_KEY"] = "YOUR_TAVILY_API_KEY"
+    return {
+      type: "final",
+      answer: `${weather.city} ${weather.temperatureC}℃，${advice}`,
+    };
+  },
+};
+~~~
 
-# 初始化
-user_prompt = "你好，请帮我查询一下今天北京的天气，然后根据天气推荐一个合适的旅游景点。"
-history = [f"用户请求：{user_prompt}"]
-print(f"用户输入：{user_prompt}\n{'='*40}")
+它不是大模型，却严格遵守与大模型相同的 Decision 协议。这样做的价值是：你可以先对循环、工具与错误处理写单元测试，再接入真实模型，而不是把所有问题混在一次 API 调用里。
 
-# Agent Loop
-for i in range(5):  # 最大 5 轮，防止无限循环
-    print(f"\n--- 循环 {i+1} ---")
+接入真实模型时，应把工具名称、描述和参数 JSON Schema 传给 SDK，并将 SDK 返回的 tool call 映射为 Decision。不要用正则解析“Action: xxx”。
 
-    # 1. 构建完整 Prompt（历史对话拼接）
-    full_prompt = "\n".join(history)
+## 六、实现 Agent Loop
 
-    # 2. 调用 LLM 进行 Thought
-    llm_output = llm.generate(full_prompt, system_prompt=AGENT_SYSTEM_PROMPT)
+~~~ts
+async function runAgent(params: {
+  task: string;
+  model: Model;
+  userId: string;
+  maxSteps?: number;
+  timeoutMs?: number;
+}) {
+  const {
+    task,
+    model,
+    userId,
+    maxSteps = 5,
+    timeoutMs = 10_000,
+  } = params;
 
-    # 截断多余的 Thought-Action 对（防止 LLM 一次输出多轮）
-    match = re.search(
-        r"(Thought:.*?Action:.*?)(?=\n\s*(?:Thought:|Observation:)|\Z)",
-        llm_output, re.DOTALL
-    )
-    if match:
-        llm_output = match.group(1).strip()
+  const trace: TraceItem[] = [];
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
 
-    print(f"模型输出：\n{llm_output}")
-    history.append(llm_output)
+  try {
+    for (let step = 0; step < maxSteps; step++) {
+      if (controller.signal.aborted) {
+        throw new Error("AGENT_TIMEOUT");
+      }
 
-    # 3. 解析 Action
-    action_match = re.search(r"Action:\s*(.*)", llm_output, re.DOTALL)
-    if not action_match:
-        observation = "错误：未能解析 Action 字段，请确保格式为 'Action: ...'。"
-        history.append(f"Observation: {observation}")
-        continue
+      const decision = await model.decide({
+        task,
+        trace,
+        tools: ["getWeather"],
+      });
 
-    action_str = action_match.group(1).strip()
+      if (decision.type === "final") {
+        return {
+          status: "completed" as const,
+          answer: decision.answer,
+          steps: step + 1,
+          trace,
+        };
+      }
 
-    # 4. 判断是否结束
-    if action_str.startswith("Finish"):
-        final = re.match(r"Finish\[(.*)\]", action_str, re.DOTALL)
-        print(f"\n任务完成！\n最终答案：{final.group(1) if final else action_str}")
-        break
+      if (!(decision.tool in tools)) {
+        throw new Error(`UNKNOWN_TOOL: ${decision.tool}`);
+      }
 
-    # 5. 解析工具调用并执行
-    tool_match = re.search(r"(\w+)\((.*)\)", action_str)
-    if not tool_match:
-        observation = f"错误：无法解析工具调用格式 '{action_str}'"
-    else:
-        tool_name = tool_match.group(1)
-        args_str = tool_match.group(2)
-        kwargs = dict(re.findall(r'(\w+)="([^"]*)"', args_str))
+      trace.push({
+        type: "action",
+        tool: decision.tool,
+        args: decision.args,
+      });
 
-        if tool_name in available_tools:
-            observation = available_tools[tool_name](**kwargs)
-        else:
-            observation = f"错误：未定义的工具 '{tool_name}'"
+      let result: unknown;
 
-    # 6. 记录 Observation，进入下一轮
-    obs_str = f"Observation: {observation}"
-    print(f"{obs_str}\n{'='*40}")
-    history.append(obs_str)
-```
+      try {
+        result = await tools[decision.tool](decision.args, {
+          userId,
+          signal: controller.signal,
+        });
+      } catch (error) {
+        result = {
+          ok: false,
+          error:
+            error instanceof Error ? error.message : "UNKNOWN_TOOL_ERROR",
+        };
+      }
 
----
+      trace.push({
+        type: "observation",
+        tool: decision.tool,
+        result,
+      });
+    }
 
-## 运行结果分析
+    return {
+      status: "stopped" as const,
+      reason: "MAX_STEPS_REACHED",
+      trace,
+    };
+  } finally {
+    clearTimeout(timer);
+  }
+}
+~~~
 
-成功执行时，输出如下三轮循环：
+调用它：
 
-```
-用户输入：你好，请帮我查询一下今天北京的天气，然后根据天气推荐一个合适的旅游景点。
-========================================
+~~~ts
+const result = await runAgent({
+  task: "查询北京天气，并给出一句出行建议",
+  model: demoModel,
+  userId: "user-123",
+});
 
---- 循环 1 ---
-模型输出：
-Thought: 首先需要获取北京今天的天气情况，再根据天气推荐旅游景点。
-Action: get_weather(city="北京")
-Observation: 北京当前天气：Sunny，气温 26 摄氏度
-========================================
+console.log(result);
+~~~
 
---- 循环 2 ---
-模型输出：
-Thought: 北京今天晴朗，气温适中，适合户外游览。下一步根据晴天推荐景点。
-Action: get_attraction(city="北京", weather="Sunny")
-Observation: 北京晴天最值得去的景点是颐和园（美丽湖景和古建筑）和长城（壮观景色和历史意义）。
-========================================
+循环只有四个关键分支：
 
---- 循环 3 ---
-模型输出：
-Thought: 已获得天气和景点信息，可以给出最终答案。
-Action: Finish[今天北京晴朗，气温 26 摄氏度，非常适合外出。推荐颐和园欣赏皇家园林，或前往长城领略壮观历史景观。]
+1. 模型返回 final，正常结束。
+2. 模型返回 action，程序校验并执行工具。
+3. 工具成功或失败，都形成 Observation 回到轨迹。
+4. 达到超时或最大步骤，强制停止。
 
-任务完成！
-最终答案：今天北京晴朗，气温 26 摄氏度，非常适合外出。推荐颐和园欣赏皇家园林，或前往长城领略壮观历史景观。
-```
+## 七、为什么工具失败也要进入 Observation
 
-三轮循环展示了智能体的四项基本能力：
+如果工具错误直接抛到循环外，模型没有机会换参数、改用其他工具或向用户解释。把可恢复错误转换为结构化 Observation，下一轮就能做出选择。
 
-| 能力 | 体现 |
-|------|------|
-| **任务分解** | 自动将「查天气+推荐景点」拆成两步执行 |
-| **工具调用** | 正确识别工具名和参数，传递 `city="北京"` |
-| **上下文理解** | 循环二把循环一的天气结果（Sunny）作为 `weather` 参数传入 |
-| **结果合成** | 循环三综合两次 Observation 输出完整答案 |
+不过，不是所有错误都值得重试：
 
----
+| 错误类型 | 建议处理 |
+|---|---|
+| 临时网络超时 | 有上限地重试，使用退避 |
+| 参数缺失 | 请求模型修正或向用户澄清 |
+| 权限不足 | 立即停止，不允许模型绕过 |
+| 预算耗尽 | 立即停止 |
+| 不可逆写操作失败 | 查询真实状态后再决定，禁止盲目重复 |
 
-## 关键机制深入理解
+## 八、把 Demo Model 换成真实模型时注意什么
 
-### 为什么用 History 拼接而不是对话轮次？
+真实模型适配器需要完成三件事：
 
-主循环用简单的字符串列表 `history` 追踪全部上下文，每轮把 LLM 输出和 Observation 都 append 进去，最后 join 成一个大字符串传给 LLM。
+1. 把 task、必要 trace 和工具 Schema 组成请求。
+2. 把结构化 tool call 转成 Decision。
+3. 把最终回答转成 final。
 
-这种方式直观易调试，适合学习理解。生产框架（LangChain、LangGraph 等）会用更结构化的消息格式（`messages=[{"role": "assistant", ...}]`），但核心思路相同：**让 LLM 每轮都能看到完整的历史轨迹**。
+传给模型的轨迹应保留任务需要的信息，但不要无限追加原始响应。工具返回可能很大，应先裁剪为关键字段，并保存完整日志到可审计存储，而不是全部塞进 context window。
 
-### 正则解析的局限
+OpenAI 的 Agents SDK 将 agent 定义为模型、指令、工具与运行行为的组合；Anthropic 的工程文章则建议从简单可理解的循环开始，在确有收益时再引入复杂编排。[OpenAI：Agent definitions](https://developers.openai.com/api/docs/guides/agents/define-agents) [Anthropic：Building effective agents](https://www.anthropic.com/engineering/building-effective-agents)
 
-主循环用正则表达式解析 `Action` 字段，这在教学场景够用，但有脆弱性：
+## 九、给循环补上生产护栏
 
-- LLM 可能偶尔不严格遵循格式
-- 参数值中若包含引号或特殊字符会导致解析失败
+最小 Demo 能跑，不代表能上线。至少还要增加：
 
-生产环境的解决方案是使用 LLM 原生的 **Function Calling / Tool Use** 能力，由模型直接输出结构化 JSON，无需手写解析器。
+- 输入 Schema 与工具参数校验；
+- 身份认证和服务端权限判断；
+- 步骤、token、时间和费用预算；
+- 写操作的幂等键、预览与人工批准；
+- 工具白名单和任务级最小暴露；
+- trace、指标、错误切片和回放；
+- 敏感信息脱敏与数据保留策略；
+- 最终答案的事实、引用和策略校验。
 
-### 最大循环次数的作用
+有副作用的 Action 应采用“模型提议 → 程序验证 → 用户批准 → 工具执行”，不能让一段生成文本直接变成真实操作。
 
-`for i in range(5)` 的上限不只是「保险措施」，它也隐含了一个设计约束：**如果一个任务需要超过 5 轮才能完成，可能意味着任务分解策略有问题，或者工具返回的信息质量不够**。调整这个数字时要同时审视工具设计。
+## 常见误区
 
----
+- **要求模型输出完整 Thought**：生产系统需要可审计决策，不需要展示隐藏推理。
+- **正则解析 Action**：格式稍有变化就会失败，应使用结构化工具调用。
+- **工具成功就等于任务完成**：还要让模型或规则检查验收标准。
+- **只设 while(true)**：必须有步骤、时间和费用上限。
+- **所有错误都自动重试**：权限和不可逆操作尤其危险。
+- **把整个工具响应塞回模型**：会浪费上下文并放大提示注入风险。
+- **先上复杂框架再理解循环**：框架隐藏不了错误边界和授权问题。
 
-## 可扩展方向
+## 小结
 
-在这个骨架的基础上，可以逐步添加：
+最小智能体就是一个受控循环：模型提出 Action，程序执行工具并得到 Observation，再把必要结果交给下一轮决策，直到返回 Final 或触发停止条件。理解这段循环后，框架、状态图、记忆和多智能体只是对同一核心机制的扩展。
 
-```python
-# 1. 记忆：让智能体记住用户偏好
-user_preferences = {}  # {"budget": "经济型", "interests": ["历史文化"]}
+## 参考资料
 
-# 2. 错误重试：工具失败时自动换策略
-if "错误" in observation:
-    # 触发备用工具或请求用户澄清
-
-# 3. 多工具并行：某些步骤可以同时调用多个工具（需框架支持）
-
-# 4. 结果评估：在 Finish 前增加自我审查步骤
-# Thought: 答案是否覆盖了用户的所有需求？
-```
-
----
-
-## 常见误区与面试考点
-
-**常见误区：**
-
-- 误区一：「System Prompt 写得越详细越好」。过度约束会让 LLM 的推理僵化，遇到格式边界情况更容易崩溃。保持必要约束，给 LLM 推理空间
-- 误区二：「观察结果（Observation）越完整越好」。原始 API 返回通常包含大量冗余字段，喂给 LLM 会占用宝贵的 context window，应精简为关键信息
-- 误区三：「解析失败就是 LLM 能力问题」。90% 的解析失败是 Prompt 的格式约束不够明确导致的，先审查 System Prompt 再换模型
-
-**面试常问：**
-
-- Thought-Action-Observation 三者分别是什么？解析器在哪个环节介入？
-- 为什么智能体主循环需要保存完整的历史记录？不保存会发生什么？
-- 生产环境中如何替代手写正则解析 Action？（Function Calling / Tool Use）
-- 如何防止智能体在工具调用失败时无限重试？
-- 这个简单实现与 LangChain Agent 的核心区别是什么？
-
----
-
+- [Yao et al.：ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)
+- [Google Research：ReAct](https://research.google/blog/react-synergizing-reasoning-and-acting-in-language-models/)
+- [Anthropic：Building effective agents](https://www.anthropic.com/engineering/building-effective-agents)
+- [OpenAI：Agent definitions](https://developers.openai.com/api/docs/guides/agents/define-agents)

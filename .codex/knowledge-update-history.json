@@ -177,7 +177,7 @@
       "key": "aigc-frontend",
       "label": "大模型和前端有哪些结合场景",
       "filePath": "fe/aigc",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-07-14",
       "batch": "frontend-scenarios-and-rag-foundations-2026-07-14"
@@ -186,7 +186,7 @@
       "key": "embedding-basics",
       "label": "Embedding 原理与向量相似度",
       "filePath": "llm/rag",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-07-14",
       "batch": "frontend-scenarios-and-rag-foundations-2026-07-14"
@@ -195,7 +195,7 @@
       "key": "rag-chunking",
       "label": "文本分块策略（Chunking）",
       "filePath": "llm/rag",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-07-14",
       "batch": "frontend-scenarios-and-rag-foundations-2026-07-14"
@@ -204,7 +204,7 @@
       "key": "vector-db-selection",
       "label": "向量数据库选型：Pinecone / Chroma / pgvector",
       "filePath": "llm/rag",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-07-14",
       "batch": "frontend-scenarios-and-rag-foundations-2026-07-14"
@@ -213,10 +213,55 @@
       "key": "rag-pipeline",
       "label": "RAG 完整流程实战",
       "filePath": "llm/rag",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-07-14",
       "batch": "frontend-scenarios-and-rag-foundations-2026-07-14"
+    },
+    {
+      "key": "rag-hybrid-search",
+      "label": "Hybrid Search 混合检索",
+      "filePath": "llm/rag",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-14",
+      "batch": "rag-evaluation-and-agent-foundations-2026-07-14"
+    },
+    {
+      "key": "rag-evaluation",
+      "label": "RAG 评估与优化",
+      "filePath": "llm/rag",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-14",
+      "batch": "rag-evaluation-and-agent-foundations-2026-07-14"
+    },
+    {
+      "key": "agent-architecture",
+      "label": "初识智能体:定义 / 类型 / PEAS / Agent Loop",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-14",
+      "batch": "rag-evaluation-and-agent-foundations-2026-07-14"
+    },
+    {
+      "key": "agent-first-demo",
+      "label": "动手:5 分钟实现第一个智能体(Thought-Action-Observation)",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-14",
+      "batch": "rag-evaluation-and-agent-foundations-2026-07-14"
+    },
+    {
+      "key": "agent-history",
+      "label": "智能体发展史",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-14",
+      "batch": "rag-evaluation-and-agent-foundations-2026-07-14"
     }
   ]
 }
