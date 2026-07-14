@@ -11,6 +11,16 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
+      - name: Publish pending content sync status
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api --method POST "repos/${{ github.repository }}/statuses/${{ github.sha }}" \
+            -f state="pending" \
+            -f context="content-sync" \
+            -f description="Content sync running" \
+            -f target_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
