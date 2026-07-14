@@ -1,4 +1,4 @@
 # OSS image repair probe
-# Single small image retry with observable commit status.
+# PR-visible sync run for diagnosing the publishing path.
 
 images/agent-history-timeline-v2.png
