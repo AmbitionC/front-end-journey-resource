@@ -2,6 +2,9 @@ name: sync-content
 on:
   push:
     branches: [master]
+  pull_request:
+    paths:
+      - '.codex/image-resync.txt'
 
 permissions:
   contents: read
@@ -36,8 +39,8 @@ jobs:
         env:
           FAAS_SYNC_URL: ${{ secrets.FAAS_SYNC_URL }}
           FAAS_SYNC_SECRET: ${{ secrets.FAAS_SYNC_SECRET }}
-          BEFORE: ${{ github.event.before }}
-          AFTER: ${{ github.sha }}
+          BEFORE: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
+          AFTER: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
         run: |
           curl -sS -X POST "$FAAS_SYNC_URL" \
             -H "x-sync-secret: $FAAS_SYNC_SECRET" \
@@ -45,7 +48,7 @@ jobs:
             -d "{\"beforeSha\":\"$BEFORE\",\"afterSha\":\"$AFTER\"}" \
             -w "\nHTTP %{http_code}\n" | tee /tmp/resp.txt
           grep -q '"success":true' /tmp/resp.txt
-          grep -q '"errors":\\[\\]' /tmp/resp.txt
+          grep -q '"errors":\[\]' /tmp/resp.txt
 
       - name: Publish content sync status
         if: always()
