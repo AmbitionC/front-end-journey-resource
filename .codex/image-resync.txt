@@ -2,8 +2,8 @@
 # Replays every knowledge illustration published before the binary integrity fix.
 # Keep paths versioned and auditable; changing this file re-enqueues them.
 
-images/transformer-arch-modern-decoder-block-v3.png
-images/transformer-arch-causal-attention-v3.png
+images/transformer-arch-modern-decoder-block-v4.webp
+images/transformer-arch-causal-attention-v4.webp
 images/llm-token-context-kv-cache-v2.png
 images/llm-model-compare-selection-v2.png
 images/llm-inference-params-sampling-v2.png
