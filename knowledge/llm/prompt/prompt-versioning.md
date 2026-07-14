@@ -1,301 +1,169 @@
-Prompt 是 LLM 应用的核心资产，和代码一样需要版本管理、测试和迭代。"随手改了一句话"可能导致输出质量显著下降且难以排查——这是 LLM 线上事故的高发源头。
+Prompt 的一次改字，可能同时改变准确率、格式、延迟、Token 用量和工具调用行为。要让变化可解释、可比较、可回滚，不能只给一段文本标 `v2`；应把真正影响请求与结果的整套配置作为一个“提示包”版本化。
 
-## 为什么 Prompt 需要版本管理
+## 版本对象不是只有 Prompt 文本
 
-与普通代码不同，Prompt 的问题往往不在运行时报错，而是输出质量的悄然退化（Silent Regression）：
+一次 LLM 运行通常由这些因素共同决定：
 
-- **格式漂移（Format Drift）**：原来输出 JSON，现在多了前缀文字
-- **语气变化（Tone Shift）**：原来专业严谨，现在随意口语
-- **边界用例失效（Edge Case Regression）**：某类输入不再正确处理
-- **成本膨胀（Cost Regression）**：Token 数突然增加导致费用上升
+- system / developer 指令与 user 模板；
+- 模型 ID 或快照、推理与采样参数；
+- 工具列表、描述、JSON Schema 与执行策略；
+- 检索配置、知识库版本和上下文拼装顺序；
+- 输出 Schema、解析器与后处理代码；
+- SDK、业务代码、功能开关和安全策略。
 
-版本管理的目标：**可追溯（Traceable）、可回滚（Rollback）、可比较（Diff）、可审计（Auditable）**。
+因此日志中的 `prompt_version` 最好指向一个不可变清单，而不是只指向某个文本文件。OpenAI 的 Prompt 指南也建议把 Prompt 构造器集中管理，并在变更前加入代表性 fixtures、测试和评测，再通过发布系统或功能开关分阶段上线。[OpenAI 文本生成指南](https://developers.openai.com/api/docs/guides/text)
 
-## 文件化版本管理
+![提示包先经过离线评测，再进入稳定分流的灰度或 A/B 实验，由指标与护栏决定发布或回滚](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/prompt-versioning-experiment-v2.png)
+*图：只有把模板、模型、工具和输出结构一起锁定，A/B 结果才知道究竟比较了什么。*
 
-### 目录结构约定
+## 用不可变清单描述一个版本
 
-将 Prompt 从代码中分离，用独立文件管理，并通过 Git 追踪变更历史：
-
-```
-prompts/
-├── summarize/
-│   ├── v1.0.yaml
-│   ├── v1.1.yaml
-│   └── v2.0.yaml       <- 当前生产版本
-├── extract-order/
-│   ├── v1.0.yaml
-│   └── v1.1.yaml
-└── registry.yaml       <- 各任务的"当前版本"指针
-```
-
-### YAML 模板文件示例
+可以把人类可读版本号与内容哈希结合：版本号表达发布意图，哈希确认运行时拿到的确切内容。
 
 ```yaml
-# prompts/summarize/v2.0.yaml
-id: summarize-v2.0
-name: 文章摘要（v2.0）
-model: claude-opus-4-5
-created_at: "2025-06-01"
-author: chenhao
-changelog: "改进了对长文的处理，增加了字数限制指令"
+id: support-answer@2.3.0
+created_at: 2026-07-14
+change: "要求答案引用检索证据；缺少证据时不猜测"
 
-system: |
-  你是一名专业的内容编辑，擅长提炼文章核心要点。
-  摘要应简洁、客观，不超过 {{ max_words }} 字。
+model:
+  id: ${MODEL_ID}
+  reasoning_effort: low
 
-user_template: |
-  请为以下文章生成摘要：
+prompts:
+  instructions: prompts/support/instructions.md
+  user_template: prompts/support/user.md
 
-  {{ article }}
+tools:
+  schema: tools/support-tools.schema.json
+  policy_version: support-tools@4
+
+retrieval:
+  index_version: help-center-2026-07-10
+  top_k: 8
+
+output:
+  schema: schemas/support-answer.v3.json
+
+eval:
+  dataset: support-regression@12
+  rubric: support-rubric@5
 ```
 
-### Jinja2 模板渲染（Python）
+构建或发布时计算清单及其引用文件的哈希，并在请求日志中记录：
 
-使用 Jinja2（模板引擎）对 YAML 中的模板变量进行渲染，避免字符串拼接带来的转义问题：
-
-```python
-from jinja2 import Template
-import yaml
-from pathlib import Path
-import anthropic
-
-def load_prompt(task: str, version: str) -> dict:
-    path = Path(f"prompts/{task}/{version}.yaml")
-    return yaml.safe_load(path.read_text(encoding="utf-8"))
-
-def render_prompt(template_str: str, variables: dict) -> str:
-    return Template(template_str).render(**variables)
-
-# 使用示例
-prompt_def = load_prompt("summarize", "v2.0")
-
-system_prompt = render_prompt(prompt_def["system"], {"max_words": 200})
-user_message = render_prompt(prompt_def["user_template"], {"article": "...文章正文..."})
-
-client = anthropic.Anthropic()
-response = client.messages.create(
-    model=prompt_def["model"],
-    max_tokens=512,
-    system=system_prompt,
-    messages=[{"role": "user", "content": user_message}],
-)
-
-# 日志记录使用了哪个版本，便于问题排查
-print(f"[Prompt: {prompt_def['id']}] {response.content[0].text}")
-```
-
-将 `prompt_def["id"]`（如 `summarize-v2.0`）写入每次调用的日志，出现质量问题时可直接定位到具体的 Prompt 版本。
-
-## A/B 测试框架
-
-A/B 测试（A/B Testing）用于在两个 Prompt 版本之间进行对比，以数据为依据决定保留哪个版本，而非依赖主观感受。
-
-### 流量分配（Traffic Splitting）
-
-核心是**确定性分流**：同一个用户/请求 ID 始终路由到同一个变体（Variant），保证用户体验一致，同时避免同一用户的多次请求污染两组数据：
-
-```python
-import hashlib
-
-def select_variant(request_id: str, variants: list[dict]) -> str:
-    """
-    基于请求 ID 的确定性哈希分流。
-    variants: [{"id": "A", "weight": 0.5}, {"id": "B", "weight": 0.5}]
-    """
-    hash_val = int(hashlib.md5(request_id.encode()).hexdigest(), 16)
-    bucket = (hash_val % 100) / 100.0  # 0.00 ~ 0.99
-
-    cumulative = 0.0
-    for variant in variants:
-        cumulative += variant["weight"]
-        if bucket < cumulative:
-            return variant["id"]
-
-    return variants[-1]["id"]
-
-# 实验配置
-experiment = {
-    "id": "summarize-ab-001",
-    "variants": [
-        {"id": "control", "prompt_version": "v1.1", "weight": 0.5},
-        {"id": "treatment", "prompt_version": "v2.0", "weight": 0.5},
-    ]
+```json
+{
+  "prompt_id": "support-answer",
+  "prompt_version": "2.3.0",
+  "bundle_hash": "sha256:…",
+  "experiment": "support-citations-2026-07",
+  "variant": "B",
+  "model": "resolved-model-id",
+  "request_id": "provider-request-id"
 }
-
-variant_id = select_variant("user-request-abc123", experiment["variants"])
-print(variant_id)  # 对同一 request_id 结果始终相同
 ```
 
-### 样本量与统计显著性
+运行时不要读取会被原地覆盖的“latest.md”。发布应创建不可变版本，再通过一个可回滚的别名或配置把流量指向它。
 
-A/B 测试需要足够的样本量才能得出可信结论。经验法则：
+## 版本号怎么定
 
-- 期望检测的效果越小，需要的样本量越大
-- 通常需要至少 **200–500 个样本/组**才能检测到 5% 级别的差异
-- 使用双样本 t 检验或 z 检验验证指标差异是否具有统计显著性（p < 0.05）
-- 宁可多跑几天，不要在样本不足时草率结论
+语义化版本可以借用，但不要假装 Prompt 与库 API 一样具有严格兼容性。一个实用约定是：
 
-## 评估指标体系
+- **Patch**：不改变任务与输出契约的澄清、错别字或示例修正；
+- **Minor**：新增受支持场景、规则或示例，输出 Schema 保持兼容；
+- **Major**：任务边界、工具权限、模型家族或输出 Schema 发生不兼容变化。
 
-### 三类评估方式对比
+无论版本号多小，只要影响模型输入，就必须跑回归评测。`2.3.1` 不代表风险一定小。
 
-| 评估方式 | 成本 | 速度 | 可扩展性 | 可靠性 | 适用场景 |
-|---------|------|------|---------|---------|---------|
-| 人工评估（Manual Eval） | 高 | 慢 | 差 | 高 | 黄金标准、校准 |
-| 自动化指标（Automated Eval） | 低 | 快 | 好 | 中（依赖指标设计） | 格式符合率、延迟、成本 |
-| LLM-as-Judge（模型评审） | 中 | 快 | 好 | 中（存在偏差） | 主观质量、开放式任务 |
+## 先离线评测，再做线上实验
 
-### 自动化指标收集（Python）
+离线评测回答“这个候选是否达到最基本质量”；线上实验回答“它是否改善真实用户目标”。不能用 A/B 测试替代安全和正确性门槛。
 
-```python
-import time
-import json
-import anthropic
+### 1. 固定代表性数据集
 
-def tracked_llm_call(prompt: str, variant_id: str, request_id: str) -> dict:
-    """执行 LLM 调用并收集自动化指标。"""
-    client = anthropic.Anthropic()
+数据集应接近真实任务分布，并单独保留边界与对抗用例。每条样本包含输入、必要上下文、期望特征和评分方法。避免只收集候选版本表现好的例子。
 
-    start = time.time()
-    response = client.messages.create(
-        model="claude-opus-4-5",
-        max_tokens=512,
-        messages=[{"role": "user", "content": prompt}],
-    )
-    latency_ms = (time.time() - start) * 1000
-    output_text = response.content[0].text
+### 2. 选择可重复的评分器
 
-    # 格式符合率（以 JSON 任务为例）
-    parse_success = True
-    try:
-        json.loads(output_text)
-    except json.JSONDecodeError:
-        parse_success = False
+优先顺序通常是：确定性代码检查、经校准的模型评分、人工评分。格式、Schema、引用存在性可用代码检查；事实性和语气可用明确 rubric；高风险决策要保留专家复核。
 
-    metrics = {
-        "variant_id": variant_id,
-        "request_id": request_id,
-        "latency_ms": round(latency_ms),
-        "input_tokens": response.usage.input_tokens,
-        "output_tokens": response.usage.output_tokens,
-        "truncated": response.stop_reason == "max_tokens",
-        "parse_success": parse_success,
-    }
+Anthropic 的评测指南强调成功标准应具体、可测、与任务相关，并覆盖真实分布和边界情况；多维任务通常需要质量、隐私、延迟和价格等多项指标，而不是一个总分。[Anthropic 评测指南](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests)
 
-    return {"output": output_text, "metrics": metrics}
+### 3. 设定晋级门槛
+
+候选必须同时满足：核心质量不低于基线、安全和格式用例全部达标、成本与延迟不越过护栏。不要用平均分掩盖某个严重失败类别。
+
+OpenAI Evals 的基本流程也是先定义期望行为与测试数据，再对候选 Prompt 运行评测并分析结果。[OpenAI Evals 指南](https://developers.openai.com/api/docs/guides/evals)
+
+## 正确设计灰度与 A/B 测试
+
+### 明确实验假设
+
+坏假设是“B 更好”；好假设是“B 会把一次解决率提高，同时不降低安全通过率，P95 延迟增加不超过既定阈值”。
+
+### 只改变目标变量
+
+如果 A 与 B 同时使用不同 Prompt、不同模型和不同检索参数，最终无法归因。需要比较整包升级时可以这样做，但结论应写成“包 B 优于包 A”，不能归因到某一句 Prompt。
+
+### 选择正确的分流单位
+
+按用户或账号进行稳定分配（sticky assignment），避免同一人在多轮会话中来回切换版本。团队协作、企业账户等存在相互影响时，按组织分流比按请求分流更合理。
+
+```ts
+function variantFor(subjectId: string): "A" | "B" {
+  const bucket = stableHash(`support-exp-2026-07:${subjectId}`) % 100;
+  return bucket < 50 ? "A" : "B";
+}
 ```
 
-## LLM-as-Judge（模型即评审）
+### 预先定义指标与停止规则
 
-对于主观质量评估，可以用另一个 LLM 调用来对输出打分，替代（或补充）人工评估，大幅提升评估吞吐量。
+至少包括：
 
-```python
-import anthropic
-import json
+- 一个主要指标，例如任务完成率或一次解决率；
+- 质量护栏，例如事实错误率、Schema 失败率、拒绝误伤率；
+- 系统护栏，例如 P95 延迟、Token 成本、工具失败率；
+- 预定样本量或运行周期、显著性方法与最大可接受损失；
+- 立即停止条件，例如越权工具调用或严重安全失败。
 
-JUDGE_PROMPT = """You are an impartial evaluator. Given a question and two answers (A and B),
-determine which answer is better and explain why.
+不要每天查看结果并在第一次“看起来赢了”时结束实验，这会抬高误判概率。若必须连续监控，应使用预先选择的序贯检验方法，并把规则写进实验配置。
 
-Question: {question}
-Answer A: {answer_a}
-Answer B: {answer_b}
+## 灰度发布与回滚
 
-Respond with JSON: {{"winner": "A" or "B", "reason": "..."}}"""
+A/B 用于比较，灰度用于限制风险。生产发布可按以下顺序：
 
-def llm_judge(question: str, answer_a: str, answer_b: str) -> dict:
-    client = anthropic.Anthropic()
-    response = client.messages.create(
-        model="claude-opus-4-5",
-        max_tokens=256,
-        messages=[{
-            "role": "user",
-            "content": JUDGE_PROMPT.format(
-                question=question, answer_a=answer_a, answer_b=answer_b
-            )
-        }],
-    )
-    return json.loads(response.content[0].text)
+1. **影子流量**：候选读取真实输入但不影响用户，检查格式、成本与工具决策；
+2. **内部或白名单**：让可快速反馈的人群使用；
+3. **小比例灰度**：观察错误、延迟、安全和关键业务指标；
+4. **逐步扩大**：每一级都有观察窗口和自动停止条件；
+5. **全量与保留对照**：必要时保留少量长期基线，监测环境漂移。
 
-# 使用示例
-result = llm_judge(
-    question="请用两句话解释什么是机器学习。",
-    answer_a="机器学习是让计算机从数据中自动学习规律的技术。它广泛应用于图像识别、推荐系统等领域。",
-    answer_b="机器学习就是让电脑变聪明，可以做很多事情。",
-)
-print(result)
-# {"winner": "A", "reason": "Answer A is more precise and includes concrete application examples."}
-```
+回滚必须是配置切换，不应要求重新构建应用。旧提示包、旧工具 Schema 与兼容解析器要保留到回滚窗口结束。
 
-**LLM-as-Judge 的局限性：**
-- 存在位置偏差（Position Bias）：倾向于偏好第一个回答
-- 存在冗长偏差（Verbosity Bias）：倾向于偏好更长的回答
-- 缓解方法：交换 A/B 顺序各跑一次，取一致结论；校准 Judge 模型与人工标注的相关性
+## 可观测性与隐私
 
-## A/B 测试完整流水线
+为了定位回归，日志至少需要提示包版本、实验变体、模型、延迟、Token 用量、工具结果状态、输出解析状态和供应商请求 ID。但不要默认完整记录用户 Prompt 和模型回复；先做数据分级、脱敏、访问控制与保留期限设计。
 
-```mermaid
-graph TD
-    U[User Request] --> R{Traffic Router}
-    R -->|50%| PA[Prompt A]
-    R -->|50%| PB[Prompt B]
-    PA --> LLM_A[LLM Call]
-    PB --> LLM_B[LLM Call]
-    LLM_A --> MA[Metrics Collect]
-    LLM_B --> MB[Metrics Collect]
-    MA --> AN[Analysis & Winner]
-    MB --> AN
-```
+将用户反馈直接当作唯一质量指标也不可靠：只有愿意反馈的人会被观察到，而且满意度可能与事实正确性冲突。应把显式反馈与任务结果、自动评测和抽样审查结合。
 
-扩展后的流程还包括 LLM-as-Judge 的自动质量评分节点，可以并行接在 `Metrics Collect` 之后，形成全自动评估闭环。
+## 常见失败方式
 
-## 工具生态
+**只保存 Prompt 文本。** 模型或工具 Schema 已变化，回滚文本仍复现不了旧行为。
 
-市面上有专门的 Prompt 管理平台，提供版本管理、实验追踪、评估 pipeline 等能力：
+**在生产中覆盖同名版本。** 日志写着 `v2`，不同时间却指向不同内容，事故无法复盘。
 
-| 工具 | 核心能力 | 定位 |
-|------|---------|------|
-| LangSmith | Tracing、A/B 测试、Prompt Hub | LangChain 生态 |
-| PromptLayer | 版本管理、成本追踪 | 轻量级 |
-| Braintrust | 评估、数据集、Prompt 管理 | 独立评估平台 |
-| Helicone | 成本监控、日志 | 代理层 |
+**离线集被反复调参污染。** 同一个评测集被看得太多后会变成训练集，应保留独立的最终验证集并定期补充新案例。
 
-对于规模较大的 LLM 应用，引入专门工具比自建更经济。**以官方最新文档为准**了解当前功能。
+**A/B 按请求随机。** 多轮会话可能跨版本，既破坏体验，也污染指标。
 
-## 常见错误与最佳实践
+**只看平均质量。** 少数越权、泄露或格式崩溃可能被平均分淹没，必须设置分类护栏。
 
-### 常见错误
+## 小结
 
-- **"感觉好多了"就上线**：主观感受代替不了数据验证，尤其是罕见边界情况
-- **用全量流量测试**：A/B 测试应从 5–10% 小流量开始，控制风险，确认稳定后再扩量
-- **样本量不足就下结论**：样本量不足时统计结论不可信，宁可多跑几天
-- **只看平均值（Mean）**：关注 P95/P99 延迟和失败案例，均值可能掩盖严重的长尾问题
-- **不记录 changelog**：Prompt 改动要像 git commit 一样留文字说明，注明"改了什么、为什么改"
-- **测试时间太短**：避免在特定时段（如工作日高峰）做短期测试，日期效应会影响结论
-- **Judge 模型与被评测模型相同**：应使用更强的模型或不同供应商的模型担任 Judge，减少自我偏袒
+Prompt 版本管理的核心是可复现：把模板、模型、工具、检索和输出结构打成不可变提示包；变更先过离线评测，再通过稳定分流的灰度或 A/B 验证；用预定义指标决定发布或回滚。这样每次变化都能回答三个问题：线上运行的到底是什么、为什么发布、出问题如何快速退回。
 
-### 最佳实践
+## 参考资料
 
-1. **Prompt 即代码（Prompts as Code）**：所有 Prompt 纳入 Git 版本控制，每次修改对应一个 commit
-2. **先假设后测试**：改 Prompt 前先写下预期的改善假设，测试后对照假设分析结果
-3. **多指标并行追踪**：同时追踪质量、延迟、成本三类指标，避免"优化了质量但成本翻倍"
-4. **保留实验记录**：即使失败的实验也要记录结论，防止重复踩坑
-5. **定期校准 LLM-as-Judge**：用人工标注集验证 Judge 模型与人类偏好的相关性（Pearson r > 0.7 为可用）
-
-## 面试常问
-
-- **为什么 Prompt 需要版本管理，和代码版本管理有什么区别？**  
-  代码错误通常在运行时报错，Prompt 退化是输出质量的静默下降，更难被自动检测。且 Prompt 变更频率高、协作人员多（产品、算法、工程），更需要规范的变更管理流程。
-
-- **A/B 测试中如何保证分流的一致性（同一用户始终走同一变体）？**  
-  使用用户 ID 或请求 ID 做确定性哈希（如 MD5 取模），而非随机数。这样相同的 ID 每次都映射到相同的 bucket，保证用户体验一致性，同时数据统计不受重复访问污染。
-
-- **LLM-as-Judge 评估方法有什么优缺点？**  
-  优点是低成本、高吞吐、可自动化；缺点是存在位置偏差和冗长偏差，且评分受 Judge 模型能力和 Prompt 设计影响。需要定期与人工标注对齐校准。
-
-- **如何确定 A/B 测试的样本量是否足够？**  
-  使用幂分析（Power Analysis）预估所需样本量：确定期望检测的最小效果量、显著性水平（α=0.05）和统计功效（β=0.8），计算出最小样本量后再开始实验。
-
-- **生产环境中如何快速回滚一个有问题的 Prompt 版本？**  
-  如果 Prompt 版本与代码解耦（存放在配置/数据库），可以在不发布代码的情况下直接修改"当前版本"指针，实现秒级回滚。这也是将 Prompt 外置管理而非硬编码在代码中的核心理由之一。
-
+- [OpenAI：Text generation 中的 Prompt 工程化建议](https://developers.openai.com/api/docs/guides/text)
+- [OpenAI：Working with evals](https://developers.openai.com/api/docs/guides/evals)
+- [Anthropic：Define success criteria and build evaluations](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests)

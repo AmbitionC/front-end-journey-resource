@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
-  "updatedAt": "2026-07-13",
+  "updatedAt": "2026-07-14",
   "records": [
     {
       "key": "transformer-arch",
@@ -42,7 +42,7 @@
       "key": "llm-model-selection",
       "label": "如何选择合适的模型和版本",
       "filePath": "llm/basics",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-07-13",
       "batch": "llm-model-selection-and-prompt-core-2026-07-13"
@@ -51,7 +51,7 @@
       "key": "prompt-basics",
       "label": "Prompt 设计基础与原则",
       "filePath": "llm/prompt",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-07-13",
       "batch": "llm-model-selection-and-prompt-core-2026-07-13"
@@ -60,7 +60,7 @@
       "key": "prompt-cot",
       "label": "Chain-of-Thought 思维链技巧",
       "filePath": "llm/prompt",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-07-13",
       "batch": "llm-model-selection-and-prompt-core-2026-07-13"
@@ -69,7 +69,7 @@
       "key": "prompt-few-shot",
       "label": "Few-Shot 与 Zero-Shot 提示",
       "filePath": "llm/prompt",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-07-13",
       "batch": "llm-model-selection-and-prompt-core-2026-07-13"
@@ -78,10 +78,55 @@
       "key": "prompt-structured-output",
       "label": "结构化输出与 JSON Schema",
       "filePath": "llm/prompt",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-07-13",
       "batch": "llm-model-selection-and-prompt-core-2026-07-13"
+    },
+    {
+      "key": "prompt-system",
+      "label": "System Prompt 设计模式",
+      "filePath": "llm/prompt",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-14",
+      "batch": "prompt-system-versioning-and-sdk-basics-2026-07-14"
+    },
+    {
+      "key": "prompt-versioning",
+      "label": "Prompt 版本管理与 A/B 测试",
+      "filePath": "llm/prompt",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-14",
+      "batch": "prompt-system-versioning-and-sdk-basics-2026-07-14"
+    },
+    {
+      "key": "openai-sdk",
+      "label": "OpenAI SDK 完整使用指南",
+      "filePath": "llm/dev",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-14",
+      "batch": "prompt-system-versioning-and-sdk-basics-2026-07-14"
+    },
+    {
+      "key": "claude-sdk",
+      "label": "Anthropic Claude SDK 使用指南",
+      "filePath": "llm/dev",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-14",
+      "batch": "prompt-system-versioning-and-sdk-basics-2026-07-14"
+    },
+    {
+      "key": "qwen-dashscope",
+      "label": "通义千问 DashScope API 接入",
+      "filePath": "llm/dev",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-14",
+      "batch": "prompt-system-versioning-and-sdk-basics-2026-07-14"
     }
   ]
 }

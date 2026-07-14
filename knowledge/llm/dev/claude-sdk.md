@@ -1,531 +1,211 @@
-`@anthropic-ai/sdk` 是 Anthropic 官方提供的 TypeScript/Node.js SDK，用于调用 Claude 系列模型（Opus、Sonnet、Haiku）。与 OpenAI SDK 设计相似但存在若干关键结构差异，理解这些差异是接入 Claude 的必要前提，也是面试中考察 LLM 工程经验的高频切入点。
+Anthropic 官方 TypeScript SDK `@anthropic-ai/sdk` 是 Claude Messages API 的类型化客户端，提供消息、流式事件、错误重试和工具辅助能力。它负责可靠地调用 API，但不会替应用完成权限校验、工具执行、对话持久化和业务审计。
 
-## 安装与初始化（Installation & Initialization）
+## 安装与初始化
 
 ```bash
 npm install @anthropic-ai/sdk
 ```
 
-推荐将 API Key 存入环境变量，SDK 会自动读取 `ANTHROPIC_API_KEY`：
+```ts
+import Anthropic from "@anthropic-ai/sdk";
 
-```bash
-# .env 或系统环境变量
-ANTHROPIC_API_KEY=sk-ant-...
-```
-
-```typescript
-import Anthropic from '@anthropic-ai/sdk';
-
-// SDK 自动读取 ANTHROPIC_API_KEY，apiKey 可省略
-const client = new Anthropic();
-
-// 也可以显式传入
-const client = new Anthropic({
+export const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
+  maxRetries: 2,
+  timeout: 30_000,
 });
 ```
 
-> 生产环境中 API Key 绝对不能硬编码在代码里，应通过 `.env` 文件或 Secret Manager 注入。
+`ANTHROPIC_API_KEY` 只应存在于服务端。官方 SDK 默认从环境变量读取密钥，并为请求、响应、流式事件和错误提供 TypeScript 类型。[Anthropic TypeScript SDK](https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/typescript)
 
----
+## Messages API 的基本心智模型
 
-## Messages API 核心结构差异
+Messages API 接收顶层 `system` 与一组 `user` / `assistant` 消息，返回一个 `Message`。`content` 不是单个字符串，而是内容块数组；常见块包括 `text`、`tool_use`，启用其他能力时还可能出现更多类型。
 
-这是从 OpenAI SDK 迁移时最容易踩坑的地方，务必牢记以下三点结构差异。
-
-### system 是顶层参数（不在 messages 数组里）
-
-```typescript
-// ✅ Claude 正确写法：system 与 messages 平级
-const response = await client.messages.create({
-  model: 'claude-3-5-sonnet-...',     // 具体 model ID 以官方文档为准
-  max_tokens: 1024,                    // ⚠️ 必填，无默认值
-  system: '你是一个前端架构师，回答简洁专业。',  // 顶层参数
+```ts
+const message = await anthropic.messages.create({
+  model: process.env.ANTHROPIC_MODEL!,
+  max_tokens: 1024,
+  system: "你是代码审查助手。只报告能够定位到具体代码的问题。",
   messages: [
-    { role: 'user', content: '什么是 React Server Components？' },
+    { role: "user", content: "审查：const total = items.reduce((a, b) => a + b.price, 0)" },
   ],
 });
+
+const text = message.content
+  .filter((block) => block.type === "text")
+  .map((block) => block.text)
+  .join("");
+
+console.log(text);
+console.log(message.usage, message.stop_reason);
 ```
 
-```typescript
-// ❌ 错误写法（OpenAI 风格，Claude 不支持）
-messages: [
-  { role: 'system', content: '你是一个前端架构师...' },  // Claude 会报错
-  { role: 'user', content: '...' },
-]
+不要假设 `content[0]` 一定是文本，也不要忽略 `stop_reason`。`max_tokens` 达到上限、模型请求工具或正常结束，需要不同处理。
+
+![TypeScript 服务通过 Messages API 接收内容块，校验并执行 tool_use，再用 tool_result 继续对话](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/claude-sdk-messages-tools-v2.png)
+*图：只有 `tool_use` 路径进入参数校验和工具执行；普通 `text` 块可以直接组成回答。*
+
+## 模型 ID 与推理配置
+
+模型名称变化很快，不要把“最强”“最快”的结论永久写进代码。把模型 ID 放入配置，并在升级前用自己的评测集验证。Anthropic 当前模型文档说明，较新的模型 ID 本身是固定快照，而不是永远漂移的别名；也可通过 Models API 查询能力和 Token 限制。[Anthropic Models Overview](https://platform.claude.com/docs/en/about-claude/models/overview)
+
+截至 2026-07-14，官方示例使用如 `claude-opus-4-8` 等当前模型；生产代码仍建议使用环境变量：
+
+```ts
+const model = process.env.ANTHROPIC_MODEL;
+if (!model) throw new Error("缺少 ANTHROPIC_MODEL");
 ```
 
-### max_tokens 是必填项
+不要把旧教程中的 `budget_tokens`、采样参数或模型名直接复制到新模型。当前模型可能使用自适应思考与 `effort`，支持组合也会随模型变化；应按选定模型的能力表配置，而不是依赖跨代默认值。
 
-OpenAI SDK 的 `max_tokens` 有隐式默认值，Claude SDK 中**必须显式指定**，否则请求会报参数校验错误。
+## 流式输出
 
-### 响应结构：content 数组（ContentBlock[]）
+SDK 提供两种常用方式：`messages.create({ stream: true })` 返回低开销异步事件迭代器；`messages.stream()` 提供文本回调与最终消息聚合。
 
-```typescript
-// response 类型为 Anthropic.Message
-const response = await client.messages.create({ ... });
+```ts
+const stream = anthropic.messages
+  .stream({
+    model: process.env.ANTHROPIC_MODEL!,
+    max_tokens: 2048,
+    messages: [{ role: "user", content: "解释浏览器渲染流水线。" }],
+  })
+  .on("text", (delta) => process.stdout.write(delta));
 
-// 文本内容在 content[0].text，注意先判断类型
-const block = response.content[0];
-if (block.type === 'text') {
-  console.log(block.text);
-}
-
-// 终止原因
-console.log(response.stop_reason);
-// 'end_turn' | 'max_tokens' | 'stop_sequence' | 'tool_use'
-
-// Token 用量
-console.log(response.usage);
-// { input_tokens: number, output_tokens: number }
-```
-
----
-
-## 模型分层（Model Tiers）
-
-Claude 按能力与速度划分为三个层次，以官方文档为准获取最新的具体 model ID 字符串：
-
-| 系列（Tier） | 定位 | 典型场景 |
-|---|---|---|
-| **Opus** | 最强推理能力，支持 Extended Thinking | 复杂分析、代码生成、长文档理解 |
-| **Sonnet** | 能力与速度均衡，日常首选 | 对话应用、RAG 问答、内容生成 |
-| **Haiku** | 极快响应、成本最低 | 简单分类、实时补全、高频轻量任务 |
-
-> 以上为能力层次描述，具体 model ID（如 `claude-opus-4-...`）版本迭代较快，**请以 [官方文档](https://docs.anthropic.com/en/docs/about-claude/models) 为准**。
-
----
-
-## 多轮对话（Multi-turn Conversation）
-
-### role 交替规则
-
-Claude 的 messages 数组有严格约束：
-- **必须以 `user` 角色开头**
-- **`user` 和 `assistant` 必须严格交替出现**，不允许连续同角色
-
-```typescript
-import Anthropic from '@anthropic-ai/sdk';
-
-const client = new Anthropic();
-const history: Anthropic.MessageParam[] = [];
-
-async function chat(userInput: string): Promise<string> {
-  history.push({ role: 'user', content: userInput });
-
-  const response = await client.messages.create({
-    model: 'claude-3-5-sonnet-...',   // 以官方文档为准
-    max_tokens: 1024,
-    system: '你是一个代码审查专家，给出简洁的改进建议。',
-    messages: history,
-  });
-
-  const assistantText =
-    response.content[0].type === 'text' ? response.content[0].text : '';
-
-  // 将助手回复追加进历史，维持交替结构
-  history.push({ role: 'assistant', content: assistantText });
-
-  return assistantText;
-}
-```
-
-### 处理 role 违规
-
-当业务逻辑导致连续 user 消息时，有两种处理方式：
-
-```typescript
-// 方式一：合并为单条 user 消息（推荐）
-{ role: 'user', content: '先问题A\n\n再问题B' }
-
-// 方式二：在两条 user 消息中间插入 assistant 占位消息
-{ role: 'assistant', content: '好的，我理解了。' }
-```
-
----
-
-## 流式响应（Streaming）
-
-Claude SDK 提供两种流式接入方式，推荐优先使用 **stream helper**。
-
-### 方式一：stream() helper（推荐）
-
-```typescript
-const stream = client.messages.stream({
-  model: 'claude-3-5-sonnet-...',   // 以官方文档为准
-  max_tokens: 1024,
-  messages: [{ role: 'user', content: '解释 CSS Grid 布局。' }],
-});
-
-// 事件监听：每个文本 delta 触发一次
-stream.on('text', (text) => {
-  process.stdout.write(text);
-});
-
-// 等待完成，获取最终消息（含完整 usage 统计）
 const finalMessage = await stream.finalMessage();
-console.log('Token 用量:', finalMessage.usage);
+console.log("\nusage:", finalMessage.usage);
 ```
 
-### 方式二：for-await 遍历原始事件流
+底层 SSE 会依次产生 `message_start`、`content_block_start`、`content_block_delta`、`content_block_stop` 和 `message_delta` 等事件。不要自己用字符串换行猜测 JSON 边界；使用 SDK 迭代器，并在客户端断开时取消流。[Anthropic Streaming Messages](https://platform.claude.com/docs/en/build-with-claude/streaming)
 
-```typescript
-const rawStream = await client.messages.create({
-  model: 'claude-3-5-sonnet-...',   // 以官方文档为准
-  max_tokens: 1024,
-  messages: [{ role: 'user', content: '解释 CSS Grid 布局。' }],
-  stream: true,
-});
+## 工具调用闭环
 
-for await (const event of rawStream) {
-  if (
-    event.type === 'content_block_delta' &&
-    event.delta.type === 'text_delta'
-  ) {
-    process.stdout.write(event.delta.text);
-  }
-}
-```
+自定义工具在你的应用中执行。Claude 返回 `tool_use` 内容块和 `stop_reason: "tool_use"`；应用执行后，应保留这次 assistant 的完整内容块，再用对应 `tool_use_id` 发送 `tool_result`。
 
-两种方式对比：
-
-| 维度 | stream() helper | create({ stream: true }) |
-|---|---|---|
-| API 风格 | 事件驱动（.on()） | async iterator（for-await） |
-| 获取 usage | `await stream.finalMessage()` | 监听 `message_delta` 事件 |
-| 错误处理 | 内置断连重试 | 需手动处理 |
-| 推荐场景 | 大多数场景 | 需要精细控制事件流时 |
-
----
-
-## Tool Use 工具调用
-
-Claude 把 function calling 称为 **Tool Use**，完整流程是一个多轮循环。
-
-### 流程图
-
-```mermaid
-sequenceDiagram
-    participant App as 应用层
-    participant Claude as Claude API
-    participant Tool as 外部工具
-
-    App->>Claude: messages.create({ tools, messages })
-    Claude-->>App: stop_reason === 'tool_use' + tool_use block
-    App->>Tool: 执行工具（本地函数/API调用）
-    Tool-->>App: 工具执行结果
-    App->>Claude: messages.create({ messages: [...history, tool_result] })
-    Claude-->>App: stop_reason === 'end_turn' + 最终文本
-```
-
-### 完整示例
-
-```typescript
-import Anthropic from '@anthropic-ai/sdk';
-
-const client = new Anthropic();
-
-// 1. 定义工具（tools 数组）
-const tools: Anthropic.Tool[] = [
-  {
-    name: 'get_weather',
-    description: '获取指定城市的当前天气信息',
-    input_schema: {
-      type: 'object' as const,
-      properties: {
-        city: { type: 'string', description: '城市名称，如"北京"' },
-        unit: {
-          type: 'string',
-          enum: ['celsius', 'fahrenheit'],
-          description: '温度单位',
-        },
-      },
-      required: ['city'],
-    },
+```ts
+const tools: Anthropic.Tool[] = [{
+  name: "get_order_status",
+  description: "查询当前登录用户拥有的订单状态",
+  input_schema: {
+    type: "object",
+    properties: { order_id: { type: "string" } },
+    required: ["order_id"],
+    additionalProperties: false,
   },
+}];
+
+const messages: Anthropic.MessageParam[] = [
+  { role: "user", content: "订单 A123 到哪了？" },
 ];
 
-// 2. 初始请求
-let messages: Anthropic.MessageParam[] = [
-  { role: 'user', content: '北京今天天气怎么样？' },
-];
-
-let response = await client.messages.create({
-  model: 'claude-3-5-sonnet-...',   // 以官方文档为准
+const first = await anthropic.messages.create({
+  model: process.env.ANTHROPIC_MODEL!,
   max_tokens: 1024,
+  system: "需要实时订单数据时使用工具，不要猜测。",
   tools,
   messages,
 });
 
-// 3. 检查是否触发工具调用
-while (response.stop_reason === 'tool_use') {
-  const toolUseBlock = response.content.find(
-    (b): b is Anthropic.ToolUseBlock => b.type === 'tool_use'
-  )!;
+const toolUse = first.content.find((block) => block.type === "tool_use");
 
-  // 4. 执行工具（实际场景中调用真实 API）
-  const toolResult =
-    toolUseBlock.name === 'get_weather'
-      ? { temperature: 28, condition: '晴天', humidity: '45%' }
-      : { error: '未知工具' };
+if (toolUse?.type === "tool_use") {
+  if (toolUse.name !== "get_order_status") throw new Error("未知工具");
+  const input = toolUse.input as { order_id?: unknown };
+  if (typeof input.order_id !== "string") throw new Error("参数错误");
 
-  // 5. 将 assistant 回复 + tool_result 追加进 messages
-  messages = [
-    ...messages,
-    { role: 'assistant', content: response.content },
+  // 必须在服务端依据 currentUser 再做订单归属和权限校验
+  const result = await getOrderStatus(currentUser.id, input.order_id);
+
+  messages.push(
+    { role: "assistant", content: first.content },
     {
-      role: 'user',
-      content: [
-        {
-          type: 'tool_result',
-          tool_use_id: toolUseBlock.id,
-          content: JSON.stringify(toolResult),
-        },
-      ],
+      role: "user",
+      content: [{
+        type: "tool_result",
+        tool_use_id: toolUse.id,
+        content: JSON.stringify(result),
+      }],
     },
-  ];
+  );
 
-  // 6. 继续对话
-  response = await client.messages.create({
-    model: 'claude-3-5-sonnet-...',   // 以官方文档为准
+  const final = await anthropic.messages.create({
+    model: process.env.ANTHROPIC_MODEL!,
     max_tokens: 1024,
+    system: "根据工具结果回答，不暴露内部字段。",
     tools,
     messages,
   });
 }
-
-// 7. 最终文本回复
-const finalText = response.content
-  .filter((b): b is Anthropic.TextBlock => b.type === 'text')
-  .map((b) => b.text)
-  .join('');
-
-console.log(finalText);
 ```
 
-> `tool_result` 消息格式（`tool_use_id`、`content` 字段）以官方文档为准，版本间有细微变化。
+并行工具调用可能一次返回多个 `tool_use` 块，应逐个执行并在同一后续 user 消息中返回相应 `tool_result`。工具错误也应以明确的错误结果返回，避免模型把超时或权限拒绝当作空数据。[Anthropic Tool Use](https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview)
 
----
+SDK 也提供 Tool Runner 等辅助循环，但它不会消除业务校验责任。无论使用手写循环还是辅助器，都要限制工具列表、验证 Schema、实施最小权限，并为写操作设计确认与幂等。
 
-## 视觉与多模态（Vision / Multimodal）
+## Prompt Caching
 
-Claude 支持在 messages 中传入图像，`content` 字段可以是 `ContentBlock` 数组，包含文本块和图像块混用。
+长而稳定的 system 指令、工具定义、示例或文档前缀会在每轮重复输入。Prompt Caching 可以复用相同前缀；当前 API 支持顶层自动缓存，也支持在内容块上设置显式 `cache_control`。
 
-### Base64 图像
-
-```typescript
-import fs from 'fs';
-
-const imageData = fs.readFileSync('./screenshot.png').toString('base64');
-
-const response = await client.messages.create({
-  model: 'claude-3-5-sonnet-...',   // 以官方文档为准
+```ts
+const message = await anthropic.messages.create({
+  model: process.env.ANTHROPIC_MODEL!,
   max_tokens: 1024,
-  messages: [
-    {
-      role: 'user',
-      content: [
-        {
-          type: 'image',
-          source: {
-            type: 'base64',
-            media_type: 'image/png',       // 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp'
-            data: imageData,
-          },
-        },
-        {
-          type: 'text',
-          text: '描述这张截图的布局，并指出潜在的可访问性问题。',
-        },
-      ],
-    },
-  ],
+  cache_control: { type: "ephemeral" },
+  system: "这里是跨轮次稳定的应用规则与知识前缀……",
+  messages,
 });
 ```
 
-### URL 图像
+缓存键依赖前缀内容及顺序。应把稳定的 `tools`、`system`、示例放在前面，把时间戳、用户问题等动态内容放在后面；否则每次变化都会导致未命中。缓存降低重复处理成本，不会扩大上下文窗口，也不会替代对话裁剪。[Anthropic Prompt Caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching)
 
-```typescript
-const response = await client.messages.create({
-  model: 'claude-3-5-sonnet-...',   // 以官方文档为准
-  max_tokens: 512,
-  messages: [
-    {
-      role: 'user',
-      content: [
-        {
-          type: 'image',
-          source: {
-            type: 'url',
-            url: 'https://example.com/diagram.png',
-          },
-        },
-        { type: 'text', text: '解释这张架构图。' },
-      ],
-    },
-  ],
-});
-```
+## 错误、重试与日志
 
-> 支持的 `media_type` 以官方文档为准。图像大小和数量限制也需参考官方文档。
+官方 TypeScript SDK 默认对连接错误、408、409、429 和部分服务端错误做有限指数退避重试；可通过 `maxRetries` 调整。交互请求仍应设置业务总时限，持续限流要通过排队、并发控制或降级解决，而不是无限重试。[Anthropic TypeScript SDK](https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/typescript)
 
----
-
-## Extended Thinking（扩展思考）
-
-Opus 系列支持 **Extended Thinking**（扩展推理）模式：模型在给出最终回答前，先进行内部"思考链"推导，适用于数学证明、复杂代码生成等高难度任务。启用后响应中会包含 `thinking` 类型的 content block。
-
-```typescript
-// Extended Thinking 示例骨架（以官方文档为准）
-const response = await client.messages.create({
-  model: 'claude-opus-...',       // 以官方文档为准，目前仅 Opus 支持
-  max_tokens: 16000,              // 需要较大的 max_tokens 预算
-  thinking: {
-    type: 'enabled',
-    budget_tokens: 10000,         // 思考链的 token 预算
-  },
-  messages: [{ role: 'user', content: '证明：质数有无穷多个。' }],
-});
-```
-
-> Extended Thinking 的参数格式、模型支持范围以官方文档为准，特性仍在迭代中。
-
----
-
-## 错误处理（Error Handling）
-
-```typescript
-import Anthropic from '@anthropic-ai/sdk';
-
-const client = new Anthropic();
-
+```ts
 try {
-  const response = await client.messages.create({
-    model: 'claude-3-5-sonnet-...',
-    max_tokens: 1024,
-    messages: [{ role: 'user', content: 'Hello' }],
+  const { data: message, response } = await anthropic.messages
+    .create({
+      model: process.env.ANTHROPIC_MODEL!,
+      max_tokens: 128,
+      messages: [{ role: "user", content: "ping" }],
+    })
+    .withResponse();
+
+  logger.info({
+    requestId: response.headers.get("request-id"),
+    usage: message.usage,
+    stopReason: message.stop_reason,
   });
 } catch (error) {
   if (error instanceof Anthropic.APIError) {
-    console.error('HTTP 状态码:', error.status);
-    console.error('错误信息:', error.message);
-    console.error('原始错误体:', error.error);
-
-    switch (error.status) {
-      case 401:
-        console.error('API Key 无效或未设置');
-        break;
-      case 429:
-        console.error('请求频率超限（Rate Limit），需退避重试');
-        break;
-      case 529:
-        // Claude 特有状态码
-        console.error('服务过载（Overloaded），需指数退避重试');
-        break;
-    }
+    logger.error({ status: error.status, name: error.name });
   }
+  throw error;
 }
 ```
 
-### 常见错误状态码
+不要在生产环境长期打开包含请求体和响应体的 debug 日志。官方 SDK 也提醒，详细日志可能包含敏感正文；应使用脱敏字段、访问控制与保留期限。
 
-| 状态码 | 含义 | 处理建议 |
-|---|---|---|
-| 400 | 请求参数错误（如缺少 max_tokens） | 检查参数结构 |
-| 401 | API Key 无效或未设置 | 检查环境变量 |
-| 429 | 请求频率超限（Rate Limit） | 指数退避重试 |
-| **529** | **服务过载（Claude 特有）** | **指数退避重试** |
-| 500 | 服务内部错误 | 重试，持续则联系支持 |
+## 上线检查清单
 
-> HTTP 529 是 Claude 独有的状态码（非标准 HTTP），表示当前服务器过载，不同于 429 的限速，需要区别对待。
+- 密钥只在服务端，模型 ID 与提示包版本可追踪；
+- 按内容块类型处理响应，并检查 `stop_reason`；
+- 流式连接可取消，最终消息和用量能正确聚合；
+- `tool_use` 的名称、参数、身份与权限均由应用校验；
+- assistant 内容块与 `tool_result` 的 ID 完整对应；
+- 缓存前缀稳定，动态内容位于后部；
+- 超时、有限重试、限流、请求 ID 和用量日志已配置；
+- 模型或 Prompt 升级前跑固定评测集。
 
----
+## 小结
 
-## Claude SDK vs OpenAI SDK 对比
+Claude SDK 的核心抽象是“消息 + 内容块”。文本只是其中一种结果，工具调用需要应用完成一个可信的往返循环，流式输出需要按事件累积。把模型选择、缓存、重试、权限和可观测性一起设计，才能让示例代码变成可靠服务。
 
-```mermaid
-flowchart LR
-    subgraph OpenAI["OpenAI SDK"]
-        A1["system 在 messages 数组\n{ role: 'system', content: '...' }"]
-        A2["max_tokens 可选（有默认值）"]
-        A3["response.choices[0].message.content"]
-        A4["无 529 状态码"]
-    end
+## 参考资料
 
-    subgraph Claude["Claude SDK"]
-        B1["system 是顶层参数\nclient.messages.create({ system: '...' })"]
-        B2["max_tokens 必填（无默认值）"]
-        B3["response.content[0].text"]
-        B4["529 = 服务过载（Claude 特有）"]
-    end
-
-    OpenAI -.->|"迁移时注意"| Claude
-```
-
-| 维度 | OpenAI SDK | Claude SDK |
-|---|---|---|
-| system prompt 位置 | `messages` 数组内，`role: 'system'` | 顶层参数 `system: string` |
-| `max_tokens` | 可选，有默认值 | **必填，无默认值** |
-| 响应文本路径 | `response.choices[0].message.content` | `response.content[0].text` |
-| 流式 helper | `openai.beta.chat.completions.stream()` | `client.messages.stream()` |
-| 工具调用触发条件 | `finish_reason === 'tool_calls'` | `stop_reason === 'tool_use'` |
-| 服务过载状态码 | 无 529（用 429） | **529 Overloaded（特有）** |
-| 模型参数名 | `model` | `model` |
-| SDK 包名 | `openai` | `@anthropic-ai/sdk` |
-
----
-
-## 常见错误与最佳实践
-
-**常见错误（Common Mistakes）：**
-
-1. **把 `system` 放进 `messages` 数组** — 这是从 OpenAI 迁移时 100% 会犯的错，Claude 会直接报参数错误。
-2. **忘记填写 `max_tokens`** — 与 OpenAI 不同，Claude 没有隐式默认值，漏填必报错。
-3. **messages 不以 `user` 开头** — 不能直接以 `assistant` 开头，会导致请求被拒绝。
-4. **连续相同 role** — 两条连续 `user` 或 `assistant` 消息会导致请求失败，需合并或插入占位消息。
-5. **Tool Use 循环中未将 assistant 回复加入历史** — 发送 `tool_result` 时，必须先把上一轮的 assistant content 追加进 messages，否则上下文不完整。
-6. **忽略 529 重试** — 生产系统必须处理 529，与 429 一样需要指数退避，否则高并发场景下请求会大量失败。
-7. **直接访问 `response.content[0].text` 不检查类型** — 当 `stop_reason === 'tool_use'` 时，`content[0]` 是 `tool_use` 块而非文本块，需先判断 `block.type === 'text'`。
-
-**最佳实践（Best Practices）：**
-
-- 通过环境变量管理 API Key，永不硬编码
-- 优先使用 `client.messages.stream()` helper，内置断连重试
-- 多轮对话中维护完整 history，并在超出 context window 前进行截断（如保留最近 N 轮）
-- Tool Use 实现为循环（`while stop_reason === 'tool_use'`），支持模型连续调用多个工具
-- 统一捕获 `Anthropic.APIError`，对 429/529 实现指数退避重试
-
----
-
-## 面试常问
-
-**Q1：Claude SDK 和 OpenAI SDK 最核心的结构区别是什么？**
-
-最常被考察的是两点：① `system` prompt 的位置不同——OpenAI 把它放在 `messages` 数组里作为 `role: 'system'` 的消息，Claude 把 `system` 作为顶层独立参数；② `max_tokens` 在 Claude 中是**必填项**，没有隐式默认值，OpenAI 中则可省略。
-
-**Q2：为什么 messages 数组不能出现连续同角色消息？**
-
-这是 Claude 模型训练时对话格式的约束——训练数据都是严格的 user/assistant 交替对话格式，偏离格式会导致模型行为不可预测，因此 API 层面直接报错拒绝。实践中若有多条用户输入需合并，或在中间补一条简短 assistant 占位消息。
-
-**Q3：stop_reason 有哪些值，分别代表什么？**
-
-- `end_turn`：模型正常完成输出
-- `max_tokens`：达到 `max_tokens` 上限被截断，需增大 `max_tokens` 或分段处理
-- `stop_sequence`：触发了用户自定义的停止序列
-- `tool_use`：模型请求调用一个或多个工具，需执行工具后把结果以 `tool_result` 追加并继续对话
-
-**Q4：stream() helper 和 create({ stream: true }) 有什么区别，分别适合什么场景？**
-
-`stream()` helper 提供事件驱动接口（`.on('text', ...)`），内置断连重试逻辑，通过 `finalMessage()` 获取完整 usage，适合大多数场景。`create({ stream: true })` 返回原始 async iterator，给开发者更细粒度的事件控制权，适合需要处理 `message_start`、`content_block_start` 等底层事件的场景。
-
-**Q5：Tool Use 循环中，向 API 发送 tool_result 时，messages 数组需要包含哪些内容？**
-
-必须把上一轮 API 返回的 assistant 消息（包含 `tool_use` block 的 `response.content`）先追加进 messages，然后再追加包含 `tool_result` 的 user 消息。如果只发 `tool_result` 而缺少前一条 assistant 消息，API 会因为缺少上下文而报错。
-
-**Q6：HTTP 529 是什么，应该如何处理？**
-
-529 是 Claude 特有的非标准 HTTP 状态码，表示服务器当前过载（Overloaded），与 429（Rate Limit）不同。429 是客户端请求太频繁，529 是服务端压力过大。两者都需要指数退避重试，但语义不同。生产系统中应统一捕获 `Anthropic.APIError`，对 `error.status === 529` 单独记录并以较长的初始等待时间进行重试。
-
-**Q7：Extended Thinking 是什么，适合什么场景？**
-
-Extended Thinking 是 Opus 系列支持的一种推理模式，允许模型在输出最终答案前先进行可见的内部推导（思考链），消耗额外的 token 预算（`budget_tokens`）。适合数学证明、复杂代码设计、多步骤推理等需要深度推导的任务。对于简单问答或轻量任务，开启 Extended Thinking 会造成不必要的 token 消耗和延迟。
+- [Anthropic：TypeScript SDK](https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/typescript)
+- [Anthropic：Models overview](https://platform.claude.com/docs/en/about-claude/models/overview)
+- [Anthropic：Streaming messages](https://platform.claude.com/docs/en/build-with-claude/streaming)
+- [Anthropic：Tool use with Claude](https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview)
+- [Anthropic：Prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching)
