@@ -1,4 +1,4 @@
 # OSS image repair probe
-# Single small image to distinguish batch timeout from sync failure.
+# Single small image retry with observable commit status.
 
 images/agent-history-timeline-v2.png
