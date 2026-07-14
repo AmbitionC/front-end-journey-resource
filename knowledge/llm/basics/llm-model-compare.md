@@ -12,7 +12,7 @@ $$
 
 例如，同一个模型别名可能随时间指向新快照；同一家族的推理模型和低延迟模型也可能不接受相同参数。
 
-![从任务需求、候选模型、统一评测集到生产路由策略的模型选型流程](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-model-compare-selection-v2.png)
+![从任务需求、候选模型、统一评测集到生产路由策略的模型选型流程](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-model-compare-selection-v3.webp)
 *图：先用统一评测集测量具体工作负载，再决定主模型、降级模型与版本锁定，而不是做品牌排名。*
 
 ## 四个模型家族的工程定位

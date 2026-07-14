@@ -10,7 +10,7 @@ $$
 
 随后，解码器可以取最大概率项（greedy），也可以从过滤和归一化后的分布中随机采样。这个过程会在每个生成位置重复。
 
-![Logits 经 Temperature 缩放，再选择 Top-K 或 Top-P 过滤并采样下一个 Token](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-inference-params-sampling-v2.png)
+![Logits 经 Temperature 缩放，再选择 Top-K 或 Top-P 过滤并采样下一个 Token](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-inference-params-sampling-v3.webp)
 *图：Temperature 改变分布形状；Top-K 固定候选数量，Top-P 按累计概率动态确定候选集合。具体支持和执行顺序以模型 API 为准。*
 
 ## Temperature：改变分布的尖锐程度

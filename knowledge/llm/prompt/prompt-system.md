@@ -6,7 +6,7 @@ System Prompt 不是一段“角色扮演台词”，而是应用交给模型的
 
 以 OpenAI 当前的角色模型为例，`developer` 指令的优先级高于 `user` 消息；平台级规则又高于应用指令。模型生成过的 `assistant` 内容属于历史上下文，不应被当成新的可信规则。OpenAI 还特别说明：使用 `previous_response_id` 延续对话时，上一轮的 `instructions` 不会自动沿用，因此应用需要在每次请求中明确提供本轮规则。[OpenAI 文本生成指南](https://developers.openai.com/api/docs/guides/text)
 
-![平台规则、应用指令、用户请求与外部内容进入模型后，仍需通过应用层校验才能输出或执行工具](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/prompt-system-boundaries-v2.png)
+![平台规则、应用指令、用户请求与外部内容进入模型后，仍需通过应用层校验才能输出或执行工具](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/prompt-system-boundaries-v3.webp)
 *图：指令层级决定“模型应听谁的”，应用层校验决定“系统实际上允许做什么”；分隔符有助于解析，但不是权限边界。*
 
 ## System Prompt 应该解决哪些问题

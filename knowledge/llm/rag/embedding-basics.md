@@ -14,7 +14,7 @@ $$
 
 其中 $d$ 是向量维度。实际维度可能是数百或数千；图中的二维空间只是帮助理解的投影。
 
-![Embedding 的语义空间与相似度度量](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/embedding-similarity-space-v2.png)
+![Embedding 的语义空间与相似度度量](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/embedding-similarity-space-v3.webp)
 
 Sentence-BERT 等双编码器方法的关键工程优势，是文档向量可以提前计算并存入索引。查询到来时只编码查询，再做近邻搜索，不需要把查询与每篇文档成对送入一个大模型。
 

@@ -10,7 +10,7 @@
 
 如果任务要求每次结果完全一致，或者一个错误就会造成付款、删除、法律承诺等严重后果，应让确定性代码负责最终决策，大模型只做建议、解释或草稿。
 
-![大模型与前端的六类可落地场景](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/aigc-frontend-scenarios-v2.png)
+![大模型与前端的六类可落地场景](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/aigc-frontend-scenarios-v3.webp)
 
 ## 二、场景一：对话式问答与检索
 

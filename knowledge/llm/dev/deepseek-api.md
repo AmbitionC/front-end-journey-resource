@@ -4,7 +4,7 @@
 
 DeepSeek 同时提供 OpenAI 与 Anthropic 风格的兼容入口。这里的“兼容”主要指请求结构和 SDK 使用方式相近，并不意味着模型名称、扩展参数、错误行为和能力边界完全相同。迁移时必须重新检查这些差异。
 
-![DeepSeek API 的请求、思考与工具闭环](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/deepseek-api-thinking-tools-v2.png)
+![DeepSeek API 的请求、思考与工具闭环](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/deepseek-api-thinking-tools-v3.webp)
 
 截至 2026 年 7 月，官方文档列出的主力模型是 `deepseek-v4-flash` 与 `deepseek-v4-pro`。历史别名 `deepseek-chat`、`deepseek-reasoner` 已进入弃用窗口，不应继续写进新项目。模型和价格会变，生产代码应通过环境变量配置，并在上线前核对官方模型与计费页。
 

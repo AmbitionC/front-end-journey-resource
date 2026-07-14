@@ -15,7 +15,7 @@
 - 保留标题、来源、位置和权限等必要背景。
 - 边界稳定，源文档更新后可以增量重建。
 
-![文本分块的边界、重叠与可检索单元](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-chunking-strategies-v2.png)
+![文本分块的边界、重叠与可检索单元](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-chunking-strategies-v3.webp)
 
 ## 二、长度必须按 token 评估
 
