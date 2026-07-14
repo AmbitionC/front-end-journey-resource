@@ -222,7 +222,7 @@
       "key": "rag-hybrid-search",
       "label": "Hybrid Search 混合检索",
       "filePath": "llm/rag",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-07-14",
       "batch": "rag-evaluation-and-agent-foundations-2026-07-14"
@@ -231,7 +231,7 @@
       "key": "rag-evaluation",
       "label": "RAG 评估与优化",
       "filePath": "llm/rag",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-07-14",
       "batch": "rag-evaluation-and-agent-foundations-2026-07-14"
@@ -240,7 +240,7 @@
       "key": "agent-architecture",
       "label": "智能体定义、类型、PEAS 与 Agent Loop",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-07-14",
       "batch": "rag-evaluation-and-agent-foundations-2026-07-14"
@@ -249,7 +249,7 @@
       "key": "agent-first-demo",
       "label": "实现第一个 Thought-Action-Observation Agent",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-07-14",
       "batch": "rag-evaluation-and-agent-foundations-2026-07-14"
@@ -258,11 +258,100 @@
       "key": "agent-history",
       "label": "智能体发展史",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-07-14",
       "batch": "rag-evaluation-and-agent-foundations-2026-07-14"
+    },
+    {
+      "key": "llm-capability-boundaries",
+      "label": "大模型的能力边界、幻觉与不确定性",
+      "filePath": "llm/basics",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-14",
+      "batch": "llm-foundations-next-10-2026-07-14"
+    },
+    {
+      "key": "llm-multimodal-basics",
+      "label": "多模态模型基础：文本 / 图像 / 音频",
+      "filePath": "llm/basics",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-14",
+      "batch": "llm-foundations-next-10-2026-07-14"
+    },
+    {
+      "key": "llm-tokenizer",
+      "label": "Tokenizer、词表与子词切分",
+      "filePath": "llm/basics",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-14",
+      "batch": "llm-foundations-next-10-2026-07-14"
+    },
+    {
+      "key": "llm-training-overview",
+      "label": "大模型训练全流程概览",
+      "filePath": "llm/basics",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-14",
+      "batch": "llm-foundations-next-10-2026-07-14"
+    },
+    {
+      "key": "llm-pretraining",
+      "label": "预训练目标、数据与 Scaling",
+      "filePath": "llm/basics",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-14",
+      "batch": "llm-foundations-next-10-2026-07-14"
+    },
+    {
+      "key": "llm-alignment",
+      "label": "模型对齐：SFT、偏好数据与安全",
+      "filePath": "llm/basics",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-14",
+      "batch": "llm-foundations-next-10-2026-07-14"
+    },
+    {
+      "key": "llm-rlhf-dpo",
+      "label": "RLHF、RLAIF 与 DPO 的差异",
+      "filePath": "llm/basics",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-14",
+      "batch": "llm-foundations-next-10-2026-07-14"
+    },
+    {
+      "key": "llm-quantization",
+      "label": "模型量化与精度权衡",
+      "filePath": "llm/basics",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-14",
+      "batch": "llm-foundations-next-10-2026-07-14"
+    },
+    {
+      "key": "llm-moe",
+      "label": "MoE 混合专家模型原理",
+      "filePath": "llm/basics",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-14",
+      "batch": "llm-foundations-next-10-2026-07-14"
+    },
+    {
+      "key": "llm-reasoning-models",
+      "label": "推理模型、思考预算与使用边界",
+      "filePath": "llm/basics",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-14",
+      "batch": "llm-foundations-next-10-2026-07-14"
     }
   ]
 }
-
