@@ -1,10 +1,10 @@
 {
   "schemaVersion": 2,
-  "status": "proposal",
+  "status": "applied",
   "theme": "Agent",
   "generatedAt": "2026-07-14",
   "targetTotal": 300,
-  "strategy": "300 个核心知识点构成默认学习地图；旧文章不直接删除，未入选内容进入扩展资料。",
+  "strategy": "300 个核心知识点构成默认学习地图；复用匹配文章，删除未匹配的 189 篇旧 Markdown。",
   "ratio": [
     {
       "key": "agent-llm",
@@ -1985,4 +1985,3 @@
     }
   ]
 }
-
