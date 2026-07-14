@@ -22,7 +22,7 @@
     },
     {
       "key": "llm-model-compare",
-      "label": "主流模型对比：GPT / Claude / Qwen / DeepSeek",
+      "label": "主流模型能力与适用场景对比",
       "filePath": "llm/basics",
       "status": "published",
       "action": "updated",
@@ -40,7 +40,7 @@
     },
     {
       "key": "llm-model-selection",
-      "label": "如何选择合适的模型和版本",
+      "label": "模型能力评估与选型",
       "filePath": "llm/basics",
       "status": "published",
       "action": "updated",
@@ -58,7 +58,7 @@
     },
     {
       "key": "prompt-cot",
-      "label": "Chain-of-Thought 思维链技巧",
+      "label": "推理提示策略与适用边界",
       "filePath": "llm/prompt",
       "status": "published",
       "action": "updated",
@@ -103,7 +103,7 @@
     },
     {
       "key": "openai-sdk",
-      "label": "OpenAI SDK 完整使用指南",
+      "label": "OpenAI SDK 核心使用",
       "filePath": "llm/dev",
       "status": "published",
       "action": "updated",
@@ -112,7 +112,7 @@
     },
     {
       "key": "claude-sdk",
-      "label": "Anthropic Claude SDK 使用指南",
+      "label": "Anthropic Claude SDK 核心使用",
       "filePath": "llm/dev",
       "status": "published",
       "action": "updated",
@@ -139,7 +139,7 @@
     },
     {
       "key": "llm-sse-streaming",
-      "label": "SSE 流式响应实现详解",
+      "label": "SSE 流式响应与增量渲染",
       "filePath": "llm/dev",
       "status": "published",
       "action": "updated",
@@ -148,7 +148,7 @@
     },
     {
       "key": "function-calling",
-      "label": "Function Calling 工具调用",
+      "label": "Function Calling 与工具调用",
       "filePath": "llm/dev",
       "status": "published",
       "action": "updated",
@@ -157,7 +157,7 @@
     },
     {
       "key": "aigc-application",
-      "label": "如何集成大模型到前端应用",
+      "label": "将大模型集成到 Web 应用",
       "filePath": "llm/dev",
       "status": "published",
       "action": "updated",
@@ -166,7 +166,7 @@
     },
     {
       "key": "aigc-openai",
-      "label": "如何调用GPT的OpenAPI",
+      "label": "OpenAI API 调用基础",
       "filePath": "fe/aigc",
       "status": "published",
       "action": "updated",
@@ -175,7 +175,7 @@
     },
     {
       "key": "aigc-frontend",
-      "label": "大模型和前端有哪些结合场景",
+      "label": "大模型与前端产品的结合场景",
       "filePath": "fe/aigc",
       "status": "published",
       "action": "updated",
@@ -202,7 +202,7 @@
     },
     {
       "key": "vector-db-selection",
-      "label": "向量数据库选型：Pinecone / Chroma / pgvector",
+      "label": "向量数据库选型",
       "filePath": "llm/rag",
       "status": "published",
       "action": "updated",
@@ -238,7 +238,7 @@
     },
     {
       "key": "agent-architecture",
-      "label": "初识智能体:定义 / 类型 / PEAS / Agent Loop",
+      "label": "智能体定义、类型、PEAS 与 Agent Loop",
       "filePath": "llm/agent",
       "status": "pending",
       "action": "updated",
@@ -247,7 +247,7 @@
     },
     {
       "key": "agent-first-demo",
-      "label": "动手:5 分钟实现第一个智能体(Thought-Action-Observation)",
+      "label": "实现第一个 Thought-Action-Observation Agent",
       "filePath": "llm/agent",
       "status": "pending",
       "action": "updated",
@@ -265,3 +265,4 @@
     }
   ]
 }
+

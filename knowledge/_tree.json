@@ -1,2246 +1,2265 @@
 [
   {
-    "label": "大模型 & 智能体",
-    "key": "llm",
+    "label": "Agent 与大模型核心",
+    "key": "agent-llm",
     "children": [
       {
         "label": "LLM 基础",
-        "key": "llm-basics",
+        "key": "llm-foundation",
         "children": [
           {
             "label": "Transformer 架构原理",
             "key": "transformer-arch",
             "isLeaf": true,
-            "filePath": "llm/basics"
+            "filePath": "llm/basics",
+            "contentStatus": "published"
           },
           {
             "label": "Token、Context Window 与 KV Cache",
             "key": "llm-token-context",
             "isLeaf": true,
-            "filePath": "llm/basics"
-          },
-          {
-            "label": "主流模型对比：GPT / Claude / Qwen / DeepSeek",
-            "key": "llm-model-compare",
-            "isLeaf": true,
-            "filePath": "llm/basics"
+            "filePath": "llm/basics",
+            "contentStatus": "published"
           },
           {
             "label": "LLM 推理参数：Temperature / Top-P / Top-K",
             "key": "llm-inference-params",
             "isLeaf": true,
-            "filePath": "llm/basics"
+            "filePath": "llm/basics",
+            "contentStatus": "published"
           },
           {
-            "label": "如何选择合适的模型和版本",
+            "label": "模型能力评估与选型",
             "key": "llm-model-selection",
             "isLeaf": true,
-            "filePath": "llm/basics"
+            "filePath": "llm/basics",
+            "contentStatus": "published"
+          },
+          {
+            "label": "主流模型能力与适用场景对比",
+            "key": "llm-model-compare",
+            "isLeaf": true,
+            "filePath": "llm/basics",
+            "contentStatus": "published"
+          },
+          {
+            "label": "大模型的能力边界、幻觉与不确定性",
+            "key": "llm-capability-boundaries",
+            "isLeaf": true,
+            "filePath": "llm/basics",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "多模态模型基础：文本 / 图像 / 音频",
+            "key": "llm-multimodal-basics",
+            "isLeaf": true,
+            "filePath": "llm/basics",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Tokenizer、词表与子词切分",
+            "key": "llm-tokenizer",
+            "isLeaf": true,
+            "filePath": "llm/basics",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "大模型训练全流程概览",
+            "key": "llm-training-overview",
+            "isLeaf": true,
+            "filePath": "llm/basics",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "预训练目标、数据与 Scaling",
+            "key": "llm-pretraining",
+            "isLeaf": true,
+            "filePath": "llm/basics",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "模型对齐：SFT、偏好数据与安全",
+            "key": "llm-alignment",
+            "isLeaf": true,
+            "filePath": "llm/basics",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "RLHF、RLAIF 与 DPO 的差异",
+            "key": "llm-rlhf-dpo",
+            "isLeaf": true,
+            "filePath": "llm/basics",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "模型量化与精度权衡",
+            "key": "llm-quantization",
+            "isLeaf": true,
+            "filePath": "llm/basics",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "MoE 混合专家模型原理",
+            "key": "llm-moe",
+            "isLeaf": true,
+            "filePath": "llm/basics",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "推理模型、思考预算与使用边界",
+            "key": "llm-reasoning-models",
+            "isLeaf": true,
+            "filePath": "llm/basics",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "长上下文、注意力稀释与有效利用",
+            "key": "llm-long-context",
+            "isLeaf": true,
+            "filePath": "llm/basics",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "开源模型选型、推理与本地部署",
+            "key": "llm-open-source-deployment",
+            "isLeaf": true,
+            "filePath": "llm/basics",
+            "contentStatus": "coming-soon"
           }
         ]
       },
       {
-        "label": "Prompt Engineering",
-        "key": "llm-prompt",
+        "label": "Prompt 与上下文工程",
+        "key": "prompt-context",
         "children": [
           {
             "label": "Prompt 设计基础与原则",
             "key": "prompt-basics",
             "isLeaf": true,
-            "filePath": "llm/prompt"
-          },
-          {
-            "label": "Chain-of-Thought 思维链技巧",
-            "key": "prompt-cot",
-            "isLeaf": true,
-            "filePath": "llm/prompt"
-          },
-          {
-            "label": "Few-Shot 与 Zero-Shot 提示",
-            "key": "prompt-few-shot",
-            "isLeaf": true,
-            "filePath": "llm/prompt"
-          },
-          {
-            "label": "结构化输出与 JSON Schema",
-            "key": "prompt-structured-output",
-            "isLeaf": true,
-            "filePath": "llm/prompt"
+            "filePath": "llm/prompt",
+            "contentStatus": "published"
           },
           {
             "label": "System Prompt 设计模式",
             "key": "prompt-system",
             "isLeaf": true,
-            "filePath": "llm/prompt"
+            "filePath": "llm/prompt",
+            "contentStatus": "published"
+          },
+          {
+            "label": "Few-Shot 与 Zero-Shot 提示",
+            "key": "prompt-few-shot",
+            "isLeaf": true,
+            "filePath": "llm/prompt",
+            "contentStatus": "published"
+          },
+          {
+            "label": "结构化输出与 JSON Schema",
+            "key": "prompt-structured-output",
+            "isLeaf": true,
+            "filePath": "llm/prompt",
+            "contentStatus": "published"
+          },
+          {
+            "label": "推理提示策略与适用边界",
+            "key": "prompt-cot",
+            "isLeaf": true,
+            "filePath": "llm/prompt",
+            "contentStatus": "published"
+          },
+          {
+            "label": "上下文工程（Context Engineering）",
+            "key": "context-engineering",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published"
           },
           {
             "label": "Prompt 版本管理与 A/B 测试",
             "key": "prompt-versioning",
             "isLeaf": true,
-            "filePath": "llm/prompt"
+            "filePath": "llm/prompt",
+            "contentStatus": "published"
+          },
+          {
+            "label": "Prompt 调试、测试与回归验证",
+            "key": "prompt-testing-debugging",
+            "isLeaf": true,
+            "filePath": "llm/prompt",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "System、Developer、User 消息的职责边界",
+            "key": "prompt-role-boundaries",
+            "isLeaf": true,
+            "filePath": "llm/prompt",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "指令优先级与冲突处理",
+            "key": "prompt-instruction-hierarchy",
+            "isLeaf": true,
+            "filePath": "llm/prompt",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Prompt 模板、变量与复用设计",
+            "key": "prompt-template-design",
+            "isLeaf": true,
+            "filePath": "llm/prompt",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "示例选择、排序与动态 Few-Shot",
+            "key": "prompt-examples-selection",
+            "isLeaf": true,
+            "filePath": "llm/prompt",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "模型输出校验与自动修复",
+            "key": "prompt-output-validation",
+            "isLeaf": true,
+            "filePath": "llm/prompt",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "上下文压缩、摘要与裁剪",
+            "key": "prompt-context-compression",
+            "isLeaf": true,
+            "filePath": "llm/prompt",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Prompt Cache 与稳定前缀设计",
+            "key": "prompt-cache-design",
+            "isLeaf": true,
+            "filePath": "llm/prompt",
+            "contentStatus": "coming-soon"
           }
         ]
       },
       {
         "label": "AI 应用开发",
-        "key": "llm-dev",
+        "key": "ai-application",
         "children": [
           {
-            "label": "OpenAI SDK 完整使用指南",
-            "key": "openai-sdk",
+            "label": "大模型 API 通用模型：消息、响应与计费",
+            "key": "llm-api-basics",
             "isLeaf": true,
-            "filePath": "llm/dev"
+            "filePath": "llm/dev",
+            "contentStatus": "coming-soon"
           },
           {
-            "label": "Anthropic Claude SDK 使用指南",
+            "label": "OpenAI SDK 核心使用",
+            "key": "openai-sdk",
+            "isLeaf": true,
+            "filePath": "llm/dev",
+            "contentStatus": "published"
+          },
+          {
+            "label": "Function Calling 与工具调用",
+            "key": "function-calling",
+            "isLeaf": true,
+            "filePath": "llm/dev",
+            "contentStatus": "published"
+          },
+          {
+            "label": "SSE 流式响应与增量渲染",
+            "key": "llm-sse-streaming",
+            "isLeaf": true,
+            "filePath": "llm/dev",
+            "contentStatus": "published"
+          },
+          {
+            "label": "将大模型集成到 Web 应用",
+            "key": "aigc-application",
+            "isLeaf": true,
+            "filePath": "llm/dev",
+            "contentStatus": "published"
+          },
+          {
+            "label": "对话状态、会话与历史管理",
+            "key": "llm-conversation-state",
+            "isLeaf": true,
+            "filePath": "llm/dev",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "多模态输入输出应用开发",
+            "key": "llm-multimodal-api",
+            "isLeaf": true,
+            "filePath": "llm/dev",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "超时、重试、Fallback 与错误处理",
+            "key": "llm-error-retry-fallback",
+            "isLeaf": true,
+            "filePath": "llm/dev",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "模型路由与多供应商适配",
+            "key": "llm-model-routing",
+            "isLeaf": true,
+            "filePath": "llm/dev",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Responses、Chat 与统一生成接口模式",
+            "key": "llm-response-api-patterns",
+            "isLeaf": true,
+            "filePath": "llm/dev",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "流式请求取消、续传与状态恢复",
+            "key": "llm-stream-cancel-resume",
+            "isLeaf": true,
+            "filePath": "llm/dev",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Batch 批处理与离线任务",
+            "key": "llm-batch-api",
+            "isLeaf": true,
+            "filePath": "llm/dev",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "文件上传、解析与大文件处理",
+            "key": "llm-file-input",
+            "isLeaf": true,
+            "filePath": "llm/dev",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "视觉理解与图像生成应用",
+            "key": "llm-vision-app",
+            "isLeaf": true,
+            "filePath": "llm/dev",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "语音、音频与 Realtime 应用",
+            "key": "llm-audio-realtime",
+            "isLeaf": true,
+            "filePath": "llm/dev",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "模型供应商抽象层设计",
+            "key": "llm-provider-abstraction",
+            "isLeaf": true,
+            "filePath": "llm/dev",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "API Key、代理层与客户端安全",
+            "key": "llm-api-security",
+            "isLeaf": true,
+            "filePath": "llm/dev",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Token 预算、截断与上下文分配",
+            "key": "llm-token-budget",
+            "isLeaf": true,
+            "filePath": "llm/dev",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "用户反馈采集与质量闭环",
+            "key": "llm-user-feedback",
+            "isLeaf": true,
+            "filePath": "llm/dev",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Anthropic Claude SDK 核心使用",
             "key": "claude-sdk",
             "isLeaf": true,
-            "filePath": "llm/dev"
+            "filePath": "llm/dev",
+            "contentStatus": "published"
           },
           {
             "label": "通义千问 DashScope API 接入",
             "key": "qwen-dashscope",
             "isLeaf": true,
-            "filePath": "llm/dev"
+            "filePath": "llm/dev",
+            "contentStatus": "published"
           },
           {
             "label": "DeepSeek API 接入实践",
             "key": "deepseek-api",
             "isLeaf": true,
-            "filePath": "llm/dev"
+            "filePath": "llm/dev",
+            "contentStatus": "published"
           },
           {
-            "label": "SSE 流式响应实现详解",
-            "key": "llm-sse-streaming",
-            "isLeaf": true,
-            "filePath": "llm/dev"
-          },
-          {
-            "label": "Function Calling 工具调用",
-            "key": "function-calling",
-            "isLeaf": true,
-            "filePath": "llm/dev"
-          },
-          {
-            "label": "如何集成大模型到前端应用",
-            "key": "aigc-application",
-            "isLeaf": true,
-            "filePath": "llm/dev"
-          },
-          {
-            "label": "如何调用GPT的OpenAPI",
+            "label": "OpenAI API 调用基础",
             "key": "aigc-openai",
             "isLeaf": true,
-            "filePath": "fe/aigc"
+            "filePath": "fe/aigc",
+            "contentStatus": "published"
           },
           {
-            "label": "大模型和前端有哪些结合场景",
+            "label": "大模型与前端产品的结合场景",
             "key": "aigc-frontend",
             "isLeaf": true,
-            "filePath": "fe/aigc"
+            "filePath": "fe/aigc",
+            "contentStatus": "published"
           }
         ]
       },
       {
-        "label": "RAG 架构",
-        "key": "llm-rag",
+        "label": "RAG 与知识系统",
+        "key": "rag-core",
         "children": [
           {
             "label": "Embedding 原理与向量相似度",
             "key": "embedding-basics",
             "isLeaf": true,
-            "filePath": "llm/rag"
+            "filePath": "llm/rag",
+            "contentStatus": "published"
           },
           {
             "label": "文本分块策略（Chunking）",
             "key": "rag-chunking",
             "isLeaf": true,
-            "filePath": "llm/rag"
+            "filePath": "llm/rag",
+            "contentStatus": "published"
           },
           {
-            "label": "向量数据库选型：Pinecone / Chroma / pgvector",
+            "label": "向量数据库选型",
             "key": "vector-db-selection",
             "isLeaf": true,
-            "filePath": "llm/rag"
+            "filePath": "llm/rag",
+            "contentStatus": "published"
           },
           {
             "label": "RAG 完整流程实战",
             "key": "rag-pipeline",
             "isLeaf": true,
-            "filePath": "llm/rag"
+            "filePath": "llm/rag",
+            "contentStatus": "published"
           },
           {
             "label": "Hybrid Search 混合检索",
             "key": "rag-hybrid-search",
             "isLeaf": true,
-            "filePath": "llm/rag"
+            "filePath": "llm/rag",
+            "contentStatus": "published"
           },
           {
             "label": "RAG 评估与优化",
             "key": "rag-evaluation",
             "isLeaf": true,
-            "filePath": "llm/rag"
+            "filePath": "llm/rag",
+            "contentStatus": "published"
+          },
+          {
+            "label": "查询改写、分解与扩展",
+            "key": "rag-query-rewrite",
+            "isLeaf": true,
+            "filePath": "llm/rag",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Rerank 重排序原理与实践",
+            "key": "rag-reranking",
+            "isLeaf": true,
+            "filePath": "llm/rag",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "元数据过滤与结构化检索",
+            "key": "rag-metadata-filtering",
+            "isLeaf": true,
+            "filePath": "llm/rag",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "引用溯源、Grounding 与事实一致性",
+            "key": "rag-citation-grounding",
+            "isLeaf": true,
+            "filePath": "llm/rag",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "RAG 数据权限与多租户隔离",
+            "key": "rag-access-control",
+            "isLeaf": true,
+            "filePath": "llm/rag",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "生产级文档解析、索引与增量更新",
+            "key": "rag-production-ingestion",
+            "isLeaf": true,
+            "filePath": "llm/rag",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "文档 Loader、Parser 与版面解析",
+            "key": "rag-loader-parser",
+            "isLeaf": true,
+            "filePath": "llm/rag",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "表格、数据库与结构化数据检索",
+            "key": "rag-table-retrieval",
+            "isLeaf": true,
+            "filePath": "llm/rag",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "图像、OCR 与多模态检索",
+            "key": "rag-image-retrieval",
+            "isLeaf": true,
+            "filePath": "llm/rag",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "代码仓库切分、索引与检索",
+            "key": "rag-code-retrieval",
+            "isLeaf": true,
+            "filePath": "llm/rag",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "GraphRAG 与知识图谱增强检索",
+            "key": "rag-graph-rag",
+            "isLeaf": true,
+            "filePath": "llm/rag",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Parent-Child 与 Small-to-Big Retrieval",
+            "key": "rag-parent-child",
+            "isLeaf": true,
+            "filePath": "llm/rag",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Multi-Query 与多路召回",
+            "key": "rag-multi-query",
+            "isLeaf": true,
+            "filePath": "llm/rag",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "查询路由与多索引选择",
+            "key": "rag-routing",
+            "isLeaf": true,
+            "filePath": "llm/rag",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "检索上下文压缩与去噪",
+            "key": "rag-context-compression",
+            "isLeaf": true,
+            "filePath": "llm/rag",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "文档去重、近重复检测与规范化",
+            "key": "rag-deduplication",
+            "isLeaf": true,
+            "filePath": "llm/rag",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "索引版本、重建与回滚",
+            "key": "rag-index-versioning",
+            "isLeaf": true,
+            "filePath": "llm/rag",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Embedding、检索与答案缓存",
+            "key": "rag-cache",
+            "isLeaf": true,
+            "filePath": "llm/rag",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "RAG 延迟、吞吐与成本优化",
+            "key": "rag-latency-cost",
+            "isLeaf": true,
+            "filePath": "llm/rag",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "RAG 测试集、Golden Set 与回归测试",
+            "key": "rag-testing",
+            "isLeaf": true,
+            "filePath": "llm/rag",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "RAG 失败诊断：数据、召回、排序与生成",
+            "key": "rag-failure-debugging",
+            "isLeaf": true,
+            "filePath": "llm/rag",
+            "contentStatus": "coming-soon"
           }
         ]
       },
       {
-        "label": "AI 智能体",
-        "key": "llm-agent",
+        "label": "Agent 原理与编排",
+        "key": "agent-principles",
         "children": [
           {
-            "label": "入门",
-            "key": "agent-stage-intro",
-            "children": [
-              {
-                "label": "初识智能体:定义 / 类型 / PEAS / Agent Loop",
-                "key": "agent-architecture",
-                "isLeaf": true,
-                "filePath": "llm/agent"
-              },
-              {
-                "label": "动手:5 分钟实现第一个智能体(Thought-Action-Observation)",
-                "key": "agent-first-demo",
-                "isLeaf": true,
-                "filePath": "llm/agent"
-              },
-              {
-                "label": "智能体发展史",
-                "key": "agent-history",
-                "isLeaf": true,
-                "filePath": "llm/agent"
-              }
-            ]
+            "label": "智能体定义、类型、PEAS 与 Agent Loop",
+            "key": "agent-architecture",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published"
           },
           {
-            "label": "原理与经典范式",
-            "key": "agent-stage-paradigm",
-            "children": [
-              {
-                "label": "ReAct:推理与行动框架",
-                "key": "agent-react",
-                "isLeaf": true,
-                "filePath": "llm/agent"
-              },
-              {
-                "label": "经典范式:Reflection / Plan-and-Execute / Tool-Use",
-                "key": "agent-paradigms",
-                "isLeaf": true,
-                "filePath": "llm/agent"
-              },
-              {
-                "label": "上下文工程(Context Engineering)",
-                "key": "context-engineering",
-                "isLeaf": true,
-                "filePath": "llm/agent"
-              },
-              {
-                "label": "记忆与检索",
-                "key": "agent-memory",
-                "isLeaf": true,
-                "filePath": "llm/agent"
-              }
-            ]
+            "label": "实现第一个 Thought-Action-Observation Agent",
+            "key": "agent-first-demo",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published"
           },
           {
-            "label": "框架与工程",
-            "key": "agent-stage-framework",
-            "children": [
-              {
-                "label": "从零构建你的 Agent 框架",
-                "key": "build-agent-framework",
-                "isLeaf": true,
-                "filePath": "llm/agent"
-              },
-              {
-                "label": "LangChain.js 入门与实战",
-                "key": "langchain-js",
-                "isLeaf": true,
-                "filePath": "llm/agent"
-              },
-              {
-                "label": "Vercel AI SDK 深度使用",
-                "key": "vercel-ai-sdk",
-                "isLeaf": true,
-                "filePath": "llm/agent"
-              },
-              {
-                "label": "智能体通信协议:MCP / A2A",
-                "key": "mcp-protocol",
-                "isLeaf": true,
-                "filePath": "llm/agent"
-              }
-            ]
+            "label": "智能体发展史",
+            "key": "agent-history",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published"
           },
           {
-            "label": "多体协作与进阶",
-            "key": "agent-stage-advanced",
-            "children": [
-              {
-                "label": "多智能体协作:CrewAI / AutoGen / MetaGPT / LangGraph",
-                "key": "multi-agent",
-                "isLeaf": true,
-                "filePath": "llm/agent"
-              },
-              {
-                "label": "Agentic RL:用强化学习训练智能体",
-                "key": "agentic-rl",
-                "isLeaf": true,
-                "filePath": "llm/agent"
-              },
-              {
-                "label": "智能体性能评估",
-                "key": "agent-evaluation",
-                "isLeaf": true,
-                "filePath": "llm/agent"
-              }
-            ]
+            "label": "ReAct：推理与行动框架",
+            "key": "agent-react",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published"
           },
           {
-            "label": "实战",
-            "key": "agent-stage-practice",
-            "children": [
-              {
-                "label": "低代码平台搭建智能体",
-                "key": "agent-lowcode",
-                "isLeaf": true,
-                "filePath": "llm/agent"
-              },
-              {
-                "label": "实战:自动化深度研究智能体",
-                "key": "agent-deep-research",
-                "isLeaf": true,
-                "filePath": "llm/agent"
-              }
-            ]
+            "label": "Reflection、Plan-and-Execute 与 Tool-Use",
+            "key": "agent-paradigms",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published"
+          },
+          {
+            "label": "短期记忆、长期记忆与检索",
+            "key": "agent-memory",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published"
+          },
+          {
+            "label": "从零构建 Agent 运行时",
+            "key": "build-agent-framework",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published"
+          },
+          {
+            "label": "MCP / A2A 智能体通信协议",
+            "key": "mcp-protocol",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published"
+          },
+          {
+            "label": "多智能体协作与适用边界",
+            "key": "multi-agent",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published"
+          },
+          {
+            "label": "智能体性能评估",
+            "key": "agent-evaluation",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published"
+          },
+          {
+            "label": "深度研究智能体实战",
+            "key": "agent-deep-research",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published"
+          },
+          {
+            "label": "Agent 工具契约、Schema 与错误语义",
+            "key": "agent-tool-design",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "工作流状态、检查点与断点续跑",
+            "key": "agent-workflow-state",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "任务规划、分解与动态重规划",
+            "key": "agent-planning",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Handoff、Agent-as-Tool 与职责边界",
+            "key": "agent-handoff",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Human-in-the-loop 审批与人工接管",
+            "key": "agent-human-in-loop",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "代码执行、浏览器与文件操作沙箱",
+            "key": "agent-sandbox",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Agent Run Loop、轮次与终止条件",
+            "key": "agent-run-loop",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "用状态机建模 Agent 行为",
+            "key": "agent-state-machine",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "事件驱动 Agent 与异步编排",
+            "key": "agent-event-driven",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "确定性 Workflow 与 Agent 的组合",
+            "key": "agent-deterministic-workflow",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "动态工作流生成与执行",
+            "key": "agent-dynamic-workflow",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "工具发现、选择与路由",
+            "key": "agent-tool-selection",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "工具结果校验、解析与反馈",
+            "key": "agent-tool-result-validation",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "工具超时、取消与重试",
+            "key": "agent-tool-timeout",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "并行工具调用与依赖调度",
+            "key": "agent-parallel-tools",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Subagent 子智能体设计",
+            "key": "agent-subagents",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Supervisor 监督者模式",
+            "key": "agent-supervisor",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "任务委派、职责与结果合并",
+            "key": "agent-delegation",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "多智能体消息、协议与状态同步",
+            "key": "agent-multi-agent-messaging",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Agent 记忆系统架构设计",
+            "key": "agent-memory-architecture",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "会话摘要、压缩与记忆提炼",
+            "key": "agent-memory-summarization",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "遗忘策略、冲突处理与记忆更新",
+            "key": "agent-memory-forgetting",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Browser-use 网页操作智能体",
+            "key": "agent-browser-use",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Computer-use 桌面操作智能体",
+            "key": "agent-computer-use",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Coding Agent 的架构与执行循环",
+            "key": "agent-coding",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Voice Agent 与实时对话编排",
+            "key": "agent-voice",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "coming-soon"
           }
         ]
       },
       {
-        "label": "生产级 AI",
-        "key": "llm-production",
+        "label": "生产级 Agent",
+        "key": "agent-production",
         "children": [
           {
-            "label": "AI 应用可观测性：LangSmith / Langfuse",
+            "label": "Agent 可观测性与全链路 Tracing",
             "key": "ai-observability",
             "isLeaf": true,
-            "filePath": "llm/production"
+            "filePath": "llm/production",
+            "contentStatus": "published"
           },
           {
-            "label": "LLM 成本优化策略",
+            "label": "Token、延迟与成本优化",
             "key": "llm-cost-optimize",
             "isLeaf": true,
-            "filePath": "llm/production"
+            "filePath": "llm/production",
+            "contentStatus": "published"
           },
           {
-            "label": "Prompt Injection 防御",
+            "label": "Prompt Injection 与间接注入防御",
             "key": "prompt-injection-defense",
             "isLeaf": true,
-            "filePath": "llm/production"
+            "filePath": "llm/production",
+            "contentStatus": "published"
           },
           {
-            "label": "AI 应用限流与配额控制",
+            "label": "AI 应用限流、配额与背压",
             "key": "ai-rate-limiting",
             "isLeaf": true,
-            "filePath": "llm/production"
+            "filePath": "llm/production",
+            "contentStatus": "published"
           },
           {
-            "label": "Agent 评估框架设计",
+            "label": "生产级 Agent 评估系统设计",
             "key": "agent-eval-framework",
             "isLeaf": true,
-            "filePath": "llm/production"
+            "filePath": "llm/production",
+            "contentStatus": "published"
+          },
+          {
+            "label": "输入、输出与工具 Guardrails",
+            "key": "agent-guardrails",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "最小权限、授权与工具调用确认",
+            "key": "agent-permission-model",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "失败分类、重试、补偿与恢复",
+            "key": "agent-failure-recovery",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "幂等性、重复执行与副作用控制",
+            "key": "agent-idempotency",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "敏感数据、日志脱敏与隐私保护",
+            "key": "agent-data-privacy",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Agent 威胁建模与安全测试",
+            "key": "agent-security-threat-model",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Agent 服务部署、扩缩容与版本发布",
+            "key": "agent-deployment",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "线上反馈、评估集与持续改进闭环",
+            "key": "agent-feedback-loop",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Trace、Span、Run 与工具调用事件模型",
+            "key": "agent-trace-model",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "成功率、质量、延迟、成本与业务指标",
+            "key": "agent-metrics",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Agent 结构化日志与上下文关联",
+            "key": "agent-logs",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Agent 调试方法与失败复现",
+            "key": "agent-debugging",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Agent 单元、集成、场景与端到端测试",
+            "key": "agent-test-pyramid",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "用户模拟器与环境模拟测试",
+            "key": "agent-simulation",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Agent 红队测试与对抗样本",
+            "key": "agent-red-teaming",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Agent Benchmark 的设计与解读",
+            "key": "agent-benchmark",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "在线评估、抽样与质量监控",
+            "key": "agent-online-eval",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Agent A/B 测试与实验设计",
+            "key": "agent-ab-testing",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "发布质量门禁与回归阻断",
+            "key": "agent-quality-gates",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Prompt、工具与模型升级回归测试",
+            "key": "agent-prompt-regression",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "网页、文件与邮件中的间接 Prompt Injection",
+            "key": "agent-indirect-injection",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "工具描述、Schema 与返回值投毒",
+            "key": "agent-tool-poisoning",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "记忆污染与持久化攻击",
+            "key": "agent-memory-poisoning",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "数据外泄路径与阻断策略",
+            "key": "agent-data-exfiltration",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Agent 身份、用户身份与委托授权",
+            "key": "agent-identity-auth",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "密钥、凭证与 Secret 生命周期",
+            "key": "agent-secrets-management",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "模型、工具、MCP 与依赖供应链安全",
+            "key": "agent-supply-chain",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "网络出口、域名白名单与数据边界",
+            "key": "agent-network-egress",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "沙箱逃逸风险与纵深防御",
+            "key": "agent-sandbox-escape",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "不可抵赖审计日志与合规留痕",
+            "key": "agent-audit-log",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Agent Gateway 与统一接入层",
+            "key": "agent-api-gateway",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "队列、Worker 与长任务执行",
+            "key": "agent-queue-worker",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "并发控制、资源隔离与公平调度",
+            "key": "agent-concurrency",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "端到端超时预算与 Deadline 传播",
+            "key": "agent-timeout-budget",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "模型、工具、检索与结果缓存",
+            "key": "agent-cache",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "模型降级、Fallback 与熔断",
+            "key": "agent-model-fallback",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "状态备份、灾难恢复与任务重放",
+            "key": "agent-disaster-recovery",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "灰度、Canary 与模型版本发布",
+            "key": "agent-canary-release",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Agent SLI、SLO 与错误预算",
+            "key": "agent-slo",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Agent 线上事故响应与复盘",
+            "key": "agent-incident-response",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "coming-soon"
           }
         ]
       }
     ]
   },
   {
-    "label": "数据研发",
-    "key": "data",
+    "label": "服务端工程",
+    "key": "server",
     "children": [
       {
-        "label": "Python 基础",
-        "key": "data-python",
+        "label": "运行时与框架",
+        "key": "server-runtime",
         "children": [
           {
-            "label": "Python 环境与包管理（pip / conda / uv）",
-            "key": "python-env",
+            "label": "Node.js 运行时与核心模块",
+            "key": "node-knowledge",
             "isLeaf": true,
-            "filePath": "data/python"
+            "filePath": "fe/node",
+            "contentStatus": "published"
           },
           {
-            "label": "Python 数据类型与面向对象",
-            "key": "python-oop",
-            "isLeaf": true,
-            "filePath": "data/python"
-          },
-          {
-            "label": "Python 异步编程（asyncio）",
-            "key": "python-async",
-            "isLeaf": true,
-            "filePath": "data/python"
-          },
-          {
-            "label": "Python 类型注解与 Pydantic",
-            "key": "python-typing",
-            "isLeaf": true,
-            "filePath": "data/python"
-          },
-          {
-            "label": "FastAPI 快速构建 AI 后端",
-            "key": "fastapi-basics",
-            "isLeaf": true,
-            "filePath": "data/python"
-          }
-        ]
-      },
-      {
-        "label": "数据处理",
-        "key": "data-processing",
-        "children": [
-          {
-            "label": "Pandas 数据清洗与分析",
-            "key": "pandas-basics",
-            "isLeaf": true,
-            "filePath": "data/processing"
-          },
-          {
-            "label": "NumPy 数值计算基础",
-            "key": "numpy-basics",
-            "isLeaf": true,
-            "filePath": "data/processing"
-          },
-          {
-            "label": "数据格式：JSON / CSV / Parquet",
-            "key": "data-formats",
-            "isLeaf": true,
-            "filePath": "data/processing"
-          },
-          {
-            "label": "文本预处理与清洗策略",
-            "key": "text-preprocessing",
-            "isLeaf": true,
-            "filePath": "data/processing"
-          },
-          {
-            "label": "数据质量评估与异常检测",
-            "key": "data-quality",
-            "isLeaf": true,
-            "filePath": "data/processing"
-          }
-        ]
-      },
-      {
-        "label": "SQL 与数据库",
-        "key": "data-sql",
-        "children": [
-          {
-            "label": "SQL 核心语法与进阶查询",
-            "key": "sql-core",
-            "isLeaf": true,
-            "filePath": "data/sql"
-          },
-          {
-            "label": "窗口函数与分析函数",
-            "key": "sql-window-function",
-            "isLeaf": true,
-            "filePath": "data/sql"
-          },
-          {
-            "label": "索引优化与执行计划",
-            "key": "sql-index-optimize",
-            "isLeaf": true,
-            "filePath": "data/sql"
-          },
-          {
-            "label": "PostgreSQL 特性与 JSON 支持",
-            "key": "postgresql-features",
-            "isLeaf": true,
-            "filePath": "data/sql"
-          },
-          {
-            "label": "ClickHouse 列式数据库入门",
-            "key": "clickhouse-intro",
-            "isLeaf": true,
-            "filePath": "data/sql"
-          }
-        ]
-      },
-      {
-        "label": "Embedding 与向量数据库",
-        "key": "data-vector",
-        "children": [
-          {
-            "label": "Embedding 模型选型与对比",
-            "key": "embedding-models",
-            "isLeaf": true,
-            "filePath": "data/vector"
-          },
-          {
-            "label": "pgvector：PostgreSQL 向量扩展",
-            "key": "pgvector-usage",
-            "isLeaf": true,
-            "filePath": "data/vector"
-          },
-          {
-            "label": "Chroma 本地向量数据库",
-            "key": "chroma-db",
-            "isLeaf": true,
-            "filePath": "data/vector"
-          },
-          {
-            "label": "Pinecone 云端向量数据库",
-            "key": "pinecone-usage",
-            "isLeaf": true,
-            "filePath": "data/vector"
-          },
-          {
-            "label": "向量检索：ANN 算法与 HNSW",
-            "key": "ann-hnsw",
-            "isLeaf": true,
-            "filePath": "data/vector"
-          }
-        ]
-      },
-      {
-        "label": "数据管道与 ETL",
-        "key": "data-pipeline",
-        "children": [
-          {
-            "label": "ETL 流程设计与最佳实践",
-            "key": "etl-design",
-            "isLeaf": true,
-            "filePath": "data/pipeline"
-          },
-          {
-            "label": "AI 训练数据采集与标注",
-            "key": "data-labeling",
-            "isLeaf": true,
-            "filePath": "data/pipeline"
-          },
-          {
-            "label": "Embedding 管道自动化",
-            "key": "embedding-pipeline",
-            "isLeaf": true,
-            "filePath": "data/pipeline"
-          },
-          {
-            "label": "数据版本管理（DVC）",
-            "key": "dvc-basics",
-            "isLeaf": true,
-            "filePath": "data/pipeline"
-          }
-        ]
-      },
-      {
-        "label": "数据可视化与分析",
-        "key": "data-analysis",
-        "children": [
-          {
-            "label": "Matplotlib & Seaborn 可视化",
-            "key": "matplotlib-seaborn",
-            "isLeaf": true,
-            "filePath": "data/analysis"
-          },
-          {
-            "label": "Jupyter Notebook 工程实践",
-            "key": "jupyter-practices",
-            "isLeaf": true,
-            "filePath": "data/analysis"
-          },
-          {
-            "label": "用 Python 构建数据报告",
-            "key": "python-data-report",
-            "isLeaf": true,
-            "filePath": "data/analysis"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "label": "后端研发",
-    "key": "backend",
-    "children": [
-      {
-        "label": "Node.js 深度",
-        "key": "backend-nodejs",
-        "children": [
-          {
-            "label": "Node.js 事件循环深度解析",
+            "label": "Node.js 事件循环与异步 I/O",
             "key": "node-event-loop-deep",
             "isLeaf": true,
-            "filePath": "backend/nodejs"
+            "filePath": "backend/nodejs",
+            "contentStatus": "published"
           },
           {
             "label": "Stream 流式处理原理与实践",
             "key": "node-stream",
             "isLeaf": true,
-            "filePath": "backend/nodejs"
+            "filePath": "backend/nodejs",
+            "contentStatus": "published"
           },
           {
-            "label": "Worker Threads 多线程模型",
-            "key": "node-worker-threads",
+            "label": "FastAPI 构建 AI 服务",
+            "key": "fastapi-basics",
             "isLeaf": true,
-            "filePath": "backend/nodejs"
+            "filePath": "data/python",
+            "contentStatus": "published"
           },
           {
-            "label": "child_process 与进程通信",
-            "key": "node-child-process",
-            "isLeaf": true,
-            "filePath": "backend/nodejs"
-          },
-          {
-            "label": "Cluster 集群模式",
-            "key": "node-cluster",
-            "isLeaf": true,
-            "filePath": "backend/nodejs"
-          },
-          {
-            "label": "Buffer 与二进制数据处理",
+            "label": "Buffer、二进制与编码",
             "key": "node-buffer",
             "isLeaf": true,
-            "filePath": "backend/nodejs"
+            "filePath": "backend/nodejs",
+            "contentStatus": "published"
           },
           {
-            "label": "Node.js 性能分析与调优",
-            "key": "node-performance",
+            "label": "Worker Threads 与 CPU 密集任务",
+            "key": "node-worker-threads",
             "isLeaf": true,
-            "filePath": "backend/nodejs"
-          }
-        ]
-      },
-      {
-        "label": "后端框架",
-        "key": "backend-framework",
-        "children": [
-          {
-            "label": "MidwayJS 框架与依赖注入",
-            "key": "midway-di",
-            "isLeaf": true,
-            "filePath": "backend/framework"
+            "filePath": "backend/nodejs",
+            "contentStatus": "published"
           },
           {
-            "label": "Koa 中间件机制",
-            "key": "koa-middleware",
-            "isLeaf": true,
-            "filePath": "backend/framework"
-          },
-          {
-            "label": "Express 核心原理",
+            "label": "Express 核心原理与中间件",
             "key": "express-core",
             "isLeaf": true,
-            "filePath": "backend/framework"
+            "filePath": "backend/framework",
+            "contentStatus": "published"
           },
           {
-            "label": "NestJS 企业级架构",
+            "label": "NestJS 模块化服务架构",
             "key": "nestjs-architecture",
             "isLeaf": true,
-            "filePath": "backend/framework"
+            "filePath": "backend/framework",
+            "contentStatus": "published"
           },
           {
-            "label": "Serverless 函数计算入门",
-            "key": "serverless-intro",
+            "label": "请求上下文与洋葱模型",
+            "key": "koa-middleware",
             "isLeaf": true,
-            "filePath": "backend/framework"
+            "filePath": "backend/framework",
+            "contentStatus": "published"
           }
         ]
       },
       {
-        "label": "数据库设计",
-        "key": "backend-database",
-        "children": [
-          {
-            "label": "MySQL 索引原理与优化",
-            "key": "mysql-index",
-            "isLeaf": true,
-            "filePath": "backend/database"
-          },
-          {
-            "label": "TypeORM 实体设计与关联查询",
-            "key": "typeorm-entity",
-            "isLeaf": true,
-            "filePath": "backend/database"
-          },
-          {
-            "label": "Redis 数据结构与使用场景",
-            "key": "redis-data-structure",
-            "isLeaf": true,
-            "filePath": "backend/database"
-          },
-          {
-            "label": "Redis 缓存策略与穿透击穿雪崩",
-            "key": "redis-cache",
-            "isLeaf": true,
-            "filePath": "backend/database"
-          },
-          {
-            "label": "事务与锁机制",
-            "key": "db-transaction-lock",
-            "isLeaf": true,
-            "filePath": "backend/database"
-          },
-          {
-            "label": "分库分表与读写分离",
-            "key": "db-sharding",
-            "isLeaf": true,
-            "filePath": "backend/database"
-          }
-        ]
-      },
-      {
-        "label": "API 设计",
-        "key": "backend-api",
+        "label": "API 与异步任务",
+        "key": "server-api",
         "children": [
           {
             "label": "RESTful API 设计规范",
             "key": "restful-design",
             "isLeaf": true,
-            "filePath": "backend/api"
-          },
-          {
-            "label": "GraphQL 核心概念与使用",
-            "key": "graphql-core",
-            "isLeaf": true,
-            "filePath": "backend/api"
+            "filePath": "backend/api",
+            "contentStatus": "published"
           },
           {
             "label": "WebSocket 实时通信",
             "key": "websocket",
             "isLeaf": true,
-            "filePath": "backend/api"
-          },
-          {
-            "label": "SSE 服务端推送事件",
-            "key": "sse-server",
-            "isLeaf": true,
-            "filePath": "backend/api"
+            "filePath": "backend/api",
+            "contentStatus": "published"
           },
           {
             "label": "API 版本管理与兼容性",
             "key": "api-versioning",
             "isLeaf": true,
-            "filePath": "backend/api"
+            "filePath": "backend/api",
+            "contentStatus": "published"
+          },
+          {
+            "label": "API Schema 校验、错误码与契约测试",
+            "key": "api-schema-validation",
+            "isLeaf": true,
+            "filePath": "backend/api",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "消息队列、异步任务与后台 Job",
+            "key": "async-job-queue",
+            "isLeaf": true,
+            "filePath": "backend/api",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "GraphQL Schema、查询与 Resolver",
+            "key": "graphql-core",
+            "isLeaf": true,
+            "filePath": "backend/api",
+            "contentStatus": "published"
+          },
+          {
+            "label": "SSE 服务端推送与连接管理",
+            "key": "sse-server",
+            "isLeaf": true,
+            "filePath": "backend/api",
+            "contentStatus": "published"
+          },
+          {
+            "label": "gRPC、Protobuf 与服务通信",
+            "key": "grpc-basics",
+            "isLeaf": true,
+            "filePath": "backend/api",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Webhook 签名、重试与幂等",
+            "key": "webhook-design",
+            "isLeaf": true,
+            "filePath": "backend/api",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "文件上传、分片与对象存储",
+            "key": "file-upload-service",
+            "isLeaf": true,
+            "filePath": "backend/api",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "分页、过滤、排序与游标设计",
+            "key": "api-pagination-filtering",
+            "isLeaf": true,
+            "filePath": "backend/api",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "API 幂等键与重复请求处理",
+            "key": "api-idempotency",
+            "isLeaf": true,
+            "filePath": "backend/api",
+            "contentStatus": "coming-soon"
           }
         ]
       },
       {
-        "label": "认证与安全",
-        "key": "backend-auth",
+        "label": "存储与状态",
+        "key": "server-storage",
         "children": [
           {
-            "label": "JWT 认证机制深度解析",
+            "label": "数据库索引原理与查询优化",
+            "key": "mysql-index",
+            "isLeaf": true,
+            "filePath": "backend/database",
+            "contentStatus": "published"
+          },
+          {
+            "label": "事务、隔离级别与锁",
+            "key": "db-transaction-lock",
+            "isLeaf": true,
+            "filePath": "backend/database",
+            "contentStatus": "published"
+          },
+          {
+            "label": "Redis 缓存策略与一致性",
+            "key": "redis-cache",
+            "isLeaf": true,
+            "filePath": "backend/database",
+            "contentStatus": "published"
+          },
+          {
+            "label": "Agent 会话、检查点与任务状态存储",
+            "key": "agent-state-storage",
+            "isLeaf": true,
+            "filePath": "backend/storage",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "ORM 实体、关系与查询边界",
+            "key": "typeorm-entity",
+            "isLeaf": true,
+            "filePath": "backend/database",
+            "contentStatus": "published"
+          },
+          {
+            "label": "Redis 数据结构与使用场景",
+            "key": "redis-data-structure",
+            "isLeaf": true,
+            "filePath": "backend/database",
+            "contentStatus": "published"
+          },
+          {
+            "label": "分库分表、读写分离与扩展",
+            "key": "db-sharding",
+            "isLeaf": true,
+            "filePath": "backend/database",
+            "contentStatus": "published"
+          },
+          {
+            "label": "PostgreSQL 事务、MVCC 与锁",
+            "key": "postgresql-transaction",
+            "isLeaf": true,
+            "filePath": "backend/storage",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "数据库 Migration、回滚与兼容发布",
+            "key": "database-migration",
+            "isLeaf": true,
+            "filePath": "backend/storage",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "对象存储、预签名 URL 与生命周期",
+            "key": "object-storage",
+            "isLeaf": true,
+            "filePath": "backend/storage",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "事件存储、Outbox 与状态重建",
+            "key": "event-store",
+            "isLeaf": true,
+            "filePath": "backend/storage",
+            "contentStatus": "coming-soon"
+          }
+        ]
+      },
+      {
+        "label": "安全与交付",
+        "key": "server-security-ops",
+        "children": [
+          {
+            "label": "JWT 认证机制",
             "key": "jwt-auth",
             "isLeaf": true,
-            "filePath": "backend/auth"
+            "filePath": "backend/auth",
+            "contentStatus": "published"
           },
           {
             "label": "OAuth 2.0 授权流程",
             "key": "oauth2",
             "isLeaf": true,
-            "filePath": "backend/auth"
+            "filePath": "backend/auth",
+            "contentStatus": "published"
           },
           {
-            "label": "密码加密与存储最佳实践",
-            "key": "password-encrypt",
-            "isLeaf": true,
-            "filePath": "backend/auth"
-          },
-          {
-            "label": "SQL 注入防御",
-            "key": "sql-injection",
-            "isLeaf": true,
-            "filePath": "backend/auth"
-          },
-          {
-            "label": "接口限流与熔断",
+            "label": "接口限流、熔断与降级",
             "key": "rate-limit-circuit",
             "isLeaf": true,
-            "filePath": "backend/auth"
-          }
-        ]
-      },
-      {
-        "label": "部署与运维",
-        "key": "backend-devops",
-        "children": [
+            "filePath": "backend/auth",
+            "contentStatus": "published"
+          },
           {
             "label": "Docker 容器化基础",
             "key": "docker-basics",
             "isLeaf": true,
-            "filePath": "backend/devops"
+            "filePath": "backend/devops",
+            "contentStatus": "published"
           },
           {
-            "label": "Docker Compose 多服务编排",
+            "label": "CI/CD 流水线与安全发布",
+            "key": "cicd-pipeline",
+            "isLeaf": true,
+            "filePath": "backend/devops",
+            "contentStatus": "published"
+          },
+          {
+            "label": "密码哈希、Salt 与凭证存储",
+            "key": "password-encrypt",
+            "isLeaf": true,
+            "filePath": "backend/auth",
+            "contentStatus": "published"
+          },
+          {
+            "label": "SQL 注入与参数化查询",
+            "key": "sql-injection",
+            "isLeaf": true,
+            "filePath": "backend/auth",
+            "contentStatus": "published"
+          },
+          {
+            "label": "Docker Compose 多服务开发环境",
             "key": "docker-compose",
             "isLeaf": true,
-            "filePath": "backend/devops"
+            "filePath": "backend/devops",
+            "contentStatus": "published"
           },
           {
             "label": "Nginx 反向代理与负载均衡",
             "key": "nginx-proxy",
             "isLeaf": true,
-            "filePath": "backend/devops"
+            "filePath": "backend/devops",
+            "contentStatus": "published"
           },
           {
-            "label": "CI/CD 流水线设计",
-            "key": "cicd-pipeline",
-            "isLeaf": true,
-            "filePath": "backend/devops"
-          },
-          {
-            "label": "日志收集与监控报警",
+            "label": "日志、指标、Tracing 与告警",
             "key": "logging-monitoring",
             "isLeaf": true,
-            "filePath": "backend/devops"
+            "filePath": "backend/devops",
+            "contentStatus": "published"
           },
           {
-            "label": "阿里云 FC 函数计算部署",
-            "key": "aliyun-fc-deploy",
+            "label": "配置、Secret 与环境隔离",
+            "key": "secrets-config",
             "isLeaf": true,
-            "filePath": "backend/devops"
+            "filePath": "backend/ops",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "健康检查、优雅启停与就绪探针",
+            "key": "health-check",
+            "isLeaf": true,
+            "filePath": "backend/ops",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "数据库备份、恢复与演练",
+            "key": "backup-restore",
+            "isLeaf": true,
+            "filePath": "backend/ops",
+            "contentStatus": "coming-soon"
           }
         ]
       }
     ]
   },
   {
-    "label": "计算机基础",
-    "key": "cs",
+    "label": "数据工程",
+    "key": "data",
     "children": [
       {
-        "label": "操作系统",
-        "key": "cs-os",
+        "label": "Python 工程基础",
+        "key": "data-python-core",
         "children": [
           {
-            "label": "进程、线程与协程有什么区别?",
+            "label": "Python 环境与包管理",
+            "key": "python-env",
+            "isLeaf": true,
+            "filePath": "data/python",
+            "contentStatus": "published"
+          },
+          {
+            "label": "Python 类型注解与 Pydantic",
+            "key": "python-typing",
+            "isLeaf": true,
+            "filePath": "data/python",
+            "contentStatus": "published"
+          },
+          {
+            "label": "Python 异步编程（asyncio）",
+            "key": "python-async",
+            "isLeaf": true,
+            "filePath": "data/python",
+            "contentStatus": "published"
+          },
+          {
+            "label": "Python 数据模型与面向对象",
+            "key": "python-oop",
+            "isLeaf": true,
+            "filePath": "data/python",
+            "contentStatus": "published"
+          },
+          {
+            "label": "NumPy 数值计算基础",
+            "key": "numpy-basics",
+            "isLeaf": true,
+            "filePath": "data/processing",
+            "contentStatus": "published"
+          },
+          {
+            "label": "Jupyter Notebook 工程实践",
+            "key": "jupyter-practices",
+            "isLeaf": true,
+            "filePath": "data/analysis",
+            "contentStatus": "published"
+          }
+        ]
+      },
+      {
+        "label": "数据处理与质量",
+        "key": "data-processing-core",
+        "children": [
+          {
+            "label": "Pandas 数据清洗与分析",
+            "key": "pandas-basics",
+            "isLeaf": true,
+            "filePath": "data/processing",
+            "contentStatus": "published"
+          },
+          {
+            "label": "JSON / CSV / Parquet 数据格式",
+            "key": "data-formats",
+            "isLeaf": true,
+            "filePath": "data/processing",
+            "contentStatus": "published"
+          },
+          {
+            "label": "文本预处理与清洗策略",
+            "key": "text-preprocessing",
+            "isLeaf": true,
+            "filePath": "data/processing",
+            "contentStatus": "published"
+          },
+          {
+            "label": "数据质量评估与异常检测",
+            "key": "data-quality",
+            "isLeaf": true,
+            "filePath": "data/processing",
+            "contentStatus": "published"
+          },
+          {
+            "label": "AI 数据采集、标注与审核",
+            "key": "data-labeling",
+            "isLeaf": true,
+            "filePath": "data/pipeline",
+            "contentStatus": "published"
+          },
+          {
+            "label": "数据 Schema 演进与兼容性",
+            "key": "data-schema-evolution",
+            "isLeaf": true,
+            "filePath": "data/processing",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "精确去重、近似去重与污染控制",
+            "key": "data-deduplication",
+            "isLeaf": true,
+            "filePath": "data/processing",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "数据采样、分层与代表性",
+            "key": "data-sampling",
+            "isLeaf": true,
+            "filePath": "data/processing",
+            "contentStatus": "coming-soon"
+          }
+        ]
+      },
+      {
+        "label": "数据存储与检索",
+        "key": "data-storage-core",
+        "children": [
+          {
+            "label": "SQL 核心语法与进阶查询",
+            "key": "sql-core",
+            "isLeaf": true,
+            "filePath": "data/sql",
+            "contentStatus": "published"
+          },
+          {
+            "label": "PostgreSQL 与 JSON 数据",
+            "key": "postgresql-features",
+            "isLeaf": true,
+            "filePath": "data/sql",
+            "contentStatus": "published"
+          },
+          {
+            "label": "pgvector 向量存储与检索",
+            "key": "pgvector-usage",
+            "isLeaf": true,
+            "filePath": "data/vector",
+            "contentStatus": "published"
+          },
+          {
+            "label": "ANN 与 HNSW 向量检索算法",
+            "key": "ann-hnsw",
+            "isLeaf": true,
+            "filePath": "data/vector",
+            "contentStatus": "published"
+          },
+          {
+            "label": "窗口函数与分析查询",
+            "key": "sql-window-function",
+            "isLeaf": true,
+            "filePath": "data/sql",
+            "contentStatus": "published"
+          },
+          {
+            "label": "索引、执行计划与查询优化",
+            "key": "sql-index-optimize",
+            "isLeaf": true,
+            "filePath": "data/sql",
+            "contentStatus": "published"
+          },
+          {
+            "label": "ClickHouse 与列式分析",
+            "key": "clickhouse-intro",
+            "isLeaf": true,
+            "filePath": "data/sql",
+            "contentStatus": "published"
+          },
+          {
+            "label": "Embedding 模型评估与选型",
+            "key": "embedding-models",
+            "isLeaf": true,
+            "filePath": "data/vector",
+            "contentStatus": "published"
+          },
+          {
+            "label": "向量数据库索引、过滤与一致性",
+            "key": "vector-database-internals",
+            "isLeaf": true,
+            "filePath": "data/storage",
+            "contentStatus": "coming-soon"
+          }
+        ]
+      },
+      {
+        "label": "数据管道",
+        "key": "data-pipeline-core",
+        "children": [
+          {
+            "label": "ETL / ELT 流程设计",
+            "key": "etl-design",
+            "isLeaf": true,
+            "filePath": "data/pipeline",
+            "contentStatus": "published"
+          },
+          {
+            "label": "Embedding 管道自动化",
+            "key": "embedding-pipeline",
+            "isLeaf": true,
+            "filePath": "data/pipeline",
+            "contentStatus": "published"
+          },
+          {
+            "label": "数据集与数据版本管理",
+            "key": "dvc-basics",
+            "isLeaf": true,
+            "filePath": "data/pipeline",
+            "contentStatus": "published"
+          },
+          {
+            "label": "批处理、流处理与 Lambda/Kappa 架构",
+            "key": "batch-stream-processing",
+            "isLeaf": true,
+            "filePath": "data/pipeline",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "数据任务编排、依赖与重试",
+            "key": "data-orchestration",
+            "isLeaf": true,
+            "filePath": "data/pipeline",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "数据血缘、元数据与可追溯性",
+            "key": "data-lineage",
+            "isLeaf": true,
+            "filePath": "data/pipeline",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "数据新鲜度、完整性与管道可观测",
+            "key": "data-observability",
+            "isLeaf": true,
+            "filePath": "data/pipeline",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "Data Contract 与上下游协作",
+            "key": "data-contracts",
+            "isLeaf": true,
+            "filePath": "data/pipeline",
+            "contentStatus": "coming-soon"
+          }
+        ]
+      },
+      {
+        "label": "分析与实验",
+        "key": "data-analysis-core",
+        "children": [
+          {
+            "label": "Matplotlib / Seaborn 数据可视化",
+            "key": "matplotlib-seaborn",
+            "isLeaf": true,
+            "filePath": "data/analysis",
+            "contentStatus": "published"
+          },
+          {
+            "label": "用 Python 构建可复现数据报告",
+            "key": "python-data-report",
+            "isLeaf": true,
+            "filePath": "data/analysis",
+            "contentStatus": "published"
+          },
+          {
+            "label": "实验设计、显著性与效果分析",
+            "key": "experiment-analysis",
+            "isLeaf": true,
+            "filePath": "data/analysis",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "特征、标签与 Feature Store 基础",
+            "key": "feature-store",
+            "isLeaf": true,
+            "filePath": "data/analysis",
+            "contentStatus": "coming-soon"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "计算机与算法基础",
+    "key": "cs-algorithm",
+    "children": [
+      {
+        "label": "计算机基础",
+        "key": "cs-core",
+        "children": [
+          {
+            "label": "进程、线程与协程",
             "key": "os-process-thread",
             "isLeaf": true,
-            "filePath": "cs/os"
+            "filePath": "cs/os",
+            "contentStatus": "published"
           },
           {
-            "label": "进程间通信(IPC)有哪些方式?",
-            "key": "os-ipc",
-            "isLeaf": true,
-            "filePath": "cs/os"
-          },
-          {
-            "label": "线程同步与互斥:锁、信号量与条件变量",
-            "key": "os-thread-sync",
-            "isLeaf": true,
-            "filePath": "cs/os"
-          },
-          {
-            "label": "死锁是如何产生的?如何预防和避免?",
-            "key": "os-deadlock",
-            "isLeaf": true,
-            "filePath": "cs/os"
-          },
-          {
-            "label": "虚拟内存与分页机制是怎么工作的?",
+            "label": "内存、虚拟内存与分页",
             "key": "os-virtual-memory",
             "isLeaf": true,
-            "filePath": "cs/os"
+            "filePath": "cs/os",
+            "contentStatus": "published"
           },
           {
-            "label": "操作系统的进程调度算法有哪些?",
-            "key": "os-process-schedule",
+            "label": "OSI、TCP/IP 与端到端通信",
+            "key": "tcpIp-model",
             "isLeaf": true,
-            "filePath": "cs/os"
+            "filePath": "network/tcpIp",
+            "contentStatus": "published"
+          },
+          {
+            "label": "HTTP 请求、响应与报文结构",
+            "key": "http-message",
+            "isLeaf": true,
+            "filePath": "network/http",
+            "contentStatus": "published"
+          },
+          {
+            "label": "进程间通信（IPC）",
+            "key": "os-ipc",
+            "isLeaf": true,
+            "filePath": "cs/os",
+            "contentStatus": "published"
+          },
+          {
+            "label": "锁、信号量与并发同步",
+            "key": "os-thread-sync",
+            "isLeaf": true,
+            "filePath": "cs/os",
+            "contentStatus": "published"
+          },
+          {
+            "label": "死锁、检测与避免",
+            "key": "os-deadlock",
+            "isLeaf": true,
+            "filePath": "cs/os",
+            "contentStatus": "published"
+          },
+          {
+            "label": "TCP 建连、断开与连接状态",
+            "key": "tcp-handshake",
+            "isLeaf": true,
+            "filePath": "network/tcpIp",
+            "contentStatus": "published"
+          },
+          {
+            "label": "TCP、UDP 与传输场景",
+            "key": "tcp-udp",
+            "isLeaf": true,
+            "filePath": "network/tcpIp",
+            "contentStatus": "published"
+          },
+          {
+            "label": "DNS 解析、缓存与容灾",
+            "key": "dns-analysis",
+            "isLeaf": true,
+            "filePath": "network/others",
+            "contentStatus": "published"
           }
         ]
       },
       {
-        "label": "数据库与 MySQL",
-        "key": "cs-mysql",
+        "label": "算法与数据结构",
+        "key": "algorithm-core",
         "children": [
           {
-            "label": "MySQL 索引为什么用 B+ 树?",
-            "key": "mysql-index-bptree",
+            "label": "时间复杂度、空间复杂度与性能估算",
+            "key": "algorithm-complexity",
             "isLeaf": true,
-            "filePath": "cs/mysql"
+            "filePath": "cs/algorithm",
+            "contentStatus": "coming-soon"
           },
           {
-            "label": "如何优化索引?最左前缀、覆盖索引与索引失效",
-            "key": "mysql-index-optimize",
+            "label": "数组、字符串与双指针",
+            "key": "algorithm-array",
             "isLeaf": true,
-            "filePath": "cs/mysql"
+            "filePath": "data-structure/algorithm",
+            "contentStatus": "published"
           },
           {
-            "label": "事务的 ACID 特性是如何保证的?",
-            "key": "mysql-transaction-acid",
+            "label": "栈、队列与任务调度",
+            "key": "algorithm-stack-queue",
             "isLeaf": true,
-            "filePath": "cs/mysql"
+            "filePath": "cs/algorithm",
+            "contentStatus": "coming-soon"
           },
           {
-            "label": "事务隔离级别与 MVCC 原理",
-            "key": "mysql-isolation-mvcc",
+            "label": "哈希表、缓存与去重",
+            "key": "algorithm-hash",
             "isLeaf": true,
-            "filePath": "cs/mysql"
+            "filePath": "data-structure/algorithm",
+            "contentStatus": "published"
           },
           {
-            "label": "MySQL 的锁机制:行锁、间隙锁与死锁",
-            "key": "mysql-lock",
+            "label": "树、图与遍历",
+            "key": "algorithm-tree",
             "isLeaf": true,
-            "filePath": "cs/mysql"
+            "filePath": "data-structure/algorithm",
+            "contentStatus": "published"
           },
           {
-            "label": "redo log、undo log 与 binlog 有什么区别?",
-            "key": "mysql-logs",
+            "label": "递归、分治与搜索",
+            "key": "algorithm-loop",
             "isLeaf": true,
-            "filePath": "cs/mysql"
-          }
-        ]
-      },
-      {
-        "label": "Redis 与缓存",
-        "key": "cs-redis",
-        "children": [
-          {
-            "label": "Redis 有哪些数据结构?各自适合什么场景?",
-            "key": "redis-data-types",
-            "isLeaf": true,
-            "filePath": "cs/redis"
+            "filePath": "data-structure/algorithm",
+            "contentStatus": "published"
           },
           {
-            "label": "Redis 持久化:RDB 与 AOF 怎么选?",
-            "key": "redis-persistence",
+            "label": "字符串、匹配与文本处理",
+            "key": "algorithm-string",
             "isLeaf": true,
-            "filePath": "cs/redis"
+            "filePath": "data-structure/algorithm",
+            "contentStatus": "published"
           },
           {
-            "label": "缓存穿透、击穿、雪崩及解决方案",
-            "key": "redis-cache-problems",
+            "label": "堆、优先队列与 Top-K",
+            "key": "algorithm-heap",
             "isLeaf": true,
-            "filePath": "cs/redis"
+            "filePath": "cs/algorithm",
+            "contentStatus": "coming-soon"
           },
           {
-            "label": "如何用 Redis 实现分布式锁?",
-            "key": "redis-distributed-lock",
+            "label": "链表、指针与 LRU",
+            "key": "algorithm-linked-list",
             "isLeaf": true,
-            "filePath": "cs/redis"
+            "filePath": "cs/algorithm",
+            "contentStatus": "coming-soon"
           },
           {
-            "label": "Redis 的过期删除与内存淘汰策略",
-            "key": "redis-expire-evict",
+            "label": "Trie、前缀检索与自动补全",
+            "key": "algorithm-trie",
             "isLeaf": true,
-            "filePath": "cs/redis"
+            "filePath": "cs/algorithm",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "排序算法、稳定性与外部排序",
+            "key": "algorithm-sorting",
+            "isLeaf": true,
+            "filePath": "cs/algorithm",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "BFS、DFS、最短路与拓扑排序",
+            "key": "algorithm-graph",
+            "isLeaf": true,
+            "filePath": "cs/algorithm",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "回溯、剪枝与组合搜索",
+            "key": "algorithm-backtracking",
+            "isLeaf": true,
+            "filePath": "cs/algorithm",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "向量、矩阵与线性代数直觉",
+            "key": "linear-algebra-ai",
+            "isLeaf": true,
+            "filePath": "cs/algorithm",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "概率、分布、采样与统计估计",
+            "key": "probability-statistics-ai",
+            "isLeaf": true,
+            "filePath": "cs/algorithm",
+            "contentStatus": "coming-soon"
           }
         ]
       }
     ]
   },
   {
-    "label": "前端开发(可选)",
-    "key": "frontend",
+    "label": "前端核心",
+    "key": "frontend-core",
     "children": [
       {
-        "label": "导语",
-        "key": "intro",
+        "label": "Web 基础",
+        "key": "web-foundation",
         "children": [
           {
-            "label": "导语",
-            "key": "introduce",
+            "label": "语义化 HTML 与 Web 可访问性",
+            "key": "web-semantic-accessibility",
             "isLeaf": true,
-            "filePath": "intro"
+            "filePath": "frontend/web",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "现代 CSS 布局与响应式设计",
+            "key": "responsive-layout",
+            "isLeaf": true,
+            "filePath": "html-css/css",
+            "contentStatus": "published"
+          },
+          {
+            "label": "浏览器事件循环、任务与渲染时机",
+            "key": "event-loop",
+            "isLeaf": true,
+            "filePath": "js-es6-ts/js",
+            "contentStatus": "published"
+          },
+          {
+            "label": "Promise、async/await 与异步控制流",
+            "key": "promise",
+            "isLeaf": true,
+            "filePath": "js-es6-ts/es6",
+            "contentStatus": "published"
+          },
+          {
+            "label": "Cookie、Storage 与浏览器状态",
+            "key": "localStorage-sessionStorage",
+            "isLeaf": true,
+            "filePath": "network/others",
+            "contentStatus": "published"
+          },
+          {
+            "label": "XSS、CSRF、CSP 与 Web 安全基础",
+            "key": "web-attack",
+            "isLeaf": true,
+            "filePath": "network/security",
+            "contentStatus": "published"
           }
         ]
       },
       {
-        "label": "JavaScript/ES6/TypeScript",
-        "key": "js-es6-ts",
+        "label": "TypeScript 与 UI 工程",
+        "key": "frontend-engineering",
         "children": [
           {
-            "label": "JavaScript",
-            "key": "js",
-            "children": [
-              {
-                "label": "事件循环机制",
-                "key": "event-loop",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "宏任务与微任务",
-                "key": "macro-micro-task",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "setTimeout产生误差原因",
-                "key": "setTimeout-error",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "如何判断数据类型",
-                "key": "data-type",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "Array常见的方法",
-                "key": "array-function",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "String常见的方法",
-                "key": "string-function",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "Object常见的方法",
-                "key": "object-function",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "map和reduce方法",
-                "key": "map-reduce",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "浏览器输入URL过程",
-                "key": "input-url",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "Array.sort实现原理",
-                "key": "array-sort",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "深拷贝和浅拷贝的区别",
-                "key": "deep-clone",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "JS的垃圾回收机制",
-                "key": "js-trunk",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "作用域和作用域链、执行期上下文",
-                "key": "js-scope",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "防抖和节流",
-                "key": "debounce-throttle",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "原型和原型链",
-                "key": "prototype",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "回流（Reflow）和重绘（Repaints）",
-                "key": "reflow-repaints",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "\"==\"和\"===\"的区别",
-                "key": "equals",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "继承的实现方式及差异",
-                "key": "extends",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "闭包及其作用",
-                "key": "closure",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "JS的arguments",
-                "key": "arguments",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "new一个类的原理",
-                "key": "new-class",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "DOM常见的操作方式",
-                "key": "dom-function",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "addEventListener和onClick的区别",
-                "key": "eventListener",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "Ajax请求的过程",
-                "key": "ajax-request",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "bind/call/apply的区别",
-                "key": "bind-call",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "原始值和引用值的区别",
-                "key": "origin-link-address",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "如何正确判断this指向",
-                "key": "this-pointer",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "new和Object.create的区别",
-                "key": "new-object",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "BOM属性对象方法",
-                "key": "bom-function",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "函数柯里化及其通用封装",
-                "key": "curry",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "prototype和__proto__的区别",
-                "key": "prototype-proto",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "DOM的location对象",
-                "key": "dom-location",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              },
-              {
-                "label": "类数组与数组的区别与转换",
-                "key": "array-like-object",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/js"
-              }
-            ]
+            "label": "TypeScript 类型系统与类型建模",
+            "key": "type-system",
+            "isLeaf": true,
+            "filePath": "js-es6-ts/ts",
+            "contentStatus": "published"
           },
           {
-            "label": "ES6",
-            "key": "es6",
-            "children": [
-              {
-                "label": "变量的结构赋值",
-                "key": "es6-deconstruction",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/es6"
-              },
-              {
-                "label": "箭头函数与this指向",
-                "key": "es6-arrow",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/es6"
-              },
-              {
-                "label": "Promise概念",
-                "key": "promise",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/es6"
-              },
-              {
-                "label": "Promise的API",
-                "key": "promise-api",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/es6"
-              },
-              {
-                "label": "几种异步方式的比较",
-                "key": "async-compare",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/es6"
-              },
-              {
-                "label": "CommonJS和ESModule区别",
-                "key": "commonjs-esmodule",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/es6"
-              },
-              {
-                "label": "Iterator的实现",
-                "key": "iterator",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/es6"
-              },
-              {
-                "label": "class基本语法与继承",
-                "key": "class",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/es6"
-              },
-              {
-                "label": "循环的比较和使用场景",
-                "key": "es6-loop",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/es6"
-              },
-              {
-                "label": "let/const和var的区别",
-                "key": "let-const",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/es6"
-              },
-              {
-                "label": "变量提升和暂时性死区",
-                "key": "hoisting-tdz",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/es6"
-              },
-              {
-                "label": "Set和Map的区别",
-                "key": "set-map",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/es6"
-              },
-              {
-                "label": "async函数概念",
-                "key": "async",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/es6"
-              },
-              {
-                "label": "Proxy的概念与使用",
-                "key": "proxy",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/es6"
-              },
-              {
-                "label": "Symbol的概念与使用",
-                "key": "symbol",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/es6"
-              },
-              {
-                "label": "Generator的概念与使用",
-                "key": "generator",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/es6"
-              },
-              {
-                "label": "Reflect的概念与使用",
-                "key": "reflect",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/es6"
-              }
-            ]
+            "label": "React 函数组件、Hooks 与状态",
+            "key": "react-hooks",
+            "isLeaf": true,
+            "filePath": "framework/react",
+            "contentStatus": "published"
           },
           {
-            "label": "TypeScript",
-            "key": "ts",
-            "children": [
-              {
-                "label": "TypeScript与JavaScript 的主要区别是什么",
-                "key": "ts-js-difference",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/ts"
-              },
-              {
-                "label": "TypeScript的类型系统",
-                "key": "type-system",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/ts"
-              },
-              {
-                "label": "TypeScript中的泛型有什么用途",
-                "key": "ts-generics",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/ts"
-              },
-              {
-                "label": "TypeScript中的装饰器是什么",
-                "key": "ts-decorator",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/ts"
-              },
-              {
-                "label": "TypeScript中的枚举是什么",
-                "key": "ts-enums",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/ts"
-              },
-              {
-                "label": "如何在TypeScript中实现封装",
-                "key": "ts-class-interface",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/ts"
-              },
-              {
-                "label": "TypeScript的编译过程",
-                "key": "ts-compile",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/ts"
-              },
-              {
-                "label": "TypeScript中的类和构造函数",
-                "key": "ts-consturctor",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/ts"
-              },
-              {
-                "label": "如何集成 TS 到现有的 JS 项目中",
-                "key": "ts-refactor-js",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/ts"
-              },
-              {
-                "label": "TypeScript 中的接口和类型别名有什么区别？",
-                "key": "ts-interface-class",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/ts"
-              },
-              {
-                "label": "TypeScript支持哪些高级类型操作",
-                "key": "ts-operation",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/ts"
-              },
-              {
-                "label": "如何在TypeScript中处理异步编程",
-                "key": "ts-async",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/ts"
-              },
-              {
-                "label": "TypeScript 中的模块和命名空间",
-                "key": "ts-modules",
-                "isLeaf": true,
-                "filePath": "js-es6-ts/ts"
-              }
-            ]
+            "label": "可复用组件、状态与通信设计",
+            "key": "design-components",
+            "isLeaf": true,
+            "filePath": "fe/design",
+            "contentStatus": "published"
+          },
+          {
+            "label": "Vite、前端构建与测试基础",
+            "key": "vite-testing",
+            "isLeaf": true,
+            "filePath": "frontend/engineering",
+            "contentStatus": "coming-soon"
+          },
+          {
+            "label": "TypeScript 泛型与可复用类型",
+            "key": "ts-generics",
+            "isLeaf": true,
+            "filePath": "js-es6-ts/ts",
+            "contentStatus": "published"
+          },
+          {
+            "label": "React 渲染、Memo 与性能优化",
+            "key": "useCallback-useMemo",
+            "isLeaf": true,
+            "filePath": "framework/react",
+            "contentStatus": "published"
+          },
+          {
+            "label": "前端状态管理与服务端状态",
+            "key": "design-state",
+            "isLeaf": true,
+            "filePath": "fe/design",
+            "contentStatus": "published"
           }
         ]
       },
       {
-        "label": "HTML&CSS",
-        "key": "html-css",
+        "label": "Agent 产品界面",
+        "key": "agent-product-ui",
         "children": [
           {
-            "label": "HTML",
-            "key": "html",
-            "children": [
-              {
-                "label": "H5语义化标签及其作用",
-                "key": "h5-semantic-tag",
-                "isLeaf": true,
-                "filePath": "html-css/html"
-              },
-              {
-                "label": "HTML5的新特性",
-                "key": "html-new-feature",
-                "isLeaf": true,
-                "filePath": "html-css/html"
-              },
-              {
-                "label": "<a></a>标签的作用有哪些",
-                "key": "html-tag-a",
-                "isLeaf": true,
-                "filePath": "html-css/html"
-              },
-              {
-                "label": "HTML元素种类的划分",
-                "key": "html-type",
-                "isLeaf": true,
-                "filePath": "html-css/html"
-              },
-              {
-                "label": "SEO概念及实现",
-                "key": "seo-concept",
-                "isLeaf": true,
-                "filePath": "html-css/html"
-              }
-            ]
+            "label": "Agent Chat UI、消息模型与会话列表",
+            "key": "agent-chat-ui",
+            "isLeaf": true,
+            "filePath": "frontend/agent-ui",
+            "contentStatus": "coming-soon"
           },
           {
-            "label": "CSS",
-            "key": "css",
-            "children": [
-              {
-                "label": "未知宽高的元素水平垂直居中",
-                "key": "align-center",
-                "isLeaf": true,
-                "filePath": "html-css/css"
-              },
-              {
-                "label": "CSS权重机制",
-                "key": "css-weight",
-                "isLeaf": true,
-                "filePath": "html-css/css"
-              },
-              {
-                "label": "CSS引入方式",
-                "key": "css-import",
-                "isLeaf": true,
-                "filePath": "html-css/css"
-              },
-              {
-                "label": "Less、Sass和CSS的区别",
-                "key": "less-sass-css",
-                "isLeaf": true,
-                "filePath": "html-css/css"
-              },
-              {
-                "label": "如何实现响应式布局",
-                "key": "responsive-layout",
-                "isLeaf": true,
-                "filePath": "html-css/css"
-              },
-              {
-                "label": "CSS定位方式及其区别",
-                "key": "css-position",
-                "isLeaf": true,
-                "filePath": "html-css/css"
-              },
-              {
-                "label": "CSS定位属性",
-                "key": "css-position-property",
-                "isLeaf": true,
-                "filePath": "html-css/css"
-              },
-              {
-                "label": "常见CSS3及动画",
-                "key": "css3-animate",
-                "isLeaf": true,
-                "filePath": "html-css/css"
-              },
-              {
-                "label": "px/em/rem的区别",
-                "key": "px-em-rem",
-                "isLeaf": true,
-                "filePath": "html-css/css"
-              },
-              {
-                "label": "vh与vw的使用",
-                "key": "vh-vw",
-                "isLeaf": true,
-                "filePath": "html-css/css"
-              },
-              {
-                "label": "display及其相关属性",
-                "key": "display-property",
-                "isLeaf": true,
-                "filePath": "html-css/css"
-              },
-              {
-                "label": "圣杯布局的实现",
-                "key": "grail-grid",
-                "isLeaf": true,
-                "filePath": "html-css/css"
-              },
-              {
-                "label": "双飞翼布局的实现",
-                "key": "delphinium-grid",
-                "isLeaf": true,
-                "filePath": "html-css/css"
-              },
-              {
-                "label": "IFC与BFC",
-                "key": "ifc-bfc",
-                "isLeaf": true,
-                "filePath": "html-css/css"
-              },
-              {
-                "label": "盒模型概念",
-                "key": "box-model",
-                "isLeaf": true,
-                "filePath": "html-css/css"
-              },
-              {
-                "label": "flex布局的应用",
-                "key": "flex-display",
-                "isLeaf": true,
-                "filePath": "html-css/css"
-              },
-              {
-                "label": "浮动模型及清除浮动的方法",
-                "key": "float-model",
-                "isLeaf": true,
-                "filePath": "html-css/css"
-              },
-              {
-                "label": "margin塌陷及合并问题",
-                "key": "margin-collapse",
-                "isLeaf": true,
-                "filePath": "html-css/css"
-              },
-              {
-                "label": "用CSS画一个三角形",
-                "key": "css-triangle",
-                "isLeaf": true,
-                "filePath": "html-css/css"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "label": "计算机网络",
-        "key": "network",
-        "children": [
-          {
-            "label": "HTTP协议",
-            "key": "http",
-            "children": [
-              {
-                "label": "HTTP与HTTPS之间的区别？",
-                "key": "http-https",
-                "isLeaf": true,
-                "filePath": "network/http"
-              },
-              {
-                "label": "HTTP的报文结构是什么？",
-                "key": "http-message",
-                "isLeaf": true,
-                "filePath": "network/http"
-              },
-              {
-                "label": "HTTP的状态码有哪些？",
-                "key": "http-status-code",
-                "isLeaf": true,
-                "filePath": "network/http"
-              },
-              {
-                "label": "HTTP常见响应状态码？",
-                "key": "http-response-code",
-                "isLeaf": true,
-                "filePath": "network/http"
-              },
-              {
-                "label": "HTTP通用首部字段有哪些？",
-                "key": "http-header-key",
-                "isLeaf": true,
-                "filePath": "network/http"
-              },
-              {
-                "label": "GET和POST请求的区别？",
-                "key": "http-get-post",
-                "isLeaf": true,
-                "filePath": "network/http"
-              },
-              {
-                "label": "HTTP协议1.0、1.1和2.0有哪些特点？",
-                "key": "http-v1-v2",
-                "isLeaf": true,
-                "filePath": "network/http"
-              },
-              {
-                "label": "HTTP长连接、短连接和持久连接的区别和应用场景？",
-                "key": "http-long-short",
-                "isLeaf": true,
-                "filePath": "network/http"
-              },
-              {
-                "label": "Cookie和Session的区别？",
-                "key": "http-cookie-session",
-                "isLeaf": true,
-                "filePath": "network/http"
-              },
-              {
-                "label": "HTTPS连接建立的过程？",
-                "key": "http-https-connect",
-                "isLeaf": true,
-                "filePath": "network/http"
-              },
-              {
-                "label": "永久性重定向和暂时性重定向的区别？",
-                "key": "http-redirect",
-                "isLeaf": true,
-                "filePath": "network/http"
-              },
-              {
-                "label": "HTTP报文首部有哪些？",
-                "key": "http-header",
-                "isLeaf": true,
-                "filePath": "network/http"
-              },
-              {
-                "label": "HTTP请求首部字段、响应首部字段、实体首部字段有哪些？",
-                "key": "http-header-content",
-                "isLeaf": true,
-                "filePath": "network/http"
-              },
-              {
-                "label": "什么是对称加密算法？",
-                "key": "http-symmetric-cryptography",
-                "isLeaf": true,
-                "filePath": "network/http"
-              },
-              {
-                "label": "什么是非对称加密算法？",
-                "key": "http-none-symmetric-cryptography",
-                "isLeaf": true,
-                "filePath": "network/http"
-              },
-              {
-                "label": "重定向和转发的区别？",
-                "key": "http-redirect-transfer",
-                "isLeaf": true,
-                "filePath": "network/http"
-              },
-              {
-                "label": "Cookie相关首部字段？",
-                "key": "http-cookie",
-                "isLeaf": true,
-                "filePath": "network/http"
-              },
-              {
-                "label": "基于HTTP的功能追加协议有哪些？",
-                "key": "http-trace-proxy",
-                "isLeaf": true,
-                "filePath": "network/http"
-              },
-              {
-                "label": "网络如何保证不丢包？",
-                "key": "http-no-lose",
-                "isLeaf": true,
-                "filePath": "network/http"
-              }
-            ]
+            "label": "流式文本、光标、取消与继续生成",
+            "key": "agent-streaming-ui",
+            "isLeaf": true,
+            "filePath": "frontend/agent-ui",
+            "contentStatus": "coming-soon"
           },
           {
-            "label": "TCP/IP协议",
-            "key": "tcpIp",
-            "children": [
-              {
-                "label": "TCP/IP协议分层结构？",
-                "key": "tcpIp-protocal",
-                "isLeaf": true,
-                "filePath": "network/tcpIp"
-              },
-              {
-                "label": "TCP三次握手过程？",
-                "key": "tcp-handshake",
-                "isLeaf": true,
-                "filePath": "network/tcpIp"
-              },
-              {
-                "label": "TCP为什么是三次握手，为什么两次不行？",
-                "key": "tcp-three-shakehand",
-                "isLeaf": true,
-                "filePath": "network/tcpIp"
-              },
-              {
-                "label": "TCP四次挥手过程",
-                "key": "tcp-wave-hand",
-                "isLeaf": true,
-                "filePath": "network/tcpIp"
-              },
-              {
-                "label": "TCP与UDP的区别与场景？",
-                "key": "tcp-udp",
-                "isLeaf": true,
-                "filePath": "network/tcpIp"
-              },
-              {
-                "label": "常见的网络服务分层？",
-                "key": "network-level",
-                "isLeaf": true,
-                "filePath": "network/tcpIp"
-              },
-              {
-                "label": "TCP如何做到滑动窗口和拥塞控制？",
-                "key": "tcp-window-control",
-                "isLeaf": true,
-                "filePath": "network/tcpIp"
-              },
-              {
-                "label": "TCP粘包的原因和解决办法？",
-                "key": "tcp-sticky",
-                "isLeaf": true,
-                "filePath": "network/tcpIp"
-              },
-              {
-                "label": "TCP的报文格式？",
-                "key": "tcp-content",
-                "isLeaf": true,
-                "filePath": "network/tcpIp"
-              },
-              {
-                "label": "UDP的报文格式？",
-                "key": "udp-content",
-                "isLeaf": true,
-                "filePath": "network/tcpIp"
-              },
-              {
-                "label": "OSI和TCP/IP模型是什么？",
-                "key": "tcpIp-model",
-                "isLeaf": true,
-                "filePath": "network/tcpIp"
-              },
-              {
-                "label": "TIME-WAIT和CLOSE_WAIT是什么？",
-                "key": "time-wait-close-wait",
-                "isLeaf": true,
-                "filePath": "network/tcpIp"
-              },
-              {
-                "label": "TIME-WAIT过多出现原因和解决方法？",
-                "key": "time-wait",
-                "isLeaf": true,
-                "filePath": "network/tcpIp"
-              },
-              {
-                "label": "视频传输是用TCP还是UDP，丢包如何解决？",
-                "key": "video-transfer",
-                "isLeaf": true,
-                "filePath": "network/tcpIp"
-              }
-            ]
+            "label": "Markdown、代码块、图表与安全渲染",
+            "key": "agent-markdown-code-ui",
+            "isLeaf": true,
+            "filePath": "frontend/agent-ui",
+            "contentStatus": "coming-soon"
           },
           {
-            "label": "网络安全",
-            "key": "security",
-            "children": [
-              {
-                "label": "常见的Web攻击分类",
-                "key": "web-attack",
-                "isLeaf": true,
-                "filePath": "network/security"
-              },
-              {
-                "label": "XSS攻击及防御",
-                "key": "xss",
-                "isLeaf": true,
-                "filePath": "network/security"
-              },
-              {
-                "label": "CSRF攻击及防御",
-                "key": "csrf",
-                "isLeaf": true,
-                "filePath": "network/security"
-              }
-            ]
+            "label": "引用、来源与检索证据展示",
+            "key": "agent-citation-ui",
+            "isLeaf": true,
+            "filePath": "frontend/agent-ui",
+            "contentStatus": "coming-soon"
           },
           {
-            "label": "其他",
-            "key": "others",
-            "children": [
-              {
-                "label": "浏览器输入URL过程",
-                "key": "other-input-url",
-                "isLeaf": true,
-                "filePath": "network/others"
-              },
-              {
-                "label": "LocalStorage、SessionStorage和Cookie的区别",
-                "key": "localStorage-sessionStorage",
-                "isLeaf": true,
-                "filePath": "network/others"
-              },
-              {
-                "label": "Web服务器及其组成",
-                "key": "web-service",
-                "isLeaf": true,
-                "filePath": "network/others"
-              },
-              {
-                "label": "DNS解析时有什么算法和方式减少重复操作?",
-                "key": "dns-analysis",
-                "isLeaf": true,
-                "filePath": "network/others"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "label": "前端框架",
-        "key": "framework",
-        "children": [
-          {
-            "label": "React",
-            "key": "react",
-            "children": [
-              {
-                "label": "React生命周期",
-                "key": "react-lifecycle",
-                "isLeaf": true,
-                "filePath": "framework/react"
-              },
-              {
-                "label": "React Hooks的作用及原理",
-                "key": "react-hooks",
-                "isLeaf": true,
-                "filePath": "framework/react"
-              },
-              {
-                "label": "useCallback和useMemo性能优化",
-                "key": "useCallback-useMemo",
-                "isLeaf": true,
-                "filePath": "framework/react"
-              },
-              {
-                "label": "React的Diff算法",
-                "key": "react-diff",
-                "isLeaf": true,
-                "filePath": "framework/react"
-              },
-              {
-                "label": "Virtual DOM",
-                "key": "virtual-dom",
-                "isLeaf": true,
-                "filePath": "framework/react"
-              },
-              {
-                "label": "Flux的架构模式",
-                "key": "react-flux",
-                "isLeaf": true,
-                "filePath": "framework/react"
-              },
-              {
-                "label": "Redux设计思路",
-                "key": "react-redux",
-                "isLeaf": true,
-                "filePath": "framework/react"
-              },
-              {
-                "label": "高阶组件的定义",
-                "key": "enhance-component",
-                "isLeaf": true,
-                "filePath": "framework/react"
-              },
-              {
-                "label": "React Fiber架构",
-                "key": "react-fiber",
-                "isLeaf": true,
-                "filePath": "framework/react"
-              },
-              {
-                "label": "Pure Component与shouldComponentUpdate关系",
-                "key": "pure-component",
-                "isLeaf": true,
-                "filePath": "framework/react"
-              },
-              {
-                "label": "受控组件与非受控组件",
-                "key": "controlled-component",
-                "isLeaf": true,
-                "filePath": "framework/react"
-              },
-              {
-                "label": "React和Vue的异同",
-                "key": "react-vue-diff",
-                "isLeaf": true,
-                "filePath": "framework/react"
-              },
-              {
-                "label": "React有哪些特点",
-                "key": "react-properties",
-                "isLeaf": true,
-                "filePath": "framework/react"
-              }
-            ]
+            "label": "工具调用状态、参数预览与审批界面",
+            "key": "agent-tool-approval-ui",
+            "isLeaf": true,
+            "filePath": "frontend/agent-ui",
+            "contentStatus": "coming-soon"
           },
           {
-            "label": "Vue",
-            "key": "vue",
-            "children": [
-              {
-                "label": "Vue的核心概念有哪些",
-                "key": "vue-core",
-                "isLeaf": true,
-                "filePath": "framework/vue"
-              },
-              {
-                "label": "Vue的响应式系统如何实现",
-                "key": "vue-responsive",
-                "isLeaf": true,
-                "filePath": "framework/vue"
-              },
-              {
-                "label": "Vue的生命周期Hooks并举例说明",
-                "key": "vue-lifecycle",
-                "isLeaf": true,
-                "filePath": "framework/vue"
-              },
-              {
-                "label": "如何优化Vue应用的性能",
-                "key": "vue-performance",
-                "isLeaf": true,
-                "filePath": "framework/vue"
-              },
-              {
-                "label": "Vue Router是如何与Vue.js集成的",
-                "key": "vue-router",
-                "isLeaf": true,
-                "filePath": "framework/vue"
-              },
-              {
-                "label": "Vuex的概念与作用",
-                "key": "vue-vuex",
-                "isLeaf": true,
-                "filePath": "framework/vue"
-              },
-              {
-                "label": "Vue的计算属性和侦听器",
-                "key": "vue-computed-listener",
-                "isLeaf": true,
-                "filePath": "framework/vue"
-              },
-              {
-                "label": "Vue的v-model如何实现双向数据绑定",
-                "key": "vue-vmodel",
-                "isLeaf": true,
-                "filePath": "framework/vue"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "label": "数据结构与算法",
-        "key": "data-structure",
-        "children": [
-          {
-            "label": "算法",
-            "key": "alogrithm",
-            "children": [
-              {
-                "label": "数据结构-数组",
-                "key": "algorithm-array",
-                "isLeaf": true,
-                "filePath": "data-structure/algorithm"
-              },
-              {
-                "label": "数据结构-字符串",
-                "key": "algorithm-string",
-                "isLeaf": true,
-                "filePath": "data-structure/algorithm"
-              },
-              {
-                "label": "数据结构-树",
-                "key": "algorithm-tree",
-                "isLeaf": true,
-                "filePath": "data-structure/algorithm"
-              },
-              {
-                "label": "二分查找",
-                "key": "algorithm-binary",
-                "isLeaf": true,
-                "filePath": "data-structure/algorithm"
-              },
-              {
-                "label": "哈希表的应用",
-                "key": "algorithm-hash",
-                "isLeaf": true,
-                "filePath": "data-structure/algorithm"
-              },
-              {
-                "label": "动态规划",
-                "key": "algorithm-dynamic",
-                "isLeaf": true,
-                "filePath": "data-structure/algorithm"
-              },
-              {
-                "label": "递归与分治",
-                "key": "algorithm-loop",
-                "isLeaf": true,
-                "filePath": "data-structure/algorithm"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "label": "前端纵向领域",
-        "key": "fe",
-        "children": [
-          {
-            "label": "工程化",
-            "key": "project",
-            "children": [
-              {
-                "label": "前端工程化流程",
-                "key": "project-flow",
-                "isLeaf": true,
-                "filePath": "fe/project"
-              },
-              {
-                "label": "Webpack概念与配置",
-                "key": "project-webpack",
-                "isLeaf": true,
-                "filePath": "fe/project"
-              },
-              {
-                "label": "SSR实现及优缺点",
-                "key": "project-ssr",
-                "isLeaf": true,
-                "filePath": "fe/project"
-              },
-              {
-                "label": "SPA及其优缺点",
-                "key": "project-spa",
-                "isLeaf": true,
-                "filePath": "fe/project"
-              },
-              {
-                "label": "基础设计模式",
-                "key": "project-model",
-                "isLeaf": true,
-                "filePath": "fe/project"
-              },
-              {
-                "label": "如何在Webpack实现优化",
-                "key": "project-webpack-performance",
-                "isLeaf": true,
-                "filePath": "fe/project"
-              },
-              {
-                "label": "loader与plugin原理与实现",
-                "key": "project-loader-plugin",
-                "isLeaf": true,
-                "filePath": "fe/project"
-              }
-            ]
+            "label": "错误、重试、恢复与降级交互",
+            "key": "agent-error-retry-ui",
+            "isLeaf": true,
+            "filePath": "frontend/agent-ui",
+            "contentStatus": "coming-soon"
           },
           {
-            "label": "组件体系",
-            "key": "design",
-            "children": [
-              {
-                "label": "如何确保组件的复用性",
-                "key": "design-common",
-                "isLeaf": true,
-                "filePath": "fe/design"
-              },
-              {
-                "label": "如何实现组件的状态管理",
-                "key": "design-state",
-                "isLeaf": true,
-                "filePath": "fe/design"
-              },
-              {
-                "label": "如何实现组件间的通信",
-                "key": "design-communication",
-                "isLeaf": true,
-                "filePath": "fe/design"
-              },
-              {
-                "label": "如何设计一个高度封装的组件",
-                "key": "design-components",
-                "isLeaf": true,
-                "filePath": "fe/design"
-              },
-              {
-                "label": "前端组件性能优化如何实现",
-                "key": "design-performance",
-                "isLeaf": true,
-                "filePath": "fe/design"
-              }
-            ]
-          },
-          {
-            "label": "数据可视化",
-            "key": "visualization",
-            "children": [
-              {
-                "label": "Canvas和SVG的区别",
-                "key": "canvas-svg",
-                "isLeaf": true,
-                "filePath": "fe/visualization"
-              },
-              {
-                "label": "设计可视化图表时，Canvas和SVG如何取舍",
-                "key": "canvas-svg-select",
-                "isLeaf": true,
-                "filePath": "fe/visualization"
-              },
-              {
-                "label": "常见可视化组件库",
-                "key": "visual-projects",
-                "isLeaf": true,
-                "filePath": "fe/visualization"
-              },
-              {
-                "label": "ECharts的设计思路",
-                "key": "echarts-design",
-                "isLeaf": true,
-                "filePath": "fe/visualization"
-              },
-              {
-                "label": "如何将可视化组件库与前端框架结合",
-                "key": "visual-components",
-                "isLeaf": true,
-                "filePath": "fe/visualization"
-              }
-            ]
-          },
-          {
-            "label": "Node",
-            "key": "node",
-            "children": [
-              {
-                "label": "NodeJS基本概念与特点",
-                "key": "node-knowledge",
-                "isLeaf": true,
-                "filePath": "fe/node"
-              },
-              {
-                "label": "Node的内存控制",
-                "key": "node-memory",
-                "isLeaf": true,
-                "filePath": "fe/node"
-              },
-              {
-                "label": "Node的进程",
-                "key": "node-process",
-                "isLeaf": true,
-                "filePath": "fe/node"
-              },
-              {
-                "label": "CommonJS规范、核心模块",
-                "key": "commonjs",
-                "isLeaf": true,
-                "filePath": "fe/node"
-              },
-              {
-                "label": "Node如何构建网络服务",
-                "key": "node-web-service",
-                "isLeaf": true,
-                "filePath": "fe/node"
-              },
-              {
-                "label": "Node的异步I/O机制",
-                "key": "node-async-io",
-                "isLeaf": true,
-                "filePath": "fe/node"
-              }
-            ]
+            "label": "Agent UI 可访问性、测试与跨端适配",
+            "key": "agent-ui-accessibility-testing",
+            "isLeaf": true,
+            "filePath": "frontend/agent-ui",
+            "contentStatus": "coming-soon"
           }
         ]
       }
     ]
   },
   {
-    "label": "求职 & 职业发展",
+    "label": "项目与职业",
     "key": "career",
     "children": [
       {
         "label": "Agent 工程师成长",
-        "key": "career-agent",
+        "key": "career-agent-core",
         "children": [
           {
-            "label": "Agent 工程师到底做什么",
+            "label": "Agent 工程师的职责与岗位方向",
             "key": "agent-role-landscape",
             "isLeaf": true,
-            "filePath": "career"
+            "filePath": "career",
+            "contentStatus": "published"
+          },
+          {
+            "label": "从零到 Agent 工程师的学习路线",
+            "key": "agent-learning-roadmap",
+            "isLeaf": true,
+            "filePath": "career",
+            "contentStatus": "published"
+          },
+          {
+            "label": "Agent 项目与作品集设计",
+            "key": "agent-project-portfolio",
+            "isLeaf": true,
+            "filePath": "career",
+            "contentStatus": "published"
+          },
+          {
+            "label": "AI / Agent 岗位简历与面试",
+            "key": "agent-resume-interview",
+            "isLeaf": true,
+            "filePath": "career",
+            "contentStatus": "published"
           },
           {
             "label": "Agent 工程师技能图谱",
             "key": "agent-skill-map",
             "isLeaf": true,
-            "filePath": "career"
+            "filePath": "career",
+            "contentStatus": "published"
           },
           {
-            "label": "学习路线图：从 0 到能做 Agent",
-            "key": "agent-learning-roadmap",
+            "label": "从真实需求定义 Agent 项目",
+            "key": "agent-project-requirements",
             "isLeaf": true,
-            "filePath": "career"
+            "filePath": "career",
+            "contentStatus": "coming-soon"
           },
           {
-            "label": "做出能打的 Agent 作品集",
-            "key": "agent-project-portfolio",
+            "label": "用业务指标证明 Agent 项目价值",
+            "key": "agent-project-evaluation",
             "isLeaf": true,
-            "filePath": "career"
+            "filePath": "career",
+            "contentStatus": "coming-soon"
           },
           {
-            "label": "AI/Agent 岗位的简历与面试",
-            "key": "agent-resume-interview",
+            "label": "将 Demo 做成可运行的线上项目",
+            "key": "agent-project-deployment",
             "isLeaf": true,
-            "filePath": "career"
-          }
-        ]
-      },
-      {
-        "label": "前端求职与面试",
-        "key": "career-jobhunt",
-        "children": [
-          {
-            "label": "如何选择求职方向",
-            "key": "career-direction-choice",
-            "isLeaf": true,
-            "filePath": "career"
+            "filePath": "career",
+            "contentStatus": "coming-soon"
           },
           {
-            "label": "备战求职的心态管理",
-            "key": "mindset-management",
+            "label": "参与 Agent 开源项目与技术社区",
+            "key": "agent-open-source-contribution",
             "isLeaf": true,
-            "filePath": "career"
+            "filePath": "career",
+            "contentStatus": "coming-soon"
           },
           {
-            "label": "高效备战面试的策略",
-            "key": "efficient-preparation-strategy",
+            "label": "Agent 系统设计面试与案例拆解",
+            "key": "agent-interview-system-design",
             "isLeaf": true,
-            "filePath": "career"
-          },
-          {
-            "label": "简历制作核心原则",
-            "key": "resume-making-principles",
-            "isLeaf": true,
-            "filePath": "career"
-          },
-          {
-            "label": "如何丰富项目经历",
-            "key": "project-experience-enhancement",
-            "isLeaf": true,
-            "filePath": "career"
-          },
-          {
-            "label": "面试前的准备工作",
-            "key": "pre-interview-preparation",
-            "isLeaf": true,
-            "filePath": "career"
-          },
-          {
-            "label": "HR 面试常见问题与答题指南",
-            "key": "hr-interview-qa-guide",
-            "isLeaf": true,
-            "filePath": "career"
-          },
-          {
-            "label": "Offer 选择的分析方法",
-            "key": "offer-selection-analysis",
-            "isLeaf": true,
-            "filePath": "career"
+            "filePath": "career",
+            "contentStatus": "coming-soon"
           }
         ]
       }
     ]
   }
 ]
+
