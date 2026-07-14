@@ -1,260 +1,130 @@
-Zero-Shot 和 Few-Shot 是 Prompt 设计的两种基本范式，描述了"向模型提供多少示例"来引导任务完成。理解两者的适用边界与动态示例选择（Dynamic Few-Shot）策略，是工程化 Prompt 的核心能力。
+Zero-Shot 只给任务说明和当前输入；Few-Shot 额外提供若干示例，让模型在上下文中推断标签、格式、风格或解题模式。它不会更新模型权重，而是一次请求内的 In-Context Learning（ICL）。
 
-## 基本概念
+## 三种提示方式
 
-### Zero-Shot 提示（零样本）
+![Zero-Shot、固定 Few-Shot 与动态 Few-Shot 的输入和示例选择流程](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/prompt-few-shot-strategies-v3.webp)
+*图：动态 Few-Shot 不只追求相似度，还要考虑类别覆盖、多样性和测试泄漏。*
 
-Zero-Shot 是指不提供任何示例，只描述任务，直接让模型完成。依赖模型在预训练（Pretraining）和指令微调（Instruction Tuning）阶段积累的通用能力。
+### Zero-Shot
 
-```python
-import anthropic
-
-client = anthropic.Anthropic()
-
-msg = client.messages.create(
-    model="claude-opus-4-5",
-    max_tokens=256,
-    messages=[
-        {
-            "role": "user",
-            "content": (
-                "判断以下评论的情感倾向，输出 positive、negative 或 neutral：\n\n"
-                "评论：「这款手机续航真的太棒了，用了两天才充一次电！」\n\n情感："
-            ),
-        }
-    ],
-)
-print(msg.content[0].text)
+```text
+任务：把工单分类为 billing、delivery、product、other。
+输入：{{TICKET}}
+输出：只返回一个类别。
 ```
 
-**优点：**
-- Prompt 简洁，token 消耗少
-- 对通用任务（模型预训练时见过大量类似数据）效果已经很好
+优点是 Prompt 短、维护简单，适合模型已熟悉且边界清晰的任务。它也应该成为 Few-Shot 的基线：没有基线，就无法知道示例是否真的带来收益。
 
-**局限：**
-- 输出格式难以精确控制
-- 对于罕见任务、特殊领域或需要遵循特定约定的场景效果差
-- 输出风格不一致
+### One-Shot / Few-Shot
 
-### One-Shot 提示（单样本）
+一个示例是 One-Shot，多个示例通常称 Few-Shot：
 
-提供一个输入-输出示例，帮助模型理解期望的格式或风格，是 Few-Shot 的最小形态。
+```text
+示例 1
+输入：扣款成功但订单没有生成。
+输出：billing
 
-### Few-Shot 提示（少样本）
+示例 2
+输入：物流三天没有更新。
+输出：delivery
 
-提供 2–8 个示例，让模型从示例中学习期望的行为，这种机制被称为**上下文学习（In-Context Learning，ICL）**。
-
-```python
-import anthropic
-
-client = anthropic.Anthropic()
-
-few_shot_prompt = """判断评论的情感倾向，用 JSON 格式输出。
-
-示例 1：
-输入：「快递很快，包装完好，满意！」
-输出：{"sentiment": "positive", "reason": "物流和包装均满足预期"}
-
-示例 2：
-输入：「等了三周才到，卖家态度也很差。」
-输出：{"sentiment": "negative", "reason": "配送时间过长，服务态度差"}
-
-示例 3：
-输入：「东西就那样，说不上好也说不上坏。」
-输出：{"sentiment": "neutral", "reason": "无明显正面或负面体验"}
-
-现在请分析：
-输入：「这次购物体验还不错，但价格稍高。」
-输出："""
-
-msg = client.messages.create(
-    model="claude-opus-4-5",
-    max_tokens=256,
-    messages=[{"role": "user", "content": few_shot_prompt}],
-)
-print(msg.content[0].text)
+当前输入：{{TICKET}}
+输出：
 ```
 
-示例同时规定了：输出必须是 JSON；`reason` 字段的写作风格；如何处理混合情感。
+示例同时传递任务边界、标签拼写、输出格式和语气。它适合规则难以完全写清、边界依赖业务约定或需要稳定风格的任务。
 
-## 为什么 Few-Shot 有效：In-Context Learning 机制
+## 示例质量为什么比固定数量重要
 
-ICL 不是真正的"学习"（权重未更新），而是通过示例激活模型在预训练中习得的**任务模式识别能力**：
+不存在跨模型、跨任务都最优的“3–5 个示例”。示例数受任务难度、上下文预算、模型能力和输入长度影响。每增加一个示例都可能带来信息，也会增加成本、冲突和位置偏差。
 
-1. 示例揭示任务类型（分类、生成、翻译……）
-2. 示例规定输入-输出的映射格式
-3. 示例传达风格、语气、详细程度等隐式约束
+高质量示例应满足：
 
-这也解释了为什么示例质量比数量更重要——低质量或格式不一致的示例会传递错误的任务模式。
+- **答案正确**：错误标签会直接教错行为；
+- **格式一致**：字段、分隔符和详细程度一致；
+- **覆盖边界**：包含容易混淆和缺失信息的情况；
+- **代表分布**：不要只放最容易或最常见类别；
+- **最小充分**：每个示例都解决明确问题；
+- **来源安全**：不包含秘密、个人数据或盲测答案。
 
-关键发现：
-- 示例的**标签正确性**影响较小——即使标签随机化，模型也能学习输出格式（ICL 主要学习"数据分布和格式"）
-- 示例的**格式一致性**影响很大
-- 示例数量有**边际效应**——从 0 到 1 个示例的提升远大于从 4 到 5 个
+早期研究发现 ICL 也会受输入分布、标签空间和示例格式影响，但这不意味着标签正确性不重要。生产任务尤其不能依赖错误示例。
 
-## 示例选择策略
+## 示例顺序与位置
 
-### 覆盖典型情况（Representative）
+模型可能对顺序敏感，靠近当前输入的示例也可能影响更大。稳妥做法不是背一个排序规则，而是：
 
-示例应涵盖任务的主要类型，尤其是模型容易出错的边界情况（edge cases）：
+1. 固定一套候选示例；
+2. 测试多种顺序；
+3. 按任务切片观察退化；
+4. 将顺序作为 Prompt 版本的一部分锁定。
 
-```
-# 分类任务的示例应覆盖所有类别
-# 翻译任务的示例应包含领域术语
-# 代码生成的示例应包含异常处理模式
-```
+分类任务还要防止示例标签分布造成先验偏差。
 
-### 格式严格一致（Consistent Format）
+## Dynamic Few-Shot：按当前输入选择示例
 
-所有示例必须遵循完全相同的格式。不一致的示例会让模型困惑：
+固定示例易维护，却不能覆盖所有输入。动态 Few-Shot 从示例库中为每次请求挑选更相关的演示。
 
-```
-# 错误：格式不一致
-示例 1 输出：positive
-示例 2 输出：{"sentiment": "negative"}
+典型流程：
 
-# 正确：格式统一
-示例 1 输出：{"sentiment": "positive"}
-示例 2 输出：{"sentiment": "negative"}
-```
+1. 为当前输入计算检索表示；
+2. 从同任务、同版本的示例库召回候选；
+3. 按相似度、类别覆盖、多样性和质量重排；
+4. 去重并执行 Token 预算；
+5. 以固定模板拼接 Prompt；
+6. 记录选中了哪些示例，便于调试。
 
-### 示例数量
+只取向量 Top-K 可能返回多个几乎相同的示例，导致覆盖不足。可使用 MMR、按类别配额或规则过滤增加多样性。
 
-- 通常 3–5 个示例效果最佳
-- 示例过少（1 个）：格式约束力弱
-- 示例过多（10+）：消耗大量 token，性价比低；且可能分散对指令的注意力
-- 对于复杂任务，质量 > 数量
+## 示例库怎样治理
 
-### 示例顺序（Ordering Matters）
+示例库不是普通知识库，它定义模型行为：
 
-研究显示，越靠近查询的示例对模型影响越大（**接近效应，Recency Bias**）。把最典型或最复杂的示例放在最后。
+- 每条记录包含稳定 ID、输入、期望输出、标签、来源和审核状态；
+- 错误修复不能静默覆盖，要保留版本；
+- 用户反馈只有经过审核才能进入示例库；
+- 检索索引与 Prompt 模板要绑定版本；
+- 高风险和个人数据需要脱敏与访问控制；
+- 定期删除重复、过时或与当前 schema 不兼容的示例。
 
-## Dynamic Few-Shot（动态示例选择）
+## 防止评测泄漏
 
-硬编码固定示例有局限——面对多变的输入，固定示例未必总是最优。动态 Few-Shot 根据当前输入，从示例库中检索最相关的示例，再构建 Prompt。
+若盲测样本或近似答案进入示例库，评测分数会虚高。应按时间、用户或来源隔离训练/示例数据与评测数据，并检查近重复。
 
-### 检索流程
+动态检索还可能意外召回当前评测题的答案。每次评测都要保存示例 ID，才能审计。
 
-```mermaid
-graph LR
-    Q[用户查询 Query] --> E[Embedding 模型]
-    E --> V[查询向量]
-    DB[(示例向量库\nExample Pool)] --> S[余弦相似度计算]
-    V --> S
-    S --> T[Top-K 相似示例]
-    T --> P[构建 Few-Shot Prompt]
-    P --> L[LLM]
-    L --> R[输出结果]
-```
+## Few-Shot、RAG 与 Fine-Tuning 的区别
 
-### Python 实现骨架
+| 方法 | 注入什么 | 主要用途 |
+|---|---|---|
+| Few-Shot | 输入—输出行为示例 | 教格式、标签边界和风格 |
+| RAG | 与问题相关的事实资料 | 提供可更新知识和来源 |
+| Fine-Tuning | 通过训练更新权重 | 固化高频稳定行为或风格 |
 
-```python
-from anthropic import Anthropic
-import numpy as np
+三者可以组合。示例回答“怎样做”，检索资料回答“依据什么事实做”。不要用 Few-Shot 塞大量易变知识，也不要把 RAG 文档误当成正确行为示例。
 
+## 评测方法
 
-def embed(text: str) -> list[float]:
-    """调用嵌入模型，返回向量（此处为占位，替换为实际嵌入 API）。"""
-    raise NotImplementedError("请替换为实际的 embedding 实现")
+比较至少四组：Zero-Shot、固定 Few-Shot、动态 Few-Shot、必要时 Fine-Tuned。除质量外，还记录 Prompt Token、TTFT、总成本和不同切片的稳定性。
 
+对动态 Few-Shot 做消融：仅相似度、相似度 + 多样性、不同示例数、不同顺序。只有稳定提升才值得增加检索系统复杂度。
 
-def cosine_sim(a: list[float], b: list[float]) -> float:
-    """计算两个向量的余弦相似度（Cosine Similarity）。"""
-    a_arr = np.array(a)
-    b_arr = np.array(b)
-    norm = np.linalg.norm(a_arr) * np.linalg.norm(b_arr)
-    if norm == 0:
-        return 0.0
-    return float(np.dot(a_arr, b_arr) / norm)
+## 常见误区
 
+- **Few-Shot 一定优于 Zero-Shot**：无关或错误示例可能降低表现。
+- **示例越多越好**：上下文与干扰成本会增加。
+- **相似度最高就是最佳示例**：还要考虑覆盖、多样性和标签平衡。
+- **示例格式能替代原生 Structured Outputs**：示例只能提高概率，不能提供机制保证。
+- **示例可以直接收集用户答案**：必须审核、脱敏并防止投毒。
+- **固定数量经验适用于所有模型**：应通过评测决定。
 
-def dynamic_few_shot(query: str, example_pool: list[dict], k: int = 3) -> str:
-    # 1. embed query and examples (use your preferred embedding model)
-    query_emb = embed(query)
-    example_embs = [embed(ex["input"]) for ex in example_pool]
-    # 2. pick top-k by cosine similarity
-    scores = [cosine_sim(query_emb, e) for e in example_embs]
-    top_k = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)[:k]
-    # 3. build prompt
-    examples_text = "\n\n".join(
-        f"Input: {example_pool[i]['input']}\nOutput: {example_pool[i]['output']}"
-        for i in top_k
-    )
-    prompt = f"{examples_text}\n\nInput: {query}\nOutput:"
-    client = Anthropic()
-    msg = client.messages.create(
-        model="claude-opus-4-5",
-        max_tokens=256,
-        messages=[{"role": "user", "content": prompt}],
-    )
-    return msg.content[0].text
-```
+## 小结
 
-### 工程落地建议
+先建立 Zero-Shot 基线，再用少量正确、统一、覆盖边界的示例验证增益。输入分布复杂时再引入动态检索，并对示例库、版本和评测泄漏做完整治理。
 
-- 示例库（Example Pool）提前离线计算并存储向量（可用 Faiss、Pinecone、pgvector）
-- 查询时只需对用户输入做一次嵌入，检索复杂度为 O(log N)（使用 ANN 近似最近邻）
-- 示例数量 k 推荐 3–5，同时监控 token 上限
+## 参考资料
 
-## 方法横向对比
-
-| 方法 | 数据需求 | 推理成本 | 灵活性 | 推荐场景 |
-|------|---------|---------|--------|---------|
-| Zero-Shot | 无 | 低 | 高 | 通用任务、快速原型 |
-| Few-Shot | 少量示例 | 中 | 高 | 格式/风格定制 |
-| Fine-tuning | 大量标注数据 | 低（推理时） | 低 | 专有领域、高频调用 |
-
-**经验法则：先用 Few-Shot 验证可行性，当任务固定且调用频率高时再评估 Fine-tuning 的 ROI。**
-
-### Few-Shot vs Fine-tuning 决策矩阵
-
-| 考量维度 | 倾向 Few-Shot | 倾向 Fine-tuning |
-|---------|-------------|----------------|
-| 数据量 | < 100 条示例 | > 500 条标注数据 |
-| 任务稳定性 | 需求频繁变化 | 任务格式高度固定 |
-| 调用频率 | 低频 / 实验阶段 | 日均百万级调用 |
-| 推理延迟要求 | 宽松 | 严格（Prompt 越短越快）|
-| 定制深度 | 格式/风格 | 领域知识、专有术语 |
-
-## Few-Shot + CoT 组合
-
-在 Few-Shot 示例中同时展示推理过程，形成 **Few-Shot CoT**（效果通常优于两者单独使用）：
-
-```
-示例：
-输入：「数组 [3,1,4,1,5] 中的最大值是？」
-思考：遍历数组，记录最大值：3→1（保持 3）→4（更新到 4）→1（保持 4）→5（更新到 5）。
-输出：5
-```
-
-详细用法参见 CoT 思维链技巧文章。
-
-## 常见错误 / 最佳实践
-
-### 常见错误
-
-1. **示例格式不统一**：不同示例用不同字段名或分隔符，导致模型输出格式混乱。
-2. **示例全是正面案例**：缺少负例或边界案例，模型对异常输入处理不当。
-3. **示例过多且质量低**：10+ 条质量平庸的示例不如 3 条高质量示例。
-4. **动态检索 k 值过大**：塞入太多示例超出 context window 或稀释核心指令。
-5. **忽略 Recency Bias**：把最重要的示例放在最前面，却因接近效应效果不如放在最后。
-
-### 最佳实践
-
-- **先 Zero-Shot 基准测试**：了解模型在没有示例时的表现，再判断 Few-Shot 的增益。
-- **示例覆盖 label 分布**：分类任务中各类别示例数量尽量均衡，避免隐性偏差（bias）。
-- **动态 Few-Shot 离线预计算嵌入**：避免每次请求都实时嵌入整个示例库。
-- **使用清晰的分隔符**：`---`、`###` 或 XML 标签（`<example>`）明确示例边界。
-- **Few-Shot 结合系统提示**：示例放在 user/assistant 对话轮次，任务说明放在 system prompt，职责分明。
-
-## 面试常问
-
-- Zero-Shot 和 Few-Shot 分别在什么情况下更适合？各有哪些局限？
-- In-Context Learning（ICL）的本质是什么？为什么不更新权重也能"学习"？
-- Few-Shot 示例的质量 vs 数量，哪个更重要？为什么？
-- Dynamic Few-Shot 是什么，如何实现？核心技术挑战是什么？
-- 什么时候应该从 Few-Shot 升级到 Fine-tuning？判断标准是什么？
-- Recency Bias 对示例排序有什么影响，如何利用这一特性？
-- Few-Shot Prompting 和 In-Context Learning 是同一回事吗？
-
+- [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165)
+- [Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?](https://arxiv.org/abs/2202.12837)
+- [Fantastically Ordered Prompts and Where to Find Them](https://arxiv.org/abs/2104.08786)
+- [OpenAI API：Prompt engineering](https://developers.openai.com/api/docs/guides/prompt-engineering)
+- [Anthropic：Prompting best practices](https://docs.anthropic.com/claude/prompt-library)

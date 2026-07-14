@@ -1,711 +1,235 @@
-大模型（LLM）正在成为现代 Web 应用的核心能力之一。对前端开发者而言，理解如何安全、高效地将 LLM 集成进来，既是竞争力的体现，也是面试高频考点。
+## 集成大模型，重点不是一个请求按钮
 
-## 黄金法则：永远不要在浏览器中直接调用 LLM API
+演示项目只需要在浏览器里发出请求；可上线的产品还要处理密钥、身份、配额、流式状态、内容安全、工具权限、上下文和可观测性。最稳妥的基本架构是：**浏览器只访问自己的 BFF，BFF 再访问模型与工具服务**。
 
-这是集成大模型的第一原则，没有例外。
+![大模型前端应用的 BFF 与流式架构](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/aigc-application-bff-stream-v3.webp)
 
-```typescript
-// ❌ 极度危险：API Key 暴露在客户端
-const response = await fetch('https://api.openai.com/v1/chat/completions', {
-  method: 'POST',
-  headers: {
-    'Authorization': 'Bearer sk-xxxxxxxx', // 任何人打开 DevTools 都能看到
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({ model: 'gpt-4o', messages }),
-});
+## 一、为什么必须有自己的服务端
+
+模型密钥一旦进入浏览器，就能被开发者工具、代理或打包产物读取。CORS 不是密钥保护机制，即使请求技术上能从浏览器发出，也不应把长期 Provider Key 交给用户设备。
+
+BFF（Backend for Frontend）承担：
+
+- 校验登录态，将请求绑定用户与租户。
+- 保存模型密钥，按环境切换提供方和模型。
+- 限制输入长度、频率、并发和预算。
+- 组装系统指令、上下文与知识检索结果。
+- 执行工具的权限验证和副作用确认。
+- 把不同模型的流式事件转换成前端稳定协议。
+- 记录 request ID、usage、延迟和错误分类。
+
+前端因此只依赖自有接口，例如 `POST /api/chat`，不会被提供方协议绑死。
+
+## 二、先设计消息与状态机
+
+聊天 UI 不应只用 `loading: boolean`。一次回答至少会经历：
+
+```ts
+type RequestState =
+  | "idle"
+  | "submitting"
+  | "streaming"
+  | "completed"
+  | "error"
+  | "cancelled";
+
+type Message = {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+  status: "pending" | "streaming" | "done" | "error";
+  requestId?: string;
+};
 ```
 
-**为什么绝对不行：**
-- API Key 会出现在浏览器 Network 面板、打包产物、JS 源码中
-- 攻击者只需 F12 即可提取 Key，随后无限调用，产生巨额账单
-- 无法在客户端做身份验证、限流、审计
-- 即使通过环境变量注入（如 Vite 的 `import.meta.env`），打包后依然嵌入在 bundle 中
+推荐流程：
 
-## BFF 代理架构
+1. 用户提交后立即插入用户消息与空的 assistant 占位消息。
+2. 状态切到 `submitting`，防止重复提交。
+3. 收到 `start` 事件保存服务端 `requestId`，切到 `streaming`。
+4. `delta` 只追加到当前 assistant 消息。
+5. 收到 `done` 后固化消息；收到 `error` 或取消时保留已生成内容并标记状态。
 
-正确的架构是 BFF（Backend for Frontend，前端专属后端）模式：浏览器只与自己的后端通信，API Key 永远不离开服务端。
+通过消息 ID 定位更新对象，不要假设“数组最后一条永远是当前回答”，否则并发会话或重试很容易串写。
 
-```mermaid
-flowchart LR
-    Browser["🌐 浏览器\n（无 API Key）"]
-    BFF["🖥️ BFF 服务器\n（持有 API Key）\n认证 / 限流 / 日志"]
-    LLM["🤖 LLM Provider\n（OpenAI / DeepSeek / 其他）"]
+## 三、BFF 流式接口
 
-    Browser -- "POST /api/chat\n{ message, userId }" --> BFF
-    BFF -- "POST /v1/chat/completions\nAuthorization: Bearer sk-xxx" --> LLM
-    LLM -- "SSE token stream" --> BFF
-    BFF -- "SSE token stream\n（去除敏感字段）" --> Browser
+以下用通用 Web API 展示结构；模型 SDK 可以替换，但浏览器协议保持不变。
 
-    style Browser fill:#cfe2ff,stroke:#0d6efd
-    style BFF fill:#d1e7dd,stroke:#198754
-    style LLM fill:#fff3cd,stroke:#ffc107
-```
+```ts
+export async function POST(request: Request) {
+  const session = await requireSession(request);
+  const { message, conversationId } = await request.json();
 
-BFF 层的职责：
-- **认证**：验证用户身份（JWT、Session），拒绝未登录请求
-- **限流**：每用户每分钟最多 N 次请求，防滥用
-- **日志审计**：记录请求/响应用于监控和合规
-- **Prompt 注入**：在服务端拼接 system prompt，前端无法绕过
-- **成本控制**：限制 max_tokens，阻断异常大的请求
+  validateInput(message);
+  await enforceQuota(session.userId);
 
-## BFF 实现模式
-
-### Express 代理
-
-```typescript
-import express from 'express';
-import OpenAI from 'openai';
-
-const app = express();
-app.use(express.json());
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY, // 只在服务端存在
-});
-
-// 简单的内存限流（生产环境用 Redis）
-const rateLimitMap = new Map<string, number[]>();
-
-function checkRateLimit(userId: string, maxPerMinute = 10): boolean {
-  const now = Date.now();
-  const timestamps = (rateLimitMap.get(userId) ?? []).filter(
-    (t) => now - t < 60_000
-  );
-  if (timestamps.length >= maxPerMinute) return false;
-  timestamps.push(now);
-  rateLimitMap.set(userId, timestamps);
-  return true;
-}
-
-app.post('/api/chat', async (req, res) => {
-  // 1. 身份验证（示意，实际使用 JWT 中间件）
-  const userId = req.headers['x-user-id'] as string;
-  if (!userId) return res.status(401).json({ error: 'Unauthorized' });
-
-  // 2. 限流检查
-  if (!checkRateLimit(userId)) {
-    return res.status(429).json({ error: '请求过于频繁，请稍后再试' });
-  }
-
-  const { message } = req.body as { message: string };
-
-  // 3. 设置 SSE 响应头
-  res.setHeader('Content-Type', 'text/event-stream');
-  res.setHeader('Cache-Control', 'no-cache');
-  res.setHeader('X-Accel-Buffering', 'no');
-
-  try {
-    const stream = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
-      messages: [
-        { role: 'system', content: '你是一个专业助手，请礼貌、准确地回答问题。' },
-        { role: 'user', content: message },
-      ],
-      stream: true,
-      max_tokens: 2048,
-    });
-
-    for await (const chunk of stream) {
-      const delta = chunk.choices[0]?.delta?.content;
-      if (delta) {
-        res.write(`data: ${JSON.stringify({ content: delta })}\n\n`);
-      }
-    }
-    res.write('data: [DONE]\n\n');
-  } catch (err) {
-    res.write(`data: ${JSON.stringify({ error: 'LLM 请求失败' })}\n\n`);
-  } finally {
-    res.end();
-  }
-});
-```
-
-### Next.js App Router Route Handler
-
-```typescript
-// app/api/chat/route.ts
-import { NextRequest, NextResponse } from 'next/server';
-import OpenAI from 'openai';
-import { getServerSession } from 'next-auth'; // 示意
-
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-
-export async function POST(req: NextRequest) {
-  // 身份验证
-  const session = await getServerSession();
-  if (!session?.user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
-  const { messages } = await req.json() as {
-    messages: OpenAI.Chat.ChatCompletionMessageParam[];
-  };
+  const requestId = crypto.randomUUID();
+  const upstream = await createModelStream({
+    message,
+    conversationId,
+    userId: session.userId,
+    signal: request.signal,
+  });
 
   const encoder = new TextEncoder();
-
-  const stream = new ReadableStream({
+  const body = new ReadableStream({
     async start(controller) {
-      try {
-        const llmStream = await openai.chat.completions.create({
-          model: 'gpt-4o-mini',
-          messages: [
-            { role: 'system', content: '你是一个专业助手。' },
-            ...messages,
-          ],
-          stream: true,
-          max_tokens: 2048,
-        });
+      const send = (event: string, data: unknown) => {
+        controller.enqueue(encoder.encode(
+          `event: ${event}\ndata: ${JSON.stringify(data)}\n\n`,
+        ));
+      };
 
-        for await (const chunk of llmStream) {
-          const delta = chunk.choices[0]?.delta?.content;
-          if (delta) {
-            controller.enqueue(
-              encoder.encode(`data: ${JSON.stringify({ content: delta })}\n\n`)
-            );
-          }
+      send("start", { requestId });
+      try {
+        for await (const item of upstream) {
+          if (item.type === "text") send("delta", { text: item.text });
+          if (item.type === "tool") send("tool", item.publicStatus);
         }
-        controller.enqueue(encoder.encode('data: [DONE]\n\n'));
-      } catch {
-        controller.enqueue(
-          encoder.encode(`data: ${JSON.stringify({ error: '请求失败' })}\n\n`)
-        );
+        send("done", {});
+      } catch (error) {
+        if (!request.signal.aborted) {
+          send("error", toPublicError(error));
+        }
       } finally {
         controller.close();
       }
     },
   });
 
-  return new Response(stream, {
+  return new Response(body, {
     headers: {
-      'Content-Type': 'text/event-stream',
-      'Cache-Control': 'no-cache',
+      "Content-Type": "text/event-stream; charset=utf-8",
+      "Cache-Control": "no-cache, no-transform",
     },
   });
 }
 ```
 
-### Vercel / Cloudflare Workers Edge Functions
+`request.signal` 很重要：浏览器停止生成或关闭页面后，BFF 应取消上游，避免无用计算继续消耗配额。
 
-```typescript
-// Vercel Edge Function (app/api/chat/route.ts with edge runtime)
-export const runtime = 'edge';
+## 四、前端消费流
 
-import OpenAI from 'openai';
+聊天通常是 POST，因此使用 `fetch` 与 `ReadableStream`。解析器必须跨网络 chunk 缓冲 SSE 帧，不能把一次 `read()` 当作一个事件。
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+```ts
+const controller = new AbortController();
 
-export async function POST(req: Request) {
-  const { message } = await req.json() as { message: string };
-
-  const response = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
-    messages: [{ role: 'user', content: message }],
-    stream: true,
-  });
-
-  // OpenAI SDK 返回的 stream 可直接用于 Response（以官方文档为准）
-  return new Response(response.toReadableStream(), {
-    headers: {
-      'Content-Type': 'text/event-stream',
-      'Cache-Control': 'no-cache',
-    },
-  });
-}
-```
-
-## API Key 安全管理
-
-```mermaid
-flowchart TD
-    A[API Key] --> B{存储位置}
-    B --> C["✅ 服务端环境变量\n.env.local / 平台 Secrets"]
-    B --> D["❌ 前端代码"]
-    B --> E["❌ Git 仓库"]
-    B --> F["❌ 客户端 Bundle"]
-
-    C --> G[使用模式]
-    G --> H["开发：.env.local\n加入 .gitignore"]
-    G --> I["生产：Vercel/Railway\n平台 Secret 管理"]
-    G --> J["团队：Vault/AWS Secrets Manager"]
-
-    style C fill:#d4edda,stroke:#28a745
-    style D fill:#f8d7da,stroke:#dc3545
-    style E fill:#f8d7da,stroke:#dc3545
-    style F fill:#f8d7da,stroke:#dc3545
-```
-
-**Key 轮换策略**：
-- 定期（建议每季度）主动轮换 API Key
-- 发现泄露立即吊销旧 Key，生成新 Key
-- 检查 git 历史记录：`git log -p | grep 'sk-'`，如有泄露需强制推送清理历史
-- 在 LLM Provider 平台设置用量预警，账单异常时第一时间告警
-
-## 流式 UI 实现
-
-### React useStreamChat Hook
-
-```typescript
-import { useState, useRef, useCallback, useEffect } from 'react';
-
-interface Message {
-  role: 'user' | 'assistant';
-  content: string;
-  isStreaming?: boolean;
-}
-
-export function useStreamChat() {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [isStreaming, setIsStreaming] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const abortRef = useRef<AbortController | null>(null);
-
-  // 组件卸载时取消进行中的请求
-  useEffect(() => {
-    return () => { abortRef.current?.abort(); };
-  }, []);
-
-  const sendMessage = useCallback(async (userInput: string) => {
-    if (isStreaming || !userInput.trim()) return;
-
-    abortRef.current?.abort();
-    const controller = new AbortController();
-    abortRef.current = controller;
-
-    const userMessage: Message = { role: 'user', content: userInput };
-    const currentMessages = [...messages, userMessage];
-
-    setMessages([...currentMessages, { role: 'assistant', content: '', isStreaming: true }]);
-    setIsStreaming(true);
-    setError(null);
-
-    try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: currentMessages }),
-        signal: controller.signal,
-      });
-
-      if (!response.ok) {
-        throw new Error(await getErrorMessage(response));
-      }
-      if (!response.body) throw new Error('No stream');
-
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let buffer = '';
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split('\n');
-        buffer = lines.pop() ?? '';
-
-        for (const line of lines) {
-          if (!line.startsWith('data: ')) continue;
-          const payload = line.slice(6).trim();
-          if (payload === '[DONE]') break;
-          try {
-            const { content, error: streamError } = JSON.parse(payload) as {
-              content?: string;
-              error?: string;
-            };
-            if (streamError) throw new Error(streamError);
-            if (content) {
-              setMessages((prev) => {
-                const updated = [...prev];
-                const last = updated[updated.length - 1];
-                if (last.role === 'assistant') {
-                  updated[updated.length - 1] = {
-                    ...last,
-                    content: last.content + content,
-                  };
-                }
-                return updated;
-              });
-            }
-          } catch { /* 忽略非 JSON */ }
-        }
-      }
-
-      // 流结束后移除 isStreaming 标记
-      setMessages((prev) => {
-        const updated = [...prev];
-        const last = updated[updated.length - 1];
-        if (last.role === 'assistant') {
-          updated[updated.length - 1] = { ...last, isStreaming: false };
-        }
-        return updated;
-      });
-    } catch (err) {
-      if (err instanceof Error && err.name === 'AbortError') return;
-      const msg = err instanceof Error ? err.message : '请求失败';
-      setError(msg);
-      // 移除不完整的 assistant 消息
-      setMessages((prev) =>
-        prev[prev.length - 1]?.isStreaming ? prev.slice(0, -1) : prev
-      );
-    } finally {
-      setIsStreaming(false);
-    }
-  }, [messages, isStreaming]);
-
-  const stopStream = useCallback(() => {
-    abortRef.current?.abort();
-    setIsStreaming(false);
-  }, []);
-
-  return { messages, isStreaming, error, sendMessage, stopStream };
-}
-
-async function getErrorMessage(response: Response): Promise<string> {
-  try {
-    const data = await response.json() as { error?: string };
-    return data.error ?? `HTTP ${response.status}`;
-  } catch {
-    return `HTTP ${response.status}`;
-  }
-}
-```
-
-## 错误处理与降级策略
-
-```typescript
-// 服务端统一错误处理
-async function callLLMWithFallback(
-  messages: OpenAI.Chat.ChatCompletionMessageParam[]
-) {
-  const primaryClient = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-  });
+async function sendMessage(message: string) {
+  setState("submitting");
+  const assistantId = createAssistantPlaceholder();
 
   try {
-    return await primaryClient.chat.completions.create({
-      model: 'gpt-4o-mini',
-      messages,
-      max_tokens: 1024,
+    const response = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message }),
+      signal: controller.signal,
+    });
+
+    await consumeSSE(response, (event) => {
+      const data = JSON.parse(event.data);
+      if (event.event === "start") setState("streaming");
+      if (event.event === "delta") queueText(assistantId, data.text);
+      if (event.event === "done") markDone(assistantId);
+      if (event.event === "error") markError(assistantId, data);
     });
   } catch (error) {
-    if (error instanceof OpenAI.APIError) {
-      // 429: 限流 → 等待重试或切换模型
-      if (error.status === 429) {
-        await new Promise((r) => setTimeout(r, 2000));
-        // 可切换到备用 Provider（如 DeepSeek）
-      }
-
-      // 503: 服务不可用 → 降级响应
-      if (error.status === 503 || error.status === 500) {
-        return null; // 返回 null，前端显示"服务暂时不可用"
-      }
-    }
-    throw error;
-  }
-}
-
-// 前端接收到错误事件时的处理
-function handleStreamError(errorMsg: string): string {
-  const errorMap: Record<string, string> = {
-    'rate_limit': '请求太频繁，请稍候再试',
-    'insufficient_quota': 'AI 服务暂时不可用',
-    'Stream failed': '生成过程中断，请重试',
-  };
-
-  for (const [key, friendly] of Object.entries(errorMap)) {
-    if (errorMsg.includes(key)) return friendly;
-  }
-  return '出错了，请重试';
-}
-```
-
-## Context Window 管理
-
-多轮对话时，历史消息全部计入输入 token，需要主动管理避免超出上下文窗口。
-
-### 策略对比
-
-| 策略 | 实现复杂度 | Token 效率 | 信息保留度 | 适合场景 |
-|---|---|---|---|---|
-| 滑动窗口（保留最近 N 轮） | 低 | 高 | 中 | 大多数聊天应用 |
-| 摘要压缩（旧对话摘要化） | 中-高 | 高 | 高 | 长会话、客服系统 |
-| 重要消息钉选 | 中 | 高 | 很高 | 代码审查、文档问答 |
-| RAG 动态注入 | 高 | 很高 | 很高 | 知识库问答 |
-
-### 滑动窗口实现
-
-```typescript
-interface Message {
-  role: 'system' | 'user' | 'assistant';
-  content: string;
-}
-
-/**
- * 粗略估算 token 数（英文约 4 字符/token，中文约 1.5 字符/token）
- * 仅用于近似判断，精确计数需用 tiktoken 库（以官方文档为准）
- */
-function estimateTokens(text: string): number {
-  const chineseChars = (text.match(/[一-鿿]/g) ?? []).length;
-  const otherChars = text.length - chineseChars;
-  return Math.ceil(chineseChars / 1.5 + otherChars / 4);
-}
-
-function truncateHistory(
-  messages: Message[],
-  systemPrompt: string,
-  maxContextTokens: number
-): Message[] {
-  const systemTokens = estimateTokens(systemPrompt);
-  // 为输出预留空间
-  const availableTokens = maxContextTokens - systemTokens - 512;
-
-  let usedTokens = 0;
-  const retained: Message[] = [];
-
-  // 从最新的消息开始向前保留
-  for (let i = messages.length - 1; i >= 0; i--) {
-    const tokens = estimateTokens(messages[i].content);
-    if (usedTokens + tokens > availableTokens) break;
-    usedTokens += tokens;
-    retained.unshift(messages[i]);
-  }
-
-  return [
-    { role: 'system', content: systemPrompt },
-    ...retained,
-  ];
-}
-```
-
-## 缓存策略
-
-```typescript
-// 简单的内存缓存（生产用 Redis）
-const responseCache = new Map<string, { content: string; expireAt: number }>();
-
-async function cachedChat(
-  message: string,
-  ttlMs = 5 * 60 * 1000 // 5 分钟
-): Promise<string> {
-  const cacheKey = message.trim().toLowerCase();
-  const cached = responseCache.get(cacheKey);
-
-  if (cached && Date.now() < cached.expireAt) {
-    return cached.content;
-  }
-
-  const content = await callLLM(message);
-  responseCache.set(cacheKey, {
-    content,
-    expireAt: Date.now() + ttlMs,
-  });
-
-  return content;
-}
-
-// 语义缓存思路（Semantic Cache）：
-// 将 prompt 向量化后存储，新请求与已有 prompt 做相似度匹配
-// 相似度超过阈值（如 0.95）时直接返回缓存结果
-// 实现较复杂，适合高流量场景
-```
-
-## 成本控制
-
-```typescript
-// 按任务复杂度选择模型
-type TaskComplexity = 'simple' | 'medium' | 'complex';
-
-function selectModel(complexity: TaskComplexity): string {
-  // 具体模型 ID 以各 Provider 官方文档为准
-  const modelMap: Record<TaskComplexity, string> = {
-    simple: 'gpt-4o-mini',    // 分类、提取、简单问答
-    medium: 'gpt-4o',         // 代码生成、内容创作
-    complex: 'o1-mini',       // 数学推理、逻辑分析
-  };
-  return modelMap[complexity];
-}
-
-// 输入 token 优化：压缩 system prompt
-const COMPACT_SYSTEM_PROMPT = '你是专业助手，给出简洁准确的回答。'; // 比长段描述节省 token
-
-// 请求去重：防止同一用户快速重复提交同一问题
-const pendingRequests = new Map<string, Promise<string>>();
-
-async function deduplicatedChat(userId: string, message: string): Promise<string> {
-  const key = `${userId}:${message}`;
-  if (pendingRequests.has(key)) {
-    return pendingRequests.get(key)!; // 复用进行中的请求
-  }
-  const promise = callLLM(message).finally(() => pendingRequests.delete(key));
-  pendingRequests.set(key, promise);
-  return promise;
-}
-```
-
-## 监控与可观测性
-
-```typescript
-interface LLMRequestLog {
-  requestId: string;
-  userId: string;
-  model: string;
-  inputTokens: number;
-  outputTokens: number;
-  latencyMs: number;
-  ttftMs: number;       // 首 token 时延
-  success: boolean;
-  errorCode?: number;
-  timestamp: number;
-}
-
-async function trackedLLMCall(
-  client: OpenAI,
-  params: OpenAI.Chat.ChatCompletionCreateParams,
-  userId: string
-): Promise<{ stream: AsyncIterable<OpenAI.Chat.ChatCompletionChunk>; log: LLMRequestLog }> {
-  const requestId = crypto.randomUUID();
-  const startTime = Date.now();
-  let ttftMs = 0;
-  let outputTokens = 0;
-  let firstChunk = true;
-
-  const rawStream = await client.chat.completions.create({
-    ...params,
-    stream: true,
-    stream_options: { include_usage: true }, // 以官方文档为准
-  });
-
-  // 包装 stream 以收集指标
-  async function* instrumentedStream() {
-    try {
-      for await (const chunk of rawStream) {
-        if (firstChunk) {
-          ttftMs = Date.now() - startTime;
-          firstChunk = false;
-        }
-        const delta = chunk.choices[0]?.delta?.content;
-        if (delta) outputTokens++;
-
-        // 最后一个 chunk 通常包含 usage 信息
-        if (chunk.usage) {
-          // 记录最终 token 用量
-        }
-        yield chunk;
-      }
-    } finally {
-      const log: LLMRequestLog = {
-        requestId,
-        userId,
-        model: params.model as string,
-        inputTokens: 0, // 从 usage 中读取
-        outputTokens,
-        latencyMs: Date.now() - startTime,
-        ttftMs,
-        success: true,
-        timestamp: Date.now(),
-      };
-      // 上报到监控系统（日志 / Prometheus / 自定义埋点）
-      console.log('[LLM]', JSON.stringify(log));
+    if ((error as DOMException).name === "AbortError") {
+      markCancelled(assistantId);
+      setState("cancelled");
+    } else {
+      markError(assistantId, { code: "NETWORK_ERROR" });
+      setState("error");
     }
   }
-
-  const log = {
-    requestId, userId, model: params.model as string,
-    inputTokens: 0, outputTokens: 0, latencyMs: 0, ttftMs: 0,
-    success: true, timestamp: startTime,
-  };
-
-  return { stream: instrumentedStream(), log };
 }
 ```
 
-**隐私注意事项**：记录用户 prompt 时需遵守隐私法规（GDPR、中国《个人信息保护法》），通常需要：
-- 在用户协议中明确说明 AI 对话可能被记录用于改善服务
-- 提供用户删除对话记录的能力
-- 敏感信息（密码、身份证号）在日志中脱敏处理
+频繁拼接文本会引发大量渲染。可以在内存中累计 delta，用 `requestAnimationFrame` 批量更新 React/Vue 状态；Markdown 解析也应节流，完成后再做一次完整渲染。
 
-## 整体集成架构全景
+## 五、Markdown 与内容安全
 
-```mermaid
-flowchart TB
-    subgraph 客户端
-        UI["React UI\nuseStreamChat Hook\nAbortController"]
-    end
+模型输出是不可信文本。若渲染 Markdown：
 
-    subgraph BFF["BFF 服务器（Next.js / Express）"]
-        Auth["身份验证\n(JWT / Session)"]
-        RateLimit["限流\n(Redis / 内存)"]
-        PromptBuilder["Prompt 构建\n(System Prompt 注入)"]
-        ContextMgr["Context 管理\n(历史截断)"]
-        Cache["缓存层\n(Redis)"]
-        StreamProxy["SSE 流代理"]
-        Logger["监控 & 日志\n(Token 用量 / TTFT)"]
-    end
+- 默认禁用原始 HTML，或用成熟的 sanitizer 严格净化。
+- 限制链接协议为 `https` 等允许列表，阻止 `javascript:`。
+- 代码块只做语法高亮，不执行其中代码。
+- 外链使用安全的 `rel` 属性，必要时显示离站提示。
+- 不把模型内容直接传给 `innerHTML`。
 
-    subgraph 外部
-        LLMProvider["LLM Provider\n(OpenAI / DeepSeek)"]
-    end
+提示词不能替代输出净化。即使系统指令要求“不要输出脚本”，模型也可能复述用户输入或外部检索内容。
 
-    UI -- "POST /api/chat\n{ messages }" --> Auth
-    Auth --> RateLimit
-    RateLimit --> Cache
-    Cache -- "缓存命中" --> UI
-    Cache -- "缓存未命中" --> PromptBuilder
-    PromptBuilder --> ContextMgr
-    ContextMgr --> StreamProxy
-    StreamProxy -- "stream: true" --> LLMProvider
-    LLMProvider -- "token chunks" --> StreamProxy
-    StreamProxy -- "SSE events" --> UI
-    StreamProxy --> Logger
+## 六、上下文不能无限追加
 
-    style 客户端 fill:#cfe2ff,stroke:#0d6efd
-    style BFF fill:#d1e7dd,stroke:#198754
-    style 外部 fill:#fff3cd,stroke:#ffc107
+把整个会话每次都从浏览器回传既浪费 token，也让用户可以篡改历史。更稳妥的方式是浏览器传 `conversationId` 和新消息，服务端从可信存储读取历史。
+
+上下文管理通常包含：
+
+- 保留最近若干轮原文。
+- 将更早内容压缩为可追踪摘要。
+- 只检索与当前问题相关的知识片段。
+- 对工具结果和附件使用引用 ID，而不是重复注入全文。
+- 计算 token 预算，为回答预留输出空间。
+
+摘要会丢失信息，关键事实应存为结构化状态并让用户确认，而不是只依赖模型总结。
+
+## 七、工具交互要让用户看得懂
+
+前端不应只显示“思考中”。统一事件协议可以公开安全的工具状态：
+
+```ts
+type PublicToolEvent = {
+  name: "search_docs" | "query_order";
+  status: "waiting_confirmation" | "running" | "done" | "failed";
+  summary: string;
+};
 ```
 
-## 常见错误
+查询类工具可显示“正在搜索知识库”；付款、删除和发送消息等操作必须展示最终参数并要求确认。确认按钮调用独立受保护接口，不能让模型的一段文字直接触发高风险动作。
 
-**1. 在 Vite/CRA 项目中使用 `VITE_LLM_API_KEY`**：以 `VITE_` 前缀的环境变量会被打包进客户端 bundle，与直接硬编码无异。LLM API Key 必须只存在于服务端。
+## 八、错误和重试体验
 
-**2. 未对上下文窗口设置上限**：长对话不截断历史，超出模型上下文限制后报错，且每次请求消耗大量 token。
+至少区分：
 
-**3. 流式响应不处理 `AbortError`**：用户取消后组件卸载，后续的 `setState` 调用在已卸载组件上触发 React 警告，甚至引起内存泄漏。
+- `401/403`：登录或权限问题，引导重新登录，不重试模型。
+- `429`：频率或配额限制，显示可重试时间。
+- `5xx`：服务暂时不可用，可提供手动重试。
+- 流中断：保留已经生成的文字，明确标记不完整。
+- 用户取消：属于正常状态，不显示成系统故障。
 
-**4. 没有 max_tokens 限制**：模型可能输出超长内容，消耗数倍于预期的 token，产生意外账单。
+重试时应生成新的 assistant 消息版本，并保留原用户输入。对可能产生副作用的工具不能自动重放；服务端需用幂等键去重。
 
-**5. 服务端未验证用户身份就转发请求**：任何人可以直接调用 `/api/chat` 消耗你的 API 配额。
+## 九、监控真正影响体验的指标
 
-**6. token 估算用于精确计费**：`text.length / 4` 只是粗略估算，不同语言、模型的 tokenizer 差异显著，精确计数需要使用官方 tokenizer 库（以官方文档为准）。
+除了总响应时间，还应记录：
 
-## 最佳实践
+- 首事件时间与首字时间。
+- 流式生成持续时间、异常中断率和用户取消率。
+- 输入/输出 token、单用户成本和缓存命中。
+- 工具调用成功率、确认率与 P95 延迟。
+- Markdown 渲染耗时、长任务掉帧与前端错误。
+- 按模型/提示版本分组的质量评测结果。
 
-- BFF 层必须做身份验证，即使是内部工具也要有基本认证
-- 为每个用户设置独立的每日/每分钟请求限额，防止单用户耗尽配额
-- 在服务端设置 `max_tokens` 上限，不信任前端传来的参数
-- 多轮对话始终实现历史截断，选择合适的截断策略
-- 高频相同问题优先考虑缓存，缓存命中率直接影响成本
-- 在 LLM Provider 平台设置账单预警，避免失控消费
-- 记录 TTFT 和总延迟，用于识别性能问题和 Provider 对比
+浏览器只接收脱敏后的 `requestId`，服务端用它串联 BFF 日志、模型请求和工具调用。不要把完整提示词、隐私内容或密钥写进前端埋点。
 
-## 面试常问
+## 上线检查清单
 
-**Q：为什么不能在前端直接调用 LLM API？**
+- [ ] Provider Key 只在 BFF，未进入浏览器代码和接口响应。
+- [ ] 接口验证登录态、输入长度、频率、并发和预算。
+- [ ] 前端有明确状态机，能完成、失败、停止和重试。
+- [ ] 流式解析跨 chunk 缓冲，取消信号能传到模型端。
+- [ ] Markdown/链接按不可信内容净化。
+- [ ] 会话历史由服务端可信存储管理，并有 token 预算。
+- [ ] 高风险工具展示最终参数并要求用户确认。
+- [ ] request ID、usage、首字延迟和错误分类可观测。
+- [ ] 核心任务有固定评测集，模型或提示升级后会回归。
 
-A：两个核心原因：安全性和可控性。安全性上，API Key 会暴露在客户端代码和 Network 面板中，任何人都能提取并滥用，产生巨额账单。可控性上，浏览器端无法做身份验证、限流、日志审计，也无法注入 system prompt 防止绕过。正确做法是通过 BFF（Backend for Frontend）代理层，所有 LLM 调用在服务端发起。
+## 参考资料
 
-**Q：BFF 模式在 LLM 集成中具体解决了什么问题？**
-
-A：BFF 作为中间层承担了安全守门、成本控制、能力增强三个职责。安全方面持有 API Key、验证用户身份、防止未授权访问；成本方面做限流、context 截断、请求缓存；能力增强方面注入 system prompt、记录监控数据、实现降级逻辑。这些事情都不能在浏览器中完成。
-
-**Q：如何处理上下文窗口超出限制的问题？**
-
-A：主要有两种策略：滑动窗口（保留最近 N 轮对话，实现简单）和摘要压缩（用 LLM 对旧对话生成摘要替换原文，信息密度更高但实现复杂）。实际选择取决于对话长度和信息连贯性要求。无论哪种策略，都需要在服务端执行，并有一个 token 估算机制来判断何时触发截断。
-
-**Q：如何控制 LLM 集成的成本？**
-
-A：从多个层面入手：1）按任务复杂度分层选模型，简单任务用轻量模型；2）压缩 system prompt，减少每次请求的固定 token 消耗；3）对相同问题做缓存（键值缓存或语义缓存）；4）设置 max_tokens 上限；5）前端做防抖防止快速重复提交；6）在 Provider 平台设置用量预警及时发现异常。
-
-**Q：流式响应中，用户点击"停止"后如何避免继续消耗 token？**
-
-A：需要打通完整的取消链路：前端调用 `AbortController.abort()` → fetch 抛出 AbortError → 浏览器关闭 TCP 连接 → 服务端监听到连接断开（Express 的 `req.on('close')`，或 Next.js 的 `req.signal` abort 事件）→ 服务端调用上游 LLM stream 的 `abort()` 方法。每个环节都要处理，遗漏任何一个都会导致上游请求继续运行，继续消耗 token。
+- [OpenAI：Text generation](https://developers.openai.com/api/docs/guides/text)
+- [OpenAI：Streaming API responses](https://developers.openai.com/api/docs/guides/streaming-responses)
+- [OpenAI：Function calling](https://developers.openai.com/api/docs/guides/function-calling)
+- [OpenAI：Safety best practices](https://developers.openai.com/api/docs/guides/safety-best-practices)
+- [WHATWG：Server-sent events](https://html.spec.whatwg.org/multipage/server-sent-events.html)

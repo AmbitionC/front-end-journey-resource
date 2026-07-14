@@ -1,220 +1,115 @@
-LLM 每次生成 Token 时，先通过模型计算词表上所有 Token 的概率分布（Logits → Softmax），再按某种策略从中**采样**出下一个 Token。Temperature、Top-P、Top-K 是控制这一采样过程的核心参数，它们直接决定了输出的确定性、多样性和创意程度。理解这些参数的原理，是精准调控 LLM 行为的基础。
+大语言模型先为词表中的候选 Token 计算 Logits，再把它们转换成概率并选出下一个 Token。Temperature 改变概率分布的形状，Top-K 与 Top-P 截断候选集合；它们调的是“怎样选”，不是给模型增加知识或推理能力。
 
-## 从 Logits 到概率分布
+## 从 Logits 到下一个 Token
 
-模型最后一层输出 **Logits**（原始得分向量，维度等于词表大小），再经 Softmax 转换为概率分布：
+模型对每个候选 Token 输出一个实数分数 $z_i$。Softmax 把这些分数变成总和为 1 的概率：
 
-$$p_i = \frac{e^{z_i}}{\sum_{j=1}^{V} e^{z_j}}$$
+$$
+p_i=\frac{e^{z_i}}{\sum_j e^{z_j}}
+$$
 
-假设词表中排名靠前的 Token 概率如下：
+随后，解码器可以取最大概率项（greedy），也可以从过滤和归一化后的分布中随机采样。这个过程会在每个生成位置重复。
 
-```
-"the"    → 0.40
-"a"      → 0.25
-"this"   → 0.15
-"some"   → 0.08
-"any"    → 0.05
-…（其余 Token 共 0.07）
-```
+![Logits 经 Temperature 缩放，再选择 Top-K 或 Top-P 过滤并采样下一个 Token](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-inference-params-sampling-v3.webp)
+*图：Temperature 改变分布形状；Top-K 固定候选数量，Top-P 按累计概率动态确定候选集合。具体支持和执行顺序以模型 API 为准。*
 
-**贪心解码（Greedy Decoding）** 是最简单的策略：永远选概率最高的 Token（"the"），输出完全确定，但缺乏多样性，容易重复和单调。
+## Temperature：改变分布的尖锐程度
 
-**采样（Sampling）** 从概率分布中随机抽取，输出更自然，但也可能产生不连贯的结果。Temperature、Top-P、Top-K 都是在采样过程中对概率分布进行调整或截断的手段。
+常见定义是在 Softmax 前把 Logits 除以温度 $T$：
 
-## Temperature（温度）
+$$
+p_i(T)=\frac{e^{z_i/T}}{\sum_j e^{z_j/T}},\quad T>0
+$$
 
-Temperature 通过在 Softmax 之前**缩放 Logits** 来控制分布的"尖锐程度"：
+- $T<1$：放大 Logit 差异，分布更尖锐，高概率 Token 更占优势。
+- $T=1$：保持原始 Softmax 分布。
+- $T>1$：缩小差异，分布更平坦，低概率 Token 更容易被选中。
 
-$$p_i^{(T)} = \frac{e^{z_i / T}}{\sum_{j} e^{z_j / T}}$$
+“温度更高等于更有创造力”只是粗略经验。过高温度也会放大不相关候选，导致事实错误、格式破坏或语义漂移。温度不会让模型获得原本没有的知识。
 
-参数 $T > 0$，对分布的影响如下：
+### Temperature = 0 的边界
 
-```mermaid
-graph LR
-    subgraph "T < 1（如 0.3）：分布更尖锐"
-        A1["'the' 0.40 → 0.75\n其他 Token 被压低"]
-    end
-    subgraph "T = 1：原始分布"
-        A2["保持原始概率不变"]
-    end
-    subgraph "T > 1（如 1.5）：分布更平坦"
-        A3["'the' 0.40 → 0.20\n低概率 Token 机会增加"]
-    end
-    A1 --> A2 --> A3
-```
+数学公式要求 $T>0$。API 中的 `temperature: 0` 通常被实现为接近贪心解码或特殊确定性路径，但这是服务商约定，不是上述公式直接代入的结果。即使使用贪心，分布式计算、模型快照、服务端路由和工具执行仍可能导致输出不完全一致。
 
-| Temperature 区间 | 输出特征 | 典型场景 |
-|----------------|---------|---------|
-| **0**（贪心） | 完全确定，每次相同 | 单元测试、复现场景 |
-| **0 – 0.3** | 高确定性，保守稳定 | 事实问答、数据提取、代码生成 |
-| **0.3 – 0.7** | 平衡，自然流畅 | 日常对话、邮件撰写、技术文档 |
-| **0.7 – 1.0** | 一定创意，自然多样 | 内容创作、聊天助手 |
-| **1.0 – 2.0** | 高发散，风格多变 | 头脑风暴、诗歌创作、风格迁移 |
+## Top-K：保留固定数量的最高概率候选
 
-**T = 0 是特殊情况**：等价于贪心解码，Top-P 和 Top-K 此时无效（因为只有一个候选）。
+Top-K 将 Token 按概率排序，只保留前 $K$ 个，把其他概率设为 0，再重新归一化并采样。
 
-```typescript
-// 不同场景的 temperature 参考配置
-const configs = {
-  factualQA:      { temperature: 0.0 },   // 事实问答：完全确定
-  codeGeneration: { temperature: 0.2 },   // 代码生成：稳定为主
-  chatAssistant:  { temperature: 0.7 },   // 对话助手：自然流畅
-  creativeWriting:{ temperature: 1.0 },   // 创意写作：多样发散
-  brainstorming:  { temperature: 1.2 },   // 头脑风暴：高度发散
-}
-```
+- 优点：简单、可预测，能切掉长尾低概率候选。
+- 局限：$K$ 是固定数量，不能适应每一步分布的集中程度。
 
-## Top-K 采样
+当一个 Token 已占据绝大多数概率时，大 $K$ 会保留不必要候选；当很多候选都合理时，小 $K$ 又可能过早删除多样性。
 
-Top-K 在采样前先**硬截断**候选集：只保留概率最高的 K 个 Token，将其余 Token 的概率置零，再对 K 个候选归一化后采样。
+## Top-P：保留动态的概率质量
 
-```
-K = 3 时，候选集 = ["the", "a", "this"]（概率归一化后采样）
-K = 1 时，退化为贪心解码
-K = 词表大小时，等价于不截断
-```
+Top-P，也称 Nucleus Sampling。它从最高概率 Token 开始累加，保留累计概率达到阈值 $p$ 的最小集合，再归一化采样：
 
-**优点**：简单直接，有效过滤"离谱"的低概率 Token。
+$$
+S_p=\min\left\{S:\sum_{i\in S}p_{(i)}\ge p\right\}
+$$
 
-**缺点**：K 是静态值，无法适应概率分布的动态变化：
-- 分布**集中**时（高概率 Token 非常突出）：K = 50 仍然保留了很多低质量候选，引入不必要噪声
-- 分布**均匀**时（所有 Token 概率相近）：K = 3 过于激进，丢失了合理多样性
+当分布很集中时，候选集合可能很小；分布较平坦时，候选集合会自动扩大。原始论文提出这一方法是为了避开概率分布中不可靠的长尾，同时保留开放式生成的多样性。
 
-## Top-P 采样（Nucleus Sampling）
+## 三者怎样组合
 
-Top-P（也叫 Nucleus Sampling，核采样）解决了 Top-K 的硬截断问题：**动态确定候选集大小**。
+概念上可以把解码过程理解为：温度缩放 → 概率计算 → 一个或多个过滤器 → 重新归一化 → 采样。但具体服务端可能调整顺序、固定某些参数，或完全不开放这些控制项。
 
-**算法**：将 Token 按概率从高到低排序，依次累加，直到累积概率超过阈值 $P$，以此时的 Token 集合作为候选集，再归一化后采样。
+若同时启用 Top-K 和 Top-P，最终候选通常不会比单独使用任一过滤器更大；但不要把某个框架的实现顺序当成跨厂商标准。
 
-$$\text{候选集} = \min\left\{ S : \sum_{i \in S} p_{(i)} \geq P \right\}$$
+截至 2026-07-13，Anthropic 官方文档明确说明 Claude Opus 4.7 及之后的部分模型、Claude Sonnet 5 不接受非默认 `temperature`、`top_p`、`top_k`。新一代推理模型也常用 `effort`、thinking 模式或提示词来替代直接采样控制。因此，先查“具体模型 ID”的文档，再写请求参数。
 
-```
-P = 0.9，从高到低累加：
-"the"  (0.40) → 累积 0.40
-"a"    (0.25) → 累积 0.65
-"this" (0.15) → 累积 0.80
-"some" (0.08) → 累积 0.88
-"any"  (0.05) → 累积 0.93 ← 超过 0.9，停止
+## 其他常见控制项
 
-候选集 = ["the", "a", "this", "some", "any"]（5 个）
-```
+### 最大输出
 
-**动态适应性**：
-- 分布集中（某 Token 概率 0.95）→ 候选集只有 1 个，精准
-- 分布均匀（概率均等）→ 候选集包含更多 Token，保留多样性
+`max_output_tokens`、`max_tokens` 或 `max_new_tokens` 限制最多生成多少 Token。设置太小会截断答案；设置很大只是允许更多输出，不代表模型一定写满。还要处理长度上限对应的 stop reason。
 
-这正是 Top-P 被广泛认为优于 Top-K 的原因。常用范围：**0.8 – 0.95**。
+### Stop sequences
 
-## 三者的执行顺序与组合
+命中指定字符串时停止生成。它适合文本协议边界，但不应替代原生结构化输出；若停止字符串可能出现在合法内容中，会造成意外截断。
 
-实际推理时，若同时设置多个参数，执行顺序通常为：
+### Presence / frequency / repetition penalty
 
-```mermaid
-flowchart LR
-    L[原始 Logits] --> T[Temperature 缩放]
-    T --> K[Top-K 截断\n保留前 K 个]
-    K --> P[Top-P 截断\n动态核集合]
-    P --> S[从候选集采样\n得到下一个 Token]
-```
+这些参数降低已出现 Token 再次被选中的倾向。不同 API 的公式和范围不同，过强会伤害专有名词、代码标识符和必要重复。
 
-**注意事项**：
-- 同时设置 Top-K 和 Top-P 时，候选集取**两者的交集**（先 Top-K 再 Top-P），实际上是更严格的过滤
-- 生产实践中通常**只选其中一个**，避免参数组合复杂性
-- T = 0 时，Top-P 和 Top-K 均失效（贪心解码不采样）
+### Seed
 
-```typescript
-// 使用 Anthropic SDK 的典型配置（以官方文档为准）
-import Anthropic from '@anthropic-ai/sdk'
+部分平台提供 seed 以提高复现性，通常也只是 best effort。要复现实验，还需固定模型快照、提示、工具、参数和输入顺序，并保存响应元数据。
 
-const client = new Anthropic()
+### Reasoning effort
 
-// 代码生成场景：低温、高稳定性
-const codeResponse = await client.messages.create({
-  model: 'claude-opus-4-5',
-  max_tokens: 2048,
-  temperature: 0.2,
-  top_p: 0.95,
-  messages: [{ role: 'user', content: '实现一个 debounce 函数' }],
-})
+推理模型可能提供 `effort` 或 thinking 模式，控制测试时计算量。它影响的不是普通采样温度，而是模型在作答前后使用推理预算的方式，通常会改变延迟与成本。
 
-// 创意写作场景：高温、高多样性
-const creativeResponse = await client.messages.create({
-  model: 'claude-opus-4-5',
-  max_tokens: 1024,
-  temperature: 1.0,
-  top_p: 0.95,
-  messages: [{ role: 'user', content: '写一首关于秋天的短诗' }],
-})
-```
+## 不要背参数表：用评测选择
 
-## 其他重要参数
+为一个任务确定参数时，可以这样做：
 
-### Repetition Penalty（重复惩罚）
+1. 固定模型快照、提示、工具和最大输出。
+2. 选取覆盖正常、边界和失败场景的评测集。
+3. 只改变一个受支持的参数，且每组运行多次。
+4. 同时统计任务质量、格式成功率、方差、延迟和成本。
+5. 选出满足约束的稳定区域，而不是追逐单次最好结果。
 
-防止模型陷入循环生成同一内容。实现方式：在 Logits 层对已出现的 Token 施加惩罚，降低其再次被选中的概率。
-
-不同 API 的实现名称略有差异：
-- **OpenAI**：`frequency_penalty`（按出现频次惩罚，越常见惩罚越重）和 `presence_penalty`（只要出现过就惩罚，鼓励引入新词）
-- **Anthropic Claude**：暂无独立参数，由模型训练内化处理
-- **HuggingFace**：`repetition_penalty`（直接乘法因子，> 1 惩罚重复）
-
-```typescript
-// OpenAI API 中的重复惩罚（以官方文档为准）
-const response = await openai.chat.completions.create({
-  model: 'gpt-4o',
-  messages: [...],
-  frequency_penalty: 0.5,  // 0-2，惩罚已出现 Token 的频率
-  presence_penalty: 0.3,   // 0-2，惩罚已出现过的任意 Token
-})
-```
-
-### max_tokens / max_new_tokens
-
-限制生成 Token 数的上限。注意：
-- 这是**最多生成多少**，不是"恰好生成这么多"
-- 模型遇到 EOS（End of Sequence）Token 时会提前停止
-- 设置过小会导致输出被截断，通常要预留足够空间
-
-### Stop Sequences（停止序列）
-
-指定让模型提前停止生成的字符串。常用于结构化输出控制：
-
-```typescript
-// 用 stop 序列控制结构化 JSON 输出边界
-const response = await client.chat.completions.create({
-  model: 'gpt-4o',
-  messages: [{ role: 'user', content: '提取以下文本中的人名：...' }],
-  stop: ['</result>'],  // 遇到关闭标签立即停止
-  response_format: { type: 'json_object' },
-})
-```
-
-## 参数调优速查表
-
-| 场景 | Temperature | Top-P | Top-K | 说明 |
-|------|------------|-------|-------|------|
-| 事实问答 / 数据提取 | 0.0 – 0.2 | 1.0 | — | 确定性优先，结果可复现 |
-| 代码生成 | 0.1 – 0.3 | 0.95 | — | 稳定语法，偶尔探索替代方案 |
-| 日常对话助手 | 0.6 – 0.8 | 0.9 | — | 自然流畅，不过于随机 |
-| 内容创作 / 文案 | 0.8 – 1.0 | 0.95 | — | 多样表达，避免生硬 |
-| 头脑风暴 | 1.0 – 1.3 | 0.95 | — | 高度发散，接受一些不连贯 |
-| 调试 / 单元测试 | 0.0 | 1.0 | — | 完全复现，消除随机性 |
-
-> 以上为经验参考值，实际效果受模型版本、任务类型、prompt 质量等多因素影响，建议通过 A/B 测试确定最优配置。
+事实抽取通常更看重一致性和结构正确率；创意候选生成更看重多样性，但仍要设置质量底线。代码、数学和 Agent 任务往往还受 reasoning effort、工具结果和验证器影响，不能只调 Temperature。
 
 ## 常见误区
 
-- **"Temperature = 0 等于 Top-P = 0"**：Temperature = 0 是贪心解码；Top-P = 0 通常无效（候选集为空）。语义完全不同。
-- **"更高的 Temperature 一定更有创意"**：Temperature 过高（> 1.5）会产生不连贯的输出，创意和质量往往同时下降
-- **"同时设 Top-K 和 Top-P 效果更好"**：叠加使用会让候选集更小（双重过滤），不一定符合预期，建议二选一
-- **"Repetition Penalty 越大越好"**：过大的惩罚值会阻止模型正常重复合理词汇（如专有名词、代词），产生语义漂移
+- **“Temperature = 0 保证完全复现”**：最多提高确定性，不是跨请求、跨版本的强保证。
+- **“Top-P = 0 就是贪心”**：边界值的接受范围与行为由 API 定义，不应自行推断。
+- **“Top-P 永远优于 Top-K”**：它们是不同过滤策略，效果取决于模型与任务。
+- **“同时打开所有参数更精细”**：过滤器叠加会缩小候选集，也会增加调试难度。
+- **“低温可以消除幻觉”**：低温只减少采样随机性，不能修复错误知识或缺失证据。
+- **“SDK 类型里有字段就能用”**：同一 SDK 面向多个模型，服务端仍可能拒绝参数。
 
-## 面试常问
+## 小结
 
-- Temperature = 0 和 Temperature = 0.01 有什么实际区别？
-- 为什么 Top-P（Nucleus Sampling）被认为比 Top-K 更鲁棒？
-- 想让模型每次输出完全相同，应该怎么设置这些参数？
-- Repetition Penalty 是在 Logits 层起作用还是采样层？
-- 生产环境中如何系统地确定最优 Temperature 值？
-- Top-P 和 Top-K 同时设置时，最终候选集是并集还是交集？
+Temperature 控制分布尖锐程度，Top-K 用固定数量裁剪候选，Top-P 用动态概率质量裁剪候选。生产环境应把它们视为模型特定的解码接口，通过评测选择，而不是套用永久有效的经验值。
 
+## 参考资料
+
+- [The Curious Case of Neural Text Degeneration（Nucleus Sampling）](https://arxiv.org/abs/1904.09751)
+- [Anthropic：Migrating to Claude 4](https://docs.anthropic.com/en/docs/about-claude/models/migrating-to-claude-4)
+- [Anthropic：Using the Messages API](https://docs.anthropic.com/en/api/prompt-validation)
+- [OpenAI API：Model guidance](https://developers.openai.com/api/docs/guides/latest-model)
+- [Alibaba Cloud Model Studio：DashScope API Reference](https://www.alibabacloud.com/help/en/model-studio/qwen-api-via-dashscope)
+- [DeepSeek API Docs](https://api-docs.deepseek.com/)

@@ -1,0 +1,34 @@
+# OSS image repair manifest
+# Replays every knowledge illustration published before the binary integrity fix.
+# Keep paths versioned and auditable; changing this file re-enqueues them.
+
+images/transformer-arch-modern-decoder-block-v4.webp
+images/transformer-arch-causal-attention-v4.webp
+images/llm-token-context-kv-cache-v3.webp
+images/llm-model-compare-selection-v3.webp
+images/llm-inference-params-sampling-v3.webp
+images/llm-model-selection-eval-loop-v3.webp
+images/prompt-basics-contract-v3.webp
+images/prompt-cot-verification-v3.webp
+images/prompt-structured-output-pipeline-v3.webp
+images/prompt-few-shot-strategies-v3.webp
+images/prompt-system-boundaries-v3.webp
+images/prompt-versioning-experiment-v3.webp
+images/openai-sdk-responses-lifecycle-v3.webp
+images/claude-sdk-messages-tools-v3.webp
+images/qwen-dashscope-integration-v3.webp
+images/aigc-application-bff-stream-v3.webp
+images/llm-sse-streaming-boundaries-v3.webp
+images/aigc-openai-responses-minimal-v3.webp
+images/deepseek-api-thinking-tools-v3.webp
+images/function-calling-execution-loop-v3.webp
+images/aigc-frontend-scenarios-v3.webp
+images/embedding-similarity-space-v3.webp
+images/rag-chunking-strategies-v3.webp
+images/vector-db-selection-matrix-v3.webp
+images/rag-pipeline-production-loop-v3.webp
+images/rag-hybrid-search-pipeline-v2.png
+images/rag-evaluation-diagnostic-loop-v2.png
+images/agent-architecture-peas-loop-v2.png
+images/agent-first-demo-loop-v2.png
+images/agent-history-timeline-v2.png

@@ -1,361 +1,244 @@
-在构建检索增强生成（RAG, Retrieval-Augmented Generation）系统时，如何将原始文档切分成合适的片段，往往决定了整个系统的天花板。LLM 的上下文窗口有限，不可能将整个知识库一次性塞入 Prompt；而检索阶段返回的片段质量，直接决定最终答案的准确性。分块策略的核心矛盾有两条：**粒度与语义完整性的权衡**（太小丢语义，太大引入噪声）以及**均匀切分与结构感知的权衡**（固定长度实现简单，但往往割裂段落或代码）。
+文本分块（Chunking）是把长文档转换成可检索单元的过程。它不是简单按字符“切碎”，而是在模型上下文、Embedding 限制、检索粒度和语义完整性之间寻找平衡。
 
----
+一个 RAG 系统能否找到正确证据，往往在生成向量之前就由切块质量决定了。
 
-## 一、为什么分块至关重要
+## 一、为什么不能整篇直接入库
 
-### 1.1 上下文窗口的约束
+把一整篇长文编码成一个向量，会把多个主题压缩到同一表示中。查询只涉及一个小节时，整篇文档的平均语义可能不够接近；即使召回，送入模型的无关内容也会增加噪声和 token 成本。
 
-主流 LLM 的上下文窗口从 4K 到 128K Token 不等。即便是最大的窗口，面对数百万字的知识库也无能为力。RAG 的核心思路是"先检索再生成"，只把最相关的片段送入上下文。分块的质量直接影响：
+反过来，把每句话都独立入库会丢失标题、限定条件和上下文。例如“该操作只适用于管理员”如果被切到另一块，模型可能召回操作步骤，却漏掉权限约束。
 
-- **召回率**：语义完整的块更容易被向量检索命中；
-- **精确率**：过大的块引入大量无关内容，干扰 LLM 推理；
-- **延迟与成本**：块的大小决定了每次检索传入的 Token 数量。
+因此，一个好 chunk 应该同时满足：
 
-### 1.2 两大核心矛盾
+- 能独立表达一个相对完整的事实或子主题。
+- 足够小，便于精确检索和放入上下文。
+- 保留标题、来源、位置和权限等必要背景。
+- 边界稳定，源文档更新后可以增量重建。
 
-| 矛盾维度 | 极端情况 A | 极端情况 B |
-|---|---|---|
-| 粒度 vs 语义完整性 | 按字符截断，快速但割裂句意 | 整段/整页，语义完整但噪声大 |
-| 均匀 vs 结构感知 | 固定 512 Token，实现简单 | 按 Markdown 标题/代码函数边界切分，精准但复杂 |
+![文本分块的边界、重叠与可检索单元](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-chunking-strategies-v3.webp)
 
----
+## 二、长度必须按 token 评估
 
-## 二、主流分块策略详解
+模型限制通常以 token 计算，而不是字符或字节。同样长度的中文、英文、代码和表格可能对应不同 token 数。
 
-### 2.1 固定大小切分（Fixed-size Chunking）
+切块工具应使用与 Embedding/生成模型匹配的 tokenizer 或官方计数方法：
 
-最简单的策略：按固定字符数或 Token 数截断，不考虑语义边界。
-
-**优点**：实现极简，速度快，适合快速原型。
-**缺点**：可能在句子中间截断，导致语义不完整；对结构化文档（如代码、表格）破坏严重。
-
-```python
-def fixed_size_chunking(text: str, chunk_size: int = 500, overlap: int = 50) -> list[str]:
-    """按固定字符数切分文本，支持重叠窗口"""
-    chunks = []
-    start = 0
-    while start < len(text):
-        end = start + chunk_size
-        chunks.append(text[start:end])
-        start += chunk_size - overlap  # 滑动步长 = chunk_size - overlap
-    return chunks
-
-# 示例
-text = "这是一段很长的文档内容..." * 100
-chunks = fixed_size_chunking(text, chunk_size=200, overlap=20)
-print(f"共生成 {len(chunks)} 个块，首块预览: {chunks[0][:50]}")
+```ts
+type ChunkLimits = {
+  targetTokens: number;
+  maxTokens: number;
+  overlapTokens: number;
+};
 ```
 
----
+`targetTokens` 是希望达到的大小，`maxTokens` 是绝不能超过的上限。先按自然结构组织，再在超长节点内部继续拆分；不要为了固定 512 token 强行切断一个尚未结束的句子。
 
-### 2.2 句子级切分（Sentence-based Chunking）
+没有适用于所有语料的最佳值。初始参数只是实验起点，最终要通过真实检索评测选择。
 
-以自然句子边界（句号、问号、感叹号）为切分点，将若干句子组合成一个块，直到接近目标长度上限。
+## 三、固定长度切分
 
-**优点**：保留完整句意，不会在句子中间截断；适合新闻、论文等叙述性文本。
-**缺点**：句子长度差异大，导致块大小不均匀；对中文分句依赖标点符号的准确性。
+固定 token 窗口实现简单、吞吐稳定，适合结构很弱的纯文本或作为基线。
 
-```python
-import re
-
-def sentence_based_chunking(text: str, max_chunk_size: int = 400) -> list[str]:
-    """按句子边界切分，合并到接近目标长度"""
-    # 中英文句子分割（简化版）
-    sentences = re.split(r'(?<=[。！？.!?])\s*', text)
-    sentences = [s.strip() for s in sentences if s.strip()]
-
-    chunks, current_chunk = [], ""
-    for sentence in sentences:
-        if len(current_chunk) + len(sentence) <= max_chunk_size:
-            current_chunk += sentence
-        else:
-            if current_chunk:
-                chunks.append(current_chunk)
-            current_chunk = sentence
-    if current_chunk:
-        chunks.append(current_chunk)
-    return chunks
+```ts
+function slidingWindows(tokens: number[], size: number, overlap: number) {
+  if (size <= 0 || overlap < 0 || overlap >= size) {
+    throw new Error("INVALID_WINDOW");
+  }
+  const chunks: number[][] = [];
+  const step = size - overlap;
+  for (let start = 0; start < tokens.length; start += step) {
+    chunks.push(tokens.slice(start, start + size));
+    if (start + size >= tokens.length) break;
+  }
+  return chunks;
+}
 ```
 
----
+缺点是边界可能落在句子、列表或代码块中间。解码 token 后还可能出现难读片段。因此固定切分适合做性能基线，不应默认是质量最优方案。
 
-### 2.3 递归字符切分（Recursive Character Splitting）
+## 四、递归结构切分
 
-LangChain 中 `RecursiveCharacterTextSplitter` 所采用的策略：按优先级依次尝试多种分隔符（`\n\n` > `\n` > `.` > ` `），优先在段落边界切分，找不到则降级到行，再降级到句子，最后才按空格截断。
+递归切分遵循“先大结构，后小结构”：
 
-**优点**：在尽量保留语义结构的前提下，兼顾长度控制；通用性强，是实践中最常用的默认策略。
-**缺点**：对 Markdown、代码等高度结构化内容仍有不足；参数调优需要经验。
+1. 按文档、章节或 Markdown 标题分组。
+2. 超长章节按段落拆分。
+3. 超长段落按句子拆分。
+4. 单句仍超长时，才按 token 硬切。
 
-```python
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-
-def recursive_split(text: str, chunk_size: int = 500, chunk_overlap: int = 50) -> list[str]:
-    """
-    使用 LangChain RecursiveCharacterTextSplitter 进行递归切分
-    分隔符优先级: 段落 > 行 > 句子 > 单词
-    """
-    splitter = RecursiveCharacterTextSplitter(
-        chunk_size=chunk_size,
-        chunk_overlap=chunk_overlap,
-        separators=["\n\n", "\n", "。", ".", " ", ""],  # 中文优先加句号
-        length_function=len,
-    )
-    chunks = splitter.split_text(text)
-    return chunks
-
-# 示例
-sample_doc = """
-## 第一章 简介
-
-这是第一章的内容，包含多个段落。
-
-第二段内容在这里。
-
-## 第二章 深入探讨
-
-这里是第二章的详细内容。
-"""
-result = recursive_split(sample_doc, chunk_size=100, chunk_overlap=10)
-for i, chunk in enumerate(result):
-    print(f"[Chunk {i}] {repr(chunk[:60])}")
+```ts
+const separators = [
+  /\n#{1,6}\s/, // Markdown 标题
+  /\n\n+/,      // 段落
+  /(?<=[。！？.!?])\s*/, // 句子：实际实现需按语言优化
+];
 ```
 
----
+真实解析器不应只靠一个正则。Markdown、HTML、PDF、代码和表格应先转换成带类型的文档树，再按节点类型切分。
 
-### 2.4 语义切分（Semantic Chunking）
+这种策略通常是技术文档和知识库的稳健起点：边界可解释、实现成本适中，也方便把标题路径附加到 chunk。
 
-将文本按句子编码为向量，计算相邻句子之间的余弦相似度，在相似度骤降处（即语义跳变点）切分。这是最"智能"的策略，切出的块在语义上高度内聚。
+## 五、语义切分
 
-**优点**：切分点对应真实的语义边界，块内语义最完整；对混合主题的长文档效果显著。
-**缺点**：需要对每个句子做 Embedding，计算成本高；对 Embedding 模型质量依赖强。
+语义切分先对句子或小段落生成向量，再根据相邻单元的相似度变化寻找主题边界。它可以识别没有明显标题的主题转换。
 
-```python
-import numpy as np
-from sentence_transformers import SentenceTransformer
+基本流程：
 
-def semantic_chunking(text: str, model_name: str = "BAAI/bge-small-zh-v1.5",
-                      threshold: float = 0.7) -> list[str]:
-    """
-    语义切分：在余弦相似度骤降处切分文本
-    threshold: 低于此值视为语义跳变点
-    """
-    model = SentenceTransformer(model_name)
-    sentences = [s.strip() for s in text.split("。") if s.strip()]
+1. 将文档拆成句子或小段。
+2. 计算每个单元的 Embedding。
+3. 计算相邻单元的相似度或距离。
+4. 当距离超过阈值时建立边界。
+5. 对过小块合并，对过大块递归拆分。
 
-    if len(sentences) <= 1:
-        return sentences
+语义切分增加了 Embedding 成本和参数复杂度。阈值依赖模型与语料；短句、列表和代码也可能产生不稳定边界。适合长叙述文档，不一定适合每个知识库。
 
-    # 编码所有句子
-    embeddings = model.encode(sentences, normalize_embeddings=True)
+## 六、结构感知切分
 
-    # 计算相邻句子余弦相似度（已归一化，点积即余弦相似度）
-    similarities = [
-        float(np.dot(embeddings[i], embeddings[i + 1]))
-        for i in range(len(embeddings) - 1)
-    ]
+不同内容类型需要不同的最小语义单元：
 
-    # 在低相似度处切分
-    chunks, current = [], [sentences[0]]
-    for i, sim in enumerate(similarities):
-        if sim < threshold:
-            chunks.append("。".join(current) + "。")
-            current = [sentences[i + 1]]
-        else:
-            current.append(sentences[i + 1])
-    if current:
-        chunks.append("。".join(current) + "。")
+### Markdown / HTML
 
-    return chunks
+保留标题层级、列表、引用和代码块。一个代码块不要从中间切开；链接文本与目标应同时保留。
+
+### PDF
+
+先处理页眉页脚、双栏、断行和 OCR。页码只是来源元数据，不应成为唯一边界；同一段跨页时应重新拼接。
+
+### 表格
+
+保留列名。大表可以按行组切分，但每块都带表名、列头和关键单位。把表格展平成无列名文本会失去含义。
+
+### 代码
+
+按文件、类、函数或 AST 节点切分，并附带模块路径、符号名和依赖关系。固定字符切分容易破坏语法。
+
+### FAQ
+
+一个问题与完整答案通常是天然 chunk。相似问法可以作为检索别名，但不要复制成多个相互竞争的答案。
+
+## 七、Overlap 的作用与代价
+
+重叠让边界附近的信息同时出现在相邻 chunk 中，减少一句话被切断后无法理解的问题。若块大小为 $S$、重叠为 $O$，步长为：
+
+$$
+\text{step}=S-O
+$$
+
+重叠越大，chunk 数、Embedding 成本、索引存储和检索重复越高。大量近重复结果还会挤占 top-k，让上下文看起来很多，实际只来自同一小段。
+
+更合理的策略是：
+
+- 优先用结构边界避免切断语义。
+- 只在固定/递归窗口边界使用有限重叠。
+- 检索后按 `documentId + position` 合并相邻块。
+- 对候选做去重或 MMR，避免上下文被重复内容占满。
+
+重叠是边界保险，不是越大越好。
+
+## 八、父子块与邻域扩展
+
+一个实用方案是“用小块检索，用大块回答”：
+
+- 子块较小，向量更聚焦，用于相似度搜索。
+- 父块保留完整章节或较长上下文。
+- 命中子块后，返回父块或相邻窗口给生成模型。
+
+```ts
+type Chunk = {
+  id: string;
+  parentId?: string;
+  documentId: string;
+  text: string;
+  start: number;
+  end: number;
+};
 ```
 
----
+这种方法兼顾召回精度与回答背景，但要控制父块大小。邻域扩展也应有上限，并在组装时去重。
 
-### 2.5 结构感知切分（Structure-aware Chunking）
+## 九、元数据是 chunk 的一部分
 
-针对具有明确结构的文档（Markdown、HTML、代码文件），按结构边界切分。Markdown 文档按 `#`/`##`/`###` 标题层级切分；Python/JavaScript 代码按函数或类定义边界切分（借助 AST）。
+每个 chunk 至少应记录：
 
-**优点**：切分结果与文档的逻辑单元完全对齐，语义最完整；保留标题上下文，有利于后续元数据注入。
-**缺点**：需针对不同格式单独开发解析逻辑；结构层级不规范的文档效果差。
-
-```python
-import ast
-
-def chunk_python_by_function(source_code: str) -> list[dict]:
-    """按函数/类边界切分 Python 代码（使用 AST）"""
-    tree = ast.parse(source_code)
-    lines = source_code.splitlines()
-    chunks = []
-
-    for node in ast.walk(tree):
-        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
-            start = node.lineno - 1
-            end = node.end_lineno
-            code_block = "\n".join(lines[start:end])
-            chunks.append({
-                "type": type(node).__name__,
-                "name": node.name,
-                "content": code_block,
-                "start_line": start + 1,
-                "end_line": end,
-            })
-    return chunks
+```json
+{
+  "id": "doc_42:v3:chunk_018",
+  "documentId": "doc_42",
+  "sourceVersion": "v3",
+  "headingPath": ["安装", "鉴权"],
+  "position": 18,
+  "page": 12,
+  "language": "zh-CN",
+  "tenantId": "tenant_a",
+  "acl": ["developer"],
+  "chunkerVersion": "markdown-recursive-v2"
+}
 ```
 
----
+标题路径可以作为检索文本的一部分增强语义，也可以单独保留用于展示。ACL、租户、文档状态必须用于检索过滤，不能等模型看到内容后再决定是否有权访问。
 
-## 三、重叠窗口（Chunk Overlap）
+稳定 ID 使更新和删除可追踪。建议由文档 ID、版本和位置/内容哈希生成，不要每次全量运行都随机生成新 ID。
 
-跨块的关键信息往往位于切分边界附近。引入重叠窗口（Overlap），让相邻块共享一段内容，可以有效避免上下文断裂。
+## 十、一个可落地的切块器
 
-**经验法则**：重叠量通常为 `chunk_size` 的 10%–20%。例如 `chunk_size=500`，`overlap=50~100`。
+```ts
+type Node = { type: string; text: string; headingPath: string[] };
 
-```
-原始文本:  |<------- Chunk 1 (500 chars) ------->|
-                                   |<overlap>|
-                                   |<------- Chunk 2 (500 chars) ------->|
-                                                            |<overlap>|
-                                                            |<------ Chunk 3 ------>|
-
-ASCII 示意:
-文本流:  [============================][============================][==================]
-Chunk1:  [==========CHUNK-1===========]
-Chunk2:               [======OVERLAP======CHUNK-2====================]
-Chunk3:                                        [====OVERLAP====CHUNK-3================]
-```
-
-重叠的代价是存储和检索时的冗余。若 overlap 过大（>30%），相邻块几乎相同，会显著增加向量库体积并降低检索多样性。
-
----
-
-## 四、元数据注入（Metadata Enrichment）
-
-每个块不仅要存储文本内容，还应附加结构化元数据，用于后续的过滤（Filter）和来源归因（Attribution）。
-
-```python
-def build_chunk_with_metadata(
-    content: str,
-    source_file: str,
-    section_title: str,
-    page_number: int,
-    chunk_index: int,
-) -> dict:
-    """为每个文本块注入元数据"""
-    return {
-        "content": content,           # 实际文本内容
-        "metadata": {
-            "source": source_file,     # 来源文件路径，如 "docs/guide.md"
-            "section": section_title,  # 所在章节标题，如 "第三章 安装指南"
-            "page": page_number,       # PDF 页码或文档逻辑页
-            "chunk_index": chunk_index,# 在文档中的顺序编号
-            "char_count": len(content),# 字符数，用于调试
-        }
+function chunkDocument(nodes: Node[], limits: ChunkLimits) {
+  const result = [];
+  for (const node of nodes) {
+    if (countTokens(node.text) <= limits.maxTokens) {
+      result.push(toChunk(node));
+      continue;
     }
 
-# 示例输出
-chunk = build_chunk_with_metadata(
-    content="RecursiveCharacterTextSplitter 会按段落优先切分...",
-    source_file="docs/langchain-guide.md",
-    section_title="文本切分策略",
-    page_number=3,
-    chunk_index=7,
-)
-# 检索时可按 metadata.source 过滤，只检索特定文档
+    const sentences = splitSentences(node.text);
+    for (const group of packByTokenBudget(sentences, limits)) {
+      result.push(toChunk({ ...node, text: group.join("") }));
+    }
+  }
+  return result;
+}
 ```
 
-元数据注入后，RAG 系统可以实现：
-- **来源过滤**：只在某个文件或章节中检索；
-- **答案归因**：回答时标注"来自《xxx》第 N 页"；
-- **结果排序**：优先返回最新章节的内容。
+生产实现还需要：语言检测、空白清理、重复页眉去除、表格/代码专用策略、异常超长单元处理和版本记录。
 
----
+## 十一、如何评测切块策略
 
-## 五、策略对比
+不要只看平均 chunk 长度。准备查询—证据标注集，对每个策略重新建索引并比较：
 
-| 策略 | 实现复杂度 | 语义完整性 | 适合场景 | 计算开销 |
-|---|---|---|---|---|
-| 固定大小切分（Fixed-size） | 低 | 低 | 快速原型、纯文本流水账 | 极低 |
-| 句子级切分（Sentence-based） | 低–中 | 中 | 新闻、论文、叙述性文本 | 低 |
-| 递归字符切分（Recursive） | 中 | 中–高 | 通用文档、技术博客（**默认首选**） | 低 |
-| 语义切分（Semantic） | 高 | 高 | 混合主题长文、学术文献 | 高（需 Embedding） |
-| 结构感知切分（Structure-aware） | 高 | 最高 | Markdown 文档、代码库、HTML | 中（需解析器） |
+- `Recall@k`：正确证据是否进入前 k。
+- 命中块是否包含回答所需的完整限定条件。
+- top-k 中重复或相邻块比例。
+- 组装后的上下文 token、P95 延迟和成本。
+- 最终答案的引用正确性与忠实度。
 
----
+对比至少包含固定长度基线、结构感知策略和一组大小/重叠参数。一次只改变一个主要变量，否则无法判断提升来自哪里。
 
-## 六、分块决策流程
+长上下文并不能替代检索与切块。研究显示，模型对长上下文不同位置的信息利用并不均匀；把大量无关内容塞进提示会让关键证据更难被使用。
 
-```mermaid
-flowchart TD
-    A[输入文档] --> B{文档类型判断}
-    B -->|代码文件 .py/.js| C[结构感知切分\nAST 函数/类边界]
-    B -->|Markdown / HTML| D[结构感知切分\n按标题层级切分]
-    B -->|普通文本 / PDF| E{是否混合多主题?}
-    E -->|是| F[语义切分\nEmbedding 余弦相似度]
-    E -->|否| G[递归字符切分\nRecursiveCharacterTextSplitter]
-    C --> H[设置 chunk_size\n按函数/类自然大小]
-    D --> H
-    F --> I[设置 chunk_size\n300–600 Token]
-    G --> I
-    I --> J[设置 overlap\n10%–20% of chunk_size]
-    H --> J
-    J --> K[注入元数据\nsource / section / page / index]
-    K --> L[输出 Chunk 列表\n写入向量数据库]
-```
+## 十二、常见失败
 
----
+- **块过小**：召回了关键词，却没有结论所需的背景。
+- **块过大**：向量主题被稀释，检索和生成成本增加。
+- **只按字符切**：破坏句子、表格和代码结构。
+- **重叠过大**：top-k 被重复片段占据。
+- **标题未保留**：正文中的“它”“该功能”失去指代。
+- **没有版本与删除同步**：旧政策仍然能被搜索。
+- **权限后置**：已经造成敏感信息泄露。
 
-## 七、不同内容类型的分块建议
+## 检查清单
 
-### 7.1 代码（Code）
+- [ ] 文档先解析为结构，再按 token 上限递归拆分。
+- [ ] 表格、代码、FAQ 和 PDF 使用适合的边界策略。
+- [ ] overlap 有明确目的，并评估重复召回。
+- [ ] chunk 带标题路径、来源、位置、版本和 ACL。
+- [ ] ID 稳定，增量更新与删除能够同步索引。
+- [ ] 用真实查询比较 Recall@k、完整性、延迟和成本。
+- [ ] 检索后会合并相邻块并去重。
+- [ ] 没有把“更长上下文”当作切块质量的替代品。
 
-不要按字符截断代码。以函数或类为最小切分单元，使用 AST 解析。单个函数超过目标 chunk_size 时，保留完整函数而不强制截断（宁可超长，不可破坏语法）。每个块的元数据应包含函数名、文件路径、行号。
+## 参考资料
 
-### 7.2 表格（Table）
-
-Markdown 或 HTML 表格不适合直接向量化，应先转换为自然语言描述。例如将表格行转为"产品 A 的价格为 99 元，库存为 500 件"，再进行切分。
-
-### 7.3 FAQ 文档
-
-问答对（Q+A）应作为原子单元保留，不可将问题和答案分入两个块。若 Q+A 对过长，允许适度截断答案，但问题必须保留在块头部。
-
-### 7.4 技术文档（Technical Docs）
-
-推荐使用递归字符切分，`chunk_size` 设置为 300–500 Token，`overlap` 设为 50–100 Token。同时结合 Markdown 标题作为元数据的 `section` 字段，方便后续按章节过滤。
-
----
-
-## 八、常见误区与最佳实践
-
-**误区 1：chunk_size 越大越好**
-大块包含更多信息，但向量化后语义被"稀释"，相似度计算不够精准，召回质量反而下降。建议从 300–500 Token 起步，通过评估指标迭代调整。
-
-**误区 2：overlap 可以省略**
-省略 overlap 会导致跨块边界的信息丢失，尤其是长推理链中的关键过渡句。10%–20% 的 overlap 是低成本的保险策略。
-
-**误区 3：所有文档用同一策略**
-代码、表格、FAQ、叙述文本对切分策略的需求截然不同。生产系统应根据文档类型路由到不同的切分器。
-
-**最佳实践**：构建"切分评估集"——准备若干典型问题，用不同策略切分后分别测试召回率和答案准确率，以数据驱动策略选型。
-
----
-
-## 九、面试常问
-
-**Q1：如何调优 chunk_size 和 overlap 参数？**
-
-A：首先明确目标指标（如 Hit Rate@5、MRR），然后准备 50–100 个典型问答对作为评估集。以 256、512、1024 Token 三档 chunk_size 分别建库，固定 overlap=10%，运行评估取最优值。overlap 的调优类似：固定 chunk_size，用 0%、10%、20% 三档对比。实践中 512 Token + 10% overlap 是一个可靠起点。
-
-**Q2：语义切分与固定大小切分相比，优势和代价分别是什么？**
-
-A：语义切分的优势在于切分边界对齐真实的语义跳变点，块内语义高度内聚，向量检索精度更高；劣势是需要对每个句子做 Embedding，预处理成本是固定切分的数十倍，且依赖 Embedding 模型的质量。对于语言风格统一、主题单一的文档，两者差距不大；对于混合了多个主题的长篇文档，语义切分优势明显。
-
-**Q3：检索命中了，但最终答案仍然不准确，可能是什么原因？**
-
-A：常见原因有三：（1）**块内噪声过多**：chunk_size 过大，检索到的块包含大量无关内容，干扰 LLM 推理；（2）**关键信息跨块分布**：答案所需的信息分散在相邻两个块中，单块不完整，需要加大 overlap 或使用父块检索（Parent Document Retrieval）；（3）**元数据未利用**：检索时未对来源或章节做过滤，引入了来自不同版本文档的矛盾信息。
-
-**Q4：对于代码库的 RAG，有什么特殊的分块建议？**
-
-A：代码库不能用通用文本切分策略。推荐：（1）以函数或类为原子单元，用 AST 解析而非字符截断；（2）每个块的元数据包含函数签名、文件路径、所属类名，方便按模块过滤；（3）对超长函数（>1000 Token），可拆分为函数签名+文档注释 和 函数体 两个块，保证函数契约在第一个块中完整呈现；（4）建议同时索引代码和对应的 docstring/注释，用自然语言查询可以命中代码块。
-
----
-
+- [Lost in the Middle：长上下文信息利用研究](https://arxiv.org/abs/2307.03172)
+- [Retrieval-Augmented Generation 原始论文](https://arxiv.org/abs/2005.11401)
+- [OpenAI：Retrieval](https://developers.openai.com/api/docs/guides/retrieval)

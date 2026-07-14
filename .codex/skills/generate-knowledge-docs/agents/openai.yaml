@@ -1,0 +1,11 @@
+interface:
+  display_name: "知识点文档生成器"
+  short_description: "批量调研知识主题，生成并更新渐进式图文 Markdown 知识文档"
+  default_prompt: "使用 $generate-knowledge-docs 扫描知识目录，按指定范围批量生成或更新经过调研并包含关键原理配图的 Markdown 文档。"
+policy:
+  products:
+    - "chatgpt"
+    - "codex"
+    - "api"
+    - "atlas"
+  allow_implicit_invocation: true

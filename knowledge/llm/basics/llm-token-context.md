@@ -1,242 +1,102 @@
-Token 是 LLM 处理文本的最小单位，Context Window 决定模型在一次推理中能"看到"多长的上下文，KV Cache 则是让自回归推理从理论可行变为工程可用的关键优化。三者相互关联，共同决定了 LLM 的能力边界、延迟表现和使用成本。
+Token、上下文窗口和 KV Cache 分别回答三个问题：模型怎样切分输入、一次请求最多容纳什么、生成时怎样避免反复计算历史。把三者连起来，才能正确判断长对话为什么更贵、首字为什么变慢，以及缓存究竟缓存了什么。
 
-## 什么是 Token
+## 先建立完整心智模型
 
-LLM 不直接处理字符或单词，而是将文本切分成**词元（Token）**。分词器（Tokenizer）负责完成这一转换：将原始文本转换为 Token ID 序列，推理完成后再将 ID 序列还原为文本。
+一次请求并不是“把字符串交给模型”这么简单。服务端先用与模型匹配的 tokenizer 把文本、工具定义和多模态占位等内容编码成 Token ID；模型在有限的上下文窗口内处理这些 Token；自回归生成时，KV Cache 保存各层已经算出的 Key 和 Value，后续每一步只追加新位置对应的数据。
 
-### BPE：主流分词算法
+![文本被编码为 Token，并在 Prefill 与 Decode 阶段读写 KV Cache](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-token-context-kv-cache-v3.webp)
+*图：Prefill 并行处理输入并写入缓存；Decode 每次生成一个 Token，读取历史 K/V 后追加新 K/V。*
 
-**字节对编码（Byte-Pair Encoding，BPE）** 是 GPT 系列等主流模型使用的分词算法，核心思想是贪心合并：
+## Token：模型处理的离散符号
 
-1. 初始化词表为语料库中出现过的所有基本字符
-2. 统计所有相邻 Token 对的出现频率
-3. 将频率最高的 Token 对合并为一个新 Token，加入词表
-4. 重复步骤 2-3，直到词表大小达到预设上限
+Token 不是字符，也不必等于单词。现代 tokenizer 通常从字节、字符或子词出发，用 BPE、Unigram 等方法构造词表，再把文本映射为整数序列。同一段文字在不同模型上可能得到不同 Token 数；空格、大小写、标点、代码缩进和中文词表覆盖都会影响结果。
 
-这样，高频词（如 "the"、"agent"）成为完整的单 Token；罕见词则被拆分为多个子词 Token（如 "tokenization" → ["token", "ization"]）。
+因此，不能用“一个英文单词固定等于多少 Token”或“一个汉字固定等于一个 Token”做精确预算。可靠做法是使用目标模型对应的 tokenizer 或厂商提供的计数接口。
 
-```mermaid
-flowchart LR
-    A["原始文本\n'Hello, world!'"] --> B["基础字符\nH/e/l/l/o/,/ /w/o/r/l/d/!"]
-    B --> C["迭代合并高频对\nel→el, ll→ll, ..."]
-    C --> D["BPE 词表\n['Hello', ',', ' world', '!']"]
-    D --> E["Token IDs\n[15496, 11, 995, 0]"]
-```
+Token 数会影响：
 
-**SentencePiece**（Llama、Qwen 等使用）和 **WordPiece**（BERT 使用）是两种常见的变体：
+- 输入、输出和缓存命中的计费量；
+- Prefill 需要处理的序列长度；
+- 可留给模型输出的空间；
+- 文本截断、分块与 RAG 的边界。
 
-| 算法 | 代表模型 | 特点 |
-|------|---------|------|
-| BPE | GPT 系列 | 贪心合并高频对，词表可控 |
-| SentencePiece | LLaMA、Qwen | 将空格视为普通字符，无语言依赖，分词可逆 |
-| WordPiece | BERT | 合并标准是最大化语言模型似然，而非频率 |
+> Token ID 只是词表索引。模型真正处理的是由 Token ID 查表得到的向量表示。
 
-### Token 的计量规律
+## Context Window：一次推理的总预算
 
-不同语言、不同内容的 Token 效率差异显著：
+上下文窗口是模型一次推理可接收的总序列预算。通常可抽象为：
 
-```
-英文：~1 token ≈ 4 个字符，或约 ¾ 个单词
-中文：通常 1 个汉字 ≈ 1–2 个 Token（因词表大小而异）
-代码：标识符、缩进符、括号各自消耗 Token
-特殊符号/生僻词：可能被切分为多个 Token
-```
+$$
+N_{system}+N_{history}+N_{tools}+N_{retrieval}+N_{user}+N_{output}\leq N_{context}
+$$
 
-```typescript
-// 用 tiktoken 统计 GPT 系列模型的 Token 数
-import { encoding_for_model } from 'tiktoken'
+不同 API 对工具调用、多模态输入、推理 Token 和最大输出的计数规则并不完全相同，所以应以具体模型文档与响应中的 usage 为准。
 
-const enc = encoding_for_model('gpt-4o')
+### 窗口更大不等于效果线性变好
 
-const texts = [
-  'Hello, world!',           // 英文
-  '你好，世界！',             // 中文
-  'function add(a, b) {}',   // 代码
-]
+长上下文仍有三类现实约束：
 
-for (const text of texts) {
-  const tokens = enc.encode(text)
-  console.log(`"${text}" → ${tokens.length} tokens`)
-}
-enc.free()
+1. **质量约束**：模型“能接收”不代表能同等利用每个位置。Lost in the Middle 研究显示，相关信息的位置会影响检索和问答表现。
+2. **延迟约束**：输入越长，Prefill 通常越慢，TTFT（首 Token 延迟）会上升。
+3. **资源约束**：注意力计算、KV Cache、并发批次会共同消耗算力与显存。
 
-// 输出（近似）：
-// "Hello, world!" → 4 tokens
-// "你好，世界！" → 6 tokens
-// "function add(a, b) {}" → 8 tokens
-```
+工程上应先删除无关上下文，再考虑摘要、分层记忆或 RAG；不要因为窗口足够大就把整个知识库塞进请求。
 
-### Token 的实际影响
+## KV Cache：缓存的是每层历史 Token 的 K 和 V
 
-| 影响维度 | 说明 |
-|---------|------|
-| **API 成本** | 输入/输出 Token 分别计费，长 prompt 直接推高成本 |
-| **输出延迟** | 自回归生成逐 Token 输出，Token 数决定生成时间 |
-| **上下文限制** | 超出 Context Window 的内容被截断，信息丢失 |
-| **模型理解** | 分词方式影响模型对词汇的理解，同义词可能 Token 化方式不同 |
+在因果自注意力中，第 $t$ 个位置只关注自己和之前的位置。若每生成一个 Token 都重算完整前缀，会重复计算历史位置的 Key、Value 投影。KV Cache 把这些历史结果保留下来：
 
-**一个反直觉的陷阱**：模型对 `2 + 2` 和 `2+2` 的处理可能不同，因为它们的分词结果不同。同理，单词大小写也可能产生不同的 Token 序列，影响模型理解。
+- **Prefill**：并行处理输入序列，生成每层的 K/V，并得到第一个待生成 Token 的分布。
+- **Decode**：输入最新 Token，计算它在每层的新 Q/K/V；Q 与历史 K 做匹配，用注意力权重汇总历史 V；随后把新 K/V 追加到缓存。
 
-## Context Window（上下文窗口）
+KV Cache 消除了历史 K/V 投影的重复计算，但没有让长序列“免费”。每个新 Token 仍需读取越来越长的缓存并与历史位置做注意力计算。
 
-Context Window 是模型在**单次推理**中能处理的最大 Token 数。它不仅包含用户输入，还包括 System Prompt、历史对话和输出空间：
+### 缓存大小怎么估算
 
-```
-|←─────────────── Context Window（如 128K tokens）─────────────────→|
-| System Prompt | 历史对话 | 检索文档 | 当前用户输入 | 输出预留空间 |
-```
+以常见实现为例，单请求的缓存字节数可近似写成：
 
-### 上下文长度的演进
+$$
+2\times L\times S\times H_{kv}\times D_h\times B
+$$
 
-| 时间 | 代表模型 | Context Window |
-|------|---------|---------------|
-| 2020 | GPT-3 | 2K tokens |
-| 2023 | GPT-4 | 8K / 32K tokens |
-| 2024 | Claude 3 | 200K tokens |
-| 2024+ | Gemini 1.5 Pro | 1M tokens |
-| 现在 | 部分模型 | 数百万 tokens |
+其中 $2$ 代表 K 和 V，$L$ 是层数，$S$ 是已缓存序列长度，$H_{kv}$ 是 KV 头数，$D_h$ 是每头维度，$B$ 是每个元素的字节数。它说明缓存随序列长度线性增长，也解释了量化 KV、分页注意力和减少 KV 头数为什么有效。
 
-窗口扩大带来的能力：分析长文档、维持超长对话历史、理解大型代码库等。
+### MHA、GQA 与 MQA
 
-### 长上下文的实际挑战
+- MHA 通常让每个 Query 头拥有对应的 K/V 头，容量高但缓存较大。
+- MQA 让多个 Query 头共享一组 K/V 头，缓存最省，但可能影响质量。
+- GQA 把 Query 头分组，每组共享 K/V，折中质量与推理效率。原始 GQA 论文报告其质量接近 MHA，同时速度接近 MQA。
 
-即使模型支持超长 Context，使用中仍存在以下问题：
+## Prefix Caching 与 KV Cache 的区别
 
-**"Lost in the Middle" 效应**：研究表明 LLM 对上下文中间位置的信息利用率低于开头和结尾。关键信息放在中间时，模型容易"忽略"。
+KV Cache 通常指**一次请求内部**为自回归解码保存的状态；Prefix Caching 则尝试在**多个请求之间**复用相同前缀对应的已计算结果。要提高命中率，应把稳定内容放前面、动态内容放后面，并避免对前缀做无意义改写。
 
-```mermaid
-graph LR
-    A[开头内容\n利用率高] --> B[中间内容\n利用率低 Lost in the Middle]
-    B --> C[结尾内容\n利用率较高]
-    style B fill:#ff9999
-```
+命中规则、最短可缓存长度、缓存寿命和折扣价格都是服务商实现细节。不要把“内容语义相同”误认为“一定命中”；许多实现要求前缀 Token 序列精确一致。
 
-**计算与显存瓶颈**：Self-Attention 复杂度为 $O(n^2)$，序列长度翻倍，计算量增加 4 倍，显存占用和推理时间急剧上升。
+## 一次请求该怎样做预算
 
-**有效长度 ≠ 声称长度**：部分模型在超长上下文时准确率下降，"能处理 100K tokens" 不等于"在 100K tokens 范围内仍准确"。
-
-### 开发实践建议
-
-- 将**最重要的信息放在 prompt 开头或结尾**，避免关键内容埋在中间
-- 使用 **RAG（检索增强生成）** 替代将整个知识库塞入 context——先检索再注入
-- 监控实际 Token 使用量，为输出预留足够空间（常见问题：context 接近上限时模型截断输出）
-- 多轮对话时定期压缩历史，避免无关的早期对话消耗窗口空间
-
-## KV Cache：推理加速的关键
-
-KV Cache 是 Transformer 自回归推理的核心加速技术，理解它有助于解释延迟来源和成本结构。
-
-### 为什么需要 KV Cache
-
-自回归生成时，每次预测新 Token，模型都需要计算整个已有序列的 Self-Attention。如果不做缓存，每步推理都要对所有前缀 Token 重新计算 K（Key）和 V（Value）矩阵——代价随序列长度线性增加。
-
-**KV Cache 的做法**：在 Prefill（预填充）阶段一次性计算所有前缀 Token 的 K、V 矩阵，并缓存在显存中。后续 Decode（解码）阶段每生成一个新 Token，只需计算该 Token 的 Q 向量，然后与已缓存的 K、V 做注意力计算。
-
-```mermaid
-sequenceDiagram
-    participant Input as 输入序列
-    participant Cache as KV Cache（显存）
-    participant Attn as Attention 模块
-    participant Out as 输出
-
-    Note over Input,Out: Prefill 阶段（一次性处理整个前缀）
-    Input->>Attn: 完整前缀序列
-    Attn->>Cache: 缓存所有层的 K, V 矩阵
-    Attn->>Out: 第一个生成 Token
-
-    Note over Input,Out: Decode 阶段（逐 Token 生成）
-    loop 每次生成新 Token
-        Out->>Attn: 新 Token 的 Q
-        Cache->>Attn: 读取已缓存的 K, V
-        Attn->>Out: 下一个 Token
-    end
-```
-
-### KV Cache 的显存代价
-
-缓存大小与序列长度、层数、头数成正比：
-
-$$\text{KV Cache 显存} \approx 2 \times \text{层数} \times \text{序列长度} \times d_\text{model} \times \text{精度字节数}$$
-
-以 LLaMA-3 70B（fp16 精度）为例：
-- 32 层，d_model = 8192
-- 每 1K tokens 的 KV Cache ≈ **约 1.5 GB 显存**
-- 128K tokens 上下文 ≈ 约 192 GB 显存
-
-这解释了为什么长上下文模型对 GPU 显存要求极高，也是云服务商对长上下文收取更高费用的根本原因。
-
-### 推理的两个阶段
-
-| 阶段 | 操作 | 性能特征 |
-|------|------|---------|
-| **Prefill（预填充）** | 并行处理全部输入 Token，生成 KV Cache | 计算密集，时间与输入长度正相关 |
-| **Decode（解码）** | 逐 Token 自回归生成 | 显存带宽密集，每步时间约相同 |
-
-**TTFT（Time to First Token）**：Prefill 结束后用户看到第一个字的时间，是实时对话体验的核心指标。输入越长，TTFT 越高。
-
-**TPS（Tokens Per Second）**：Decode 阶段的生成速度，取决于显存带宽。
-
-### Prefix Caching（前缀缓存）
-
-主流推理框架（vLLM、TensorRT-LLM）和主要 API 服务商都支持 **Prefix Caching**：对于**完全相同的前缀**（如固定的 System Prompt），其 KV Cache 在多次请求间复用，跳过 Prefill 阶段的重复计算。
-
-```typescript
-// 利用 Prefix Caching 的关键：固定前缀 + 动态后缀
-const SYSTEM_PROMPT = `
-你是一名专业的前端工程师助手。
-你需要遵循以下规范：
-1. 代码使用 TypeScript
-2. 优先使用函数式写法
-3. 避免全局变量
-`.trim()
-// ↑ 这段固定不变，第一次请求后会被 cache
-
-// 动态部分放在 system prompt 之后
-const messages = [
-  { role: 'system', content: SYSTEM_PROMPT },  // 触发 Prefix Cache
-  { role: 'user', content: userMessage },        // 每次不同
-]
-
-// 实践原则：
-// 1. System Prompt 固定化，保持内容不变
-// 2. 将动态内容（历史对话、检索结果）放在固定前缀之后
-// 3. Claude、OpenAI 等 API 已自动支持，无需额外参数
-```
-
-**Prefix Caching 的收益**：
-- 延迟：跳过 Prefill，TTFT 大幅降低
-- 成本：部分 API 服务商对 cache hit 的 Token 收费更低（具体以官方为准）
-
-## 三者的关联与工程权衡
-
-```mermaid
-graph TB
-    Token[Token\n文本的计量单位] -->|数量决定| CW[Context Window\n单次处理上限]
-    CW -->|长度影响| KV[KV Cache\n缓存已处理的 K/V]
-    KV -->|占用| GPU[GPU 显存]
-    GPU -->|限制| CW
-    Token -->|单价 × 数量| Cost[API 成本]
-    KV -->|Prefix Caching| Cost
-```
-
-| 概念 | 核心影响 | 工程关注点 |
-|------|---------|-----------|
-| **Token** | 成本、速度、上限 | 控制 prompt 长度，评估 token 用量 |
-| **Context Window** | 能力边界、理解范围 | 合理分配窗口，长文本用 RAG 替代堆 context |
-| **KV Cache** | 推理效率、显存占用 | 固定前缀触发 cache；长上下文评估显存需求 |
+1. 用目标模型的 tokenizer 或计数接口统计真实输入。
+2. 显式为输出和工具返回预留空间。
+3. 监控 TTFT、输出速度、缓存命中率和截断原因。
+4. 对长会话做摘要或分层记忆，不无限回传历史。
+5. 用业务评测验证长上下文中的关键信息是否仍被正确利用。
 
 ## 常见误区
 
-- **"Context Window 大就一定好"**：更大的窗口意味着更高的显存消耗和更高的每次请求成本，且中间内容利用率低
-- **"Prefix Caching 自动生效"**：只有完全相同的前缀才能命中缓存，前缀内容每次变化则 cache miss
-- **"Token 数 ≈ 字数"**：中文场景下 Token 数通常多于汉字数，计费时以实际 Token 为准
+- **“Token 就是字数”**：不同 tokenizer 的边界不同，只能近似估算。
+- **“上下文窗口只算用户输入”**：系统指令、历史、工具和输出预算都可能占用窗口。
+- **“有 KV Cache 后每步成本不随长度变化”**：缓存避免重算，但 Decode 仍需读取和关注历史位置。
+- **“更长窗口一定替代 RAG”**：RAG 还承担筛选、更新、权限和来源追踪等职责。
+- **“Temperature 为 0 就能逐字复现”**：分布式推理、模型版本和服务端实现仍可能引入差异。
 
-## 面试常问
+## 小结
 
-- Token 和字符有什么区别？为什么计费以 Token 为单位？
-- BPE 和 WordPiece 的核心差异是什么？
-- Context Window 满了会怎样？模型会报错还是截断？
-- KV Cache 缓存的是什么？为什么能加速推理而不影响结果？
-- Prefill 和 Decode 阶段的性能瓶颈分别是什么？
-- 为什么长上下文推理比短上下文成本高得多？
+Token 决定序列如何表示和计量；Context Window 规定一次请求的总预算；KV Cache 用显存换取自回归生成速度。优化 LLM 应用时，应把它们作为一条链路共同测量，而不是分别背三个定义。
 
+## 参考资料
+
+- [OpenAI tiktoken](https://github.com/openai/tiktoken)
+- [Hugging Face Transformers：KV cache strategies](https://huggingface.co/docs/transformers/kv_cache)
+- [GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints](https://arxiv.org/abs/2305.13245)
+- [Lost in the Middle: How Language Models Use Long Contexts](https://arxiv.org/abs/2307.03172)
+- [OpenAI API：Prompt caching](https://developers.openai.com/api/docs/guides/prompt-caching)

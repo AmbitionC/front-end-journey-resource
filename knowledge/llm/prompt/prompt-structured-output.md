@@ -1,310 +1,164 @@
-LLM 默认输出自然语言，但程序需要结构化数据。结构化输出（Structured Output）技术让模型的回复直接符合预定义的 JSON Schema，省去解析自然语言的麻烦，是 LLM 集成到业务系统的关键环节。
+结构化输出让模型结果进入程序世界：不再依赖正则从自然语言中猜字段，而是让回复遵循明确的数据结构。但“JSON 可解析”“符合 JSON Schema”和“业务事实正确”是三层不同保证，任何一层都不能省略。
 
-## 为什么需要结构化输出
+## 三种常见方案
 
-在没有结构化约束时，LLM 的回答往往夹杂着额外的解释文字，导致下游系统需要复杂的正则匹配或二次解析。当输入文本或模型版本稍有变化，解析逻辑就可能失效，引发线上故障。
+### Prompt-only JSON
 
-**结构化输出的核心价值：**
-- 消除输出格式的不确定性（Format Reliability）
-- 与下游系统直接集成——数据库入库、API 透传、UI 渲染
-- 便于类型检查（Type Safety）和自动化测试
-- 降低系统整体的解析失败率（Parse Error Rate）
+只在 Prompt 中要求输出 JSON。兼容性最好，但模型可能添加代码围栏、漏字段、写错枚举或输出被截断。它适合原型或没有原生能力的模型，不应被当作强保证。
 
-以下流程图展示了从 Prompt 到下游消费的完整链路：
+### JSON mode
 
-```mermaid
-flowchart TD
-    P[Prompt + Schema 定义] --> LLM[LLM 推理]
-    LLM --> SO{结构化输出}
-    SO -->|JSON 字符串| PARSE[JSON.parse / 反序列化]
-    PARSE -->|成功| DS[下游系统\nDB / API / UI]
-    PARSE -->|失败| ERR[错误处理 / 重试]
-    ERR --> LLM
-```
+平台保证输出是合法 JSON，但通常不保证它符合你的具体字段 schema。仍要在应用端验证必填字段、类型和枚举。
 
-## 方法一：Prompt-only JSON（提示词约束）
+### Structured Outputs / Strict Tool Use
 
-最基础的方法是在系统提示词（System Prompt）或用户消息中明确要求输出 JSON，并给出格式示例：
+平台在解码阶段约束可生成 Token，使结果匹配支持的 JSON Schema 子集。它比 Prompt-only 可靠，但仍可能出现拒答、长度截断、API 错误，且 schema 支持范围因模型而异。
 
-```python
-import anthropic
-import json
+![Prompt 和 JSON Schema 经过约束解码、Schema 校验与业务校验后得到可信对象](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/prompt-structured-output-pipeline-v3.webp)
+*图：Schema 合法只证明结构符合约束；事实、权限和业务规则仍需单独验证。*
 
-client = anthropic.Anthropic()
+## 先设计数据合同
 
-prompt = """从以下文本中提取结构化信息，严格按照 JSON 格式返回，不要输出任何其他内容。
-
-文本：「订单号 ORD-20241218-001，客户王芳，购买了 iPhone 15（2件），总金额约 9000 元。」
-
-输出格式示例：
-{
-  "order_id": "string",
-  "customer_name": "string",
-  "items": [{"name": "string", "quantity": 1}],
-  "total_amount": 0
-}"""
-
-response = client.messages.create(
-    model="claude-opus-4-5",
-    max_tokens=512,
-    messages=[{"role": "user", "content": prompt}],
-)
-
-try:
-    result = json.loads(response.content[0].text)
-    print(result)
-except json.JSONDecodeError:
-    print("解析失败，原始输出：", response.content[0].text)
-```
-
-**优点：** 通用，任何模型都可用，无需特殊 API 参数。  
-**缺点：** 模型仍可能在 JSON 前后输出额外文字，或产生语法错误，需要额外的防御性解析（Defensive Parsing）。
-
-## 方法二：OpenAI Structured Outputs（结构化输出 API）
-
-OpenAI 在 GPT-4o 系列模型上引入了原生的 Structured Outputs 功能，通过 `response_format` 参数传入 JSON Schema，使用语法约束（Grammar Constraint）在解码阶段强制输出符合 Schema 的 token 序列，从根本上消除格式错误。
-
-```python
-from openai import OpenAI
-from pydantic import BaseModel
-
-client = OpenAI()
-
-class OrderInfo(BaseModel):
-    order_id: str
-    customer_name: str
-    total_amount: float
-
-completion = client.beta.chat.completions.parse(
-    model="gpt-4o",
-    messages=[
-        {"role": "user", "content": "订单 ORD-001，客户王芳，金额 9000 元。"}
-    ],
-    response_format=OrderInfo,
-)
-
-order = completion.choices[0].message.parsed
-print(order.order_id, order.customer_name, order.total_amount)
-```
-
-`response_format` 接受 Pydantic 模型或手写的 JSON Schema 字典。解码阶段的 token 掩码保证字段名、类型、枚举值均合规，是目前格式约束最强的方案。
-
-## 方法三：OpenAI Function Calling / Tool Use（工具调用）
-
-Function Calling（函数调用）是 OpenAI 最早引入的结构化机制，现已演进为 Tool Use（工具调用）。模型在需要调用外部能力时，会输出一段符合 `parameters` Schema 的 JSON，而非普通文字回复。
-
-```python
-from openai import OpenAI
-import json
-
-client = OpenAI()
-
-tools = [
-    {
-        "type": "function",
-        "function": {
-            "name": "extract_user_info",
-            "description": "提取用户基本信息",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "name": {"type": "string", "description": "用户姓名"},
-                    "age": {"type": "integer", "description": "用户年龄"},
-                    "occupation": {"type": "string", "description": "职业"},
-                },
-                "required": ["name", "age", "occupation"],
-            },
-        },
-    }
-]
-
-response = client.chat.completions.create(
-    model="gpt-4o",
-    messages=[
-        {"role": "user", "content": "张三，28岁，软件工程师，北京。"}
-    ],
-    tools=tools,
-    tool_choice={"type": "function", "function": {"name": "extract_user_info"}},
-)
-
-tool_call = response.choices[0].message.tool_calls[0]
-user_info = json.loads(tool_call.function.arguments)
-print(user_info)
-# {"name": "张三", "age": 28, "occupation": "软件工程师"}
-```
-
-`tool_choice` 设为指定函数名可强制模型调用该工具，而非自由决策，适合将 Tool Use 当作纯结构化输出的手段。
-
-## 方法四：Claude Tool Use（Anthropic 工具调用）
-
-Claude 的工具调用（Tool Use）在机制上与 OpenAI Function Calling 类似，但 Schema 字段名略有差异：使用 `input_schema` 而非 `parameters`，工具调用结果存放在 `response.content` 列表中，类型为 `tool_use`。强制调用某个工具时使用 `tool_choice: {"type": "tool", "name": "..."}` 。
-
-```python
-import anthropic
-import json
-
-client = anthropic.Anthropic()
-
-tools = [
-    {
-        "name": "extract_person",
-        "description": "从文本中提取人物信息",
-        "input_schema": {
-            "type": "object",
-            "properties": {
-                "name": {"type": "string", "description": "姓名"},
-                "age": {"type": "integer", "description": "年龄"},
-                "occupation": {"type": "string", "description": "职业"},
-            },
-            "required": ["name"],
-        },
-    }
-]
-
-response = client.messages.create(
-    model="claude-opus-4-5",
-    max_tokens=1024,
-    tools=tools,
-    messages=[
-        {"role": "user", "content": "张伟，35岁，是一名软件工程师。请提取他的信息。"}
-    ],
-)
-
-for block in response.content:
-    if block.type == "tool_use":
-        print(json.dumps(block.input, ensure_ascii=False, indent=2))
-# {
-#   "name": "张伟",
-#   "age": 35,
-#   "occupation": "软件工程师"
-# }
-```
-
-Claude 的工具调用同样受 Schema 约束，实测在嵌套对象、枚举字段上均能稳定输出合规 JSON。与 OpenAI 相比，Claude 会在思考阶段（`thinking` block，若开启）先推理再填充工具参数，有助于处理模糊输入。
-
-## 四种方法对比
-
-| 方法 | 约束强度 | API 支持 | 适用模型 | 典型用途 |
-|------|---------|---------|---------|---------|
-| Prompt-only JSON | 低（可能不合规） | 无需特殊 | 所有 | 快速原型 |
-| OpenAI Structured Outputs | 高（grammar约束） | response_format | GPT-4o+ | 可靠解析 |
-| OpenAI Function Calling | 高 | tools | GPT系列 | 工具调用 |
-| Claude Tool Use | 高 | tools | Claude系列 | 工具调用/结构化提取 |
-
-## JSON Schema 设计要点
-
-JSON Schema 本身也是 Prompt 的一部分，写得好能显著提升模型的填充准确率。
-
-### `required` 字段
-
-明确声明哪些字段是必填的，模型会优先保证这些字段存在。非必填字段在无法从文本提取时，模型可以省略，避免凭空捏造（Hallucination）。
+以工单分类为例：
 
 ```json
 {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "properties": {
-    "name": {"type": "string"},
-    "age": {"type": "integer"},
-    "email": {"type": "string"}
-  },
-  "required": ["name"]
-}
-```
-
-### `type` 与 `enum`
-
-`type` 限制数据类型，`enum` 进一步约束枚举值，两者配合可大幅减少无效输出：
-
-```json
-{
-  "status": {
-    "type": "string",
-    "enum": ["pending", "shipped", "delivered", "cancelled"],
-    "description": "订单状态"
-  },
-  "priority": {
-    "type": "integer",
-    "enum": [1, 2, 3],
-    "description": "优先级：1=低，2=中，3=高"
-  }
-}
-```
-
-### `description` 引导模型理解语义
-
-`description` 是写给模型看的"注释"，对于含义不直观的字段尤为重要：
-
-```json
-{
-  "sentiment_score": {
-    "type": "number",
-    "description": "情感得分，范围 -1 到 1。-1 表示极负面，0 表示中性，1 表示极正面"
-  },
-  "confidence": {
-    "type": "number",
-    "description": "提取置信度，0~1 之间，低于 0.5 时建议人工复核"
-  }
-}
-```
-
-### 嵌套对象与数组
-
-```json
-{
-  "type": "object",
-  "properties": {
-    "items": {
+    "category": {
+      "type": "string",
+      "enum": ["billing", "delivery", "product", "other"]
+    },
+    "order_id": {
+      "type": ["string", "null"],
+      "description": "输入中明确出现的订单号；没有则为 null"
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "evidence": {
       "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "name": {"type": "string", "description": "商品名称"},
-          "quantity": {"type": "integer", "description": "购买数量"},
-          "unit_price": {"type": "number", "description": "单价（元）"}
-        },
-        "required": ["name", "quantity"]
-      },
-      "description": "订单商品列表"
+      "items": { "type": "string" },
+      "maxItems": 3
     }
-  }
+  },
+  "required": ["category", "order_id", "confidence", "evidence"],
+  "additionalProperties": false
 }
 ```
 
-## 常见错误与最佳实践
+设计要点：
 
-### 常见错误
+- 用 `required` 明确必须存在的字段；
+- 用 `enum` 表达封闭集合，不用模糊字符串；
+- 缺失与空值要有明确语义；
+- `additionalProperties: false` 可拒绝未声明字段；
+- 使用 `minimum`、`maximum`、`minItems` 等收紧范围；
+- `description` 说明字段含义和证据要求；
+- schema 尽量扁平，避免不必要的深层嵌套。
 
-| 错误 | 后果 | 改进方式 |
-|------|------|---------|
-| Prompt-only 但不给格式示例 | 模型输出格式随机 | 提供完整的 JSON 示例 |
-| `description` 为空或含糊 | 模型对字段语义猜测错误 | 写清楚单位、范围、枚举含义 |
-| `required` 包含无法从文本中提取的字段 | 模型被迫编造数据 | 只将确定能提取的字段放入 required |
-| 忽略解析错误 | 线上静默失败 | 始终包裹 try/except，记录原始输出 |
-| Schema 嵌套过深（>5层） | 模型填充准确率下降 | 拆分为多次调用或扁平化 Schema |
+先确认平台支持哪些 JSON Schema 关键字。完整标准与某个模型 API 支持的子集不是一回事。
 
-### 最佳实践
+## Schema 校验仍应放在应用端
 
-1. **优先使用 Tool Use / Structured Outputs**，比 Prompt-only 更可靠，尤其在生产环境。
-2. **每个字段都写 `description`**，把领域知识编码进 Schema 而非依赖模型猜测。
-3. **`enum` 优先于 `string`**：能枚举的值一定要枚举，减少歧义。
-4. **设置合理的 `max_tokens`**：结构化输出通常比自由文本短，避免因 token 限制导致 JSON 被截断。
-5. **记录原始输出**：即使解析成功，也保存 `response.content` 原文，便于事后审计。
-6. **防御性解析**：对 Prompt-only 方案，尝试先提取 markdown 代码块中的 JSON，再全文解析。
+即使平台宣称严格结构化输出，应用也应再次验证。原因包括：SDK/网关转换、模型不支持、响应截断、降级路径和未来版本变化。
 
-## 面试常问
+TypeScript 可使用 Ajv、Zod 等工具：
 
-- **为什么不能直接让模型输出 JSON，还需要专门的结构化输出机制？**  
-  Prompt-only 方法依赖模型的"遵从指令"能力，模型可能在 JSON 前后输出额外文字，或产生语法错误。Structured Outputs / Tool Use 在解码阶段使用 Schema 约束 token 选择，从机制层面保证格式合规。
+```typescript
+import Ajv from 'ajv'
 
-- **Function Calling 和 Structured Outputs 有什么区别？**  
-  Function Calling 的语义是"调用外部工具"，模型决策是否调用；Structured Outputs 的语义是"按指定格式回复"，模型必须输出结构化内容。前者更适合 Agent 流程，后者更适合纯数据提取。
+const ajv = new Ajv({ allErrors: true })
+const validate = ajv.compile(ticketSchema)
 
-- **Claude Tool Use 和 OpenAI Function Calling 的主要差异？**  
-  Schema 字段名不同（`input_schema` vs `parameters`）；强制调用语法不同（`tool_choice: {type: "tool"}` vs `{type: "function"}`）；Claude 的工具结果在 `content` 列表中，需要按 `type == "tool_use"` 过滤。
+const parsed = JSON.parse(responseText)
+if (!validate(parsed)) {
+  throw new Error(JSON.stringify(validate.errors))
+}
+```
 
-- **如何处理模型输出不符合 Schema 的情况？**  
-  记录原始输出、触发重试（可在 Prompt 中说明上次输出有误）、或降级到人工处理队列。切勿静默吞掉错误。
+不要在校验失败后静默使用部分对象。记录错误类型、模型版本和原始响应，进入受控重试或降级。
 
-- **JSON Schema 中 `description` 字段对模型有什么作用？**  
-  `description` 直接出现在模型的上下文中，相当于字段级别的 Prompt，帮助模型理解字段语义，尤其对歧义字段（如 `score`、`type`、`status`）影响显著。
+## 结构正确不等于事实正确
 
+下面的对象完全可能符合 schema，却是模型编造的：
+
+```json
+{
+  "category": "billing",
+  "order_id": "ORD-999999",
+  "confidence": 0.99,
+  "evidence": ["用户提到已扣款"]
+}
+```
+
+还要做语义和业务校验：
+
+- `order_id` 是否真的出现在输入或数据库；
+- 枚举值是否允许当前状态转换；
+- 金额、日期和单位是否在合理范围；
+- 引用 ID 是否存在并支持结论；
+- 工具参数是否通过鉴权；
+- 高风险动作是否需要人工确认。
+
+`confidence` 是模型输出字段，不应直接当成校准概率或权限依据。
+
+## Structured Output 与 Tool Calling
+
+- **Structured Output**：应用需要结构化回答，例如抽取、分类或 UI 数据。
+- **Tool Calling**：模型提出调用某个外部能力及参数，应用决定是否执行。
+
+二者都可使用 schema，但语义不同。工具调用必须经过应用鉴权、参数校验和副作用确认；schema 合法不代表模型有权执行。
+
+部分兼容层会忽略 `strict`。例如 Anthropic 官方文档说明，其 OpenAI SDK 兼容层不保证传入 schema，若需要保证应使用原生 Structured Outputs。不要因为客户端类型检查通过就假设服务端行为一致。
+
+## 错误处理状态机
+
+至少处理：
+
+1. API/网络失败；
+2. 拒答或安全停止；
+3. 长度截断；
+4. JSON 解析失败；
+5. Schema 校验失败；
+6. 语义/业务校验失败；
+7. 工具执行失败。
+
+可恢复的格式错误允许一次带明确错误信息的重试；高风险语义错误应降级或转人工。无限重试既昂贵，也可能重复同一错误。
+
+## 版本与兼容性
+
+为 schema 设置自己的版本号，并让消费者支持明确版本：
+
+```json
+{
+  "schema_version": "ticket-classification.v2",
+  "category": "delivery"
+}
+```
+
+新增字段、修改 `required`、收紧枚举都可能破坏消费者。schema、Prompt、模型和解析器应在同一发布流程中测试与回滚。
+
+## 常见误区
+
+- **“只返回 JSON”就是 Structured Outputs**：Prompt-only 没有机制保证。
+- **JSON mode 保证字段正确**：它通常只保证 JSON 语法。
+- **Schema 通过就能直接写数据库**：仍需事实、权限和业务校验。
+- **所有 JSON Schema 关键字都支持**：平台通常只支持子集。
+- **`strict` 在兼容 API 中行为相同**：兼容层可能忽略或改写参数。
+- **模型 confidence 可以决定高风险动作**：需要独立校准和权限策略。
+
+## 小结
+
+生产结构化输出应形成完整链路：原生约束解码 → JSON 解析 → Schema 校验 → 语义/业务校验 → 受控重试、降级或人工处理。格式正确只是可靠对象的第一步。
+
+## 参考资料
+
+- [OpenAI API：Structured model outputs](https://developers.openai.com/api/docs/guides/structured-outputs)
+- [Anthropic：Features overview—Structured outputs](https://docs.anthropic.com/claude/reference/getting-started-with-the-api)
+- [Anthropic：OpenAI SDK compatibility](https://docs.anthropic.com/en/api/openai-sdk)
+- [JSON Schema 2020-12 Validation](https://json-schema.org/draft/2020-12/draft-bhutton-json-schema-validation-00)
+- [Understanding JSON Schema：Objects](https://json-schema.org/understanding-json-schema/reference/object)

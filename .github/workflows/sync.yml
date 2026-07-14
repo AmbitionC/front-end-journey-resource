@@ -2,10 +2,28 @@ name: sync-content
 on:
   push:
     branches: [master]
+  pull_request:
+    paths:
+      - '.codex/image-resync.txt'
+
+permissions:
+  contents: read
+  statuses: write
+
 jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
+      - name: Publish pending content sync status
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api --method POST "repos/${{ github.repository }}/statuses/${{ github.sha }}" \
+            -f state="pending" \
+            -f context="content-sync" \
+            -f description="Content sync running" \
+            -f target_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -21,8 +39,8 @@ jobs:
         env:
           FAAS_SYNC_URL: ${{ secrets.FAAS_SYNC_URL }}
           FAAS_SYNC_SECRET: ${{ secrets.FAAS_SYNC_SECRET }}
-          BEFORE: ${{ github.event.before }}
-          AFTER: ${{ github.sha }}
+          BEFORE: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
+          AFTER: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
         run: |
           curl -sS -X POST "$FAAS_SYNC_URL" \
             -H "x-sync-secret: $FAAS_SYNC_SECRET" \
@@ -30,3 +48,18 @@ jobs:
             -d "{\"beforeSha\":\"$BEFORE\",\"afterSha\":\"$AFTER\"}" \
             -w "\nHTTP %{http_code}\n" | tee /tmp/resp.txt
           grep -q '"success":true' /tmp/resp.txt
+          grep -q '"errors":\[\]' /tmp/resp.txt
+
+      - name: Publish content sync status
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          state="$JOB_STATUS"
+          if [ "$state" = "cancelled" ]; then state="error"; fi
+          gh api --method POST "repos/${{ github.repository }}/statuses/${{ github.sha }}" \
+            -f state="$state" \
+            -f context="content-sync" \
+            -f description="Content sync $state" \
+            -f target_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
