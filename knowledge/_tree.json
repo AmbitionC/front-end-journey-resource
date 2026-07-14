@@ -47,70 +47,70 @@
             "key": "llm-capability-boundaries",
             "isLeaf": true,
             "filePath": "llm/basics",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "多模态模型基础：文本 / 图像 / 音频",
             "key": "llm-multimodal-basics",
             "isLeaf": true,
             "filePath": "llm/basics",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "Tokenizer、词表与子词切分",
             "key": "llm-tokenizer",
             "isLeaf": true,
             "filePath": "llm/basics",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "大模型训练全流程概览",
             "key": "llm-training-overview",
             "isLeaf": true,
             "filePath": "llm/basics",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "预训练目标、数据与 Scaling",
             "key": "llm-pretraining",
             "isLeaf": true,
             "filePath": "llm/basics",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "模型对齐：SFT、偏好数据与安全",
             "key": "llm-alignment",
             "isLeaf": true,
             "filePath": "llm/basics",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "RLHF、RLAIF 与 DPO 的差异",
             "key": "llm-rlhf-dpo",
             "isLeaf": true,
             "filePath": "llm/basics",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "模型量化与精度权衡",
             "key": "llm-quantization",
             "isLeaf": true,
             "filePath": "llm/basics",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "MoE 混合专家模型原理",
             "key": "llm-moe",
             "isLeaf": true,
             "filePath": "llm/basics",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "推理模型、思考预算与使用边界",
             "key": "llm-reasoning-models",
             "isLeaf": true,
             "filePath": "llm/basics",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "长上下文、注意力稀释与有效利用",
@@ -2262,4 +2262,3 @@
     ]
   }
 ]
-
