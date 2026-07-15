@@ -447,7 +447,7 @@
       "key": "llm-api-basics",
       "label": "大模型 API 通用模型：消息、响应与计费",
       "filePath": "llm/dev",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "ai-application-next-10-2026-07-15"
@@ -456,7 +456,7 @@
       "key": "llm-conversation-state",
       "label": "对话状态、会话与历史管理",
       "filePath": "llm/dev",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "ai-application-next-10-2026-07-15"
@@ -465,7 +465,7 @@
       "key": "llm-multimodal-api",
       "label": "多模态输入输出应用开发",
       "filePath": "llm/dev",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "ai-application-next-10-2026-07-15"
@@ -474,7 +474,7 @@
       "key": "llm-error-retry-fallback",
       "label": "超时、重试、Fallback 与错误处理",
       "filePath": "llm/dev",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "ai-application-next-10-2026-07-15"
@@ -483,7 +483,7 @@
       "key": "llm-model-routing",
       "label": "模型路由与多供应商适配",
       "filePath": "llm/dev",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "ai-application-next-10-2026-07-15"
@@ -492,7 +492,7 @@
       "key": "llm-response-api-patterns",
       "label": "Responses、Chat 与统一生成接口模式",
       "filePath": "llm/dev",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "ai-application-next-10-2026-07-15"
@@ -501,7 +501,7 @@
       "key": "llm-stream-cancel-resume",
       "label": "流式请求取消、续传与状态恢复",
       "filePath": "llm/dev",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "ai-application-next-10-2026-07-15"
@@ -510,7 +510,7 @@
       "key": "llm-batch-api",
       "label": "Batch 批处理与离线任务",
       "filePath": "llm/dev",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "ai-application-next-10-2026-07-15"
@@ -519,7 +519,7 @@
       "key": "llm-file-input",
       "label": "文件上传、解析与大文件处理",
       "filePath": "llm/dev",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "ai-application-next-10-2026-07-15"
@@ -528,10 +528,100 @@
       "key": "llm-vision-app",
       "label": "视觉理解与图像生成应用",
       "filePath": "llm/dev",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "ai-application-next-10-2026-07-15"
+    },
+    {
+      "key": "llm-audio-realtime",
+      "label": "语音、音频与 Realtime 应用",
+      "filePath": "llm/dev",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "ai-app-rag-next-10-2026-07-15"
+    },
+    {
+      "key": "llm-provider-abstraction",
+      "label": "模型供应商抽象层设计",
+      "filePath": "llm/dev",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "ai-app-rag-next-10-2026-07-15"
+    },
+    {
+      "key": "llm-api-security",
+      "label": "API Key、代理层与客户端安全",
+      "filePath": "llm/dev",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "ai-app-rag-next-10-2026-07-15"
+    },
+    {
+      "key": "llm-token-budget",
+      "label": "Token 预算、截断与上下文分配",
+      "filePath": "llm/dev",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "ai-app-rag-next-10-2026-07-15"
+    },
+    {
+      "key": "llm-user-feedback",
+      "label": "用户反馈采集与质量闭环",
+      "filePath": "llm/dev",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "ai-app-rag-next-10-2026-07-15"
+    },
+    {
+      "key": "rag-query-rewrite",
+      "label": "查询改写、分解与扩展",
+      "filePath": "llm/rag",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "ai-app-rag-next-10-2026-07-15"
+    },
+    {
+      "key": "rag-reranking",
+      "label": "Rerank 重排序原理与实践",
+      "filePath": "llm/rag",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "ai-app-rag-next-10-2026-07-15"
+    },
+    {
+      "key": "rag-metadata-filtering",
+      "label": "元数据过滤与结构化检索",
+      "filePath": "llm/rag",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "ai-app-rag-next-10-2026-07-15"
+    },
+    {
+      "key": "rag-citation-grounding",
+      "label": "引用溯源、Grounding 与事实一致性",
+      "filePath": "llm/rag",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "ai-app-rag-next-10-2026-07-15"
+    },
+    {
+      "key": "rag-access-control",
+      "label": "RAG 数据权限与多租户隔离",
+      "filePath": "llm/rag",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "ai-app-rag-next-10-2026-07-15"
     }
   ]
 }

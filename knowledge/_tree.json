@@ -346,35 +346,35 @@
             "key": "llm-audio-realtime",
             "isLeaf": true,
             "filePath": "llm/dev",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "模型供应商抽象层设计",
             "key": "llm-provider-abstraction",
             "isLeaf": true,
             "filePath": "llm/dev",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "API Key、代理层与客户端安全",
             "key": "llm-api-security",
             "isLeaf": true,
             "filePath": "llm/dev",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "Token 预算、截断与上下文分配",
             "key": "llm-token-budget",
             "isLeaf": true,
             "filePath": "llm/dev",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "用户反馈采集与质量闭环",
             "key": "llm-user-feedback",
             "isLeaf": true,
             "filePath": "llm/dev",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "Anthropic Claude SDK 核心使用",
@@ -464,35 +464,35 @@
             "key": "rag-query-rewrite",
             "isLeaf": true,
             "filePath": "llm/rag",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "Rerank 重排序原理与实践",
             "key": "rag-reranking",
             "isLeaf": true,
             "filePath": "llm/rag",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "元数据过滤与结构化检索",
             "key": "rag-metadata-filtering",
             "isLeaf": true,
             "filePath": "llm/rag",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "引用溯源、Grounding 与事实一致性",
             "key": "rag-citation-grounding",
             "isLeaf": true,
             "filePath": "llm/rag",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "RAG 数据权限与多租户隔离",
             "key": "rag-access-control",
             "isLeaf": true,
             "filePath": "llm/rag",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "生产级文档解析、索引与增量更新",
