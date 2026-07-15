@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
-  "updatedAt": "2026-07-14",
+  "updatedAt": "2026-07-15",
   "records": [
     {
       "key": "transformer-arch",
@@ -267,7 +267,7 @@
       "key": "llm-capability-boundaries",
       "label": "大模型的能力边界、幻觉与不确定性",
       "filePath": "llm/basics",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-14",
       "batch": "llm-foundations-next-10-2026-07-14"
@@ -276,7 +276,7 @@
       "key": "llm-multimodal-basics",
       "label": "多模态模型基础：文本 / 图像 / 音频",
       "filePath": "llm/basics",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-14",
       "batch": "llm-foundations-next-10-2026-07-14"
@@ -285,7 +285,7 @@
       "key": "llm-tokenizer",
       "label": "Tokenizer、词表与子词切分",
       "filePath": "llm/basics",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-14",
       "batch": "llm-foundations-next-10-2026-07-14"
@@ -294,7 +294,7 @@
       "key": "llm-training-overview",
       "label": "大模型训练全流程概览",
       "filePath": "llm/basics",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-14",
       "batch": "llm-foundations-next-10-2026-07-14"
@@ -303,7 +303,7 @@
       "key": "llm-pretraining",
       "label": "预训练目标、数据与 Scaling",
       "filePath": "llm/basics",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-14",
       "batch": "llm-foundations-next-10-2026-07-14"
@@ -312,7 +312,7 @@
       "key": "llm-alignment",
       "label": "模型对齐：SFT、偏好数据与安全",
       "filePath": "llm/basics",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-14",
       "batch": "llm-foundations-next-10-2026-07-14"
@@ -321,7 +321,7 @@
       "key": "llm-rlhf-dpo",
       "label": "RLHF、RLAIF 与 DPO 的差异",
       "filePath": "llm/basics",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-14",
       "batch": "llm-foundations-next-10-2026-07-14"
@@ -330,7 +330,7 @@
       "key": "llm-quantization",
       "label": "模型量化与精度权衡",
       "filePath": "llm/basics",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-14",
       "batch": "llm-foundations-next-10-2026-07-14"
@@ -339,7 +339,7 @@
       "key": "llm-moe",
       "label": "MoE 混合专家模型原理",
       "filePath": "llm/basics",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-14",
       "batch": "llm-foundations-next-10-2026-07-14"
@@ -348,10 +348,100 @@
       "key": "llm-reasoning-models",
       "label": "推理模型、思考预算与使用边界",
       "filePath": "llm/basics",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-14",
       "batch": "llm-foundations-next-10-2026-07-14"
+    },
+    {
+      "key": "llm-long-context",
+      "label": "长上下文、注意力稀释与有效利用",
+      "filePath": "llm/basics",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "long-context-prompt-next-10-2026-07-15"
+    },
+    {
+      "key": "llm-open-source-deployment",
+      "label": "开源模型选型、推理与本地部署",
+      "filePath": "llm/basics",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "long-context-prompt-next-10-2026-07-15"
+    },
+    {
+      "key": "prompt-testing-debugging",
+      "label": "Prompt 调试、测试与回归验证",
+      "filePath": "llm/prompt",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "long-context-prompt-next-10-2026-07-15"
+    },
+    {
+      "key": "prompt-role-boundaries",
+      "label": "System、Developer、User 消息的职责边界",
+      "filePath": "llm/prompt",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "long-context-prompt-next-10-2026-07-15"
+    },
+    {
+      "key": "prompt-instruction-hierarchy",
+      "label": "指令优先级与冲突处理",
+      "filePath": "llm/prompt",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "long-context-prompt-next-10-2026-07-15"
+    },
+    {
+      "key": "prompt-template-design",
+      "label": "Prompt 模板、变量与复用设计",
+      "filePath": "llm/prompt",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "long-context-prompt-next-10-2026-07-15"
+    },
+    {
+      "key": "prompt-examples-selection",
+      "label": "示例选择、排序与动态 Few-Shot",
+      "filePath": "llm/prompt",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "long-context-prompt-next-10-2026-07-15"
+    },
+    {
+      "key": "prompt-output-validation",
+      "label": "模型输出校验与自动修复",
+      "filePath": "llm/prompt",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "long-context-prompt-next-10-2026-07-15"
+    },
+    {
+      "key": "prompt-context-compression",
+      "label": "上下文压缩、摘要与裁剪",
+      "filePath": "llm/prompt",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "long-context-prompt-next-10-2026-07-15"
+    },
+    {
+      "key": "prompt-cache-design",
+      "label": "Prompt Cache 与稳定前缀设计",
+      "filePath": "llm/prompt",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "long-context-prompt-next-10-2026-07-15"
     }
   ]
 }
