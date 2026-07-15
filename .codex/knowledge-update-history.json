@@ -537,7 +537,7 @@
       "key": "llm-audio-realtime",
       "label": "语音、音频与 Realtime 应用",
       "filePath": "llm/dev",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "ai-app-rag-next-10-2026-07-15"
@@ -546,7 +546,7 @@
       "key": "llm-provider-abstraction",
       "label": "模型供应商抽象层设计",
       "filePath": "llm/dev",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "ai-app-rag-next-10-2026-07-15"
@@ -555,7 +555,7 @@
       "key": "llm-api-security",
       "label": "API Key、代理层与客户端安全",
       "filePath": "llm/dev",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "ai-app-rag-next-10-2026-07-15"
@@ -564,7 +564,7 @@
       "key": "llm-token-budget",
       "label": "Token 预算、截断与上下文分配",
       "filePath": "llm/dev",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "ai-app-rag-next-10-2026-07-15"
@@ -573,7 +573,7 @@
       "key": "llm-user-feedback",
       "label": "用户反馈采集与质量闭环",
       "filePath": "llm/dev",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "ai-app-rag-next-10-2026-07-15"
@@ -582,7 +582,7 @@
       "key": "rag-query-rewrite",
       "label": "查询改写、分解与扩展",
       "filePath": "llm/rag",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "ai-app-rag-next-10-2026-07-15"
@@ -591,7 +591,7 @@
       "key": "rag-reranking",
       "label": "Rerank 重排序原理与实践",
       "filePath": "llm/rag",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "ai-app-rag-next-10-2026-07-15"
@@ -600,7 +600,7 @@
       "key": "rag-metadata-filtering",
       "label": "元数据过滤与结构化检索",
       "filePath": "llm/rag",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "ai-app-rag-next-10-2026-07-15"
@@ -609,7 +609,7 @@
       "key": "rag-citation-grounding",
       "label": "引用溯源、Grounding 与事实一致性",
       "filePath": "llm/rag",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "ai-app-rag-next-10-2026-07-15"
@@ -618,10 +618,190 @@
       "key": "rag-access-control",
       "label": "RAG 数据权限与多租户隔离",
       "filePath": "llm/rag",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "ai-app-rag-next-10-2026-07-15"
+    },
+    {
+      "key": "rag-production-ingestion",
+      "label": "生产级文档解析、索引与增量更新",
+      "filePath": "llm/rag",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "rag-production-agent-next-20-2026-07-15"
+    },
+    {
+      "key": "rag-loader-parser",
+      "label": "文档 Loader、Parser 与版面解析",
+      "filePath": "llm/rag",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "rag-production-agent-next-20-2026-07-15"
+    },
+    {
+      "key": "rag-table-retrieval",
+      "label": "表格、数据库与结构化数据检索",
+      "filePath": "llm/rag",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "rag-production-agent-next-20-2026-07-15"
+    },
+    {
+      "key": "rag-image-retrieval",
+      "label": "图像、OCR 与多模态检索",
+      "filePath": "llm/rag",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "rag-production-agent-next-20-2026-07-15"
+    },
+    {
+      "key": "rag-code-retrieval",
+      "label": "代码仓库切分、索引与检索",
+      "filePath": "llm/rag",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "rag-production-agent-next-20-2026-07-15"
+    },
+    {
+      "key": "rag-graph-rag",
+      "label": "GraphRAG 与知识图谱增强检索",
+      "filePath": "llm/rag",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "rag-production-agent-next-20-2026-07-15"
+    },
+    {
+      "key": "rag-parent-child",
+      "label": "Parent-Child 与 Small-to-Big Retrieval",
+      "filePath": "llm/rag",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "rag-production-agent-next-20-2026-07-15"
+    },
+    {
+      "key": "rag-multi-query",
+      "label": "Multi-Query 与多路召回",
+      "filePath": "llm/rag",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "rag-production-agent-next-20-2026-07-15"
+    },
+    {
+      "key": "rag-routing",
+      "label": "查询路由与多索引选择",
+      "filePath": "llm/rag",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "rag-production-agent-next-20-2026-07-15"
+    },
+    {
+      "key": "rag-context-compression",
+      "label": "检索上下文压缩与去噪",
+      "filePath": "llm/rag",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "rag-production-agent-next-20-2026-07-15"
+    },
+    {
+      "key": "rag-deduplication",
+      "label": "文档去重、近重复检测与规范化",
+      "filePath": "llm/rag",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "rag-production-agent-next-20-2026-07-15"
+    },
+    {
+      "key": "rag-index-versioning",
+      "label": "索引版本、重建与回滚",
+      "filePath": "llm/rag",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "rag-production-agent-next-20-2026-07-15"
+    },
+    {
+      "key": "rag-cache",
+      "label": "Embedding、检索与答案缓存",
+      "filePath": "llm/rag",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "rag-production-agent-next-20-2026-07-15"
+    },
+    {
+      "key": "rag-latency-cost",
+      "label": "RAG 延迟、吞吐与成本优化",
+      "filePath": "llm/rag",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "rag-production-agent-next-20-2026-07-15"
+    },
+    {
+      "key": "rag-testing",
+      "label": "RAG 测试集、Golden Set 与回归测试",
+      "filePath": "llm/rag",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "rag-production-agent-next-20-2026-07-15"
+    },
+    {
+      "key": "rag-failure-debugging",
+      "label": "RAG 失败诊断：数据、召回、排序与生成",
+      "filePath": "llm/rag",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "rag-production-agent-next-20-2026-07-15"
+    },
+    {
+      "key": "agent-tool-design",
+      "label": "Agent 工具契约、Schema 与错误语义",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "rag-production-agent-next-20-2026-07-15"
+    },
+    {
+      "key": "agent-workflow-state",
+      "label": "工作流状态、检查点与断点续跑",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "rag-production-agent-next-20-2026-07-15"
+    },
+    {
+      "key": "agent-planning",
+      "label": "任务规划、分解与动态重规划",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "rag-production-agent-next-20-2026-07-15"
+    },
+    {
+      "key": "agent-handoff",
+      "label": "Handoff、Agent-as-Tool 与职责边界",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "rag-production-agent-next-20-2026-07-15"
     }
   ]
 }
