@@ -117,14 +117,14 @@
             "key": "llm-long-context",
             "isLeaf": true,
             "filePath": "llm/basics",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "开源模型选型、推理与本地部署",
             "key": "llm-open-source-deployment",
             "isLeaf": true,
             "filePath": "llm/basics",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           }
         ]
       },
@@ -186,56 +186,56 @@
             "key": "prompt-testing-debugging",
             "isLeaf": true,
             "filePath": "llm/prompt",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "System、Developer、User 消息的职责边界",
             "key": "prompt-role-boundaries",
             "isLeaf": true,
             "filePath": "llm/prompt",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "指令优先级与冲突处理",
             "key": "prompt-instruction-hierarchy",
             "isLeaf": true,
             "filePath": "llm/prompt",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "Prompt 模板、变量与复用设计",
             "key": "prompt-template-design",
             "isLeaf": true,
             "filePath": "llm/prompt",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "示例选择、排序与动态 Few-Shot",
             "key": "prompt-examples-selection",
             "isLeaf": true,
             "filePath": "llm/prompt",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "模型输出校验与自动修复",
             "key": "prompt-output-validation",
             "isLeaf": true,
             "filePath": "llm/prompt",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "上下文压缩、摘要与裁剪",
             "key": "prompt-context-compression",
             "isLeaf": true,
             "filePath": "llm/prompt",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "Prompt Cache 与稳定前缀设计",
             "key": "prompt-cache-design",
             "isLeaf": true,
             "filePath": "llm/prompt",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           }
         ]
       },
