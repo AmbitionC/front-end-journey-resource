@@ -357,7 +357,7 @@
       "key": "llm-long-context",
       "label": "长上下文、注意力稀释与有效利用",
       "filePath": "llm/basics",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "long-context-prompt-next-10-2026-07-15"
@@ -366,7 +366,7 @@
       "key": "llm-open-source-deployment",
       "label": "开源模型选型、推理与本地部署",
       "filePath": "llm/basics",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "long-context-prompt-next-10-2026-07-15"
@@ -375,7 +375,7 @@
       "key": "prompt-testing-debugging",
       "label": "Prompt 调试、测试与回归验证",
       "filePath": "llm/prompt",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "long-context-prompt-next-10-2026-07-15"
@@ -384,7 +384,7 @@
       "key": "prompt-role-boundaries",
       "label": "System、Developer、User 消息的职责边界",
       "filePath": "llm/prompt",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "long-context-prompt-next-10-2026-07-15"
@@ -393,7 +393,7 @@
       "key": "prompt-instruction-hierarchy",
       "label": "指令优先级与冲突处理",
       "filePath": "llm/prompt",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "long-context-prompt-next-10-2026-07-15"
@@ -402,7 +402,7 @@
       "key": "prompt-template-design",
       "label": "Prompt 模板、变量与复用设计",
       "filePath": "llm/prompt",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "long-context-prompt-next-10-2026-07-15"
@@ -411,7 +411,7 @@
       "key": "prompt-examples-selection",
       "label": "示例选择、排序与动态 Few-Shot",
       "filePath": "llm/prompt",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "long-context-prompt-next-10-2026-07-15"
@@ -420,7 +420,7 @@
       "key": "prompt-output-validation",
       "label": "模型输出校验与自动修复",
       "filePath": "llm/prompt",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "long-context-prompt-next-10-2026-07-15"
@@ -429,7 +429,7 @@
       "key": "prompt-context-compression",
       "label": "上下文压缩、摘要与裁剪",
       "filePath": "llm/prompt",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "long-context-prompt-next-10-2026-07-15"
@@ -438,10 +438,100 @@
       "key": "prompt-cache-design",
       "label": "Prompt Cache 与稳定前缀设计",
       "filePath": "llm/prompt",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "long-context-prompt-next-10-2026-07-15"
+    },
+    {
+      "key": "llm-api-basics",
+      "label": "大模型 API 通用模型：消息、响应与计费",
+      "filePath": "llm/dev",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "ai-application-next-10-2026-07-15"
+    },
+    {
+      "key": "llm-conversation-state",
+      "label": "对话状态、会话与历史管理",
+      "filePath": "llm/dev",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "ai-application-next-10-2026-07-15"
+    },
+    {
+      "key": "llm-multimodal-api",
+      "label": "多模态输入输出应用开发",
+      "filePath": "llm/dev",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "ai-application-next-10-2026-07-15"
+    },
+    {
+      "key": "llm-error-retry-fallback",
+      "label": "超时、重试、Fallback 与错误处理",
+      "filePath": "llm/dev",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "ai-application-next-10-2026-07-15"
+    },
+    {
+      "key": "llm-model-routing",
+      "label": "模型路由与多供应商适配",
+      "filePath": "llm/dev",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "ai-application-next-10-2026-07-15"
+    },
+    {
+      "key": "llm-response-api-patterns",
+      "label": "Responses、Chat 与统一生成接口模式",
+      "filePath": "llm/dev",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "ai-application-next-10-2026-07-15"
+    },
+    {
+      "key": "llm-stream-cancel-resume",
+      "label": "流式请求取消、续传与状态恢复",
+      "filePath": "llm/dev",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "ai-application-next-10-2026-07-15"
+    },
+    {
+      "key": "llm-batch-api",
+      "label": "Batch 批处理与离线任务",
+      "filePath": "llm/dev",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "ai-application-next-10-2026-07-15"
+    },
+    {
+      "key": "llm-file-input",
+      "label": "文件上传、解析与大文件处理",
+      "filePath": "llm/dev",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "ai-application-next-10-2026-07-15"
+    },
+    {
+      "key": "llm-vision-app",
+      "label": "视觉理解与图像生成应用",
+      "filePath": "llm/dev",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-15",
+      "batch": "ai-application-next-10-2026-07-15"
     }
   ]
 }

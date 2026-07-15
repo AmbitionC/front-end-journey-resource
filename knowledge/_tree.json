@@ -248,7 +248,7 @@
             "key": "llm-api-basics",
             "isLeaf": true,
             "filePath": "llm/dev",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "OpenAI SDK 核心使用",
@@ -283,63 +283,63 @@
             "key": "llm-conversation-state",
             "isLeaf": true,
             "filePath": "llm/dev",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "多模态输入输出应用开发",
             "key": "llm-multimodal-api",
             "isLeaf": true,
             "filePath": "llm/dev",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "超时、重试、Fallback 与错误处理",
             "key": "llm-error-retry-fallback",
             "isLeaf": true,
             "filePath": "llm/dev",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "模型路由与多供应商适配",
             "key": "llm-model-routing",
             "isLeaf": true,
             "filePath": "llm/dev",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "Responses、Chat 与统一生成接口模式",
             "key": "llm-response-api-patterns",
             "isLeaf": true,
             "filePath": "llm/dev",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "流式请求取消、续传与状态恢复",
             "key": "llm-stream-cancel-resume",
             "isLeaf": true,
             "filePath": "llm/dev",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "Batch 批处理与离线任务",
             "key": "llm-batch-api",
             "isLeaf": true,
             "filePath": "llm/dev",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "文件上传、解析与大文件处理",
             "key": "llm-file-input",
             "isLeaf": true,
             "filePath": "llm/dev",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "视觉理解与图像生成应用",
             "key": "llm-vision-app",
             "isLeaf": true,
             "filePath": "llm/dev",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "语音、音频与 Realtime 应用",
