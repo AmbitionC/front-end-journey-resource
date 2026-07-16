@@ -807,7 +807,7 @@
       "key": "agent-human-in-loop",
       "label": "Human-in-the-loop 审批与人工接管",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-orchestration-next-10-2026-07-16"
@@ -816,7 +816,7 @@
       "key": "agent-sandbox",
       "label": "代码执行、浏览器与文件操作沙箱",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-orchestration-next-10-2026-07-16"
@@ -825,7 +825,7 @@
       "key": "agent-run-loop",
       "label": "Agent Run Loop、轮次与终止条件",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-orchestration-next-10-2026-07-16"
@@ -834,7 +834,7 @@
       "key": "agent-state-machine",
       "label": "用状态机建模 Agent 行为",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-orchestration-next-10-2026-07-16"
@@ -843,7 +843,7 @@
       "key": "agent-event-driven",
       "label": "事件驱动 Agent 与异步编排",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-orchestration-next-10-2026-07-16"
@@ -852,7 +852,7 @@
       "key": "agent-deterministic-workflow",
       "label": "确定性 Workflow 与 Agent 的组合",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-orchestration-next-10-2026-07-16"
@@ -861,7 +861,7 @@
       "key": "agent-dynamic-workflow",
       "label": "动态工作流生成与执行",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-orchestration-next-10-2026-07-16"
@@ -870,7 +870,7 @@
       "key": "agent-tool-selection",
       "label": "工具发现、选择与路由",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-orchestration-next-10-2026-07-16"
@@ -879,7 +879,7 @@
       "key": "agent-tool-result-validation",
       "label": "工具结果校验、解析与反馈",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-orchestration-next-10-2026-07-16"
@@ -888,10 +888,190 @@
       "key": "agent-tool-timeout",
       "label": "工具超时、取消与重试",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-orchestration-next-10-2026-07-16"
+    },
+    {
+      "key": "agent-parallel-tools",
+      "label": "并行工具调用与依赖调度",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-multi-production-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-subagents",
+      "label": "Subagent 子智能体设计",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-multi-production-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-supervisor",
+      "label": "Supervisor 监督者模式",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-multi-production-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-delegation",
+      "label": "任务委派、职责与结果合并",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-multi-production-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-multi-agent-messaging",
+      "label": "多智能体消息、协议与状态同步",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-multi-production-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-memory-architecture",
+      "label": "Agent 记忆系统架构设计",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-multi-production-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-memory-summarization",
+      "label": "会话摘要、压缩与记忆提炼",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-multi-production-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-memory-forgetting",
+      "label": "遗忘策略、冲突处理与记忆更新",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-multi-production-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-browser-use",
+      "label": "Browser-use 网页操作智能体",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-multi-production-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-computer-use",
+      "label": "Computer-use 桌面操作智能体",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-multi-production-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-coding",
+      "label": "Coding Agent 的架构与执行循环",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-multi-production-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-voice",
+      "label": "Voice Agent 与实时对话编排",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-multi-production-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-guardrails",
+      "label": "输入、输出与工具 Guardrails",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-multi-production-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-permission-model",
+      "label": "最小权限、授权与工具调用确认",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-multi-production-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-failure-recovery",
+      "label": "失败分类、重试、补偿与恢复",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-multi-production-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-idempotency",
+      "label": "幂等性、重复执行与副作用控制",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-multi-production-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-data-privacy",
+      "label": "敏感数据、日志脱敏与隐私保护",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-multi-production-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-security-threat-model",
+      "label": "Agent 威胁建模与安全测试",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-multi-production-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-deployment",
+      "label": "Agent 服务部署、扩缩容与版本发布",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-multi-production-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-feedback-loop",
+      "label": "线上反馈、评估集与持续改进闭环",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-multi-production-next-20-2026-07-16"
     }
   ]
 }

@@ -792,84 +792,84 @@
             "key": "agent-parallel-tools",
             "isLeaf": true,
             "filePath": "llm/agent",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "Subagent 子智能体设计",
             "key": "agent-subagents",
             "isLeaf": true,
             "filePath": "llm/agent",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "Supervisor 监督者模式",
             "key": "agent-supervisor",
             "isLeaf": true,
             "filePath": "llm/agent",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "任务委派、职责与结果合并",
             "key": "agent-delegation",
             "isLeaf": true,
             "filePath": "llm/agent",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "多智能体消息、协议与状态同步",
             "key": "agent-multi-agent-messaging",
             "isLeaf": true,
             "filePath": "llm/agent",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "Agent 记忆系统架构设计",
             "key": "agent-memory-architecture",
             "isLeaf": true,
             "filePath": "llm/agent",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "会话摘要、压缩与记忆提炼",
             "key": "agent-memory-summarization",
             "isLeaf": true,
             "filePath": "llm/agent",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "遗忘策略、冲突处理与记忆更新",
             "key": "agent-memory-forgetting",
             "isLeaf": true,
             "filePath": "llm/agent",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "Browser-use 网页操作智能体",
             "key": "agent-browser-use",
             "isLeaf": true,
             "filePath": "llm/agent",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "Computer-use 桌面操作智能体",
             "key": "agent-computer-use",
             "isLeaf": true,
             "filePath": "llm/agent",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "Coding Agent 的架构与执行循环",
             "key": "agent-coding",
             "isLeaf": true,
             "filePath": "llm/agent",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "Voice Agent 与实时对话编排",
             "key": "agent-voice",
             "isLeaf": true,
             "filePath": "llm/agent",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           }
         ]
       },
@@ -917,56 +917,56 @@
             "key": "agent-guardrails",
             "isLeaf": true,
             "filePath": "llm/production",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "最小权限、授权与工具调用确认",
             "key": "agent-permission-model",
             "isLeaf": true,
             "filePath": "llm/production",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "失败分类、重试、补偿与恢复",
             "key": "agent-failure-recovery",
             "isLeaf": true,
             "filePath": "llm/production",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "幂等性、重复执行与副作用控制",
             "key": "agent-idempotency",
             "isLeaf": true,
             "filePath": "llm/production",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "敏感数据、日志脱敏与隐私保护",
             "key": "agent-data-privacy",
             "isLeaf": true,
             "filePath": "llm/production",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "Agent 威胁建模与安全测试",
             "key": "agent-security-threat-model",
             "isLeaf": true,
             "filePath": "llm/production",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "Agent 服务部署、扩缩容与版本发布",
             "key": "agent-deployment",
             "isLeaf": true,
             "filePath": "llm/production",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "线上反馈、评估集与持续改进闭环",
             "key": "agent-feedback-loop",
             "isLeaf": true,
             "filePath": "llm/production",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "Trace、Span、Run 与工具调用事件模型",
