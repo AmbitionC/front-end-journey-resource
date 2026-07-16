@@ -722,70 +722,70 @@
             "key": "agent-human-in-loop",
             "isLeaf": true,
             "filePath": "llm/agent",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "代码执行、浏览器与文件操作沙箱",
             "key": "agent-sandbox",
             "isLeaf": true,
             "filePath": "llm/agent",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "Agent Run Loop、轮次与终止条件",
             "key": "agent-run-loop",
             "isLeaf": true,
             "filePath": "llm/agent",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "用状态机建模 Agent 行为",
             "key": "agent-state-machine",
             "isLeaf": true,
             "filePath": "llm/agent",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "事件驱动 Agent 与异步编排",
             "key": "agent-event-driven",
             "isLeaf": true,
             "filePath": "llm/agent",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "确定性 Workflow 与 Agent 的组合",
             "key": "agent-deterministic-workflow",
             "isLeaf": true,
             "filePath": "llm/agent",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "动态工作流生成与执行",
             "key": "agent-dynamic-workflow",
             "isLeaf": true,
             "filePath": "llm/agent",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "工具发现、选择与路由",
             "key": "agent-tool-selection",
             "isLeaf": true,
             "filePath": "llm/agent",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "工具结果校验、解析与反馈",
             "key": "agent-tool-result-validation",
             "isLeaf": true,
             "filePath": "llm/agent",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "工具超时、取消与重试",
             "key": "agent-tool-timeout",
             "isLeaf": true,
             "filePath": "llm/agent",
-            "contentStatus": "coming-soon"
+            "contentStatus": "published"
           },
           {
             "label": "并行工具调用与依赖调度",

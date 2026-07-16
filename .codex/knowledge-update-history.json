@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
-  "updatedAt": "2026-07-15",
+  "updatedAt": "2026-07-16",
   "records": [
     {
       "key": "transformer-arch",
@@ -627,7 +627,7 @@
       "key": "rag-production-ingestion",
       "label": "生产级文档解析、索引与增量更新",
       "filePath": "llm/rag",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "rag-production-agent-next-20-2026-07-15"
@@ -636,7 +636,7 @@
       "key": "rag-loader-parser",
       "label": "文档 Loader、Parser 与版面解析",
       "filePath": "llm/rag",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "rag-production-agent-next-20-2026-07-15"
@@ -645,7 +645,7 @@
       "key": "rag-table-retrieval",
       "label": "表格、数据库与结构化数据检索",
       "filePath": "llm/rag",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "rag-production-agent-next-20-2026-07-15"
@@ -654,7 +654,7 @@
       "key": "rag-image-retrieval",
       "label": "图像、OCR 与多模态检索",
       "filePath": "llm/rag",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "rag-production-agent-next-20-2026-07-15"
@@ -663,7 +663,7 @@
       "key": "rag-code-retrieval",
       "label": "代码仓库切分、索引与检索",
       "filePath": "llm/rag",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "rag-production-agent-next-20-2026-07-15"
@@ -672,7 +672,7 @@
       "key": "rag-graph-rag",
       "label": "GraphRAG 与知识图谱增强检索",
       "filePath": "llm/rag",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "rag-production-agent-next-20-2026-07-15"
@@ -681,7 +681,7 @@
       "key": "rag-parent-child",
       "label": "Parent-Child 与 Small-to-Big Retrieval",
       "filePath": "llm/rag",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "rag-production-agent-next-20-2026-07-15"
@@ -690,7 +690,7 @@
       "key": "rag-multi-query",
       "label": "Multi-Query 与多路召回",
       "filePath": "llm/rag",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "rag-production-agent-next-20-2026-07-15"
@@ -699,7 +699,7 @@
       "key": "rag-routing",
       "label": "查询路由与多索引选择",
       "filePath": "llm/rag",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "rag-production-agent-next-20-2026-07-15"
@@ -708,7 +708,7 @@
       "key": "rag-context-compression",
       "label": "检索上下文压缩与去噪",
       "filePath": "llm/rag",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "rag-production-agent-next-20-2026-07-15"
@@ -717,7 +717,7 @@
       "key": "rag-deduplication",
       "label": "文档去重、近重复检测与规范化",
       "filePath": "llm/rag",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "rag-production-agent-next-20-2026-07-15"
@@ -726,7 +726,7 @@
       "key": "rag-index-versioning",
       "label": "索引版本、重建与回滚",
       "filePath": "llm/rag",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "rag-production-agent-next-20-2026-07-15"
@@ -735,7 +735,7 @@
       "key": "rag-cache",
       "label": "Embedding、检索与答案缓存",
       "filePath": "llm/rag",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "rag-production-agent-next-20-2026-07-15"
@@ -744,7 +744,7 @@
       "key": "rag-latency-cost",
       "label": "RAG 延迟、吞吐与成本优化",
       "filePath": "llm/rag",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "rag-production-agent-next-20-2026-07-15"
@@ -753,7 +753,7 @@
       "key": "rag-testing",
       "label": "RAG 测试集、Golden Set 与回归测试",
       "filePath": "llm/rag",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "rag-production-agent-next-20-2026-07-15"
@@ -762,7 +762,7 @@
       "key": "rag-failure-debugging",
       "label": "RAG 失败诊断：数据、召回、排序与生成",
       "filePath": "llm/rag",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "rag-production-agent-next-20-2026-07-15"
@@ -771,7 +771,7 @@
       "key": "agent-tool-design",
       "label": "Agent 工具契约、Schema 与错误语义",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "rag-production-agent-next-20-2026-07-15"
@@ -780,7 +780,7 @@
       "key": "agent-workflow-state",
       "label": "工作流状态、检查点与断点续跑",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "rag-production-agent-next-20-2026-07-15"
@@ -789,7 +789,7 @@
       "key": "agent-planning",
       "label": "任务规划、分解与动态重规划",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "rag-production-agent-next-20-2026-07-15"
@@ -798,10 +798,100 @@
       "key": "agent-handoff",
       "label": "Handoff、Agent-as-Tool 与职责边界",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-15",
       "batch": "rag-production-agent-next-20-2026-07-15"
+    },
+    {
+      "key": "agent-human-in-loop",
+      "label": "Human-in-the-loop 审批与人工接管",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-orchestration-next-10-2026-07-16"
+    },
+    {
+      "key": "agent-sandbox",
+      "label": "代码执行、浏览器与文件操作沙箱",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-orchestration-next-10-2026-07-16"
+    },
+    {
+      "key": "agent-run-loop",
+      "label": "Agent Run Loop、轮次与终止条件",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-orchestration-next-10-2026-07-16"
+    },
+    {
+      "key": "agent-state-machine",
+      "label": "用状态机建模 Agent 行为",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-orchestration-next-10-2026-07-16"
+    },
+    {
+      "key": "agent-event-driven",
+      "label": "事件驱动 Agent 与异步编排",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-orchestration-next-10-2026-07-16"
+    },
+    {
+      "key": "agent-deterministic-workflow",
+      "label": "确定性 Workflow 与 Agent 的组合",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-orchestration-next-10-2026-07-16"
+    },
+    {
+      "key": "agent-dynamic-workflow",
+      "label": "动态工作流生成与执行",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-orchestration-next-10-2026-07-16"
+    },
+    {
+      "key": "agent-tool-selection",
+      "label": "工具发现、选择与路由",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-orchestration-next-10-2026-07-16"
+    },
+    {
+      "key": "agent-tool-result-validation",
+      "label": "工具结果校验、解析与反馈",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-orchestration-next-10-2026-07-16"
+    },
+    {
+      "key": "agent-tool-timeout",
+      "label": "工具超时、取消与重试",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-orchestration-next-10-2026-07-16"
     }
   ]
 }
