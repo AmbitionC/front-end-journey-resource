@@ -897,7 +897,7 @@
       "key": "agent-parallel-tools",
       "label": "并行工具调用与依赖调度",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-multi-production-next-20-2026-07-16"
@@ -906,7 +906,7 @@
       "key": "agent-subagents",
       "label": "Subagent 子智能体设计",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-multi-production-next-20-2026-07-16"
@@ -915,7 +915,7 @@
       "key": "agent-supervisor",
       "label": "Supervisor 监督者模式",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-multi-production-next-20-2026-07-16"
@@ -924,7 +924,7 @@
       "key": "agent-delegation",
       "label": "任务委派、职责与结果合并",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-multi-production-next-20-2026-07-16"
@@ -933,7 +933,7 @@
       "key": "agent-multi-agent-messaging",
       "label": "多智能体消息、协议与状态同步",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-multi-production-next-20-2026-07-16"
@@ -942,7 +942,7 @@
       "key": "agent-memory-architecture",
       "label": "Agent 记忆系统架构设计",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-multi-production-next-20-2026-07-16"
@@ -951,7 +951,7 @@
       "key": "agent-memory-summarization",
       "label": "会话摘要、压缩与记忆提炼",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-multi-production-next-20-2026-07-16"
@@ -960,7 +960,7 @@
       "key": "agent-memory-forgetting",
       "label": "遗忘策略、冲突处理与记忆更新",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-multi-production-next-20-2026-07-16"
@@ -969,7 +969,7 @@
       "key": "agent-browser-use",
       "label": "Browser-use 网页操作智能体",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-multi-production-next-20-2026-07-16"
@@ -978,7 +978,7 @@
       "key": "agent-computer-use",
       "label": "Computer-use 桌面操作智能体",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-multi-production-next-20-2026-07-16"
@@ -987,7 +987,7 @@
       "key": "agent-coding",
       "label": "Coding Agent 的架构与执行循环",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-multi-production-next-20-2026-07-16"
@@ -996,7 +996,7 @@
       "key": "agent-voice",
       "label": "Voice Agent 与实时对话编排",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-multi-production-next-20-2026-07-16"
@@ -1005,7 +1005,7 @@
       "key": "agent-guardrails",
       "label": "输入、输出与工具 Guardrails",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-multi-production-next-20-2026-07-16"
@@ -1014,7 +1014,7 @@
       "key": "agent-permission-model",
       "label": "最小权限、授权与工具调用确认",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-multi-production-next-20-2026-07-16"
@@ -1023,7 +1023,7 @@
       "key": "agent-failure-recovery",
       "label": "失败分类、重试、补偿与恢复",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-multi-production-next-20-2026-07-16"
@@ -1032,7 +1032,7 @@
       "key": "agent-idempotency",
       "label": "幂等性、重复执行与副作用控制",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-multi-production-next-20-2026-07-16"
@@ -1041,7 +1041,7 @@
       "key": "agent-data-privacy",
       "label": "敏感数据、日志脱敏与隐私保护",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-multi-production-next-20-2026-07-16"
@@ -1050,7 +1050,7 @@
       "key": "agent-security-threat-model",
       "label": "Agent 威胁建模与安全测试",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-multi-production-next-20-2026-07-16"
@@ -1059,7 +1059,7 @@
       "key": "agent-deployment",
       "label": "Agent 服务部署、扩缩容与版本发布",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-multi-production-next-20-2026-07-16"
@@ -1068,10 +1068,190 @@
       "key": "agent-feedback-loop",
       "label": "线上反馈、评估集与持续改进闭环",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-multi-production-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-trace-model",
+      "label": "Trace、Span、Run 与工具调用事件模型",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-observability-security-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-metrics",
+      "label": "成功率、质量、延迟、成本与业务指标",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-observability-security-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-logs",
+      "label": "Agent 结构化日志与上下文关联",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-observability-security-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-debugging",
+      "label": "Agent 调试方法与失败复现",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-observability-security-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-test-pyramid",
+      "label": "Agent 单元、集成、场景与端到端测试",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-observability-security-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-simulation",
+      "label": "用户模拟器与环境模拟测试",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-observability-security-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-red-teaming",
+      "label": "Agent 红队测试与对抗样本",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-observability-security-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-benchmark",
+      "label": "Agent Benchmark 的设计与解读",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-observability-security-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-online-eval",
+      "label": "在线评估、抽样与质量监控",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-observability-security-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-ab-testing",
+      "label": "Agent A/B 测试与实验设计",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-observability-security-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-quality-gates",
+      "label": "发布质量门禁与回归阻断",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-observability-security-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-prompt-regression",
+      "label": "Prompt、工具与模型升级回归测试",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-observability-security-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-indirect-injection",
+      "label": "网页、文件与邮件中的间接 Prompt Injection",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-observability-security-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-tool-poisoning",
+      "label": "工具描述、Schema 与返回值投毒",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-observability-security-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-memory-poisoning",
+      "label": "记忆污染与持久化攻击",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-observability-security-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-data-exfiltration",
+      "label": "数据外泄路径与阻断策略",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-observability-security-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-identity-auth",
+      "label": "Agent 身份、用户身份与委托授权",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-observability-security-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-secrets-management",
+      "label": "密钥、凭证与 Secret 生命周期",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-observability-security-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-supply-chain",
+      "label": "模型、工具、MCP 与依赖供应链安全",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-observability-security-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-network-egress",
+      "label": "网络出口、域名白名单与数据边界",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-16",
+      "batch": "agent-observability-security-next-20-2026-07-16"
     }
   ]
 }
