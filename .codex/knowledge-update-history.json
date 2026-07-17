@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
-  "updatedAt": "2026-07-16",
+  "updatedAt": "2026-07-17",
   "records": [
     {
       "key": "transformer-arch",
@@ -1257,7 +1257,7 @@
       "key": "agent-sandbox-escape",
       "label": "沙箱逃逸风险与纵深防御",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-17",
       "batch": "agent-platform-backend-next-20-2026-07-17"
@@ -1266,7 +1266,7 @@
       "key": "agent-audit-log",
       "label": "不可抵赖审计日志与合规留痕",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-17",
       "batch": "agent-platform-backend-next-20-2026-07-17"
@@ -1275,7 +1275,7 @@
       "key": "agent-api-gateway",
       "label": "Agent Gateway 与统一接入层",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-17",
       "batch": "agent-platform-backend-next-20-2026-07-17"
@@ -1284,7 +1284,7 @@
       "key": "agent-queue-worker",
       "label": "队列、Worker 与长任务执行",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-17",
       "batch": "agent-platform-backend-next-20-2026-07-17"
@@ -1293,7 +1293,7 @@
       "key": "agent-concurrency",
       "label": "并发控制、资源隔离与公平调度",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-17",
       "batch": "agent-platform-backend-next-20-2026-07-17"
@@ -1302,7 +1302,7 @@
       "key": "agent-timeout-budget",
       "label": "端到端超时预算与 Deadline 传播",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-17",
       "batch": "agent-platform-backend-next-20-2026-07-17"
@@ -1311,7 +1311,7 @@
       "key": "agent-cache",
       "label": "模型、工具、检索与结果缓存",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-17",
       "batch": "agent-platform-backend-next-20-2026-07-17"
@@ -1320,7 +1320,7 @@
       "key": "agent-model-fallback",
       "label": "模型降级、Fallback 与熔断",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-17",
       "batch": "agent-platform-backend-next-20-2026-07-17"
@@ -1329,7 +1329,7 @@
       "key": "agent-disaster-recovery",
       "label": "状态备份、灾难恢复与任务重放",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-17",
       "batch": "agent-platform-backend-next-20-2026-07-17"
@@ -1338,7 +1338,7 @@
       "key": "agent-canary-release",
       "label": "灰度、Canary 与模型版本发布",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-17",
       "batch": "agent-platform-backend-next-20-2026-07-17"
@@ -1347,7 +1347,7 @@
       "key": "agent-slo",
       "label": "Agent SLI、SLO 与错误预算",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-17",
       "batch": "agent-platform-backend-next-20-2026-07-17"
@@ -1356,7 +1356,7 @@
       "key": "agent-incident-response",
       "label": "Agent 线上事故响应与复盘",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-17",
       "batch": "agent-platform-backend-next-20-2026-07-17"
@@ -1365,7 +1365,7 @@
       "key": "api-schema-validation",
       "label": "API Schema 校验、错误码与契约测试",
       "filePath": "backend/api",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-17",
       "batch": "agent-platform-backend-next-20-2026-07-17"
@@ -1374,7 +1374,7 @@
       "key": "async-job-queue",
       "label": "消息队列、异步任务与后台 Job",
       "filePath": "backend/api",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-17",
       "batch": "agent-platform-backend-next-20-2026-07-17"
@@ -1383,7 +1383,7 @@
       "key": "grpc-basics",
       "label": "gRPC、Protobuf 与服务通信",
       "filePath": "backend/api",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-17",
       "batch": "agent-platform-backend-next-20-2026-07-17"
@@ -1392,7 +1392,7 @@
       "key": "webhook-design",
       "label": "Webhook 签名、重试与幂等",
       "filePath": "backend/api",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-17",
       "batch": "agent-platform-backend-next-20-2026-07-17"
@@ -1401,7 +1401,7 @@
       "key": "file-upload-service",
       "label": "文件上传、分片与对象存储",
       "filePath": "backend/api",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-17",
       "batch": "agent-platform-backend-next-20-2026-07-17"
@@ -1410,7 +1410,7 @@
       "key": "api-pagination-filtering",
       "label": "分页、过滤、排序与游标设计",
       "filePath": "backend/api",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-17",
       "batch": "agent-platform-backend-next-20-2026-07-17"
@@ -1419,7 +1419,7 @@
       "key": "api-idempotency",
       "label": "API 幂等键与重复请求处理",
       "filePath": "backend/api",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-17",
       "batch": "agent-platform-backend-next-20-2026-07-17"
@@ -1428,10 +1428,460 @@
       "key": "agent-state-storage",
       "label": "Agent 会话、检查点与任务状态存储",
       "filePath": "backend/storage",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-17",
       "batch": "agent-platform-backend-next-20-2026-07-17"
+    },
+    {
+      "key": "postgresql-transaction",
+      "label": "PostgreSQL 事务、MVCC 与锁",
+      "filePath": "backend/storage",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "database-migration",
+      "label": "数据库 Migration、回滚与兼容发布",
+      "filePath": "backend/storage",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "object-storage",
+      "label": "对象存储、预签名 URL 与生命周期",
+      "filePath": "backend/storage",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "event-store",
+      "label": "事件存储、Outbox 与状态重建",
+      "filePath": "backend/storage",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "secrets-config",
+      "label": "配置、Secret 与环境隔离",
+      "filePath": "backend/ops",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "health-check",
+      "label": "健康检查、优雅启停与就绪探针",
+      "filePath": "backend/ops",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "backup-restore",
+      "label": "数据库备份、恢复与演练",
+      "filePath": "backend/ops",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "data-schema-evolution",
+      "label": "数据 Schema 演进与兼容性",
+      "filePath": "data/processing",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "data-deduplication",
+      "label": "精确去重、近似去重与污染控制",
+      "filePath": "data/processing",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "data-sampling",
+      "label": "数据采样、分层与代表性",
+      "filePath": "data/processing",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "vector-database-internals",
+      "label": "向量数据库索引、过滤与一致性",
+      "filePath": "data/storage",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "batch-stream-processing",
+      "label": "批处理、流处理与 Lambda/Kappa 架构",
+      "filePath": "data/pipeline",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "data-orchestration",
+      "label": "数据任务编排、依赖与重试",
+      "filePath": "data/pipeline",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "data-lineage",
+      "label": "数据血缘、元数据与可追溯性",
+      "filePath": "data/pipeline",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "data-observability",
+      "label": "数据新鲜度、完整性与管道可观测",
+      "filePath": "data/pipeline",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "data-contracts",
+      "label": "Data Contract 与上下游协作",
+      "filePath": "data/pipeline",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "experiment-analysis",
+      "label": "实验设计、显著性与效果分析",
+      "filePath": "data/analysis",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "feature-store",
+      "label": "特征、标签与 Feature Store 基础",
+      "filePath": "data/analysis",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "algorithm-complexity",
+      "label": "时间复杂度、空间复杂度与性能估算",
+      "filePath": "cs/algorithm",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "algorithm-stack-queue",
+      "label": "栈、队列与任务调度",
+      "filePath": "cs/algorithm",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "algorithm-heap",
+      "label": "堆、优先队列与 Top-K",
+      "filePath": "cs/algorithm",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "algorithm-linked-list",
+      "label": "链表、指针与 LRU",
+      "filePath": "cs/algorithm",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "algorithm-trie",
+      "label": "Trie、前缀检索与自动补全",
+      "filePath": "cs/algorithm",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "algorithm-sorting",
+      "label": "排序算法、稳定性与外部排序",
+      "filePath": "cs/algorithm",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "algorithm-graph",
+      "label": "BFS、DFS、最短路与拓扑排序",
+      "filePath": "cs/algorithm",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "algorithm-backtracking",
+      "label": "回溯、剪枝与组合搜索",
+      "filePath": "cs/algorithm",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "linear-algebra-ai",
+      "label": "向量、矩阵与线性代数直觉",
+      "filePath": "cs/algorithm",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "probability-statistics-ai",
+      "label": "概率、分布、采样与统计估计",
+      "filePath": "cs/algorithm",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "web-semantic-accessibility",
+      "label": "语义化 HTML 与 Web 可访问性",
+      "filePath": "frontend/web",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "vite-testing",
+      "label": "Vite、前端构建与测试基础",
+      "filePath": "frontend/engineering",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "agent-chat-ui",
+      "label": "Agent Chat UI、消息模型与会话列表",
+      "filePath": "frontend/agent-ui",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "agent-streaming-ui",
+      "label": "流式文本、光标、取消与继续生成",
+      "filePath": "frontend/agent-ui",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "agent-markdown-code-ui",
+      "label": "Markdown、代码块、图表与安全渲染",
+      "filePath": "frontend/agent-ui",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "agent-citation-ui",
+      "label": "引用、来源与检索证据展示",
+      "filePath": "frontend/agent-ui",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "agent-tool-approval-ui",
+      "label": "工具调用状态、参数预览与审批界面",
+      "filePath": "frontend/agent-ui",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "agent-error-retry-ui",
+      "label": "错误、重试、恢复与降级交互",
+      "filePath": "frontend/agent-ui",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "agent-ui-accessibility-testing",
+      "label": "Agent UI 可访问性、测试与跨端适配",
+      "filePath": "frontend/agent-ui",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "agent-project-requirements",
+      "label": "从真实需求定义 Agent 项目",
+      "filePath": "career",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "agent-project-evaluation",
+      "label": "用业务指标证明 Agent 项目价值",
+      "filePath": "career",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "agent-project-deployment",
+      "label": "将 Demo 做成可运行的线上项目",
+      "filePath": "career",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "agent-open-source-contribution",
+      "label": "参与 Agent 开源项目与技术社区",
+      "filePath": "career",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "agent-interview-system-design",
+      "label": "Agent 系统设计面试与案例拆解",
+      "filePath": "career",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "promise",
+      "label": "Promise、async/await 与异步控制流",
+      "filePath": "js-es6-ts/es6",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "responsive-layout",
+      "label": "现代 CSS 布局与响应式设计",
+      "filePath": "html-css/css",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "useCallback-useMemo",
+      "label": "React 渲染、Memo 与性能优化",
+      "filePath": "framework/react",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "tcpIp-model",
+      "label": "OSI、TCP/IP 与端到端通信",
+      "filePath": "network/tcpIp",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "ts-generics",
+      "label": "TypeScript 泛型与可复用类型",
+      "filePath": "js-es6-ts/ts",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "design-components",
+      "label": "可复用组件、状态与通信设计",
+      "filePath": "fe/design",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "node-knowledge",
+      "label": "Node.js 运行时与核心模块",
+      "filePath": "fe/node",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
+    },
+    {
+      "key": "dns-analysis",
+      "label": "DNS 解析、缓存与容灾",
+      "filePath": "network/others",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-07-17",
+      "batch": "complete-knowledge-next-50-2026-07-17"
     }
   ]
 }
