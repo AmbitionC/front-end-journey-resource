@@ -1077,7 +1077,7 @@
       "key": "agent-trace-model",
       "label": "Trace、Span、Run 与工具调用事件模型",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-observability-security-next-20-2026-07-16"
@@ -1086,7 +1086,7 @@
       "key": "agent-metrics",
       "label": "成功率、质量、延迟、成本与业务指标",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-observability-security-next-20-2026-07-16"
@@ -1095,7 +1095,7 @@
       "key": "agent-logs",
       "label": "Agent 结构化日志与上下文关联",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-observability-security-next-20-2026-07-16"
@@ -1104,7 +1104,7 @@
       "key": "agent-debugging",
       "label": "Agent 调试方法与失败复现",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-observability-security-next-20-2026-07-16"
@@ -1113,7 +1113,7 @@
       "key": "agent-test-pyramid",
       "label": "Agent 单元、集成、场景与端到端测试",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-observability-security-next-20-2026-07-16"
@@ -1122,7 +1122,7 @@
       "key": "agent-simulation",
       "label": "用户模拟器与环境模拟测试",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-observability-security-next-20-2026-07-16"
@@ -1131,7 +1131,7 @@
       "key": "agent-red-teaming",
       "label": "Agent 红队测试与对抗样本",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-observability-security-next-20-2026-07-16"
@@ -1140,7 +1140,7 @@
       "key": "agent-benchmark",
       "label": "Agent Benchmark 的设计与解读",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-observability-security-next-20-2026-07-16"
@@ -1149,7 +1149,7 @@
       "key": "agent-online-eval",
       "label": "在线评估、抽样与质量监控",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-observability-security-next-20-2026-07-16"
@@ -1158,7 +1158,7 @@
       "key": "agent-ab-testing",
       "label": "Agent A/B 测试与实验设计",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-observability-security-next-20-2026-07-16"
@@ -1167,7 +1167,7 @@
       "key": "agent-quality-gates",
       "label": "发布质量门禁与回归阻断",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-observability-security-next-20-2026-07-16"
@@ -1176,7 +1176,7 @@
       "key": "agent-prompt-regression",
       "label": "Prompt、工具与模型升级回归测试",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-observability-security-next-20-2026-07-16"
@@ -1185,7 +1185,7 @@
       "key": "agent-indirect-injection",
       "label": "网页、文件与邮件中的间接 Prompt Injection",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-observability-security-next-20-2026-07-16"
@@ -1194,7 +1194,7 @@
       "key": "agent-tool-poisoning",
       "label": "工具描述、Schema 与返回值投毒",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-observability-security-next-20-2026-07-16"
@@ -1203,7 +1203,7 @@
       "key": "agent-memory-poisoning",
       "label": "记忆污染与持久化攻击",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-observability-security-next-20-2026-07-16"
@@ -1212,7 +1212,7 @@
       "key": "agent-data-exfiltration",
       "label": "数据外泄路径与阻断策略",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-observability-security-next-20-2026-07-16"
@@ -1221,7 +1221,7 @@
       "key": "agent-identity-auth",
       "label": "Agent 身份、用户身份与委托授权",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-observability-security-next-20-2026-07-16"
@@ -1230,7 +1230,7 @@
       "key": "agent-secrets-management",
       "label": "密钥、凭证与 Secret 生命周期",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-observability-security-next-20-2026-07-16"
@@ -1239,7 +1239,7 @@
       "key": "agent-supply-chain",
       "label": "模型、工具、MCP 与依赖供应链安全",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-observability-security-next-20-2026-07-16"
@@ -1248,10 +1248,190 @@
       "key": "agent-network-egress",
       "label": "网络出口、域名白名单与数据边界",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-07-16",
       "batch": "agent-observability-security-next-20-2026-07-16"
+    },
+    {
+      "key": "agent-sandbox-escape",
+      "label": "沙箱逃逸风险与纵深防御",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "agent-platform-backend-next-20-2026-07-17"
+    },
+    {
+      "key": "agent-audit-log",
+      "label": "不可抵赖审计日志与合规留痕",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "agent-platform-backend-next-20-2026-07-17"
+    },
+    {
+      "key": "agent-api-gateway",
+      "label": "Agent Gateway 与统一接入层",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "agent-platform-backend-next-20-2026-07-17"
+    },
+    {
+      "key": "agent-queue-worker",
+      "label": "队列、Worker 与长任务执行",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "agent-platform-backend-next-20-2026-07-17"
+    },
+    {
+      "key": "agent-concurrency",
+      "label": "并发控制、资源隔离与公平调度",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "agent-platform-backend-next-20-2026-07-17"
+    },
+    {
+      "key": "agent-timeout-budget",
+      "label": "端到端超时预算与 Deadline 传播",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "agent-platform-backend-next-20-2026-07-17"
+    },
+    {
+      "key": "agent-cache",
+      "label": "模型、工具、检索与结果缓存",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "agent-platform-backend-next-20-2026-07-17"
+    },
+    {
+      "key": "agent-model-fallback",
+      "label": "模型降级、Fallback 与熔断",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "agent-platform-backend-next-20-2026-07-17"
+    },
+    {
+      "key": "agent-disaster-recovery",
+      "label": "状态备份、灾难恢复与任务重放",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "agent-platform-backend-next-20-2026-07-17"
+    },
+    {
+      "key": "agent-canary-release",
+      "label": "灰度、Canary 与模型版本发布",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "agent-platform-backend-next-20-2026-07-17"
+    },
+    {
+      "key": "agent-slo",
+      "label": "Agent SLI、SLO 与错误预算",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "agent-platform-backend-next-20-2026-07-17"
+    },
+    {
+      "key": "agent-incident-response",
+      "label": "Agent 线上事故响应与复盘",
+      "filePath": "llm/production",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "agent-platform-backend-next-20-2026-07-17"
+    },
+    {
+      "key": "api-schema-validation",
+      "label": "API Schema 校验、错误码与契约测试",
+      "filePath": "backend/api",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "agent-platform-backend-next-20-2026-07-17"
+    },
+    {
+      "key": "async-job-queue",
+      "label": "消息队列、异步任务与后台 Job",
+      "filePath": "backend/api",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "agent-platform-backend-next-20-2026-07-17"
+    },
+    {
+      "key": "grpc-basics",
+      "label": "gRPC、Protobuf 与服务通信",
+      "filePath": "backend/api",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "agent-platform-backend-next-20-2026-07-17"
+    },
+    {
+      "key": "webhook-design",
+      "label": "Webhook 签名、重试与幂等",
+      "filePath": "backend/api",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "agent-platform-backend-next-20-2026-07-17"
+    },
+    {
+      "key": "file-upload-service",
+      "label": "文件上传、分片与对象存储",
+      "filePath": "backend/api",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "agent-platform-backend-next-20-2026-07-17"
+    },
+    {
+      "key": "api-pagination-filtering",
+      "label": "分页、过滤、排序与游标设计",
+      "filePath": "backend/api",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "agent-platform-backend-next-20-2026-07-17"
+    },
+    {
+      "key": "api-idempotency",
+      "label": "API 幂等键与重复请求处理",
+      "filePath": "backend/api",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "agent-platform-backend-next-20-2026-07-17"
+    },
+    {
+      "key": "agent-state-storage",
+      "label": "Agent 会话、检查点与任务状态存储",
+      "filePath": "backend/storage",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-07-17",
+      "batch": "agent-platform-backend-next-20-2026-07-17"
     }
   ]
 }
