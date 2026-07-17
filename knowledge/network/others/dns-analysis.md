@@ -1,41 +1,71 @@
-| 方法 | 描述 |
-| :---: | --- |
-| DNS缓存 | 缓存DNS查询结果，减少重复查询 |
-| 本地DNS缓存 | 在操作系统或本地DNS服务器中缓存DNS查询结果，提供本地解析服务 |
-| 递归DNS查询 | 本地DNS服务器向根域名服务器发起递归查询，直到找到目标域名的IP地址 |
-| DNS预取 | 预先解析页面中的链接中的域名，提前获取IP地址以加速访问 |
+DNS 把域名映射为资源记录，是带委派和缓存的分布式数据库，不是一次“问某台服务器要 IP”的调用。排障要沿 stub resolver、recursive resolver、root、TLD 和 authoritative server 追踪，并同时考虑 TTL、负缓存、多个记录、DNSSEC、传输与应用连接复用。
 
+![DNS 从 Stub、递归解析器、Root、TLD 到权威服务器的解析、缓存、负缓存与故障切换](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/dns-analysis-resolution-cache-failover-v1.webp)
+*图：递归 resolver 缓存委派和答案；NXDOMAIN 也会负缓存；权威或递归节点故障的用户时延受重试与缓存影响。*
 
-DNS解析过程中，为了减少重复操作并加速域名解析速度，采用了多种算法和方式：
+## 角色与递归过程
 
-####  缓存机制： 
-    - **本地DNS缓存**：本地DNS解析器（如操作系统或浏览器内置的DNS解析器）在解析域名后会将结果暂存一段时间，当再次请求相同的域名时，直接从缓存中提取结果，避免了对DNS服务器的重复查询。
-    - **DNS服务器缓存**：各级DNS服务器（包括递归DNS服务器和权威DNS服务器）也会缓存解析结果，以减少向上游服务器的查询次数。
+应用通常调用操作系统 stub resolver，把递归查询交给本地/企业/ISP/公共 recursive resolver。缓存未命中时，递归器从 root 得到 TLD 委派，再向 TLD 得到域的 authoritative nameserver，最后取得 A/AAAA 等答案。
 
+[RFC 1034](https://www.rfc-editor.org/rfc/rfc1034.html)与 [RFC 1035](https://www.rfc-editor.org/rfc/rfc1035.html)定义 DNS 概念、数据和协议。Root/TLD 返回 delegation（NS 与必要 glue），不是替所有域保存最终 IP。权威服务器对 zone 数据负责，递归器负责替客户端追问和缓存。
 
+## Resource Records
 
-####  递归查询与迭代查询： 
-    - **递归查询**：当DNS客户端请求一个DNS服务器进行递归查询时，DNS服务器负责完成整个查询过程，向上寻找直到找到最终的权威DNS服务器，拿到解析结果并返回给客户端，减少客户端多次查询的必要。
-    - **迭代查询**：DNS服务器之间通过迭代查询方式进行协作，每个服务器仅返回其知道的下一步查询方向，直到找到权威DNS服务器获取最终结果。
+A/AAAA 映射 IPv4/IPv6，CNAME 表示别名，NS 声明权威，MX 邮件路由，TXT 承载文本策略，SRV 描述服务/端口，SOA 包含 zone 管理与序列等。每条 RR 有 owner name、type、class、TTL 和 data。
 
+CNAME 链增加查询和失败点，且 apex 使用受 DNS 规则限制；云厂商 ALIAS/ANAME 是提供商扩展。客户端最终可能得到多个 A/AAAA，选择和连接竞速由应用/系统实现，不保证按响应顺序轮询。
 
+## TTL 与多层缓存
 
-####  DNS轮询和负载均衡： 
-    - DNS轮询是通过DNS服务器在多个IP地址之间轮流返回响应，这样可以平衡服务器负载，同时避免了对单一服务器的重复请求。
-    - 对于大型网站，可能会使用DNS智能负载均衡服务，根据服务器的健康状况和地理位置等因素动态调整返回给客户端的IP地址列表。
+TTL 是缓存记录可复用的时间上限，不是“全球必定在该秒更新”。权威修改后，已有递归缓存会保留旧值至 TTL；操作系统、浏览器、JVM、代理和连接池还可能有自己的缓存/复用。
 
+变更前提前至少一个旧 TTL 降低 TTL，等待旧缓存过期，再切记录；稳定后恢复合理 TTL。低 TTL 增加权威查询、成本和对故障敏感度，也不保证零停机。蓝绿切换应让新旧地址在传播窗口都可服务。
 
+## Negative Caching
 
-####  DNS预解析（DNS Prefetching）： 
-    - 浏览器可以分析页面内容，对预期要访问的域名提前进行DNS解析，从而减少用户实际点击链接后的等待时间。
+[RFC 2308](https://www.rfc-editor.org/rfc/rfc2308.html)定义 NXDOMAIN/NODATA 等负缓存，避免不存在名称被反复查询。误删记录后，即使立即恢复，递归器仍可能按负 TTL 返回不存在。SOA 中相关值影响缓存时间。
 
+[RFC 9520](https://www.rfc-editor.org/rfc/rfc9520.html)进一步讨论 DNS resolution failure caching。要区分 authoritative NXDOMAIN、NOERROR/NODATA、SERVFAIL、timeout 和 REFUSED：它们的含义、缓存与重试不同。应用把所有错误显示成“域名不存在”会误导。
 
+## 委派与 Glue
 
-####  DNS缓存时间（TTL值）： 
-    - DNS记录中包含一个Time To Live（TTL）值，表示DNS记录在缓存中可以保持有效的秒数。合理的TTL值可以确保DNS更新信息传播的速度和缓存有效性之间的平衡。
+父 zone 通过 NS 委派子 zone。若 nameserver 名位于被委派 zone 内，解析其地址可能循环，父区提供 glue A/AAAA 帮助到达。Glue 是引导信息，权威数据仍在子 zone。
 
+常见故障包括 parent NS 与 zone apex NS 不一致、glue 过期、只在某权威节点更新、serial 未推进和 DNS provider 网络不可达。用 `dig +trace` 查看委派链，用 `dig @server name type` 分别询问每个权威。
 
+## 传输、大小与 DNSSEC
 
-####  DNSSEC签名验证： 
-    - DNSSEC（DNS Security Extensions）虽然不是为了减少重复操作，但通过提供签名验证机制，可以避免对不可信数据源的重复查询。
+DNS 传统使用 UDP 53，响应截断可转 TCP；EDNS 增大 UDP payload，但路径 MTU/防火墙可能丢大包。现代环境也有 DoT/DoH，它们改变 stub 到 resolver 的传输，不改变权威委派模型。
 
+DNSSEC 用签名与信任链验证数据来源/完整性。验证失败通常返回 SERVFAIL，而不是退回未验证答案。过期签名、错误 DS/DNSKEY 或时钟问题都可能导致“权威看似有记录，验证 resolver 不返回”。排障比较验证与非验证查询，但不能在生产简单关闭验证当修复。
+
+## 高可用与 Failover
+
+域至少配置多个权威服务器，并放在独立故障域/网络；parent 委派和每台 zone 数据一致。多个 NS 不意味着客户端立即无感切换：recursive resolver 会按自己的超时与重试尝试，某个黑洞权威会增加尾延迟。
+
+DNS failover 通过健康检查改变答案，但缓存中的旧地址在 TTL 内仍被使用，现有 TCP 连接可能更久。旧端点应在 drain 窗口继续服务或明确拒绝。DNS 不能替代应用级 retry、负载均衡和数据层灾备。
+
+## 递归解析器高可用
+
+客户端配置多个 recursive resolver，但操作系统可能按顺序、并行或超时后切换，行为不统一。企业网络应提供 anycast/本地冗余并监控外部域与内部 split-horizon。VPN、search domain 和 `/etc/hosts` 可让同一名称在不同客户端结果不同。
+
+不要把 8.8.8.8 当万能测试：公共 resolver 可能无法访问内部 zone，其缓存也与企业 resolver 不同。始终记录测试使用的 resolver、query type、flags 和时间。
+
+## 系统化排障
+
+先 `dig name A/AAAA` 看 status、answer、TTL 与 SERVER；再直接问权威；检查 `+trace` 委派；比较多递归器；查看 DNSSEC；最后检查应用缓存和连接池。区分“解析正确但连不上”与“根本没答案”。
+
+记录完整时间线：变更前 TTL、变更时刻、各 cache 剩余 TTL、权威一致性和应用连接年龄。不要只截图当前 dig，因为缓存问题是时间问题。
+
+## 验证与演练
+
+持续从不同区域监测 A/AAAA、权威可达、SOA serial、DNSSEC 到期和解析延迟。演练单权威故障、错误 NXDOMAIN、DS 配置错误、主 IP 下线与回滚。变更 runbook 包含降 TTL、等待、切换、验证和恢复 TTL。
+
+DNS 的可靠性来自委派正确、缓存可预测、多个权威真实独立，以及应用理解旧答案会继续存在。把它当“改一条记录马上生效”，就会在故障切换时低估最关键的时间边界。
+
+## 参考资料
+
+- [RFC 1034：Domain Names—Concepts and Facilities](https://www.rfc-editor.org/rfc/rfc1034.html)
+- [RFC 1035：Domain Names—Implementation and Specification](https://www.rfc-editor.org/rfc/rfc1035.html)
+- [RFC 2308：Negative Caching of DNS Queries](https://www.rfc-editor.org/rfc/rfc2308.html)
+- [RFC 9520：Negative Caching of DNS Resolution Failures](https://www.rfc-editor.org/rfc/rfc9520.html)
