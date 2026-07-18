@@ -1,3 +1,10 @@
+FastAPI 构建 AI 服务需要把“机制是什么”“边界在哪里”“怎样验证”放在同一条学习路径中。本文以 [FastAPI request body tutorial](https://fastapi.tiangolo.com/tutorial/body/) 对“Pydantic 请求体声明、解析、校验与 OpenAPI”的说明为事实边界，并用 [FastAPI concurrency and async/await](https://fastapi.tiangolo.com/async/) 校准“async path operation、阻塞调用与并发边界”。文中的代码和工程方案用于解释这些机制；涉及具体版本、默认值或部署行为时，应再回到所链接的一手资料确认。
+
+![FastAPI 构建 AI 服务的核心机制与验证路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/fastapi-ai-service-request-lifecycle-v1.webp)
+*图：FastAPI 构建 AI 服务的核心组件、信息流与验证边界。*
+
+---
+
 在 AI 工程领域，后端框架的选型往往被低估。当你需要把一个 LLM 调用、向量检索、Agent 编排包装成一个可靠的 HTTP 服务时，框架的 async 能力、类型系统和文档化水平会直接影响开发效率与系统稳定性。FastAPI 在这三个维度上同时做到了行业领先，这也是当前大多数 AI 后端项目优先选择它的原因。
 
 ## 为什么 FastAPI 适合 AI 后端
@@ -376,3 +383,8 @@ A：典型流程：① Pydantic 校验请求（问题 + 可选的上下文窗口
 
 **Q：`response_model` 的作用是什么？**
 A：两个作用：1) 文档生成，Swagger UI 会展示响应体的字段和类型；2) 数据过滤，FastAPI 会按 `response_model` 的字段裁剪响应，即使 handler 返回了多余字段也不会输出，防止内部数据泄露。如果需要关闭校验只保留文档，可用 `response_model_exclude_unset=True` 或设置 `response_model=None`。
+
+## 参考资料
+
+- [FastAPI request body tutorial](https://fastapi.tiangolo.com/tutorial/body/)
+- [FastAPI concurrency and async/await](https://fastapi.tiangolo.com/async/)

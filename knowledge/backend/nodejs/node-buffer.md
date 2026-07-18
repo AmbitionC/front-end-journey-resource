@@ -1,3 +1,10 @@
+Buffer、二进制与编码需要把“机制是什么”“边界在哪里”“怎样验证”放在同一条学习路径中。本文以 [Node.js Buffer API](https://nodejs.org/api/buffer.html) 对“Buffer 创建、编码、切片、TypedArray 互操作与安全边界”的说明为事实边界，并用 [WHATWG Encoding Standard](https://encoding.spec.whatwg.org/) 校准“UTF-8 解码、编码器/解码器和错误处理规范”。文中的代码和工程方案用于解释这些机制；涉及具体版本、默认值或部署行为时，应再回到所链接的一手资料确认。
+
+![Buffer、二进制与编码的核心机制与验证路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/node-buffer-bytes-encoding-views-v1.webp)
+*图：Buffer、二进制与编码的核心组件、信息流与验证边界。*
+
+---
+
 Buffer 是 Node.js 处理二进制数据的核心类，它代表一块固定大小的原始内存区域，分配在 **V8 堆外 (outside V8 heap)**，因此不受垃圾回收影响，专为高性能二进制操作设计。在 Agent 服务中，Buffer 是高效处理 Embedding 向量、序列化模型输入输出、操作网络数据包的基础工具。
 
 ## Buffer 是什么
@@ -301,3 +308,8 @@ A：通过 `Buffer.from(float32arr.buffer, float32arr.byteOffset, float32arr.byt
 
 **Q：`Buffer.allocUnsafe` 的安全风险是什么，何时可以使用？**
 A：`allocUnsafe` 分配的内存未清零，可能包含旧进程数据（密码、密钥等敏感信息）。当且仅当分配后**立即**用业务数据覆盖全部内容时才安全使用，例如将网络数据包写入 Buffer、从文件读取数据到 Buffer 等场景。绝不能在写入之前读取 `allocUnsafe` 的内容。
+
+## 参考资料
+
+- [Node.js Buffer API](https://nodejs.org/api/buffer.html)
+- [WHATWG Encoding Standard](https://encoding.spec.whatwg.org/)

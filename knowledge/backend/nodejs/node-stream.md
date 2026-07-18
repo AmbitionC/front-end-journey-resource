@@ -1,3 +1,10 @@
+Stream 流式处理原理与实践需要把“机制是什么”“边界在哪里”“怎样验证”放在同一条学习路径中。本文以 [Node.js Stream API](https://nodejs.org/api/stream.html) 对“Readable、Writable、Transform、pipeline 与背压语义”的说明为事实边界，并用 [Node.js Web Streams API](https://nodejs.org/api/webstreams.html) 校准“WHATWG streams 在 Node 中的实现与互操作”。文中的代码和工程方案用于解释这些机制；涉及具体版本、默认值或部署行为时，应再回到所链接的一手资料确认。
+
+![Stream 流式处理原理与实践的核心机制与验证路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/node-stream-backpressure-flow-v1.webp)
+*图：Stream 流式处理原理与实践的核心组件、信息流与验证边界。*
+
+---
+
 将一个 2 GB 的 JSON 文件整体读入内存再处理，进程会立即 OOM（内存溢出）崩溃；但用 Stream 流式处理同一文件，内存峰值可以稳定在几十 MB。Node.js 的 Stream 抽象是构建高性能、低内存占用 I/O 管道的核心，也是实现 AI 服务流式响应（Streaming LLM output）的底层基础。
 
 ## 为什么 Stream 比整体读写更高效
@@ -310,3 +317,8 @@ Stream 减少的是内存峰值，不是总 I/O 时间。对于小文件（< 1 M
 4. **如何自定义 Transform Stream？** 实现 `_transform(chunk, encoding, callback)` 和 `_flush(callback)` 两个方法。
 5. **`highWaterMark` 在对象模式和 Buffer 模式下单位有何不同？** 对象模式是对象数，Buffer 模式是字节数。
 6. **Stream 在 AI 服务中的核心应用场景**：LLM 流式输出转发（SSE）、大规模 embedding 文件的低内存处理。
+
+## 参考资料
+
+- [Node.js Stream API](https://nodejs.org/api/stream.html)
+- [Node.js Web Streams API](https://nodejs.org/api/webstreams.html)

@@ -1,3 +1,10 @@
+Node.js 事件循环与异步 I/O需要把“机制是什么”“边界在哪里”“怎样验证”放在同一条学习路径中。本文以 [Node.js event loop, timers, and process.nextTick](https://nodejs.org/learn/asynchronous-work/event-loop-timers-and-nexttick) 对“Node 事件循环阶段与 nextTick 行为”的说明为事实边界，并用 [libuv design overview](https://docs.libuv.org/en/v1.x/design.html) 校准“libuv 事件循环、I/O 轮询与线程池设计”。文中的代码和工程方案用于解释这些机制；涉及具体版本、默认值或部署行为时，应再回到所链接的一手资料确认。
+
+![Node.js 事件循环与异步 I/O的核心机制与验证路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/node-event-loop-libuv-phases-v1.webp)
+*图：Node.js 事件循环与异步 I/O的核心组件、信息流与验证边界。*
+
+---
+
 Node.js 之所以能以单线程处理数以万计的并发连接，根本在于它的事件循环 (Event Loop) 机制——理解每个阶段的执行顺序与微任务插入时机，是写出可预期异步代码、排查诡异 Bug、以及正确评估 AI Agent 服务吞吐量上限的必备前提。
 
 ## 为什么 Node.js 选择单线程非阻塞 I/O
@@ -225,3 +232,8 @@ Agent 服务的吞吐量瓶颈往往不在 LLM 调用速度，而在于：
 3. **`setImmediate` vs `setTimeout(fn, 0)` 在 I/O 回调内为何顺序确定？** 答：I/O 回调在 poll 阶段执行，poll 之后紧接 check 阶段（setImmediate），timers 要等下一轮。
 4. **libuv 线程池处理哪些操作？** 文件 I/O、DNS lookup、部分 crypto；网络 I/O 不走线程池。
 5. **如何诊断事件循环阻塞？** 使用 `perf_hooks.monitorEventLoopDelay`、`--prof` 火焰图、或 Clinic.js Doctor。
+
+## 参考资料
+
+- [Node.js event loop, timers, and process.nextTick](https://nodejs.org/learn/asynchronous-work/event-loop-timers-and-nexttick)
+- [libuv design overview](https://docs.libuv.org/en/v1.x/design.html)

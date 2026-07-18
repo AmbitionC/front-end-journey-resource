@@ -1,3 +1,10 @@
+Express 核心原理与中间件需要把“机制是什么”“边界在哪里”“怎样验证”放在同一条学习路径中。本文以 [Express using middleware](https://expressjs.com/en/guide/using-middleware/) 对“应用级、路由级和错误处理中间件及执行顺序”的说明为事实边界，并用 [Express error handling](https://expressjs.com/en/guide/error-handling/) 校准“同步/异步错误传播、默认处理器与 Express 5 Promise 行为”。文中的代码和工程方案用于解释这些机制；涉及具体版本、默认值或部署行为时，应再回到所链接的一手资料确认。
+
+![Express 核心原理与中间件的核心机制与验证路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/express-middleware-stack-error-flow-v1.webp)
+*图：Express 核心原理与中间件的核心组件、信息流与验证边界。*
+
+---
+
 Express 是 Node.js 生态中历史最悠久、使用最广泛的 Web 框架，以"最小化、无主见（unopinionated）"为设计哲学——核心只提供路由和中间件管道，不强制约定目录结构、ORM 或任何业务逻辑组织方式。理解其内部运行机制，有助于写出更健壮的应用，也是面试中被频繁考察的知识点。
 
 ## 请求生命周期总览
@@ -347,3 +354,8 @@ flowchart TD
 
 - **Q：在构建 AI Agent 工具服务时，Express 有哪些注意事项？**  
   A：工具调用的参数校验要做严格的 schema 验证（防止 Prompt Injection 带来的恶意参数）；工具执行失败应返回结构化结果而非 5xx，让 Agent 能自主决策是否重试；LLM 流式响应端点需要在路由层手动管理 `res.write` 和 `res.end`，或考虑迁移到 Koa（`ctx.body = stream`）获得更好的流处理体验。
+
+## 参考资料
+
+- [Express using middleware](https://expressjs.com/en/guide/using-middleware/)
+- [Express error handling](https://expressjs.com/en/guide/error-handling/)
