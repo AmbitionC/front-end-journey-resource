@@ -1,3 +1,8 @@
+![Git 保存 code、dvc.yaml、.dvc metadata，DVC cache/remote 保存大文件对象；commit A/B 分别指向数据 hash；pipeline DAG 从 raw→prepare→train→metrics，变更只重跑受影响节点](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/dvc-data-version-pipeline-dag-v1.webp)
+*图：上半部比较 Git 中的 code/dvc.yaml/.dvc metadata 与 DVC cache/remote 的大对象；下半部沿 raw → prepare → train → metrics 读取增量重跑。*
+
+---
+
 机器学习项目的核心挑战之一是**数据与实验的可复现性**——仅用 Git 管理代码，无法追踪训练数据、特征文件和模型权重的版本变化。DVC（Data Version Control）像 Git 管理代码一样管理数据和 ML pipeline，让实验复现和团队协作变得可靠。
 
 ## 为什么 Git 不够用
@@ -16,6 +21,9 @@ Git 对 ML/AI 项目存在三个根本性局限：
 **DVC 的解决思路**：数据文件存到远端对象存储（S3、GCS 等），Git 仓库里只保留一个轻量的 `.dvc` 指针文件（几十字节），通过指针的哈希锁定具体数据版本。
 
 ## DVC 架构：指针文件 + 远端存储
+
+[`dvc add` 文档](https://doc.dvc.org/command-reference/add) 说明 Git 保存 `.dvc` 元数据，而实际数据进入 DVC cache 并可推送到 remote；切换 Git commit 后仍需 checkout/pull 对齐工作区数据。
+
 
 ```mermaid
 flowchart LR
@@ -303,7 +311,7 @@ dvc repro      # 验证 pipeline 可复现
 
 **模型权重版本管理**：大型模型的权重文件（`.pt`、`.bin`、ONNX 格式）动辄数 GB，用 DVC 追踪后既不污染 Git 仓库，又能精确关联"哪个代码版本 + 哪个数据版本 = 哪个模型权重"。
 
-**特征工程 Pipeline**：将特征生成过程定义为 `dvc.yaml` stages，通过 `dvc repro` 保证特征文件与原始数据、特征代码的一致性。修改特征逻辑时只需更新脚本，`dvc repro` 自动识别需要重新生成的特征。
+**特征工程 Pipeline**：将特征生成过程定义为 `dvc.yaml` stages，通过 `dvc repro` 保证特征文件与原始数据、特征代码的一致性。修改特征逻辑时只需更新脚本，`dvc repro` 自动识别需要重新生成的特征。（参见 [DVC data pipelines](https://doc.dvc.org/start/data-pipelines/data-pipelines)）
 
 **RAG 知识库版本管理**：将文档库的向量化结果（embedding 文件）用 DVC 追踪，知识库更新时可以追溯是哪次文档变更导致了 RAG 效果变化。
 
@@ -427,3 +435,8 @@ DVC 本身支持 TB 级数据，但需要针对性优化：① 配置 `cache.typ
 **Q4：`dvc repro` 和直接运行训练脚本相比有什么核心优势？**
 
 三个核心优势：① **增量执行**——基于内容哈希检测变化，只重新运行必要的 stage，避免因改了评估脚本而重新跑耗时数小时的训练 stage；② **依赖顺序保证**——自动按依赖图顺序执行，不会出现用旧版特征文件训练新模型的逻辑错误；③ **状态锁定**——执行完成后更新 `dvc.lock`，提交到 Git 后任何人都能用 `dvc repro` 验证这个 commit 的实验是否完全可复现。直接运行脚本没有任何这三个保证。
+
+## 参考资料
+
+- [DVC add command](https://doc.dvc.org/command-reference/add)
+- [DVC data pipelines](https://doc.dvc.org/start/data-pipelines/data-pipelines)

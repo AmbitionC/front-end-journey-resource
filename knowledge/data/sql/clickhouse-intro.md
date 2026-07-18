@@ -1,4 +1,9 @@
-ClickHouse 是一款开源的列式 OLAP（在线分析处理）数据库，专为海量数据的高速聚合分析而设计。对于 AI/Agent 工程师而言，它是存储和分析 LLM 调用日志（LLM call log）、Token 用量追踪（Token usage tracking）和 Agent 执行链路（Agent trace）的理想基础设施。
+![ClickHouse MergeTree：批量写入形成多个 immutable data parts，每个 part 按列存储并带稀疏 primary index，后台 merge 合并 parts；查询先做 partition/index pruning 再只读所需列](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/clickhouse-mergetree-column-parts-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是解释列式存储、MergeTree parts、primary key 稀疏索引、后台 merge 和 OLAP 查询适用边界。*
+
+---
+
+ClickHouse 是一款开源的列式 OLAP（在线分析处理）数据库，专为海量数据的高速聚合分析而设计。对于 AI/Agent 工程师而言，它是存储和分析 LLM 调用日志（LLM call log）、Token 用量追踪（Token usage tracking）和 Agent 执行链路（Agent trace）的理想基础设施。（参见 [ClickHouse introduction](https://clickhouse.com/docs/intro)）
 
 ## 列式存储原理
 
@@ -30,6 +35,9 @@ latency_ms 列: 820, 1200, 650, 980, ...
 | 向量化执行 | 同列数据连续，可用 SIMD 指令批量运算 | CPU 利用率提升 |
 
 ## MergeTree 引擎
+
+[ClickHouse MergeTree 文档](https://clickhouse.com/docs/engines/table-engines/mergetree-family/mergetree) 说明批量写入形成不可变 parts，排序键与稀疏主索引用于跳过数据，后台 merge 再合并 parts。
+
 
 MergeTree 是 ClickHouse 最核心的存储引擎，几乎所有生产场景都基于它或其变体（ReplicatedMergeTree、AggregatingMergeTree、SummingMergeTree 等）构建。
 
@@ -299,3 +307,8 @@ graph LR
 - **物化视图 + AggregatingMergeTree 解决什么问题？** 解决高频重复聚合的性能瓶颈：数据写入时实时预聚合，查询时只需合并少量预聚合状态，避免每次查询都全表扫描；特别适合 LLM Token 用量每日报表、Agent 调用量统计等固定维度的汇总看板。
 
 - **ClickHouse 能替代 MySQL 吗？** 不能。ClickHouse 不支持高频单行更新、复杂事务和多表 JOIN，适合分析型只读查询（OLAP）；MySQL 适合联机事务处理（OLTP）。二者通常配合使用：MySQL 处理写入和事务，ClickHouse 承担分析查询。
+
+## 参考资料
+
+- [ClickHouse introduction](https://clickhouse.com/docs/intro)
+- [ClickHouse MergeTree](https://clickhouse.com/docs/engines/table-engines/mergetree-family/mergetree)
