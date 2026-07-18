@@ -139,8 +139,8 @@ df = pd.read_csv(
 
 | 场景 | 推荐方案 | 原因 |
 |---|---|---|
-| 文件 < 100MB，需要分析 | `pandas.read_csv` | API 丰富，类型推断 |
-| 文件 > 1GB | `csv` 模块逐行读取 | 避免 OOM |
+| 数据能在内存预算内展开，需要分析 | `pandas.read_csv` | API 丰富，便于显式指定类型 |
+| 数据可能超过内存预算 | `csv` 模块逐行读取或分块处理 | 控制峰值内存；阈值需按 schema 与机器实测 |
 | 生成供 Excel 查看的报告 | `pandas` + `utf-8-sig` | BOM 保证兼容性 |
 | 与外部系统交换结构化数据 | `csv` 模块 | 无额外依赖 |
 
@@ -235,9 +235,9 @@ flowchart TD
     B -->|嵌套/结构化| C{数据规模}
     B -->|扁平表格| D{数据规模}
 
-    C -->|小于 10MB，需要可读| E[JSON]
+    C -->|可整体加载且需要可读| E[JSON]
     C -->|任意规模，逐条处理| F[JSONL]
-    C -->|大于 100MB，分析查询| G[Parquet]
+    C -->|需要列裁剪/分析查询| G[Parquet]
 
     D -->|与外部系统交换| H[CSV]
     D -->|内部存储 / 分析| G
@@ -301,7 +301,7 @@ for batch in parquet_file.iter_batches(batch_size=256, columns=["chunk_id", "tex
 
 **误区 2：CSV 类型安全**。CSV 所有列本质上都是字符串，`1`、`"1"`、`01` 读进来可能被推断成不同类型。用 Pandas 读 CSV 后必须检查 `df.dtypes`，必要时显式指定 `dtype` 参数，尤其是 ID 类字段。（参见 [RFC 4180: Common Format and MIME Type for CSV Files](https://www.rfc-editor.org/rfc/rfc4180.html)）
 
-**误区 3：JSONL 和 JSON 可以混用**。`.jsonl` 文件不能直接用 `json.load()` 解析（会报错），必须逐行处理。反过来，`.json` 文件也不能用 JSONL 阅读器逐行读取。两者是不同的格式，文件首字节是 `[` 则是 JSON 数组，是 `{` 则通常是 JSONL。
+**误区 3：JSONL 和 JSON 可以靠首字节互相识别**。`.jsonl` 通常要求每个非空行都是一个独立 JSON 值，因此不能把多行 JSON 文档直接交给逐行阅读器；标准库 `json.load()` 也不会把多条顶层 JSON 值当作 JSONL。`{` 既可能是普通 JSON 对象，也可能是 JSONL 第一条记录，不能仅凭首字节判定；应由文件契约、媒体类型或逐行解析验证决定。
 
 **误区 4：Parquet 不支持追加写入**。标准 Parquet 文件确实不支持原地追加，但"多文件分区目录"完全可以：每批数据写一个新文件，查询时 `pd.read_parquet("dir/")` 自动合并所有分区。
 
@@ -312,7 +312,7 @@ for batch in parquet_file.iter_batches(batch_size=256, columns=["chunk_id", "tex
 - **LLM 微调数据集**：若目标训练平台要求逐条 JSON 对象，可用 `.jsonl` 并按其 schema 验证；其他平台可能接受 Parquet、Arrow 或专用格式，先服从消费端契约
 - **大规模特征/文档存储**：用 Parquet + `zstd` 压缩，按时间或类别分区，读取时用 `columns` 参数做列剪枝（Column Pruning）
 - **CSV 跨系统交换**：写入时加 BOM（`utf-8-sig`），用 `csv.QUOTE_MINIMAL` 最小化引号，读取时显式指定 `dtype`，不依赖自动类型推断
-- **Agent 工具调用序列化**：用 `orjson` 提速，用 `jmespath` 安全提取深层字段，避免裸 `dict["key"]["key"]` 链式访问
+- **Agent 工具调用序列化**：先用真实 payload 基准比较标准库与候选序列化器；选择 `orjson` 时同时验证 bytes 返回值、选项和兼容行为。深层字段提取可用显式校验模型或查询工具，避免无校验的索引链
 - **格式转换大文件**：Parquet → JSONL 用 `iter_batches` 流式转换，避免一次性 `to_dict('records')` 撑爆内存
 - **Hugging Face 数据集上传**：推送前转为 Parquet，Hub 会自动生成列统计、数据预览和 SQL 查询界面
 

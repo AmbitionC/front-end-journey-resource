@@ -29,7 +29,7 @@ Agent 的记忆系统借鉴了同样的分层设计：
 │  │ · 临时变量       │   │  ├──────────────────┤  │ │
 │  │                  │   │  │  语义记忆           │  │ │
 │  │  TTL 自动清理    │   │  │  Semantic Memory  │  │ │
-│  │  容量上限 50 条  │   │  ├──────────────────┤  │ │
+│  │  容量按预算配置  │   │  ├──────────────────┤  │ │
 │  └──────────────────┘   │  │  感知记忆           │  │ │
 │                         │  │  Perceptual Memory│  │ │
 │                         │  └──────────────────┘  │ │
@@ -50,24 +50,26 @@ Agent 的记忆系统借鉴了同样的分层设计：
 
 工作记忆是 Agent 的"当前工作台"，存放当前会话中的临时信息。它有两个核心约束：
 
-- **容量上限**：通常限制 50 条左右，防止内存无限增长
-- **TTL 机制**：每条记录带有生存时间（默认 60 分钟），过期自动清理
+- **容量上限**：按上下文预算、检索延迟和会话并发配置，防止无限增长
+- **TTL 机制**：每条记录可带生存时间；时长来自业务有效期与合规要求
 
 当容量接近上限时，系统自动移除优先级最低的记录，而非简单地按先进先出截断。
 
 检索时采用混合策略：优先尝试 TF-IDF 向量化语义检索，失败时回退到关键词匹配。评分综合三个因素：
 
 ```
-final_score = base_relevance × time_decay × (0.8 + importance × 0.4)
-# base_relevance = tfidf_score × 0.7 + keyword_score × 0.3（或纯 keyword_score）
-# time_decay：基于时间戳的指数衰减系数
+base_relevance = α × vector_score + (1 - α) × keyword_score
+final_score = base_relevance × time_decay × importance_weight
+# α、衰减参数与 importance 映射都属于 MemoryPolicy，需在目标查询集上校准
 ```
 
 ```python
 class WorkingMemory:
     def __init__(self, config: MemoryConfig):
-        self.max_capacity = config.working_memory_capacity or 50
-        self.max_age_minutes = config.working_memory_ttl or 60
+        self.config = config
+        self.max_capacity = config.working_memory_capacity
+        self.max_age_minutes = config.working_memory_ttl
+        self.vector_weight = config.vector_weight
         self.memories = []
 
     def add(self, memory_item: MemoryItem) -> str:
@@ -77,17 +79,17 @@ class WorkingMemory:
         self.memories.append(memory_item)
         return memory_item.id
 
-    def retrieve(self, query: str, limit: int = 5, **kwargs) -> list:
+    def retrieve(self, query: str, limit: int, **kwargs) -> list:
         self._expire_old_memories()
         vector_scores = self._try_tfidf_search(query)
         scored_memories = []
         for memory in self.memories:
             vector_score  = vector_scores.get(memory.id, 0.0)
             keyword_score = self._calculate_keyword_score(query, memory.content)
-            base_relevance = vector_score * 0.7 + keyword_score * 0.3 \
+            base_relevance = vector_score * self.vector_weight + keyword_score * (1 - self.vector_weight) \
                              if vector_score > 0 else keyword_score
             time_decay        = self._calculate_time_decay(memory.timestamp)
-            importance_weight = 0.8 + (memory.importance * 0.4)
+            importance_weight = self.config.importance_weight(memory.importance)
             final_score = base_relevance * time_decay * importance_weight
             if final_score > 0:
                 scored_memories.append((final_score, memory))
@@ -109,8 +111,10 @@ class WorkingMemory:
 检索评分公式：
 
 ```
-score = (vector_similarity × 0.8 + recency_score × 0.2) × (0.8 + importance × 0.4)
+score = (α × vector_similarity + (1 - α) × recency_score) × importance_weight
 ```
+
+这里的 `α`、时间衰减与重要性映射都是待校准参数。用带“应召回 / 不应召回”标注的业务查询集比较 Recall@k、误召回和时效错误，再确定配置。
 
 情景记忆比工作记忆更强调**时间近因性**（recency），因为"什么时候发生的"本身就是情景知识的核心维度——最近发生的事更可能被当前对话引用。
 
@@ -133,17 +137,16 @@ flowchart LR
 检索时并行执行向量检索和图检索，再合并评分排序：
 
 ```python
-def retrieve(self, query: str, limit: int = 5) -> list:
-    vector_results = self._vector_search(query, limit * 2)
-    graph_results  = self._graph_search(query, limit * 2)
+def retrieve(self, query: str, limit: int) -> list:
+    candidate_limit = self.config.candidate_limit(limit)
+    vector_results = self._vector_search(query, candidate_limit)
+    graph_results  = self._graph_search(query, candidate_limit)
     return self._combine_and_rank(vector_results, graph_results, query)[:limit]
 
-# 评分公式：
-#   base_score  = vector_score × 0.7 + graph_score × 0.3
-#   final_score = base_score × (0.8 + importance × 0.4)
+# 评分公式中的 vector、graph、importance 权重由检索评估集校准并写入配置
 ```
 
-语义记忆中图检索权重（0.3）高于情景记忆，因为概念间的**关系推理**才是语义知识的核心价值——仅靠向量相似度无法回答"谁与谁有关联"之类的问题。
+图检索能表达向量相似度无法直接回答的显式关系，但不代表它应占固定权重。合并前还要处理两路分数是否可比，并按查询类型验证排序质量。
 
 ---
 
@@ -161,13 +164,13 @@ sequenceDiagram
 
     Note over A: 存储阶段
     A->>E: "用户张三是 Python 开发者"
-    E->>A: [0.12, -0.34, 0.87, ...]  1024 维向量
+    E->>A: [0.12, -0.34, 0.87, ...]  模型定义的维度
     A->>V: upsert(vector, metadata)
 
     Note over A: 检索阶段
     A->>E: "张三擅长什么"
     E->>A: [0.11, -0.31, 0.85, ...]
-    A->>V: search_similar(query_vector, top_k=5)
+    A->>V: search_similar(query_vector, top_k=policy.top_k)
     V->>A: 相关记忆列表 + 相似度分数
 ```
 
@@ -188,7 +191,7 @@ sequenceDiagram
 **MQE（Multi-Query Expansion，多查询扩展）**：用 LLM 生成语义等价但表述不同的多个查询，并行检索后合并去重。它可能缓解查询与文档的词汇鸿沟，也会增加调用、噪声和合并成本；召回收益必须在目标语料、查询集与固定评测口径上测量，不能套用通用百分比。
 
 ```python
-def generate_expanded_queries(query: str, n: int = 2) -> list[str]:
+def generate_expanded_queries(query: str, n: int) -> list[str]:
     # 以官方 LLM 接口为准
     prompt = f"原始查询：{query}\n请给出 {n} 个不同表述的查询，每行一个。"
     expanded = llm.invoke(prompt)
@@ -218,7 +221,7 @@ flowchart TD
     C -->|临时| D[工作记忆\nTTL 管理]
     C -->|事件| E[情景记忆\nSQLite+Qdrant]
     C -->|知识| F[语义记忆\nQdrant+Neo4j]
-    D -->|重要性 ≥ 0.7| G[整合 Consolidation]
+    D -->|超过已校准整合阈值| G[整合 Consolidation]
     G --> E
     E -->|反复召回 + 高重要性| F
     D & E & F -->|定期清理| H[遗忘 Forgetting]
@@ -230,18 +233,18 @@ flowchart TD
 工作记忆中重要性超过阈值的条目会被"提升"为情景记忆；情景记忆中反复召回、高度重要的内容可进一步提升为语义记忆。这模仿了人类大脑的记忆固化过程（睡眠期间海马体将短期记忆转化为长期记忆）。
 
 ```python
-# 将重要工作记忆整合为情景记忆（以 hello-agents 框架接口为例）
+# 策略值来自业务配置；下面仅展示接口形状
 memory_tool.execute("consolidate",
     from_type="working",
     to_type="episodic",
-    importance_threshold=0.7   # 只有 importance >= 0.7 的记忆才整合
+    importance_threshold=policy.working_to_episodic_threshold,
 )
 
 # 将情景记忆中的高价值知识提升为语义记忆
 memory_tool.execute("consolidate",
     from_type="episodic",
     to_type="semantic",
-    importance_threshold=0.8
+    importance_threshold=policy.episodic_to_semantic_threshold,
 )
 ```
 
@@ -260,14 +263,13 @@ memory_tool.execute("consolidate",
 | 基于容量（capacity_based） | 容量接近上限 | 重要性最低的若干条 | 防止存储溢出 |
 
 ```python
-# 清理重要性低于 0.2 的记忆
-memory_tool.execute("forget", strategy="importance_based", threshold=0.2)
+# 所有阈值与期限均来自 MemoryPolicy，而不是通用常量
+memory_tool.execute("forget", strategy="importance_based", threshold=policy.min_importance)
 
-# 清理 30 天前的记忆
-memory_tool.execute("forget", strategy="time_based", max_age_days=30)
+memory_tool.execute("forget", strategy="time_based", max_age_days=policy.max_age_days)
 
 # 容量管理：清理最不重要的条目
-memory_tool.execute("forget", strategy="capacity_based", threshold=0.3)
+memory_tool.execute("forget", strategy="capacity_based", threshold=policy.capacity_trim_ratio)
 ```
 
 ### 时间衰减模型
@@ -277,14 +279,12 @@ memory_tool.execute("forget", strategy="capacity_based", threshold=0.3)
 ```python
 import math
 
-def calculate_recency_score(timestamp: str) -> float:
+def calculate_recency_score(timestamp: str, half_life_hours: float, floor: float) -> float:
     age_hours = (datetime.now() - datetime.fromisoformat(timestamp)).total_seconds() / 3600
-    decay_factor = 0.1
-    # 24 小时内保持高分，此后平滑衰减，最低不低于 0.1
-    return max(0.1, math.exp(-decay_factor * age_hours / 24))
+    return max(floor, math.exp(-math.log(2) * age_hours / half_life_hours))
 ```
 
-新近记忆分值高，随时间平滑衰减，但不会归零（保留 0.1 的基础分），确保历史记录仍然可被检索到。
+`half_life_hours` 和 `floor` 由信息时效与误召回成本配置；长期有效的事实、临时会话状态和合规到期数据不应共用一条衰减曲线。
 
 ---
 

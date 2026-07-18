@@ -186,14 +186,17 @@ def deduplicate_sources(sources: list[dict]) -> list[dict]:
     seen = set()
     return [s for s in sources if s["url"] not in seen and not seen.add(s["url"])]
 
-def limit_source_tokens(source: dict, max_tokens: int = 2000) -> dict:
-    """限制单条摘要长度，防止上下文溢出（1 token ≈ 4 字符估算）"""
-    snippet = source["snippet"]
-    max_chars = max_tokens * 4
-    if len(snippet) > max_chars:
-        snippet = snippet[:max_chars] + "..."
-    return {**source, "snippet": snippet}
+def limit_source_tokens(source: dict, max_tokens: int, tokenizer) -> dict:
+    """使用目标模型对应的 tokenizer 执行硬 token 上限。"""
+    token_ids = tokenizer.encode(source["snippet"])
+    if len(token_ids) <= max_tokens:
+        return source
+
+    snippet = tokenizer.decode(token_ids[:max_tokens])
+    return {**source, "snippet": snippet + "...", "truncated": True}
 ```
+
+字符数与 token 数的映射会随模型、语言和文本内容变化，尤其不能用英文经验倍率约束中文。若只是限制 UI 预览长度，可以按字符截断；若约束模型上下文或费用，必须使用目标模型对应的 tokenizer，或调用提供商的 token counting API。
 
 还可以加一层搜索结果缓存，避免相同查询重复消耗 API 配额：
 
@@ -228,14 +231,19 @@ workspace/
 **后端 FastAPI 流式端点**：
 
 ```python
+import json
+
+from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
+
+app = FastAPI()
 
 async def research_stream(topic: str):
     # 规划阶段
     yield f"data: {json.dumps({'type': 'progress', 'stage': 'planning', 'percentage': 10})}\n\n"
 
     todo_items = await planning_service.plan_todo_list(topic)
-    yield f"data: {json.dumps({'type': 'plan', 'data': [t.dict() for t in todo_items]})}\n\n"
+    yield f"data: {json.dumps({'type': 'plan', 'data': [t.model_dump() for t in todo_items]})}\n\n"
 
     # 执行阶段（逐任务推送进度）
     task_summaries = []
@@ -253,12 +261,12 @@ async def research_stream(topic: str):
     yield f"data: {json.dumps({'type': 'progress', 'stage': 'reporting', 'percentage': 90})}\n\n"
     report = await reporting_service.generate_report(topic, task_summaries)
     yield f"data: {json.dumps({'type': 'report', 'data': report})}\n\n"
-    yield f"data: {json.dumps({'type': 'progress', 'stage': 'completed', 'percentage': 100})}\n\n"
+    yield f"data: {json.dumps({'type': 'completed', 'percentage': 100})}\n\n"
 
-@app.post("/api/research")
-async def research(request: ResearchRequest):
+@app.get("/api/research")
+async def research(topic: str):
     return StreamingResponse(
-        research_stream(request.topic),
+        research_stream(topic),
         media_type="text/event-stream",
         headers={"Cache-Control": "no-cache", "Connection": "keep-alive"}
     )
@@ -298,6 +306,11 @@ export function useResearch() {
           break
       }
     }
+
+    es.onerror = () => {
+      isLoading.value = false
+      es.close()
+    }
   }
 
   return { progress, progressText, markdownContent, isLoading, startResearch }
@@ -318,7 +331,7 @@ export function useResearch() {
 
 - 搜索关键词建议用英文（英文文档覆盖面更广）
 - 结果去重（同一 URL 可能出现在多个搜索引擎）
-- Token 截断（防止长摘要撑爆 Agent 上下文窗口）
+- 用目标 tokenizer 执行 token 上限（防止长摘要撑爆 Agent 上下文窗口）
 - 搜索缓存（相同查询不重复消耗 API 配额）
 
 **3. 规划质量评估**
@@ -373,7 +386,7 @@ graph LR
 
 **常见误区**：
 - 认为存在通用子任务数量：应根据覆盖矩阵、依赖关系、并发/成本预算和证据增量动态拆分；当新搜索不再增加独立证据时停止扩张。
-- 忽视搜索结果的 Token 管理：不截断摘要直接喂给总结 Agent，很容易触发上下文长度限制。
+- 忽视搜索结果的 Token 管理：不做预算就把摘要全部喂给总结 Agent，可能触发上下文长度限制；字符截断不能替代目标模型 tokenizer。
 - 期望 LLM 输出严格 JSON：即使 Prompt 要求很明确，LLM 有时仍会在 JSON 前后附加说明性文字，解析层必须做防御性处理。
 - 不考虑来源引用：深度研究的可信度来自引用，总结 Agent 的 Prompt 必须明确要求为每个观点标注来源。
 

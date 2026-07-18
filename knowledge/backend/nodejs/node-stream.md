@@ -293,7 +293,7 @@ async function streamLLMResponse(
 `pipe()` 本身不建立完整的错误传播链；中间 Transform 抛出 `error` 时，需要应用负责其他流的关闭。独立文件/压缩管道通常优先用 `pipeline()`；但复用流、HTTP `IncomingMessage`/response socket 等场景要先评估 pipeline 的 destroy 行为和残留监听器，必要时显式编排生命周期。
 
 **误解 2：Stream 一定比整体读写快**
-Stream 减少的是内存峰值，不是总 I/O 时间。对于小文件（< 1 MB），一次性读取反而因为减少了事件循环切换次数而更快。
+Stream 的主要价值是增量处理和控制内存峰值，不保证总 I/O 时间更短。对能安全放入内存的数据，一次性读取可能减少分块与事件调度开销，也可能受缓存、系统调用和后续处理影响；分界点必须在目标机器、数据大小与处理链上基准测试，不能用固定文件阈值判断。
 
 **误解 3：`readable.on('data')` 和 `readable.read()` 可以混用**
 监听 `data` 事件会将流切换到 Flowing 模式，此后调用 `.read()` 可能返回 `null`。两种模式不应混用。
@@ -308,7 +308,7 @@ Stream 减少的是内存峰值，不是总 I/O 时间。对于小文件（< 1 M
 - **适当调整 `highWaterMark`**：网络流式场景调小（减延迟），批量磁盘 I/O 调大（提吞吐）。
 - **Transform 的 `_flush` 不要忘记**：处理末尾不完整数据是最容易遗漏的地方。
 - **对象模式慎用**：对象模式的 Stream 无法直接通过 HTTP 响应输出，需要在管道末尾序列化回 Buffer/string。
-- **AI Agent 场景强制流式响应**：凡是调用 LLM API，优先选择 streaming 模式，SSE 或 chunked transfer，减少客户端感知延迟。
+- **按交互需求选择流式响应**：长生成且需要尽早展示时可评估 streaming、SSE 或 chunked transfer；短结构化响应、需要完整校验或原子返回时，缓冲后一次发送也可能更合适。
 
 ## 面试重点
 

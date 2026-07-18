@@ -3,7 +3,7 @@
 
 ---
 
-在构建 AI Agent 系统时，一个绕不过去的技术选择是：是否使用异步编程（Asynchronous Programming）。调用 LLM API、读取向量数据库、执行 Web 搜索——这些操作延迟从几十毫秒到数十秒不等，如果全部串行执行，系统吞吐量将严重受限。Python 的 `asyncio` 模块正是解决这类问题的核心工具，理解它的工作原理是每一位 AI/RAG/Agent 工程师的必修课。（参见 [PEP 3156: Asynchronous IO Support Rebooted](https://peps.python.org/pep-3156/)）
+在构建 AI Agent 系统时，一个绕不过去的技术选择是：是否使用异步编程（Asynchronous Programming）。调用 LLM API、读取向量数据库、执行 Web 搜索都可能花大量时间等待远端 I/O；若把互不依赖的等待全部串行化，吞吐和端到端延迟会受影响。Python 的 `asyncio` 为这类协作式并发提供 event loop、Future 与 Task 等抽象。（参见 [PEP 3156: Asynchronous IO Support Rebooted](https://peps.python.org/pep-3156/)）
 
 ## 同步 vs 异步：I/O 密集 vs CPU 密集
 
@@ -15,7 +15,7 @@
 | CPU 密集型（CPU-bound） | 矩阵运算、图像处理、本地模型推理、加解密 | CPU 计算时间 | `multiprocessing` / `ProcessPoolExecutor` |
 | 混合型 | 批量 embedding + 向量检索 | 两者都有 | 异步 I/O + 进程池 |
 
-**为什么 LLM API 调用必须异步？** 一次 GPT-4 调用平均耗时 3-15 秒。若 Agent 同时处理 50 个用户请求，同步模式需要 50 × 10s = 8 分钟；异步模式下，事件循环（Event Loop）在等待某个请求时切换去处理其他请求，总耗时接近单次调用时间。`asyncio` 的并发切换成本仅为微秒级，远低于线程（Thread）的毫秒级上下文切换开销。
+**为什么 LLM API 调用适合异步？** 网络请求的大部分时间在等待远端响应。同步串行代码会让后续请求一直排队；异步代码可以在一个请求等待 I/O 时推进其他任务。实际吞吐、延迟和调度开销取决于网络、限流、客户端实现与运行环境，应以压测结果为准，不能用一组固定数字外推。
 
 > Python 的 GIL（全局解释器锁）限制了多线程并行执行 Python 字节码，但不影响 I/O 等待期间的并发。`asyncio` 通过单线程协作式调度绕开了这一限制。
 
@@ -82,7 +82,7 @@ asyncio.run(main())
 
 ### asyncio.gather — 批量并发
 
-`gather` 并发调度多个协程，等所有完成后按传入顺序返回结果列表。这是 Agent 中并行调用多个工具（Tool Call）的标准写法。
+[`asyncio.gather`](https://docs.python.org/3/library/asyncio-task.html#asyncio.gather) 会并发运行传入的 awaitable，并在全部成功时按传入顺序返回结果列表。它适合需要把一组结果汇总起来的调用，但错误传播和取消语义必须显式设计。
 
 ```python
 async def parallel_tool_calls(tool_calls: list[dict]) -> list:
@@ -91,7 +91,7 @@ async def parallel_tool_calls(tool_calls: list[dict]) -> list:
         tool = TOOL_REGISTRY[call["name"]]
         return await tool.ainvoke(call["arguments"])
 
-    # return_exceptions=True：单个工具失败不影响其他工具继续执行
+    # return_exceptions=True：异常会作为结果返回，由调用方逐项处理
     results = await asyncio.gather(
         *[run_one(c) for c in tool_calls],
         return_exceptions=True,
@@ -179,7 +179,7 @@ async def main():
 `Semaphore`（信号量）限制同时执行的协程数量，防止并发过高触发 API 速率限制（Rate Limit）或压垮服务端。在批量处理 RAG 索引、批量 embedding 等场景中**必须**使用。
 
 ```python
-async def batch_embed(texts: list[str], max_concurrent: int = 20) -> list[list[float]]:
+async def batch_embed(texts: list[str], max_concurrent: int) -> list[list[float]]:
     """批量 embedding，限制最多 20 个并发请求，避免触发 OpenAI Rate Limit"""
     sem = asyncio.Semaphore(max_concurrent)
 
@@ -260,7 +260,7 @@ async def orchestrate(query: str) -> str:
 
 ### Python 3.11+ TaskGroup — 结构化并发
 
-`TaskGroup` 是对 `gather` 的结构化升级，任一任务异常会自动取消组内所有其他任务，并将异常集合到 `ExceptionGroup` 中：
+`TaskGroup` 提供结构化并发边界：组内首个非 `CancelledError` 异常通常会取消尚未完成的兄弟任务，退出上下文时再以 `ExceptionGroup` / `BaseExceptionGroup` 传播不能直接重抛的异常。完整例外以 [Python asyncio tasks and task groups](https://docs.python.org/3/library/asyncio-task.html) 为准：
 
 ```python
 async def run_agents():
@@ -271,7 +271,7 @@ async def run_agents():
     return task_a.result(), task_b.result()
 ```
 
-生产环境优先选用 `TaskGroup`，其结构化取消语义远比裸 `gather` 更安全。
+当一组任务应当共同成功或失败时，`TaskGroup` 的生命周期边界通常比裸 `gather` 更容易推理；需要容纳局部失败并逐项返回结果时，`gather(..., return_exceptions=True)` 仍可能更合适。
 
 ---
 
@@ -307,7 +307,7 @@ async def good():
 
 **误区 4：不限并发导致 Rate Limit 或 OOM**
 
-对 OpenAI / Claude 等 API 无节制地并发，会触发 `429 Too Many Requests`。始终在批量处理场景中使用 `asyncio.Semaphore`。
+对远端 API 无节制地并发，可能触发服务端限流或耗尽本地连接、内存。批量处理应根据提供商配额与压测结果设置并发上限；`asyncio.Semaphore` 是一种常见实现，但已有连接池或任务队列也可以承担这一职责。
 
 **误区 5：在 Jupyter 中调用 `asyncio.run()`**
 
@@ -318,11 +318,10 @@ Jupyter 已有运行中的事件循环，`asyncio.run()` 会报错。在 noteboo
 ## 最佳实践
 
 - **按宿主选择 runner**：单次脚本通常用 `asyncio.run()`；Python 3.11+ 需要复用同一 loop/context 的多个顶层调用可用 `asyncio.Runner`；已有事件循环中不要嵌套调用 `asyncio.run()`。
-- **同步阻塞代码一律隔离**：`requests`、`time.sleep`、`open()` 等必须用 `asyncio.to_thread` 或 `run_in_executor` 包裹。
-- **批量 API 调用必加 Semaphore**：LLM 和 Embedding API 都有速率限制，`max_concurrent` 建议设为 10-50，视服务商限额调整。
-- **`gather` 加 `return_exceptions=True`**：批处理场景下单个失败不应导致全部丢弃，错误由调用方逐条处理。
-- **Python 3.11+ 优先使用 `TaskGroup`**：结构化并发，自动处理异常传播和任务取消，比裸 `gather` 更安全。
-- **框架层保持 async 一致性**：FastAPI、Starlette 等框架的路由处理器全部用 `async def`；混用同步处理器会退化为线程执行，丧失异步优势。
+- **隔离会阻塞 event loop 的工作**：同步网络请求、长时间文件 I/O 或 CPU 密集计算不要直接占用事件循环；根据任务性质使用异步库、`asyncio.to_thread` 或进程池。
+- **并发上限来自约束**：结合提供商配额、连接池大小、内存与目标延迟校准，不复制固定的 `max_concurrent`。
+- **按失败语义选择组合方式**：批处理若要保留每项失败，可用 `gather(..., return_exceptions=True)` 并逐项处理；任务需要共同成败时可考虑 `TaskGroup`。
+- **框架层按工作类型选择处理器**：路由真正执行异步 I/O 时使用 `async def`；若处理器调用无法替换的同步阻塞库，按框架约定使用同步处理器或显式移入线程，避免阻塞 event loop。
 - **流式输出尽早 yield**：LLM 流式接口能显著改善用户感知延迟，Agent 框架应贯通 `async for` 管道，避免中间层缓冲。
 
 ---
@@ -331,15 +330,15 @@ Jupyter 已有运行中的事件循环，`asyncio.run()` 会报错。在 noteboo
 
 **Q：协程（Coroutine）与线程（Thread）的核心区别？**
 
-协程是**用户态、协作式**调度，在 `await` 处主动让出控制权，切换成本约 1μs，无竞争条件，无需加锁；线程是**内核态、抢占式**调度，切换成本约 1-10ms，存在竞争条件，需要锁保护共享状态。asyncio 可轻松维护数万个协程，线程通常上千就会出现性能问题。
+协程由事件循环做**协作式**调度，通常在 `await` 处让出控制权；线程由操作系统做抢占式调度。协程并不天然消除竞争：多个 Task 若在 `await` 前后读写同一可变状态，仍可能发生逻辑竞态，需要锁、队列或所有权约束。两者的切换成本和可承载数量都依工作负载与运行环境而变，应通过压测选择。
 
 **Q：`asyncio.gather` 与 `asyncio.wait` 的区别？**
 
-`gather` 接受协程或任务，返回**有序结果列表**，任一异常默认取消其余任务（`return_exceptions=True` 可改变此行为）；`wait` 接受 Task 集合，返回 `(done, pending)` 集合，支持 `FIRST_COMPLETED` / `FIRST_EXCEPTION` / `ALL_COMPLETED` 策略，控制粒度更细，适合竞速或部分取消场景。
+`gather` 接受 awaitable，并在成功时返回**按输入顺序排列的结果列表**。默认 `return_exceptions=False` 时，首个异常会立即传播给等待 `gather` 的调用者，但其他已提交 awaitable 不会因此自动取消；`return_exceptions=True` 则把异常放进结果列表。`wait` 接受 Task/Future 集合，返回 `(done, pending)`，并支持 `FIRST_COMPLETED` / `FIRST_EXCEPTION` / `ALL_COMPLETED` 等等待条件，适合竞速或由调用方管理 pending 任务。[Python asyncio Task 文档](https://docs.python.org/3/library/asyncio-task.html#asyncio.gather)明确区分了这些传播与取消语义。
 
 **Q：事件循环的运行原理？**
 
-事件循环维护一个**就绪队列**（ready queue）和一个 **I/O 等待集合**。每次 tick：① 执行就绪队列中所有回调；② 调用 `select`/`epoll`/`kqueue` 等系统调用，检查哪些 I/O 已完成；③ 将完成 I/O 对应的协程放入就绪队列；④ 重复。时间复杂度接近 O(n) 的 I/O 多路复用，是其高并发的底层支撑。
+事件循环维护可运行的回调、定时器和等待 I/O 的注册项，并借助平台 selector/poller 获取就绪事件；完成 I/O 会让相应 Future/Task 再次具备运行条件。具体每轮处理策略、系统调用和复杂度取决于事件循环实现与就绪事件数量，不应概括成固定的 `O(n)`。
 
 **Q：Task 取消（Cancel）的机制是什么？**
 
@@ -354,3 +353,4 @@ Jupyter 已有运行中的事件循环，`asyncio.run()` 会报错。在 noteboo
 - [Python asyncio documentation](https://docs.python.org/3/library/asyncio.html)
 - [PEP 3156: Asynchronous IO Support Rebooted](https://peps.python.org/pep-3156/)
 - [Python asyncio runners](https://docs.python.org/3/library/asyncio-runner.html)
+- [Python asyncio tasks and task groups](https://docs.python.org/3/library/asyncio-task.html)
