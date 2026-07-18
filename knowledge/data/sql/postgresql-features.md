@@ -1,8 +1,16 @@
-PostgreSQL 在标准关系型能力之上，内置了文档存储、向量检索、全文搜索、递归查询和异步消息等特性，使其在 AI/Agent 系统中能同时承担结构化数据库、向量库和事件总线的角色，无需引入额外中间件。
+![同一业务记录把稳定字段放关系列，把变化属性放 JSONB；查询同时使用 B-tree 与 GIN 索引，MVCC 快照读取一致版本；标出约束、统计与更新粒度权衡](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/postgresql-jsonb-relational-hybrid-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是突出 JSON/JSONB 操作与索引、MVCC、事务查询，并明确 JSONB 不能替代所有关系建模。*
+
+---
+
+PostgreSQL 在关系型能力之上提供 JSONB、全文搜索、递归查询、LISTEN/NOTIFY，并可通过扩展加入向量检索。这些能力有时能减少组件数量，但 LISTEN/NOTIFY 不是持久消息队列，向量扩展也不能自动替代专用检索系统；选型仍取决于规模和可靠性要求。
 
 ## JSONB：半结构化数据存储
 
-PostgreSQL 提供两种 JSON 类型，底层实现截然不同。
+JSONB 仍是 PostgreSQL 行中的列，其读写服从数据库的 [MVCC 与事务可见性](https://www.postgresql.org/docs/current/mvcc-intro.html)；使用半结构化字段不会绕开并发控制或自动合并并发更新。
+
+
+PostgreSQL 提供两种 JSON 类型，底层实现截然不同。（参见 [PostgreSQL JSON types](https://www.postgresql.org/docs/current/datatype-json.html)）
 
 | 类型 | 存储方式 | 写入开销 | 查询性能 | GIN 索引 | 保留原始格式 |
 |------|----------|----------|----------|----------|--------------|
@@ -438,3 +446,8 @@ A：主要风险是循环引用导致无限递归。应对措施：① 在递归
 
 **Q：LISTEN/NOTIFY 适合用于 Agent 事件总线吗？有什么限制？**
 A：适合低吞吐、容忍消息丢失的场景，优势是零额外依赖、与事务集成（在事务提交后才发送通知）。主要限制：① 通知不持久化，连接断开期间的通知丢失；② payload 上限 8000 字节；③ 不支持消息确认（ACK）和重试。需要可靠性保障时，应升级为 pg_boss 或外部消息队列。
+
+## 参考资料
+
+- [PostgreSQL JSON types](https://www.postgresql.org/docs/current/datatype-json.html)
+- [PostgreSQL MVCC introduction](https://www.postgresql.org/docs/current/mvcc-intro.html)

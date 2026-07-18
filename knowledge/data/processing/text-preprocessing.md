@@ -1,3 +1,8 @@
+![原始多语言文本经过编码验证→Unicode normalization→语言感知清洗→sentence/token segmentation→质量抽样；旁边展示过度 lowercasing/去标点造成实体与代码语义丢失](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/text-preprocessing-normalization-tokenization-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是避免在规范化、大小写或标点处理中无意改变语义。*
+
+---
+
 在 RAG（Retrieval-Augmented Generation）和 LLM 工程中，文本预处理（Text Preprocessing）常被低估——工程师往往把 80% 的精力花在模型调参上，却忽视"数据入口"的质量。事实上，一份存在编码乱码、HTML 残骸或切分不当的文档，会直接导致 embedding 语义漂移、检索召回率下降，让任何模型优化都事倍功半。本文系统梳理文本预处理的完整链路，并重点讲解 RAG 场景下的分块（Chunking）策略与调参思路。
 
 ## 文本预处理在 RAG/LLM 工程中的核心地位
@@ -43,6 +48,9 @@ def normalize_whitespace(text: str) -> str:
 
 ### Unicode 标准化与大小写规范化
 
+[Unicode UAX #15](https://unicode.org/reports/tr15/) 定义 NFC/NFD 与兼容性更强的 NFKC/NFKD；NFKC 可能合并有语义差异的兼容字符，不能无条件作为所有文本的默认清洗步骤。
+
+
 ```python
 import unicodedata
 import opencc  # 繁简转换
@@ -62,6 +70,9 @@ def normalize_unicode(text: str) -> str:
 ---
 
 ## 分词（Tokenization）与中文分词
+
+[SentencePiece 原始论文](https://arxiv.org/abs/1808.06226) 展示了直接从原始句子学习子词模型的方法，使分词不依赖预先的语言特定词边界规则。
+
 
 ### 中文分词：jieba
 
@@ -369,3 +380,8 @@ chunk 过大会引入噪声，稀释 embedding 的语义焦点，导致相似度
 
 **Q：中文文本预处理与英文有哪些核心差异？**
 中文无词边界，需要分词（jieba 等）；英文重词形变化，需要 stemming/lemmatization。中文 BPE tokenization 通常以字为基本单位，英文以 subword 为单位。中文文档还需处理繁简混用（NFKC + opencc）、全半角混用等问题。此外，中文停用词表（哈工大、中科院版本）与英文 NLTK stopwords 逻辑类似但需单独维护。
+
+## 参考资料
+
+- [Unicode Standard Annex #15: Unicode Normalization Forms](https://unicode.org/reports/tr15/)
+- [SentencePiece: A simple and language independent subword tokenizer](https://arxiv.org/abs/1808.06226)

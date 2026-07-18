@@ -1,3 +1,8 @@
+![查询优化闭环：慢查询→EXPLAIN ANALYZE 计划树→比较 estimated/actual rows→检查统计与过滤→设计复合/部分索引→再测；右侧标出索引空间与写入成本](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/sql-explain-index-optimization-loop-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是统计信息、选择性、scan/join 节点、actual vs estimated、复合/部分索引和写放大串成诊断流程。*
+
+---
+
 数据库索引（Index）是建立在数据列上的有序辅助结构，将全表扫描的线性代价降低为对数级别。理解索引的物理结构、适用边界与失效场景，是写出可扩展 SQL 查询的前提。
 
 ## 索引的底层数据结构
@@ -184,6 +189,9 @@ EXPLAIN SELECT * FROM orders WHERE user_id = 42 AND status = 'paid'\G
 
 ### PostgreSQL EXPLAIN ANALYZE 解读
 
+[PostgreSQL EXPLAIN 文档](https://www.postgresql.org/docs/current/using-explain.html) 区分估算成本/行数与 `EXPLAIN ANALYZE` 的实际执行数据；诊断重点是 estimated 与 actual 的偏差及其上游原因。
+
+
 ```sql
 EXPLAIN (ANALYZE, BUFFERS, FORMAT TEXT)
 SELECT user_id, amount FROM orders WHERE user_id = 42;
@@ -320,7 +328,7 @@ LIMIT 5;
 ## 常见误区
 
 **误区一：索引越多越好**
-每次写入（INSERT / UPDATE / DELETE）都需同步更新所有相关索引的 B-Tree，写密集场景中冗余索引会显著拖慢吞吐量。定期用 `sys.schema_unused_indexes`（MySQL）或 `pg_stat_user_indexes`（PostgreSQL）清理未使用的索引。
+每次写入（INSERT / UPDATE / DELETE）都需同步更新所有相关索引的 B-Tree，写密集场景中冗余索引会显著拖慢吞吐量。定期用 `sys.schema_unused_indexes`（MySQL）或 `pg_stat_user_indexes`（PostgreSQL）清理未使用的索引。（参见 [PostgreSQL indexes introduction](https://www.postgresql.org/docs/current/indexes-intro.html)）
 
 **误区二：EXPLAIN rows 等于实际扫描行数**
 `rows` 是基于统计信息的估算，可能与实际相差数量级。只有 `EXPLAIN ANALYZE` 才给出真实行数；统计信息过时时优化器可能选错执行计划。
@@ -355,3 +363,8 @@ MySQL 的 Index Merge 合并代价不低；两侧选择性均高时，改写为 
 - **选择性低的列为何优化器放弃索引**：索引扫描 + 回表的随机 I/O 代价可超过全表顺序扫描，PostgreSQL 会参考 `correlation` 做判断。
 - **pgvector 混合查询为何有时不走向量索引**：元数据过滤后候选行数极少时，对子集做向量暴力扫描代价低于 HNSW 图遍历，优化器自动选择 B-Tree 先过滤。
 - **索引列做运算为何失效**：运算后列值不再与索引键对应，优化器无法定位，正确做法是将计算移到参数侧。
+
+## 参考资料
+
+- [PostgreSQL Using EXPLAIN](https://www.postgresql.org/docs/current/using-explain.html)
+- [PostgreSQL indexes introduction](https://www.postgresql.org/docs/current/indexes-intro.html)

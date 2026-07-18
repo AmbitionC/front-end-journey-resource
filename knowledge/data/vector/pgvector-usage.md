@@ -1,3 +1,8 @@
+![PostgreSQL 查询把 metadata filter 与 vector distance 排序组合；对比 exact scan、HNSW、IVFFlat 三条路径，展示索引候选、过滤、recheck、top-k 与 recall/latency 调参点](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/pgvector-filter-ann-query-plan-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是准确说明 exact/approximate search、distance operator、filter 与 recall 调参。*
+
+---
+
 pgvector 是 PostgreSQL 的开源向量扩展（vector extension），让已有的关系型数据库原生支持高维向量的存储、索引与相似度检索，是 AI/Agent 工程师在现有 PostgreSQL 基础设施上构建检索增强生成（RAG，Retrieval-Augmented Generation）系统的最低成本路径之一。
 
 ## 安装与启用
@@ -124,6 +129,11 @@ SET random_page_cost = 1.1;  -- SSD 推荐值（默认 4.0）
 更根本的解法是为过滤列（`session_id`、`role`）建立普通 B-Tree 索引，让规划器能准确估计过滤后的基数（cardinality），从而做出更好的决策。
 
 ## 索引
+
+[pgvector 维护者文档](https://github.com/pgvector/pgvector) 区分默认的 exact search 与 HNSW/IVFFlat approximate indexes，并定义距离操作符、过滤和索引参数；近似索引用召回率换取查询性能，必须在目标数据上验证。
+
+pgvector 的 HNSW/IVFFlat 是扩展提供的向量索引，不应与 PostgreSQL 核心的 [B-tree、Hash、GiST、SP-GiST、GIN、BRIN](https://www.postgresql.org/docs/current/indexes-types.html) 混为一类；元数据过滤通常仍依赖合适的关系索引。
+
 
 ### IVFFlat 索引
 
@@ -409,3 +419,8 @@ IVFFlat 依赖 k-means 对现有数据聚类，表为空或行数过少时（< `
 
 - **pgvector 与专用向量数据库如何决策？**
   核心三要素：向量规模（百万以内 pgvector 足够）、是否需要关系查询（需要则强烈倾向 pgvector）、团队运维能力（已有 PostgreSQL 运维经验则无需引入新组件）。不是非此即彼，可先用 pgvector 验证业务价值，规模压力显现后再评估迁移收益。
+
+## 参考资料
+
+- [pgvector official documentation](https://github.com/pgvector/pgvector)
+- [PostgreSQL index types](https://www.postgresql.org/docs/current/indexes-types.html)
