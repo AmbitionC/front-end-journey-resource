@@ -27,7 +27,7 @@ The deterministic order is the knowledge-tree order after removing all 209 keys 
 
 - Generate source images in small groups so each prompt remains topic-specific.
 - Normalize each image to 1672 × 941 RGB WebP on a warm-white canvas without destructive cropping.
-- Run dimension, mode, luminance, dark-pixel, light-pixel, corner, and duplicate-hash checks before copying the image into its article directory.
+- Run dimension, mode, luminance, dark-pixel, light-pixel, corner, and duplicate-hash checks before placing the image in the repository-level `images/` directory.
 
 ## Task 3: Update articles in ten groups
 
@@ -43,7 +43,7 @@ For every group:
 ## Task 4: Update generation history
 
 - Change all existing `pending` records to `published`.
-- Append the 91 records in tree order with status `pending`, action `update`, and batch ID `complete-remaining-91-2026-07-18`.
+- Append the 91 records in tree order with status `pending`, history action `updated`, and batch ID `complete-remaining-91-2026-07-18`.
 - Assert 300 records, 300 unique keys, 209 published, and 91 pending.
 
 ## Task 5: Full validation
