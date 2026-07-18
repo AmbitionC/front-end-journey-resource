@@ -78,14 +78,32 @@ async function routedRequest(userMessage: string): Promise<string> {
 
 精确匹配（Exact Cache）只命中规范化后完全相同的 key；语义缓存（Semantic Cache）尝试复用语义相近请求的答案。两者的命中率取决于请求重复度、TTL、租户隔离和相似度策略，应从真实流量日志计算，不能套用固定区间。
 
-**原理**：将每次请求的 Prompt 编码为向量（Embedding），存入向量数据库。新请求到来时，计算其向量与库中历史向量的余弦相似度（Cosine Similarity）。相似度超过阈值则直接返回缓存答案，跳过 LLM 调用。
+**原理**：将请求文本编码为向量，在**相同授权与运行语境的分区内**检索候选。语义相似只说明文本接近，不说明答案仍有效、调用者有权读取，或两个请求可以共享结果；返回前必须同时通过分区、TTL、版本和逐条授权检查。
 
 ```typescript
+interface CacheScope {
+  tenantId: string;
+  authorizationScope: string[]; // 稳定的角色/资源范围，不放访问令牌
+  systemPromptVersion: string;
+  modelVersion: string;
+  toolsetVersion: string;
+  locale: string;
+  policyVersion: string;
+}
+
+interface CacheRequest {
+  question: string;
+  scope: CacheScope;
+}
+
 interface CacheEntry {
   id: string;
   question: string;
   answer: string;
   embedding: number[];
+  scopeFingerprint: string;
+  authorizationDescriptor: AuthorizationDescriptor;
+  invalidationTags: string[];
   createdAt: number;
   ttl: number; // seconds
 }
@@ -95,34 +113,62 @@ class SemanticCache {
     private vectorStore: VectorStore,
     private embedFn: (text: string) => Promise<number[]>,
     private similarityThreshold: number, // 由离线评估和误命中成本校准
+    private authorizeScope: (
+      principal: Principal,
+      operation: "read" | "write",
+      scope: CacheScope,
+    ) => Promise<void>,
+    private authorizeEntry: (
+      principal: Principal,
+      entry: CacheEntry,
+    ) => Promise<boolean>,
   ) {}
 
-  async get(question: string): Promise<string | null> {
-    const embedding = await this.embedFn(question);
+  async get(request: CacheRequest, principal: Principal): Promise<string | null> {
+    // 先授权，后检索；不能先跨租户搜索再在应用层丢弃。
+    await this.authorizeScope(principal, "read", request.scope);
+    const scopeFingerprint = stableHash(canonicalizeScope(request.scope));
+    const embedding = await this.embedFn(request.question);
     const results = await this.vectorStore.search(embedding, {
       topK: CACHE_CONFIG.candidateCount,
+      filter: { scopeFingerprint },
     });
 
-    if (
-      results.length > 0 &&
-      results[0].score >= this.similarityThreshold &&
-      !this.isExpired(results[0].entry)
-    ) {
-      return results[0].entry.answer;
+    for (const result of results) {
+      const entry = result.entry as CacheEntry;
+      if (result.score < this.similarityThreshold) continue;
+      if (entry.scopeFingerprint !== scopeFingerprint || this.isExpired(entry)) continue;
+      // 即使分区匹配，也要在“命中”前按当前权限重做逐条授权。
+      if (await this.authorizeEntry(principal, entry)) return entry.answer;
     }
     return null;
   }
 
-  async set(question: string, answer: string, ttlSeconds: number): Promise<void> {
-    const embedding = await this.embedFn(question);
+  async set(
+    request: CacheRequest,
+    answer: string,
+    principal: Principal,
+    ttlSeconds: number,
+    authorizationDescriptor: AuthorizationDescriptor,
+    invalidationTags: string[],
+  ): Promise<void> {
+    await this.authorizeScope(principal, "write", request.scope);
+    const embedding = await this.embedFn(request.question);
     await this.vectorStore.upsert({
       id: crypto.randomUUID(),
-      question,
+      question: request.question,
       answer,
       embedding,
+      scopeFingerprint: stableHash(canonicalizeScope(request.scope)),
+      authorizationDescriptor,
+      invalidationTags,
       createdAt: Date.now(),
       ttl: ttlSeconds,
     });
+  }
+
+  async invalidateByTag(tag: string): Promise<void> {
+    await this.vectorStore.delete({ filter: { invalidationTags: { contains: tag } } });
   }
 
   private isExpired(entry: CacheEntry): boolean {
@@ -131,19 +177,36 @@ class SemanticCache {
 }
 
 // 在 LLM 调用链中嵌入语义缓存
-async function cachedLLMCall(question: string, cache: SemanticCache): Promise<string> {
-  const cached = await cache.get(question);
+async function cachedLLMCall(
+  request: CacheRequest,
+  principal: Principal,
+  cache: SemanticCache,
+): Promise<string> {
+  const cached = await cache.get(request, principal);
   if (cached) {
     return cached; // 跳过本次 LLM 生成；仍有查询与缓存基础设施成本
   }
 
-  const answer = await callLLM(CACHE_CONFIG.answerModel, { user: question });
-  await cache.set(question, answer, CACHE_CONFIG.ttlSeconds);
+  const answer = await callLLM(request.scope.modelVersion, {
+    user: request.question,
+  });
+  await cache.set(
+    request,
+    answer,
+    principal,
+    CACHE_CONFIG.ttlSeconds,
+    currentAuthorizationDescriptor(principal),
+    currentInvalidationTags(request),
+  );
   return answer;
 }
 ```
 
-**阈值选择**：相似度分数不是跨 embedding 模型通用的概率。用目标语料构造“可复用 / 不可复用”样本，按误命中的业务损失选择阈值，并持续监控命中率、误命中率和陈旧答案比例；更换 embedding 模型后必须重新校准。
+这里的缓存身份不是“问题向量”本身，而是“规范化请求 + 授权/运行语境指纹”的组合。`authorizationScope` 要使用稳定的角色或资源范围，不能把 bearer token、cookie 等秘密直接写进 key。System Prompt、模型、工具 schema、locale 或安全策略的版本变化，都可能让旧答案失效。
+
+**阈值与负样本**：相似度分数不是跨 embedding 模型通用的概率。除“可复用 / 不可复用”普通样本外，还要专门构造**语义很近但答案不能复用**的 negative pairs，例如不同租户/角色、不同日期或数字、肯定与否定、不同 locale、不同政策版本，以及只改一个权限敏感实体的请求。按误命中的业务损失选择阈值，并分切片监控错误复用；更换 embedding 模型后重新校准。
+
+**失效机制**：TTL 只是最后一道上限。知识源、用户权限、System Prompt、模型/工具版本或政策变化时，应通过版本化 scope 或事件驱动的 invalidation tag 主动删除/旁路旧条目；无法可靠判断依赖关系的高风险答案不应进入语义缓存。
 
 ## Prompt 压缩（Prompt Compression）
 

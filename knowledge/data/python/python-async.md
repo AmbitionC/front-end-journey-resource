@@ -85,18 +85,31 @@ asyncio.run(main())
 [`asyncio.gather`](https://docs.python.org/3/library/asyncio-task.html#asyncio.gather) 会并发运行传入的 awaitable，并在全部成功时按传入顺序返回结果列表。它适合需要把一组结果汇总起来的调用，但错误传播和取消语义必须显式设计。
 
 ```python
-async def parallel_tool_calls(tool_calls: list[dict]) -> list:
-    """Agent 并行执行多个 tool call，总耗时 = 最慢那个工具"""
+async def parallel_tool_calls(tool_calls: list[dict]) -> list[dict]:
+    """并发执行工具，并把每项成功或失败显式编码到返回值。"""
     async def run_one(call: dict):
         tool = TOOL_REGISTRY[call["name"]]
         return await tool.ainvoke(call["arguments"])
 
-    # return_exceptions=True：异常会作为结果返回，由调用方逐项处理
+    # 结果元素的运行时类型是正常返回值或 BaseException。
     results = await asyncio.gather(
         *[run_one(c) for c in tool_calls],
         return_exceptions=True,
     )
-    return results
+    outcomes = []
+    for call, result in zip(tool_calls, results):
+        if isinstance(result, asyncio.CancelledError):
+            raise result  # 不把当前操作的取消伪装成普通工具失败
+        if isinstance(result, BaseException):
+            outcomes.append({
+                "tool": call["name"],
+                "ok": False,
+                "error_type": type(result).__name__,
+                "error": str(result),
+            })
+        else:
+            outcomes.append({"tool": call["name"], "ok": True, "value": result})
+    return outcomes
 ```
 
 ### asyncio.create_task — 即时调度
@@ -125,12 +138,19 @@ async def race_llms(prompts: list[str]):
     """多个 LLM 提供商竞速，用最快的那个结果"""
     tasks = {asyncio.create_task(call_llm(p)) for p in prompts}
     done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+    winner = next(iter(done))
 
-    # 取消其余未完成的任务
-    for t in pending:
-        t.cancel()
+    # 取消其余任务后仍要等待它们结束，让 finally/连接清理真正完成。
+    for t in tasks:
+        if t is not winner and not t.done():
+            t.cancel()
+    await asyncio.gather(
+        *(t for t in tasks if t is not winner),
+        return_exceptions=True,
+    )
 
-    return done.pop().result()
+    # winner 若失败，在完成清理后把原异常传播给调用方。
+    return winner.result()
 ```
 
 `gather` vs `wait` 选择原则：需要有序结果且统一处理用 `gather`；需要先处理最快完成的或部分取消用 `wait`。
@@ -152,11 +172,11 @@ async def fetch_embeddings(texts: list[str]) -> list[list[float]]:
 
 ### async for — 异步迭代器与流式输出
 
-`async for` 配合异步生成器（`async def` + `yield`）实现 LLM 流式输出（Streaming），用户看到逐 token 输出而非等待完整响应：
+`async for` 配合异步生成器（`async def` + `yield`）实现 LLM 流式输出（Streaming），用户可以逐步看到提供商返回的文本增量，而非等待完整响应；一个增量片段不一定恰好对应一个 token：
 
 ```python
 async def stream_response(prompt: str):
-    """逐 token 流式输出，适合前端实时展示"""
+    """逐增量文本片段输出，适合前端实时展示。"""
     async with httpx.AsyncClient() as client:
         async with client.stream(
             "POST", CHAT_URL,
@@ -170,8 +190,8 @@ async def stream_response(prompt: str):
                         yield delta  # 调用方 async for 逐块消费
 
 async def main():
-    async for token in stream_response("讲解 asyncio"):
-        print(token, end="", flush=True)
+    async for delta in stream_response("讲解 asyncio"):
+        print(delta, end="", flush=True)
 ```
 
 ## 并发控制：asyncio.Semaphore
@@ -191,7 +211,8 @@ async def batch_embed(texts: list[str], max_concurrent: int) -> list[list[float]
             )
             return resp.data[0].embedding
 
-    return await asyncio.gather(*[embed_one(t) for t in texts], return_exceptions=True)
+    # 这里选择整体失败语义，因此不把异常混入 list[list[float]]。
+    return await asyncio.gather(*[embed_one(t) for t in texts])
 ```
 
 `Semaphore` 的值即最大并发数，`async with sem` 进入时计数减一，退出时计数加一，为零时后续协程阻塞等待。
@@ -346,7 +367,7 @@ Jupyter 已有运行中的事件循环，`asyncio.run()` 会报错。在 noteboo
 
 **Q：如何在同步函数中调用异步函数？**
 
-三种方式：① 将包装函数改为 `async def`（推荐，彻底异步化）；② 使用 `asyncio.run(coro)` 作为顶层入口；③ 在已有事件循环中用 `loop.run_until_complete(coro)`（需持有 loop 引用，不推荐）。切忌在协程内嵌套调用 `asyncio.run()`，会抛 `RuntimeError: This event loop is already running`。（参见 [Python asyncio documentation](https://docs.python.org/3/library/asyncio.html)）
+三种常见方式：① 将包装函数改为 `async def`，由已有异步调用链 `await`；② 在普通脚本的同步顶层使用 `asyncio.run(coro)`；③ 仅当同步代码**拥有一个尚未运行的 loop** 时，才可调用 `loop.run_until_complete(coro)`。不要对已经运行的 loop 调用 `run_until_complete`，也不要在协程内嵌套 `asyncio.run()`；Notebook 或异步框架中应使用其现有 loop 提供的 `await`/调度入口。（参见 [Python asyncio documentation](https://docs.python.org/3/library/asyncio.html)）
 
 ## 参考资料
 

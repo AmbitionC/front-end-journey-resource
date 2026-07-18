@@ -102,11 +102,11 @@ graph TD
 
 ## LangSmith：LangChain 官方可观测平台
 
-LangSmith 由 LangChain 团队开发，与 LangChain / LangGraph 生态深度集成，是使用 LangChain 技术栈时的默认选择。
+LangSmith 是 LangChain 团队提供的可观测与评估平台。当前接入方式、环境变量和 SDK 示例应以 [LangSmith observability quickstart](https://docs.langchain.com/langsmith/observability-quickstart) 为准；不要把某个版本的产品能力或部署方式写死在业务封装里。
 
 ### 架构要点
 
-LangSmith 采用 SaaS 优先的架构，数据上报到 `api.smith.langchain.com`。企业版支持私有化部署（Self-Hosted），底层使用 ClickHouse 存储追踪数据，PostgreSQL 存储元数据。
+托管版与自托管版的网络、存储和许可边界不同。[LangSmith self-hosted 文档](https://docs.langchain.com/langsmith/self-hosted)列出了当前部署前提；选型时应直接核对组织的区域、保留期、加密、备份和运维责任，而不是从客户端 SDK 推断服务端拓扑。
 
 核心模块：
 - **Tracing**：自动或手动捕获调用链
@@ -220,15 +220,18 @@ async function agentRun(userInput: string) {
 
 ## Langfuse：开源框架无关的可观测平台
 
-Langfuse 完全开源（MIT 协议），架构上将前端 UI、后端 API、数据存储完全解耦，支持 Docker Compose 一键自托管，是数据主权要求高（金融、医疗、政府）场景的首选。
+Langfuse 同时提供托管服务与开源自托管方案。是否适合高合规场景取决于实际部署、密钥、网络、保留期、备份和访问控制，不能仅凭“可自托管”下结论。
 
 ### 架构要点
 
-Langfuse 服务端架构：
-- **Ingestion API**：接收 SDK 上报的追踪数据，支持批量写入
-- **PostgreSQL**：存储 Trace、Span、Generation 元数据
-- **ClickHouse**（可选，生产推荐）：存储高频写入的事件流，支持 OLAP 分析查询
-- **S3/MinIO**（可选）：大体积 Prompt/输出内容的对象存储
+按当前 [Langfuse self-hosting architecture](https://langfuse.com/self-hosting)，主要数据组件各有不同职责：
+
+- **PostgreSQL**：事务型主数据库；
+- **ClickHouse**：保存 trace、observation、score 等分析数据；
+- **Redis / Valkey**：队列与缓存；
+- **S3 兼容 Blob Storage**：接收事件、保存多模态对象和大型导出。
+
+这些组件不是“按需加一个 ClickHouse”那么简单。生产部署需要把队列积压、对象存储耐久性、数据库备份和时区配置一起纳入运行手册。
 
 核心功能：
 - **Observations**：Trace 下的 Span 和 Generation 统称 Observation
@@ -238,145 +241,83 @@ Langfuse 服务端架构：
 
 ### Python SDK 接入
 
+Langfuse Python SDK v4 已基于 OpenTelemetry 重写；[`langfuse-python` 官方仓库](https://github.com/langfuse/langfuse-python)的当前入口是 `get_client` / `observe`，短生命周期进程使用同步 `flush()`。
+
 ```python
-from langfuse import Langfuse
-from langfuse.decorators import observe, langfuse_context
+from langfuse import get_client, observe
 
-langfuse = Langfuse(
-    public_key="pk-lf-...",
-    secret_key="sk-lf-...",
-    host="https://cloud.langfuse.com",  # 或自托管地址
-)
+# 通过 LANGFUSE_PUBLIC_KEY、LANGFUSE_SECRET_KEY、LANGFUSE_BASE_URL 配置
+langfuse = get_client()
 
-# @observe 装饰器自动创建 Trace/Span，层级由调用栈决定
 @observe(name="qa-pipeline")
 def qa_pipeline(question: str) -> str:
-    docs = retrieve_documents(question)
-    answer = generate_answer(question, docs)
-    
-    # 在当前 span 上记录额外元数据
-    langfuse_context.update_current_observation(
-        metadata={"doc_count": len(docs)},
-        tags=["production", "v2"],
-    )
+    with langfuse.start_as_current_observation(
+        as_type="span", name="rag-retrieval"
+    ) as retrieval:
+        docs = retrieve_documents(question)
+        retrieval.update(output={"doc_count": len(docs)})
+
+    with langfuse.start_as_current_observation(
+        as_type="generation", name="llm-answer", model=MODEL_ID
+    ) as generation:
+        answer = generate_answer(question, docs)
+        generation.update(output=answer)
+
     return answer
 
-@observe(name="rag-retrieval")
-def retrieve_documents(query: str) -> list[dict]:
-    return vector_store.similarity_search(query, k=5)
-
-@observe(name="llm-generate", as_type="generation")
-def generate_answer(question: str, docs: list[dict]) -> str:
-    context = "\n".join(d["page_content"] for d in docs)
-    response = openai_client.chat.completions.create(
-        model="gpt-4o",
-        messages=[
-            {"role": "system", "content": f"上下文：{context}"},
-            {"role": "user", "content": question},
-        ],
-    )
-    # 上报 token 用量
-    langfuse_context.update_current_observation(
-        usage={
-            "input": response.usage.prompt_tokens,
-            "output": response.usage.completion_tokens,
-        },
-        model="gpt-4o",
-    )
-    return response.choices[0].message.content
+if __name__ == "__main__":
+    print(qa_pipeline("如何验证 RAG 回答？"))
+    # CLI / serverless teardown 等短生命周期边界；常驻服务放在 shutdown hook
+    langfuse.flush()
 ```
 
 ### TypeScript SDK 接入
 
-```typescript
-import Langfuse from "langfuse";
+JS/TS SDK v5 已拆为多个 `@langfuse/*` 包并基于 OpenTelemetry。当前包名和迁移入口见 [`langfuse-js` 官方仓库](https://github.com/langfuse/langfuse-js)；下面假设 `./instrumentation` 已按官方文档初始化 SDK 与 exporter。
 
-const langfuse = new Langfuse({
-  publicKey: process.env.LANGFUSE_PUBLIC_KEY!,
-  secretKey: process.env.LANGFUSE_SECRET_KEY!,
-  baseUrl: process.env.LANGFUSE_HOST ?? "https://cloud.langfuse.com",
-});
+```typescript
+import { startActiveObservation } from "@langfuse/tracing";
+import { sdk } from "./instrumentation";
 
 async function handleUserQuery(userId: string, query: string): Promise<string> {
-  const trace = langfuse.trace({
-    name: "user-query",
-    userId,
-    input: { query },
-    tags: ["production"],
-  });
+  return startActiveObservation("user-query", async (root) => {
+    root.update({ input: { userId, query } });
 
-  // RAG 检索 Span
-  const retrievalSpan = trace.span({
-    name: "rag-retrieval",
-    input: { query },
-  });
-  const docs = await retrieveDocuments(query);
-  retrievalSpan.end({ output: { docCount: docs.length } });
+    const docs = await startActiveObservation("rag-retrieval", async (span) => {
+      const result = await retrieveDocuments(query);
+      span.update({ output: { docCount: result.length } });
+      return result;
+    });
 
-  // LLM 调用 Generation（记录 token 消耗和成本）
-  const generation = trace.generation({
-    name: "llm-answer",
-    model: "gpt-4o",
-    modelParameters: { temperature: 0.7, maxTokens: 1024 },
-    input: [
-      { role: "system", content: buildSystemPrompt(docs) },
-      { role: "user", content: query },
-    ],
-  });
-
-  const response = await openai.chat.completions.create({
-    model: "gpt-4o",
-    messages: [
-      { role: "system", content: buildSystemPrompt(docs) },
-      { role: "user", content: query },
-    ],
-  });
-
-  const answer = response.choices[0].message.content ?? "";
-  generation.end({
-    output: answer,
-    usage: {
-      promptTokens: response.usage?.prompt_tokens,
-      completionTokens: response.usage?.completion_tokens,
-      totalTokens: response.usage?.total_tokens,
-    },
-  });
-
-  trace.update({ output: { answer } });
-
-  // 确保所有事件在进程退出前已上报
-  await langfuse.flushAsync();
-  return answer;
-}
-
-// 事后打分（如用户点赞/踩，或 LLM-as-Judge 结果）
-async function scoreTrace(traceId: string, score: number) {
-  await langfuse.score({
-    traceId,
-    name: "user-feedback",
-    value: score,        // 0.0 ~ 1.0
-    comment: "thumbs up",
+    const answer = await generateAnswer(query, docs);
+    root.update({ output: { answer } });
+    return answer;
   });
 }
+
+async function main(): Promise<void> {
+  const answer = await handleUserQuery("user-123", "如何验证 RAG 回答？");
+  console.log(answer);
+}
+
+// 短生命周期脚本在退出边界等待 exporter；常驻服务放到进程 shutdown hook。
+void main().finally(() => sdk.shutdown());
 ```
 
-## LangSmith vs Langfuse 深度对比
+## 产品选型：验证清单而非静态胜负表
 
-| 维度 | LangSmith | Langfuse |
-|------|-----------|----------|
-| 开源协议 | 商业闭源（客户端 SDK 开源） | 完全开源（MIT） |
-| 自托管 | 企业版支持（需购买许可） | 官方 Docker Compose，文档完善 |
-| 数据主权 | SaaS 默认数据上传至 LangChain 服务器 | 自托管时数据完全在本地 |
-| LangChain 集成 | 原生零配置，环境变量即可 | 需要额外配置 LangChain Callback |
-| 非 LangChain 框架 | 支持，但体验不如原生 | 框架无关，SDK 覆盖全面 |
-| Prompt 管理 | Prompt Hub，支持版本化 + 共享 | 版本化 + A/B 测试流量分配 |
-| 评估功能 | 数据集 + Evaluator（内置多种） | Dataset Runs + 自定义评分函数 |
-| LLM-as-Judge | 内置，支持多种评估标准 | 支持，需自行定义评估 Prompt |
-| 价格模型 | 按 Trace 数量计费，有免费层 | 开源免费，Cloud 版按用量计费 |
-| 适用团队规模 | 中小团队，LangChain 技术栈 | 企业级，数据合规要求高 |
-| 社区活跃度 | LangChain 生态背书 | 独立开源社区，增长快速 |
+两类产品的 SDK、托管区域、许可和功能会持续变化，不能用一张长期不更新的“谁更强”表替代验证。做一个最小原型，并逐项记录证据：
 
-**选型建议**：技术栈以 LangChain 为主且无数据主权要求，选 LangSmith 体验更丝滑；有私有化部署需求或使用多种 LLM 框架，选 Langfuse；两者 API 风格相近，迁移成本不高。
+| 维度 | 需要验证的问题 |
+|------|----------------|
+| 数据边界 | 原始输入/输出、附件和评分别写到哪里？是否可脱敏、分区和设置保留期？ |
+| 部署责任 | 托管与自托管分别由谁负责扩缩容、升级、备份、队列积压和灾难恢复？ |
+| 追踪语义 | 跨进程 context 能否传播？generation、tool、retrieval 能否保持父子关系？ |
+| SDK 生命周期 | 当前主版本、初始化方式、flush/shutdown 契约和运行时要求是什么？ |
+| 评估闭环 | 线上 trace 如何进入版本化数据集？是否能复现实验、切片并导出结果？ |
+| 总成本 | 除平台费用外，还要计入对象存储、数据库、运维和评审模型成本。 |
+
+选型记录应链接当时使用的 [LangSmith 官方接入文档](https://docs.langchain.com/langsmith/observability-quickstart)、[LangSmith 自托管文档](https://docs.langchain.com/langsmith/self-hosted)、Langfuse SDK 仓库和自托管架构页面，并保存 SDK/服务端版本；这样后续升级时才能重放同一验收清单。
 
 ## 评估闭环（Evaluation Loop）
 
@@ -482,7 +423,7 @@ Trace 是一次完整请求的根节点，Span 是其中的子操作节点，两
 
 **Q：LangSmith 和 Langfuse 如何选择？**
 
-主要看三个维度：技术栈（LangChain 为主选 LangSmith，框架无关选 Langfuse）、数据主权要求（有私有化部署需求选 Langfuse 开源版）、团队规模（小团队 SaaS 免费层足够，企业级考虑自托管和许可费用）。
+不要按技术栈或团队规模直接二选一。用同一条真实链路验证 context 传播、脱敏、数据集回放和导出器关闭，再比较托管/自托管的数据边界、依赖组件、升级责任和总成本；结论要绑定当时的 SDK 与服务端版本。
 
 **Q：如何避免 Token 消耗失控？**
 
@@ -492,3 +433,8 @@ Trace 是一次完整请求的根节点，Span 是其中的子操作节点，两
 
 - [OpenTelemetry traces](https://opentelemetry.io/docs/concepts/signals/traces/)
 - [OpenTelemetry Trace API specification](https://opentelemetry.io/docs/specs/otel/trace/api/)
+- [LangSmith observability quickstart](https://docs.langchain.com/langsmith/observability-quickstart)
+- [LangSmith self-hosted deployment](https://docs.langchain.com/langsmith/self-hosted)
+- [Langfuse self-hosting architecture](https://langfuse.com/self-hosting)
+- [Langfuse Python SDK](https://github.com/langfuse/langfuse-python)
+- [Langfuse JS/TS SDK](https://github.com/langfuse/langfuse-js)

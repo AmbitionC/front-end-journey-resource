@@ -3,6 +3,27 @@
 
 ---
 
+树是没有环且节点之间只有一条简单路径的特殊图。二叉树节点通常用 `left` / `right` 表示孩子；一般树则更适合用 `children` 数组。图中的 BFS/DFS 示意还画出了 `visited`：遍历一般图时必须记录已访问节点，避免在环上重复扩展；遍历严格的树时，可以用“父节点不回退”等结构约束省略它。（参见 [Boost Graph Library breadth-first search](https://www.boost.org/doc/libs/latest/libs/graph/doc/breadth_first_search.html) 与 [depth-first search](https://www.boost.org/doc/libs/latest/libs/graph/doc/depth_first_search.html)）
+
+```javascript
+function bfsGraph(start, neighbors) {
+  const order = [];
+  const queue = [start];
+  const visited = new Set([start]);
+
+  for (let head = 0; head < queue.length; head++) {
+    const node = queue[head];
+    order.push(node);
+    for (const next of neighbors.get(node) ?? []) {
+      if (visited.has(next)) continue;
+      visited.add(next); // 入队时标记，防止被多个前驱重复加入
+      queue.push(next);
+    }
+  }
+  return order;
+}
+```
+
 #### 1. 二叉树的最大深度
 **问题**：给定一个二叉树，找出其最大深度。  
 **解法**：递归遍历左右子树，取较大者深度加一。（参见 [Boost Graph Library depth-first search](https://www.boost.org/doc/libs/latest/libs/graph/doc/depth_first_search.html)）
@@ -25,11 +46,12 @@ function levelOrder(root) {
   const result = [];
   if (!root) return result;
   const queue = [root];
-  while (queue.length) {
-    const levelSize = queue.length;
+  let head = 0;
+  while (head < queue.length) {
+    const levelSize = queue.length - head;
     const currentLevel = [];
     for (let i = 0; i < levelSize; i++) {
-      const node = queue.shift();
+      const node = queue[head++];
       currentLevel.push(node.val);
       if (node.left) queue.push(node.left);
       if (node.right) queue.push(node.right);
@@ -87,11 +109,12 @@ function zigzagLevelOrder(root) {
   if (!root) return result;
   let leftToRight = true;
   const queue = [root];
-  while (queue.length) {
-    const levelSize = queue.length;
+  let head = 0;
+  while (head < queue.length) {
+    const levelSize = queue.length - head;
     const currentLevel = [];
     for (let i = 0; i < levelSize; i++) {
-      const node = queue.shift();
+      const node = queue[head++];
       currentLevel[(leftToRight ? i : levelSize - 1 - i)] = node.val;
       if (node.left) queue.push(node.left);
       if (node.right) queue.push(node.right);
@@ -106,13 +129,14 @@ function zigzagLevelOrder(root) {
 
 
 #### 6. 树的高度
-**问题**：给定一个任意树，返回其高度。  
-**解法**：递归计算左子树和右子树的高度，取较大者加一。
+**问题**：给定一棵以 `children` 数组表示的一般树，返回其高度。
+**解法**：叶子高度为 1；非叶节点递归计算所有孩子子树的高度，取最大值加一。
 
 ```javascript
 function treeHeight(root) {
   if (!root) return 0;
-  return 1 + Math.max(treeHeight(root.left), treeHeight(root.right));
+  if (!root.children?.length) return 1;
+  return 1 + Math.max(...root.children.map(treeHeight));
 }
 ```
 
