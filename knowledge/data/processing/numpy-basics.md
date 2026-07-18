@@ -1,3 +1,8 @@
+![二维 ndarray 映射到连续内存，标出 shape、dtype、strides；slice 形成 shared view，copy 独立内存；右侧展示 (3,1) 与 (1,4) broadcasting 成 (3,4)](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/numpy-ndarray-shape-stride-broadcast-v1.webp)
+*图：左侧沿 shape/dtype/strides 把二维 ndarray 映射到字节内存，比较共享 slice 与独立 copy；右侧读取 `(3,1)` 和 `(1,4)` 的广播结果。*
+
+---
+
 NumPy 是 Python 科学计算的基石，也是 AI/ML 工程师绕不开的底层工具。无论是手写余弦相似度、理解 PyTorch Tensor 的内存布局，还是调试广播维度错误，扎实的 NumPy 基础都能让你在向量化思维上快人一步。本文以 AI/RAG/Agent 工程场景为主线，系统梳理 NumPy 的核心知识点。
 
 ## NumPy 在 AI 向量计算中的地位
@@ -15,6 +20,9 @@ RAG Pipeline 中的 NumPy 位置：
 ```
 
 ## ndarray 基础
+
+[NumPy Fundamentals](https://numpy.org/doc/stable/user/basics.html) 将 `ndarray` 的 shape、dtype、索引、view/copy 与 ufunc 作为核心语义；切片是否共享内存要按具体索引方式判断。
+
 
 ### 核心属性
 
@@ -101,7 +109,7 @@ selected = embeddings[top_ids]
 
 ## 广播机制（Broadcasting）
 
-Broadcasting 允许形状不同的数组参与运算，NumPy 会自动"扩展"较小的数组以匹配更大的形状，但**不实际分配新内存**。
+Broadcasting 允许形状兼容的数组参与运算；NumPy 通常不会先把较小输入复制成完整的平铺数组，但具体运算的输出或中间结果仍可能分配内存。（参见 [NumPy broadcasting](https://numpy.org/doc/stable/user/basics.broadcasting.html)）
 
 **广播规则**：从尾部维度开始对齐，两个维度兼容的条件是：**值相等**，或**其中一个为 1**。
 
@@ -384,3 +392,8 @@ NumPy 默认 `float64`，但 GPU 训练和大多数 Embedding 模型用 `float32
 
 **Q：CPU 上 ndarray 与 Tensor 共享内存的前提是什么？**
 `torch.from_numpy()` 和 `.numpy()` 均共享内存，但 Tensor 必须在 CPU 上且不能 `requires_grad=True`（有梯度时需先 `detach()`）。任何一方修改数据，另一方立即可见。
+
+## 参考资料
+
+- [NumPy fundamentals](https://numpy.org/doc/stable/user/basics.html)
+- [NumPy broadcasting](https://numpy.org/doc/stable/user/basics.broadcasting.html)

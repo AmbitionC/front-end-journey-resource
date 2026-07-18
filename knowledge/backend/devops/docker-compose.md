@@ -1,4 +1,9 @@
-Docker Compose 用一个 YAML 文件声明式地定义和管理多容器应用，一条命令启动整个本地开发环境（Agent API + Redis + PostgreSQL + 向量数据库），告别"十步启动教程"。对于 AI/Agent 工程师来说，Compose 是本地调试多服务 Agent 系统的标准工具。
+![Compose 应用图：web、api、db 三个 service 位于显式 network；db 使用 named volume，api 等待 db healthcheck，配置与 secret 分开注入；标出 depends_on 只表达启动依赖](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/docker-compose-service-dependency-network-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是明确 services、networks、volumes、depends_on 健康条件、配置合并与 secrets。*
+
+---
+
+Docker Compose 用 YAML 声明多容器应用的 services、networks、volumes、configs 和 secrets，并可统一创建本地依赖。它常用于开发与集成测试；是否用于生产取决于高可用、调度、备份和运维要求。（参见 [Compose file reference](https://docs.docker.com/reference/compose-file/)）
 
 ## 定位：本地开发与测试的多容器编排
 
@@ -212,6 +217,9 @@ bind mount 的路径以 `./` 或 `/` 开头，named volume 直接写卷名。开
 
 ## depends_on + healthcheck 保证启动顺序
 
+[Docker Compose 启动顺序文档](https://docs.docker.com/compose/how-tos/startup-order/) 说明 `depends_on` 可以结合 `service_healthy` 等条件等待依赖就绪；单纯的创建顺序并不证明数据库已经可接受请求。
+
+
 `depends_on` 有两种模式：
 
 ```yaml
@@ -307,3 +315,8 @@ docker compose config
 - **Compose V1 和 V2 的主要区别**：命令从 `docker-compose` 变为 `docker compose`，配置文件从 `docker-compose.yml` 变为 `compose.yaml`，`version` 字段废弃，V2 由 Go 实现性能更好。
 - **Volume bind mount 和 named volume 的区别**：bind mount 映射宿主机目录，适合开发热重载；named volume 由 Docker 管理，适合生产数据持久化，容器重建后数据不丢失。
 - **`docker compose down -v` 的风险**：会同时删除 named volumes，数据库数据永久丢失，生产环境严禁随意执行。
+
+## 参考资料
+
+- [Compose file reference](https://docs.docker.com/reference/compose-file/)
+- [Docker Compose startup order](https://docs.docker.com/compose/how-tos/startup-order/)

@@ -1,8 +1,13 @@
-Jupyter 是 AI/Agent 工程师日常实验与模型评估的核心工具，但其交互式特性也埋藏着不少陷阱。本文系统梳理 Jupyter 的工程化用法，覆盖环境管理、版本控制、参数化执行到 CI/CD 集成，帮助你把 Notebook 从"个人草稿"升级为"可复现的工程产物"。
+![Notebook 从干净 kernel 按 cell 1→2→3 顺序执行，输入数据与环境锁定，输出 artifact 通过 nbconvert/CI 重建；对比随意乱序执行导致 hidden state。秘密只从环境注入](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/jupyter-reproducible-notebook-pipeline-v1.webp)
+*图：左侧按干净 kernel 的 cell 1 → 2 → 3 顺序执行，右侧对比乱序造成的 hidden state；数据、环境和 secrets 从外部注入，artifact 由 CI 重建。*
+
+---
+
+Jupyter 适合交互式实验、探索分析和模型评估，但可变 kernel 状态也会隐藏执行依赖。本文从环境、版本控制、参数化执行和 CI 重建说明如何把 Notebook 变成可复现的工程产物。
 
 ## Jupyter 是什么，工程价值与风险
 
-Jupyter Notebook 本质上是一个将代码（Code）、富文本（Markdown）、输出（Output）混合存储的 JSON 文件（`.ipynb` 格式）。其交互式执行模型（Interactive Execution Model）让数据科学家可以逐 Cell 运行、实时观察结果，非常适合探索性数据分析（EDA, Exploratory Data Analysis）和模型实验。
+Jupyter Notebook 本质上是一个将代码（Code）、富文本（Markdown）、输出（Output）混合存储的 JSON 文件（`.ipynb` 格式）。其交互式执行模型（Interactive Execution Model）让数据科学家可以逐 Cell 运行、实时观察结果，非常适合探索性数据分析（EDA, Exploratory Data Analysis）和模型实验。（参见 [Jupyter Notebook documentation](https://jupyter-notebook.readthedocs.io/en/stable/notebook.html)）
 
 **工程价值：**
 
@@ -401,7 +406,7 @@ jupyter kernelspec list
 
 # 输出示例：
 # Available kernels:
-#   agent-eval    /Users/chenhao/Library/Jupyter/kernels/agent-eval
+#   agent-eval    $HOME/Library/Jupyter/kernels/agent-eval
 #   python3       /usr/local/share/jupyter/kernels/python3
 
 # 删除不再使用的 Kernel
@@ -439,6 +444,9 @@ dependencies:
 ---
 
 ## AI/Agent 工程中的 Jupyter 实践
+
+[Jupyter Server Security](https://jupyter-server.readthedocs.io/en/latest/operators/security.html) 说明 token/密码认证与浏览器安全边界；Notebook 能执行任意内核代码，因此不可信文件和输出不能仅靠界面提示来隔离。
+
 
 对于 AI/Agent 工程师，Jupyter 不仅是数据分析工具，更是实验追踪（Experiment Tracking）和模型评估（Model Evaluation）的主战场。
 
@@ -540,7 +548,7 @@ flowchart TD
 **环境相关**
 
 - **忘记激活正确 Kernel**：Notebook 右上角显示的 Kernel 不是项目专属环境，导致 `import` 成功但用的是错误版本的库。
-- **硬编码绝对路径**：`pd.read_csv("/Users/chenhao/data/file.csv")` 在他人机器或 CI 环境完全失效，应使用相对路径配合 `pathlib`。
+- **硬编码绝对路径**：`pd.read_csv("data/file.csv")` 应从明确的项目根目录解析，或使用 `pathlib.Path` 组合 `$HOME`/配置目录；不要发布开发者机器的真实用户路径。
 - **在全局 base 环境安装包**：久而久之 base 环境依赖混乱，升级一个包可能破坏所有 Notebook。
 
 **协作相关**
@@ -587,3 +595,8 @@ JupyterLab 是 Jupyter Notebook 的下一代界面，采用多面板布局，支
 **Q4：在 AI Agent 工程中，如何用 Jupyter 管理大量对比实验？**
 
 推荐的工作流：用一个 Notebook 作为模板（Template），用 `parameters` tag 标记可变参数（模型名、提示词版本、数据集路径等）；用 Papermill CLI 或 Python API 批量执行，每个实验生成独立的输出 Notebook；用 nbconvert 将结果转为 HTML 便于分享；将实验参数和指标存入 JSON 或 CSV 便于程序化对比。如果规模更大，可以引入 MLflow 或 Weights & Biases 等专业实验追踪平台（Experiment Tracking Platform）与 Notebook 配合使用。
+
+## 参考资料
+
+- [Jupyter Notebook documentation](https://jupyter-notebook.readthedocs.io/en/stable/notebook.html)
+- [Jupyter Server security](https://jupyter-server.readthedocs.io/en/latest/operators/security.html)

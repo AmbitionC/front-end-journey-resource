@@ -1,3 +1,8 @@
+![同一个 typed data model 左侧进入 static type checker 检查调用关系，右侧进入 Pydantic runtime validator 解析外部 JSON；输出 validated model，再序列化。标出类型注解本身不执行运行时检查](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/python-typing-static-runtime-validation-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是区分静态 type hints 与运行时 Pydantic 校验，覆盖 union/generic/protocol、模型边界和序列化。*
+
+---
+
 在构建 AI Agent、RAG 流水线或调用 LLM 工具（Tool Calling）的过程中，数据流动极为复杂：用户消息、检索结果、工具返回值、模型输出，每一层都需要清晰的结构约定。Python 的类型注解（Type Annotations）与 Pydantic 正是解决这一问题的核心工具——前者让意图可读可检查，后者让意图在运行时强制执行。
 
 ## 为什么 AI/Agent 工程师尤其需要类型系统
@@ -143,7 +148,7 @@ except ValidationError as e:
     print(e)  # score 字段验证失败
 ```
 
-Pydantic 默认开启**类型强制转换**：`"42"` 可以赋值给 `int` 字段。如需严格模式，使用 `model_config = ConfigDict(strict=True)`。
+Pydantic 默认开启**类型强制转换**：`"42"` 可以赋值给 `int` 字段。如需严格模式，使用 `model_config = ConfigDict(strict=True)`。（参见 [Pydantic models](https://pydantic.dev/docs/validation/latest/concepts/models/)）
 
 ### Field：细化字段约束
 
@@ -374,4 +379,9 @@ A：调用 `MyModel.model_json_schema()` 即可得到符合 JSON Schema Draft 7 
 A：`mode="before"` 在字段验证前触发，接收原始输入数据（通常是 `dict`），适合数据预处理；`mode="after"` 在所有字段验证完成后触发，接收已构建的模型实例，适合跨字段校验。
 
 **Q：`Protocol` 和 `ABC` 的区别，在 Agent 框架中如何选择？**
-A：`Protocol` 实现结构化子类型（静态版本的 duck typing），无需显式继承，适合定义工具接口、检索器接口等——只要对象有对应方法就满足协议；`ABC` 需要显式继承并实现抽象方法，适合强制子类实现某些行为。Agent 框架中 `Protocol` 更灵活，第三方工具无需修改代码即可适配。
+A：`Protocol` 实现结构化子类型（静态版本的 duck typing），无需显式继承，适合定义工具接口、检索器接口等——只要对象有对应方法就满足协议；`ABC` 需要显式继承并实现抽象方法，适合强制子类实现某些行为。Agent 框架中 `Protocol` 更灵活，第三方工具无需修改代码即可适配。（参见 [Python typing module](https://docs.python.org/3/library/typing.html)）
+
+## 参考资料
+
+- [Python typing module](https://docs.python.org/3/library/typing.html)
+- [Pydantic models](https://pydantic.dev/docs/validation/latest/concepts/models/)
