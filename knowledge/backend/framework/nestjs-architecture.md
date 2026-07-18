@@ -1,3 +1,8 @@
+![NestJS 模块边界图：AppModule 导入 FeatureModule，FeatureModule 内 Controller 依赖 Service Provider；请求依次经过 middleware、guard、interceptor、pipe、controller，异常进入 filter](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/nestjs-module-di-request-pipeline-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是Module、Controller、Provider、依赖注入作用域与请求管线画成清晰边界。*
+
+---
+
 NestJS 是一个受 Angular 启发、基于 TypeScript 构建的 Node.js 服务端框架，通过装饰器（Decorator）、依赖注入（Dependency Injection）和强制模块化，为企业级后端提供了清晰、可测试的架构规范，也是构建多工具 Agent 服务后端的理想选择。
 
 ## 设计哲学：Angular 在后端的延伸
@@ -26,6 +31,9 @@ NestJS 应用由以下核心构建块组成，各司其职：
 | ExceptionFilter | `@Catch()` + `implements ExceptionFilter` | 统一异常处理 |
 
 ### Module 系统
+
+[NestJS Modules 文档](https://docs.nestjs.com/modules) 规定 `imports`、`providers`、`controllers` 与 `exports` 共同定义模块的封装边界；未导出的 provider 不会自动成为其他模块的公共依赖。
+
 
 ```typescript
 // agents/agents.module.ts — Agent 工具服务模块示例
@@ -91,6 +99,9 @@ export class AgentsController {
 ```
 
 ## 依赖注入
+
+[NestJS Providers 文档](https://docs.nestjs.com/providers) 说明 provider 通过 token 注册到依赖注入容器，构造函数注入只是消费这些 token 的常见方式。
+
 
 ### 构造函数注入
 
@@ -326,3 +337,8 @@ NestJS 的模块化架构与 Agent 系统的多工具设计天然契合：
 - **Interceptor 的 `next.handle()` 返回什么？** 返回 RxJS `Observable`，代表 Handler 执行流，可用 `tap`/`map`/`catchError` 等操作符在 Handler 前后注入逻辑或修改响应数据。
 - **`@Module` 的 `exports` 字段作用？** 控制本模块哪些 Provider 对外可见；未 export 的 Provider 仅在本模块内可注入，是依赖封装的关键机制。
 - **如何在全局注册 Guard/Interceptor？** 两种方式：`main.ts` 中 `app.useGlobalGuards(new Guard())` （无法注入依赖），或在 Module 中用 `{ provide: APP_GUARD, useClass: Guard }` （可享受 DI，推荐）。
+
+## 参考资料
+
+- [NestJS modules](https://docs.nestjs.com/modules)
+- [NestJS providers](https://docs.nestjs.com/providers)

@@ -1,3 +1,8 @@
+![两个事务并行时间线：read、update、commit/rollback；展示 Read Committed 与 Repeatable Read 快照差异、record/gap lock 等待和死锁检测回滚](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/database-isolation-lock-timeline-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是ACID、隔离现象、MVCC、记录/间隙锁和死锁处理放进同一并发时间线。*
+
+---
+
 事务（Transaction）与锁（Lock）是数据库保证数据正确性的两大基石。在并发写入、多步骤业务操作等场景下，理解这两个机制的原理，是设计可靠后端服务——尤其是 Agent 工具调用链——的必备基础。
 
 ## ACID：事务的四大保证
@@ -31,7 +36,7 @@
 | REPEATABLE READ | 否 | 否 | 可能* | MySQL InnoDB 默认，*通过 MVCC+间隙锁基本消除 |
 | SERIALIZABLE | 否 | 否 | 否 | 最高级别，性能最差 |
 
-MySQL InnoDB 在 **REPEATABLE READ** 级别下，普通 SELECT 走快照读（MVCC），`SELECT ... FOR UPDATE` 走当前读并加 Next-Key Lock，两者配合基本消除幻读。
+MySQL InnoDB 在 **REPEATABLE READ** 级别下，普通 SELECT 走快照读（MVCC），`SELECT ... FOR UPDATE` 走当前读并加 Next-Key Lock，两者配合基本消除幻读。（参见 [MySQL 8.4 InnoDB transaction isolation levels](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/innodb-transaction-isolation-levels.html)；参见 [MySQL 8.4 InnoDB locking](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/innodb-locking.html)）
 
 ## MVCC：InnoDB 的多版本并发控制
 
@@ -320,3 +325,8 @@ SHOW ENGINE INNODB STATUS\G
 SELECT * FROM performance_schema.data_lock_waits;
 SELECT * FROM performance_schema.data_locks;
 ```
+
+## 参考资料
+
+- [MySQL 8.4 InnoDB transaction isolation levels](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/innodb-transaction-isolation-levels.html)
+- [MySQL 8.4 InnoDB locking](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/innodb-locking.html)
