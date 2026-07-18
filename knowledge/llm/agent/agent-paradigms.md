@@ -350,7 +350,7 @@ Plan-and-Execute 特别适合以下类型的任务：
 
 Tool-Use（工具调用）是一种更通用的范式视角，可以看作是 ReAct 的底层机制抽象。它的核心问题是：**如何让 LLM 知道什么时候、调用哪个工具、用什么参数？**
 
-现代 LLM 的 Function Calling / Tool Use 接口（OpenAI、Anthropic、Google 等均支持）是 Tool-Use 范式的原生实现。与 ReAct 的文本解析方式相比，Function Calling 通过结构化 JSON schema 定义工具，由模型直接输出结构化调用，无需正则解析，更稳定。
+现代 LLM 的 Function Calling / Tool Use 接口是 Tool-Use 范式的一类产品化实现。它通过结构化 schema 定义工具，并让模型输出结构化调用，可减少应用层正则解析；整体可靠性仍取决于目标模型对 schema 的遵循、API 契约、参数校验与错误恢复，必须在真实任务集上验证。
 
 ```mermaid
 flowchart LR

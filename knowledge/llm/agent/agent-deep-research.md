@@ -25,7 +25,7 @@ graph TD
         UI[Vue3 + TypeScript\n全屏模态 UI / Markdown 渲染]
     end
     subgraph 后端层
-        API[FastAPI\n/research/stream SSE 端点]
+        API[FastAPI\n/api/research SSE 端点]
     end
     subgraph 智能体层
         P[TODO Planner\n研究规划专家]
