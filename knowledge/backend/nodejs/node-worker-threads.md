@@ -1,13 +1,14 @@
-Worker Threads 与 CPU 密集任务需要把“机制是什么”“边界在哪里”“怎样验证”放在同一条学习路径中。本文以 [Node.js worker_threads API](https://nodejs.org/api/worker_threads.html) 对“worker 线程、消息通道、资源限制与适用边界”的说明为事实边界，并用 [HTML structured clone algorithm](https://html.spec.whatwg.org/multipage/structured-data.html#structured-cloning) 校准“跨线程消息数据的序列化、传输与可转移对象语义”。文中的代码和工程方案用于解释这些机制；涉及具体版本、默认值或部署行为时，应再回到所链接的一手资料确认。
-
-![Worker Threads 与 CPU 密集任务的核心机制与验证路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/node-worker-thread-pool-messaging-v1.webp)
-*图：Worker Threads 与 CPU 密集任务的核心组件、信息流与验证边界。*
+![主线程 event loop 把 CPU 任务分发到固定 worker pool，MessagePort 返回结果；对比 structured clone、transfer ArrayBuffer、SharedArrayBuffer 三条数据通道，并标出池化和取消](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/node-worker-thread-pool-messaging-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是说明 worker 适合 CPU 密集任务而非普通异步 I/O，并明确消息复制、Transferable 与 SharedArrayBuffer。*
 
 ---
 
-Node.js 单线程模型对 I/O 密集型场景几乎是完美的，但一旦遇到 CPU 密集型计算——向量相似度搜索、文本分词、图像处理——主线程就会被阻塞，导致所有并发请求陷入等待。`worker_threads` 模块在不牺牲 Node.js 编程模型的前提下，将 CPU 密集工作转移到独立线程，是 AI Agent 服务处理本地推理和批量计算的关键工具。
+Node.js 的异步 API 很适合让主线程在等待 I/O 时继续处理其他事件，但长时间 CPU 计算——例如文本分词、图像处理或本地数值任务——仍会阻塞事件循环。`worker_threads` 可以把这类 JavaScript 计算转移到独立线程；是否获益取决于任务粒度、数据传输和线程池调度成本。
 
 ## CPU 密集任务对事件循环的威胁
+
+[Node.js `worker_threads` 文档](https://nodejs.org/api/worker_threads.html) 明确 worker 适合 CPU 密集型 JavaScript，普通异步 I/O 通常直接使用 Node 的异步 API 更合适；频繁任务还应池化以摊薄启动成本。
+
 
 Node.js 主线程同时负责运行 JavaScript 代码和驱动事件循环（Event Loop）。一旦主线程被同步计算占据，所有等待中的 I/O 回调、计时器、HTTP 请求都无法得到调度：
 
@@ -146,7 +147,7 @@ async function handleRequest(vectors: number[][], baseVector: number[]) {
 
 ## SharedArrayBuffer 与 Atomics
 
-`postMessage` 使用结构化克隆（Structured Clone）传输数据，传输大型数组时会有复制开销。`SharedArrayBuffer` 允许主线程和 Worker 线程共享同一块内存，配合 `Atomics` 进行原子操作避免竞争条件：
+`postMessage` 使用结构化克隆（Structured Clone）传输数据，传输大型数组时会有复制开销。`SharedArrayBuffer` 允许主线程和 Worker 线程共享同一块内存，配合 `Atomics` 进行原子操作避免竞争条件：（参见 [HTML structured clone algorithm](https://html.spec.whatwg.org/multipage/structured-data.html#structured-cloning)）
 
 ```typescript
 import { Worker, isMainThread, workerData, parentPort } from 'worker_threads';

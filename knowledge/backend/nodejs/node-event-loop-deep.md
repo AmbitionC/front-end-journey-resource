@@ -1,7 +1,5 @@
-Node.js 事件循环与异步 I/O需要把“机制是什么”“边界在哪里”“怎样验证”放在同一条学习路径中。本文以 [Node.js event loop, timers, and process.nextTick](https://nodejs.org/learn/asynchronous-work/event-loop-timers-and-nexttick) 对“Node 事件循环阶段与 nextTick 行为”的说明为事实边界，并用 [libuv design overview](https://docs.libuv.org/en/v1.x/design.html) 校准“libuv 事件循环、I/O 轮询与线程池设计”。文中的代码和工程方案用于解释这些机制；涉及具体版本、默认值或部署行为时，应再回到所链接的一手资料确认。
-
-![Node.js 事件循环与异步 I/O的核心机制与验证路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/node-event-loop-libuv-phases-v1.webp)
-*图：Node.js 事件循环与异步 I/O的核心组件、信息流与验证边界。*
+![Node.js 事件循环环形阶段图：timers→pending callbacks→poll→check→close；阶段间显示 nextTick 与 microtask 清空，旁边分出 libuv thread pool 完成 CPU/文件任务后回到回调队列](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/node-event-loop-libuv-phases-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是准确区分事件循环阶段、microtask/nextTick 队列、线程池与 I/O 回调。*
 
 ---
 
@@ -113,7 +111,10 @@ fs.readFile('/etc/hostname', () => {
 
 ## libuv 线程池与 I/O 集成
 
-虽然 JavaScript 运行在单线程，libuv 内部维护一个默认大小为 4 的线程池（可通过环境变量 `UV_THREADPOOL_SIZE` 扩大至 1024），用于处理：
+[libuv 设计文档](https://docs.libuv.org/en/v1.x/design.html) 区分事件循环的 I/O polling 与线程池执行路径；文件系统等部分操作完成后再把回调交回事件循环，并非所有异步 I/O 都在池中执行。
+
+
+虽然 JavaScript 运行在单线程，libuv 仍维护共享线程池处理部分阻塞工作；默认容量和允许范围随 Node/libuv 版本而变化，部署时应以当前运行时文档和压测为准，并可在进程启动前通过 `UV_THREADPOOL_SIZE` 调整。线程池常用于：
 
 - 文件系统操作（`fs.readFile` 等）
 - DNS 解析（`dns.lookup`）
@@ -209,7 +210,7 @@ Agent 服务的吞吐量瓶颈往往不在 LLM 调用速度，而在于：
 实际上 Node.js 会将最小延迟截断为约 1ms，且必须等待 timers 阶段到来才执行，期间 poll 阶段可能阻塞数毫秒。
 
 **误解 2：Promise 比 process.nextTick 更快**
-恰好相反——`process.nextTick` 的优先级高于 Promise 微任务。在 Node.js v11 之前两者行为还有阶段性差异，v11+ 之后才统一到"每个宏任务后清空所有微任务"。
+恰好相反——`process.nextTick` 的优先级高于 Promise 微任务。在 Node.js v11 之前两者行为还有阶段性差异，v11+ 之后才统一到"每个宏任务后清空所有微任务"。（参见 [Node.js event loop, timers, and process.nextTick](https://nodejs.org/learn/asynchronous-work/event-loop-timers-and-nexttick)）
 
 **误解 3：Node.js 完全是单线程的**
 主线程（JavaScript 执行）是单线程，但 libuv 线程池、操作系统异步 I/O、以及 `worker_threads` 允许真正的多线程。

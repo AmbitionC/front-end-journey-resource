@@ -1,7 +1,5 @@
-AI 应用限流、配额与背压需要把“机制是什么”“边界在哪里”“怎样验证”放在同一条学习路径中。本文以 [RFC 9110 HTTP Semantics — 429 Too Many Requests](https://www.rfc-editor.org/rfc/rfc9110.html#name-429-too-many-requests) 对“429 状态码与 Retry-After 语义”的说明为事实边界，并用 [Reactive Streams specification](https://www.reactive-streams.org/) 校准“异步流的非阻塞背压与有界需求信号”。文中的代码和工程方案用于解释这些机制；涉及具体版本、默认值或部署行为时，应再回到所链接的一手资料确认。
-
-![AI 应用限流、配额与背压的核心机制与验证路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/ai-rate-limit-backpressure-queue-v1.webp)
-*图：AI 应用限流、配额与背压的核心组件、信息流与验证边界。*
+![AI 请求流：客户端→令牌桶→有界队列→并发 worker→模型供应商；画出 429/Retry-After、队列满拒绝、超时取消和自适应并发反馈箭头](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/ai-rate-limit-backpressure-queue-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是区分入口限流、供应商配额、并发槽位、队列背压和取消传播，避免重试放大拥塞。*
 
 ---
 
@@ -312,6 +310,9 @@ function enqueue(req: Omit<QueuedRequest, "enqueuedAt">): void {
 
 ### 快速失败（Fast Fail）
 
+[RFC 9110 的 429 语义](https://www.rfc-editor.org/rfc/rfc9110.html#name-429-too-many-requests) 表示客户端在一段时间内发送了过多请求，服务端可以用 `Retry-After` 提示何时重试；客户端仍需加入抖动并限制重试次数。
+
+
 最简单的策略，适合对延迟敏感的实时交互场景。立即返回错误，配合友好的 UI 提示（如"当前繁忙，请 30 秒后重试"）。
 
 ### 排队等待（Queue）
@@ -358,6 +359,9 @@ async function callWithFallback(
 ```
 
 ## 完整请求链路
+
+[Reactive Streams](https://www.reactive-streams.org/) 把背压表达为消费者向上游发出的有界需求信号；在模型流式输出链路中，队列和并发槽位也应保持有界，避免慢消费者把内存拖垮。
+
 
 一个请求从进入系统到得到响应，需经过多层控制：
 

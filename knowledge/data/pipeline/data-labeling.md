@@ -1,7 +1,5 @@
-AI 数据采集、标注与审核需要把“机制是什么”“边界在哪里”“怎样验证”放在同一条学习路径中。本文以 [Create instruction pages — Amazon SageMaker AI](https://docs.aws.amazon.com/sagemaker/latest/dg/sms-creating-instruction-pages.html) 对“标注任务的短说明、完整说明，以及用多个示例覆盖边界和困难案例”的说明为事实边界，并用 [Annotation consolidation — Amazon SageMaker AI](https://docs.aws.amazon.com/sagemaker/latest/dg/sms-annotation-consolidation.html) 校准“每个对象由多名 worker 标注、标注相似度/投票或概率合并，以及最终标签与质量权衡”。文中的代码和工程方案用于解释这些机制；涉及具体版本、默认值或部署行为时，应再回到所链接的一手资料确认。
-
-![AI 数据采集、标注与审核的核心机制与验证路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/data-labeling-consensus-audit-flow-v1.webp)
-*图：AI 数据采集、标注与审核的核心组件、信息流与验证边界。*
+![数据样本经过标注规范与示例培训后并行分配给两名 annotator；一致结果入库，分歧进入 adjudicator；质量抽样、版本化 guideline、provenance 和隐私审计贯穿](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/data-labeling-consensus-audit-flow-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是覆盖任务规范、gold examples、多人标注、一致性、分歧裁决、数据表与隐私审计。*
 
 ---
 
@@ -131,7 +129,13 @@ print("示例：", synthetic_dataset[0])
 
 ## 质量控制（Quality Control）
 
+[SageMaker 标注说明页文档](https://docs.aws.amazon.com/sagemaker/latest/dg/sms-creating-instruction-pages.html) 建议同时提供简明指令、完整说明和覆盖边界/困难案例的多个示例；规范版本应与标签数据一起留痕。
+
+
 ### Inter-Annotator Agreement（标注一致性度量）
+
+[Annotation Consolidation](https://docs.aws.amazon.com/sagemaker/latest/dg/sms-annotation-consolidation.html) 说明同一对象可由多名 worker 标注，再按投票、相似度或概率模型合并；一致率和最终标签是不同层面的质量信号。
+
 
 多标注员独立标注同一数据，通过一致性指标发现歧义和标注员能力差异。
 
@@ -181,6 +185,9 @@ print(f"Bounding Box IoU: {iou:.4f}")
 ```
 
 ### Gold Standard Sets（黄金标准集）
+
+[Label Verification and Adjustment](https://docs.aws.amazon.com/sagemaker/latest/dg/sms-verification-data.html) 将独立复核与纠正既有标签作为单独工作流，并允许复核者评分、评论或调整结果。
+
 
 在标注任务中混入 5%–10% 已有正确答案的样本（gold set），实时计算每位标注员在这些样本上的准确率，用于：
 

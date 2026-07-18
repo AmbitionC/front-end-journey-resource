@@ -1,3 +1,8 @@
+![评估金字塔：底层单步工具与格式校验，中层完整轨迹与恢复能力，上层端到端任务成功，侧边贯穿延迟、token 成本、安全与人工复核；标出离线回放和线上监控](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-evaluation-metric-layers-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是任务成功、轨迹质量、工具正确性、成本与安全拆成可复现指标。*
+
+---
+
 构建一个 Agent 容易，但如何知道它"真的好用"？准确率一个数字远远不够——Agent 在什么任务上失败、失败的代价多大、换个表述方式还能答对吗？这些问题都需要系统化的评估体系来回答。本文介绍智能体性能评估的核心维度、主流基准与方法，以及为什么"单看准确率"会误导决策。
 
 ## 为什么需要系统化评估
@@ -134,6 +139,11 @@ $$\text{Drop Rate}_{\ell \to \ell+1} = \frac{\text{Accuracy}_\ell - \text{Accura
 GAIA 的官方系统提示词强制要求答案格式为 `FINAL ANSWER: [答案]`，评估时从中提取答案进行匹配。
 
 ### AgentBench、WebArena 等其他基准
+
+[AgentBench](https://arxiv.org/abs/2308.03688) 在多个交互环境中评估智能体，提醒我们不能用单一静态问答分数代替跨任务的行动能力。
+
+[WebArena](https://arxiv.org/abs/2307.13854) 用可执行的网站任务和功能正确性判定端到端结果，因此评估对象是实际完成的任务，而不只是生成文本的相似度。
+
 
 | 基准 | 主办方 | 特点 |
 |------|--------|------|
@@ -282,3 +292,7 @@ print(f"正确数: {results['correct_samples']}/{results['total_samples']}")
 - **Q：如何在有限预算下设计评估方案？**  
   优先级：先用小样本（50–100 条）快速验证核心能力（准确率）；再用已有基准（BFCL、GAIA）做标准化测试方便横向对比；最后对业务关键路径做专项鲁棒性和成本评估。
 
+## 参考资料
+
+- [AgentBench: Evaluating LLMs as Agents](https://arxiv.org/abs/2308.03688)
+- [WebArena: A Realistic Web Environment for Building Autonomous Agents](https://arxiv.org/abs/2307.13854)

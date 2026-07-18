@@ -1,4 +1,9 @@
-在构建 AI Agent 系统时，一个绕不过去的技术选择是：是否使用异步编程（Asynchronous Programming）。调用 LLM API、读取向量数据库、执行 Web 搜索——这些操作延迟从几十毫秒到数十秒不等，如果全部串行执行，系统吞吐量将严重受限。Python 的 `asyncio` 模块正是解决这类问题的核心工具，理解它的工作原理是每一位 AI/RAG/Agent 工程师的必修课。
+![asyncio event loop 调度三个 Task；每个 Task 在 await I/O 时挂起并让出执行权，I/O ready 后恢复；TaskGroup 边界内一个失败触发 sibling cancellation，finally 做清理](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/python-asyncio-task-scheduling-cancel-v1.webp)
+*图：三个 Task 在 `await` I/O 时把执行权交回 event loop，I/O ready 后恢复；TaskGroup 内一个失败会触发 sibling cancellation，并在 `finally` 清理。*
+
+---
+
+在构建 AI Agent 系统时，一个绕不过去的技术选择是：是否使用异步编程（Asynchronous Programming）。调用 LLM API、读取向量数据库、执行 Web 搜索——这些操作延迟从几十毫秒到数十秒不等，如果全部串行执行，系统吞吐量将严重受限。Python 的 `asyncio` 模块正是解决这类问题的核心工具，理解它的工作原理是每一位 AI/RAG/Agent 工程师的必修课。（参见 [PEP 3156: Asynchronous IO Support Rebooted](https://peps.python.org/pep-3156/)）
 
 ## 同步 vs 异步：I/O 密集 vs CPU 密集
 
@@ -65,13 +70,13 @@ async def main():
     result = await call_llm("用一句话解释 asyncio")
     print(result)
 
-# asyncio.run() 是 Python 3.7+ 推荐的唯一入口
+# 单次命令行程序的常规顶层入口
 asyncio.run(main())
 ```
 
-`await` 只能用在 `async def` 内部，否则触发 `SyntaxError`。`asyncio.run()` 会创建新的事件循环、运行协程、完成后自动关闭——不要手动管理 `get_event_loop()` / `loop.close()`。
+`await` 只能出现在支持异步语法的上下文。`asyncio.run()` 会创建事件循环、运行协程并在完成后关闭，适合单次命令行入口；它不是所有场景的唯一 API。[Python asyncio runners](https://docs.python.org/3/library/asyncio-runner.html)还提供 Python 3.11+ 的 `asyncio.Runner`，用于在同一 event loop/context 中多次运行顶层 async 函数。
 
-**Jupyter Notebook 特例**：Jupyter 内部已有运行中的事件循环，直接 `asyncio.run()` 会抛 `RuntimeError`。解决方案：直接 `await main()`，或安装 `nest_asyncio` 库。
+**Jupyter Notebook 特例**：Jupyter 内部已有运行中的事件循环，直接 `asyncio.run()` 会抛 `RuntimeError`。在支持 top-level await 的单元格直接 `await main()`；不要把给现有 loop 打补丁作为默认方案。
 
 ## asyncio 核心 API
 
@@ -306,13 +311,13 @@ async def good():
 
 **误区 5：在 Jupyter 中调用 `asyncio.run()`**
 
-Jupyter 已有运行中的事件循环，`asyncio.run()` 会报错。使用 `await coroutine()` 或 `nest_asyncio.apply()` 解决。
+Jupyter 已有运行中的事件循环，`asyncio.run()` 会报错。在 notebook 单元格使用 top-level `await coroutine()`，或把同步入口移到独立脚本。
 
 ---
 
 ## 最佳实践
 
-- **入口只用 `asyncio.run()`**：不要手动创建或管理事件循环，不要嵌套调用 `asyncio.run()`。
+- **按宿主选择 runner**：单次脚本通常用 `asyncio.run()`；Python 3.11+ 需要复用同一 loop/context 的多个顶层调用可用 `asyncio.Runner`；已有事件循环中不要嵌套调用 `asyncio.run()`。
 - **同步阻塞代码一律隔离**：`requests`、`time.sleep`、`open()` 等必须用 `asyncio.to_thread` 或 `run_in_executor` 包裹。
 - **批量 API 调用必加 Semaphore**：LLM 和 Embedding API 都有速率限制，`max_concurrent` 建议设为 10-50，视服务商限额调整。
 - **`gather` 加 `return_exceptions=True`**：批处理场景下单个失败不应导致全部丢弃，错误由调用方逐条处理。
@@ -342,4 +347,10 @@ Jupyter 已有运行中的事件循环，`asyncio.run()` 会报错。使用 `awa
 
 **Q：如何在同步函数中调用异步函数？**
 
-三种方式：① 将包装函数改为 `async def`（推荐，彻底异步化）；② 使用 `asyncio.run(coro)` 作为顶层入口；③ 在已有事件循环中用 `loop.run_until_complete(coro)`（需持有 loop 引用，不推荐）。切忌在协程内嵌套调用 `asyncio.run()`，会抛 `RuntimeError: This event loop is already running`。
+三种方式：① 将包装函数改为 `async def`（推荐，彻底异步化）；② 使用 `asyncio.run(coro)` 作为顶层入口；③ 在已有事件循环中用 `loop.run_until_complete(coro)`（需持有 loop 引用，不推荐）。切忌在协程内嵌套调用 `asyncio.run()`，会抛 `RuntimeError: This event loop is already running`。（参见 [Python asyncio documentation](https://docs.python.org/3/library/asyncio.html)）
+
+## 参考资料
+
+- [Python asyncio documentation](https://docs.python.org/3/library/asyncio.html)
+- [PEP 3156: Asynchronous IO Support Rebooted](https://peps.python.org/pep-3156/)
+- [Python asyncio runners](https://docs.python.org/3/library/asyncio-runner.html)

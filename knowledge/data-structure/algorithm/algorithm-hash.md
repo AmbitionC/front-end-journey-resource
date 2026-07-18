@@ -1,63 +1,102 @@
-#### 1. 哈希表原理
-哈希表（Hash Table），也称散列表，是一种数据结构，它提供了快速的数据插入和查询功能。哈希表通过以下步骤实现其功能：
+哈希表把“按 key 查找”转化为“计算桶位置，再解决冲突”。平均 O(1) 不是魔法，也不是无条件保证；它依赖哈希函数、负载因子、冲突策略和扩容行为。
 
-+ **哈希函数**：哈希表使用一个函数（称为哈希函数）将输入（例如字符串或者数字）转换为一个索引值，这个索引值通常在数组的范围内。
-+ **数组**：哈希表底层通常是一个数组，索引值用来在数组中定位数据。
-+ **处理冲突**：由于不同的输入可能会映射到相同的索引，因此需要一种方法来处理这种冲突。常见的处理方法包括链地址法（使用链表存储相同索引的多个元素）和开放寻址法（寻找空的数组位置存储数据）。
-+ **动态扩容**：当哈希表中的元素太多，导致冲突增加时，可能需要进行扩容，即创建一个更大的数组，并将所有元素重新映射（rehash）到新数组中。
+![键经过哈希函数进入桶，碰撞由链或探测序列解决，负载因子升高后扩容并重新分布](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/hash-table-bucket-collision-resize-v1.webp)
+*图：两个 key 落入同一 bucket 形成 collision；resize 增加桶数后必须 rehash，不能只复制旧下标。*
 
+---
 
+## 从 key 到 bucket
 
-#### 2. 代码示例
+[NIST 的 hash table 定义](https://xlinux.nist.gov/dads/HTML/hashtab.html)包含 table、bucket、hash function 与 collision resolution。一个典型位置计算为：
+
+```text
+hashCode = hash(key)
+index = normalize(hashCode) mod bucketCount
+```
+
+哈希函数要求同一个 key 稳定得到同一 hash，并尽量把实际 key 集合均匀分散。它不要求不同 key 的 hash 永不相同；有限桶容纳无限可能 key，碰撞必然发生。判定最终相等仍需要 key equality，hash 相等只能说明“可能相等”。
+
+## 两类冲突处理
+
+拉链法让每个 bucket 指向一个小集合，碰撞项存入链表、数组或树；开放寻址则把所有元素放在表内，发生碰撞后按线性、二次或双重哈希探测其他槽位。
+
+负载因子 `α = entries / buckets` 上升时，链或探测序列通常变长。实现会在阈值附近扩容，然后按新 bucketCount 重新计算所有位置。扩容单次可能是 O(n)，但把成本摊到多次插入后，常得到摊还 O(1)。
+
+最坏情况下，大量 key 落入同一桶，查找可退化到 O(n)。面对不可信输入还要考虑碰撞攻击；运行时可能随机化字符串哈希或把长链转成平衡结构，但应用不能依赖未公开实现细节。
+
+## 正确的最小映射
+
+教学实现应先处理“相同 key 更新 value”，而不是每次追加：
+
 ```javascript
-class HashTable {
-  constructor(size = 53) {
-    this.keyMap = new Array(size);
+class HashMap {
+  constructor(size = 16) {
+    this.buckets = Array.from({ length: size }, () => []);
+    this.count = 0;
   }
 
-  _hash(key) {
-    let total = 0;
-    let prime = 31;
-    for (let i = 0; i < Math.min(key.length, 100); i++) {
-      let char = key[i];
-      total = (total * prime + char.charCodeAt(0)) % this.keyMap.length;
+  indexFor(key) {
+    let hash = 2166136261;
+    for (const char of String(key)) {
+      hash ^= char.codePointAt(0);
+      hash = Math.imul(hash, 16777619);
     }
-    return total;
+    return (hash >>> 0) % this.buckets.length;
   }
 
   set(key, value) {
-    const index = this._hash(key);
-    if (!this.keyMap[index]) {
-      this.keyMap[index] = [];
+    const bucket = this.buckets[this.indexFor(key)];
+    const pair = bucket.find(([storedKey]) => Object.is(storedKey, key));
+    if (pair) {
+      pair[1] = value;
+      return;
     }
-    this.keyMap[index].push([key, value]);
+    bucket.push([key, value]);
+    this.count += 1;
   }
 
   get(key) {
-    const index = this._hash(key);
-    if (this.keyMap[index]) {
-      for (let i = 0; i < this.keyMap[index].length; i++) {
-        if (this.keyMap[index][i][0] === key) {
-          return this.keyMap[index][i][1];
-        }
-      }
-    }
-    return undefined;
+    const bucket = this.buckets[this.indexFor(key)];
+    return bucket.find(([storedKey]) => Object.is(storedKey, key))?.[1];
   }
 }
 ```
 
+这个示例仍省略 resize、delete、迭代顺序和通用对象 key 的稳定哈希，所以只能用于理解结构，不能替代标准库。
 
+## 用不变量解题
 
-#### 3. 前端领域的应用
-+ **缓存机制**：哈希表可用于实现缓存，存储计算结果或重复请求的数据，以减少计算量和响应时间。
-+ **计数器**：在处理事件或分析用户行为时，哈希表可以用来计数和存储特定事件的数据。
-+ **唯一性检查**：哈希表可以用来快速检查数组中元素的唯一性，例如，检查用户输入的用户名是否已存在。
-+ **数据去重**：利用哈希表的特性，可以快速找出并去除数组中的重复数据。
-+ **快速查找**：在处理大量数据时，哈希表可以快速定位数据，例如在大型表单中快速验证输入字段。
-+ **对象属性管理**：在JavaScript中，对象的属性可以通过哈希表进行管理，提高属性访问的效率。
-+ **本地存储模拟**：可以使用哈希表来模拟localStorage的行为，实现数据的持久化存储。
-+ **分页和懒加载**：在实现分页或懒加载功能时，哈希表可以用来存储已加载的数据页，快速进行页面切换。
-+ **数据索引**：在构建前端搜索引擎或过滤功能时，哈希表可以作为索引结构，加速搜索过程。
-+ **动画帧控制**：在动画处理中，哈希表可以存储动画帧的状态，实现精确的动画控制。
+哈希题的关键是定义 key、value 与写入时机。
 
+两数之和中，key 是已见过的数，value 是索引。先查询补数再写入当前数，保证同一元素不会被复用：
+
+```javascript
+function twoSum(nums, target) {
+  const indexByValue = new Map();
+  for (let i = 0; i < nums.length; i += 1) {
+    const need = target - nums[i];
+    if (indexByValue.has(need)) return [indexByValue.get(need), i];
+    indexByValue.set(nums[i], i);
+  }
+  return null;
+}
+```
+
+计数问题的 value 是频次；分组问题的 key 是规范化签名；去重只关心成员关系，使用 Set 更直接。若问题要求稳定输出、全部配对或保留重复位置，value 就可能是数组而不是单个索引。
+
+## JavaScript Map、Set 与 Object
+
+JavaScript 的 Map 支持任意值作为 key，并提供明确的 `has`、`size` 与插入顺序迭代。Set 只保存唯一成员。[Python 映射类型文档](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict)同样强调 key 必须可哈希，并说明字典操作与插入顺序语义；这些是语言契约，不能反推运行时必须采用某一种哈希表内部布局。
+
+普通 JavaScript 对象适合固定字段记录；属性 key 是字符串或 Symbol，还涉及原型链。把用户输入当字典 key 时使用 Map 或无原型对象，避免继承属性和 prototype pollution。内存中的 Map/Object 不具有持久化能力，不能“模拟 localStorage 持久化”；进程或页面结束后内容会消失。
+
+## 复杂度与验证
+
+平均查找、插入和删除常按 O(1) 分析，遍历为 O(n)，扩容单次为 O(n)。测试不仅覆盖命中/未命中，还应覆盖相同 key 更新、故意碰撞、删除后再插入、扩容前后全部 key 可查，以及特殊值的相等规则。
+
+如果任务只需要几十个固定字段，数组或对象可能更简单；需要有序范围查询时，树结构更合适。哈希表擅长精确 key lookup，不天然支持前缀、最小值或区间扫描。
+
+## 参考资料
+
+- [NIST Dictionary of Algorithms and Data Structures: hash table](https://xlinux.nist.gov/dads/HTML/hashtab.html)
+- [Python dictionary view objects and mapping types](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict)

@@ -1,3 +1,8 @@
+![请求与响应报文并排：request/status line、field section、空行、content；再分离 message semantics 与 HTTP/1.1 framing，标出 Content-Length/Transfer-Encoding 冲突会导致解析差异](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/http-message-semantics-framing-v1.webp)
+*图：请求与响应都按 start-line → field section → 空行 → content 读取；右侧把 HTTP 语义与 HTTP/1.1 framing 分开，并标出长度字段冲突。*
+
+---
+
 #### <font style="color:rgb(33, 37, 41);">HTTP报文定义</font>
 <font style="color:rgb(33, 37, 41);">HTTP报文是在HTTP应用程序直接发送的</font><font style="color:#D46B08;">数据块</font><font style="color:rgb(33, 37, 41);">。这些数据块以一些文本形式的元信息（meta-information）开头。这些信息</font>**<font style="color:rgb(33, 37, 41);">描述了报文的内容及含义，后面跟着可选的数据部分</font>**<font style="color:rgb(33, 37, 41);">。这些报文在客户端、服务器和代理直接流动。</font>
 
@@ -6,7 +11,6 @@
 #### 报文的组成
 <font style="color:rgb(33, 37, 41);">HTTP报文是简单的</font><font style="color:#D46B08;">格式化的数据块</font><font style="color:rgb(33, 37, 41);">。每条报文都包含一条来自客户端的请求，或者一条来自服务端的响应。他们由三个部分组成：对报文进行描述的</font>**<font style="color:rgb(33, 37, 41);">起始行</font>**<font style="color:rgb(33, 37, 41);">（Start Line），包含属性的</font>**<font style="color:rgb(33, 37, 41);">首部块</font>**<font style="color:rgb(33, 37, 41);">（Header），以及可选的、包含数据的</font>**<font style="color:rgb(33, 37, 41);">主体</font>**<font style="color:rgb(33, 37, 41);">（Body）部分。</font>
 
-![](https://cdn.nlark.com/yuque/0/2022/png/577681/1652197056011-bccda9d6-81ad-424f-be26-0891cf38f33d.png)
 
 <font style="color:#8C8C8C;">报文的组成示意图</font>
 
@@ -21,7 +25,6 @@
 #### <font style="color:rgb(33, 37, 41);">报文的语法</font>
 <font style="color:rgb(33, 37, 41);">所有的HTTP报文都可以分为两类：</font><font style="color:#D46B08;">请求报文</font><font style="color:rgb(33, 37, 41);">（Request Message）和</font><font style="color:#D46B08;">响应报文</font><font style="color:rgb(33, 37, 41);">（Response Message）。请求报文会向Web服务器请求一个动作。响应报文会将请求的结果返回给客户端。请求和响应报文的基本报文机构相同。</font>
 
-![](https://cdn.nlark.com/yuque/0/2022/png/577681/1652197055891-ae87c3e6-1320-4e69-bf46-ac274e37f37d.png)
 
 <font style="color:#8C8C8C;">请求报文和响应报文的示意图</font>
 
@@ -38,7 +41,6 @@
 #### <font style="color:rgb(33, 37, 41);">方法（Method）</font>
 <font style="color:rgb(33, 37, 41);">请求的起始行以方法作为开始，方法用来告知服务器需要做些什么。</font>
 
-![](https://cdn.nlark.com/yuque/0/2024/png/577681/1717680188252-7537da8c-9e4a-433d-9e40-d25045793371.png)
 
 <font style="color:#8C8C8C;">请求方法列表</font>
 
@@ -65,3 +67,13 @@
 
 <font style="color:#8C8C8C;">状态码列表</font>
 
+## 语义与报文定界是两层问题
+
+[RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html) 定义方法、状态、字段与内容的语义；同一语义可以映射到不同 HTTP 版本的线格式。
+
+[RFC 9112](https://www.rfc-editor.org/rfc/rfc9112.html) 专门规定 HTTP/1.1 报文语法、连接管理和 framing；`Content-Length` 与 `Transfer-Encoding` 的冲突会造成解析差异，必须按规范拒绝或处理。
+
+## 参考资料
+
+- [RFC 9110: HTTP Semantics](https://www.rfc-editor.org/rfc/rfc9110.html)
+- [RFC 9112: HTTP/1.1](https://www.rfc-editor.org/rfc/rfc9112.html)

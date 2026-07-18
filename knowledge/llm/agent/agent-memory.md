@@ -1,8 +1,16 @@
+![分层记忆图：当前上下文工作区位于中心，短期对话在上，长期情节与语义存储在下；箭头展示写入、索引、检索、压缩和遗忘，标出权限与时效过滤](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-memory-tiered-read-write-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是区分工作上下文、情节记忆、语义记忆及检索写回，而不是把所有历史都称作长期记忆。*
+
+---
+
 Agent 的记忆系统决定了它能否跨轮次保持上下文、积累经验、从历史中学习。没有记忆，每次对话都是一次性的——Agent 不知道你是谁，也不记得上一轮说过什么。本文从认知科学的类比出发，系统梳理 Agent 记忆的分类、存储与召回机制、向量检索的核心原理，以及记忆压缩与遗忘策略。
 
 ---
 
 ## 记忆的分层模型
+
+[MemGPT](https://arxiv.org/abs/2310.08560) 将上下文窗口内外的状态组织成分层存储，并由运行时决定信息的换入与换出，而不是把所有历史永久塞进一次推理。
+
 
 认知心理学将人类记忆分为三个层次：感觉记忆（极短暂，秒级）、工作记忆（短期，容量有限）、长期记忆（持久，几乎无上限）。长期记忆又分为语义记忆（抽象知识）和情景记忆（具体经历）。
 
@@ -91,6 +99,9 @@ class WorkingMemory:
 
 ## 长期记忆：情景与语义
 
+[Generative Agents](https://arxiv.org/abs/2304.03442) 的原始架构把记忆流、基于相关性/近期性/重要性的检索、反思与规划连接起来，说明长期记忆还需要召回和写回策略。
+
+
 ### 情景记忆（Episodic Memory）
 
 情景记忆存储具体的交互事件，保留完整的时序关系。底层采用 **SQLite + Qdrant** 混合架构：SQLite 处理结构化过滤（时间范围、会话 ID、重要性区间），Qdrant 处理语义向量检索，两路结果合并排序后返回。
@@ -174,7 +185,7 @@ sequenceDiagram
 
 纯向量检索的局限在于查询表述与文档表述可能存在词汇鸿沟（问题是疑问句，文档是陈述句，语义空间有偏差）。两种策略可以缓解这个问题：
 
-**MQE（Multi-Query Expansion，多查询扩展）**：用 LLM 生成语义等价但表述不同的多个查询，并行检索后合并去重，提升召回率 30%~50%。
+**MQE（Multi-Query Expansion，多查询扩展）**：用 LLM 生成语义等价但表述不同的多个查询，并行检索后合并去重。它可能缓解查询与文档的词汇鸿沟，也会增加调用、噪声和合并成本；召回收益必须在目标语料、查询集与固定评测口径上测量，不能套用通用百分比。
 
 ```python
 def generate_expanded_queries(query: str, n: int = 2) -> list[str]:
@@ -306,3 +317,7 @@ def calculate_recency_score(timestamp: str) -> float:
 
 ---
 
+## 参考资料
+
+- [MemGPT: Towards LLMs as Operating Systems](https://arxiv.org/abs/2310.08560)
+- [Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/abs/2304.03442)

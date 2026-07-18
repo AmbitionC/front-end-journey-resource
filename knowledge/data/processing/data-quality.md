@@ -1,13 +1,14 @@
-数据质量评估与异常检测需要把“机制是什么”“边界在哪里”“怎样验证”放在同一条学习路径中。本文以 [ISO/IEC 25012 Data Quality Model](https://www.iso.org/standard/35736.html) 对“数据质量模型与内在/系统依赖质量特性”的说明为事实边界，并用 [Automating Large-scale Data Quality Verification](https://www.vldb.org/pvldb/vol11/p1781-schelter.pdf) 校准“Deequ 数据质量约束、分析器和大规模验证方法”。文中的代码和工程方案用于解释这些机制；涉及具体版本、默认值或部署行为时，应再回到所链接的一手资料确认。
-
-![数据质量评估与异常检测的核心机制与验证路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/data-quality-dimensions-detection-loop-v1.webp)
-*图：数据质量评估与异常检测的核心组件、信息流与验证边界。*
+![数据进入 schema/contract gate，依次执行 completeness、validity、uniqueness、consistency、freshness 检查，再做分布漂移检测；失败进入 quarantine 与责任人修复，指标回流监控](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/data-quality-dimensions-detection-loop-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是完整性、有效性、一致性、唯一性、及时性与分布漂移转成可执行 checks 和数据契约。*
 
 ---
 
 在大语言模型（LLM）和检索增强生成（RAG）系统大行其道的今天，数据质量问题早已不再是传统数仓工程师的专属课题。对 AI/Agent 工程师而言，喂给模型或向量库的每一条文本、每一行结构化记录，都直接影响推理质量与召回精度。计算机科学有一条古老定律——**GIGO（Garbage In, Garbage Out，垃圾进垃圾出）**，在 LLM 时代被再次放大：低质量的训练数据会让微调模型产生幻觉；重复的文档块会让 RAG 召回结果冗余；字段缺失的结构化数据会让 Agent 的工具调用逻辑出错。系统性地评估并修复数据质量，往往比反复调参带来更大的收益。
 
 ## 数据质量六维度（Six Dimensions of Data Quality）
+
+[ISO/IEC 25012](https://www.iso.org/standard/35736.html) 提供内在质量与系统依赖质量特性的模型；项目中的完整性、有效性、一致性、唯一性和及时性检查应落成可计算规则，而不只是口号。
+
 
 业界通常用六个维度衡量数据质量，每个维度对 AI 系统都有具体映射：
 
@@ -262,6 +263,9 @@ def is_low_quality(text: str, min_len: int = 50,
 ```
 
 ## 数据质量监控管道设计（Monitoring Pipeline）
+
+[Deequ 论文](https://www.vldb.org/pvldb/vol11/p1781-schelter.pdf) 将数据分析器、约束和验证组合成可扩展的数据质量检查，适合把批次失败与具体规则和指标关联起来。
+
 
 生产环境的数据质量保障需要从一次性脚本升级为持续运行的监控管道：
 

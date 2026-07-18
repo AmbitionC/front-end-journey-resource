@@ -1,8 +1,13 @@
-# 虚拟内存与分页机制是怎么工作的?
+![CPU virtual address 经 TLB/page table 转换到 physical frame；缺页触发 kernel page fault handler，从 file/swap/zero page 装入；fork 后共享只读页，写入触发 copy-on-write](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/virtual-memory-page-table-fault-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是解释虚拟地址、页表、TLB、page fault、匿名/文件映射、copy-on-write 与回收边界。*
+
+---
+
+## 虚拟内存与分页机制是怎么工作的?
 
 设想这样一个场景:你的电脑只有 16GB 物理内存,却同时开着浏览器(几十个标签页)、IDE、Docker、一个本地跑着的大模型推理进程。把它们占用的内存加起来可能远超 16GB,但系统依然在跑——而且每个程序都"以为"自己独占了一整块从 0 开始、连续无缝的地址空间。更神奇的是,浏览器里的一个野指针越界,顶多让浏览器崩溃,绝不会改写 IDE 的内存。
 
-这一切看似矛盾的现象,背后是同一套机制在支撑:**虚拟内存(Virtual Memory)**。理解它,几乎是理解现代操作系统的钥匙。
+这一切看似矛盾的现象,背后是同一套机制在支撑:**虚拟内存(Virtual Memory)**。理解它,几乎是理解现代操作系统的钥匙。（参见 [Linux kernel memory management documentation](https://docs.kernel.org/mm/index.html)）
 
 ## 为什么需要虚拟内存?
 
@@ -119,7 +124,7 @@ flowchart LR
 
 ## mmap:把文件直接映射进地址空间
 
-虚拟内存机制还顺手提供了一个强大能力:**内存映射(mmap)**。它把一个文件(或一段匿名内存)直接映射到进程的虚拟地址空间,之后读写这段内存就等同于读写文件——由缺页机制按需把文件内容加载进来,由操作系统在合适时机把脏页写回磁盘。
+虚拟内存机制还顺手提供了一个强大能力:**内存映射(mmap)**。它把一个文件(或一段匿名内存)直接映射到进程的虚拟地址空间,之后读写这段内存就等同于读写文件——由缺页机制按需把文件内容加载进来,由操作系统在合适时机把脏页写回磁盘。（参见 [POSIX mmap](https://pubs.opengroup.org/onlinepubs/9799919799/functions/mmap.html)）
 
 它的好处是省去了 `read`/`write` 系统调用反复拷贝的开销,还天然支持多个进程映射同一文件实现共享内存。动态库加载、数据库引擎、以及把超大模型权重文件"映射"进内存按需读取,都依赖 mmap。
 
@@ -132,3 +137,8 @@ flowchart LR
 ## 小结
 
 虚拟内存用一层"虚拟地址→物理地址"的翻译,一举解决了隔离、连续假象与超额分配三大问题。分页让映射变得可行,多级页表压缩了页表体积,TLB 把翻译加速到近乎免费;缺页中断与按需调页让程序可以"用到才加载",页面置换算法决定内存紧张时谁出局,而工作集装不下时就会陷入 thrashing。这套从硬件到操作系统协同的设计思想,不仅撑起了你电脑上每一个进程,也悄悄影响着今天大模型推理引擎的资源调度方式。
+
+## 参考资料
+
+- [Linux kernel memory management documentation](https://docs.kernel.org/mm/index.html)
+- [POSIX mmap](https://pubs.opengroup.org/onlinepubs/9799919799/functions/mmap.html)

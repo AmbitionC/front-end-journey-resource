@@ -1,4 +1,9 @@
-深度研究（Deep Research）是智能体的一类典型知识密集型任务：用户给出一个开放主题，Agent 需要自主规划、多轮检索、综合归纳，最终交付带来源引用的结构化报告。本文以一个完整的实战项目为线索，剖析其架构设计、Agent 分工、工具系统与关键工程细节。
+![深度研究闭环：问题分解→并行检索→阅读原始来源→证据账本记录 claim/source/confidence→交叉验证→带引用综合；注入检测与停止条件作为护栏](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/deep-research-evidence-ledger-loop-v1.webp)
+*图：沿“问题分解 → 并行检索 → 原始来源阅读 → 证据账本 → 交叉验证 → 带引用综合”读取，注入检测和停止条件包围整个闭环。*
+
+---
+
+深度研究（Deep Research）是智能体的一类典型知识密集型任务：用户给出一个开放主题，Agent 需要自主规划、多轮检索、综合归纳，最终交付带来源引用的结构化报告。本文以一个完整的实战项目为线索，剖析其架构设计、Agent 分工、工具系统与关键工程细节。（参见 [Deep Research System Card](https://cdn.openai.com/deep-research-system-card.pdf)；参见 [How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system)）
 
 ## 为什么深度研究比普通搜索难
 
@@ -52,7 +57,7 @@ graph TD
 
 ```mermaid
 flowchart TD
-    INPUT[用户输入研究主题] --> PLAN[规划阶段\nTODO Planner\n分解 3-5 个子任务]
+    INPUT[用户输入研究主题] --> PLAN[规划阶段\nTODO Planner\n按覆盖与预算分解]
     PLAN --> EXEC{执行阶段\n逐个子任务循环}
     EXEC --> SEARCH[SearchTool\n执行搜索]
     SEARCH --> SUMM[Task Summarizer\n总结 + 来源引用]
@@ -84,7 +89,7 @@ flowchart TD
 ]
 ```
 
-子任务数量以 3-5 个为宜：过少覆盖不全，过多则产生冗余和成本浪费。每个子任务包含 `title`（标题）、`intent`（研究意图）、`query`（搜索关键词，建议用英文以获得更好的召回）。
+子任务数量由问题维度、来源独立性、预算和停止条件决定：过粗会漏掉证据，过细会重复检索并增加合并成本。每个子任务包含 `title`（标题）、`intent`（研究意图）、`query`（搜索关键词）；查询语言应匹配目标资料，而不是默认英文一定更好。
 
 ## 三 Agent 协作设计
 
@@ -321,16 +326,19 @@ export function useResearch() {
 可以对规划结果做自动化评分：
 
 ```python
-def evaluate_plan(todo_items: list[TodoItem]) -> dict:
+def evaluate_plan(todo_items: list[TodoItem], policy: PlanPolicy) -> dict:
     score = 100
     suggestions = []
-    if len(todo_items) < 3:
-        score -= 20; suggestions.append("子任务过少，可能遗漏重要信息")
-    if len(todo_items) > 5:
-        score -= 10; suggestions.append("子任务过多，可能存在冗余")
+    if len(todo_items) < policy.min_tasks:
+        score -= policy.missing_coverage_penalty
+        suggestions.append("子任务少于当前研究策略要求，请检查覆盖面")
+    if len(todo_items) > policy.max_tasks:
+        score -= policy.redundancy_penalty
+        suggestions.append("子任务多于当前研究策略上限，请检查重复项")
     for task in todo_items:
-        if len(task.query.split()) < 2:
-            score -= 10; suggestions.append(f"任务「{task.title}」搜索查询过于简单")
+        if len(task.query.split()) < policy.min_query_terms:
+            score -= policy.query_penalty
+            suggestions.append(f"任务「{task.title}」搜索查询未达到当前策略要求")
     return {"score": score, "suggestions": suggestions}
 ```
 
@@ -364,7 +372,7 @@ graph LR
 ## 常见误区与最佳实践
 
 **常见误区**：
-- 认为子任务越多越好：3-5 个子任务已足够覆盖大多数主题，更多只会增加延迟和成本，并在最终报告中产生重复内容。
+- 认为存在通用子任务数量：应根据覆盖矩阵、依赖关系、并发/成本预算和证据增量动态拆分；当新搜索不再增加独立证据时停止扩张。
 - 忽视搜索结果的 Token 管理：不截断摘要直接喂给总结 Agent，很容易触发上下文长度限制。
 - 期望 LLM 输出严格 JSON：即使 Prompt 要求很明确，LLM 有时仍会在 JSON 前后附加说明性文字，解析层必须做防御性处理。
 - 不考虑来源引用：深度研究的可信度来自引用，总结 Agent 的 Prompt 必须明确要求为每个观点标注来源。
@@ -372,7 +380,7 @@ graph LR
 **最佳实践**：
 - 搜索关键词优先使用英文，可配合日期限定词（如"2024"）确保时效性。
 - 每个 Agent 的 Prompt 中包含具体输出示例（Few-shot），比纯描述更有效。
-- 生产环境中搜索结果缓存可以节省 30%-50% 的搜索 API 开销。
+- 生产环境可对规范化查询和稳定来源做带 TTL/版本的缓存；命中率、节省金额和陈旧风险用真实流量测量，不假定固定百分比。
 - 用 NoteTool 落盘研究过程，不仅支持断点恢复，还能构成"研究轨迹"数据集，用于后续 Agent 的微调。
 
 ## 面试常问要点
@@ -385,3 +393,7 @@ graph LR
 - 如何评估规划 Agent 生成的子任务质量？给出量化指标。
 - `ToolAwareSimpleAgent` 的回调机制解决了什么问题？可以用于哪些场景？
 
+## 参考资料
+
+- [Deep Research System Card](https://cdn.openai.com/deep-research-system-card.pdf)
+- [How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system)

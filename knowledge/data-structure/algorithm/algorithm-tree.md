@@ -1,6 +1,11 @@
+![同一图从节点 A 出发：左侧 BFS 用 queue 按层扩展 frontier，右侧 DFS 用 stack 深入回溯；visited set 阻止环重复，树结构作为无环特例](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/tree-graph-bfs-dfs-frontiers-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是区分 tree 与 general graph、DFS/BFS、visited、递归/显式栈和遍历复杂度，避免在有环图上无限访问。*
+
+---
+
 #### 1. 二叉树的最大深度
 **问题**：给定一个二叉树，找出其最大深度。  
-**解法**：递归遍历左右子树，取较大者深度加一。
+**解法**：递归遍历左右子树，取较大者深度加一。（参见 [Boost Graph Library depth-first search](https://www.boost.org/doc/libs/latest/libs/graph/doc/depth_first_search.html)）
 
 ```javascript
 function maxDepth(root) {
@@ -13,7 +18,7 @@ function maxDepth(root) {
 
 #### 2. 二叉树的层序遍历
 **问题**：给定一个二叉树，按层序遍历其节点值。  
-**解法**：使用队列进行广度优先搜索（BFS）。
+**解法**：使用队列进行广度优先搜索（BFS）。（参见 [Boost Graph Library breadth-first search](https://www.boost.org/doc/libs/latest/libs/graph/doc/breadth_first_search.html)）
 
 ```javascript
 function levelOrder(root) {
@@ -186,3 +191,7 @@ function postorderTraversal(root) {
 }
 ```
 
+## 参考资料
+
+- [Boost Graph Library breadth-first search](https://www.boost.org/doc/libs/latest/libs/graph/doc/breadth_first_search.html)
+- [Boost Graph Library depth-first search](https://www.boost.org/doc/libs/latest/libs/graph/doc/depth_first_search.html)

@@ -1,3 +1,8 @@
+![InnoDB B-tree 查询路径：根→中间页→叶子页；主键聚簇叶子存整行，二级索引叶子存主键，再回表；另画联合索引 leftmost prefix 与覆盖查询](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/mysql-btree-index-lookup-path-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是说明聚簇/二级索引、联合索引前缀、覆盖查询、选择性和 EXPLAIN，而非绝对化性能结论。*
+
+---
+
 索引（Index）是数据库提升查询性能的核心机制，本质上是用空间换时间的数据结构。对于 AI/Agent 后端工程师来说，无论是存储用户会话、向量元数据，还是构建 RAG 系统的检索层，索引设计直接决定了服务的吞吐瓶颈。
 
 ## B+ 树：InnoDB 索引的底层结构
@@ -23,7 +28,7 @@ B+ 树是多路平衡搜索树，与 B 树的核心区别在于：
 
 这是 InnoDB 中最重要的概念对，必须透彻理解。
 
-**聚簇索引（Clustered Index）**：叶子节点直接存放完整的行数据，InnoDB 以主键构建聚簇索引，一张表只能有一个。数据的物理存储顺序与主键顺序一致。
+**聚簇索引（Clustered Index）**：叶子节点直接存放完整的行数据，InnoDB 以主键构建聚簇索引，一张表只能有一个。数据的物理存储顺序与主键顺序一致。（参见 [MySQL 8.4 Reference: InnoDB Index Types](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/innodb-index-types.html)）
 
 **二级索引（Secondary Index，非主键索引）**：叶子节点存放的不是完整行数据，而是 **索引列值 + 主键值**。当查询需要获取索引列以外的字段时，必须用这个主键值再次查询聚簇索引，这个额外的一次查找称为 **回表（Table Lookup）**。
 
@@ -94,6 +99,9 @@ SELECT name, age, email FROM users WHERE name = 'Alice';
 **高频接口优化技巧**：对 Agent 对话历史表（`session_id, user_id, created_at, content`）中，若频繁按 `session_id` 分页拉取 `user_id` 和 `created_at`，可建 `INDEX(session_id, created_at, user_id)` 覆盖索引，彻底消除回表。
 
 ## EXPLAIN 执行计划解读
+
+[MySQL 8.4 EXPLAIN 文档](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/explain.html) 定义了访问类型、候选/实际使用索引和额外执行信息；优化时要验证计划，而不是只凭索引名称判断是否命中。
+
 
 ```sql
 EXPLAIN SELECT * FROM orders WHERE user_id = 100 AND status = 1;
@@ -323,3 +331,8 @@ B+ 树叶子链表原生支持范围查询和排序；B 树数据分散在各层
 
 **Q：大表加索引如何不影响线上服务？**
 MySQL 5.6+ 支持 `ALTER TABLE ... ADD INDEX` 的在线 DDL（Online DDL），默认采用 `ALGORITHM=INPLACE, LOCK=NONE`，不会长时间锁表。也可借助 `pt-online-schema-change` 或 `gh-ost` 工具做零停机迁移。
+
+## 参考资料
+
+- [MySQL 8.4 Reference: InnoDB Index Types](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/innodb-index-types.html)
+- [MySQL 8.4 Reference: EXPLAIN](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/explain.html)

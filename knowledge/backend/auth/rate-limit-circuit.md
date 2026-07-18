@@ -1,3 +1,8 @@
+![请求先经过限流器再到 circuit breaker；熔断器 Closed→Open→Half-open→Closed 状态机，失败率触发 open，冷却后少量探测；open 时走缓存/降级结果，429 携带 RateLimit/Retry-After 信息](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rate-limit-circuit-breaker-states-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是区分限流保护容量、熔断隔离故障、降级保持核心功能，并明确 Retry-After 与半开探测。*
+
+---
+
 在 AI Agent 服务中，每一次 LLM API 调用都直接产生费用，一个失控的请求循环或恶意用户的批量调用足以在分钟内耗尽月度预算。限流（Rate Limiting）和熔断（Circuit Breaker）是两道互补的防线：限流控制流量入口，熔断隔离下游故障。
 
 ## 为什么限流对 AI 服务尤为关键
@@ -37,6 +42,9 @@ flowchart LR
 ```
 
 ## 分层限流策略
+
+[RFC 9333](https://www.rfc-editor.org/rfc/rfc9333.html) 的 RateLimit 字段用于告知客户端配额与窗口信息；它是协作信号，不替代服务端强制执行的限流策略。
+
 
 AI 服务需要在四个维度叠加限流，由粗到细：
 
@@ -161,6 +169,9 @@ async function releaseAgentSlot(userId: string) {
 
 ## 熔断器（Circuit Breaker）
 
+[Resilience4j CircuitBreaker 文档](https://resilience4j.readme.io/docs/circuitbreaker) 把 Closed、Open、Half-open 以及有限探测定义为状态机；熔断限制的是失败扩散，不等同于入口限流。
+
+
 熔断保护的是**出站调用**——当下游 LLM Provider 出现大规模超时或错误时，熔断器快速失败，避免请求线程被阻塞堆积。
 
 ```mermaid
@@ -260,3 +271,8 @@ IP 限流无法区分正常用户和恶意用户，在 NAT 场景下多个用户
 **熔断 Half-Open 状态的作用**：Open 状态下完全拒绝请求，Half-Open 是一个"试探恢复"的过渡态，只放行少量请求验证下游是否真正恢复，成功则关闭熔断，失败则重新打开，避免下游刚恢复就被大量请求再次压垮。
 
 **AI 服务特有的限流维度**：除常规请求速率外，还需控制 Token 消耗（费用）、并发 Agent 任务数（资源隔离）、模型维度（高成本模型单独限额），三者结合才能有效管控 AI 配额。
+
+## 参考资料
+
+- [RFC 9333: RateLimit Fields for HTTP](https://www.rfc-editor.org/rfc/rfc9333.html)
+- [Resilience4j CircuitBreaker documentation](https://resilience4j.readme.io/docs/circuitbreaker)

@@ -1,4 +1,9 @@
-# 进程、线程与协程有什么区别?
+![操作系统含两个 process，各自独立 virtual address space；一个进程内有多个 kernel threads，共享 heap；某线程内 event loop 调度多个 coroutines。三层分别标出隔离、抢占和协作切换](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/process-thread-coroutine-scheduling-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是从地址空间、调度单位、共享状态和切换成本区分进程、线程与协程，避免把语言级 coroutine 等同内核线程。*
+
+---
+
+## 进程、线程与协程有什么区别?
 
 设想你打开浏览器看视频,同时还在用编辑器写代码、用音乐软件听歌。这三个程序互不干扰:浏览器崩溃了不会把你的代码弄丢,音乐也照样播放。但当你切到编辑器时,它内部其实又同时在做好几件事——光标闪烁、自动保存、语法高亮、拼写检查。这两层"同时进行",分别对应着操作系统里两个最基础的概念:**进程**和**线程**。而当你写一段网络爬虫,需要同时发起上千个 HTTP 请求时,你可能又会听到第三个词:**协程**。
 
@@ -33,6 +38,9 @@ graph TB
 代价是:进程之间想交换数据很麻烦。它们不能直接读对方的内存,必须借助操作系统提供的**进程间通信(IPC)**机制,如管道、消息队列、共享内存、socket 等,这些都需要经过内核,成本不低。
 
 ## 二、线程:CPU 调度的基本单位
+
+[POSIX 线程通用概念](https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap02.html#tag_02_09) 定义同一进程内线程共享的执行环境以及各线程独有状态；协程则是语言/运行时的协作调度抽象，不能等同于 POSIX 线程。
+
 
 如果一个进程内部想同时做多件事(比如编辑器一边响应键盘一边自动保存),就需要线程。
 
@@ -70,7 +78,7 @@ graph TB
 
 ## 四、协程:用户态的轻量执行单元
 
-进程和线程都是操作系统的概念,由内核调度。**协程(coroutine)则是用户态的概念,由程序自己调度。**
+进程和线程都是操作系统的概念,由内核调度。**协程(coroutine)则是用户态的概念,由程序自己调度。**（参见 [PEP 3156: Asynchronous IO Support Rebooted](https://peps.python.org/pep-3156/)）
 
 协程是一种可以**主动挂起和恢复**的函数。它的关键特征是:**协作式调度,而非抢占式**。一个协程不会被强行打断,它只在遇到 `yield` / `await` 这样的让出点时,主动交出执行权;调度器(通常是语言运行时或一个事件循环,运行在用户态)再挑选下一个就绪的协程来跑。
 
@@ -135,3 +143,8 @@ sequenceDiagram
 - **协程**是用户态的协作式调度单元,靠主动让出而非内核抢占,切换成本极低,但不能真并行、且要求全程非阻塞。
 
 三者不是替代关系,而是不同抽象层次的工具:操作系统用进程隔离程序、用线程压榨多核,而我们用协程在 IO 等待的缝隙里塞进海量并发。选对工具的前提,永远是先看清你的任务到底卡在 CPU 还是卡在 IO。
+
+## 参考资料
+
+- [POSIX General Concepts: Threads](https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap02.html#tag_02_09)
+- [PEP 3156: Asynchronous IO Support Rebooted](https://peps.python.org/pep-3156/)

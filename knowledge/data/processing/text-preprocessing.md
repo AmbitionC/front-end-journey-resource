@@ -1,7 +1,5 @@
-文本预处理与清洗策略需要把“机制是什么”“边界在哪里”“怎样验证”放在同一条学习路径中。本文以 [Unicode Standard Annex #15: Unicode Normalization Forms](https://unicode.org/reports/tr15/) 对“NFC/NFD/NFKC/NFKD 规范化形式与稳定性”的说明为事实边界，并用 [SentencePiece: A simple and language independent subword tokenizer](https://arxiv.org/abs/1808.06226) 校准“直接从原始句子训练子词模型的原始方法”。文中的代码和工程方案用于解释这些机制；涉及具体版本、默认值或部署行为时，应再回到所链接的一手资料确认。
-
-![文本预处理与清洗策略的核心机制与验证路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/text-preprocessing-normalization-tokenization-v1.webp)
-*图：文本预处理与清洗策略的核心组件、信息流与验证边界。*
+![原始多语言文本经过编码验证→Unicode normalization→语言感知清洗→sentence/token segmentation→质量抽样；旁边展示过度 lowercasing/去标点造成实体与代码语义丢失](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/text-preprocessing-normalization-tokenization-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是避免在规范化、大小写或标点处理中无意改变语义。*
 
 ---
 
@@ -50,6 +48,9 @@ def normalize_whitespace(text: str) -> str:
 
 ### Unicode 标准化与大小写规范化
 
+[Unicode UAX #15](https://unicode.org/reports/tr15/) 定义 NFC/NFD 与兼容性更强的 NFKC/NFKD；NFKC 可能合并有语义差异的兼容字符，不能无条件作为所有文本的默认清洗步骤。
+
+
 ```python
 import unicodedata
 import opencc  # 繁简转换
@@ -69,6 +70,9 @@ def normalize_unicode(text: str) -> str:
 ---
 
 ## 分词（Tokenization）与中文分词
+
+[SentencePiece 原始论文](https://arxiv.org/abs/1808.06226) 展示了直接从原始句子学习子词模型的方法，使分词不依赖预先的语言特定词边界规则。
+
 
 ### 中文分词：jieba
 

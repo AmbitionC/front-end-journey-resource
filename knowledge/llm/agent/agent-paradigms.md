@@ -1,3 +1,8 @@
+![三栏对比图：Reflection 的执行后反馈回路、Plan-and-Execute 的计划器与执行器分离、Tool-Use 的模型到工具再回模型；统一任务入口和结果出口，标出各自最适合的任务特征](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-paradigms-reactive-deliberative-hybrid-learning-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是比较 Reflection、Plan-and-Execute、Tool-Use 的控制流与适用边界。*
+
+---
+
 智能体不止一种思考方式。除了 ReAct 的"边想边做"，业界还形成了几种更具针对性的范式：**Reflection（反思范式）**、**Plan-and-Execute（先规划后执行）**、**Tool-Use（工具调用）**。理解它们各自的适用边界，是构建生产级智能体的必要前提。
 
 ## 一、Reflection / Self-Refine：反思范式
@@ -12,7 +17,7 @@
 - **反思**：一个"评审员"角色的 LLM 调用（可以是同一模型加不同 Prompt，也可以是独立模型）对初稿进行批判，输出结构化反馈。
 - **优化**：智能体根据反馈修改初稿，生成新版本。
 
-该范式由 Shinn 等人于 2023 年在 Reflexion 框架中系统化（发表于 NeurIPS 2023）。在代码生成、文本写作、数学推理等任务上，Reflection 可以将一个"功能正确但低效"的初稿迭代为"高质量"的最终版本。
+该范式由 Shinn 等人于 2023 年在 Reflexion 框架中系统化（发表于 NeurIPS 2023）。在代码生成、文本写作、数学推理等任务上，Reflection 可以将一个"功能正确但低效"的初稿迭代为"高质量"的最终版本。（参见 [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366)）
 
 形式化地，第 $i$ 轮迭代中，反思模型 $\pi_\text{reflect}$ 对当前输出 $O_i$ 生成反馈 $F_i$：
 
@@ -174,7 +179,7 @@ class ReflectionAgent:
 | 维度 | 评估 |
 |------|------|
 | API 调用次数 | 每轮迭代额外 2 次（反思 + 优化），$k$ 次迭代共 $2k+1$ 次调用 |
-| 总延迟 | 串行叠加，$k$ 次迭代可能比 ReAct 慢 3-5 倍 |
+| 总延迟 | 串行叠加，随每轮模型/工具耗时和迭代次数增长；在目标任务上测量 |
 | 输出质量提升 | 显著，尤其在代码生成、技术写作、复杂推理场景 |
 | 提示词复杂度 | 高，需要为执行/反思/优化三种角色各自调试 |
 
@@ -186,7 +191,7 @@ class ReflectionAgent:
 
 ### 核心思想
 
-Lei Wang 等人于 2023 年提出 Plan-and-Solve Prompting，旨在解决 CoT 在多步骤问题上"中途跑偏"的问题。其策略是将任务处理分为两个明确阶段：
+Lei Wang 等人于 2023 年提出 Plan-and-Solve Prompting，旨在解决 CoT 在多步骤问题上"中途跑偏"的问题。其策略是将任务处理分为两个明确阶段：（参见 [Plan-and-Solve Prompting](https://arxiv.org/abs/2305.04091)）
 
 1. **规划阶段（Planning）**：LLM 接收完整问题，输出一个分步执行计划。此阶段不执行任何操作，只生成计划列表。
 2. **执行阶段（Solving）**：执行器按照计划顺序逐步推进，将每步的结果作为下一步的输入。
@@ -337,6 +342,9 @@ Plan-and-Execute 特别适合以下类型的任务：
 ---
 
 ## 三、Tool-Use：工具调用范式
+
+[Toolformer](https://arxiv.org/abs/2302.04761) 研究了语言模型通过自监督方式学习何时调用外部 API 以及如何使用返回结果；它与产品 API 的 function-calling 协议相关，但不是同一个抽象层。
+
 
 ### 核心思想
 
@@ -524,3 +532,8 @@ RLHF 是通过人类偏好数据微调模型权重，是训练阶段的优化，
 **Q：工具数量增多到 50+个后如何优化？**
 工具数量超过 15 个后，全量列入 system prompt 的方式效率低下，LLM 选择准确率会下降。优化方向：(1) **工具检索**：根据用户意图，先用向量检索从工具库中取出 Top-K 个最相关工具，再注入 prompt；(2) **工具分层**：将工具按功能域分组，先选组再选工具；(3) **工具元数据索引**：为工具建立可搜索的语义索引，动态加载。
 
+## 参考资料
+
+- [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366)
+- [Plan-and-Solve Prompting](https://arxiv.org/abs/2305.04091)
+- [Toolformer: Language Models Can Teach Themselves to Use Tools](https://arxiv.org/abs/2302.04761)

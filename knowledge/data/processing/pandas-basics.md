@@ -1,4 +1,9 @@
-在 AI 工程化的流水线（Pipeline）中，数据处理往往占据 60% 以上的工时。无论是训练前的特征工程（Feature Engineering）、RAG 系统的文档元数据管理，还是 Agent 工具链里的结构化数据分析，pandas 都是 Python 生态里最不可绕开的库之一。它的设计哲学是"表格即对象"——把关系数据库的行列概念与 NumPy 的向量化计算融合在一起，用极少的代码完成数据清洗、聚合和转换。
+![两个 DataFrame 按 index/column labels 对齐后合并，缺失位置变为 NA；数据清洗管线依次 dtype 规范化、缺失处理、过滤、groupby 聚合，并标出 view/copy 与 chained assignment 风险](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/pandas-index-alignment-cleaning-flow-v1.webp)
+*图：先看两个 DataFrame 如何按 index/column labels 对齐并产生 NA，再沿 dtype 规范化 → 缺失处理 → 过滤 → groupby 聚合读取清洗管线。*
+
+---
+
+数据处理通常占据 AI 工程流水线的显著工作量，但比例会随数据质量、团队与任务而变化。pandas 适合处理中小规模表格数据，可用于特征工程、RAG 元数据和结构化分析；数据超过单机内存或需要分布式执行时，应评估其他引擎。
 
 ## pandas 在 AI 数据工程中的定位
 
@@ -21,6 +26,9 @@ flowchart LR
 | RAG 元数据管理 | 批量构造 chunk DataFrame，追踪 embedding 状态 |
 
 ## Series 与 DataFrame 核心概念
+
+[pandas 入门指南](https://pandas.pydata.org/docs/user_guide/10min.html) 展示 Series/DataFrame、基于标签的选择、对齐、合并和分组操作；运算默认按索引标签对齐，而非仅按物理位置拼接。
+
 
 ### 索引机制（Index）
 
@@ -142,6 +150,9 @@ df = (
 `assign` 返回新 DataFrame（不修改原对象），支持链式调用，是特征工程的推荐写法。
 
 ### fillna / dropna
+
+[pandas missing data 指南](https://pandas.pydata.org/docs/user_guide/missing_data.html) 区分多种缺失值标记和 nullable dtype；填充或删除前必须先确认列类型和缺失语义，不能把所有 NA 当成同一种业务状态。
+
 
 ```python
 df['source'].fillna('unknown', inplace=True)          # 类别列补占位符
@@ -343,3 +354,8 @@ df.loc[df['age'] > 30, 'score'] = 0
 
 **Q：如何处理 pandas 读取 GB 级 CSV 文件内存溢出的问题？**
 三个方向：① `chunksize` 分批读取后聚合；② `usecols` + `dtype` 减少单次加载体积；③ 换用 Polars 或 DuckDB 直接 SQL 查询，彻底绕开 pandas 的内存模型。
+
+## 参考资料
+
+- [pandas 10 minutes to pandas](https://pandas.pydata.org/docs/user_guide/10min.html)
+- [pandas missing data](https://pandas.pydata.org/docs/user_guide/missing_data.html)

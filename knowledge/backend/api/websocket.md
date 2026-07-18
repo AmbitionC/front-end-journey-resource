@@ -1,8 +1,13 @@
-WebSocket 是建立在 TCP 之上的全双工通信协议，通过一次 HTTP 握手升级，在客户端与服务端之间建立持久的双向通道。相比 HTTP 轮询，它彻底消除了"请求-响应"的单向限制，是实时聊天、协同编辑、Agent 执行状态推送等场景的底层支柱。
+![客户端与服务端时序图：HTTP Upgrade/101→双向 data frames→ping/pong→close frame/close response；旁边拆解 frame header、payload 与 fragmentation，标出代理和背压边界](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/websocket-handshake-frame-lifecycle-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是准确描述 HTTP Upgrade 握手、frame、消息分片、ping/pong、关闭握手和应用层背压。*
+
+---
+
+WebSocket 是建立在 TCP 之上的全双工通信协议，通过 HTTP 握手升级后在客户端与服务端之间交换独立消息。相比应用层轮询，它允许任一端主动发送数据，适用于实时聊天、协同编辑和 Agent 执行状态推送等场景；连接管理、背压与重连仍由应用负责。
 
 ## 握手升级（HTTP Upgrade）过程
 
-WebSocket 连接的建立需借助 HTTP/1.1 的协议升级机制。客户端发送一个特殊的 `GET` 请求，携带升级所需的协议头；服务端验证通过后返回 `101 Switching Protocols`，此后该 TCP 连接脱离 HTTP 协议，进入 WebSocket 帧传输模式。
+WebSocket 连接的建立需借助 HTTP/1.1 的协议升级机制。客户端发送一个特殊的 `GET` 请求，携带升级所需的协议头；服务端验证通过后返回 `101 Switching Protocols`，此后该 TCP 连接脱离 HTTP 协议，进入 WebSocket 帧传输模式。（参见 [RFC 6455: The WebSocket Protocol](https://www.rfc-editor.org/rfc/rfc6455.html)）
 
 ```mermaid
 sequenceDiagram
@@ -70,6 +75,9 @@ opcode 取值及含义：
 
 ## WebSocket vs SSE vs 轮询
 
+浏览器侧的 [WHATWG WebSockets Standard](https://websockets.spec.whatwg.org/) 定义了连接状态、`send()`、`bufferedAmount` 与关闭算法；`bufferedAmount` 只能用于观察排队字节，应用仍需自行设计背压阈值。
+
+
 三种实时通信方案覆盖不同的工程场景，选型前需明确通信方向和复杂度预算：
 
 | 维度 | WebSocket | SSE（Server-Sent Events） | 长轮询（Long Polling） |
@@ -94,6 +102,7 @@ opcode 取值及含义：
 import { WebSocketServer, WebSocket, RawData } from 'ws';
 import { IncomingMessage } from 'http';
 import { parse } from 'url';
+import { verify, JwtPayload } from 'jsonwebtoken';
 
 interface Client {
   ws: WebSocket;
@@ -106,13 +115,41 @@ const clients = new Map<string, Client>();
 
 const wss = new WebSocketServer({ port: 8080 });
 
+function requiredEnv(name: string): string {
+  const value = process.env[name];
+  if (!value) throw new Error(`Missing required environment variable: ${name}`);
+  return value;
+}
+
+const jwtConfig = {
+  secret: requiredEnv('JWT_SECRET'),
+  issuer: requiredEnv('JWT_ISSUER'),
+  audience: requiredEnv('JWT_AUDIENCE'),
+};
+
+function verifyJwt(token: string): string | null {
+  try {
+    const payload = verify(token, jwtConfig.secret, {
+      algorithms: ['HS256'],
+      issuer: jwtConfig.issuer,
+      audience: jwtConfig.audience,
+    });
+
+    if (typeof payload === 'string') return null;
+    const { sub } = payload as JwtPayload;
+    return typeof sub === 'string' && sub.length > 0 ? sub : null;
+  } catch {
+    // 过期、签名不匹配、issuer/audience 错误都按未认证处理。
+    return null;
+  }
+}
+
 // ── 认证：从 query param 中读取 token ──────────────────────────────
 function authenticate(req: IncomingMessage): string | null {
   const { query } = parse(req.url ?? '', true);
   const token = query.token as string | undefined;
   if (!token) return null;
-  // TODO: 验证 JWT，返回 userId
-  return verifyJwt(token); // 返回 userId 或 null
+  return verifyJwt(token);
 }
 
 wss.on('connection', (ws: WebSocket, req: IncomingMessage) => {
@@ -436,3 +473,8 @@ const wss = new WebSocketServer({ port: 8080, maxPayload: 1024 * 1024 }); // 1MB
 - **Socket.IO 的房间（Room）原理是什么？** 服务端维护一个 `room → Set<socketId>` 的 Map，`emit to room` 时遍历该 Set 逐个推送；Redis Adapter 将这个 Map 同步到 Redis，使多实例共享房间状态。
 
 - **WebSocket 在 HTTP/2 下如何工作？** RFC 8441 定义了 WebSocket over HTTP/2（使用 `CONNECT` 方法在 HTTP/2 流上建立 WebSocket），可复用 HTTP/2 连接、节省端口，但目前生产环境多数仍走 HTTP/1.1 升级。
+
+## 参考资料
+
+- [RFC 6455: The WebSocket Protocol](https://www.rfc-editor.org/rfc/rfc6455.html)
+- [WHATWG WebSockets Standard](https://websockets.spec.whatwg.org/)

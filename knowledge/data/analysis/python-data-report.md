@@ -1,6 +1,14 @@
+![版本化 data+code+environment 进入参数化 notebook/quarto build，依次执行 checks、analysis、figures、tables，输出 HTML/PDF artifact；CI 从空环境重建并比较数据版本与哈希](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/python-reproducible-report-build-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是参数、数据版本、环境、计算、图表、叙事和导出串成可复现报告构建，而不是手工复制结果。*
+
+---
+
 手工报告（Manual Reporting）的核心痛点在于：数据取数依赖人工、图表每次重画、格式调整耗时，且无法在数据更新时自动刷新。Python 自动化数据报告（Automated Data Reporting）将"取数 → 聚合 → 可视化 → 渲染 → 分发"全流程变为可调度的代码，既保证可复现性，也释放了数据分析师的重复劳动。
 
 ## 手工 vs. 自动化报告
+
+[Quarto 的 Python 计算文档](https://quarto.org/docs/computations/python.html) 将代码、叙事、执行选项与缓存纳入同一构建过程，适合生成可重建的 HTML/PDF artifact。
+
 
 | 维度 | 手工报告 | 自动化报告 |
 |------|----------|----------|
@@ -199,6 +207,9 @@ with open("output/report.html", "w", encoding="utf-8") as f:
 `| safe` 过滤器告诉 Jinja2 跳过 HTML 转义，pandas `to_html()` 的输出必须使用此过滤器，否则标签会被原样输出为文本。
 
 ## PDF 生成方案对比
+
+[nbconvert](https://nbconvert.readthedocs.io/en/latest/) 可以执行、转换并用模板导出 Notebook；在自动报告里应从干净 kernel 重建，而不是把交互会话里的旧输出当作结果。
+
 
 | 方案 | 安装复杂度 | 输出质量 | 动态内容支持 | 适用场景 |
 |------|-----------|---------|------------|---------|
@@ -505,3 +516,8 @@ tz_cn = ZoneInfo("Asia/Shanghai")
 display_time = datetime.now(tz=tz_cn).strftime("%Y-%m-%d %H:%M %Z")
 # 输出示例：2026-06-19 08:00 CST
 ```
+
+## 参考资料
+
+- [nbconvert documentation](https://nbconvert.readthedocs.io/en/latest/)
+- [Quarto computations with Python](https://quarto.org/docs/computations/python.html)

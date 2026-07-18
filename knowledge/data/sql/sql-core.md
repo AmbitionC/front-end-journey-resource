@@ -1,11 +1,9 @@
-SQL 核心语法与进阶查询需要把“机制是什么”“边界在哪里”“怎样验证”放在同一条学习路径中。本文以 [PostgreSQL SQL language tutorial](https://www.postgresql.org/docs/current/tutorial-sql.html) 对“表、查询、连接、聚合、更新和高级特性的官方教程”的说明为事实边界，并用 [SQLite SELECT documentation](https://www.sqlite.org/lang_select.html) 校准“SELECT 处理、连接、聚合、compound query 和排序限制的正式文档”。文中的代码和工程方案用于解释这些机制；涉及具体版本、默认值或部署行为时，应再回到所链接的一手资料确认。
-
-![SQL 核心语法与进阶查询的核心机制与验证路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/sql-logical-query-processing-order-v1.webp)
-*图：SQL 核心语法与进阶查询的核心组件、信息流与验证边界。*
+![SQL 逻辑处理阶梯：FROM/JOIN→WHERE→GROUP BY→HAVING→SELECT→DISTINCT→ORDER BY→LIMIT；旁边用三值逻辑 TRUE/FALSE/UNKNOWN 展示 NULL 过滤行为](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/sql-logical-query-processing-order-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是关系查询的逻辑处理顺序讲清 SELECT、JOIN、GROUP BY、HAVING、子查询、CTE 与 NULL 三值逻辑。*
 
 ---
 
-SQL 是关系型数据库的声明式查询语言，其核心价值在于用**逻辑意图**描述"要什么"而非"怎么取"，查询优化器负责将意图翻译为高效的物理执行计划。对于 AI/Agent 工程师而言，SQL 同样是构建 RAG（检索增强生成）数据管道、知识图谱查询和 Agent 记忆系统的基础设施。
+SQL 是关系型数据库的声明式查询语言，其核心价值在于用**逻辑意图**描述"要什么"而非"怎么取"，查询优化器负责将意图翻译为高效的物理执行计划。对于 AI/Agent 工程师而言，SQL 同样是构建 RAG（检索增强生成）数据管道、知识图谱查询和 Agent 记忆系统的基础设施。（参见 [PostgreSQL SQL language tutorial](https://www.postgresql.org/docs/current/tutorial-sql.html)）
 
 ---
 
@@ -198,7 +196,7 @@ FROM   employees;
 
 ### 子查询（Subquery）
 
-嵌套在其他语句中的 `SELECT`，分为**非相关子查询**和**相关子查询**（Correlated Subquery）。
+嵌套在其他语句中的 `SELECT`，分为**非相关子查询**和**相关子查询**（Correlated Subquery）。（参见 [SQLite SELECT documentation](https://www.sqlite.org/lang_select.html)）
 
 ```sql
 -- 非相关子查询：整个子查询只执行一次

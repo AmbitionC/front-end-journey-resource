@@ -1,13 +1,14 @@
-Token、延迟与成本优化需要把“机制是什么”“边界在哪里”“怎样验证”放在同一条学习路径中。本文以 [Amazon Bedrock token counting](https://docs.aws.amazon.com/bedrock/latest/userguide/count-tokens.html) 对“按实际模型预估输入 token、成本和配额占用”的说明为事实边界，并用 [Amazon Bedrock prompt caching](https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-caching.html) 校准“稳定前缀缓存、缓存 token 统计、延迟与计费边界”。文中的代码和工程方案用于解释这些机制；涉及具体版本、默认值或部署行为时，应再回到所链接的一手资料确认。
-
-![Token、延迟与成本优化的核心机制与验证路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-cost-latency-levers-v1.webp)
-*图：Token、延迟与成本优化的核心组件、信息流与验证边界。*
+![从请求到响应的成本与延迟瀑布：稳定前缀缓存、动态上下文、模型推理、流式输出；每段标出 token 数、缓存命中、排队、首 token 和总时长，右侧给出质量约束](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-cost-latency-levers-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是输入/输出 token、缓存命中、并发与延迟拆成可测成本模型，避免无边界的优化结论。*
 
 ---
 
 LLM API 按 token 计费，生产环境不加控制极易造成成本失控。系统性地应用路由、缓存、压缩、批处理等策略，可以在质量几乎不变的前提下将调用费用降低 50%–80%。
 
 ## 成本结构分析
+
+[Amazon Bedrock token counting](https://docs.aws.amazon.com/bedrock/latest/userguide/count-tokens.html) 要求按实际模型和请求内容估算输入 token；字符数或固定倍率只能作为粗略预估，不能直接用于结算和配额门禁。
+
 
 理解成本来源是优化的第一步。LLM 的计费模型通常由三个维度叠加：
 
@@ -144,6 +145,9 @@ async function cachedLLMCall(question: string, cache: SemanticCache): Promise<st
 **阈值选择**：相似度阈值是语义缓存最关键的超参数。阈值 0.99 几乎等同于精确匹配；阈值 0.80 则可能把"北京天气"和"上海天气"视为同一问题。推荐从 0.92 开始，通过人工抽检缓存命中样本来校准，并持续监控"缓存误命中率"（返回了错误答案的比例）。
 
 ## Prompt 压缩（Prompt Compression）
+
+[Amazon Bedrock prompt caching](https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-caching.html) 通过复用稳定前缀减少重复处理，并单独统计缓存读写 token；它不等同于语义缓存，也不会缓存动态后缀的答案。
+
 
 压缩输入 Prompt 是降低 Input token 成本的直接手段，有三个层次：
 

@@ -1,7 +1,5 @@
-Express 核心原理与中间件需要把“机制是什么”“边界在哪里”“怎样验证”放在同一条学习路径中。本文以 [Express using middleware](https://expressjs.com/en/guide/using-middleware/) 对“应用级、路由级和错误处理中间件及执行顺序”的说明为事实边界，并用 [Express error handling](https://expressjs.com/en/guide/error-handling/) 校准“同步/异步错误传播、默认处理器与 Express 5 Promise 行为”。文中的代码和工程方案用于解释这些机制；涉及具体版本、默认值或部署行为时，应再回到所链接的一手资料确认。
-
-![Express 核心原理与中间件的核心机制与验证路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/express-middleware-stack-error-flow-v1.webp)
-*图：Express 核心原理与中间件的核心组件、信息流与验证边界。*
+![Express 5 中间件栈从上到下：通用 middleware→router→handler→404；正常 next 向下，抛错/Promise rejection 跳到四参数 error middleware，已发送响应走 close 分支](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/express-middleware-stack-error-flow-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是中间件栈顺序、路由匹配、next/Promise 错误传播和终止响应为核心。*
 
 ---
 
@@ -22,7 +20,7 @@ flowchart LR
     style ErrMW fill:#f96,stroke:#c00
 ```
 
-请求进入 Express 后依次经过：Application-level 中间件 → Router 匹配 → Router-level 中间件 → Route Handler。任何环节调用 `next(err)` 都会跳过剩余普通中间件，直接进入最近的错误处理中间件。
+请求进入 Express 后依次经过：Application-level 中间件 → Router 匹配 → Router-level 中间件 → Route Handler。任何环节调用 `next(err)` 都会跳过剩余普通中间件，直接进入最近的错误处理中间件。（参见 [Express using middleware](https://expressjs.com/en/guide/using-middleware/)）
 
 ## 中间件类型详解
 
@@ -347,7 +345,7 @@ flowchart TD
   A：Express 内部维护一个中间件数组，每次 `app.use(fn)` 将函数压入数组。收到请求时，按注册顺序逐个调用中间件，每个中间件通过调用 `next()` 将控制权传给下一个。调用链是同步驱动的，`next()` 本质是调用数组中的下一个函数。
 
 - **Q：如何正确处理 Express 中 async 路由的错误？**  
-  A：Express 4.x 不捕获 async 函数的 rejected Promise，需要 `try/catch` + `next(err)`，或使用 `express-async-errors` 包自动 monkey-patch。Express 5.x 原生支持 async 错误转发，不再需要额外处理。
+  A：Express 4.x 不捕获 async 函数的 rejected Promise，需要 `try/catch` + `next(err)`，或使用 `express-async-errors` 包自动 monkey-patch。Express 5.x 原生支持 async 错误转发，不再需要额外处理。（参见 [Express error handling](https://expressjs.com/en/guide/error-handling/)）
 
 - **Q：`app.use()` 和 `app.get()` 的区别是什么？**  
   A：`app.use()` 匹配以指定路径**开头**的所有请求（任意 HTTP 方法），常用于挂载中间件和 Router。`app.get()` 精确匹配路径且仅匹配 GET 方法，常用于注册具体路由处理器。

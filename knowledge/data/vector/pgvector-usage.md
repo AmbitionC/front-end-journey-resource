@@ -1,7 +1,5 @@
-pgvector 向量存储与检索需要把“机制是什么”“边界在哪里”“怎样验证”放在同一条学习路径中。本文以 [pgvector official documentation](https://github.com/pgvector/pgvector) 对“vector 类型、距离操作符、exact/HNSW/IVFFlat 索引与过滤”的说明为事实边界，并用 [PostgreSQL index types](https://www.postgresql.org/docs/current/indexes-types.html) 校准“B-tree、Hash、GiST、SP-GiST、GIN、BRIN 的索引能力与边界”。文中的代码和工程方案用于解释这些机制；涉及具体版本、默认值或部署行为时，应再回到所链接的一手资料确认。
-
-![pgvector 向量存储与检索的核心机制与验证路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/pgvector-filter-ann-query-plan-v1.webp)
-*图：pgvector 向量存储与检索的核心组件、信息流与验证边界。*
+![PostgreSQL 查询把 metadata filter 与 vector distance 排序组合；对比 exact scan、HNSW、IVFFlat 三条路径，展示索引候选、过滤、recheck、top-k 与 recall/latency 调参点](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/pgvector-filter-ann-query-plan-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是准确说明 exact/approximate search、distance operator、filter 与 recall 调参。*
 
 ---
 
@@ -131,6 +129,11 @@ SET random_page_cost = 1.1;  -- SSD 推荐值（默认 4.0）
 更根本的解法是为过滤列（`session_id`、`role`）建立普通 B-Tree 索引，让规划器能准确估计过滤后的基数（cardinality），从而做出更好的决策。
 
 ## 索引
+
+[pgvector 维护者文档](https://github.com/pgvector/pgvector) 区分默认的 exact search 与 HNSW/IVFFlat approximate indexes，并定义距离操作符、过滤和索引参数；近似索引用召回率换取查询性能，必须在目标数据上验证。
+
+pgvector 的 HNSW/IVFFlat 是扩展提供的向量索引，不应与 PostgreSQL 核心的 [B-tree、Hash、GiST、SP-GiST、GIN、BRIN](https://www.postgresql.org/docs/current/indexes-types.html) 混为一类；元数据过滤通常仍依赖合适的关系索引。
+
 
 ### IVFFlat 索引
 

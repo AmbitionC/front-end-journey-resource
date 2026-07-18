@@ -1,4 +1,9 @@
-单个 Agent 可以完成工具调用和推理循环，但面对需要并行分工、专业互补的复杂任务时，单体架构会遇到上下文过长、能力单一、错误传播等瓶颈。多智能体系统（Multi-Agent System，MAS）通过让多个 Agent 分工协作完成任务，是突破这些限制的核心范式。
+![Orchestrator–Worker 多智能体架构：主智能体拆分三个独立子任务，并行 worker 各自使用工具，结果经过证据校验后汇总；旁边展示共享状态冲突、重复工作、成本放大三类风险](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/multi-agent-orchestrator-worker-tradeoffs-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是说明何时并行分工真正有收益，以及协调、共享状态、汇总和成本如何限制扩展。*
+
+---
+
+单个 Agent 可以完成工具调用和推理循环，但面对需要并行分工、专业互补的复杂任务时，单体架构会遇到上下文过长、能力单一、错误传播等瓶颈。多智能体系统（Multi-Agent System，MAS）通过让多个 Agent 分工协作完成任务，是突破这些限制的核心范式。（参见 [How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system)）
 
 ## 为什么需要多智能体
 
@@ -12,6 +17,9 @@
 多智能体通过**角色分工**（Role Specialization）、**信息传递**（Message Passing）和**状态共享**（Shared State）来突破这些限制。
 
 ## 四大协作范式
+
+[AutoGen 原始论文](https://arxiv.org/abs/2308.08155) 提出以可组合的多智能体会话构建应用，并允许不同 Agent 组合模型、人类输入和工具；收益仍取决于任务能否有效分解。
+
 
 ### 1. 单体自主循环（Autonomous Loop）
 
@@ -260,3 +268,7 @@ Agent 间通信分三种模式：
 - **Q：什么场景不适合多 Agent？**  
   任务简单、上下文短、延迟敏感（如实时问答）、调试预算有限的场景，单 Agent 更合适。多 Agent 的额外复杂性要有对应的收益才值得引入。
 
+## 参考资料
+
+- [How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system)
+- [AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation](https://arxiv.org/abs/2308.08155)

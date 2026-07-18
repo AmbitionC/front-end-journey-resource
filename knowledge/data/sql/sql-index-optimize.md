@@ -1,7 +1,5 @@
-索引、执行计划与查询优化需要把“机制是什么”“边界在哪里”“怎样验证”放在同一条学习路径中。本文以 [PostgreSQL Using EXPLAIN](https://www.postgresql.org/docs/current/using-explain.html) 对“计划节点、成本估算、EXPLAIN ANALYZE 与诊断方法”的说明为事实边界，并用 [PostgreSQL indexes introduction](https://www.postgresql.org/docs/current/indexes-intro.html) 校准“索引加速机制、维护成本和使用边界”。文中的代码和工程方案用于解释这些机制；涉及具体版本、默认值或部署行为时，应再回到所链接的一手资料确认。
-
-![索引、执行计划与查询优化的核心机制与验证路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/sql-explain-index-optimization-loop-v1.webp)
-*图：索引、执行计划与查询优化的核心组件、信息流与验证边界。*
+![查询优化闭环：慢查询→EXPLAIN ANALYZE 计划树→比较 estimated/actual rows→检查统计与过滤→设计复合/部分索引→再测；右侧标出索引空间与写入成本](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/sql-explain-index-optimization-loop-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是统计信息、选择性、scan/join 节点、actual vs estimated、复合/部分索引和写放大串成诊断流程。*
 
 ---
 
@@ -191,6 +189,9 @@ EXPLAIN SELECT * FROM orders WHERE user_id = 42 AND status = 'paid'\G
 
 ### PostgreSQL EXPLAIN ANALYZE 解读
 
+[PostgreSQL EXPLAIN 文档](https://www.postgresql.org/docs/current/using-explain.html) 区分估算成本/行数与 `EXPLAIN ANALYZE` 的实际执行数据；诊断重点是 estimated 与 actual 的偏差及其上游原因。
+
+
 ```sql
 EXPLAIN (ANALYZE, BUFFERS, FORMAT TEXT)
 SELECT user_id, amount FROM orders WHERE user_id = 42;
@@ -327,7 +328,7 @@ LIMIT 5;
 ## 常见误区
 
 **误区一：索引越多越好**
-每次写入（INSERT / UPDATE / DELETE）都需同步更新所有相关索引的 B-Tree，写密集场景中冗余索引会显著拖慢吞吐量。定期用 `sys.schema_unused_indexes`（MySQL）或 `pg_stat_user_indexes`（PostgreSQL）清理未使用的索引。
+每次写入（INSERT / UPDATE / DELETE）都需同步更新所有相关索引的 B-Tree，写密集场景中冗余索引会显著拖慢吞吐量。定期用 `sys.schema_unused_indexes`（MySQL）或 `pg_stat_user_indexes`（PostgreSQL）清理未使用的索引。（参见 [PostgreSQL indexes introduction](https://www.postgresql.org/docs/current/indexes-intro.html)）
 
 **误区二：EXPLAIN rows 等于实际扫描行数**
 `rows` 是基于统计信息的估算，可能与实际相差数量级。只有 `EXPLAIN ANALYZE` 才给出真实行数；统计信息过时时优化器可能选错执行计划。

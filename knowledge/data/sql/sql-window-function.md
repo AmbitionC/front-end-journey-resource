@@ -1,13 +1,14 @@
-窗口函数与分析查询需要把“机制是什么”“边界在哪里”“怎样验证”放在同一条学习路径中。本文以 [PostgreSQL window functions tutorial](https://www.postgresql.org/docs/current/tutorial-window.html) 对“窗口、partition、order、frame 与执行位置”的说明为事实边界，并用 [PostgreSQL window function reference](https://www.postgresql.org/docs/current/functions-window.html) 校准“排名、值函数、聚合窗口和默认 frame 语义”。文中的代码和工程方案用于解释这些机制；涉及具体版本、默认值或部署行为时，应再回到所链接的一手资料确认。
-
-![窗口函数与分析查询的核心机制与验证路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/sql-window-partition-order-frame-v1.webp)
-*图：窗口函数与分析查询的核心组件、信息流与验证边界。*
+![按部门 partition、时间 order 的表，移动 frame 从当前行向前展开；并排展示 ROW_NUMBER、LAG 和 running SUM 结果，强调窗口函数不折叠原始行](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/sql-window-partition-order-frame-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是区分 partition、order、frame 与聚合分组，覆盖 ranking、running total、lag/lead 和默认 frame 陷阱。*
 
 ---
 
 窗口函数（Window Function）是 SQL 分析能力的核心特性，它允许对与当前行相关的一组行执行计算，同时保留每一行不被折叠——这一特性使排名、累计、时序偏移等复杂分析场景的表达能力远超传统聚合写法，在 LLM 推理链路日志分析、Agent 执行轨迹回溯等场景中尤为常用。
 
 ## 窗口函数与 GROUP BY 的本质差异
+
+[PostgreSQL 窗口函数教程](https://www.postgresql.org/docs/current/tutorial-window.html) 说明窗口函数在保留输入行的同时，对相关行集计算结果；这与 `GROUP BY` 折叠分组的行为不同。
+
 
 理解两者的处理模型差异，是掌握窗口函数的前提。
 
@@ -78,6 +79,9 @@ RANK() OVER (ORDER BY salary DESC)
 决定分区内行的处理顺序。对排名函数，它直接决定名次分配；对聚合窗口函数，它决定累计方向；省略时，所有行被视为无序，窗口帧默认覆盖整个分区。
 
 ### 窗口帧（Window Frame）
+
+[PostgreSQL 窗口函数参考](https://www.postgresql.org/docs/current/functions-window.html) 提醒默认 frame 会受 `ORDER BY` 和 peer rows 影响；`last_value` 等函数若不显式指定 frame，结果常与“整个分区”直觉不同。
+
 
 窗口帧在 `PARTITION BY` + `ORDER BY` 确定的有序分区内，进一步缩小参与计算的行范围。
 

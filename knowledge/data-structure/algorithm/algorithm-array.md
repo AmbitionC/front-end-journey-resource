@@ -1,4 +1,12 @@
+![一个有序数组上 left/right 双指针向中间移动，每步展示不变量“已排除区间不可能含答案”；下方滑动窗口用 expand/shrink 保持约束，并区分 mutable array 与 immutable string](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/array-string-two-pointer-invariants-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是从连续序列、索引、原地更新、字符串不可变性和双指针不变量渐进展开。*
+
+---
+
 #### 1. 查找数组中的最大值
+
+[ECMAScript Array Objects](https://tc39.es/ecma262/multipage/indexed-collections.html#sec-array-objects) 定义数组索引属性、`length` 与数组方法的标准语义；算法复杂度仍取决于具体操作和输入规模。
+
 **问题**：找出数组中的最大元素。  
 **解法**：使用`Math.max`和扩展运算符。
 
@@ -23,6 +31,9 @@ console.log(uniqueArr); // [1, 2, 3, 4]
 
 
 #### 3. 归并两个排序数组
+
+[Purdue 的竞赛编程讲义](https://www.cs.purdue.edu/homes/ninghui/courses/390_Fall19/lectures.html) 总结了双指针和滑动窗口模式：每次移动端点时都要维护一个能排除候选的循环不变量。
+
 **问题**：合并两个已排序的数组，使合并后的数组也是有序的。  
 **解法**：使用双指针从后向前归并。
 
@@ -219,6 +230,9 @@ console.log(isPalindrome(str)); // true
 
 
 #### 10. 合并两个有序数组
+
+[Princeton COS 226 双指针材料](https://www.cs.princeton.edu/courses/archive/spring26/cos226/precepts/advanced-precept5.pdf) 展示了利用有序性单调排除候选区间的线性扫描；“两个指针”本身不是正确性的证明，不变量才是。
+
 **问题**：给定两个有序整数数组，在原地合并它们，使它们成为一个有序数组。  
 **解法**：从后向前填充较小的元素。
 
@@ -248,3 +262,8 @@ merge(nums1, 3, nums2, 3);
 console.log(nums1); // [1, 2, 2, 3, 5, 6]
 ```
 
+## 参考资料
+
+- [ECMAScript Array Objects](https://tc39.es/ecma262/multipage/indexed-collections.html#sec-array-objects)
+- [Introduction to Competitive Programming — Purdue University](https://www.cs.purdue.edu/homes/ninghui/courses/390_Fall19/lectures.html)
+- [COS 226 Advanced Precept 5 Instructor Notes — Princeton University](https://www.cs.princeton.edu/courses/archive/spring26/cos226/precepts/advanced-precept5.pdf)

@@ -1,44 +1,91 @@
-React Hooks是React 16.8版本引入的一个新特性，允许你在不编写类组件的情况下使用状态和其他React特性。Hooks的主要目的是使得函数组件更加强大，同时保持组件的简洁和可重用。
+React 函数组件每次渲染都用当次 props 与 state 计算 UI 快照。Hook 让 React 在多次渲染之间关联状态槽位，并在 commit 后与外部系统同步；它们不是普通工具函数，也不能按条件随意调用。
 
-#### React Hooks的作用
-+ **状态管理**：使用`useState` Hook可以在函数组件中添加状态。
-+ **副作用处理**：`useEffect` Hook用于处理副作用，如数据获取、订阅或手动更改DOM。
-+ **上下文消费**：`useContext` Hook让你可以在函数组件中访问上下文（Context）。
-+ **自定义Hooks**：创建自定义Hooks可以复用状态逻辑，让代码更加模块化。
-+ **性能优化**：通过避免不必要的渲染和副作用，Hooks可以提高组件性能。
-+ **更好的代码组织**：Hooks使得相关逻辑可以放在一起，而不是分散在不同的生命周期方法中。
+![事件处理器把 state update 加入队列，React render 生成快照并 commit DOM，Effect 随后 setup 外部同步且在依赖变化或卸载时 cleanup](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/react-render-state-effect-cycle-v1.webp)
+*图：event → update queue → render snapshot → commit → effect；顶部固定 Hook 调用顺序，底部区分纯派生数据与外部系统。*
 
+---
 
+## State 是一次渲染的快照
 
-#### React Hooks的原理
-React Hooks的工作原理基于React的内部状态管理机制。当你在函数组件中调用一个Hook时，React会跟踪这个Hook的调用顺序，并在适当的生命周期阶段执行相应的副作用或更新。
+[useState 文档](https://react.dev/reference/react/useState)说明 setter 会请求下一次渲染，不会修改当前函数中的 state 变量：
 
-以下是`useState`和`useEffect`两个常用Hooks的工作原理简述：
+```tsx
+function Counter() {
+  const [count, setCount] = useState(0);
 
-+ `**useState**`： 
-    - 当你调用`useState`时，React会为这个state分配一个内部的state槽位。
-    - 当组件重新渲染时，React会保持state的值，除非你显式地更新它。
-    - `useState`的setter函数用于更新state，当调用时，React会调度一个新的渲染周期。
-+ `**useEffect**`： 
-    - `useEffect`接受一个函数作为参数，这个函数包含了所有的副作用逻辑。
-    - 在组件的每次渲染后，React会执行`useEffect`中定义的副作用。
-    - 如果`useEffect`的依赖数组（第二个参数）发生变化，React会跳过执行副作用。
-    - 为了处理清理逻辑，React会在组件卸载前执行副作用函数的返回值。
+  function incrementTwice() {
+    setCount(current => current + 1);
+    setCount(current => current + 1);
+  }
 
+  return <button onClick={incrementTwice}>{count}</button>;
+}
+```
 
+两个函数式 updater 按队列依次接收最新待处理状态，所以增加 2。如果写两次 `setCount(count + 1)`，两个表达式都捕获同一次 render 的 count，不能据此推导为增加 2。
 
-| 概念 | 作用 | 原理 |
-| :---: | --- | --- |
-| useState | 用于在函数组件中添加状态。 | 通过闭包和函数组件内部的实例对象来管理状态，使得状态在多次渲染之间保持一致，并提供更新状态的方法。 |
-| useEffect | 在函数组件中执行副作用操作，如数据获取、订阅等。 | 使用副作用函数和依赖数组来控制副作用的执行时机，确保副作用操作在每次渲染后执行，并在下次渲染前清除。 |
-| useContext | 在函数组件中访问React上下文。 | 使用React上下文API来访问全局的上下文，无需通过层层传递props来传递数据，提高了组件的灵活性和可维护性。 |
-| useReducer | 用于状态管理的替代方案，适用于复杂状态逻辑。 | 使用类似Redux的reducer函数来管理状态，通过分发动作和更新状态来实现复杂状态逻辑，更适合于处理多个相关状态之间的复杂交互。 |
-| useMemo | 用于性能优化，避免不必要的计算。 | 使用记忆化技术来缓存函数的计算结果，当依赖项未变时直接返回缓存值，避免重复计算，提高性能。 |
-| useCallback | 用于性能优化，避免不必要的函数重新创建。 | 使用记忆化技术来缓存函数的引用，当依赖项未变时直接返回缓存的函数引用，避免函数在每次渲染时重新创建，提高性能。 |
-| useRef | 用于在函数组件中保存可变值的引用。 | 使用一个可变的ref对象来保存引用值，在多次渲染之间保持一致，而不需要重新创建。用于保存DOM引用、计时器ID等。 |
-| useImperativeHandle | 用于自定义组件实例的暴露。 | 在函数组件内部通过useImperativeHandle来暴露自定义的实例方法，使得父组件可以直接调用子组件的方法或属性。 |
-| useLayoutEffect | 类似于useEffect，但在DOM变更后同步执行。 | 在DOM变更后同步执行副作用操作，可用于获取DOM元素的布局信息或执行DOM操作，但会阻塞浏览器渲染，应谨慎使用以避免性能问题。 |
+对象和数组 state 按不可变方式更新。React 用新引用表达变化；原地修改后再传回同一对象会让调试、memo 和并发渲染边界失去可靠信号。
 
+## Hook 调用顺序必须稳定
 
+[Rules of Hooks](https://react.dev/reference/rules/rules-of-hooks)要求 Hook 只在 React 函数组件或自定义 Hook 顶层调用，不能位于条件、循环、事件函数或提前 return 之后。React 按调用顺序把 `useState`、`useEffect` 等对应到组件内部槽位；某次渲染跳过一个 Hook，会让后续槽位错位。
 
+自定义 Hook 用于复用状态逻辑，不共享同一份状态实例。每个调用者获得自己的 state 与 Effect；若要共享数据，需要共同 owner、Context 或外部 store。
 
+## Effect 同步外部系统
+
+[useEffect 文档](https://react.dev/reference/react/useEffect)把 Effect 定义为组件与外部系统的同步。依赖发生变化的 commit 后，React 先用旧值运行 cleanup，再用新值运行 setup；组件卸载时再执行最后一次 cleanup。依赖不变时才跳过重新同步。
+
+```tsx
+useEffect(() => {
+  const controller = new AbortController();
+
+  loadUser(userId, { signal: controller.signal })
+    .then(setUser)
+    .catch(error => {
+      if (error.name !== 'AbortError') setError(error);
+    });
+
+  return () => controller.abort();
+}, [userId]);
+```
+
+依赖数组不是人工挑选的“触发条件”，而是 setup/cleanup 使用的所有响应式值。修复 lint 警告应重构闭包、把非响应式逻辑移出组件或使用函数式更新，不能随意删除依赖。
+
+## 什么时候不需要 Effect
+
+能在 render 中从 props/state 计算的值直接计算；昂贵时再 memoize。用户点击引发的提交放在事件处理器，因为事件提供明确意图。只为“state A 变化后 set state B”写 Effect，常导致额外 render 和短暂不一致。
+
+```tsx
+// 不需要 Effect 和第二份 state。
+const visibleItems = items.filter(item => item.name.includes(query));
+```
+
+Effect 适合连接 WebSocket、订阅浏览器 API、控制非 React widget、发送曝光事件等。setup 做什么，cleanup 就撤销什么；开发 Strict Mode 中额外的 setup/cleanup 循环用于暴露不对称逻辑。
+
+## Context、Reducer、Ref 与 Memo
+
+`useContext` 读取最近 Provider 的值。高频变化的大对象 Context 会使所有消费者重新渲染，应按责任拆分并保持 value 稳定，而不是把所有状态塞进一个 Provider。
+
+`useReducer` 适合多个事件驱动同一状态机：reducer 接收 state/action 并返回新 state，便于集中验证合法迁移。它不是因为“字段多”就必然优于 useState。
+
+`useRef` 保存跨渲染的可变值且修改不会触发 render，适合 DOM、timer ID 与外部实例。屏幕上要响应变化的数据应是 state。
+
+`useMemo` 与 `useCallback` 是性能优化，不是语义保证。只有昂贵计算、memoized child 或稳定依赖边界确有收益时使用，并以 Profiler 验证；给每个函数加 useCallback 会增加依赖维护成本。
+
+## 组件设计步骤
+
+1. 先写纯 render：相同 props/state 得到相同 UI。
+2. 找到最小 state，删除可推导与重复字段。
+3. 把用户意图放入事件处理器。
+4. 列出真正的外部系统，为每个 setup 写对称 cleanup。
+5. 运行 Hooks lint，并测试依赖变化、快速切换、卸载与失败。
+6. 最后才用 profiler 决定 memo。
+
+这套顺序把 Hook 从 API 清单变成渲染模型：state 驱动下一快照，commit 更新宿主，Effect 只负责外部同步。
+
+## 参考资料
+
+- [React useState reference](https://react.dev/reference/react/useState)
+- [React useEffect reference](https://react.dev/reference/react/useEffect)
+- [React Rules of Hooks](https://react.dev/reference/rules/rules-of-hooks)

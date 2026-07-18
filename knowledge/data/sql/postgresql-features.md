@@ -1,15 +1,16 @@
-PostgreSQL 与 JSON 数据需要把“机制是什么”“边界在哪里”“怎样验证”放在同一条学习路径中。本文以 [PostgreSQL JSON types](https://www.postgresql.org/docs/current/datatype-json.html) 对“json/jsonb 存储、索引、包含关系与限制”的说明为事实边界，并用 [PostgreSQL MVCC introduction](https://www.postgresql.org/docs/current/mvcc-intro.html) 校准“并发控制、事务隔离与快照可见性”。文中的代码和工程方案用于解释这些机制；涉及具体版本、默认值或部署行为时，应再回到所链接的一手资料确认。
-
-![PostgreSQL 与 JSON 数据的核心机制与验证路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/postgresql-jsonb-relational-hybrid-v1.webp)
-*图：PostgreSQL 与 JSON 数据的核心组件、信息流与验证边界。*
+![同一业务记录把稳定字段放关系列，把变化属性放 JSONB；查询同时使用 B-tree 与 GIN 索引，MVCC 快照读取一致版本；标出约束、统计与更新粒度权衡](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/postgresql-jsonb-relational-hybrid-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是突出 JSON/JSONB 操作与索引、MVCC、事务查询，并明确 JSONB 不能替代所有关系建模。*
 
 ---
 
-PostgreSQL 在标准关系型能力之上，内置了文档存储、向量检索、全文搜索、递归查询和异步消息等特性，使其在 AI/Agent 系统中能同时承担结构化数据库、向量库和事件总线的角色，无需引入额外中间件。
+PostgreSQL 在关系型能力之上提供 JSONB、全文搜索、递归查询、LISTEN/NOTIFY，并可通过扩展加入向量检索。这些能力有时能减少组件数量，但 LISTEN/NOTIFY 不是持久消息队列，向量扩展也不能自动替代专用检索系统；选型仍取决于规模和可靠性要求。
 
 ## JSONB：半结构化数据存储
 
-PostgreSQL 提供两种 JSON 类型，底层实现截然不同。
+JSONB 仍是 PostgreSQL 行中的列，其读写服从数据库的 [MVCC 与事务可见性](https://www.postgresql.org/docs/current/mvcc-intro.html)；使用半结构化字段不会绕开并发控制或自动合并并发更新。
+
+
+PostgreSQL 提供两种 JSON 类型，底层实现截然不同。（参见 [PostgreSQL JSON types](https://www.postgresql.org/docs/current/datatype-json.html)）
 
 | 类型 | 存储方式 | 写入开销 | 查询性能 | GIN 索引 | 保留原始格式 |
 |------|----------|----------|----------|----------|--------------|

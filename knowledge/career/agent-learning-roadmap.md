@@ -1,10 +1,18 @@
+![学习依赖 DAG：编程/网络/数据库→LLM 与 embeddings→tool use 与 RAG→Agent runtime/state→evals/observability/security→production project；每阶段配一个可验证作品和进入条件](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-engineer-learning-dependency-roadmap-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是基础软件能力→LLM/检索→Agent runtime→评估安全→生产项目建立依赖顺序。*
+
+---
+
 很多同学在开始学 Agent 之前，都会问我同一个问题："学长，我该从哪里开始？"这个问题我太熟悉了——当年我自己也在面对一堆概念：大模型、Prompt、RAG、ReAct、LangChain……完全不知道该先碰哪个。
 
-所以这篇路线图，是我把自己踩过的弯路都填上之后，梳理出来给你的。它不是最完美的路径，但一定是最务实的路径。按这条路走，你可以在 **12 到 17 周**内，从完全不懂 AI 到独立做出一个能上线的 Agent 产品。
+下面给出一个按依赖递进的学习样例。图中的 **12 到 17 周**只是便于安排练习的节奏，不是能力或上线结果的保证；实际进度取决于已有的软件基础、每周投入和项目可靠性要求。
 
 ---
 
 ## 四个阶段总览
+
+[CS Curricula 2023](https://csed.acm.org/final-report/) 将软件、系统、数据、AI 与安全列为相互关联的基础知识域；学习路线应先补任务所需依赖，而不是从某个流行框架倒推全部能力。
+
 
 ```mermaid
 gantt
@@ -54,6 +62,9 @@ gantt
 ---
 
 ## Phase 2：学 Agent 核心（3–4 周）
+
+[Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents) 建议从简单、可组合的工作流开始，只在任务确需自主决策时增加 Agent 复杂度；路线中的项目应逐阶段验证这一边界。
+
 
 **目标：** 从原理上搞懂 Agent 是什么，动手从零写一个 ReAct Agent。
 
@@ -106,7 +117,7 @@ gantt
 
 **阶段实践：** 搭一个基于 RAG 的问答 Agent（比如对你自己的知识库提问），然后尝试用两个不同的框架各实现一遍。
 
-**里程碑：** 你能搭出一个生产可用的 RAG 系统，遇到检索质量问题知道从哪里入手调优；面对一个新框架，能快速上手而不是一脸茫然。
+**里程碑：** 你能搭出一个可运行、可评估的 RAG 原型，遇到检索质量问题知道从数据、分块、召回和生成链路定位；面对新框架时能识别它替你封装了哪些机制。
 
 ---
 
@@ -158,3 +169,8 @@ LangChain 确实强大，但如果你不知道 ReAct 是什么、不懂 Tool Cal
 路线图只是地图，最终带你走到终点的还是你自己的双脚。每完成一个里程碑，都来知识库里记录一下你的收获——那些笔记，将来都是你作品集里最有说服力的证据。
 
 我在终点等你。
+
+## 参考资料
+
+- [ACM/IEEE-CS/AAAI Computer Science Curricula 2023](https://csed.acm.org/final-report/)
+- [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents)
