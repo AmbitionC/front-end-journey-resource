@@ -1,6 +1,14 @@
+![Embedding 选型漏斗：任务与语言过滤→离线 MTEB/领域集评测→向量维度与存储成本→ANN recall/latency 联合测试→线上 A/B；展示 query/document 双塔编码和 cosine 检索](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/embedding-model-evaluation-funnel-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是任务/语言/域、维度、归一化、上下文长度、检索指标和成本做选型。*
+
+---
+
 嵌入模型（Embedding Model）是将文本映射为稠密向量的核心组件，RAG（检索增强生成）和语义搜索管道的检索质量几乎完全取决于嵌入模型的选型与配置。理解其工作原理、相似度度量机制以及工程上的权衡，是构建可靠 AI Agent 系统的必备基础。
 
 ## 为什么 Embedding 对 RAG 至关重要
+
+[Sentence-BERT](https://arxiv.org/abs/1908.10084) 使用孪生/三元网络独立编码句子，使语义相似度检索不必对每一对候选句做联合前向计算。
+
 
 在 RAG 系统中，文档在入库时被转换为向量存入向量数据库（Vector Database），用户提问时同样被转换为向量，通过近似最近邻（Approximate Nearest Neighbor，ANN）检索返回最相关的文档片段，再送入语言模型生成回答。整个流程中，嵌入模型决定了"语义近"是否能被准确识别——若嵌入质量差，即使语言模型再强，召回到的文档也是噪声。
 
@@ -110,7 +118,7 @@ for passage, score in zip(passages, scores):
 
 ## Tokenization 限制与分块策略
 
-绝大多数嵌入模型基于 Transformer 架构，输入长度受最大 token 数限制（通常为 512 token）。超出部分会被截断，截断后的向量无法准确表达原文语义。
+许多嵌入模型有最大输入 token 数，具体上限与截断策略由模型和服务版本决定，并不统一为 512。超过边界的内容可能被截断或拒绝，因此分块前要读取模型元数据并用边界样本验证。
 
 分块（Chunking）策略需要配合模型的 token 上限设计：
 
@@ -294,6 +302,9 @@ for batch in batch_iter(all_texts, size=256):
 
 ## 嵌入质量评估
 
+[MTEB](https://arxiv.org/abs/2210.07316) 用多任务、多数据集比较 embedding，并显示单个基准排名不能代表所有语言、领域和检索任务；最终选型仍应在目标数据上验证。
+
+
 ### Recall@K
 
 最直接的离线评估指标是 recall@K：给定一批查询，每条查询有一个或多个已知的相关文档，计算 Top-K 检索结果中包含相关文档的比例。
@@ -360,3 +371,8 @@ def recall_at_k(query_vecs, doc_vecs, relevant_doc_ids: list[list[int]], k: int 
 - **非对称检索中 query 和 passage 为什么需要不同编码？** 两者在语言风格和长度上差异显著，模型需要学习如何将"简短提问"的语义与"详细文档片段"的语义对齐。指令感知模型通过不同前缀触发不同的编码模式，使得两类文本最终落入相同的语义子空间，从而提升检索精度。
 
 - **嵌入模型更换后需要做哪些工作？** 必须对所有已入库文档重新生成向量（旧向量与新模型不兼容），重建向量索引，并重新调整相似度阈值和 HNSW 参数。这是更换模型成本极高的根本原因，选型阶段应充分评估。
+
+## 参考资料
+
+- [Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks](https://arxiv.org/abs/1908.10084)
+- [MTEB: Massive Text Embedding Benchmark](https://arxiv.org/abs/2210.07316)

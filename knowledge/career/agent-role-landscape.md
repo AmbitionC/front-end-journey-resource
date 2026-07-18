@@ -1,8 +1,16 @@
+![岗位地图以产品交付为中心，分成 Agent application、platform/runtime、evaluation/quality、security/governance、research engineering 五条轨道；每条标出核心产出、协作对象和证据类型](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-engineer-role-landscape-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是正式计算机课程框架与职业任务数据区分 Agent 应用、平台、评估、安全和研究工程岗位。*
+
+---
+
 很多同学听到"Agent 工程师"这个词，第一反应是：这是不是算法岗？要懂模型训练吗？是不是需要很强的数学背景？
 
 我当时也有过一样的困惑。但深入了解之后发现，现实情况要比想象中宽广得多——**Agent 工程师并不是一个单一的岗位，而是一个包含多个细分方向的职业生态**。不同背景的人，都有自己适合的切入口。
 
 ## Agent 工程师到底在做什么
+
+[GitHub Agentic AI Developer 能力域](https://learn.microsoft.com/en-us/credentials/certifications/agentic-ai-developer/) 覆盖 Agent 架构、工具与环境、状态、评估调优和多 Agent 协调，说明岗位产出通常跨应用、平台与质量环节。
+
 
 如果用一句话描述 Agent 工程师的日常，我会说：**他们在让 AI 真正"干活"**。
 
@@ -15,6 +23,9 @@ Agent 工程师的日常工作，大致包括：设计 Prompt 策略和工具调
 听起来像"技术杂家"？没错，这个角色确实需要横跨多个知识域，但这也正是它的魅力所在。
 
 ## 四个主要方向，你站哪一侧
+
+[OpenAI 的 Agent 构建指南](https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf) 将模型、工具、指令、编排、guardrails、人工介入和评估视为相互依赖的工程责任；真实岗位名称可能不同，应以这些产出判断方向。
+
 
 Agent 工程师这个大帽子下，分着四条非常不同的路。
 
@@ -36,17 +47,20 @@ graph TD
 
 ### 应用层（Application Layer）
 
-这是招聘量最大、门槛相对最低的方向，也是我最推荐前端/全栈工程师首先考虑的切入点。
+应用层通常更直接复用前端、后端和产品工程经验，但进入门槛取决于岗位的业务域、可靠性要求与团队分工，不能仅按“应用层”标签判断难度。
 
 应用层 Agent 工程师的核心任务：**用现有的大模型和 Agent 框架，构建面向用户的产品和功能**。你可能在做客服 Agent、代码助手、自动化办公工具，或者把 AI 能力嵌入到已有的业务系统。
 
-这个方向对数学能力要求低，更看重工程实现能力、产品思维和 Prompt Engineering。前端工程师在这里有天然优势——懂用户体验，能快速搭出可交互的原型，这在 Agent 产品迭代中非常重要。
+这类岗位通常重视工程实现、产品判断和评估能力；涉及检索、排序或模型调优时也可能需要统计与机器学习基础。前端经验有助于交互原型，后端经验有助于工具、状态和可靠性，具体优势取决于交付物。
 
 ### 框架层（Framework Layer）
 
 框架层工程师做的事是：**给其他 Agent 开发者提供工具和"脚手架"**。LangChain、LlamaIndex、AutoGen 这类框架背后，就是框架层工程师在维护和演进。这个方向需要更深的工程设计能力，理解 Agent 的执行模型、记忆管理、工具编排机制，后端背景的工程师在这里更有优势。
 
 ### RL训练 / 微调（Reinforcement Learning / Fine-tuning）
+
+[Anthropic Research](https://www.anthropic.com/research) 将 Alignment、Interpretability、Societal Impacts 与 Frontier Red Team 等团队明确分开，研究工程与安全治理也不应被统称为“模型训练岗”。
+
 
 这是最靠近"模型本体"的方向。**通过 RLHF、DPO 等方式，让模型学会更好地执行 Agent 任务**，比如减少幻觉、提升工具调用准确率、改善多步推理能力。对数学基础和 ML 工程能力要求较高，通常需要算法背景。如果你对大模型原理有兴趣，可以补充 **知识库 → 大模型基础** 的内容，那里从 Transformer 结构到预训练、微调流程都有完整介绍。
 
@@ -75,14 +89,14 @@ Infra 工程师关心的是：**Agent 在大规模生产环境下能不能跑起
 
 **不管哪个方向，建议都一样：先动手做一个真实的 Agent 应用**。哪怕只是本地运行的小工具，构建过程中遇到的每一个问题，都会指向你真正需要补强的地方。
 
-## 市场信号：谁在招，招什么
+## 用岗位产出而不是热度判断方向
 
-近两年 Agent 工程师的需求快速增长，且不再局限于 AI 原生公司。
+岗位名称、招聘数量和薪酬会随地区、公司和时间快速变化，本文的职责来源不能支持统一的市场排名。阅读当期 JD 时，优先核对可交付物：是用户功能、runtime/平台、评估与质量、安全治理，还是研究实验；再看协作对象、值班责任和可验证的成功指标。
 
-**应用层** 是需求量最大的方向，字节跳动、阿里、腾讯、美团等头部公司业务线都在招聘能"用 AI 做产品"的工程师，JD 中"有 Agent 开发经验优先"已经成为标配。薪酬与传统前端相比有明显溢价，应届 SSP 普遍在 30w+。
+转型顺序也不必固定。更稳妥的做法是选择一个能复用既有经验、又能产出完整证据链的项目：实现可运行功能，记录架构取舍，用 eval 和 trace 展示质量，并明确权限与失败边界。项目证据比“赛道热度”更能说明适配度。
 
-**框架层和 Infra** 的需求集中在 AI 基础设施公司（百川、月之暗面、MiniMax 等）和大厂 AI 平台团队，数量相对少，但薪酬天花板更高。**RL/微调** 仍是"精英市场"，顶尖团队抢的是有 top 论文或模型组经验的人，对应届生竞争激烈，但需求随模型迭代持续增加。
+## 参考资料
 
-如果你正在准备秋招，我的建议是：**把应用层作为起点，打开 Agent 工程师的大门，在工作中再根据兴趣决定是否往框架层或 Infra 深耕**。
-
-这条赛道还很新，市场上还没有人建立起三五年的经验壁垒。**现在入场，你不是在追赶别人，而是和大家一起从起点出发。**
+- [GitHub Certified: Agentic AI Developer (beta)](https://learn.microsoft.com/en-us/credentials/certifications/agentic-ai-developer/)
+- [A practical guide to building agents — OpenAI](https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf)
+- [Research — Anthropic](https://www.anthropic.com/research)

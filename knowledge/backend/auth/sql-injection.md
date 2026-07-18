@@ -1,4 +1,9 @@
-SQL 注入（SQL Injection）是 OWASP Top 10 常年榜首的漏洞类型，攻击者通过在用户输入中插入恶意 SQL 片段，操控数据库执行非预期查询，轻则泄露数据，重则删库跑路。理解注入原理与防御方案，是每个后端工程师和 AI Agent 开发者的必备知识。
+![对比两条路径：危险字符串拼接让用户输入进入 SQL 语法树；安全参数化先固定 SQL 模板再把输入绑定为 data。旁边展示表名/排序字段必须 allowlist、数据库账号最小权限](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/sql-injection-data-code-separation-v1.webp)
+*图：上路展示字符串拼接让输入进入 SQL 语法树，下路展示固定模板与参数绑定保持代码/数据分离；动态标识符另走 allowlist。*
+
+---
+
+SQL 注入（SQL Injection）发生在不可信输入改变了 SQL 命令结构时，后果可能包括越权读取、修改或删除数据。具体风险排名会随统计口径和年份变化；工程上更重要的是保持代码与数据分离，并限制数据库账号权限。
 
 ## 攻击原理与经典示例
 
@@ -42,6 +47,9 @@ SELECT * FROM users WHERE username = '' OR '1'='1' -- ' AND password = 'anything
 
 ## 攻击影响
 
+[CWE-89](https://cwe.mitre.org/data/definitions/89.html) 将问题定义为未正确中和进入 SQL 命令的特殊元素，后果可包括越权读取、修改或删除数据以及绕过认证。
+
+
 - **数据泄露**：SELECT 用户表、密码哈希、支付信息、私聊记录
 - **绕过认证**：`OR 1=1` 让所有账号密码校验失效
 - **权限提升**：读取 `information_schema` 探测表结构，定向攻击
@@ -68,6 +76,9 @@ flowchart LR
 ## 防御方案
 
 ### 方案一：参数化查询（首选，根本性防御）
+
+[OWASP SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html) 将参数化查询作为首选防线：SQL 结构先固定，外部输入只作为绑定数据；表名或排序字段等标识符需走 allowlist。
+
 
 Prepared Statements 将 SQL 结构与数据严格分离——语句在编译阶段已固定，用户输入无论包含什么特殊字符都只被当作纯数据。
 
@@ -258,3 +269,8 @@ const systemPrompt = `
 - **UNION 注入的前提**：攻击者需要猜到原始查询的列数和数据类型，通常先用 `ORDER BY` 枚举列数。
 - **时间盲注的检测难点**：无任何响应内容差异，只能通过响应时延判断，且网络抖动会干扰判断，自动化工具通过多次重试统计平均延迟来确认。
 - **如何测试是否存在注入**：在参数中输入 `'`，观察是否返回数据库报错；使用 `sqlmap -u "http://..." --forms` 自动检测。
+
+## 参考资料
+
+- [OWASP SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html)
+- [CWE-89: Improper Neutralization of Special Elements used in an SQL Command](https://cwe.mitre.org/data/definitions/89.html)

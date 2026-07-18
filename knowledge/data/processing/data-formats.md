@@ -1,6 +1,14 @@
+![同一小表分别编码为 JSON 对象、CSV 行和 Parquet 列块；标出 schema/type fidelity、嵌套、压缩、行扫描与列裁剪，给出交换数据和分析读取两条选择路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/data-formats-row-column-tradeoffs-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是JSON、CSV 和 Parquet 的结构、schema、类型、压缩、列裁剪与跨系统互操作比较，不做单一格式推荐。*
+
+---
+
 在 AI 工程链路中，数据格式的选择直接影响训练速度、推理吞吐和 RAG 系统的检索质量。一个训练集如果用低效格式存储，加载本身就可能成为 GPU 利用率的瓶颈；一个 RAG 流水线如果格式转换不当，可能在向量化前悄悄截断文本或丢失元数据。JSON、CSV、Parquet 是 AI 数据工程中最高频出现的三种格式，弄清它们的内部机制、适用场景和陷阱，是 Agent 工程师必备的基础技能。
 
 ## JSON：灵活但有代价
+
+[RFC 8259](https://www.rfc-editor.org/rfc/rfc8259.html) 定义 JSON 的对象、数组、字符串、数字、布尔和 null 语法，并对编码与互操作提出要求；它不提供独立的 schema 或日期类型。
+
 
 JSON（JavaScript Object Notation）是 LLM 应用中最常见的数据交换格式。Agent 的 Tool Call 返回值、RAG 文档的元数据、多轮对话历史，几乎无处不在。
 
@@ -19,23 +27,15 @@ data = {"messages": [{"role": "user", "content": "你好"}], "tokens": 12}
 text = json.dumps(data, ensure_ascii=False)
 obj  = json.loads(text)
 
-# ujson：速度约为标准库的 3-5x，API 兼容
+# ujson：第三方实现；性能与兼容性应在目标数据和版本上实测
 text = ujson.dumps(data, ensure_ascii=False)
 
-# orjson：速度约为标准库的 5-10x，dumps 返回 bytes
+# orjson：dumps 返回 bytes；性能应在目标数据和版本上实测
 text = orjson.dumps(data)               # bytes
 obj  = orjson.loads(text)               # 接受 bytes/str
 ```
 
-性能对比（单条 1KB JSON，百万次操作）：
-
-| 库 | dumps | loads | 特点 |
-|---|---|---|---|
-| json (stdlib) | 基准 1x | 基准 1x | 无依赖，随处可用 |
-| ujson | ~4x | ~3x | API 兼容，C 扩展 |
-| orjson | ~8x | ~6x | 最快，支持 dataclass/datetime/numpy |
-
-**工程建议**：对话历史缓存、工具调用序列化用 `orjson`；对外 API 接口、配置文件用标准库，保证最大兼容性。
+性能不能脱离 payload、选项、Python/库版本与 CPU 给固定倍数。用真实数据分别测 `dumps`/`loads` 吞吐、峰值内存、输出字节数和兼容性；标准库无额外依赖，第三方库可能提供 bytes 输出或扩展类型，但必须验证边界值与升级行为。对外协议优先保证互操作，确认序列化确为瓶颈后再替换实现。
 
 ### 复杂嵌套结构的处理
 
@@ -59,13 +59,13 @@ name = jmespath.search("choices[0].message.tool_calls[0].function.name", respons
 # → "search"
 ```
 
-## JSON Lines：LLM 微调数据集的事实标准
+## JSON Lines：独立记录带来的工程优势
 
-JSON Lines（`.jsonl`）格式是每行一个独立 JSON 对象，没有外层数组括号。它之所以成为 LLM 训练/微调数据集的标准格式，有三个关键原因：
+JSON 本身并不等于“只能全量读取”：增量 JSON 解析器可以边接收边解析一个大型数组或对象；只是 Python 标准库常用的 `json.load()` 会把整个文档解析成内存对象。JSON Lines（`.jsonl`）把每个非空行约定为一个独立 JSON 值，因此逐条读取、校验、追加和失败恢复更直接。它常被训练工具采用，但最终仍应服从目标平台的输入契约。
 
-1. **流式友好**：可以逐行读取，无需把整个文件载入内存
-2. **追加安全**：新数据直接 `append`，不破坏已有内容
-3. **工具链支持**：Hugging Face `datasets`、OpenAI 微调 API、LLaMA-Factory 全部原生支持 `.jsonl`
+1. **记录独立**：一行解析失败时，可以定位到具体记录而不必重新解析整个文档
+2. **便于追加**：在确保前一条记录已用换行结束后，可以追加新记录而不重写外层数组
+3. **逐条消费**：普通逐行读取器就能控制峰值内存；标准 JSON 若要达到类似效果，需要增量解析器
 
 ```python
 import json
@@ -115,7 +115,7 @@ rows = [
 ]
 
 with open("data.csv", "w", newline="", encoding="utf-8-sig") as f:
-    # utf-8-sig 添加 BOM，Excel 打开不乱码
+    # 若目标 Excel/区域设置需要 BOM，可用 utf-8-sig；先用目标环境验证
     writer = csv.writer(f, quoting=csv.QUOTE_MINIMAL)
     writer.writerows(rows)
 
@@ -130,8 +130,8 @@ df = pd.read_csv(
 ```
 
 **常见陷阱**：
-- 不指定 `newline=""` 写 CSV 会导致 Windows 下出现空行
-- Excel 默认 GBK 编码，读取 UTF-8 文件必须加 BOM 或显式指定编码
+- Python `csv` 文档建议打开文件时使用 `newline=""`，避免换行层与 CSV 层重复转换
+- Excel 对无 BOM UTF-8 CSV 的识别取决于版本、平台、导入方式和区域设置；面向已知接收端时，可选择 `utf-8-sig` 或让用户在导入时显式选择 UTF-8
 - 字段内含逗号/换行未正确引用，会导致列偏移
 - 18 位数字 ID 被 pandas 推断为 `float64` 后精度丢失，必须用 `dtype` 显式指定为 `str`
 
@@ -139,16 +139,19 @@ df = pd.read_csv(
 
 | 场景 | 推荐方案 | 原因 |
 |---|---|---|
-| 文件 < 100MB，需要分析 | `pandas.read_csv` | API 丰富，类型推断 |
-| 文件 > 1GB | `csv` 模块逐行读取 | 避免 OOM |
-| 生成供 Excel 查看的报告 | `pandas` + `utf-8-sig` | BOM 保证兼容性 |
+| 数据能在内存预算内展开，需要分析 | `pandas.read_csv` | API 丰富，便于显式指定类型 |
+| 数据可能超过内存预算 | `csv` 模块逐行读取或分块处理 | 控制峰值内存；阈值需按 schema 与机器实测 |
+| 生成供 Excel 查看的报告 | `pandas`；按接收端选择 `utf-8` / `utf-8-sig` | BOM 是部分 Excel 工作流的兼容选项，不是跨平台保证 |
 | 与外部系统交换结构化数据 | `csv` 模块 | 无额外依赖 |
 
 ## Parquet：AI 数据工程的基石
 
-Parquet 是 Apache 开源的列式存储格式，是大规模 AI 数据集存储的首选。Hugging Face Hub 上绝大多数数据集都以 Parquet 分发。
+Parquet 是 Apache 的列式存储格式，常用于分析型数据集和批量特征数据。它是否优于 JSON/CSV 取决于 schema、列裁剪、压缩、嵌套结构和跨系统互操作需求。
 
 ### 列式存储原理
+
+[Apache Parquet 文件格式](https://parquet.apache.org/docs/file-format/) 按列块组织数据并保存 metadata、encoding 与嵌套结构信息，因此分析查询可以只读取所需列；收益仍取决于数据布局和读取模式。
+
 
 行式存储（CSV/JSON）按行将数据写在一起；列式存储（Parquet）将同一列的所有值连续存放：
 
@@ -160,7 +163,7 @@ Parquet 是 Apache 开源的列式存储格式，是大规模 AI 数据集存储
 [id: 1, 2, 3, ...] [name: "Alice", "Bob", ...] [age: 25, 30, ...]
 ```
 
-当查询只需要 `name` 列时，列式存储可以跳过所有其他列的 IO。同列数据类型相同，还能用 Run-Length Encoding、字典编码等专门算法大幅压缩。
+当查询只需要 `name` 列时，列式存储可以跳过其他列的 IO。同一列往往更容易出现重复值、连续游程或较小的值域，可供字典编码、Run-Length Encoding 等编码利用；随后使用的通用压缩 codec 也能利用重复字节模式。实际压缩效果取决于数据分布、排序、编码和 codec。
 
 ### 读写与分区
 
@@ -182,7 +185,7 @@ df.to_parquet(
     "docs_partitioned/",
     engine="pyarrow",
     partition_cols=["source"],
-    compression="zstd",   # zstd 压缩率高于 snappy，推荐用于归档
+    compression="zstd",   # 示例选择；应按目标数据的体积、CPU 与兼容性实测
 )
 
 # 只读需要的列（列剪枝，Column Pruning）
@@ -203,12 +206,12 @@ for batch in parquet_file.iter_batches(batch_size=256, columns=["doc_id", "text"
 
 **压缩算法选择**：
 
-| 算法 | 压缩率 | 速度 | 推荐场景 |
-|---|---|---|---|
-| snappy | 中 | 最快 | 频繁读写的热数据 |
-| zstd | 高 | 快 | 归档、冷数据 |
-| gzip | 高 | 慢 | 与外部系统兼容 |
-| uncompressed | 无 | 最快 | 调试、内存映射 |
+| 算法 | 主要取舍 | 选型提示 |
+|---|---|---|
+| snappy | 通常偏向较低 CPU 开销 | 先确认消费端支持，并用实际读写负载测量 |
+| zstd | 可调整压缩级别，在体积与 CPU 之间取舍 | 适合把存储成本纳入权衡的场景，不能假定总是更优 |
+| gzip | 生态兼容较广，但 CPU/体积结果依数据和实现而变 | 外部系统只支持 gzip 时再选择 |
+| uncompressed | 不执行 codec 压缩，文件可能更大 | 调试或上层已经压缩的数据可评估 |
 
 ## 格式对比总览
 
@@ -216,8 +219,8 @@ for batch in parquet_file.iter_batches(batch_size=256, columns=["doc_id", "text"
 |---|---|---|---|---|
 | 存储方式 | 行式（嵌套） | 行式（流式） | 行式（扁平） | 列式 |
 | 可读性 | 高 | 高 | 高 | 低（二进制） |
-| 压缩率 | 低 | 低 | 低 | 高（3-10x） |
-| 流式读取 | 困难 | 原生支持 | 支持 | 支持（按列批次） |
+| 压缩率 | 取决于内容与压缩器 | 取决于内容与压缩器 | 取决于内容与压缩器 | 可利用列内相似性，结果依数据、编码与 codec 而定 |
+| 流式读取 | 需要增量解析器；`json.load` 通常全量构建对象 | 逐行读取简单 | 支持逐行/分块 | 支持按 row group/批次读取 |
 | 类型保真 | 中（无日期类型） | 中 | 低（全字符串） | 高（强类型） |
 | 嵌套结构 | 原生支持 | 原生支持 | 不支持 | 有限支持（struct） |
 | AI 训练数据集 | 小规模配置 | 标准格式 | 不推荐 | 大规模首选 |
@@ -232,9 +235,9 @@ flowchart TD
     B -->|嵌套/结构化| C{数据规模}
     B -->|扁平表格| D{数据规模}
 
-    C -->|小于 10MB，需要可读| E[JSON]
-    C -->|任意规模，逐条处理| F[JSONL]
-    C -->|大于 100MB，分析查询| G[Parquet]
+    C -->|可整体加载且需要可读| E[JSON]
+    C -->|独立记录，需要逐条处理或追加| F[JSONL]
+    C -->|需要列裁剪/分析查询| G[Parquet]
 
     D -->|与外部系统交换| H[CSV]
     D -->|内部存储 / 分析| G
@@ -290,26 +293,26 @@ for batch in parquet_file.iter_batches(batch_size=256, columns=["chunk_id", "tex
     vector_db.upsert(ids=df_batch["chunk_id"].tolist(), vectors=embeddings)
 ```
 
-核心原则：**写入用 JSONL（流式安全），中间态用 Parquet（压缩+类型+可查询），接口传输用 JSON（通用兼容）**。
+这只是一个可行链路，不是通用定律：采集阶段若需要独立追加和逐条恢复可选 JSONL；分析中间态若需要 schema、列裁剪和批量读取可评估 Parquet；接口传输则按协议契约选择 JSON 或其他媒体类型。
 
 ## 常见误区
 
-**误区 1：JSON 适合存储大规模数据集**。JSON 没有列式压缩，100GB 的 JSON 文件用 Parquet 存储通常只需 10-20GB，且查询速度快 10 倍以上。大规模数据集请用 Parquet，不要用 JSON 数组文件。
+**误区 1：只按文件扩展名判断大规模数据性能**。JSON 缺少 Parquet 的列式布局、页统计与列裁剪，但实际体积和查询耗时还取决于 schema、数据分布、codec、分区、查询列和引擎。用目标数据同时测压缩后字节数、扫描列、谓词与端到端读取时间，不能套用固定倍数。
 
-**误区 2：CSV 类型安全**。CSV 所有列本质上都是字符串，`1`、`"1"`、`01` 读进来可能被推断成不同类型。用 Pandas 读 CSV 后必须检查 `df.dtypes`，必要时显式指定 `dtype` 参数，尤其是 ID 类字段。
+**误区 2：CSV 类型安全**。CSV 所有列本质上都是字符串，`1`、`"1"`、`01` 读进来可能被推断成不同类型。用 Pandas 读 CSV 后必须检查 `df.dtypes`，必要时显式指定 `dtype` 参数，尤其是 ID 类字段。（参见 [RFC 4180: Common Format and MIME Type for CSV Files](https://www.rfc-editor.org/rfc/rfc4180.html)）
 
-**误区 3：JSONL 和 JSON 可以混用**。`.jsonl` 文件不能直接用 `json.load()` 解析（会报错），必须逐行处理。反过来，`.json` 文件也不能用 JSONL 阅读器逐行读取。两者是不同的格式，文件首字节是 `[` 则是 JSON 数组，是 `{` 则通常是 JSONL。
+**误区 3：JSONL 和 JSON 可以靠首字节互相识别**。`.jsonl` 通常要求每个非空行都是一个独立 JSON 值，因此不能把多行 JSON 文档直接交给逐行阅读器；标准库 `json.load()` 也不会把多条顶层 JSON 值当作 JSONL。`{` 既可能是普通 JSON 对象，也可能是 JSONL 第一条记录，不能仅凭首字节判定；应由文件契约、媒体类型或逐行解析验证决定。
 
 **误区 4：Parquet 不支持追加写入**。标准 Parquet 文件确实不支持原地追加，但"多文件分区目录"完全可以：每批数据写一个新文件，查询时 `pd.read_parquet("dir/")` 自动合并所有分区。
 
-**误区 5：`ensure_ascii=True` 是安全的默认值**。默认值虽然不会报错，但会把所有中文转义为 `\uXXXX`，文件体积膨胀约 3 倍，可读性极差。AI 工程中涉及中文数据时，永远加 `ensure_ascii=False`。
+**误区 5：把 `ensure_ascii` 当成安全开关**。`ensure_ascii=True` 会把非 ASCII 字符转义，体积变化取决于字符构成和后续压缩；它不提供安全边界。需要 UTF-8 可读输出时可设 `ensure_ascii=False`，同时按 JSON/传输层规则处理编码。
 
 ## 最佳实践
 
-- **LLM 微调数据集**：始终用 `.jsonl`，保留完整元数据字段，用 `json.dumps(ensure_ascii=False)` 保留 Unicode；验证时用 `wc -l` 快速统计条数
+- **LLM 微调数据集**：若目标训练平台要求逐条 JSON 对象，可用 `.jsonl` 并按其 schema 验证；其他平台可能接受 Parquet、Arrow 或专用格式，先服从消费端契约
 - **大规模特征/文档存储**：用 Parquet + `zstd` 压缩，按时间或类别分区，读取时用 `columns` 参数做列剪枝（Column Pruning）
-- **CSV 跨系统交换**：写入时加 BOM（`utf-8-sig`），用 `csv.QUOTE_MINIMAL` 最小化引号，读取时显式指定 `dtype`，不依赖自动类型推断
-- **Agent 工具调用序列化**：用 `orjson` 提速，用 `jmespath` 安全提取深层字段，避免裸 `dict["key"]["key"]` 链式访问
+- **CSV 跨系统交换**：先约定编码、分隔符、换行和 schema；只有目标接收端需要时才写入 BOM（`utf-8-sig`），并用 CSV 库正确引用字段。读取 ID 等敏感列时显式指定 `dtype`
+- **Agent 工具调用序列化**：先用真实 payload 基准比较标准库与候选序列化器；选择 `orjson` 时同时验证 bytes 返回值、选项和兼容行为。深层字段提取可用显式校验模型或查询工具，避免无校验的索引链
 - **格式转换大文件**：Parquet → JSONL 用 `iter_batches` 流式转换，避免一次性 `to_dict('records')` 撑爆内存
 - **Hugging Face 数据集上传**：推送前转为 Parquet，Hub 会自动生成列统计、数据预览和 SQL 查询界面
 
@@ -317,20 +320,26 @@ for batch in parquet_file.iter_batches(batch_size=256, columns=["chunk_id", "tex
 
 **Q：JSON 和 JSONL 的区别是什么？各自适合什么场景？**
 
-JSON 是一个完整文档（对象或数组），必须全量解析；JSONL 每行一个独立 JSON 对象，天然支持流式读取和追加写入。JSON 适合配置文件、API 响应；JSONL 是 LLM 训练/微调数据集的事实标准。
+JSON 表示一个完整文档；常见 `json.load()` 会一次构建整个对象，但增量解析器也能流式处理 JSON。JSONL 则让每行成为独立 JSON 值，普通逐行读取器即可逐条消费，并便于追加记录。JSON 常见于配置和 API 响应；当训练平台要求逐条记录时，JSONL 是常见选择，但不是所有平台的唯一格式。
 
 **Q：为什么 Parquet 在 AI 数据工程中比 CSV 更受欢迎？**
 
-四点核心优势：(1) 列式存储只读需要的列，IO 减少数倍；(2) 内置强类型系统，不存在 CSV 的类型推断问题；(3) 压缩率高（通常 3-10x），存储成本低；(4) 支持谓词下推（Predicate Pushdown），查询时自动跳过无关分区。
+核心机制是：(1) 列式存储允许读取所需列；(2) 文件 schema 提供比无 schema CSV 更稳定的类型；(3) 列内相似性利于字典、RLE 与压缩编码；(4) 统计信息可帮助引擎做谓词下推和数据跳过。收益大小必须在目标数据和引擎上测量。（参见 [Apache Parquet file format](https://parquet.apache.org/docs/file-format/)）
 
 **Q：`orjson` 相比标准 `json` 库有什么优势？有什么限制？**
 
-优势：序列化速度快 5-10 倍，原生支持 `datetime`、`numpy` 数组、Python `dataclass`，无需自定义 Encoder。限制：`dumps` 返回 `bytes` 而非 `str`（需 `.decode()` 转换）；不支持 `cls` 参数（改用 `default` 回调）。
+优势是 `dumps` 返回 bytes，并提供 datetime、NumPy、dataclass 等扩展选项；限制包括 API/兼容行为与标准库不同。速度取决于数据形状、版本、CPU 和选项，应在真实 payload 上基准测试，而不是引用固定倍数。
 
 **Q：处理含中文的 CSV 文件时，如何保证 Excel 正确打开？**
 
-写入时使用 `encoding="utf-8-sig"`，在文件头部添加 UTF-8 BOM（Byte Order Mark），Excel 读到 BOM 会识别为 UTF-8，而不是系统默认的 GBK 编码。
+先确定用户的 Excel 版本、平台、区域设置和导入方式。部分直接双击打开 CSV 的 Excel 环境可通过 `encoding="utf-8-sig"` 写入 UTF-8 BOM 来改善识别；另一些环境可在“导入文本/CSV”时显式选择 UTF-8。BOM 不是所有表格软件的通用要求，发布前应在目标环境验证。
 
 **Q：Parquet 列式存储为什么压缩率高？**
 
-同一列的值类型相同，重复值多，天然适合字典编码（Dictionary Encoding）和游程编码（Run-Length Encoding，RLE）。例如 `source` 列只有 `"wiki"`/`"arxiv"` 两种值，RLE 可以把 500 个连续相同值压缩成一条记录，而行式存储无法利用这一规律。
+列式布局把同一字段的值放在一起；若该列有重复值、连续游程或较小值域，字典编码与 RLE 就有机会用更紧凑的表示。之后的压缩 codec 还能利用编码后或原始数据中的重复模式。行式数据同样可以被 gzip 等通用算法压缩，只是列式布局与专用编码可能让某些数据分布更容易被利用；收益必须实测。
+
+## 参考资料
+
+- [RFC 8259: The JavaScript Object Notation Data Interchange Format](https://www.rfc-editor.org/rfc/rfc8259.html)
+- [RFC 4180: Common Format and MIME Type for CSV Files](https://www.rfc-editor.org/rfc/rfc4180.html)
+- [Apache Parquet file format](https://parquet.apache.org/docs/file-format/)

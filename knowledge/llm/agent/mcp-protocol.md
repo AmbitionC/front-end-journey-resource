@@ -1,3 +1,8 @@
+![左右分区：左侧 MCP 的 Host–Client–Server、tools/resources/prompts 与传输层；右侧 A2A 的 Client Agent–Remote Agent、Agent Card、Task、Message、Artifact；中间明确“上下文/工具接入”与“智能体互操作”不是同一层](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/mcp-a2a-protocol-boundaries-v1.webp)
+*图：左侧读 MCP 的 Host–Client–Server 与 tools/resources/prompts，右侧读 A2A 的 Agent Card–Task–Message–Artifact；中线强调两者责任层不同。*
+
+---
+
 构建完一个能推理、会用工具的单体 Agent 之后，下一个挑战是：**如何让 Agent 与更广泛的外部世界高效沟通，以及如何让多个 Agent 之间相互协作？** 这正是智能体通信协议要解决的问题。本文聚焦目前业界最成熟、生态最活跃的两种协议：MCP（Model Context Protocol）和 A2A（Agent-to-Agent Protocol）。
 
 ---
@@ -56,6 +61,9 @@ graph TD
 MCP 不仅仅是一个 RPC（远程过程调用）协议，它更强调**上下文共享**。当 Agent 访问代码仓库时，MCP Server 不仅返回文件内容，还能提供代码结构、依赖关系、提交历史等丰富上下文，让 Agent 做出更智能的决策。
 
 ### Host / Client / Server 三层架构
+
+[MCP 架构文档](https://modelcontextprotocol.io/docs/learn/architecture) 将 Host、Client、Server 以及 tools/resources/prompts 的数据层与传输层分开，协议重点是上下文和能力接入。
+
 
 ```mermaid
 sequenceDiagram
@@ -192,6 +200,9 @@ MCP 支持多种传输层（Transport Agnostic 特性）：
 ---
 
 ## A2A：Agent 间的点对点协作
+
+[A2A Specification](https://a2a-protocol.org/latest/specification/) 通过 Agent Card、Task、Message、Artifact 与版本协商描述远程智能体互操作；它不替代 MCP 的本地工具/上下文接入职责。
+
 
 ### 设计动机
 
@@ -369,3 +380,7 @@ A2A 中的 Agent 有自己的推理能力和自主性，不是简单的函数调
 
 ---
 
+## 参考资料
+
+- [Model Context Protocol architecture overview](https://modelcontextprotocol.io/docs/learn/architecture)
+- [A2A Protocol specification](https://a2a-protocol.org/latest/specification/)

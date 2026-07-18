@@ -1,3 +1,8 @@
+![Source→incremental extract watermark→immutable raw/staging→validate/deduplicate→transform→warehouse；每步写 checkpoint 与 lineage，失败可从安全点重跑，late data 进入回补分支](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/etl-idempotent-staging-quality-gates-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是明确抽取水位线、幂等 staging、schema evolution、质量门禁、重跑和 lineage。*
+
+---
+
 ETL（Extract、Transform、Load）是数据工程的基础架构模式，负责将分散的原始数据经过抽取、清洗转换后加载到目标存储，是构建数据仓库、AI 训练数据管道和特征存储（Feature Store）的核心能力。
 
 ## ETL 与 ELT：选型决策
@@ -45,6 +50,9 @@ CDC 是 AI 数据管道中使用最广的方式，能以近实时的方式将业
 - **规范化（Normalization）**：将非结构化字段（JSON 列）拆展为标准列
 
 ### Load（加载）：写入策略影响幂等性
+
+[PostgreSQL COPY](https://www.postgresql.org/docs/current/sql-copy.html) 定义表与文件或标准输入输出之间的批量传输；它提高装载效率，但幂等键、staging 和失败重跑仍需由管道设计保证。
+
 
 | 策略 | 操作 | 适用场景 | 幂等性 |
 |------|------|----------|--------|
@@ -332,7 +340,7 @@ def run_pipeline(
 
 ## 编排与调度：Airflow 核心概念
 
-Apache Airflow 是最主流的 ETL 编排工具，核心概念：
+Apache Airflow 是常用的批处理工作流编排工具之一，核心概念包括：（参见 [Apache Airflow core concepts](https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/index.html)）
 
 - **DAG（Directed Acyclic Graph）**：有向无环图，定义任务依赖关系
 - **Operator**：任务执行单元（`PythonOperator`、`BashOperator`、`SparkSubmitOperator`）
@@ -439,3 +447,8 @@ ETL pipeline 是 AI 系统的数据基础设施层：
 **Q5：ETL 和 ELT 如何选型？在 AI 项目中各适合什么场景？**
 
 核心看转换逻辑的复杂度和变更频率，以及目标系统的计算能力。AI 离线训练场景常用 ELT——数据先 Load 到数仓（Snowflake/BigQuery），再用 SQL 或 dbt 做特征工程，灵活性高；特征存储的实时特征写入场景用 ETL，需要在写入前完成特征计算以降低在线推理延迟。训练数据管道的数据质量要求更高，通常在 ETL 阶段加入严格的数据质量门控。
+
+## 参考资料
+
+- [Apache Airflow core concepts](https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/index.html)
+- [PostgreSQL COPY](https://www.postgresql.org/docs/current/sql-copy.html)

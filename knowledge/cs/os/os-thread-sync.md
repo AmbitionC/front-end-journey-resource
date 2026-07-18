@@ -1,4 +1,9 @@
-# 线程同步与互斥:锁、信号量与条件变量
+![两个线程访问 shared state：mutex 临界区建立互斥，condition variable 用 while predicate 等待并通知，semaphore 控制有限资源槽；箭头标出 happens-before，未加锁路径显示 data race](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/thread-synchronization-happens-before-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是happens-before 思维解释 mutex、condition variable、semaphore、atomic 与锁顺序，而不是只列 API。*
+
+---
+
+## 线程同步与互斥:锁、信号量与条件变量
 
 设想一个再普通不过的场景:一个网站要统计页面访问量,内存里有个变量 `count`。两个线程几乎同时处理两个请求,都执行 `count++`。你以为最终结果是 `+2`,但很可能只 `+1`。
 
@@ -18,7 +23,7 @@
 
 我们把"访问共享资源、必须串行执行的那段代码"称为**临界区(Critical Section)**。上例中 `count++` 就是临界区。
 
-保证临界区**任意时刻最多只有一个线程进入**,这个性质叫**互斥(Mutual Exclusion)**。互斥是同步最基础的需求。一个正确的互斥机制要同时满足:
+保证临界区**任意时刻最多只有一个线程进入**,这个性质叫**互斥(Mutual Exclusion)**。互斥是同步最基础的需求。一个正确的互斥机制要同时满足:（参见 [POSIX pthread_mutex_lock](https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_mutex_lock.html)）
 
 - **互斥性**:同一时刻只有一个线程在临界区内;
 - **无死锁/无饥饿**:想进入的线程最终能进入;
@@ -96,7 +101,7 @@ sem_wait(&sem);          // 占用一个连接
 sem_post(&sem);          // 归还
 ```
 
-互斥锁强调"所有权"(谁加锁谁解锁),信号量则没有所有权概念——一个线程 `wait`、另一个线程 `post` 完全合法,因此它也常用来做线程间的**事件通知**。
+互斥锁强调"所有权"(谁加锁谁解锁),信号量则没有所有权概念——一个线程 `wait`、另一个线程 `post` 完全合法,因此它也常用来做线程间的**事件通知**。（参见 [POSIX sem_wait](https://pubs.opengroup.org/onlinepubs/9799919799/functions/sem_wait.html)）
 
 ## 条件变量:生产者-消费者
 
@@ -223,3 +228,8 @@ graph LR
 - **首选无共享设计**:让每个子 Agent 在隔离的上下文里产出结果,最后由一个汇聚步骤串行合并。把并发写收敛成"并行算 + 串行并",从根上消灭竞态,往往比到处加锁更可靠。
 
 同步的本质不是"加锁",而是**管理共享可变状态的访问顺序**。理解了竞态从何而来,你才能在锁、信号量、条件变量、原子操作之间做出恰当的取舍——无论是在操作系统内核里,还是在一个高并发的 Agent 服务里。
+
+## 参考资料
+
+- [POSIX pthread_mutex_lock](https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_mutex_lock.html)
+- [POSIX sem_wait](https://pubs.opengroup.org/onlinepubs/9799919799/functions/sem_wait.html)

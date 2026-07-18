@@ -1,3 +1,8 @@
+![Node.js 事件循环环形阶段图：timers→pending callbacks→poll→check→close；阶段间显示 nextTick 与 microtask 清空，旁边分出 libuv thread pool 完成 CPU/文件任务后回到回调队列](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/node-event-loop-libuv-phases-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是准确区分事件循环阶段、microtask/nextTick 队列、线程池与 I/O 回调。*
+
+---
+
 Node.js 之所以能以单线程处理数以万计的并发连接，根本在于它的事件循环 (Event Loop) 机制——理解每个阶段的执行顺序与微任务插入时机，是写出可预期异步代码、排查诡异 Bug、以及正确评估 AI Agent 服务吞吐量上限的必备前提。
 
 ## 为什么 Node.js 选择单线程非阻塞 I/O
@@ -106,7 +111,10 @@ fs.readFile('/etc/hostname', () => {
 
 ## libuv 线程池与 I/O 集成
 
-虽然 JavaScript 运行在单线程，libuv 内部维护一个默认大小为 4 的线程池（可通过环境变量 `UV_THREADPOOL_SIZE` 扩大至 1024），用于处理：
+[libuv 设计文档](https://docs.libuv.org/en/v1.x/design.html) 区分事件循环的 I/O polling 与线程池执行路径；文件系统等部分操作完成后再把回调交回事件循环，并非所有异步 I/O 都在池中执行。
+
+
+虽然 JavaScript 运行在单线程，libuv 仍维护共享线程池处理部分阻塞工作；默认容量和允许范围随 Node/libuv 版本而变化，部署时应以当前运行时文档和压测为准，并可在进程启动前通过 `UV_THREADPOOL_SIZE` 调整。线程池常用于：
 
 - 文件系统操作（`fs.readFile` 等）
 - DNS 解析（`dns.lookup`）
@@ -202,7 +210,7 @@ Agent 服务的吞吐量瓶颈往往不在 LLM 调用速度，而在于：
 实际上 Node.js 会将最小延迟截断为约 1ms，且必须等待 timers 阶段到来才执行，期间 poll 阶段可能阻塞数毫秒。
 
 **误解 2：Promise 比 process.nextTick 更快**
-恰好相反——`process.nextTick` 的优先级高于 Promise 微任务。在 Node.js v11 之前两者行为还有阶段性差异，v11+ 之后才统一到"每个宏任务后清空所有微任务"。
+恰好相反——`process.nextTick` 的优先级高于 Promise 微任务。在 Node.js v11 之前两者行为还有阶段性差异，v11+ 之后才统一到"每个宏任务后清空所有微任务"。（参见 [Node.js event loop, timers, and process.nextTick](https://nodejs.org/learn/asynchronous-work/event-loop-timers-and-nexttick)）
 
 **误解 3：Node.js 完全是单线程的**
 主线程（JavaScript 执行）是单线程，但 libuv 线程池、操作系统异步 I/O、以及 `worker_threads` 允许真正的多线程。
@@ -225,3 +233,8 @@ Agent 服务的吞吐量瓶颈往往不在 LLM 调用速度，而在于：
 3. **`setImmediate` vs `setTimeout(fn, 0)` 在 I/O 回调内为何顺序确定？** 答：I/O 回调在 poll 阶段执行，poll 之后紧接 check 阶段（setImmediate），timers 要等下一轮。
 4. **libuv 线程池处理哪些操作？** 文件 I/O、DNS lookup、部分 crypto；网络 I/O 不走线程池。
 5. **如何诊断事件循环阻塞？** 使用 `perf_hooks.monitorEventLoopDelay`、`--prof` 火焰图、或 Clinic.js Doctor。
+
+## 参考资料
+
+- [Node.js event loop, timers, and process.nextTick](https://nodejs.org/learn/asynchronous-work/event-loop-timers-and-nexttick)
+- [libuv design overview](https://docs.libuv.org/en/v1.x/design.html)

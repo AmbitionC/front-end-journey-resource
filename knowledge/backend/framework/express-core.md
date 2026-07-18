@@ -1,3 +1,8 @@
+![Express 5 中间件栈从上到下：通用 middleware→router→handler→404；正常 next 向下，抛错/Promise rejection 跳到四参数 error middleware，已发送响应走 close 分支](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/express-middleware-stack-error-flow-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是中间件栈顺序、路由匹配、next/Promise 错误传播和终止响应为核心。*
+
+---
+
 Express 是 Node.js 生态中历史最悠久、使用最广泛的 Web 框架，以"最小化、无主见（unopinionated）"为设计哲学——核心只提供路由和中间件管道，不强制约定目录结构、ORM 或任何业务逻辑组织方式。理解其内部运行机制，有助于写出更健壮的应用，也是面试中被频繁考察的知识点。
 
 ## 请求生命周期总览
@@ -15,7 +20,7 @@ flowchart LR
     style ErrMW fill:#f96,stroke:#c00
 ```
 
-请求进入 Express 后依次经过：Application-level 中间件 → Router 匹配 → Router-level 中间件 → Route Handler。任何环节调用 `next(err)` 都会跳过剩余普通中间件，直接进入最近的错误处理中间件。
+请求进入 Express 后依次经过：Application-level 中间件 → Router 匹配 → Router-level 中间件 → Route Handler。任何环节调用 `next(err)` 都会跳过剩余普通中间件，直接进入最近的错误处理中间件。（参见 [Express using middleware](https://expressjs.com/en/guide/using-middleware/)）
 
 ## 中间件类型详解
 
@@ -340,10 +345,15 @@ flowchart TD
   A：Express 内部维护一个中间件数组，每次 `app.use(fn)` 将函数压入数组。收到请求时，按注册顺序逐个调用中间件，每个中间件通过调用 `next()` 将控制权传给下一个。调用链是同步驱动的，`next()` 本质是调用数组中的下一个函数。
 
 - **Q：如何正确处理 Express 中 async 路由的错误？**  
-  A：Express 4.x 不捕获 async 函数的 rejected Promise，需要 `try/catch` + `next(err)`，或使用 `express-async-errors` 包自动 monkey-patch。Express 5.x 原生支持 async 错误转发，不再需要额外处理。
+  A：Express 4.x 不捕获 async 函数的 rejected Promise，需要 `try/catch` + `next(err)`，或使用 `express-async-errors` 包自动 monkey-patch。Express 5.x 原生支持 async 错误转发，不再需要额外处理。（参见 [Express error handling](https://expressjs.com/en/guide/error-handling/)）
 
 - **Q：`app.use()` 和 `app.get()` 的区别是什么？**  
   A：`app.use()` 匹配以指定路径**开头**的所有请求（任意 HTTP 方法），常用于挂载中间件和 Router。`app.get()` 精确匹配路径且仅匹配 GET 方法，常用于注册具体路由处理器。
 
 - **Q：在构建 AI Agent 工具服务时，Express 有哪些注意事项？**  
   A：工具调用的参数校验要做严格的 schema 验证（防止 Prompt Injection 带来的恶意参数）；工具执行失败应返回结构化结果而非 5xx，让 Agent 能自主决策是否重试；LLM 流式响应端点需要在路由层手动管理 `res.write` 和 `res.end`，或考虑迁移到 Koa（`ctx.body = stream`）获得更好的流处理体验。
+
+## 参考资料
+
+- [Express using middleware](https://expressjs.com/en/guide/using-middleware/)
+- [Express error handling](https://expressjs.com/en/guide/error-handling/)

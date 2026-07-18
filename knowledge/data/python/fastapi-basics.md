@@ -1,4 +1,9 @@
-在 AI 工程领域，后端框架的选型往往被低估。当你需要把一个 LLM 调用、向量检索、Agent 编排包装成一个可靠的 HTTP 服务时，框架的 async 能力、类型系统和文档化水平会直接影响开发效率与系统稳定性。FastAPI 在这三个维度上同时做到了行业领先，这也是当前大多数 AI 后端项目优先选择它的原因。
+![FastAPI AI 服务请求生命周期：ASGI server→路由→Pydantic 校验→依赖注入→async handler→模型/任务队列→响应；把 CPU 密集工作明确移到 worker，把取消与超时贯穿](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/fastapi-ai-service-request-lifecycle-v1.webp)
+*图：沿 ASGI server → 路由 → Pydantic 校验 → 依赖注入 → async handler → 响应读取；CPU 密集推理转入 worker，取消与超时贯穿链路。*
+
+---
+
+当 LLM 调用、向量检索和 Agent 编排需要包装成 HTTP 服务时，框架的并发模型、运行时校验和 API 文档能力会影响实现与运维。FastAPI 提供 ASGI、Pydantic 集成和 OpenAPI 生成，是一个常见选择；是否采用仍取决于团队生态、部署模型与任务负载。
 
 ## 为什么 FastAPI 适合 AI 后端
 
@@ -66,7 +71,7 @@ app.include_router(router)
 
 ## 请求与响应模型（Pydantic BaseModel）
 
-Pydantic v2 是 FastAPI 的核心依赖，`BaseModel` 负责序列化、反序列化和运行时校验，`response_model` 参数负责响应体的字段裁剪和文档生成：
+Pydantic v2 是 FastAPI 的核心依赖，`BaseModel` 负责序列化、反序列化和运行时校验，`response_model` 参数负责响应体的字段裁剪和文档生成：（参见 [FastAPI request body tutorial](https://fastapi.tiangolo.com/tutorial/body/)）
 
 ```python
 from pydantic import BaseModel, Field, model_validator
@@ -363,7 +368,7 @@ app = FastAPI(lifespan=lifespan)
 ## 面试常问
 
 **Q：FastAPI 的并发模型是什么？与多线程、多进程有何区别？**
-A：FastAPI 基于 asyncio 单线程事件循环，通过协程实现并发，适合 I/O 密集型任务（LLM 调用、DB 查询）。CPU 密集型任务（本地推理、向量计算）应用 `run_in_executor` 推到线程池，或启动独立进程。生产环境通常用 `gunicorn -w 4 -k uvicorn.workers.UvicornWorker` 启动多 worker 利用多核。
+A：`async def` path operation 在事件循环中协作式并发，适合非阻塞 I/O；普通 `def` handler 会由 FastAPI 在线程池运行，不能因此把阻塞调用直接放进 `async def`。（参见 [FastAPI concurrency and async/await](https://fastapi.tiangolo.com/async/)）CPU 密集 Python 代码通常放到独立进程/任务服务，或使用会释放 GIL 的原生库。部署可用 Uvicorn 的 `--workers` 或外部进程管理器；[`uvicorn.workers` 已被官方标为 deprecated](https://github.com/Kludex/uvicorn/blob/main/docs/deployment/index.md)，Gunicorn 场景应按当前文档使用独立的 `uvicorn-worker` 包，而不是复制旧命令。
 
 **Q：`Depends` 和直接在函数里调用有什么区别？**
 A：三个核心优势：1) 依赖可以嵌套，FastAPI 自动推导执行顺序和去重；2) 测试时可通过 `app.dependency_overrides[dep_fn] = mock_fn` 替换，无需修改业务代码；3) 依赖支持 `yield`（类似上下文管理器），可以在请求结束后执行清理（如关闭 DB 事务）。
@@ -376,3 +381,9 @@ A：典型流程：① Pydantic 校验请求（问题 + 可选的上下文窗口
 
 **Q：`response_model` 的作用是什么？**
 A：两个作用：1) 文档生成，Swagger UI 会展示响应体的字段和类型；2) 数据过滤，FastAPI 会按 `response_model` 的字段裁剪响应，即使 handler 返回了多余字段也不会输出，防止内部数据泄露。如果需要关闭校验只保留文档，可用 `response_model_exclude_unset=True` 或设置 `response_model=None`。
+
+## 参考资料
+
+- [FastAPI request body tutorial](https://fastapi.tiangolo.com/tutorial/body/)
+- [FastAPI concurrency and async/await](https://fastapi.tiangolo.com/async/)
+- [Uvicorn deployment documentation](https://github.com/Kludex/uvicorn/blob/main/docs/deployment/index.md)

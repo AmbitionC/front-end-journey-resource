@@ -1,4 +1,9 @@
-Koa 是由 Express 原班人马打造的下一代 Node.js Web 框架，其核心设计将 `async/await` 作为第一公民，通过极简的洋葱模型（Onion Model）中间件机制彻底解决了 Express 回调嵌套与错误处理不一致的痛点。
+![洋葱模型剖面：请求按 middleware A→B→C 向内，await next 后响应按 C→B→A 向外；标出 Context、计时器、错误捕获与最终 response body](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/koa-onion-middleware-unwind-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是async/await 控制流准确解释请求 Context、洋葱模型、异常回溯和响应写入时机。*
+
+---
+
+Koa 的中间件以 `async/await` 和洋葱式控制流组织请求，使嵌套调用、响应回溯和集中错误捕获更显式；它改善了组合方式，但错误边界与响应终止仍需应用正确实现。
 
 ## Koa vs Express：核心差异
 
@@ -167,7 +172,7 @@ app.use(timingMiddleware);
 app.use(router.routes());
 ```
 
-洋葱模型的优势在此体现：`errorMiddleware` 通过 `try/catch` 包裹 `await next()` 即可捕获**整个中间件链**中抛出的任何错误，无论错误发生在第几层。
+洋葱模型的优势在此体现：`errorMiddleware` 通过 `try/catch` 包裹 `await next()` 即可捕获**整个中间件链**中抛出的任何错误，无论错误发生在第几层。（参见 [Koa official documentation](https://koajs.com/)）
 
 ## 常用中间件生态
 
@@ -266,7 +271,7 @@ router.post('/agent/stream', async (ctx: Context) => {
 
 ## 中间件分支与组合复用
 
-由于 `koa-compose` 本身就是把一组中间件压成一个中间件，我们可以利用它实现按路径或条件挂载子中间件链，复用同一套鉴权/日志组合：
+由于 `koa-compose` 本身就是把一组中间件压成一个中间件，我们可以利用它实现按路径或条件挂载子中间件链，复用同一套鉴权/日志组合：（参见 [koa-compose reference implementation](https://github.com/koajs/compose)）
 
 ```typescript
 import compose from 'koa-compose';
@@ -309,3 +314,8 @@ router.use('/public', loggingMiddleware);
 
 - **Q：为什么 Koa 适合 AI Agent 流式接口？**  
   A：Koa 对 Node.js Stream 有原生支持（`ctx.body` 可以直接赋值为可读流），配合 `async/await` 可以干净地编写异步流处理逻辑，避免了 Express 中需要手动调用 `res.write`/`res.end` 并管理各种生命周期事件的复杂度。
+
+## 参考资料
+
+- [Koa official documentation](https://koajs.com/)
+- [koa-compose reference implementation](https://github.com/koajs/compose)

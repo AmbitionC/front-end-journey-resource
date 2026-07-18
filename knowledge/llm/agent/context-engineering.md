@@ -1,4 +1,9 @@
-在构建基于 LLM 的 Agent 系统时，仅靠精心设计的 Prompt 是不够的。随着任务复杂度提升、交互轮次增加，真正的瓶颈在于：**每次调用模型前，如何系统性地为它准备最优的输入上下文**。这正是上下文工程（Context Engineering）要解决的问题——它是提示工程（Prompt Engineering）的自然演进，也是构建稳健 Agent 的工程基础。
+![从左到右展示上下文工程闭环：Gather 收集候选信息，Select 按相关性与可信度筛选，Compress 压缩并保留出处，Verify 在模型调用前后校验；同时画出固定 context budget 与被丢弃的噪声](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/context-engineering-gather-select-compress-verify-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是收集、筛选、压缩、验证串成可执行机制。*
+
+---
+
+在构建基于 LLM 的 Agent 系统时，仅靠精心设计的 Prompt 是不够的。随着任务复杂度提升、交互轮次增加，真正的瓶颈在于：**每次调用模型前，如何系统性地为它准备最优的输入上下文**。这正是上下文工程（Context Engineering）要解决的问题——它是提示工程（Prompt Engineering）的自然演进，也是构建稳健 Agent 的工程基础。（参见 [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)）
 
 ---
 
@@ -194,6 +199,9 @@ assistant: 不错的选择！接下来可以考虑数据清洗...
 
 ## 长时程任务的上下文策略
 
+[MemGPT](https://arxiv.org/abs/2310.08560) 把有限上下文类比为主存，并通过分层记忆的换入、换出维持长任务状态；这个模型说明了为什么“保存全部历史”并不等于有效上下文。
+
+
 单轮对话的上下文管理相对简单，真正的挑战是**长时程任务**——需要 Agent 在多个对话轮次、多次上下文重置中保持连贯性和目标导向。三种核心策略：
 
 ### 压缩整合（Compaction）
@@ -338,3 +346,7 @@ def calculate_relevance(content: str, query: str) -> float:
 
 ---
 
+## 参考资料
+
+- [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)
+- [MemGPT: Towards LLMs as Operating Systems](https://arxiv.org/abs/2310.08560)

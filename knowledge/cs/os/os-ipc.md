@@ -1,4 +1,9 @@
-# 进程间通信(IPC)有哪些方式?
+![两个隔离进程之间四条 IPC 通道：pipe 单向字节流、Unix socket 双向消息、shared memory 共享页加同步锁、message queue 内核排队；比较复制次数、边界、同步和适用范围](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/ipc-mechanisms-copy-sharing-comparison-v1.webp)
+*图：沿图中的节点与箭头阅读，重点是数据方向、命名、复制/共享、同步和故障边界比较 pipe、socket、shared memory 与 message queue。*
+
+---
+
+## 进程间通信(IPC)有哪些方式?
 
 设想这样一个场景:你在 Linux 上敲下 `ps aux | grep node`。这一行命令里其实启动了两个独立的进程——`ps` 负责列出所有进程,`grep` 负责过滤。`ps` 的输出怎么"流"到 `grep` 的输入里去的?两个进程各自拥有独立的虚拟地址空间,彼此的内存互相看不见,凭什么能传数据?
 
@@ -9,6 +14,9 @@
 ## 一、管道:最朴素的字节流
 
 ### 匿名管道(Pipe)
+
+[POSIX `pipe()`](https://pubs.opengroup.org/onlinepubs/9799919799/functions/pipe.html) 创建一对文件描述符：数组第 0 项用于读取、第 1 项用于写入；它提供字节流而不保留应用消息边界。
+
 
 匿名管道是最古老的 IPC。内核维护一块环形缓冲区,提供两个文件描述符:一个只读、一个只写。一端写,另一端读,数据像水管里的水一样单向流动。
 
@@ -67,6 +75,9 @@ msgrcv(qid, &msg, len, mtype, 0);       // 按类型取一条消息
 适用于本机进程间传递控制指令、小型任务这类"短消息"场景,比如一个分发器把任务 ID 投进队列,多个 worker 各取所需。
 
 ## 三、共享内存:最快,但要自己同步
+
+[POSIX `shm_open()`](https://pubs.opengroup.org/onlinepubs/9799919799/functions/shm_open.html) 创建或打开带名称和权限的共享内存对象；映射后的并发可见性与同步仍需由应用使用锁或原子操作保证。
+
 
 前面几种方式都有个共同的"原罪":数据要在内核缓冲区里中转,至少经历"用户态 → 内核态 → 用户态"两次拷贝。共享内存(Shared Memory)直接釜底抽薪——**让多个进程的虚拟地址映射到同一块物理内存**。
 
@@ -183,3 +194,8 @@ flowchart LR
 - **大上下文 / 大向量共享**:若多个本机 Agent 需共享同一份大体量上下文或向量缓存,可考虑**共享内存**减少序列化与拷贝开销,但务必配合同步原语。
 
 一句话总结选型直觉:**比速度选共享内存(配信号量),要解耦选消息队列,要可跨机选 Socket,做通知与控制选信号,跑子进程拿输出选管道。** 没有"最好"的 IPC,只有"最匹配你约束条件"的 IPC——而那个约束,通常就是**数据量、是否跨机、谁负责同步**这三件事。
+
+## 参考资料
+
+- [POSIX pipe](https://pubs.opengroup.org/onlinepubs/9799919799/functions/pipe.html)
+- [POSIX shared memory objects](https://pubs.opengroup.org/onlinepubs/9799919799/functions/shm_open.html)
