@@ -1,3 +1,10 @@
+数据质量评估与异常检测需要把“机制是什么”“边界在哪里”“怎样验证”放在同一条学习路径中。本文以 [ISO/IEC 25012 Data Quality Model](https://www.iso.org/standard/35736.html) 对“数据质量模型与内在/系统依赖质量特性”的说明为事实边界，并用 [Automating Large-scale Data Quality Verification](https://www.vldb.org/pvldb/vol11/p1781-schelter.pdf) 校准“Deequ 数据质量约束、分析器和大规模验证方法”。文中的代码和工程方案用于解释这些机制；涉及具体版本、默认值或部署行为时，应再回到所链接的一手资料确认。
+
+![数据质量评估与异常检测的核心机制与验证路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/data-quality-dimensions-detection-loop-v1.webp)
+*图：数据质量评估与异常检测的核心组件、信息流与验证边界。*
+
+---
+
 在大语言模型（LLM）和检索增强生成（RAG）系统大行其道的今天，数据质量问题早已不再是传统数仓工程师的专属课题。对 AI/Agent 工程师而言，喂给模型或向量库的每一条文本、每一行结构化记录，都直接影响推理质量与召回精度。计算机科学有一条古老定律——**GIGO（Garbage In, Garbage Out，垃圾进垃圾出）**，在 LLM 时代被再次放大：低质量的训练数据会让微调模型产生幻觉；重复的文档块会让 RAG 召回结果冗余；字段缺失的结构化数据会让 Agent 的工具调用逻辑出错。系统性地评估并修复数据质量，往往比反复调参带来更大的收益。
 
 ## 数据质量六维度（Six Dimensions of Data Quality）
@@ -358,3 +365,8 @@ Z-score 假设正态分布，且对极端离群点本身敏感（极端值会拉
 **Q：数据质量监控管道应包含哪些核心组件？**
 
 ① 入口校验层（Schema 校验 + 类型检查）；② 统计分析层（缺失率、唯一性、分布统计）；③ 规则引擎层（业务约束校验）；④ 告警与报告层（分级告警、指标持久化）；⑤ 血缘追踪层（记录每条数据的来源、处理版本，用于问题溯源）。生产环境中可以用 Great Expectations 或自研轻量 Pipeline 实现，关键是与数据摄入流程集成而非独立运行。
+
+## 参考资料
+
+- [ISO/IEC 25012 Data Quality Model](https://www.iso.org/standard/35736.html)
+- [Automating Large-scale Data Quality Verification](https://www.vldb.org/pvldb/vol11/p1781-schelter.pdf)

@@ -1,3 +1,10 @@
+pgvector 向量存储与检索需要把“机制是什么”“边界在哪里”“怎样验证”放在同一条学习路径中。本文以 [pgvector official documentation](https://github.com/pgvector/pgvector) 对“vector 类型、距离操作符、exact/HNSW/IVFFlat 索引与过滤”的说明为事实边界，并用 [PostgreSQL index types](https://www.postgresql.org/docs/current/indexes-types.html) 校准“B-tree、Hash、GiST、SP-GiST、GIN、BRIN 的索引能力与边界”。文中的代码和工程方案用于解释这些机制；涉及具体版本、默认值或部署行为时，应再回到所链接的一手资料确认。
+
+![pgvector 向量存储与检索的核心机制与验证路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/pgvector-filter-ann-query-plan-v1.webp)
+*图：pgvector 向量存储与检索的核心组件、信息流与验证边界。*
+
+---
+
 pgvector 是 PostgreSQL 的开源向量扩展（vector extension），让已有的关系型数据库原生支持高维向量的存储、索引与相似度检索，是 AI/Agent 工程师在现有 PostgreSQL 基础设施上构建检索增强生成（RAG，Retrieval-Augmented Generation）系统的最低成本路径之一。
 
 ## 安装与启用
@@ -409,3 +416,8 @@ IVFFlat 依赖 k-means 对现有数据聚类，表为空或行数过少时（< `
 
 - **pgvector 与专用向量数据库如何决策？**
   核心三要素：向量规模（百万以内 pgvector 足够）、是否需要关系查询（需要则强烈倾向 pgvector）、团队运维能力（已有 PostgreSQL 运维经验则无需引入新组件）。不是非此即彼，可先用 pgvector 验证业务价值，规模压力显现后再评估迁移收益。
+
+## 参考资料
+
+- [pgvector official documentation](https://github.com/pgvector/pgvector)
+- [PostgreSQL index types](https://www.postgresql.org/docs/current/indexes-types.html)

@@ -1,3 +1,10 @@
+PostgreSQL 与 JSON 数据需要把“机制是什么”“边界在哪里”“怎样验证”放在同一条学习路径中。本文以 [PostgreSQL JSON types](https://www.postgresql.org/docs/current/datatype-json.html) 对“json/jsonb 存储、索引、包含关系与限制”的说明为事实边界，并用 [PostgreSQL MVCC introduction](https://www.postgresql.org/docs/current/mvcc-intro.html) 校准“并发控制、事务隔离与快照可见性”。文中的代码和工程方案用于解释这些机制；涉及具体版本、默认值或部署行为时，应再回到所链接的一手资料确认。
+
+![PostgreSQL 与 JSON 数据的核心机制与验证路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/postgresql-jsonb-relational-hybrid-v1.webp)
+*图：PostgreSQL 与 JSON 数据的核心组件、信息流与验证边界。*
+
+---
+
 PostgreSQL 在标准关系型能力之上，内置了文档存储、向量检索、全文搜索、递归查询和异步消息等特性，使其在 AI/Agent 系统中能同时承担结构化数据库、向量库和事件总线的角色，无需引入额外中间件。
 
 ## JSONB：半结构化数据存储
@@ -438,3 +445,8 @@ A：主要风险是循环引用导致无限递归。应对措施：① 在递归
 
 **Q：LISTEN/NOTIFY 适合用于 Agent 事件总线吗？有什么限制？**
 A：适合低吞吐、容忍消息丢失的场景，优势是零额外依赖、与事务集成（在事务提交后才发送通知）。主要限制：① 通知不持久化，连接断开期间的通知丢失；② payload 上限 8000 字节；③ 不支持消息确认（ACK）和重试。需要可靠性保障时，应升级为 pg_boss 或外部消息队列。
+
+## 参考资料
+
+- [PostgreSQL JSON types](https://www.postgresql.org/docs/current/datatype-json.html)
+- [PostgreSQL MVCC introduction](https://www.postgresql.org/docs/current/mvcc-intro.html)

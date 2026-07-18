@@ -1,3 +1,10 @@
+JSON / CSV / Parquet 数据格式需要把“机制是什么”“边界在哪里”“怎样验证”放在同一条学习路径中。本文以 [RFC 8259: The JavaScript Object Notation Data Interchange Format](https://www.rfc-editor.org/rfc/rfc8259.html) 对“JSON 语法、值类型、编码和互操作要求”的说明为事实边界，并用 [RFC 4180: Common Format and MIME Type for CSV Files](https://www.rfc-editor.org/rfc/rfc4180.html) 校准“CSV 常见格式、转义与 MIME 类型”。文中的代码和工程方案用于解释这些机制；涉及具体版本、默认值或部署行为时，应再回到所链接的一手资料确认。
+
+![JSON / CSV / Parquet 数据格式的核心机制与验证路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/data-formats-row-column-tradeoffs-v1.webp)
+*图：JSON / CSV / Parquet 数据格式的核心组件、信息流与验证边界。*
+
+---
+
 在 AI 工程链路中，数据格式的选择直接影响训练速度、推理吞吐和 RAG 系统的检索质量。一个训练集如果用低效格式存储，加载本身就可能成为 GPU 利用率的瓶颈；一个 RAG 流水线如果格式转换不当，可能在向量化前悄悄截断文本或丢失元数据。JSON、CSV、Parquet 是 AI 数据工程中最高频出现的三种格式，弄清它们的内部机制、适用场景和陷阱，是 Agent 工程师必备的基础技能。
 
 ## JSON：灵活但有代价
@@ -334,3 +341,9 @@ JSON 是一个完整文档（对象或数组），必须全量解析；JSONL 每
 **Q：Parquet 列式存储为什么压缩率高？**
 
 同一列的值类型相同，重复值多，天然适合字典编码（Dictionary Encoding）和游程编码（Run-Length Encoding，RLE）。例如 `source` 列只有 `"wiki"`/`"arxiv"` 两种值，RLE 可以把 500 个连续相同值压缩成一条记录，而行式存储无法利用这一规律。
+
+## 参考资料
+
+- [RFC 8259: The JavaScript Object Notation Data Interchange Format](https://www.rfc-editor.org/rfc/rfc8259.html)
+- [RFC 4180: Common Format and MIME Type for CSV Files](https://www.rfc-editor.org/rfc/rfc4180.html)
+- [Apache Parquet file format](https://parquet.apache.org/docs/file-format/)

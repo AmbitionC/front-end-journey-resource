@@ -1,3 +1,10 @@
+索引、执行计划与查询优化需要把“机制是什么”“边界在哪里”“怎样验证”放在同一条学习路径中。本文以 [PostgreSQL Using EXPLAIN](https://www.postgresql.org/docs/current/using-explain.html) 对“计划节点、成本估算、EXPLAIN ANALYZE 与诊断方法”的说明为事实边界，并用 [PostgreSQL indexes introduction](https://www.postgresql.org/docs/current/indexes-intro.html) 校准“索引加速机制、维护成本和使用边界”。文中的代码和工程方案用于解释这些机制；涉及具体版本、默认值或部署行为时，应再回到所链接的一手资料确认。
+
+![索引、执行计划与查询优化的核心机制与验证路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/sql-explain-index-optimization-loop-v1.webp)
+*图：索引、执行计划与查询优化的核心组件、信息流与验证边界。*
+
+---
+
 数据库索引（Index）是建立在数据列上的有序辅助结构，将全表扫描的线性代价降低为对数级别。理解索引的物理结构、适用边界与失效场景，是写出可扩展 SQL 查询的前提。
 
 ## 索引的底层数据结构
@@ -355,3 +362,8 @@ MySQL 的 Index Merge 合并代价不低；两侧选择性均高时，改写为 
 - **选择性低的列为何优化器放弃索引**：索引扫描 + 回表的随机 I/O 代价可超过全表顺序扫描，PostgreSQL 会参考 `correlation` 做判断。
 - **pgvector 混合查询为何有时不走向量索引**：元数据过滤后候选行数极少时，对子集做向量暴力扫描代价低于 HNSW 图遍历，优化器自动选择 B-Tree 先过滤。
 - **索引列做运算为何失效**：运算后列值不再与索引键对应，优化器无法定位，正确做法是将计算移到参数侧。
+
+## 参考资料
+
+- [PostgreSQL Using EXPLAIN](https://www.postgresql.org/docs/current/using-explain.html)
+- [PostgreSQL indexes introduction](https://www.postgresql.org/docs/current/indexes-intro.html)

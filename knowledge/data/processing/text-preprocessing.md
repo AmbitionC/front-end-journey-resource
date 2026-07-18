@@ -1,3 +1,10 @@
+文本预处理与清洗策略需要把“机制是什么”“边界在哪里”“怎样验证”放在同一条学习路径中。本文以 [Unicode Standard Annex #15: Unicode Normalization Forms](https://unicode.org/reports/tr15/) 对“NFC/NFD/NFKC/NFKD 规范化形式与稳定性”的说明为事实边界，并用 [SentencePiece: A simple and language independent subword tokenizer](https://arxiv.org/abs/1808.06226) 校准“直接从原始句子训练子词模型的原始方法”。文中的代码和工程方案用于解释这些机制；涉及具体版本、默认值或部署行为时，应再回到所链接的一手资料确认。
+
+![文本预处理与清洗策略的核心机制与验证路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/text-preprocessing-normalization-tokenization-v1.webp)
+*图：文本预处理与清洗策略的核心组件、信息流与验证边界。*
+
+---
+
 在 RAG（Retrieval-Augmented Generation）和 LLM 工程中，文本预处理（Text Preprocessing）常被低估——工程师往往把 80% 的精力花在模型调参上，却忽视"数据入口"的质量。事实上，一份存在编码乱码、HTML 残骸或切分不当的文档，会直接导致 embedding 语义漂移、检索召回率下降，让任何模型优化都事倍功半。本文系统梳理文本预处理的完整链路，并重点讲解 RAG 场景下的分块（Chunking）策略与调参思路。
 
 ## 文本预处理在 RAG/LLM 工程中的核心地位
@@ -369,3 +376,8 @@ chunk 过大会引入噪声，稀释 embedding 的语义焦点，导致相似度
 
 **Q：中文文本预处理与英文有哪些核心差异？**
 中文无词边界，需要分词（jieba 等）；英文重词形变化，需要 stemming/lemmatization。中文 BPE tokenization 通常以字为基本单位，英文以 subword 为单位。中文文档还需处理繁简混用（NFKC + opencc）、全半角混用等问题。此外，中文停用词表（哈工大、中科院版本）与英文 NLTK stopwords 逻辑类似但需单独维护。
+
+## 参考资料
+
+- [Unicode Standard Annex #15: Unicode Normalization Forms](https://unicode.org/reports/tr15/)
+- [SentencePiece: A simple and language independent subword tokenizer](https://arxiv.org/abs/1808.06226)

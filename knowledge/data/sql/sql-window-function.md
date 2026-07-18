@@ -1,3 +1,10 @@
+窗口函数与分析查询需要把“机制是什么”“边界在哪里”“怎样验证”放在同一条学习路径中。本文以 [PostgreSQL window functions tutorial](https://www.postgresql.org/docs/current/tutorial-window.html) 对“窗口、partition、order、frame 与执行位置”的说明为事实边界，并用 [PostgreSQL window function reference](https://www.postgresql.org/docs/current/functions-window.html) 校准“排名、值函数、聚合窗口和默认 frame 语义”。文中的代码和工程方案用于解释这些机制；涉及具体版本、默认值或部署行为时，应再回到所链接的一手资料确认。
+
+![窗口函数与分析查询的核心机制与验证路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/sql-window-partition-order-frame-v1.webp)
+*图：窗口函数与分析查询的核心组件、信息流与验证边界。*
+
+---
+
 窗口函数（Window Function）是 SQL 分析能力的核心特性，它允许对与当前行相关的一组行执行计算，同时保留每一行不被折叠——这一特性使排名、累计、时序偏移等复杂分析场景的表达能力远超传统聚合写法，在 LLM 推理链路日志分析、Agent 执行轨迹回溯等场景中尤为常用。
 
 ## 窗口函数与 GROUP BY 的本质差异
@@ -380,3 +387,8 @@ SELECT * FROM ranked WHERE rnk <= 3;
 - **ROWS 与 RANGE 的差异及默认值**：仅写 `ORDER BY` 时默认是 `RANGE UNBOUNDED PRECEDING TO CURRENT ROW`；重复值时二者行为差异是高频考点。
 - **LAG/LEAD 实现时序计算**：如环比增长、相邻事件间隔、会话切割；能写出完整的 session 切割 SQL 是加分项。
 - **LAST_VALUE 陷阱**：考官常考"为什么 LAST_VALUE 返回的是当前行自身"，答案是默认帧终点为 CURRENT ROW，需显式扩展帧到 UNBOUNDED FOLLOWING。
+
+## 参考资料
+
+- [PostgreSQL window functions tutorial](https://www.postgresql.org/docs/current/tutorial-window.html)
+- [PostgreSQL window function reference](https://www.postgresql.org/docs/current/functions-window.html)
