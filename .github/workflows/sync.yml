@@ -5,6 +5,16 @@ on:
   pull_request:
     paths:
       - '.codex/image-resync.txt'
+  workflow_dispatch:
+    inputs:
+      before_sha:
+        description: Git SHA before the content range to sync
+        required: true
+        type: string
+      after_sha:
+        description: Git SHA after the content range to sync
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -39,8 +49,8 @@ jobs:
         env:
           FAAS_SYNC_URL: ${{ secrets.FAAS_SYNC_URL }}
           FAAS_SYNC_SECRET: ${{ secrets.FAAS_SYNC_SECRET }}
-          BEFORE: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
-          AFTER: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+          BEFORE: ${{ github.event_name == 'workflow_dispatch' && inputs.before_sha || (github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before) }}
+          AFTER: ${{ github.event_name == 'workflow_dispatch' && inputs.after_sha || (github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha) }}
         run: |
           curl -sS -X POST "$FAAS_SYNC_URL" \
             -H "x-sync-secret: $FAAS_SYNC_SECRET" \
