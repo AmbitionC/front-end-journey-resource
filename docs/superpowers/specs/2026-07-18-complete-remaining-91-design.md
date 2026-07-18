@@ -8,7 +8,7 @@ Finish every knowledge-tree leaf that is not yet recorded in the generation hist
 
 ## Scope
 
-- Update exactly the 91 existing published articles selected by the difference between `knowledge/_tree.json` leaves and `.codex/generate-knowledge-docs-history.json` keys.
+- Update exactly the 91 existing published articles selected by the difference between `knowledge/_tree.json` leaves and `.codex/knowledge-update-history.json` keys.
 - Preserve useful, correct material. Substantially rewrite weak or obsolete documents; augment strong documents with missing evidence, current boundaries, one focused illustration, and references.
 - Keep the knowledge taxonomy unchanged because all 300 leaves are already published.
 - Promote the previous 50 pending history records to published, then append 91 pending records under batch ID `complete-remaining-91-2026-07-18`.
@@ -54,4 +54,3 @@ After review and merge:
 - The exact sync payload should report 0 changed manifests, 91 articles, 91 images, 0 deletions, and no errors. The manifest count is zero because `_tree.json` is intentionally unchanged.
 - The final history contains 300 unique records: 209 published and 91 pending immediately after this batch merges.
 - Final knowledge-document completion is 300/300 (100%).
-

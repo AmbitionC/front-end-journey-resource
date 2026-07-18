@@ -4,7 +4,7 @@
 
 ## Batch inventory
 
-The deterministic order is the knowledge-tree order after removing all 209 keys already present in `.codex/generate-knowledge-docs-history.json`.
+The deterministic order is the knowledge-tree order after removing all 209 keys already present in `.codex/knowledge-update-history.json`.
 
 1. Agent foundations (1–10): `context-engineering`, `agent-react`, `agent-paradigms`, `agent-memory`, `build-agent-framework`, `mcp-protocol`, `multi-agent`, `agent-evaluation`, `agent-deep-research`, `ai-observability`.
 2. AI production and Node.js (11–20): `llm-cost-optimize`, `prompt-injection-defense`, `ai-rate-limiting`, `agent-eval-framework`, `node-event-loop-deep`, `node-stream`, `fastapi-basics`, `node-buffer`, `node-worker-threads`, `express-core`.
@@ -60,4 +60,3 @@ For every group:
 - Push the branch, open a pull request, wait for required checks, merge, and verify the merge commit on `master`.
 - Inspect the exact GitHub Actions job and FaaS response. Confirm 0 manifests, 91 articles, 91 images, 0 deletions, and no errors.
 - Report the final 300/300 completion state with PR, merge, Actions, and validation evidence.
-
