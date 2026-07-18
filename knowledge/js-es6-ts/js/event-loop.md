@@ -1,49 +1,77 @@
-事件循环（Event Loop）是JavaScript中一个核心的概念，它允许JavaScript在单线程中执行异步操作。事件循环机制是JavaScript能够进行非阻塞I/O操作的基础，这对于创建高性能的Web应用程序至关重要。
+浏览器事件循环协调 JavaScript、事件、网络回调、microtask 与渲染。它不会让长时间同步代码“自动异步”；一个 long task 会占住主线程，直到调用栈返回，用户输入和页面更新都只能等待。
 
-![](https://cdn.nlark.com/yuque/0/2024/png/577681/1711889378893-d3bdc0bb-4cfe-4549-b681-68fb01303977.png)
+![浏览器选择一个 task 执行 JavaScript，清空本次 microtask checkpoint，然后才获得可能的 rendering update，之后进入下一轮](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/browser-event-loop-task-microtask-render-v1.webp)
+*图：task → microtask checkpoint → possible render 是一轮关键顺序；microtask 中继续入队会延迟后续 task 与绘制。*
 
-#### 基本概念
-JavaScript运行在事件循环上，这意味着即使JavaScript代码执行需要很长时间，它也不会阻塞用户界面的更新。事件循环使得JavaScript能够在执行异步任务（如网络请求、定时器等）的同时，保持对用户交互的响应。
+---
 
+## 一轮事件循环
 
+[HTML Standard 的 event loop 算法](https://html.spec.whatwg.org/multipage/webappapis.html#event-loops)区分 task queue、microtask queue 与更新渲染的处理步骤。简化理解为：
 
-#### 事件循环的组成部分
-事件循环主要由以下几个部分组成：
+1. 从合适的 task queue 选择一个可运行 task；
+2. 执行 task 对应的 JavaScript，直到调用栈为空；
+3. 执行 microtask checkpoint，持续处理队列中新加入的 microtask；
+4. 宿主在合适时机可能更新渲染；
+5. 开始下一轮。
 
-+ **执行栈（Call Stack）**：当前正在执行的代码所在的栈。当函数被调用时，它会被推入执行栈；当函数执行完毕时，它会从执行栈中弹出。 
-+ **事件队列（Event Queue）**：存储异步事件的队列。当异步操作（如Ajax请求、定时器等）完成时，相关的回调函数会被放入事件队列中等待执行。 
-+ **微任务队列（Microtask Queue）**：存储微任务的队列。微任务是在当前执行栈清空后，事件循环开始之前执行的任务。它们通常用于处理Promise回调等需要快速执行的轻量级任务。 
+计时器、用户交互与网络事件可以来自不同 task source，规范不会承诺所有 task 只存在一个简单 FIFO 队列。`setTimeout(fn, 0)` 只是让回调在满足最小延迟后成为未来 task 的候选，不是立即执行。
 
+## Promise Job 与 microtask
 
-#### 事件循环的过程
-**（1）执行代码**：JavaScript引擎执行同步代码，并将函数调用放入执行栈中。 
+[ECMAScript Jobs 规范](https://tc39.es/ecma262/multipage/executable-code-and-execution-contexts.html#sec-jobs-and-job-queues)定义 Promise reaction 等 Job 的抽象，浏览器把相关 Job 接入 microtask 机制。`queueMicrotask` 也直接安排 microtask。
 
-**（2）处理微任务**：当执行栈为空时，事件循环会检查微任务队列，并执行其中的回调函数，直到微任务队列为空。 
-
-**（3）处理事件**：微任务队列处理完毕后，事件循环会检查事件队列，并执行其中的回调函数，直到事件队列为空。 
-
-**（4）重复步骤2和3**：事件循环会不断重复这个过程，直到执行栈、微任务队列和事件队列都为空。 
-
-#### 示例
 ```javascript
-console.log('Start');
+console.log('A');
 
-setTimeout(function() {
-  console.log('Timeout');
-}, 0);
+setTimeout(() => console.log('B'), 0);
 
-Promise.resolve().then(function() {
-  console.log('Promise');
+queueMicrotask(() => {
+  console.log('C');
+  queueMicrotask(() => console.log('D'));
 });
 
-console.log('End');
+Promise.resolve().then(() => console.log('E'));
+console.log('F');
 ```
 
-在这个示例中，`console.log('Start')`和`console.log('End')`是同步执行的。`setTimeout`和`Promise`的回调函数会被放入事件队列和微任务队列中。由于微任务队列的优先级高于事件队列，`Promise`的回调会先执行，然后是`setTimeout`的回调。
+同步阶段输出 `A F`。task 结束后按入队顺序运行 `C`、`E`；C 新增的 D 仍在同一个 checkpoint 继续运行；计时器在后续 task 才运行。结果是 `A F C E D B`。
 
+推导顺序时记录“哪段同步代码在何时向哪个队列入队”，不要背“Promise 永远比 setTimeout 快”。如果 Promise 是在后续 task 中才创建，时间关系自然不同。
 
-#### 注意：
-+ 事件循环是JavaScript非阻塞行为的关键。
-+ 理解事件循环对于编写高效的JavaScript代码非常重要。
-+ 尽量避免长时间的同步操作，以免阻塞执行栈。
-+ 合理使用异步操作和微任务，以优化性能和用户体验。
+## Microtask starvation
+
+microtask checkpoint 通常持续到队列为空。如果每个 microtask 都再安排一个 microtask，浏览器会一直处理它们，后续 task 与渲染长期得不到机会：
+
+```javascript
+function starve() {
+  queueMicrotask(starve);
+}
+```
+
+因此 microtask 适合在当前同步阶段结束后快速收敛状态，不适合拆分重计算。要让输入或渲染得到机会，应跨 task 主动 yield，或把 CPU 密集工作移动到 Worker。
+
+## Rendering 与 requestAnimationFrame
+
+`requestAnimationFrame` 回调属于浏览器更新渲染的处理时机，适合在下一次绘制前计算视觉状态。它不是普通 microtask，也不保证固定 16.7ms；后台标签、屏幕刷新率和主线程负载都会改变节奏。
+
+读写布局时可在同一帧批量读取，再批量写入，减少强制同步布局。动画中若一个回调运行太久，仍会丢帧；使用 rAF 并不自动消除长任务。
+
+## 浏览器与 Node.js 不同
+
+ECMAScript 只定义语言级 Job 等抽象，具体事件循环由宿主提供。Node.js 基于 libuv，拥有 timers、poll、check 等阶段，并有 `process.nextTick` 的特殊队列。浏览器中的“task/microtask/render”顺序不能原样套到 Node I/O 示例；讨论前先写明运行时和版本。
+
+## 排查卡顿
+
+在 DevTools Performance 中先定位 long task，再展开同步调用栈、microtask 链、style/layout 与 paint。一个大任务拆成数千 Promise callback 仍可能阻塞同一 checkpoint；真正的优化包括减少工作、分帧、Worker、虚拟化和避免重复布局。
+
+测试异步顺序时不要只依赖固定 sleep。将关键回调记录到数组，等待明确事件或可控 scheduler，再断言相对顺序；对渲染还要用浏览器环境而不是只在 Node 测试。
+
+## 小结
+
+浏览器每轮执行一个 task、完成 microtask checkpoint，并在合适时机更新渲染。同步长任务和无限 microtask 都会阻塞 UI。正确推导依赖实际入队时机与宿主规则，而不是“宏任务/微任务优先级”的口号。
+
+## 参考资料
+
+- [HTML Standard: Event loops](https://html.spec.whatwg.org/multipage/webappapis.html#event-loops)
+- [ECMAScript Jobs and Job Queues](https://tc39.es/ecma262/multipage/executable-code-and-execution-contexts.html#sec-jobs-and-job-queues)
