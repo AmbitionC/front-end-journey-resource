@@ -2,6 +2,10 @@ name: sync-content
 on:
   push:
     branches: [master]
+    # 采集器投递的原始未归档内容（_inbox/）不是发布内容，faas 同步也会忽略非模块路径；
+    # 这里跳过纯 _inbox 改动，避免触发空跑同步。含 interview/ 或 knowledge/ 变更的提交仍会触发。
+    paths-ignore:
+      - '_inbox/**'
   pull_request:
     paths:
       - '.codex/image-resync.txt'

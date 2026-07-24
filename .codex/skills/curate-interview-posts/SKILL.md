@@ -1,0 +1,42 @@
+---
+name: curate-interview-posts
+description: Turn raw collected interview experiences (牛客/nowcoder 面经) from the repository `_inbox/` into a polished interview post under `interview/` and extract reusable knowledge points into `knowledge/`, updating the `_tree.json` manifests. Use when Codex/Claude is asked to 整理面经, 面经入库, 处理面经收件箱, drain the interview inbox, 把牛客面经整理成面经贴, or 从面经提炼知识点 in AmbitionC/front-end-journey-resource. Pairs with the采集器 data-collector, which drops raw entries into `_inbox/nowcoder/`.
+---
+
+# Curate Interview Posts
+
+把 `_inbox/` 里采集器投递的原始面经，整理成网站可发布的规范**面经贴**，并从中提炼可复用的**知识点**。本 skill 是「采集 → 加工发布」两层流水线的加工层；采集由 [data-collector](https://github.com/AmbitionC/data-collector) 负责。
+
+**项目模式**：以 `AmbitionC/front-end-journey-resource` 为内容唯一真相源。动手前先看仓库当前状态，不要依赖记忆里的路径/schema。整理发布只改本仓库，**不要**为发布去改 `fe-journey-faas` / `front-end-journey` / `front-end-journey-manager`。详见 [references/fe-journey-integration.md](references/fe-journey-integration.md)。
+
+## 输入
+
+`_inbox/<source>/<日期-ID-标题>/`（当前 `<source>` 主要是 `nowcoder`），每条含：
+
+- `original.md`：frontmatter（title/author/source/source_url/collected_at/kind）+ 原始面经正文。
+- `meta.json`：`url/author/publishTime/suggestedTags/summary/images` 等。
+- `assets/`：随文图片。
+
+用户可指定处理范围（某条、某公司、全部）；未指定则处理 `_inbox/` 下全部条目。
+
+## 每条的处理流程
+
+1. **读原文**：读 `original.md` + `meta.json`，理解这是哪家公司、什么岗位/轮次、考了哪些题。
+2. **脱敏（强制）**：面经属于公开发布内容，务必去除个人隐私 —— 真实姓名、手机号/微信/邮箱、身份证、具体薪资数字、可定位到个人的细节。保留公司、岗位、轮次、题目与答题思路。
+3. **写面经贴** → `interview/<公司目录>/<key>.md`：
+   - 归到已有公司分组（见 `interview/_tree.json`，如 腾讯/`Tencent`、阿里/`alibaba`、字节/`bytedance`、美团/`meituan` …）；查不到合适公司分组时新建一个顶层公司节点。
+   - 用仓库既有面经贴风格：按题目分节（`#### （1）…`），每题给出清晰、准确、可教学的解答，而非照抄口水话。必要时补充标准答案与易错点。
+   - 在 `interview/_tree.json` 对应公司分组下 upsert 叶子 `{ label, key, isLeaf: true, filePath, tags }`（`filePath` 为公司目录，`key` 为文件名去掉 `.md`，全库唯一；`tags` 用考点如 `JavaScript`/`React`/`手写题`/`系统设计`）。
+4. **提炼知识点** → `knowledge/<子路径>/<key>.md`：
+   - 对面经中值得沉淀的通用考点（如「事件循环」「Promise.all 手写」「HTTP 缓存」），判断知识库是否已有：
+     - 已有：可在面经贴中链接过去，或补充完善既有知识点，不重复造。
+     - 没有：调用 [`generate-knowledge-docs`](../generate-knowledge-docs/SKILL.md) 生成渐进式图文知识文档，并在 `knowledge/_tree.json` upsert 叶子。
+   - 用向量/词法检索或直接查 `knowledge/_tree.json` 判断重复，避免碎片化。
+5. **出队**：整理发布成功后删除 `_inbox/` 中该条目（含 `assets/`）。
+6. **图片**：面经贴/知识点若要用采集到的图，按 [references/fe-journey-integration.md](references/fe-journey-integration.md) 放到 `images/` 由同步流程发布；不要外链 `_inbox/assets`。
+
+## 发布
+
+在仓库默认分支（`master`）提交整理产出（`interview/`、`knowledge/`、对应 `_tree.json`，以及被删除的 `_inbox` 条目）。合入 `master` 后由仓库的 `sync.yml` Action 自动同步到 OSS/DB/网站/检索 —— 无需手动调用 faas。提交前请复核 diff（尤其脱敏），把关面经质量与隐私。
+
+`_tree.json` 校验：改完跑 `npm run validate:tree` 确认叶子与文件一致、key 唯一。
