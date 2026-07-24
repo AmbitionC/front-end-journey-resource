@@ -41,7 +41,8 @@ const CSS = `
   * { box-sizing: border-box; }
   body { font-family: "Noto Sans CJK SC","Noto Sans SC","PingFang SC","Microsoft YaHei",-apple-system,sans-serif;
     color:#1f2328; font-size:13px; line-height:1.75; margin:0; }
-  h1.cover { font-size:30px; font-weight:700; margin:40vh 0 0; text-align:center; page-break-after:always; color:#26251e; }
+  h1.cover { font-size:30px; font-weight:700; margin:38vh 0 0; text-align:center; page-break-after:always; color:#26251e; }
+  h1.cover .sub { font-size:15px; font-weight:500; color:#7a8a7d; margin-top:14px; }
   h2.section { font-size:20px; font-weight:600; margin:28px 0 12px; padding-bottom:6px; border-bottom:2px solid #40b35d; color:#26251e; page-break-before:always; }
   article { page-break-inside:auto; margin:0 0 22px; }
   article > h3 { font-size:16px; font-weight:600; margin:18px 0 8px; color:#111; }
@@ -59,14 +60,18 @@ const CSS = `
   .foot { margin-top:8px; text-align:center; color:#b8b6ad; font-size:11px; }
 `;
 
-function buildHtml(cat) {
+/** 为某个二级分类节点构建整册 HTML（封面=二级分类名，章节=更深层目录） */
+function buildHtml(sub, parentLabel) {
   const out = [];
-  collectLeaves(cat, [], out);
+  collectLeaves(sub, [], out);
   if (!out.length) return null;
-  let body = `<h1 class="cover">${esc(cat.label)}<div class="foot">FrontEnd Journey · 会员资料</div></h1>`;
+  let body =
+    `<h1 class="cover">${esc(sub.label)}` +
+    `<div class="sub">${esc(parentLabel)}</div>` +
+    `<div class="foot">FrontEnd Journey · 会员资料</div></h1>`;
   let lastSection = '';
   for (const { leaf, trail } of out) {
-    const section = trail.slice(1).join(' · '); // 去掉顶层分类名
+    const section = trail.slice(1).join(' · '); // 去掉本二级分类名，保留更深层目录
     if (section && section !== lastSection) {
       body += `<h2 class="section">${esc(section)}</h2>`;
       lastSection = section;
@@ -97,42 +102,54 @@ async function main() {
     console.warn('[build-materials] 未配置 OSS_ACCESS_KEY_ID/SECRET，仅本地产出 dist，不上传。');
   }
 
-  const categories = [];
+  const now = new Date().toISOString();
+  const groups = [];
+  let total = 0;
+
+  // 按「一级分类 → 二级分类」拆分：每个二级分类一册 PDF（控制单册体积）
   for (const cat of tree) {
-    const built = buildHtml(cat);
-    if (!built) {
-      console.log(`skip ${cat.key}: 无已发布文章`);
-      continue;
-    }
-    const page = await browser.newPage();
-    await page.setContent(built.html, { waitUntil: 'networkidle0', timeout: 120000 });
-    const pdf = await page.pdf({
-      format: 'A4',
-      printBackground: true,
-      margin: { top: '18mm', bottom: '18mm', left: '16mm', right: '16mm' },
-    });
-    await page.close();
-
-    const buf = Buffer.from(pdf);
-    writeFileSync(join(DIST, `${cat.key}.pdf`), buf);
-    const updatedAt = new Date().toISOString();
-
-    if (client) {
-      await client.put(`${OSS_PREFIX}${cat.key}.pdf`, buf, {
-        headers: { 'Content-Type': 'application/pdf', 'x-oss-object-acl': 'private' },
+    const subs = Array.isArray(cat.children) ? cat.children : [];
+    const items = [];
+    for (const sub of subs) {
+      // 二级节点本身可能直接是叶子（无更深分层）——也按一册处理
+      const built = buildHtml(sub, cat.label);
+      if (!built) {
+        console.log(`skip ${cat.key}/${sub.key}: 无已发布文章`);
+        continue;
+      }
+      const page = await browser.newPage();
+      await page.setContent(built.html, { waitUntil: 'networkidle0', timeout: 120000 });
+      const pdf = await page.pdf({
+        format: 'A4',
+        printBackground: true,
+        margin: { top: '18mm', bottom: '18mm', left: '16mm', right: '16mm' },
       });
+      await page.close();
+
+      const buf = Buffer.from(pdf);
+      writeFileSync(join(DIST, `${sub.key}.pdf`), buf);
+
+      if (client) {
+        await client.put(`${OSS_PREFIX}${sub.key}.pdf`, buf, {
+          headers: { 'Content-Type': 'application/pdf', 'x-oss-object-acl': 'private' },
+        });
+      }
+      items.push({
+        key: sub.key,
+        label: sub.label,
+        updatedAt: now,
+        sizeBytes: buf.length,
+        articleCount: built.count,
+      });
+      total += 1;
+      console.log(
+        `built ${cat.key}/${sub.key}: ${built.count} 篇, ${(buf.length / 1024 / 1024).toFixed(2)}MB`,
+      );
     }
-    categories.push({
-      key: cat.key,
-      label: cat.label,
-      updatedAt,
-      sizeBytes: buf.length,
-      articleCount: built.count,
-    });
-    console.log(`built ${cat.key}: ${built.count} 篇, ${(buf.length / 1024 / 1024).toFixed(2)}MB`);
+    if (items.length) groups.push({ key: cat.key, label: cat.label, items });
   }
 
-  const manifest = { generatedAt: new Date().toISOString(), categories };
+  const manifest = { generatedAt: now, version: 2, groups };
   const manifestStr = JSON.stringify(manifest, null, 2);
   writeFileSync(join(DIST, 'manifest.json'), manifestStr);
   if (client) {
@@ -142,7 +159,9 @@ async function main() {
   }
 
   await browser.close();
-  console.log(`done: ${categories.length} 个分类 PDF${client ? ' 已上传 OSS' : '（本地）'}。`);
+  console.log(
+    `done: ${groups.length} 个一级分类 / ${total} 册二级 PDF${client ? ' 已上传 OSS' : '（本地）'}。`,
+  );
 }
 
 main().catch((e) => {
