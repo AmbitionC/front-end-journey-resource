@@ -2,6 +2,7 @@
 // 内容源：knowledge/_tree.json（一级分类=顶层节点）；叶子文件 knowledge/<filePath>/<key>.md。
 // 图片：markdown 内已是公网 OSS 绝对地址，puppeteer 直接联网加载，无需重写。
 // 运行：node scripts/build-materials.mjs   （CI 里带 OSS_* 环境变量即上传；无则只产出本地 dist）
+// 注：OSS secrets 配好后手动重跑一次，把二级 PDF 首次私有上传 OSS。
 import { readFileSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
