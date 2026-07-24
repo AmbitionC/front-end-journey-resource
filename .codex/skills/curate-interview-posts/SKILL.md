@@ -23,10 +23,12 @@ description: Turn raw collected interview experiences (牛客/nowcoder 面经) f
 
 1. **读原文**：读 `original.md` + `meta.json`，理解这是哪家公司、什么岗位/轮次、考了哪些题。
 2. **脱敏（强制）**：面经属于公开发布内容，务必去除个人隐私 —— 真实姓名、手机号/微信/邮箱、身份证、具体薪资数字、可定位到个人的细节。保留公司、岗位、轮次、题目与答题思路。
-3. **写面经贴** → `interview/<公司目录>/<key>.md`：
-   - 归到已有公司分组（见 `interview/_tree.json`，如 腾讯/`Tencent`、阿里/`alibaba`、字节/`bytedance`、美团/`meituan` …）；查不到合适公司分组时新建一个顶层公司节点。
-   - 用仓库既有面经贴风格：按题目分节（`#### （1）…`），每题给出清晰、准确、可教学的解答，而非照抄口水话。必要时补充标准答案与易错点。
-   - 在 `interview/_tree.json` 对应公司分组下 upsert 叶子 `{ label, key, isLeaf: true, filePath, tags }`（`filePath` 为公司目录，`key` 为文件名去掉 `.md`，全库唯一；`tags` 用考点如 `JavaScript`/`React`/`手写题`/`系统设计`）。
+3. **写面经贴** → `interview/<目录>/<key>.md`：
+   - **判断归属**：
+     - **公司面经**（能对应到某公司某岗某轮）：归到已有公司分组（见 `interview/_tree.json`，如 腾讯/`Tencent`、阿里/`alibaba`、字节/`bytedance`、美团/`meituan` …）；查不到合适公司分组时新建一个顶层公司节点。
+     - **专题/题集面经**（无具体公司，如「AI 面试题合集」「手写题合集」这类按主题聚合、常带 `#…题解#` 标签的帖子）：归到一个「综合/专题」顶层分组（如 `common`，label「综合面经」），按主题建子分组；这类帖子往往更适合把重点放在**知识点提炼**（第 4 步），面经贴本身作为题目索引。
+   - 用仓库既有面经贴风格：按题目分节（`#### （1）…`），每题给出清晰、准确、可教学的解答，而非照抄口水话。必要时补充标准答案与易错点。原帖只有问题没有答案时，由你补齐高质量解答。
+   - 在 `interview/_tree.json` 对应分组下 upsert 叶子 `{ label, key, isLeaf: true, filePath, tags }`（`filePath` 为目录，`key` 为文件名去掉 `.md`，全库唯一；`tags` 用考点如 `JavaScript`/`React`/`手写题`/`系统设计`/`Agent`）。
 4. **提炼知识点** → `knowledge/<子路径>/<key>.md`：
    - 对面经中值得沉淀的通用考点（如「事件循环」「Promise.all 手写」「HTTP 缓存」），判断知识库是否已有：
      - 已有：可在面经贴中链接过去，或补充完善既有知识点，不重复造。
