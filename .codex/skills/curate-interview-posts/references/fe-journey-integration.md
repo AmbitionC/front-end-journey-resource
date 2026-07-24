@@ -34,7 +34,7 @@ interview 叶子：
 }
 ```
 
-knowledge 叶子：
+knowledge 叶子（含热度；`heat`/`currRank` 见 [dedup-and-heat.md](dedup-and-heat.md)）：
 
 ```json
 {
@@ -42,9 +42,13 @@ knowledge 叶子：
   "key": "event-loop",
   "isLeaf": true,
   "filePath": "js-es6-ts/runtime",
-  "contentStatus": "published"
+  "contentStatus": "published",
+  "heat": 6,
+  "currRank": 4
 }
 ```
+
+`heat`（复现来源数，排序真相源）与 `currRank`（0~5 火苗展示）是加工阶段维护的额外字段，faas 同步原样透传、网站火苗与热度排序直接消费，**无需改后端或前端**。
 
 规则：
 
