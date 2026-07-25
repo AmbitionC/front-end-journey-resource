@@ -4,9 +4,15 @@
   "type": "module",
   "scripts": {
     "migrate:tree": "node scripts/migrate-tree.mjs",
-    "validate:tree": "node scripts/validate-tree.mjs"
+    "validate:tree": "node scripts/validate-tree.mjs",
+    "build:materials": "node scripts/build-materials.mjs"
   },
   "devDependencies": {
     "tsx": "^4.19.0"
+  },
+  "dependencies": {
+    "ali-oss": "^6.23.0",
+    "markdown-it": "^14.1.0",
+    "puppeteer": "^24.10.0"
   }
 }

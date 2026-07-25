@@ -1,0 +1,56 @@
+name: Build member material PDFs
+
+# 知识点内容变更时，按一级分类重建会员资料 PDF 并以私有 ACL 上传 OSS。
+# 内容编辑经 manager→faas 写回本仓 knowledge/**，push 即触发＝「知识点更新自动重建对应 PDF」。
+on:
+  push:
+    branches: [master, main]
+    paths:
+      - 'knowledge/**'
+      - 'scripts/build-materials.mjs'
+      - '.github/workflows/build-materials.yml'
+  workflow_dispatch: {}
+
+concurrency:
+  group: build-materials
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 中文字体：PDF 渲染 CJK 必需
+      - name: Install CJK fonts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends fonts-noto-cjk fonts-noto-color-emoji
+          sudo fc-cache -f
+
+      - name: Install deps
+        run: npm install --no-audit --no-fund
+
+      # puppeteer v24 自带 Chromium 下载；确保可用
+      - name: Ensure Chromium
+        run: npx puppeteer browsers install chrome
+
+      - name: Build & upload material PDFs
+        env:
+          OSS_BUCKET: ${{ secrets.OSS_BUCKET }}
+          OSS_REGION: ${{ secrets.OSS_REGION }}
+          OSS_ACCESS_KEY_ID: ${{ secrets.OSS_ACCESS_KEY_ID }}
+          OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
+        run: npm run build:materials
+
+      - name: Upload artifacts (调试留档)
+        uses: actions/upload-artifact@v4
+        with:
+          name: material-pdfs
+          path: dist/materials/*.pdf
+          if-no-files-found: warn
+          retention-days: 7
