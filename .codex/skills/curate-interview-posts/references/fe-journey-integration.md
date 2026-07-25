@@ -44,11 +44,12 @@ knowledge 叶子（含热度；`heat`/`currRank` 见 [dedup-and-heat.md](dedup-a
   "filePath": "js-es6-ts/runtime",
   "contentStatus": "published",
   "heat": 6,
-  "currRank": 4
+  "currRank": 4,
+  "updatedAt": "2026-07-25"
 }
 ```
 
-`heat`（复现来源数，排序真相源）与 `currRank`（0~5 火苗展示）是加工阶段维护的额外字段，faas 同步原样透传、网站火苗与热度排序直接消费，**无需改后端或前端**。
+`updatedAt`（最近新增/更新日期）驱动站点的「NEW」标记（只标最近 5 条、限 30 天，新内容顶替旧标记），新增/实质更新时设为当天。`heat`（复现来源数，排序真相源）与 `currRank`（0~5 火苗展示）也是加工阶段维护的额外字段，faas 同步原样透传、网站火苗与热度排序直接消费，**无需改后端或前端**。
 
 规则：
 

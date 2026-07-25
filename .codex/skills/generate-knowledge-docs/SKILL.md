@@ -25,7 +25,7 @@ Ask a question only when different interpretations of the title would produce ma
 
 When the request concerns FrontEnd Journey knowledge content, read and follow [references/fe-journey-integration.md](references/fe-journey-integration.md). Treat `AmbitionC/front-end-journey-resource` as the content source of truth. Inspect the repository's current default branch before changing anything; do not rely on remembered paths or schemas when the repository differs.
 
-**去重与热度**：创建或更新知识点前，先做语义去重（同一考点只留一条，哪怕表述不同），并维护叶子的 `heat`/`currRank`（复现越多越靠前）——规则见 [`../curate-interview-posts/references/dedup-and-heat.md`](../curate-interview-posts/references/dedup-and-heat.md)。宁可给既有知识点加权 / 补内容，也不要造语义重复的新条目。
+**去重与热度**：创建或更新知识点前，先做语义去重（同一考点只留一条，哪怕表述不同），并维护叶子的 `heat`/`currRank`（复现越多越靠前）与 `updatedAt`（新增/实质更新设为当天，驱动站点「NEW」标记）——规则见 [`../curate-interview-posts/references/dedup-and-heat.md`](../curate-interview-posts/references/dedup-and-heat.md)。宁可给既有知识点加权 / 补内容，也不要造语义重复的新条目。
 
 Prefer a local checkout when creating or modifying batches. A writable GitHub integration is also acceptable when it can create a branch and apply the complete article/image change atomically. Do not publish unless the user asks. In this project, “发布” means branch → pull request → merge into `master`; the configured resource-repository Action performs the actual synchronization.
 

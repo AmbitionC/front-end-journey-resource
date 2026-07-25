@@ -36,6 +36,15 @@
 
 叶子上同时写 `heat`（真相源，用于排序与再计算）与 `currRank`（网站火苗展示）。faas 同步会原样透传叶子上的额外字段，无需改后端。
 
+## 三之二、`updatedAt` 与「NEW」标记
+
+叶子上还有一个 `updatedAt`（`YYYY-MM-DD`）：**新增或实质性更新一篇文章时，把它设为当天日期**。站点据此在导航树与索引上打「NEW」小标 —— 只标最近 5 条且限 30 天内，**新内容进来会把最旧的标记顶替掉**，所以不必担心标记泛滥。
+
+- 新建文章：`updatedAt` = 当天。
+- 实质性更新（补充新角度、重写章节）：刷新为当天，让它重新获得曝光。
+- 仅登记「出现于」来源、微调 heat 这类轻改动：可不刷新，避免把 NEW 位挤占给没有新内容的条目。
+- 存量回填：`node scripts/backfill-updated-at.mjs --write`（取该文件最近一次提交日期，真实 git 历史，不臆造）。
+
 ## 四、叶子示例（带热度）
 
 ```json
@@ -46,7 +55,8 @@
   "filePath": "js-es6-ts/runtime",
   "contentStatus": "published",
   "heat": 6,
-  "currRank": 4
+  "currRank": 4,
+  "updatedAt": "2026-07-25"
 }
 ```
 
