@@ -35,6 +35,21 @@ for (const mod of MODULES) {
     if (!existsSync(file)) { console.warn(`[${mod}] 缺少文件: ${mod}/${leaf.filePath}/${leaf.key}.md`); missingFiles++; }
   }
 
+  // 规则 1.5:非叶子节点也必须有 key —— faas 的 upsertLeaf 按 parentKey 定位父节点，
+  // 缺 key 的分组无法从后台挂载文章（历史上 5 个公司分组曾缺 key）。
+  const groupsMissingKey = [];
+  (function walkGroups(nodes) {
+    for (const n of nodes) {
+      if (n.isLeaf) continue;
+      if (!n.key) groupsMissingKey.push(n.label || JSON.stringify(n));
+      if (n.children) walkGroups(n.children);
+    }
+  })(tree);
+  if (groupsMissingKey.length) {
+    console.error(`[${mod}] 分组缺少 key: ${groupsMissingKey.join(', ')}`);
+    errors++;
+  }
+
   // 规则 2:key 在模块内唯一
   const keys = ls.map(l => l.key);
   const dup = keys.filter((k, i) => keys.indexOf(k) !== i);

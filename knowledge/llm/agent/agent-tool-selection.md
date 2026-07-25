@@ -80,6 +80,10 @@ Progressive discovery 的每一层仍要经过权限过滤。只隐藏具体函�
 
 可靠选择管线先建立受控 catalog，用身份与策略做硬过滤，再在允许集合中召回、匹配和排序。模型只看少量候选，可以明确放弃；执行前根据实际参数重新授权。Discovery 帮助找到工具，authorization 才决定能否使用，两者永远不能互相替代。
 
+## 出现于（热度来源）
+
+- [Agent Skill / AI 工程面试题（12 问）](../../../interview/common/ai/common-ai-agent-skill-1.md) —— 牛客网公开讨论帖：Skill 路由评测怎么设计、命中率不佳且只能命中一个时如何在选择层补救、挂 100 个 Skill 如何提升召回/准确/F1。Skill 选择与工具选择是同一套两段式检索 + 精排问题。
+
 ## 参考资料
 
 - [Model Context Protocol — Tools](https://modelcontextprotocol.io/specification/2025-11-25/server/tools)

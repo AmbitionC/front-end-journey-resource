@@ -806,6 +806,15 @@
             "currRank": 5
           },
           {
+            "label": "工具发现、选择与路由",
+            "key": "agent-tool-selection",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published",
+            "heat": 7,
+            "currRank": 4
+          },
+          {
             "label": "智能体定义、类型、PEAS 与 Agent Loop",
             "key": "agent-architecture",
             "isLeaf": true,
@@ -977,15 +986,6 @@
             "currRank": 4
           },
           {
-            "label": "工具发现、选择与路由",
-            "key": "agent-tool-selection",
-            "isLeaf": true,
-            "filePath": "llm/agent",
-            "contentStatus": "published",
-            "heat": 6,
-            "currRank": 4
-          },
-          {
             "label": "工具结果校验、解析与反馈",
             "key": "agent-tool-result-validation",
             "isLeaf": true,
@@ -1110,6 +1110,15 @@
             "contentStatus": "published",
             "heat": 6,
             "currRank": 4
+          },
+          {
+            "label": "Agent Skill：渐进式披露、热插拔与版本治理",
+            "key": "agent-skill-design",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published",
+            "heat": 1,
+            "currRank": 1
           }
         ]
       },

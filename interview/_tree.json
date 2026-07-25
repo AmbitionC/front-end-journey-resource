@@ -280,7 +280,8 @@
           }
         ]
       }
-    ]
+    ],
+    "key": "Antfin"
   },
   {
     "label": "美团",
@@ -364,7 +365,8 @@
           }
         ]
       }
-    ]
+    ],
+    "key": "Meituan"
   },
   {
     "label": "小红书",
@@ -420,7 +422,8 @@
           }
         ]
       }
-    ]
+    ],
+    "key": "Redbook"
   },
   {
     "label": "滴滴",
@@ -443,7 +446,8 @@
           }
         ]
       }
-    ]
+    ],
+    "key": "Didi"
   },
   {
     "label": "携程",
@@ -477,7 +481,8 @@
           }
         ]
       }
-    ]
+    ],
+    "key": "Ctrip"
   },
   {
     "label": "OPPO",
@@ -542,6 +547,31 @@
               "JavaScript",
               "TypeScript",
               "CSS"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "综合面经",
+    "key": "common",
+    "children": [
+      {
+        "label": "AI / Agent",
+        "key": "common-ai",
+        "children": [
+          {
+            "label": "Agent Skill / AI 工程面试题（12 问）",
+            "key": "common-ai-agent-skill-1",
+            "isLeaf": true,
+            "filePath": "common/ai",
+            "tags": [
+              "Agent",
+              "LLM",
+              "RAG",
+              "MCP",
+              "系统设计"
             ]
           }
         ]
