@@ -24,7 +24,7 @@
 
 #### 适合人群
 - 面试在即，想<strong><font color="#d97706">快速查漏补缺</font></strong>、让表达更有条理
-- <strong><font color="#d97706">转前端/校招/社招冲刺</font></strong>，需要一条清晰的准备路线
+- <strong><font color="#d97706">转 Agent 方向/校招/社招冲刺</font></strong>，需要一条清晰的准备路线
 - 会做但不太会讲，项目亮点想“说出味儿”
 - 老被追问到点上，想知道“<strong><font color="#d97706">如何被问、如何答</font></strong>”
 
