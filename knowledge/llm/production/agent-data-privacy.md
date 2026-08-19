@@ -51,6 +51,19 @@ Agent 会把用户内容送入模型、工具、记忆、日志和评估系统�
 
 模型推断的敏感属性单独标记 inferred，不展示为事实，也不用于高影响决策。用户更正后传播到派生记录，避免旧推断反复出现。
 
+## 从本地优先项目检查真实边界
+
+“数据保存在本机”是一个重要架构选择，但不是完整的隐私结论。以开源项目 [OpenBiliClaw](https://github.com/whiteguo233/OpenBiliClaw) 为例：项目 README 说明核心行为、推荐和对话数据默认保存在本机 SQLite，同时由浏览器插件连接多个内容平台，并允许用户配置外部 LLM。这个组合很典型，审计时要把“存储位置”和“处理/传输路径”拆开看。
+
+| 数据面 | 需要确认的问题 |
+|---|---|
+| 本机数据库 | 存了哪些原始行为、画像和对话？备份、导出、删除是否覆盖向量索引与缓存？ |
+| 浏览器会话 | 插件读取哪些站点权限、Cookie 或页面内容？是否按来源隔离并限制只读任务？ |
+| 模型调用 | prompt、画像、推荐候选是否会发给外部模型？provider 的保留策略和区域是什么？ |
+| 跨端访问 | 局域网 Web、移动端与插件之间如何鉴权？是否默认只监听回环地址？ |
+
+因此，评估 local-first Agent 时不能只看“有没有云端账号”。至少还要核对网络出站、浏览器权限、凭证存储、模型 provider、局域网暴露和删除传播。README 是发现这些边界的入口，最终结论应以配置默认值、实际网络请求和代码审计为证据。
+
 ## 测试与监控
 
 测试跨租户检索、日志注入秘密、工具错误回显、删除传播、同意撤回、备份恢复、调试开关、导出和第三方超时。使用 synthetic secrets/canary 检查是否出现在 prompt、trace、对象存储和告警。
@@ -61,9 +74,15 @@ Agent 会把用户内容送入模型、工具、记忆、日志和评估系统�
 
 Agent 隐私保护从数据流和 purpose 开始：能不收集就不收集，进入上下文与工具前最小化，记忆和遥测按分类隔离/脱敏，访问最小授权，保留有 TTL，删除覆盖所有派生副本。日志 redaction 只是其中一层，真正目标是让每份数据都有可解释的用途、owner 和生命周期。
 
+## 出现于（热度来源）
+
+- [OpenBiliClaw](https://github.com/whiteguo233/OpenBiliClaw) —— 本地优先、浏览器插件、跨平台来源与外部模型并存的真实 Agent 项目，用于说明“本机存储不等于全链路不出机”。
+<!-- source-cluster: cluster-960b9f0dd13b -->
+
 ## 参考资料
 
 - [NIST — Privacy Framework](https://www.nist.gov/privacy-framework)
 - [OpenTelemetry — Handling sensitive data](https://opentelemetry.io/docs/security/handling-sensitive-data/)
 - [OpenTelemetry — Log redaction](https://opentelemetry.io/docs/languages/dotnet/logs/redaction/)
 - [NIST — AI RMF Generative AI Profile](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf)
+- [OpenBiliClaw — README](https://github.com/whiteguo233/OpenBiliClaw)
