@@ -1288,6 +1288,16 @@
             "updatedAt": "2026-07-17"
           },
           {
+            "label": "敏感数据、日志脱敏与隐私保护",
+            "key": "agent-data-privacy",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "published",
+            "heat": 7,
+            "currRank": 4,
+            "updatedAt": "2026-08-20"
+          },
+          {
             "label": "Agent 可观测性与全链路 Tracing",
             "key": "ai-observability",
             "isLeaf": true,
@@ -1370,16 +1380,6 @@
           {
             "label": "幂等性、重复执行与副作用控制",
             "key": "agent-idempotency",
-            "isLeaf": true,
-            "filePath": "llm/production",
-            "contentStatus": "published",
-            "heat": 6,
-            "currRank": 4,
-            "updatedAt": "2026-07-16"
-          },
-          {
-            "label": "敏感数据、日志脱敏与隐私保护",
-            "key": "agent-data-privacy",
             "isLeaf": true,
             "filePath": "llm/production",
             "contentStatus": "published",
