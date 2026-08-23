@@ -174,6 +174,13 @@ AIMA 常用以下类型帮助理解能力递进：
 
 智能体是一套围绕环境闭环运行的系统。PEAS 先定义目标、环境、可见信息和可执行动作；Agent Loop 再把观察、决策、行动、校验和停止串起来。LLM 提供灵活决策，但可靠性来自清晰工具、显式状态、代码级权限、停止条件、评测与人工控制。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 开发二面（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-7.md)（cluster-29b42b69483b）
+- [腾讯后端 AI 开发实习面试（2026 年 4 月）](../../../interview/tencent/ai/tencent-ai-3.md)（cluster-6ba888767532）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Russell & Norvig：Intelligent Agents](https://aima.cs.berkeley.edu/4th-ed/pdfs/newchap02.pdf)

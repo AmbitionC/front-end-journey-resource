@@ -51,4 +51,3 @@ LangChain 提供模型、Prompt、检索器和工具等组件；LangGraph 用图
 ## 来源
 
 - [牛客：腾讯 AI 应用开发面试原始记录](https://www.nowcoder.com/feed/main/detail/acd3e53eecbc405296335edae4d5cf88)（B 级证据，发布于 2026-04-10；真实面试信号，不代表企业官方题库）
-

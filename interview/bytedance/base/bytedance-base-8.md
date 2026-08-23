@@ -41,4 +41,3 @@ Harness 把“被测 Agent”与“测试环境”解耦：统一构造任务、
 ## 来源
 
 - [牛客：字节 Agent 自进化方向实习一面原始记录](https://www.nowcoder.com/feed/main/detail/617d30ab75dc40db81b291b8b98dfb13)（A 级第一手证据，发布于 2026-08-05；真实面试信号，不代表企业官方题库）
-

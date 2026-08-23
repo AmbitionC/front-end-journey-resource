@@ -93,6 +93,12 @@ action 不应直接“先发请求、后写状态”，否则进程在中间崩�
 
 状态机让 Agent 行为从“提示词可能这么做”变成“只有这些迁移合法”。事件描述事实，纯 guard 检查条件，action 通过 outbox 和幂等边界执行，版本化实例抵御并发与迟到结果。显式非法事件和状态驻留指标，则让复杂异步流程真正可调试。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [腾讯 AI 应用开发面试：跨会话记忆与多 Agent（2026 年 4 月）](../../../interview/tencent/ai/tencent-ai-4.md)（cluster-2fc69bb3d45d）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [W3C — State Chart XML (SCXML)](https://www.w3.org/TR/scxml/)

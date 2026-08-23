@@ -49,4 +49,3 @@
 ## 来源
 
 - [牛客：蚂蚁 Code Agent 与 Agent 应用两轮面试原始记录](https://www.nowcoder.com/feed/main/detail/2b924dc7f978410aa15a31bdf62ffe94)（B 级证据，发布于 2026-04-25；推广内容已移除；真实面试信号，不代表企业官方题库）
-

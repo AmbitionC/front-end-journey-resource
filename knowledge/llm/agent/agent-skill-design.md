@@ -59,10 +59,13 @@ Skill 是把「某类任务该怎么做」固化下来、供 Agent 按需加载�
 
 ## 出现于（热度来源）
 
-- [腾讯后端 AI 开发实习面试](../../../interview/tencent/ai/tencent-ai-3.md)（cluster-6ba888767532）
-- [腾讯 AI 应用开发：跨会话记忆与多 Agent](../../../interview/tencent/ai/tencent-ai-4.md)（cluster-2fc69bb3d45d）
-- [蚂蚁 Code Agent 与 Agent 应用两轮面试](../../../interview/antfin/ai/antfin-ai-2.md)（cluster-2d9e5f67fe86）
-- [蚂蚁后端 AI 开发一面](../../../interview/antfin/ai/antfin-ai-3.md)（cluster-e11f3de537e5）
+<!-- interview-source-history:start -->
+- [蚂蚁 Code Agent 与 Agent 应用两轮面试（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-2.md)（cluster-2d9e5f67fe86）
+- [腾讯 AI 应用开发面试：跨会话记忆与多 Agent（2026 年 4 月）](../../../interview/tencent/ai/tencent-ai-4.md)（cluster-2fc69bb3d45d）
+- [腾讯后端 AI 开发实习面试（2026 年 4 月）](../../../interview/tencent/ai/tencent-ai-3.md)（cluster-6ba888767532）
+- [腾讯 Agent 项目二面：记忆、RAG 与 MCP（2026 年 5 月）](../../../interview/tencent/ai/tencent-ai-2.md)（cluster-7568c06b462a）
+- [蚂蚁后端 AI 开发一面：Agent、Redis 与短链系统（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-3.md)（cluster-e11f3de537e5）
+<!-- interview-source-history:end -->
 
 ## 参考资料
 

@@ -78,9 +78,11 @@ Redis 主从复制通常是异步的。主节点写入锁后、复制到从节�
 
 ## 出现于（热度来源）
 
-- [字节后端开发秋招二面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-6.md)（A 级第一手面经，cluster-5ab99b43f10b）
-- [字节后端与 Code Review Agent 秋招一面](../../../interview/bytedance/base/bytedance-base-9.md)（A 级第一手面经，cluster-5b6e09ee89e6）
-- [蚂蚁后端 AI 开发一面](../../../interview/antfin/ai/antfin-ai-3.md)（B 级第一手面经，cluster-e11f3de537e5）
+<!-- interview-source-history:start -->
+- [字节后端开发秋招二面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-6.md)（cluster-5ab99b43f10b）
+- [字节后端与 Code Review Agent 秋招一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-9.md)（cluster-5b6e09ee89e6）
+- [蚂蚁后端 AI 开发一面：Agent、Redis 与短链系统（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-3.md)（cluster-e11f3de537e5）
+<!-- interview-source-history:end -->
 
 ## 参考资料
 

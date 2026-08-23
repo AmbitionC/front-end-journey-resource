@@ -41,4 +41,3 @@
 ## 来源
 
 - [牛客：腾讯后端 AI 开发实习面试原始记录](https://www.nowcoder.com/feed/main/detail/a99d5b46ab7848f992d8ae48a60c009c)（B 级第一手证据，发布于 2026-04-27；真实面试信号，不代表企业官方题库）
-

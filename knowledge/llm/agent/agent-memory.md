@@ -265,6 +265,12 @@ memory_tool.execute("forget", strategy="capacity_based", threshold=policy.capaci
 
 ---
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 开发二面（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-7.md)（cluster-29b42b69483b）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [MemGPT: Towards LLMs as Operating Systems](https://arxiv.org/abs/2310.08560)

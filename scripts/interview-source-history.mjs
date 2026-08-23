@@ -1,5 +1,5 @@
 import { access, readFile } from 'node:fs/promises';
-import { join, normalize, resolve, sep } from 'node:path';
+import { dirname, join, normalize, relative, resolve, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 export const INTERVIEW_SOURCE_HISTORY = '.codex/interview-source-history.json';
@@ -16,6 +16,15 @@ function isObject(value) {
 
 function stringArray(value) {
   return Array.isArray(value) && value.every(item => typeof item === 'string' && item.length > 0);
+}
+
+function normalizedNowcoderUrl(value) {
+  const url = new URL(value);
+  url.hostname = url.hostname.replace(/^www\./u, '');
+  url.pathname = url.pathname.replace(/\/+$/u, '') || '/';
+  url.search = '';
+  url.hash = '';
+  return url.toString();
 }
 
 function leaves(nodes) {
@@ -50,12 +59,19 @@ export async function validateInterviewSourceHistory(resourceRoot, history) {
   }
 
   let treeLeaves = [];
+  let knowledgeLeaves = [];
   try {
     treeLeaves = leaves(JSON.parse(await readFile(join(resourceRoot, 'interview', '_tree.json'), 'utf8')));
   } catch {
     errors.push('无法读取 interview/_tree.json');
   }
+  try {
+    knowledgeLeaves = leaves(JSON.parse(await readFile(join(resourceRoot, 'knowledge', '_tree.json'), 'utf8')));
+  } catch {
+    errors.push('无法读取 knowledge/_tree.json');
+  }
   const leafByKey = new Map(treeLeaves.map(leaf => [leaf.key, leaf]));
+  const knowledgeKeys = new Set(knowledgeLeaves.map(leaf => leaf.key));
   const seenUrls = new Map();
   const publishedClusters = new Map();
 
@@ -69,9 +85,12 @@ export async function validateInterviewSourceHistory(resourceRoot, history) {
     if (record.source !== 'nowcoder') errors.push(`${prefix} 的 source 必须是 nowcoder`);
     if (typeof record.url !== 'string' || !/^https:\/\/(?:www\.)?nowcoder\.com\//u.test(record.url)) {
       errors.push(`${prefix} 的 URL 不是牛客 HTTPS 地址`);
-    } else if (seenUrls.has(record.url)) {
-      errors.push(`${prefix} 与 ${seenUrls.get(record.url)} 使用了重复 URL`);
-    } else seenUrls.set(record.url, id);
+    } else {
+      const canonicalUrl = normalizedNowcoderUrl(record.url);
+      if (seenUrls.has(canonicalUrl)) {
+        errors.push(`${prefix} 与 ${seenUrls.get(canonicalUrl)} 使用了重复 URL`);
+      } else seenUrls.set(canonicalUrl, id);
+    }
     if (typeof record.contentHash !== 'string' || !/^[a-f0-9]{16}$/u.test(record.contentHash)) {
       errors.push(`${prefix} 的 contentHash 必须是 16 位小写十六进制`);
     }
@@ -87,6 +106,9 @@ export async function validateInterviewSourceHistory(resourceRoot, history) {
     if (Array.isArray(record.knowledgeKeys) && new Set(record.knowledgeKeys).size !== record.knowledgeKeys.length) {
       errors.push(`${prefix} 的 knowledgeKeys 含重复项`);
     }
+    for (const knowledgeKey of Array.isArray(record.knowledgeKeys) ? record.knowledgeKeys : []) {
+      if (!knowledgeKeys.has(knowledgeKey)) errors.push(`${prefix} 的知识点不存在：${knowledgeKey}`);
+    }
     if (typeof record.processedAt !== 'string' || Number.isNaN(Date.parse(record.processedAt))) {
       errors.push(`${prefix} 的 processedAt 必须是 ISO 时间`);
     }
@@ -99,6 +121,12 @@ export async function validateInterviewSourceHistory(resourceRoot, history) {
       errors.push(`${prefix} 发布面经缺少 articleKey`);
     } else if (!leafByKey.has(record.articleKey)) {
       errors.push(`${prefix} 的 articleKey 不在 interview/_tree.json`);
+    } else {
+      const leaf = leafByKey.get(record.articleKey);
+      const expectedFile = `interview/${leaf.filePath}/${leaf.key}.md`;
+      if (!Array.isArray(record.publicFiles) || !record.publicFiles.includes(expectedFile)) {
+        errors.push(`${prefix} 的 articleKey 与 publicFiles 不匹配：应包含 ${expectedFile}`);
+      }
     }
     if (!Array.isArray(record.publicFiles) || record.publicFiles.length === 0) {
       errors.push(`${prefix} 发布面经缺少 publicFiles`);
@@ -118,6 +146,38 @@ export async function validateInterviewSourceHistory(resourceRoot, history) {
     if (previous) {
       errors.push(`同一 cluster 只能有一篇公开面经：${record.clusterId}（${previous}、${id}）`);
     } else publishedClusters.set(record.clusterId, id);
+  }
+
+  for (const topic of topicFrequencies(history)) {
+    const knowledgeLeaf = knowledgeLeaves.find(leaf => leaf.key === topic.key);
+    if (!knowledgeLeaf) continue;
+    const knowledgeFile = join(resourceRoot, 'knowledge', knowledgeLeaf.filePath, `${knowledgeLeaf.key}.md`);
+    let contents;
+    try {
+      contents = await readFile(knowledgeFile, 'utf8');
+    } catch {
+      errors.push(`知识点正文不存在：${topic.key}`);
+      continue;
+    }
+    for (const cluster of topic.clusters) {
+      const sourceId = publishedClusters.get(cluster);
+      const articleKey = sourceId ? history.records[sourceId]?.articleKey : undefined;
+      const interviewLeaf = articleKey ? leafByKey.get(articleKey) : undefined;
+      if (!interviewLeaf) {
+        errors.push(`知识点 ${topic.key} 的来源 cluster 没有公开面经：${cluster}`);
+        continue;
+      }
+      const interviewFile = join(
+        resourceRoot,
+        'interview',
+        interviewLeaf.filePath,
+        `${interviewLeaf.key}.md`,
+      );
+      const link = relative(dirname(knowledgeFile), interviewFile).split(sep).join('/');
+      if (!contents.includes(`](${link.startsWith('.') ? link : `./${link}`})（${cluster}）`)) {
+        errors.push(`知识点 ${topic.key} 缺少来源反链：${cluster}`);
+      }
+    }
   }
   return errors;
 }

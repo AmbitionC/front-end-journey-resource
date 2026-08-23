@@ -268,6 +268,13 @@ Agent 间通信分三种模式：
 - **Q：什么场景不适合多 Agent？**  
   任务简单、上下文短、延迟敏感（如实时问答）、调试预算有限的场景，单 Agent 更合适。多 Agent 的额外复杂性要有对应的收益才值得引入。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [腾讯 AI 应用开发面试：跨会话记忆与多 Agent（2026 年 4 月）](../../../interview/tencent/ai/tencent-ai-4.md)（cluster-2fc69bb3d45d）
+- [蚂蚁 Agent 开发一面：多 Agent 并发与质量保障（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-1.md)（cluster-cc9e5dd82505）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system)

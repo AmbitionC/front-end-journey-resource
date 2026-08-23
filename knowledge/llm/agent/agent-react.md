@@ -347,6 +347,12 @@ ReAct 适合探索性任务，每步行动取决于上一步结果，无法提�
 **Q：ReAct 循环失败最常见的原因是什么？**
 三类：(1) 格式解析失败（模型不遵循 Thought/Action 格式）；(2) 工具执行出错（参数格式错误、网络超时等）；(3) 陷入无意义的重复循环（同样的 Action 被执行多次但 Observation 没有新信息）。建议在循环中检测重复 Action，视为死循环并提前退出。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [腾讯 AI 应用开发面试：跨会话记忆与多 Agent（2026 年 4 月）](../../../interview/tencent/ai/tencent-ai-4.md)（cluster-2fc69bb3d45d）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)

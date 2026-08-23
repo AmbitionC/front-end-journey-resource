@@ -186,8 +186,10 @@ RAG 评估是一套诊断系统，而不是排行榜。先用检索指标判断�
 
 ## 出现于（热度来源）
 
-- [腾讯 Agent 开发一面：RAG、安全与后端工程](../../../interview/tencent/ai/tencent-ai-1.md)（cluster-b2e2c5d9624b）
-- [腾讯 Agent 项目二面：记忆、RAG 与 MCP](../../../interview/tencent/ai/tencent-ai-2.md)（cluster-7568c06b462a）
+<!-- interview-source-history:start -->
+- [腾讯 Agent 项目二面：记忆、RAG 与 MCP（2026 年 5 月）](../../../interview/tencent/ai/tencent-ai-2.md)（cluster-7568c06b462a）
+- [腾讯 Agent 开发一面：RAG、安全与后端工程（2026 年 5 月）](../../../interview/tencent/ai/tencent-ai-1.md)（cluster-b2e2c5d9624b）
+<!-- interview-source-history:end -->
 
 ## 参考资料
 

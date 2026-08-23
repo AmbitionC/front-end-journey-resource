@@ -67,6 +67,12 @@ Trace 记录 operation ID、attempt、错误类别、sideEffectState、backoff�
 
 失败恢复是一棵语义决策树：先分类，再决定 retry、wait、fix、reconcile、compensate、escalate 或 stop。重试受 deadline、预算、幂等和断路器限制；持久执行保存控制流，外部副作用仍需对账与补偿。最终以可验证状态结束，而不是以“异常被捕获”结束。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [蚂蚁 Agent 开发一面：多 Agent 并发与质量保障（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-1.md)（cluster-cc9e5dd82505）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [AWS — Control and limit retry calls](https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_mitigate_interaction_failure_limit_retries.html)

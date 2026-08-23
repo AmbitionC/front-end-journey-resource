@@ -101,7 +101,9 @@ Token 决定序列如何表示和计量；Context Window 规定一次请求的�
 
 ## 出现于（热度来源）
 
-- [字节 Agent 开发日常实习一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-5.md)（A 级第一手面经，cluster-1cea2513548a）
+<!-- interview-source-history:start -->
+- [字节 Agent 开发日常实习一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-5.md)（cluster-1cea2513548a）
+<!-- interview-source-history:end -->
 
 ## 参考资料
 

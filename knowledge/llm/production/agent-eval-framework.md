@@ -684,8 +684,10 @@ Agent 评估需要同时覆盖三个层次：工具调用层（选了正确的�
 
 ## 出现于（热度来源）
 
-- [字节 Agent 自进化方向实习一面](../../../interview/bytedance/base/bytedance-base-8.md)（cluster-b2a1c4e10ed2）
-- [字节后端与 Code Review Agent 秋招一面](../../../interview/bytedance/base/bytedance-base-9.md)（cluster-5b6e09ee89e6）
+<!-- interview-source-history:start -->
+- [字节后端与 Code Review Agent 秋招一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-9.md)（cluster-5b6e09ee89e6）
+- [字节 Agent 自进化方向实习一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-8.md)（cluster-b2a1c4e10ed2）
+<!-- interview-source-history:end -->
 
 ## 参考资料
 

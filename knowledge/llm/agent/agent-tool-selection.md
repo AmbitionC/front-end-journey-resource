@@ -82,7 +82,9 @@ Progressive discovery 的每一层仍要经过权限过滤。只隐藏具体函�
 
 ## 出现于（热度来源）
 
-- [字节 Agent 开发二面](../../../interview/bytedance/base/bytedance-base-7.md)（cluster-29b42b69483b）—— 追问 MCP 与自定义工具的选型边界。
+<!-- interview-source-history:start -->
+- [字节 Agent 开发二面（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-7.md)（cluster-29b42b69483b）
+<!-- interview-source-history:end -->
 
 ## 参考资料
 

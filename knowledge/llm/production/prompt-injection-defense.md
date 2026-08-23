@@ -419,6 +419,12 @@ SQL Injection 有完美的技术解法——参数化查询从语法层面将"�
 
 OWASP 将 Prompt Injection 作为 LLM 应用的核心风险之一，并建议采用输入标记、指令/数据分离、最小权限、人工审批和输出处理等分层控制。分类名称与排序会随材料版本变化，不应把某次编号当成永久风险优先级。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [腾讯 Agent 开发一面：RAG、安全与后端工程（2026 年 5 月）](../../../interview/tencent/ai/tencent-ai-1.md)（cluster-b2e2c5d9624b）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OWASP LLM Prompt Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html)

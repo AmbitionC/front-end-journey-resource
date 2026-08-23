@@ -70,6 +70,12 @@ SLO 包括任务成功、工具正确、安全违规、首响应/完成延迟、
 
 Agent 发布以版本包为原子单位，把代码、模型、prompt、工具、策略、索引和 eval 绑定。候选先离线、影子和金丝雀，Kubernetes 负责实例 rollout 与探针，业务门控根据质量、安全、延迟、成本和错误率决定放量。状态外置、任务绑定版本、回滚与补偿分开，才能可靠升级。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [腾讯 AI 应用开发面试：跨会话记忆与多 Agent（2026 年 4 月）](../../../interview/tencent/ai/tencent-ai-4.md)（cluster-2fc69bb3d45d）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [NIST — AI RMF Generative AI Profile](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf)

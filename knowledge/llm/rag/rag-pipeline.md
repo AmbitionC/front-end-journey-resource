@@ -331,6 +331,14 @@ async function answerWithRag(question: string, session: Session) {
 - [ ] 评测覆盖 Recall@k、排序、忠实度、延迟、成本和隔离。
 - [ ] trace 足以区分数据、召回、重排和生成故障。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 开发二面（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-7.md)（cluster-29b42b69483b）
+- [蚂蚁 Code Agent 与 Agent 应用两轮面试（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-2.md)（cluster-2d9e5f67fe86）
+- [腾讯后端 AI 开发实习面试（2026 年 4 月）](../../../interview/tencent/ai/tencent-ai-3.md)（cluster-6ba888767532）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Retrieval-Augmented Generation 原始论文](https://arxiv.org/abs/2005.11401)

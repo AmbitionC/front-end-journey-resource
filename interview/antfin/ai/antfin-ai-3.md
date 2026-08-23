@@ -43,4 +43,3 @@ Agent 是带目标、状态、工具和运行循环的系统；RAG 是在生成�
 ## 来源
 
 - [牛客：蚂蚁后端 AI 开发一面原始记录](https://www.nowcoder.com/feed/main/detail/db9292f9a3dc4102bec84668a7f2df18)（B 级第一手证据，发布于 2026-04-26；真实面试信号，不代表企业官方题库）
-

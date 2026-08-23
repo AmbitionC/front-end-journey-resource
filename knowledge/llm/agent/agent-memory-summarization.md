@@ -93,6 +93,13 @@ type SummaryFact = {
 
 安全摘要保留两条线：原始证据线和可执行状态线。系统从不可变记录提取带来源事实，解析指代与冲突，生成工作摘要，经过覆盖和不确定性校验后才替换 active context 中的旧消息。摘要可以短，但不能失去证据、版本和边界。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [腾讯 AI 应用开发面试：跨会话记忆与多 Agent（2026 年 4 月）](../../../interview/tencent/ai/tencent-ai-4.md)（cluster-2fc69bb3d45d）
+- [腾讯 Agent 项目二面：记忆、RAG 与 MCP（2026 年 5 月）](../../../interview/tencent/ai/tencent-ai-2.md)（cluster-7568c06b462a）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Liu et al. — Lost in the Middle](https://arxiv.org/abs/2307.03172)

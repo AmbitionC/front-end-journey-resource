@@ -18,7 +18,8 @@
             "updatedAt": "2026-08-23",
             "interviewClusters": [
               "cluster-1cea2513548a"
-            ]
+            ],
+            "interviewBaseHeat": 11
           },
           {
             "label": "Transformer 架构原理",
@@ -208,7 +209,8 @@
             "interviewClusters": [
               "cluster-2d9e5f67fe86",
               "cluster-cc9e5dd82505"
-            ]
+            ],
+            "interviewBaseHeat": 6
           },
           {
             "label": "Prompt 设计基础与原则",
@@ -625,7 +627,8 @@
               "cluster-29b42b69483b",
               "cluster-2d9e5f67fe86",
               "cluster-6ba888767532"
-            ]
+            ],
+            "interviewBaseHeat": 6
           },
           {
             "label": "RAG 评估与优化",
@@ -639,7 +642,8 @@
             "interviewClusters": [
               "cluster-7568c06b462a",
               "cluster-b2e2c5d9624b"
-            ]
+            ],
+            "interviewBaseHeat": 6
           },
           {
             "label": "Hybrid Search 混合检索",
@@ -652,7 +656,8 @@
             "updatedAt": "2026-07-14",
             "interviewClusters": [
               "cluster-cc9e5dd82505"
-            ]
+            ],
+            "interviewBaseHeat": 6
           },
           {
             "label": "Embedding 原理与向量相似度",
@@ -891,7 +896,8 @@
             "updatedAt": "2026-07-18",
             "interviewClusters": [
               "cluster-2fc69bb3d45d"
-            ]
+            ],
+            "interviewBaseHeat": 10
           },
           {
             "label": "代码执行、浏览器与文件操作沙箱",
@@ -904,7 +910,8 @@
             "updatedAt": "2026-07-16",
             "interviewClusters": [
               "cluster-b2a1c4e10ed2"
-            ]
+            ],
+            "interviewBaseHeat": 10
           },
           {
             "label": "MCP / A2A 智能体通信协议",
@@ -921,7 +928,8 @@
               "cluster-7568c06b462a",
               "cluster-cc9e5dd82505",
               "cluster-e11f3de537e5"
-            ]
+            ],
+            "interviewBaseHeat": 6
           },
           {
             "label": "工作流状态、检查点与断点续跑",
@@ -937,7 +945,8 @@
               "cluster-5ab99b43f10b",
               "cluster-5b6e09ee89e6",
               "cluster-b2a1c4e10ed2"
-            ]
+            ],
+            "interviewBaseHeat": 7
           },
           {
             "label": "事件驱动 Agent 与异步编排",
@@ -962,7 +971,8 @@
               "cluster-2d9e5f67fe86",
               "cluster-5b6e09ee89e6",
               "cluster-b2e2c5d9624b"
-            ]
+            ],
+            "interviewBaseHeat": 6
           },
           {
             "label": "工具发现、选择与路由",
@@ -975,7 +985,8 @@
             "updatedAt": "2026-07-25",
             "interviewClusters": [
               "cluster-29b42b69483b"
-            ]
+            ],
+            "interviewBaseHeat": 7
           },
           {
             "label": "智能体定义、类型、PEAS 与 Agent Loop",
@@ -989,7 +1000,8 @@
             "interviewClusters": [
               "cluster-29b42b69483b",
               "cluster-6ba888767532"
-            ]
+            ],
+            "interviewBaseHeat": 6
           },
           {
             "label": "多智能体协作与适用边界",
@@ -1003,7 +1015,8 @@
             "interviewClusters": [
               "cluster-2fc69bb3d45d",
               "cluster-cc9e5dd82505"
-            ]
+            ],
+            "interviewBaseHeat": 6
           },
           {
             "label": "Agent 记忆系统架构设计",
@@ -1017,7 +1030,8 @@
             "interviewClusters": [
               "cluster-2fc69bb3d45d",
               "cluster-7568c06b462a"
-            ]
+            ],
+            "interviewBaseHeat": 6
           },
           {
             "label": "会话摘要、压缩与记忆提炼",
@@ -1031,7 +1045,8 @@
             "interviewClusters": [
               "cluster-2fc69bb3d45d",
               "cluster-7568c06b462a"
-            ]
+            ],
+            "interviewBaseHeat": 6
           },
           {
             "label": "短期记忆、长期记忆与检索",
@@ -1044,7 +1059,8 @@
             "updatedAt": "2026-07-18",
             "interviewClusters": [
               "cluster-29b42b69483b"
-            ]
+            ],
+            "interviewBaseHeat": 6
           },
           {
             "label": "任务规划、分解与动态重规划",
@@ -1057,7 +1073,8 @@
             "updatedAt": "2026-07-16",
             "interviewClusters": [
               "cluster-29b42b69483b"
-            ]
+            ],
+            "interviewBaseHeat": 6
           },
           {
             "label": "用状态机建模 Agent 行为",
@@ -1070,7 +1087,8 @@
             "updatedAt": "2026-07-16",
             "interviewClusters": [
               "cluster-2fc69bb3d45d"
-            ]
+            ],
+            "interviewBaseHeat": 6
           },
           {
             "label": "工具结果校验、解析与反馈",
@@ -1083,7 +1101,8 @@
             "updatedAt": "2026-07-16",
             "interviewClusters": [
               "cluster-cc9e5dd82505"
-            ]
+            ],
+            "interviewBaseHeat": 6
           },
           {
             "label": "实现第一个 Thought-Action-Observation Agent",
@@ -1320,7 +1339,8 @@
               "cluster-6ba888767532",
               "cluster-7568c06b462a",
               "cluster-e11f3de537e5"
-            ]
+            ],
+            "interviewBaseHeat": 1
           }
         ]
       },
@@ -1381,7 +1401,8 @@
               "cluster-2d9e5f67fe86",
               "cluster-b2a1c4e10ed2",
               "cluster-cc9e5dd82505"
-            ]
+            ],
+            "interviewBaseHeat": 6
           },
           {
             "label": "生产级 Agent 评估系统设计",
@@ -1395,7 +1416,8 @@
             "interviewClusters": [
               "cluster-5b6e09ee89e6",
               "cluster-b2a1c4e10ed2"
-            ]
+            ],
+            "interviewBaseHeat": 6
           },
           {
             "label": "敏感数据、日志脱敏与隐私保护",
@@ -1418,7 +1440,8 @@
             "updatedAt": "2026-07-18",
             "interviewClusters": [
               "cluster-b2e2c5d9624b"
-            ]
+            ],
+            "interviewBaseHeat": 6
           },
           {
             "label": "失败分类、重试、补偿与恢复",
@@ -1431,7 +1454,8 @@
             "updatedAt": "2026-07-16",
             "interviewClusters": [
               "cluster-cc9e5dd82505"
-            ]
+            ],
+            "interviewBaseHeat": 6
           },
           {
             "label": "Agent 威胁建模与安全测试",
@@ -1444,7 +1468,8 @@
             "updatedAt": "2026-07-16",
             "interviewClusters": [
               "cluster-b2e2c5d9624b"
-            ]
+            ],
+            "interviewBaseHeat": 6
           },
           {
             "label": "Agent 服务部署、扩缩容与版本发布",
@@ -1457,7 +1482,8 @@
             "updatedAt": "2026-07-16",
             "interviewClusters": [
               "cluster-2fc69bb3d45d"
-            ]
+            ],
+            "interviewBaseHeat": 6
           },
           {
             "label": "线上反馈、评估集与持续改进闭环",
@@ -1470,7 +1496,8 @@
             "updatedAt": "2026-07-16",
             "interviewClusters": [
               "cluster-b2a1c4e10ed2"
-            ]
+            ],
+            "interviewBaseHeat": 6
           },
           {
             "label": "并发控制、资源隔离与公平调度",
@@ -1483,7 +1510,8 @@
             "updatedAt": "2026-08-23",
             "interviewClusters": [
               "cluster-cc9e5dd82505"
-            ]
+            ],
+            "interviewBaseHeat": 6
           },
           {
             "label": "Agent 可观测性与全链路 Tracing",
@@ -2051,7 +2079,8 @@
             "interviewClusters": [
               "cluster-b2e2c5d9624b",
               "cluster-e11f3de537e5"
-            ]
+            ],
+            "interviewBaseHeat": 10
           },
           {
             "label": "对象存储、预签名 URL 与生命周期",
@@ -2116,7 +2145,8 @@
               "cluster-5ab99b43f10b",
               "cluster-5b6e09ee89e6",
               "cluster-e11f3de537e5"
-            ]
+            ],
+            "interviewBaseHeat": 1
           },
           {
             "label": "数据库索引原理与查询优化",

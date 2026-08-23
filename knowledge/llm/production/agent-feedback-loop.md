@@ -72,6 +72,12 @@
 
 持续改进是一条有证据的飞轮：生产 trace 和反馈先分诊，形成脱敏、可重放、带期望属性与切片的案例；评估集经过治理，多维评分与人工校准验证候选；金丝雀再确认真实表现，回归则回滚并补充案例。反馈推动评估，不直接改写生产 Agent。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 自进化方向实习一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-8.md)（cluster-b2a1c4e10ed2）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenAI — Evaluation best practices](https://developers.openai.com/api/docs/guides/evaluation-best-practices)

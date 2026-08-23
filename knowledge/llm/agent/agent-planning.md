@@ -101,6 +101,12 @@ Replan 输入为当前 envelope、未完成任务、结构化 observation 和剩
 
 可靠 planning 是一个受边界约束的状态机：Goal/Constraints 与完成 rubric 锁定，任务以 DAG 表达依赖和证据，Act/Observe 提供可审计反馈，Replan 只修改未完成部分。预算、审批和 Loop Guard 让动态性服务于目标，而不是变成无限自治。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 开发二面（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-7.md)（cluster-29b42b69483b）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Yao et al. — ReAct](https://arxiv.org/abs/2210.03629)

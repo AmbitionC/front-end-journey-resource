@@ -88,6 +88,12 @@ async function acceptResult(raw: unknown, ctx: ValidationContext) {
 
 工具结果验证把“返回了什么”转换为“系统允许相信和使用什么”。先保留协议与执行错误语义，再按受控 schema、业务不变量、策略、来源、新鲜度和大小逐层收口；失败明确重试、拒绝、隔离或人工复核。只有 accepted evidence 可以进入 Agent 状态。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [蚂蚁 Agent 开发一面：多 Agent 并发与质量保障（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-1.md)（cluster-cc9e5dd82505）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Model Context Protocol — Tools](https://modelcontextprotocol.io/specification/2025-11-25/server/tools)

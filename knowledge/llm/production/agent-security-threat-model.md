@@ -78,6 +78,12 @@ RAG 文档、网页和邮件都可能夹带间接注入。索引前扫描不能�
 
 Agent 威胁模型从资产、攻击者能力、数据流和信任边界出发，把注入、工具滥用、记忆污染、身份伪造和外泄放到具体路径上，再配置预防、检测和响应。控制在模型之外强制，测试沿攻击路径执行，并随系统版本持续更新。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [腾讯 Agent 开发一面：RAG、安全与后端工程（2026 年 5 月）](../../../interview/tencent/ai/tencent-ai-1.md)（cluster-b2e2c5d9624b）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [NIST — Adversarial Machine Learning Taxonomy](https://csrc.nist.gov/pubs/ai/100/2/e2025/final)

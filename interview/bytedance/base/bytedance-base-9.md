@@ -41,4 +41,3 @@ Harness 执行并评估一个 Agent；Meta Harness 更关注比较不同 Harness
 ## 来源
 
 - [牛客：字节后端与 Code Review Agent 秋招一面原始记录](https://www.nowcoder.com/feed/main/detail/cea7915ef9bf496aaa3623842122c995)（A 级第一手证据，面试日期 2026-08-19；真实面试信号，不代表企业官方题库）
-

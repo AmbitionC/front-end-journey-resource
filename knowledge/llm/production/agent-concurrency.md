@@ -80,7 +80,9 @@ Worker 池按主要瓶颈分开：CPU 任务、模型协调、浏览器和高内
 
 ## 出现于（热度来源）
 
-- [蚂蚁 Agent 开发一面：多 Agent 并发与质量保障](../../../interview/antfin/ai/antfin-ai-1.md)（cluster-cc9e5dd82505）
+<!-- interview-source-history:start -->
+- [蚂蚁 Agent 开发一面：多 Agent 并发与质量保障（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-1.md)（cluster-cc9e5dd82505）
+<!-- interview-source-history:end -->
 
 ## 参考资料
 

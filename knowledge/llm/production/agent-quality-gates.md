@@ -123,6 +123,14 @@ Review 队列有 SLA、所需角色和决策模板。人工批准记录理由、
 
 发布质量门禁是一条从确定性检查、契约、离线质量、安全到 Canary 和持续生产验证的证据阶梯。策略固定指标、阈值、样本、动作、责任和例外生命周期，并绑定不可变候选。门禁既要阻止明确风险，也要诚实表达证据不足；它的可信度来自持续强制、可测试和可审计，而不是绿色图标数量。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [蚂蚁 Code Agent 与 Agent 应用两轮面试（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-2.md)（cluster-2d9e5f67fe86）
+- [字节 Agent 自进化方向实习一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-8.md)（cluster-b2a1c4e10ed2）
+- [蚂蚁 Agent 开发一面：多 Agent 并发与质量保障（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-1.md)（cluster-cc9e5dd82505）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [NIST：AI Test, Evaluation, Validation and Verification](https://www.nist.gov/ai-test-evaluation-validation-and-verification-tevv)

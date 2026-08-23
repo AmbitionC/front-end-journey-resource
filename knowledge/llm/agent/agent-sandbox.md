@@ -66,6 +66,12 @@ Linux namespace 可以让进程看到不同的进程树、挂载点、网络、�
 
 可信沙箱来自多层、最小、默认拒绝的能力边界：namespace 隔离视图，seccomp 和 capability 缩小内核面，文件与网络策略限制可达资源，预算控制消耗，监督器确认生命周期，输出扫描保护下游。任何单层都可能失效，因此设计必须允许下一层继续阻断并留下证据。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 自进化方向实习一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-8.md)（cluster-b2a1c4e10ed2）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Linux man-pages — namespaces(7)](https://man7.org/linux/man-pages/man7/namespaces.7.html)

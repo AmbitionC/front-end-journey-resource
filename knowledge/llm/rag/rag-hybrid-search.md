@@ -146,6 +146,12 @@ RRF 的优点是稳定、少调参、容易建立基线；局限是它主要利�
 
 混合检索是一条分层流水线：结构化过滤守住边界，BM25 保住精确词，向量检索理解语义，RRF 稳定融合，重排器做细粒度判断，评测集负责证明改动有效。先建立可解释的基线，再用数据决定是否引入动态权重和复杂学习排序。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [蚂蚁 Agent 开发一面：多 Agent 并发与质量保障（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-1.md)（cluster-cc9e5dd82505）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Elastic：What is hybrid search?](https://www.elastic.co/what-is/hybrid-search)

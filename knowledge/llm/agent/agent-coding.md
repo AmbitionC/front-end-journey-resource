@@ -80,9 +80,11 @@ Trace 记录搜索、读取、编辑、命令、退出码、diff 统计和验证
 
 ## 出现于（热度来源）
 
-- [字节后端与 Code Review Agent 秋招一面](../../../interview/bytedance/base/bytedance-base-9.md)（cluster-5b6e09ee89e6）
-- [腾讯 Agent 开发一面：RAG、安全与后端工程](../../../interview/tencent/ai/tencent-ai-1.md)（cluster-b2e2c5d9624b）
-- [蚂蚁 Code Agent 与 Agent 应用两轮面试](../../../interview/antfin/ai/antfin-ai-2.md)（cluster-2d9e5f67fe86）
+<!-- interview-source-history:start -->
+- [蚂蚁 Code Agent 与 Agent 应用两轮面试（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-2.md)（cluster-2d9e5f67fe86）
+- [字节后端与 Code Review Agent 秋招一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-9.md)（cluster-5b6e09ee89e6）
+- [腾讯 Agent 开发一面：RAG、安全与后端工程（2026 年 5 月）](../../../interview/tencent/ai/tencent-ai-1.md)（cluster-b2e2c5d9624b）
+<!-- interview-source-history:end -->
 
 ## 参考资料
 

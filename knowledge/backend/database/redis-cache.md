@@ -430,6 +430,13 @@ Write-Behind 在 Redis 宕机时会丢失尚未落盘的数据，不适合订单
 - **什么是 Semantic Cache？适合 Agent 的哪类场景？**  
   语义缓存用向量相似度代替精确字符串匹配，适合 FAQ 问答、知识检索、代码解释等问题集中、答案可重复利用的 LLM 调用场景，可将缓存命中率从接近 0 提升到 60%+ 以上。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [腾讯 Agent 开发一面：RAG、安全与后端工程（2026 年 5 月）](../../../interview/tencent/ai/tencent-ai-1.md)（cluster-b2e2c5d9624b）
+- [蚂蚁后端 AI 开发一面：Agent、Redis 与短链系统（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-3.md)（cluster-e11f3de537e5）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Redis client-side caching](https://redis.io/docs/latest/develop/use/client-side-caching/)
