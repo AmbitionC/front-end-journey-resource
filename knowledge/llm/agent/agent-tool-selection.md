@@ -82,7 +82,7 @@ Progressive discovery 的每一层仍要经过权限过滤。只隐藏具体函�
 
 ## 出现于（热度来源）
 
-- [Agent Skill / AI 工程面试题（12 问）](../../../interview/common/ai/common-ai-agent-skill-1.md) —— 牛客网公开讨论帖：Skill 路由评测怎么设计、命中率不佳且只能命中一个时如何在选择层补救、挂 100 个 Skill 如何提升召回/准确/F1。Skill 选择与工具选择是同一套两段式检索 + 精排问题。
+- [字节 Agent 开发二面](../../../interview/bytedance/base/bytedance-base-7.md)（cluster-29b42b69483b）—— 追问 MCP 与自定义工具的选型边界。
 
 ## 参考资料
 

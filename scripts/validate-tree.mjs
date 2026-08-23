@@ -1,6 +1,10 @@
 // scripts/validate-tree.mjs
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
+import {
+  readInterviewSourceHistory,
+  validateInterviewSourceHistory,
+} from './interview-source-history.mjs';
 
 const ROOT = resolve(import.meta.dirname, '..');
 const MODULES = ['interview', 'knowledge'];
@@ -61,6 +65,14 @@ for (const mod of MODULES) {
   }
   console.log(`[${mod}] 叶子 ${ls.length} 个,校验完成`);
 }
+
+const interviewHistory = await readInterviewSourceHistory(ROOT);
+const interviewHistoryErrors = await validateInterviewSourceHistory(ROOT, interviewHistory);
+for (const error of interviewHistoryErrors) {
+  console.error(`[interview-history] ${error}`);
+  errors++;
+}
+console.log(`[interview-history] 来源记录 ${Object.keys(interviewHistory.records ?? {}).length} 条,校验完成`);
 
 if (errors > 0) { console.error(`\n校验失败:${errors} 个错误`); process.exit(1); }
 if (missingFiles > 0) {

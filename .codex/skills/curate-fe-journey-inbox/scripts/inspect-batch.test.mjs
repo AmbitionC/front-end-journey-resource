@@ -113,3 +113,46 @@ test('separates exclusion, truncation, and malformed inputs without modifying fi
     await rm(root, { recursive: true, force: true });
   }
 });
+
+test('skips an unchanged source already recorded in committed history', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'fe-inspect-history-'));
+  try {
+    await writeEntry(root, 'already-published', meta());
+    await mkdir(join(root, '.codex'), { recursive: true });
+    await writeFile(join(root, '.codex', 'interview-source-history.json'), `${JSON.stringify({
+      schemaVersion: 1,
+      updatedAt: '2026-08-23',
+      records: {
+        a1b2c3d4e5f6: {
+          source: 'nowcoder',
+          url: 'https://www.nowcoder.com/discuss/1001',
+          contentHash: '0123456789abcdef',
+          clusterId: 'cluster-agent-tools',
+          company: 'bytedance',
+          evidenceGrade: 'A',
+          status: 'published',
+          articleKey: 'bytedance-agent-1',
+          publicFiles: ['interview/bytedance/ai/bytedance-agent-1.md'],
+          knowledgeKeys: ['agent-tool-design'],
+          processedAt: '2026-08-23T15:00:00.000Z',
+        },
+      },
+    }, null, 2)}\n`);
+
+    const report = await inspectBatch(root, 'batch-current');
+
+    assert.deepEqual(report.publicContent, []);
+    assert.deepEqual(report.previouslyProcessed, [{
+      clusterId: 'cluster-agent-tools',
+      reason: '来源内容未变化且已有处理记录',
+      paths: ['_inbox/nowcoder/already-published'],
+      sources: [{
+        id: 'a1b2c3d4e5f6',
+        url: 'https://www.nowcoder.com/discuss/1001',
+        contentHash: '0123456789abcdef',
+      }],
+    }]);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});

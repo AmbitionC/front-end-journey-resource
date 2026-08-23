@@ -3,6 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "sync:interview-weights": "node scripts/sync-interview-topic-weights.mjs",
+    "report:interview-topics": "node scripts/interview-source-history.mjs",
+    "test": "node --test test/*.test.mjs .codex/skills/curate-fe-journey-inbox/scripts/*.test.mjs",
     "migrate:tree": "node scripts/migrate-tree.mjs",
     "validate:tree": "node scripts/validate-tree.mjs",
     "build:materials": "node scripts/build-materials.mjs"

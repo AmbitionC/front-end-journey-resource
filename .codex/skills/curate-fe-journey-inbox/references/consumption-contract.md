@@ -51,6 +51,8 @@ Data Collector 固定计划必须以 `sourceMetadata.batchId` 精确限定本轮
 
 使用稳定对象保存 `clusterId`、代表条目、全部来源、主处置、附带分流、公开文件、处理时间、状态（`processed | needs_review`）。重复运行时 upsert，不重复追加。
 
+`processed.json` 是批次内的私有流水；跨批次的永久去重与频次真相源是已提交的 `.codex/interview-source-history.json`。公开、合并、跳过、退役和待复核来源都应按稳定内容 ID upsert。公开记录必须关联唯一 `clusterId`、公开文章和命中的 `knowledgeKeys`；同一 cluster 的转载只能作为合并证据，不能重复增加知识热度。
+
 ## 公开内容门槛
 
 - 面经：有可识别的问题/过程，完成脱敏，答案可被核验。
@@ -70,7 +72,7 @@ Data Collector 固定计划必须以 `sourceMetadata.batchId` 精确限定本轮
 ## 验证清单
 
 1. 输入条目 100% 映射到 cluster，cluster 100% 有主处置。
-2. 检索公开目录，确认无同 URL、同 cluster、语义同义的新重复项。
+2. 检索公开目录并校验 `.codex/interview-source-history.json`，确认无同 URL、同 cluster、语义同义的新重复项。
 3. `npm run validate:tree` 通过。
 4. `git diff --check` 通过，公开 diff 不含 `_inbox`、隐私、推广信息和无关产品改动。
 5. 随机抽查报告来源、评分证据和项目许可证字段。

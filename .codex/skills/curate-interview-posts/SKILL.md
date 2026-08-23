@@ -22,7 +22,7 @@ description: Turn raw collected interview experiences (牛客/nowcoder 面经) f
 ## 每条的处理流程
 
 1. **读原文**：读 `original.md` + `meta.json`，理解这是哪家公司、什么岗位/轮次、考了哪些题。
-2. **原文去重**：先按 [references/dedup-and-heat.md](references/dedup-and-heat.md) §一 判断这条是否已入库（同 URL 幂等；跨 URL 转载比对 `meta.json.contentHash`）。已存在则并入来源、不重复建贴。
+2. **原文去重**：先按 [references/dedup-and-heat.md](references/dedup-and-heat.md) §一 判断这条是否已入库，并先查已提交的 `.codex/interview-source-history.json`（同 URL 幂等；跨 URL 转载按 `clusterId` / `meta.json.contentHash` 聚合）。已存在则并入来源、不重复建贴，也不重复增加知识热度。
 3. **脱敏（强制）**：面经属于公开发布内容，务必去除个人隐私 —— 真实姓名、手机号/微信/邮箱、身份证、具体薪资数字、可定位到个人的细节。保留公司、岗位、轮次、题目与答题思路。
 4. **写面经贴** → `interview/<目录>/<key>.md`：
    - **判断归属**：
@@ -36,7 +36,7 @@ description: Turn raw collected interview experiences (牛客/nowcoder 面经) f
    - **全新** → 调 [`generate-knowledge-docs`](../generate-knowledge-docs/SKILL.md) 生成，`heat: 1`，来源=该面经。
    - 每次改动后把受影响父节点下 `knowledge/_tree.json` 兄弟叶子**按 `heat` 降序稳定重排**，使目录树热点→冷门（网站索引默认已按热度排序、无需改前端）。
    - 面经贴↔知识点互链。
-6. **出队**：普通人工流程按用户确认清理；自动 `publish` 模式在提交前不删除，只有 `master` 推送且该 SHA 的 `sync-content` Action 成功后，才删除本批已成功消费的本地条目（含 `assets/`）。失败、阻塞和待确认项保留。
+6. **记录与出队**：提交前将每条来源的处置和 `knowledgeKeys` upsert 到 `.codex/interview-source-history.json`；`heat` 按其中的唯一 cluster 来源累计。普通人工流程按用户确认清理；自动 `publish` 模式在提交前不删除，只有 `master` 推送且该 SHA 的 `sync-content` Action 成功后，才删除本批已成功消费的本地条目（含 `assets/`）。失败、阻塞和待确认项保留。
 7. **图片**：面经贴/知识点若要用采集到的图，按 [references/fe-journey-integration.md](references/fe-journey-integration.md) 放到 `images/` 由同步流程发布；不要外链 `_inbox/assets`。
 
 ## 发布

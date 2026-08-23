@@ -59,7 +59,10 @@ Skill 是把「某类任务该怎么做」固化下来、供 Agent 按需加载�
 
 ## 出现于（热度来源）
 
-- [Agent Skill / AI 工程面试题（12 问）](../../../interview/common/ai/common-ai-agent-skill-1.md) —— 牛客网公开讨论帖，覆盖热插拔、渐进式披露、Skill/MCP/RAG 辨析、版本治理、依赖与质量标准。
+- [腾讯后端 AI 开发实习面试](../../../interview/tencent/ai/tencent-ai-3.md)（cluster-6ba888767532）
+- [腾讯 AI 应用开发：跨会话记忆与多 Agent](../../../interview/tencent/ai/tencent-ai-4.md)（cluster-2fc69bb3d45d）
+- [蚂蚁 Code Agent 与 Agent 应用两轮面试](../../../interview/antfin/ai/antfin-ai-2.md)（cluster-2d9e5f67fe86）
+- [蚂蚁后端 AI 开发一面](../../../interview/antfin/ai/antfin-ai-3.md)（cluster-e11f3de537e5）
 
 ## 参考资料
 

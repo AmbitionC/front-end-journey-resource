@@ -2,6 +2,7 @@
 import { readFile, readdir, realpath } from 'node:fs/promises';
 import { basename, dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { readInterviewSourceHistory } from '../../../../scripts/interview-source-history.mjs';
 
 const BATCH = /^[A-Za-z0-9][A-Za-z0-9._-]{0,199}$/u;
 const PUBLIC_KINDS = new Set(['interview', 'knowledge']);
@@ -52,6 +53,7 @@ function sourceOf(root, metaPath, meta) {
     id: String(meta.id ?? ''),
     title: String(meta.title ?? ''),
     url: String(meta.url ?? ''),
+    contentHash: String(meta?.feJourney?.contentHash ?? meta?.contentHash ?? ''),
     grade: evidenceGrade(meta),
     path: relative(root, dirname(metaPath)),
     kinds: candidateKinds(meta),
@@ -97,6 +99,8 @@ function privateItem(cluster, eligible, kind) {
 export async function inspectBatch(resourceRoot, batch) {
   if (!BATCH.test(batch) || batch.includes('..')) throw new Error('batch 标识无效');
   const root = await realpath(resolve(resourceRoot));
+  const history = await readInterviewSourceHistory(root);
+  const historyRecords = Object.values(history?.records ?? {});
   const malformed = [];
   const inputs = [];
   for (const requestedPath of await walkMeta(join(root, '_inbox', 'nowcoder'))) {
@@ -151,8 +155,31 @@ export async function inspectBatch(resourceRoot, batch) {
   const project = [];
   const skipped = [];
   const blocked = [];
+  const previouslyProcessed = [];
 
   for (const cluster of clusters) {
+    const changedExistingSource = cluster.members.some(member => {
+      const previous = historyRecords.find(record => record?.url === member.url);
+      return previous && previous.contentHash !== member.contentHash;
+    });
+    const unchangedExistingSource = cluster.members.some(member => historyRecords.some(record =>
+      record?.url === member.url && record.contentHash === member.contentHash &&
+      record.status !== 'needs_review'));
+    const finalizedCluster = historyRecords.some(record =>
+      record?.clusterId === cluster.clusterId && record.status !== 'needs_review');
+    if (!changedExistingSource && (unchangedExistingSource || finalizedCluster)) {
+      previouslyProcessed.push({
+        clusterId: cluster.clusterId,
+        reason: '来源内容未变化且已有处理记录',
+        paths: cluster.members.map(item => item.path),
+        sources: cluster.members.map(item => ({
+          id: item.id,
+          url: item.url,
+          contentHash: item.contentHash,
+        })),
+      });
+      continue;
+    }
     const clean = cluster.members.filter(member => !member.truncated);
     if (clean.length === 0) {
       blocked.push({ clusterId: cluster.clusterId, reason: '正文被截断', paths: cluster.members.map(item => item.path) });
@@ -196,6 +223,7 @@ export async function inspectBatch(resourceRoot, batch) {
     project,
     skipped,
     blocked,
+    previouslyProcessed,
     malformed: malformed.sort((left, right) => left.path.localeCompare(right.path)),
   };
 }

@@ -125,6 +125,12 @@ Anthropic 关于 Agent 评估的实践也建议组合不同评分器，并分别
 
 然后查看调用轨迹：查询如何改写、命中了哪些 chunk、各自分数和版本是什么、上下文怎样截断、模型输出引用了哪里。没有 trace，RAG 调优很容易变成猜测。
 
+### 没有用户反馈时怎样抽样
+
+“用户没点差评”不等于回答正确。线上可按查询类型、租户、模型/索引版本和置信信号做分层抽样，并提高对无结果、低检索分、证据冲突、超长上下文、频繁改写和高风险主题的采样率。抽到的样本由规则、专家或校准后的 Judge 复核，再按数据、召回、排序、上下文组装和生成五层标注根因。
+
+采样率和入选原因必须入日志，否则运营数据会被高风险过采样扭曲。修复后的 bad case 进入冻结回归集，但仍保留独立 holdout，防止团队只优化见过的错误。
+
 ## 七、优化时一次只改一个主要变量
 
 可以按以下顺序迭代：
@@ -178,10 +184,14 @@ Anthropic 关于 Agent 评估的实践也建议组合不同评分器，并分别
 
 RAG 评估是一套诊断系统，而不是排行榜。先用检索指标判断证据是否进入候选集，再用忠实度、相关性和引用检查判断模型是否正确使用证据，最后用任务成功、延迟、成本与安全指标决定是否值得上线。持续保留失败样本，并让每次修复都进入冻结回归集。
 
+## 出现于（热度来源）
+
+- [腾讯 Agent 开发一面：RAG、安全与后端工程](../../../interview/tencent/ai/tencent-ai-1.md)（cluster-b2e2c5d9624b）
+- [腾讯 Agent 项目二面：记忆、RAG 与 MCP](../../../interview/tencent/ai/tencent-ai-2.md)（cluster-7568c06b462a）
+
 ## 参考资料
 
 - [Es et al.：RAGAS: Automated Evaluation of Retrieval Augmented Generation](https://aclanthology.org/2024.eacl-demo.16/)
 - [Stanford CS276：Evaluation Measures in Information Retrieval](https://web.stanford.edu/class/cs276/handouts/EvaluationNew-handout-1-per.pdf)
 - [Lewis et al.：Retrieval-Augmented Generation](https://arxiv.org/abs/2005.11401)
 - [Anthropic：Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents)
-
