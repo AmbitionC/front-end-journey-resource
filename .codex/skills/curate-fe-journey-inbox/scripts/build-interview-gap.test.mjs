@@ -12,6 +12,7 @@ async function writeEntry(root, name, {
   title,
   candidateKinds = ['interview'],
   questions,
+  batchId,
 }) {
   const directory = join(root, '_inbox', 'nowcoder', name);
   await mkdir(directory, { recursive: true });
@@ -25,6 +26,7 @@ async function writeEntry(root, name, {
       company: grade === 'C' ? 'Unknown' : 'ByteDance',
       role: 'Agent 开发',
       round: '一面',
+      ...(batchId ? { batchId } : {}),
     },
     feJourney: {
       clusterId,
@@ -121,4 +123,34 @@ test('builds evidence-gated question gap and operation reports by content cluste
     await readFile(join(root, '_inbox', '_reports', 'operation-topics-2026-08-23.md'), 'utf8'),
     result.operationMarkdown,
   );
+});
+
+test('limits generated reports to the requested Data Collector batch', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'fe-journey-gap-batch-'));
+  await writeEntry(root, 'current', {
+    clusterId: 'cluster-current',
+    grade: 'A',
+    url: 'https://www.nowcoder.com/discuss/current',
+    title: '当前批次',
+    questions: ['如何设计 Agent 记忆？'],
+    batchId: 'batch-current',
+  });
+  await writeEntry(root, 'old', {
+    clusterId: 'cluster-old',
+    grade: 'A',
+    url: 'https://www.nowcoder.com/discuss/old',
+    title: '历史批次',
+    questions: ['如何实现旧批次功能？'],
+    batchId: 'batch-old',
+  });
+
+  const result = await buildInterviewGap(root, {
+    date: '2026-08-23',
+    batch: 'batch-current',
+    write: false,
+  });
+
+  assert.equal(result.summary.inputEntries, 1);
+  assert.match(result.interviewMarkdown, /如何设计 Agent 记忆/);
+  assert.doesNotMatch(result.interviewMarkdown, /旧批次/);
 });

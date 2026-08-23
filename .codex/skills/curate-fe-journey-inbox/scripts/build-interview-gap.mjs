@@ -108,7 +108,7 @@ function evidenceGrade(meta) {
   return raw === 'A' || raw === 'B' ? raw : 'C';
 }
 
-async function inboxEntries(resourceRoot) {
+async function inboxEntries(resourceRoot, batch) {
   const paths = await walk(
     join(resourceRoot, '_inbox'),
     path => basename(path) === 'meta.json' && !path.includes(`${join('_inbox', '_reports')}`),
@@ -121,6 +121,7 @@ async function inboxEntries(resourceRoot) {
     } catch {
       continue;
     }
+    if (batch && meta?.sourceMetadata?.batchId !== batch) continue;
     const originalPath = join(dirname(metaPath), 'original.md');
     let markdown = '';
     try {
@@ -234,7 +235,7 @@ async function atomicWrite(path, content) {
 export async function buildInterviewGap(resourceRoot, options = {}) {
   const root = resolve(resourceRoot);
   const date = options.date ?? new Date().toISOString().slice(0, 10);
-  const entries = await inboxEntries(root);
+  const entries = await inboxEntries(root, options.batch);
   const clusters = groupEntries(entries);
   const eligibleClusters = clusters.filter(cluster =>
     cluster.members.some(member => member.grade === 'A' || member.grade === 'B'));
@@ -314,21 +315,32 @@ export async function buildInterviewGap(resourceRoot, options = {}) {
 function parseArgs(argv) {
   const args = [...argv];
   const root = args.shift();
-  if (!root) throw new Error('用法：build-interview-gap.mjs <resource-root> [--date YYYY-MM-DD]');
+  if (!root) throw new Error('用法：build-interview-gap.mjs <resource-root> [--date YYYY-MM-DD] [--batch ID]');
   let date;
+  let batch;
   while (args.length > 0) {
     const flag = args.shift();
-    if (flag !== '--date') throw new Error(`未知参数：${flag}`);
-    date = args.shift();
-    if (!/^\d{4}-\d{2}-\d{2}$/u.test(date ?? '')) throw new Error('--date 必须是 YYYY-MM-DD');
+    if (flag === '--date') {
+      date = args.shift();
+      if (!/^\d{4}-\d{2}-\d{2}$/u.test(date ?? '')) throw new Error('--date 必须是 YYYY-MM-DD');
+    } else if (flag === '--batch') {
+      batch = args.shift();
+      if (!/^[A-Za-z0-9][A-Za-z0-9._-]{0,199}$/u.test(batch ?? '') || batch.includes('..')) {
+        throw new Error('--batch 标识无效');
+      }
+    } else throw new Error(`未知参数：${flag}`);
   }
-  return { root, date };
+  return { root, date, batch };
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
   try {
-    const { root, date } = parseArgs(process.argv.slice(2));
-    const result = await buildInterviewGap(root, { ...(date ? { date } : {}), write: true });
+    const { root, date, batch } = parseArgs(process.argv.slice(2));
+    const result = await buildInterviewGap(root, {
+      ...(date ? { date } : {}),
+      ...(batch ? { batch } : {}),
+      write: true,
+    });
     process.stdout.write(`${result.interviewPath}\n${result.operationPath}\n`);
   } catch (error) {
     process.stderr.write(`${error instanceof Error ? error.message : error}\n`);

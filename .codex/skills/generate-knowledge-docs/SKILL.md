@@ -29,6 +29,8 @@ When the request concerns FrontEnd Journey knowledge content, read and follow [r
 
 Prefer a local checkout when creating or modifying batches. A writable GitHub integration is also acceptable when it can create a branch and apply the complete article/image change atomically. Do not publish unless the user asks. In this project, “发布” means branch → pull request → merge into `master`; the configured resource-repository Action performs the actual synchronization.
 
+Exception for an explicitly authorized Data Collector end-to-end `publish` batch: keep the exact `batchId` scope, work directly on this repository’s `master` as required by the delivery contract, push the validated article/tree/image change, and wait for that commit’s `sync-content` Action. Do not mark history `published`, report online completion, or remove its local inbox evidence until the Action succeeds.
+
 Routine knowledge publication must change only `AmbitionC/front-end-journey-resource`. Do not edit or redeploy `fe-journey-faas`, `front-end-journey`, `front-end-journey-manager`, or investment services merely to publish an article. Escalate into infrastructure only when the resource Action fails with evidence and the user authorizes that separate fix.
 
 For project batches:

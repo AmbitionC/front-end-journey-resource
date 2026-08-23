@@ -5,7 +5,7 @@
 ## 运行
 
 ```bash
-node .codex/skills/curate-fe-journey-inbox/scripts/build-interview-gap.mjs <resource-root> --date YYYY-MM-DD
+node .codex/skills/curate-fe-journey-inbox/scripts/build-interview-gap.mjs <resource-root> --date YYYY-MM-DD --batch <batchId>
 ```
 
 输出仅位于本地忽略目录：
@@ -16,6 +16,8 @@ node .codex/skills/curate-fe-journey-inbox/scripts/build-interview-gap.mjs <reso
 ## 输入与证据门槛
 
 脚本读取 `_inbox/**/meta.json` 与同目录 `original.md`，按以下顺序确定内容簇：
+
+固定计划交付时 `--batch` 必填，只读取 `sourceMetadata.batchId` 精确匹配的条目；历史人工流程可省略该参数。
 
 1. `feJourney.clusterId`
 2. `feJourney.contentHash`

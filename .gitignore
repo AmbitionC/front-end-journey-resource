@@ -1,5 +1,7 @@
 node_modules/
 .DS_Store
 *.log
+# Data Collector private evidence and operation reports never enter public content commits.
+_inbox/_reports/
 _inbox/*
 !_inbox/README.md

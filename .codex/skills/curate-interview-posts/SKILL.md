@@ -17,7 +17,7 @@ description: Turn raw collected interview experiences (牛客/nowcoder 面经) f
 - `meta.json`：`url/author/publishTime/suggestedTags/summary/images` 等。
 - `assets/`：随文图片。
 
-用户可指定处理范围（某条、某公司、全部）；未指定则处理 `_inbox/` 下全部条目。
+用户可指定处理范围（某条、某公司、全部）；未指定则处理 `_inbox/` 下全部条目。若调用方提供 Data Collector `batchId`，范围必须严格取自 `curate-fe-journey-inbox/scripts/inspect-batch.mjs`，不得混入其他批次。
 
 ## 每条的处理流程
 
@@ -36,11 +36,13 @@ description: Turn raw collected interview experiences (牛客/nowcoder 面经) f
    - **全新** → 调 [`generate-knowledge-docs`](../generate-knowledge-docs/SKILL.md) 生成，`heat: 1`，来源=该面经。
    - 每次改动后把受影响父节点下 `knowledge/_tree.json` 兄弟叶子**按 `heat` 降序稳定重排**，使目录树热点→冷门（网站索引默认已按热度排序、无需改前端）。
    - 面经贴↔知识点互链。
-6. **出队**：整理发布成功后删除 `_inbox/` 中该条目（含 `assets/`）。
+6. **出队**：普通人工流程按用户确认清理；自动 `publish` 模式在提交前不删除，只有 `master` 推送且该 SHA 的 `sync-content` Action 成功后，才删除本批已成功消费的本地条目（含 `assets/`）。失败、阻塞和待确认项保留。
 7. **图片**：面经贴/知识点若要用采集到的图，按 [references/fe-journey-integration.md](references/fe-journey-integration.md) 放到 `images/` 由同步流程发布；不要外链 `_inbox/assets`。
 
 ## 发布
 
 在仓库默认分支（`master`）提交整理产出（`interview/`、`knowledge/`、对应 `_tree.json`，以及被删除的 `_inbox` 条目）。合入 `master` 后由仓库的 `sync.yml` Action 自动同步到 OSS/DB/网站/检索 —— 无需手动调用 faas。提交前请复核 diff（尤其脱敏），把关面经质量与隐私。
+
+Data Collector 自动 `publish` 模式由总控 Skill 明确授权：校验通过后直接提交并推送 `master`，等待当前 commit 的 `sync-content` Action 成功才算上线；Action 失败时不得声称发布完成，也不得清理原始候选。`_inbox` 默认被 Git 忽略，因此成功后的本地清理不应伪装成发布提交。
 
 `_tree.json` 校验：改完跑 `npm run validate:tree` 确认叶子与文件一致、key 唯一。
