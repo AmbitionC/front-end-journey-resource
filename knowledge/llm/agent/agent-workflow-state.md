@@ -74,6 +74,14 @@ Intent 记录操作、参数 hash、授权与目标；幂等键例如 `runId:ste
 
 等待期间 ACL 或资源状态可能改变，执行前重新授权。审批允许动作，不冻结外部世界。
 
+## 面试中怎样回答 LangGraph State 保存什么
+
+LangGraph 的 State 不是框架预设的一组业务字段，而是开发者定义的共享 schema。回答项目题时，应先列出真正驱动后续节点的字段，例如 `messages`、用户目标、计划、当前步骤、工具结果、重试计数、审批状态和错误；再说明每个节点只返回需要更新的字段，框架按对应 reducer 合并更新。
+
+要把三类数据分开：业务 State 保存可序列化的流程数据；`thread_id`、checkpoint ID 和 step 等属于运行配置或检查点元数据；跨 thread 的长期用户记忆应进入 Store，而不是无限堆进单次工作流 State。大文件、数据库连接和临时句柄只保存引用，避免 checkpoint 无法序列化或无限膨胀。
+
+当前 LangGraph `StateSnapshot` 还包含 `values`、`next`、`config`、`metadata`、`created_at`、`parent_config` 和 `tasks` 等检查点视图字段。它们描述某次快照，不等同于项目自定义 State schema。面试中明确这个区别，能避免把业务状态、运行上下文与持久化快照混为一谈。
+
 ## 观测与测试
 
 Trace 保存 run/step/attempt、checkpoint seq、lease、intent、effect ID、result 与补偿。指标：运行/等待/失败、checkpoint lag、恢复次数、重复被幂等拦截、未知副作用、lease 冲突和迁移失败。
@@ -84,8 +92,13 @@ Trace 保存 run/step/attempt、checkpoint seq、lease、intent、effect ID、re
 
 Agent 工作流可靠性来自事件驱动状态和副作用协议：run/step ID 标识进度，checkpoint 保存可继续边界，write intent 与幂等键包围外部操作，commit result 后再推进。Lease、补偿、schema migration 和 replay 让任务跨崩溃与升级继续，而不把重试误当 exactly-once。
 
+## 出现于（热度来源）
+
+- [字节 Agent 开发日常实习一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-5.md)（A 级第一手面经，cluster-1cea2513548a）
+
 ## 参考资料
 
 - [Temporal — Workflow Execution](https://docs.temporal.io/workflow-execution)
 - [Temporal — Python error handling](https://docs.temporal.io/develop/python/best-practices/error-handling)
 - [LangGraph — Persistence](https://docs.langchain.com/oss/python/langgraph/persistence)
+- [LangGraph — Graph API overview](https://docs.langchain.com/oss/python/langgraph/graph-api)

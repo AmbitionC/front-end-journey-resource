@@ -138,6 +138,32 @@
               "手写题"
             ],
             "updatedAt": "2026-07-14"
+          },
+          {
+            "label": "字节 Agent 开发日常实习一面（2026 年 8 月）",
+            "key": "bytedance-base-5",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "Agent",
+              "LangGraph",
+              "Java",
+              "算法"
+            ],
+            "updatedAt": "2026-08-23"
+          },
+          {
+            "label": "字节后端开发秋招二面（2026 年 8 月）",
+            "key": "bytedance-base-6",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "Redis",
+              "分布式锁",
+              "Agent",
+              "系统设计"
+            ],
+            "updatedAt": "2026-08-23"
           }
         ]
       },

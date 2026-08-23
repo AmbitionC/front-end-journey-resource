@@ -13,9 +13,9 @@
             "isLeaf": true,
             "filePath": "llm/basics",
             "contentStatus": "published",
-            "heat": 10,
+            "heat": 11,
             "currRank": 5,
-            "updatedAt": "2026-07-14"
+            "updatedAt": "2026-08-23"
           },
           {
             "label": "Transformer 架构原理",
@@ -1017,9 +1017,9 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 6,
+            "heat": 7,
             "currRank": 4,
-            "updatedAt": "2026-07-16"
+            "updatedAt": "2026-08-23"
           },
           {
             "label": "任务规划、分解与动态重规划",
@@ -2040,6 +2040,16 @@
             "heat": 1,
             "currRank": 1,
             "updatedAt": "2026-07-18"
+          },
+          {
+            "label": "Redis 分布式锁：租约、续期与故障边界",
+            "key": "redis-distributed-lock",
+            "isLeaf": true,
+            "filePath": "backend/database",
+            "contentStatus": "published",
+            "heat": 1,
+            "currRank": 1,
+            "updatedAt": "2026-08-23"
           }
         ]
       },

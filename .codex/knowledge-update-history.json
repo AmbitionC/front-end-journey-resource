@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
-  "updatedAt": "2026-07-18",
+  "updatedAt": "2026-08-23",
   "records": [
     {
       "key": "transformer-arch",
@@ -15,10 +15,10 @@
       "key": "llm-token-context",
       "label": "Token、Context Window 与 KV Cache",
       "filePath": "llm/basics",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-13",
-      "batch": "llm-basics-after-transformer-2026-07-13"
+      "recordedAt": "2026-08-23",
+      "batch": "nowcoder-real-interviews-2026-08-23"
     },
     {
       "key": "llm-model-compare",
@@ -780,10 +780,10 @@
       "key": "agent-workflow-state",
       "label": "工作流状态、检查点与断点续跑",
       "filePath": "llm/agent",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-15",
-      "batch": "rag-production-agent-next-20-2026-07-15"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-08-23",
+      "batch": "nowcoder-real-interviews-2026-08-23"
     },
     {
       "key": "agent-planning",
@@ -2701,6 +2701,15 @@
       "action": "updated",
       "recordedAt": "2026-07-18",
       "batch": "complete-remaining-91-2026-07-18"
+    },
+    {
+      "key": "redis-distributed-lock",
+      "label": "Redis 分布式锁：租约、续期与故障边界",
+      "filePath": "backend/database",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-08-23",
+      "batch": "nowcoder-real-interviews-2026-08-23"
     }
   ]
 }
