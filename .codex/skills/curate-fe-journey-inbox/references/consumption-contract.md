@@ -29,9 +29,13 @@
 
 报告均放 `_inbox/_reports/`，保留来源 URL，不复制推广导流话术。
 
-### `operation-topics.md`
+### `operation-topics-YYYY-MM-DD.md`
 
 每项包含：主题、目标读者、可复用观点、证据来源、建议内容形式、事实/时效风险、clusterId。运营素材的目标是为产品内容引流，但报告本身不发布。
+
+### `interview-gap-YYYY-MM-DD.md`
+
+按 [真实面经差距契约](interview-gap-contract.md) 生成。只允许 A/B 证据进入问题建议；`covered/evolved/new` 是脚本初筛，公开修改前必须按题意、生产深度和追问链做语义确认。
 
 ### `project-candidates.md`
 
