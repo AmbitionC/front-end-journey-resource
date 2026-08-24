@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "measuredAt": "2026-08-25T05:40:00+08:00",
+  "scope": "ten recent August Agent/AI interview posts",
+  "baseline": {
+    "label": "historical sequential workflow",
+    "activeDurationMs": 1002743,
+    "detailTasks": 35,
+    "delivered": 10,
+    "publishedQuality": {
+      "averageChineseCharacters": 974,
+      "averageSections": 8.7,
+      "averageInternalKnowledgeLinks": 3.2,
+      "averageInputQualityScore": 82.95
+    }
+  },
+  "optimized": {
+    "strategy": "bounded two-tab collection, persistent candidate pool, exact-ten atomic delivery",
+    "accumulationRuns": [
+      {
+        "runId": "nowcoder-agent-market-20260824211411850-c57019a7",
+        "activeDurationMs": 233078,
+        "detailTasks": 24,
+        "accepted": 8
+      },
+      {
+        "runId": "nowcoder-agent-market-20260824211822142-ff63fb0e",
+        "activeDurationMs": 403935,
+        "detailTasks": 24,
+        "accepted": 9
+      }
+    ],
+    "deliveryRun": {
+      "runId": "nowcoder-agent-market-20260824212634750-58e76077",
+      "activeDurationMs": 2496,
+      "detailTasks": 0,
+      "delivered": 10,
+      "atomic": true
+    },
+    "coldAccumulationAndDeliveryDurationMs": 639509,
+    "publishedQuality": {
+      "averageChineseCharacters": 1232.5,
+      "averageSections": 9.3,
+      "averageInternalKnowledgeLinks": 5.8,
+      "manualEvidenceGrades": {
+        "A": 8,
+        "B": 2
+      },
+      "automaticInputQualityScore": 74.5
+    },
+    "publishedCompanyCoverage": {
+      "bytedance": 4,
+      "alibaba": 2,
+      "tencent": 2,
+      "kuaishou": 1,
+      "oppo": 1,
+      "ant": 0
+    }
+  },
+  "comparison": {
+    "coldDurationReductionPercent": 36.22,
+    "warmPoolDeliverySpeedup": 401.74,
+    "averageChineseCharactersIncreasePercent": 26.54,
+    "averageSectionsIncreasePercent": 6.9,
+    "averageInternalKnowledgeLinksIncreasePercent": 81.25
+  },
+  "qualityNotes": [
+    "The warm-pool number measures steady-state exact-ten delivery; it does not hide the two preceding real collection runs.",
+    "The lower automatic input score is caused by two concise but manually verified August posts; public output quality improved on all three structural measures.",
+    "No qualifying August Ant Group Agent interview was found. The gate was not weakened; two other verified large-company samples were used instead.",
+    "The public interview pages intentionally contain no source module or Nowcoder URL. Private source evidence and dispositions remain in .codex/interview-source-history.json."
+  ]
+}
