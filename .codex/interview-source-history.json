@@ -338,6 +338,45 @@
       "publicFiles": ["interview/oppo/ai/oppo-ai-1.md"],
       "knowledgeKeys": ["agent-coding", "agent-skill-design"],
       "processedAt": "2026-08-24T20:55:00.000Z"
+    },
+    "f69637db426e": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/917561494512861184",
+      "contentHash": "40374dfc6b29b4fc",
+      "clusterId": "cluster-40374dfc6b29",
+      "company": "bytedance",
+      "evidenceGrade": "B",
+      "status": "merged",
+      "publicFiles": [],
+      "knowledgeKeys": [],
+      "reason": "问题与本批已发布的字节 Coding Agent 内容高度重合，仅作为频次证据合并",
+      "processedAt": "2026-08-24T21:28:00.000Z"
+    },
+    "9cfe3ccfb4d6": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/911218249889480704",
+      "contentHash": "8b71a724d95b4bdb",
+      "clusterId": "cluster-8b71a724d95b",
+      "company": "alibaba",
+      "evidenceGrade": "B",
+      "status": "skipped",
+      "publicFiles": [],
+      "knowledgeKeys": [],
+      "reason": "面试发生于 7 月，不属于本轮 8 月最新面经范围",
+      "processedAt": "2026-08-24T21:28:00.000Z"
+    },
+    "44a59e8c1ec2": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/920452882523033600",
+      "contentHash": "eb05a15ab997b82e",
+      "clusterId": "cluster-eb05a15ab997",
+      "company": "other",
+      "evidenceGrade": "B",
+      "status": "skipped",
+      "publicFiles": [],
+      "knowledgeKeys": [],
+      "reason": "岗位以模型基础设施为主，与 Agent Journey 当前内容定位不一致",
+      "processedAt": "2026-08-24T21:28:00.000Z"
     }
   }
 }
