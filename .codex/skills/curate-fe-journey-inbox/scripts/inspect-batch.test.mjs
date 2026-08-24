@@ -86,6 +86,29 @@ test('scopes one batch, deduplicates clusters, filters C evidence, and isolates 
   }
 });
 
+test('scopes pooled delivery by deliveryBatchId while preserving the original capture batch', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'fe-inspect-delivery-batch-'));
+  try {
+    await writeEntry(root, 'pooled-source', meta({
+      sourceMetadata: {
+        batchId: 'batch-captured-earlier',
+        sourceBatchId: 'batch-captured-earlier',
+        deliveryBatchId: 'batch-delivered-now',
+        planId: 'nowcoder-agent-market',
+        evidenceGrade: 'A',
+      },
+    }));
+
+    const delivered = await inspectBatch(root, 'batch-delivered-now');
+    const captured = await inspectBatch(root, 'batch-captured-earlier');
+
+    assert.deepEqual(delivered.publicContent.map(item => item.clusterId), ['cluster-agent-tools']);
+    assert.deepEqual(captured.publicContent, []);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
 test('separates exclusion, truncation, and malformed inputs without modifying files', async () => {
   const root = await mkdtemp(join(tmpdir(), 'fe-inspect-blocked-'));
   try {

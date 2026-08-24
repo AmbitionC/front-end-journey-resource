@@ -124,7 +124,10 @@ export async function inspectBatch(resourceRoot, batch) {
       malformed.push({ path: display, reason: 'meta.json 不是有效 JSON' });
       continue;
     }
-    if (meta?.sourceMetadata?.batchId !== batch) continue;
+    // Pooled fixed-plan delivery can reuse a source captured in an earlier run. Scope by the
+    // delivery batch when present, while retaining batchId/sourceBatchId as immutable capture
+    // provenance. Legacy single-run entries continue to use batchId.
+    if ((meta?.sourceMetadata?.deliveryBatchId ?? meta?.sourceMetadata?.batchId) !== batch) continue;
     const id = clusterId(meta);
     if (meta?.source !== 'nowcoder' || meta?.sourceMetadata?.planId !== 'nowcoder-agent-market' ||
       typeof id !== 'string' || id.length === 0 || candidateKinds(meta).length === 0) {
