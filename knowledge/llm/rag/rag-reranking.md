@@ -86,6 +86,12 @@ const evidence = ranked.map(result => ({
 
 Rerank 是“宽召回、窄精排”的第二阶段：第一阶段确保相关证据进入候选集，第二阶段用更强的查询—文档交互重新排序，再经去重和上下文预算选出证据。候选深度、截断、分数校准和分层评测共同决定它是否真正改善答案。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 AI 应用开发一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-12.md)（cluster-9e24453f3753）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Nogueira and Cho — Passage Re-ranking with BERT](https://arxiv.org/abs/1901.04085)

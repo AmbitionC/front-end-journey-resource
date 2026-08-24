@@ -79,6 +79,10 @@ Agent 隐私保护从数据流和 purpose 开始：能不收集就不收集，�
 - [OpenBiliClaw](https://github.com/whiteguo233/OpenBiliClaw) —— 本地优先、浏览器插件、跨平台来源与外部模型并存的真实 Agent 项目，用于说明“本机存储不等于全链路不出机”。
 <!-- source-cluster: cluster-960b9f0dd13b -->
 
+<!-- interview-source-history:start -->
+- [字节 TikTok Agent 开发秋招一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-11.md)（cluster-26285b4c4c2b）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [NIST — Privacy Framework](https://www.nist.gov/privacy-framework)

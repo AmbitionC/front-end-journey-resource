@@ -84,6 +84,12 @@ lo + wer
 
 Tokenizer 决定文本怎样变成模型可计算的序列。BPE、unigram 与 byte-level 各有取舍，切分会直接影响上下文、成本、多语言表现和代码处理。任何 token 预算和缓存设计，都必须绑定具体模型与 tokenizer 版本。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 TikTok Agent 开发秋招一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-11.md)（cluster-26285b4c4c2b）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [SentencePiece: A simple and language independent subword tokenizer and detokenizer](https://aclanthology.org/D18-2012/)

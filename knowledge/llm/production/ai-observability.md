@@ -429,6 +429,12 @@ Trace 是一次完整请求的根节点，Span 是其中的子操作节点，两
 
 三个层面：一是接入可观测平台，设置单 Trace 成本告警阈值；二是在 Agent 设计上限制最大工具调用轮数（max_iterations）；三是定期分析 token 消耗分布，识别高消耗的请求类型（如上下文过长的会话），针对性优化 Prompt 或上下文压缩策略。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 AI 应用开发一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-12.md)（cluster-9e24453f3753）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenTelemetry traces](https://opentelemetry.io/docs/concepts/signals/traces/)

@@ -269,6 +269,7 @@ memory_tool.execute("forget", strategy="capacity_based", threshold=policy.capaci
 
 <!-- interview-source-history:start -->
 - [字节 Agent 开发二面（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-7.md)（cluster-29b42b69483b）
+- [阿里 Agent 开发暑期实习一面（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-2.md)（cluster-9d9f0031dcd6）
 <!-- interview-source-history:end -->
 
 ## 参考资料

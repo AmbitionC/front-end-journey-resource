@@ -27,9 +27,55 @@
             "isLeaf": true,
             "filePath": "llm/basics",
             "contentStatus": "published",
-            "heat": 6,
+            "heat": 7,
             "currRank": 4,
-            "updatedAt": "2026-07-14"
+            "updatedAt": "2026-07-14",
+            "interviewBaseHeat": 6,
+            "interviewClusters": [
+              "cluster-26285b4c4c2b"
+            ]
+          },
+          {
+            "label": "Tokenizer、词表与子词切分",
+            "key": "llm-tokenizer",
+            "isLeaf": true,
+            "filePath": "llm/basics",
+            "contentStatus": "published",
+            "heat": 7,
+            "currRank": 4,
+            "updatedAt": "2026-07-14",
+            "interviewBaseHeat": 6,
+            "interviewClusters": [
+              "cluster-26285b4c4c2b"
+            ]
+          },
+          {
+            "label": "RLHF、RLAIF 与 DPO 的差异",
+            "key": "llm-rlhf-dpo",
+            "isLeaf": true,
+            "filePath": "llm/basics",
+            "contentStatus": "published",
+            "heat": 7,
+            "currRank": 4,
+            "updatedAt": "2026-07-14",
+            "interviewBaseHeat": 6,
+            "interviewClusters": [
+              "cluster-26285b4c4c2b"
+            ]
+          },
+          {
+            "label": "长上下文、注意力稀释与有效利用",
+            "key": "llm-long-context",
+            "isLeaf": true,
+            "filePath": "llm/basics",
+            "contentStatus": "published",
+            "heat": 7,
+            "currRank": 4,
+            "updatedAt": "2026-07-15",
+            "interviewBaseHeat": 6,
+            "interviewClusters": [
+              "cluster-26285b4c4c2b"
+            ]
           },
           {
             "label": "LLM 推理参数：Temperature / Top-P / Top-K",
@@ -82,16 +128,6 @@
             "updatedAt": "2026-07-14"
           },
           {
-            "label": "Tokenizer、词表与子词切分",
-            "key": "llm-tokenizer",
-            "isLeaf": true,
-            "filePath": "llm/basics",
-            "contentStatus": "published",
-            "heat": 6,
-            "currRank": 4,
-            "updatedAt": "2026-07-14"
-          },
-          {
             "label": "大模型训练全流程概览",
             "key": "llm-training-overview",
             "isLeaf": true,
@@ -114,16 +150,6 @@
           {
             "label": "模型对齐：SFT、偏好数据与安全",
             "key": "llm-alignment",
-            "isLeaf": true,
-            "filePath": "llm/basics",
-            "contentStatus": "published",
-            "heat": 6,
-            "currRank": 4,
-            "updatedAt": "2026-07-14"
-          },
-          {
-            "label": "RLHF、RLAIF 与 DPO 的差异",
-            "key": "llm-rlhf-dpo",
             "isLeaf": true,
             "filePath": "llm/basics",
             "contentStatus": "published",
@@ -162,16 +188,6 @@
             "updatedAt": "2026-07-14"
           },
           {
-            "label": "长上下文、注意力稀释与有效利用",
-            "key": "llm-long-context",
-            "isLeaf": true,
-            "filePath": "llm/basics",
-            "contentStatus": "published",
-            "heat": 6,
-            "currRank": 4,
-            "updatedAt": "2026-07-15"
-          },
-          {
             "label": "开源模型选型、推理与本地部署",
             "key": "llm-open-source-deployment",
             "isLeaf": true,
@@ -203,14 +219,30 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 8,
+            "heat": 9,
             "currRank": 5,
             "updatedAt": "2026-07-18",
             "interviewClusters": [
               "cluster-2d9e5f67fe86",
+              "cluster-9d9f0031dcd6",
               "cluster-cc9e5dd82505"
             ],
             "interviewBaseHeat": 6
+          },
+          {
+            "label": "上下文压缩、摘要与裁剪",
+            "key": "prompt-context-compression",
+            "isLeaf": true,
+            "filePath": "llm/prompt",
+            "contentStatus": "published",
+            "heat": 8,
+            "currRank": 5,
+            "updatedAt": "2026-07-15",
+            "interviewBaseHeat": 6,
+            "interviewClusters": [
+              "cluster-1b2940d40f2e",
+              "cluster-ab43c892c4ed"
+            ]
           },
           {
             "label": "Prompt 设计基础与原则",
@@ -331,16 +363,6 @@
             "heat": 6,
             "currRank": 4,
             "updatedAt": "2026-07-15"
-          },
-          {
-            "label": "上下文压缩、摘要与裁剪",
-            "key": "prompt-context-compression",
-            "isLeaf": true,
-            "filePath": "llm/prompt",
-            "contentStatus": "published",
-            "heat": 6,
-            "currRank": 4,
-            "updatedAt": "2026-07-15"
           }
         ]
       },
@@ -354,9 +376,13 @@
             "isLeaf": true,
             "filePath": "llm/dev",
             "contentStatus": "published",
-            "heat": 10,
+            "heat": 11,
             "currRank": 5,
-            "updatedAt": "2026-07-14"
+            "updatedAt": "2026-07-14",
+            "interviewBaseHeat": 10,
+            "interviewClusters": [
+              "cluster-0cfd17469543"
+            ]
           },
           {
             "label": "OpenAI API 调用基础",
@@ -379,6 +405,20 @@
             "updatedAt": "2026-07-14"
           },
           {
+            "label": "Function Calling 与工具调用",
+            "key": "function-calling",
+            "isLeaf": true,
+            "filePath": "llm/dev",
+            "contentStatus": "published",
+            "heat": 7,
+            "currRank": 4,
+            "updatedAt": "2026-07-14",
+            "interviewBaseHeat": 6,
+            "interviewClusters": [
+              "cluster-1f550affd882"
+            ]
+          },
+          {
             "label": "大模型 API 通用模型：消息、响应与计费",
             "key": "llm-api-basics",
             "isLeaf": true,
@@ -391,16 +431,6 @@
           {
             "label": "OpenAI SDK 核心使用",
             "key": "openai-sdk",
-            "isLeaf": true,
-            "filePath": "llm/dev",
-            "contentStatus": "published",
-            "heat": 6,
-            "currRank": 4,
-            "updatedAt": "2026-07-14"
-          },
-          {
-            "label": "Function Calling 与工具调用",
-            "key": "function-calling",
             "isLeaf": true,
             "filePath": "llm/dev",
             "contentStatus": "published",
@@ -595,14 +625,37 @@
         "key": "rag-core",
         "children": [
           {
+            "label": "RAG 完整流程实战",
+            "key": "rag-pipeline",
+            "isLeaf": true,
+            "filePath": "llm/rag",
+            "contentStatus": "published",
+            "heat": 12,
+            "currRank": 5,
+            "updatedAt": "2026-07-14",
+            "interviewClusters": [
+              "cluster-0cfd17469543",
+              "cluster-27070393eae6",
+              "cluster-29b42b69483b",
+              "cluster-2d9e5f67fe86",
+              "cluster-6ba888767532",
+              "cluster-ab43c892c4ed"
+            ],
+            "interviewBaseHeat": 6
+          },
+          {
             "label": "Rerank 重排序原理与实践",
             "key": "rag-reranking",
             "isLeaf": true,
             "filePath": "llm/rag",
             "contentStatus": "published",
-            "heat": 10,
+            "heat": 11,
             "currRank": 5,
-            "updatedAt": "2026-07-15"
+            "updatedAt": "2026-07-15",
+            "interviewBaseHeat": 10,
+            "interviewClusters": [
+              "cluster-9e24453f3753"
+            ]
           },
           {
             "label": "Embedding、检索与答案缓存",
@@ -613,22 +666,6 @@
             "heat": 10,
             "currRank": 5,
             "updatedAt": "2026-07-16"
-          },
-          {
-            "label": "RAG 完整流程实战",
-            "key": "rag-pipeline",
-            "isLeaf": true,
-            "filePath": "llm/rag",
-            "contentStatus": "published",
-            "heat": 9,
-            "currRank": 5,
-            "updatedAt": "2026-07-14",
-            "interviewClusters": [
-              "cluster-29b42b69483b",
-              "cluster-2d9e5f67fe86",
-              "cluster-6ba888767532"
-            ],
-            "interviewBaseHeat": 6
           },
           {
             "label": "RAG 评估与优化",
@@ -651,10 +688,11 @@
             "isLeaf": true,
             "filePath": "llm/rag",
             "contentStatus": "published",
-            "heat": 7,
-            "currRank": 4,
+            "heat": 8,
+            "currRank": 5,
             "updatedAt": "2026-07-14",
             "interviewClusters": [
+              "cluster-9e24453f3753",
               "cluster-cc9e5dd82505"
             ],
             "interviewBaseHeat": 6
@@ -665,9 +703,13 @@
             "isLeaf": true,
             "filePath": "llm/rag",
             "contentStatus": "published",
-            "heat": 6,
+            "heat": 7,
             "currRank": 4,
-            "updatedAt": "2026-07-14"
+            "updatedAt": "2026-07-14",
+            "interviewBaseHeat": 6,
+            "interviewClusters": [
+              "cluster-9d9f0031dcd6"
+            ]
           },
           {
             "label": "文本分块策略（Chunking）",
@@ -675,9 +717,13 @@
             "isLeaf": true,
             "filePath": "llm/rag",
             "contentStatus": "published",
-            "heat": 6,
+            "heat": 7,
             "currRank": 4,
-            "updatedAt": "2026-07-14"
+            "updatedAt": "2026-07-14",
+            "interviewBaseHeat": 6,
+            "interviewClusters": [
+              "cluster-26285b4c4c2b"
+            ]
           },
           {
             "label": "向量数据库选型",
@@ -685,9 +731,27 @@
             "isLeaf": true,
             "filePath": "llm/rag",
             "contentStatus": "published",
-            "heat": 6,
+            "heat": 7,
             "currRank": 4,
-            "updatedAt": "2026-07-14"
+            "updatedAt": "2026-07-14",
+            "interviewBaseHeat": 6,
+            "interviewClusters": [
+              "cluster-9d9f0031dcd6"
+            ]
+          },
+          {
+            "label": "RAG 失败诊断：数据、召回、排序与生成",
+            "key": "rag-failure-debugging",
+            "isLeaf": true,
+            "filePath": "llm/rag",
+            "contentStatus": "published",
+            "heat": 7,
+            "currRank": 4,
+            "updatedAt": "2026-07-16",
+            "interviewBaseHeat": 6,
+            "interviewClusters": [
+              "cluster-9e24453f3753"
+            ]
           },
           {
             "label": "查询改写、分解与扩展",
@@ -868,16 +932,6 @@
             "heat": 6,
             "currRank": 4,
             "updatedAt": "2026-07-16"
-          },
-          {
-            "label": "RAG 失败诊断：数据、召回、排序与生成",
-            "key": "rag-failure-debugging",
-            "isLeaf": true,
-            "filePath": "llm/rag",
-            "contentStatus": "published",
-            "heat": 6,
-            "currRank": 4,
-            "updatedAt": "2026-07-16"
           }
         ]
       },
@@ -885,6 +939,63 @@
         "label": "Agent 原理与编排",
         "key": "agent-principles",
         "children": [
+          {
+            "label": "Coding Agent 的架构与执行循环",
+            "key": "agent-coding",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published",
+            "heat": 13,
+            "currRank": 5,
+            "updatedAt": "2026-08-23",
+            "interviewClusters": [
+              "cluster-0cfd17469543",
+              "cluster-1b2940d40f2e",
+              "cluster-2d9e5f67fe86",
+              "cluster-5b6e09ee89e6",
+              "cluster-ab43c892c4ed",
+              "cluster-b2e2c5d9624b",
+              "cluster-b77e34981a25"
+            ],
+            "interviewBaseHeat": 6
+          },
+          {
+            "label": "MCP / A2A 智能体通信协议",
+            "key": "mcp-protocol",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published",
+            "heat": 12,
+            "currRank": 5,
+            "updatedAt": "2026-07-18",
+            "interviewClusters": [
+              "cluster-1b2940d40f2e",
+              "cluster-29b42b69483b",
+              "cluster-6ba888767532",
+              "cluster-7568c06b462a",
+              "cluster-cc9e5dd82505",
+              "cluster-e11f3de537e5"
+            ],
+            "interviewBaseHeat": 6
+          },
+          {
+            "label": "工作流状态、检查点与断点续跑",
+            "key": "agent-workflow-state",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published",
+            "heat": 12,
+            "currRank": 5,
+            "updatedAt": "2026-08-23",
+            "interviewClusters": [
+              "cluster-1cea2513548a",
+              "cluster-5ab99b43f10b",
+              "cluster-5b6e09ee89e6",
+              "cluster-9d9f0031dcd6",
+              "cluster-b2a1c4e10ed2"
+            ],
+            "interviewBaseHeat": 7
+          },
           {
             "label": "ReAct：推理与行动框架",
             "key": "agent-react",
@@ -914,8 +1025,8 @@
             "interviewBaseHeat": 10
           },
           {
-            "label": "MCP / A2A 智能体通信协议",
-            "key": "mcp-protocol",
+            "label": "多智能体协作与适用边界",
+            "key": "multi-agent",
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
@@ -923,30 +1034,13 @@
             "currRank": 5,
             "updatedAt": "2026-07-18",
             "interviewClusters": [
-              "cluster-29b42b69483b",
-              "cluster-6ba888767532",
-              "cluster-7568c06b462a",
-              "cluster-cc9e5dd82505",
-              "cluster-e11f3de537e5"
+              "cluster-0cfd17469543",
+              "cluster-27070393eae6",
+              "cluster-2fc69bb3d45d",
+              "cluster-9e24453f3753",
+              "cluster-cc9e5dd82505"
             ],
             "interviewBaseHeat": 6
-          },
-          {
-            "label": "工作流状态、检查点与断点续跑",
-            "key": "agent-workflow-state",
-            "isLeaf": true,
-            "filePath": "llm/agent",
-            "contentStatus": "published",
-            "heat": 11,
-            "currRank": 5,
-            "updatedAt": "2026-08-23",
-            "interviewClusters": [
-              "cluster-1cea2513548a",
-              "cluster-5ab99b43f10b",
-              "cluster-5b6e09ee89e6",
-              "cluster-b2a1c4e10ed2"
-            ],
-            "interviewBaseHeat": 7
           },
           {
             "label": "事件驱动 Agent 与异步编排",
@@ -959,31 +1053,17 @@
             "updatedAt": "2026-07-16"
           },
           {
-            "label": "Coding Agent 的架构与执行循环",
-            "key": "agent-coding",
-            "isLeaf": true,
-            "filePath": "llm/agent",
-            "contentStatus": "published",
-            "heat": 9,
-            "currRank": 5,
-            "updatedAt": "2026-08-23",
-            "interviewClusters": [
-              "cluster-2d9e5f67fe86",
-              "cluster-5b6e09ee89e6",
-              "cluster-b2e2c5d9624b"
-            ],
-            "interviewBaseHeat": 6
-          },
-          {
             "label": "工具发现、选择与路由",
             "key": "agent-tool-selection",
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 8,
+            "heat": 10,
             "currRank": 5,
             "updatedAt": "2026-07-25",
             "interviewClusters": [
+              "cluster-1b2940d40f2e",
+              "cluster-1f550affd882",
               "cluster-29b42b69483b"
             ],
             "interviewBaseHeat": 7
@@ -994,27 +1074,13 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 8,
+            "heat": 9,
             "currRank": 5,
             "updatedAt": "2026-07-14",
             "interviewClusters": [
               "cluster-29b42b69483b",
-              "cluster-6ba888767532"
-            ],
-            "interviewBaseHeat": 6
-          },
-          {
-            "label": "多智能体协作与适用边界",
-            "key": "multi-agent",
-            "isLeaf": true,
-            "filePath": "llm/agent",
-            "contentStatus": "published",
-            "heat": 8,
-            "currRank": 5,
-            "updatedAt": "2026-07-18",
-            "interviewClusters": [
-              "cluster-2fc69bb3d45d",
-              "cluster-cc9e5dd82505"
+              "cluster-6ba888767532",
+              "cluster-9e24453f3753"
             ],
             "interviewBaseHeat": 6
           },
@@ -1024,14 +1090,36 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 8,
+            "heat": 9,
             "currRank": 5,
             "updatedAt": "2026-08-23",
             "interviewClusters": [
+              "cluster-1b2940d40f2e",
               "cluster-2fc69bb3d45d",
               "cluster-7568c06b462a"
             ],
             "interviewBaseHeat": 6
+          },
+          {
+            "label": "Agent Skill：渐进式披露、热插拔与版本治理",
+            "key": "agent-skill-design",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published",
+            "heat": 9,
+            "currRank": 5,
+            "updatedAt": "2026-08-25",
+            "interviewClusters": [
+              "cluster-1f550affd882",
+              "cluster-2d9e5f67fe86",
+              "cluster-2fc69bb3d45d",
+              "cluster-6ba888767532",
+              "cluster-7568c06b462a",
+              "cluster-b77e34981a25",
+              "cluster-e11f3de537e5",
+              "cluster-e2ae8847e22e"
+            ],
+            "interviewBaseHeat": 1
           },
           {
             "label": "会话摘要、压缩与记忆提炼",
@@ -1054,11 +1142,12 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 7,
-            "currRank": 4,
+            "heat": 8,
+            "currRank": 5,
             "updatedAt": "2026-07-18",
             "interviewClusters": [
-              "cluster-29b42b69483b"
+              "cluster-29b42b69483b",
+              "cluster-9d9f0031dcd6"
             ],
             "interviewBaseHeat": 6
           },
@@ -1068,11 +1157,12 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 7,
-            "currRank": 4,
+            "heat": 8,
+            "currRank": 5,
             "updatedAt": "2026-07-16",
             "interviewClusters": [
-              "cluster-29b42b69483b"
+              "cluster-29b42b69483b",
+              "cluster-e2ae8847e22e"
             ],
             "interviewBaseHeat": 6
           },
@@ -1082,11 +1172,12 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 7,
-            "currRank": 4,
+            "heat": 8,
+            "currRank": 5,
             "updatedAt": "2026-07-16",
             "interviewClusters": [
-              "cluster-2fc69bb3d45d"
+              "cluster-2fc69bb3d45d",
+              "cluster-ab43c892c4ed"
             ],
             "interviewBaseHeat": 6
           },
@@ -1096,13 +1187,85 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 7,
-            "currRank": 4,
+            "heat": 8,
+            "currRank": 5,
             "updatedAt": "2026-07-16",
             "interviewClusters": [
+              "cluster-9d9f0031dcd6",
               "cluster-cc9e5dd82505"
             ],
             "interviewBaseHeat": 6
+          },
+          {
+            "label": "Agent 工具契约、Schema 与错误语义",
+            "key": "agent-tool-design",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published",
+            "heat": 8,
+            "currRank": 5,
+            "updatedAt": "2026-07-16",
+            "interviewBaseHeat": 6,
+            "interviewClusters": [
+              "cluster-9e24453f3753",
+              "cluster-e2ae8847e22e"
+            ]
+          },
+          {
+            "label": "确定性 Workflow 与 Agent 的组合",
+            "key": "agent-deterministic-workflow",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published",
+            "heat": 7,
+            "currRank": 4,
+            "updatedAt": "2026-07-16",
+            "interviewBaseHeat": 6,
+            "interviewClusters": [
+              "cluster-0cfd17469543"
+            ]
+          },
+          {
+            "label": "Reflection、Plan-and-Execute 与 Tool-Use",
+            "key": "agent-paradigms",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published",
+            "heat": 7,
+            "currRank": 4,
+            "updatedAt": "2026-07-18",
+            "interviewBaseHeat": 6,
+            "interviewClusters": [
+              "cluster-e2ae8847e22e"
+            ]
+          },
+          {
+            "label": "Agent Run Loop、轮次与终止条件",
+            "key": "agent-run-loop",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published",
+            "heat": 7,
+            "currRank": 4,
+            "updatedAt": "2026-07-16",
+            "interviewBaseHeat": 6,
+            "interviewClusters": [
+              "cluster-1f550affd882"
+            ]
+          },
+          {
+            "label": "Subagent 子智能体设计",
+            "key": "agent-subagents",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published",
+            "heat": 7,
+            "currRank": 4,
+            "updatedAt": "2026-07-16",
+            "interviewBaseHeat": 6,
+            "interviewClusters": [
+              "cluster-1f550affd882"
+            ]
           },
           {
             "label": "实现第一个 Thought-Action-Observation Agent",
@@ -1123,16 +1286,6 @@
             "heat": 6,
             "currRank": 4,
             "updatedAt": "2026-07-14"
-          },
-          {
-            "label": "Reflection、Plan-and-Execute 与 Tool-Use",
-            "key": "agent-paradigms",
-            "isLeaf": true,
-            "filePath": "llm/agent",
-            "contentStatus": "published",
-            "heat": 6,
-            "currRank": 4,
-            "updatedAt": "2026-07-18"
           },
           {
             "label": "从零构建 Agent 运行时",
@@ -1165,16 +1318,6 @@
             "updatedAt": "2026-07-18"
           },
           {
-            "label": "Agent 工具契约、Schema 与错误语义",
-            "key": "agent-tool-design",
-            "isLeaf": true,
-            "filePath": "llm/agent",
-            "contentStatus": "published",
-            "heat": 6,
-            "currRank": 4,
-            "updatedAt": "2026-07-16"
-          },
-          {
             "label": "Handoff、Agent-as-Tool 与职责边界",
             "key": "agent-handoff",
             "isLeaf": true,
@@ -1187,26 +1330,6 @@
           {
             "label": "Human-in-the-loop 审批与人工接管",
             "key": "agent-human-in-loop",
-            "isLeaf": true,
-            "filePath": "llm/agent",
-            "contentStatus": "published",
-            "heat": 6,
-            "currRank": 4,
-            "updatedAt": "2026-07-16"
-          },
-          {
-            "label": "Agent Run Loop、轮次与终止条件",
-            "key": "agent-run-loop",
-            "isLeaf": true,
-            "filePath": "llm/agent",
-            "contentStatus": "published",
-            "heat": 6,
-            "currRank": 4,
-            "updatedAt": "2026-07-16"
-          },
-          {
-            "label": "确定性 Workflow 与 Agent 的组合",
-            "key": "agent-deterministic-workflow",
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
@@ -1237,16 +1360,6 @@
           {
             "label": "并行工具调用与依赖调度",
             "key": "agent-parallel-tools",
-            "isLeaf": true,
-            "filePath": "llm/agent",
-            "contentStatus": "published",
-            "heat": 6,
-            "currRank": 4,
-            "updatedAt": "2026-07-16"
-          },
-          {
-            "label": "Subagent 子智能体设计",
-            "key": "agent-subagents",
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
@@ -1323,24 +1436,6 @@
             "heat": 6,
             "currRank": 4,
             "updatedAt": "2026-07-16"
-          },
-          {
-            "label": "Agent Skill：渐进式披露、热插拔与版本治理",
-            "key": "agent-skill-design",
-            "isLeaf": true,
-            "filePath": "llm/agent",
-            "contentStatus": "published",
-            "heat": 6,
-            "currRank": 4,
-            "updatedAt": "2026-07-25",
-            "interviewClusters": [
-              "cluster-2d9e5f67fe86",
-              "cluster-2fc69bb3d45d",
-              "cluster-6ba888767532",
-              "cluster-7568c06b462a",
-              "cluster-e11f3de537e5"
-            ],
-            "interviewBaseHeat": 1
           }
         ]
       },
@@ -1348,6 +1443,20 @@
         "label": "生产级 Agent",
         "key": "agent-production",
         "children": [
+          {
+            "label": "模型、工具、检索与结果缓存",
+            "key": "agent-cache",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "published",
+            "heat": 11,
+            "currRank": 5,
+            "updatedAt": "2026-07-17",
+            "interviewBaseHeat": 10,
+            "interviewClusters": [
+              "cluster-27070393eae6"
+            ]
+          },
           {
             "label": "Trace、Span、Run 与工具调用事件模型",
             "key": "agent-trace-model",
@@ -1371,16 +1480,6 @@
           {
             "label": "密钥、凭证与 Secret 生命周期",
             "key": "agent-secrets-management",
-            "isLeaf": true,
-            "filePath": "llm/production",
-            "contentStatus": "published",
-            "heat": 10,
-            "currRank": 5,
-            "updatedAt": "2026-07-17"
-          },
-          {
-            "label": "模型、工具、检索与结果缓存",
-            "key": "agent-cache",
             "isLeaf": true,
             "filePath": "llm/production",
             "contentStatus": "published",
@@ -1425,9 +1524,43 @@
             "isLeaf": true,
             "filePath": "llm/production",
             "contentStatus": "published",
-            "heat": 7,
-            "currRank": 4,
-            "updatedAt": "2026-08-20"
+            "heat": 8,
+            "currRank": 5,
+            "updatedAt": "2026-08-20",
+            "interviewBaseHeat": 7,
+            "interviewClusters": [
+              "cluster-26285b4c4c2b"
+            ]
+          },
+          {
+            "label": "失败分类、重试、补偿与恢复",
+            "key": "agent-failure-recovery",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "published",
+            "heat": 8,
+            "currRank": 5,
+            "updatedAt": "2026-07-16",
+            "interviewClusters": [
+              "cluster-ab43c892c4ed",
+              "cluster-cc9e5dd82505"
+            ],
+            "interviewBaseHeat": 6
+          },
+          {
+            "label": "Agent Benchmark 的设计与解读",
+            "key": "agent-benchmark",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "published",
+            "heat": 8,
+            "currRank": 5,
+            "updatedAt": "2026-07-17",
+            "interviewBaseHeat": 6,
+            "interviewClusters": [
+              "cluster-27070393eae6",
+              "cluster-e2ae8847e22e"
+            ]
           },
           {
             "label": "Prompt Injection 与间接注入防御",
@@ -1440,20 +1573,6 @@
             "updatedAt": "2026-07-18",
             "interviewClusters": [
               "cluster-b2e2c5d9624b"
-            ],
-            "interviewBaseHeat": 6
-          },
-          {
-            "label": "失败分类、重试、补偿与恢复",
-            "key": "agent-failure-recovery",
-            "isLeaf": true,
-            "filePath": "llm/production",
-            "contentStatus": "published",
-            "heat": 7,
-            "currRank": 4,
-            "updatedAt": "2026-07-16",
-            "interviewClusters": [
-              "cluster-cc9e5dd82505"
             ],
             "interviewBaseHeat": 6
           },
@@ -1519,9 +1638,53 @@
             "isLeaf": true,
             "filePath": "llm/production",
             "contentStatus": "published",
+            "heat": 7,
+            "currRank": 4,
+            "updatedAt": "2026-07-18",
+            "interviewBaseHeat": 6,
+            "interviewClusters": [
+              "cluster-9e24453f3753"
+            ]
+          },
+          {
+            "label": "模型、工具、MCP 与依赖供应链安全",
+            "key": "agent-supply-chain",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "published",
+            "heat": 7,
+            "currRank": 4,
+            "updatedAt": "2026-07-17",
+            "interviewBaseHeat": 6,
+            "interviewClusters": [
+              "cluster-e2ae8847e22e"
+            ]
+          },
+          {
+            "label": "队列、Worker 与长任务执行",
+            "key": "agent-queue-worker",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "published",
+            "heat": 7,
+            "currRank": 4,
+            "updatedAt": "2026-07-17",
+            "interviewBaseHeat": 6,
+            "interviewClusters": [
+              "cluster-ab43c892c4ed"
+            ]
+          },
+          {
+            "label": "端到端超时预算与 Deadline 传播",
+            "key": "agent-timeout-budget",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "published",
             "heat": 6,
             "currRank": 4,
-            "updatedAt": "2026-07-18"
+            "updatedAt": "2026-07-17",
+            "interviewBaseHeat": 6,
+            "interviewClusters": []
           },
           {
             "label": "Token、延迟与成本优化",
@@ -1634,16 +1797,6 @@
             "updatedAt": "2026-07-17"
           },
           {
-            "label": "Agent Benchmark 的设计与解读",
-            "key": "agent-benchmark",
-            "isLeaf": true,
-            "filePath": "llm/production",
-            "contentStatus": "published",
-            "heat": 6,
-            "currRank": 4,
-            "updatedAt": "2026-07-17"
-          },
-          {
             "label": "在线评估、抽样与质量监控",
             "key": "agent-online-eval",
             "isLeaf": true,
@@ -1714,16 +1867,6 @@
             "updatedAt": "2026-07-17"
           },
           {
-            "label": "模型、工具、MCP 与依赖供应链安全",
-            "key": "agent-supply-chain",
-            "isLeaf": true,
-            "filePath": "llm/production",
-            "contentStatus": "published",
-            "heat": 6,
-            "currRank": 4,
-            "updatedAt": "2026-07-17"
-          },
-          {
             "label": "网络出口、域名白名单与数据边界",
             "key": "agent-network-egress",
             "isLeaf": true,
@@ -1756,26 +1899,6 @@
           {
             "label": "Agent Gateway 与统一接入层",
             "key": "agent-api-gateway",
-            "isLeaf": true,
-            "filePath": "llm/production",
-            "contentStatus": "published",
-            "heat": 6,
-            "currRank": 4,
-            "updatedAt": "2026-07-17"
-          },
-          {
-            "label": "队列、Worker 与长任务执行",
-            "key": "agent-queue-worker",
-            "isLeaf": true,
-            "filePath": "llm/production",
-            "contentStatus": "published",
-            "heat": 6,
-            "currRank": 4,
-            "updatedAt": "2026-07-17"
-          },
-          {
-            "label": "端到端超时预算与 Deadline 传播",
-            "key": "agent-timeout-budget",
             "isLeaf": true,
             "filePath": "llm/production",
             "contentStatus": "published",
@@ -2073,10 +2196,11 @@
             "isLeaf": true,
             "filePath": "backend/database",
             "contentStatus": "published",
-            "heat": 12,
+            "heat": 13,
             "currRank": 5,
             "updatedAt": "2026-07-18",
             "interviewClusters": [
+              "cluster-27070393eae6",
               "cluster-b2e2c5d9624b",
               "cluster-e11f3de537e5"
             ],

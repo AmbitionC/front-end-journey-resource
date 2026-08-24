@@ -206,6 +206,12 @@ async function cancelOrder(orderId: string, session: Session) {
 - [ ] 循环次数、总耗时、工具超时和输出大小都有上限。
 - [ ] 日志可追踪但不泄露密钥和隐私。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [阿里云 Agent 开发秋招一面（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-1.md)（cluster-1f550affd882）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenAI：Function calling](https://developers.openai.com/api/docs/guides/function-calling)

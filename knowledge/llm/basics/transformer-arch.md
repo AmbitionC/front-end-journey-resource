@@ -282,6 +282,12 @@ Attention 权重能显示某层某头如何加权 V，但最终输出还经过�
 
 Attention 负责“从哪里读取信息”，FFN 负责“如何变换当前位置的表示”，位置机制告诉模型“信息出现在哪里”，残差与归一化则让这套结构可以稳定堆深。训练时已知整段序列，因此多个位置可并行；推理时下一个 Token 尚未知，因此生成仍然逐步进行。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 TikTok Agent 开发秋招一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-11.md)（cluster-26285b4c4c2b）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Attention Is All You Need](https://arxiv.org/abs/1706.03762)

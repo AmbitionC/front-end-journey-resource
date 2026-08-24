@@ -93,6 +93,12 @@ SLSA v1.2 Source Track 还关注连续历史与技术控制。Agent 仓库对 Pr
 
 Agent 供应链安全把模型、工具、MCP、Prompt、软件和评估资产都视为可验证制品。Digest 标识内容，签名标识主体，provenance 描述过程，消费者 expectations 决定是否信任；通过后才进入 Registry 和 Runtime Allowlist。持续验证、撤销和影响分析确保信任不是发布时的一次性印章。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [快手大模型应用 Java 实习一面：Agent、SkillHub 与 Vibe Coding（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-1.md)（cluster-e2ae8847e22e）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [SLSA：Specification v1.2](https://slsa.dev/spec/v1.2/)

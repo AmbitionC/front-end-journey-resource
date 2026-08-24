@@ -149,6 +149,7 @@ RRF 的优点是稳定、少调参、容易建立基线；局限是它主要利�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节 AI 应用开发一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-12.md)（cluster-9e24453f3753）
 - [蚂蚁 Agent 开发一面：多 Agent 并发与质量保障（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-1.md)（cluster-cc9e5dd82505）
 <!-- interview-source-history:end -->
 

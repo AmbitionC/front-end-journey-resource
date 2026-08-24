@@ -69,6 +69,12 @@ DPO 的流水线更简单，但不是“免费 RLHF”：它仍需高质量偏�
 
 RLHF、RLAIF 与 DPO 是三种把偏好变成模型行为的路径。RLHF 用奖励模型和强化学习提供在线优化能力，RLAIF 扩大反馈规模，DPO 直接从偏好对学习、简化训练。决定效果的核心仍是目标定义、数据覆盖、参考策略和独立评估，而不是算法名称。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 TikTok Agent 开发秋招一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-11.md)（cluster-26285b4c4c2b）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Training language models to follow instructions with human feedback](https://arxiv.org/abs/2203.02155)

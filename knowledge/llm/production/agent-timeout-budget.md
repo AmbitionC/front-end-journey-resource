@@ -64,6 +64,12 @@ Agent runtime 为每个 Run 建立 cancellation token，并派生给模型流、
 
 端到端超时是一笔沿关键路径递减的预算。入口计算绝对 deadline，每跳扣除已用与必要预留，所有排队、并行、重试和降级共用它；取消要传播到真实工作，而外部副作用仍需幂等与对账。这样系统才能做到“用户放弃后，成本和风险也及时停止”。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [gRPC：Deadlines](https://grpc.io/docs/guides/deadlines/)

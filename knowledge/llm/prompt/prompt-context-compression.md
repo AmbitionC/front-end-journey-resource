@@ -101,6 +101,13 @@
 
 上下文压缩是受约束的信息选择：先保护任务不可损失的事实与来源，再按删除、抽取、摘要、学习式压缩逐步增加风险，并用任务结果和证据保真度验收。能恢复来源、保留冲突和安全停止，比得到一段更短、更顺的文字重要。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Coding Agent 日常实习一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)（cluster-1b2940d40f2e）
+- [腾讯微信支付 AI 软件工程一面（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-5.md)（cluster-ab43c892c4ed）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [LLMLingua: Compressing Prompts for Accelerated Inference of Large Language Models](https://arxiv.org/abs/2310.05736)

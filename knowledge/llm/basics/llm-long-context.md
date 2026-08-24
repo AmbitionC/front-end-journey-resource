@@ -81,6 +81,12 @@ Transformer 的自注意力本身没有天然顺序，需要位置编码告诉�
 
 长上下文是一种容量，不是可靠性承诺。真正的有效利用来自位置机制、上下文装配、检索、证据保护和按长度/位置分层的评测。设计时应围绕“工作上下文”优化，让模型读取少而关键的材料，并让每个结论都能回到原始证据。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 TikTok Agent 开发秋招一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-11.md)（cluster-26285b4c4c2b）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [RoFormer: Enhanced Transformer with Rotary Position Embedding](https://arxiv.org/abs/2104.09864)

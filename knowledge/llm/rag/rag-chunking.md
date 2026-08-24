@@ -237,6 +237,12 @@ function chunkDocument(nodes: Node[], limits: ChunkLimits) {
 - [ ] 检索后会合并相邻块并去重。
 - [ ] 没有把“更长上下文”当作切块质量的替代品。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 TikTok Agent 开发秋招一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-11.md)（cluster-26285b4c4c2b）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Lost in the Middle：长上下文信息利用研究](https://arxiv.org/abs/2307.03172)

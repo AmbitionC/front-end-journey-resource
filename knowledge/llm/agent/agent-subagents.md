@@ -93,6 +93,12 @@ Trace 记录合同版本、输入摘要/hash、授予工具、预算、每次调
 
 Subagent 设计的重点是边界，而不是数量：以窄合同传入最小充分上下文，以独立命名空间执行，以最小工具授权，以结构化证据返回。主 Agent 始终承担验证、合并和用户交付责任，才不会把复杂度藏进更多模型调用。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [阿里云 Agent 开发秋招一面（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-1.md)（cluster-1f550affd882）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenAI — Orchestrating multiple agents](https://developers.openai.com/api/docs/guides/agents/orchestration)

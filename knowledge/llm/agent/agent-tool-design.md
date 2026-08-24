@@ -96,6 +96,13 @@ type ToolResult<T> =
 
 工具契约把模型的不确定输出包在确定性边界里：窄意图与 Schema 约束输入，服务端授权决定权限，预算与幂等控制副作用，结构化结果和错误指导后续行为。契约测试、trace 和审批使 Agent 能安全地从“会说”跨到“会做”。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 AI 应用开发一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-12.md)（cluster-9e24453f3753）
+- [快手大模型应用 Java 实习一面：Agent、SkillHub 与 Vibe Coding（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-1.md)（cluster-e2ae8847e22e）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [JSON Schema — Draft 2020-12 Core](https://json-schema.org/draft/2020-12/json-schema-core)

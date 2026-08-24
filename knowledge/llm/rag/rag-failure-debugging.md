@@ -100,6 +100,12 @@ gold evidence 是否在候选中但被重排到截断线以下？保存 reranker
 
 RAG 调试是一条逆向证据链：先冻结可回放 trace，从 generation 回看 context、rerank、recall、index 和 source；每层做单变量反事实实验。可观测性连接版本与阶段，Golden Set 固化事故，团队才能从“调 Prompt 试试”转向可验证的根因修复。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 AI 应用开发一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-12.md)（cluster-9e24453f3753）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenTelemetry — Signals](https://opentelemetry.io/docs/concepts/signals/)

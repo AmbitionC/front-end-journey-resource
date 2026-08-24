@@ -74,6 +74,12 @@ Worker 取到消息后用条件更新获取租约：只有 queued、retrying 或
 
 队列只提供可靠传递的一部分。完整的 Agent 长任务协议需要业务任务记录、outbox、租约与 fencing、检查点、幂等副作用、完成后 ACK、有界重试、DLQ 和持久取消。把每次交付都当作可能重复，系统才能在进程崩溃和网络不确定性下维持正确状态。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [腾讯微信支付 AI 软件工程一面（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-5.md)（cluster-ab43c892c4ed）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [RabbitMQ：Reliability Guide](https://www.rabbitmq.com/docs/reliability)

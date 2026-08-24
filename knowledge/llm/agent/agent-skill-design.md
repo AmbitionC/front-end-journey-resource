@@ -57,14 +57,27 @@ Skill 是把「某类任务该怎么做」固化下来、供 Agent 按需加载�
 
 规模化后如何提升选中率（召回、准确、F1），属于路由问题，见[工具发现、选择与路由](agent-tool-selection.md)——Skill 选择与工具选择在工程上是同一套两段式检索 + 精排方法。
 
+## SkillHub 的发布与运行门禁
+
+当 Skill 从团队内文件扩展成可共享的 SkillHub 资产，治理对象就不只是说明书，还包括它能执行的代码、依赖与权限。一个可落地的发布链路可以分成三道门：
+
+1. **不可变制品**：发布包携带 `skill_id`、版本、内容哈希、作者、许可证、依赖、工具和权限声明；相同版本不允许覆盖，便于复现与追责。
+2. **发布前验证**：先做 schema、依赖闭包、许可证和危险调用静态检查，再在隔离环境运行一组正常、越权与失败恢复用例；只有输出契约和安全策略同时通过才进入仓库。
+3. **运行时约束**：任务启动时固定制品哈希，按最小权限授予工具，记录调用审计；发现问题时可撤销新任务的版本，但已经运行的任务继续使用原制品，避免中途换版本导致状态不一致。
+
+这套机制把“能找到一个 Skill”和“敢在生产环境运行它”分开：前者由检索与路由解决，后者由供应链校验、沙箱执行、权限控制和审计共同保证。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [阿里云 Agent 开发秋招一面（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-1.md)（cluster-1f550affd882）
 - [蚂蚁 Code Agent 与 Agent 应用两轮面试（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-2.md)（cluster-2d9e5f67fe86）
 - [腾讯 AI 应用开发面试：跨会话记忆与多 Agent（2026 年 4 月）](../../../interview/tencent/ai/tencent-ai-4.md)（cluster-2fc69bb3d45d）
 - [腾讯后端 AI 开发实习面试（2026 年 4 月）](../../../interview/tencent/ai/tencent-ai-3.md)（cluster-6ba888767532）
 - [腾讯 Agent 项目二面：记忆、RAG 与 MCP（2026 年 5 月）](../../../interview/tencent/ai/tencent-ai-2.md)（cluster-7568c06b462a）
+- [OPPO AI 全栈一面：AI Coding、Skill 与数据结构（2026 年 8 月）](../../../interview/oppo/ai/oppo-ai-1.md)（cluster-b77e34981a25）
 - [蚂蚁后端 AI 开发一面：Agent、Redis 与短链系统（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-3.md)（cluster-e11f3de537e5）
+- [快手大模型应用 Java 实习一面：Agent、SkillHub 与 Vibe Coding（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-1.md)（cluster-e2ae8847e22e）
 <!-- interview-source-history:end -->
 
 ## 参考资料

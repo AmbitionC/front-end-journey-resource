@@ -203,6 +203,12 @@ RAG 数据会变化。建议用稳定 chunk ID 和版本化流水线：
 - [ ] 原始数据与流水线可重放，索引可以重建。
 - [ ] 应用有存储适配层，核心权限逻辑不依赖模型。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [阿里 Agent 开发暑期实习一面（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-2.md)（cluster-9d9f0031dcd6）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [pgvector 官方仓库与索引说明](https://github.com/pgvector/pgvector)

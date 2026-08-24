@@ -642,6 +642,12 @@ RLHF 是通过人类偏好数据微调模型权重，是训练阶段的优化，
 **Q：工具目录变大后如何优化？**
 当全量注入导致 Prompt 膨胀、混淆工具或违反最小权限原则时，可以：(1) **工具检索**：根据用户意图，从工具库中检索候选工具再注入，候选数由召回率和误调用评估校准；(2) **工具分层**：按功能域先路由再选工具；(3) **工具元数据索引**：为名称、描述、schema、权限和版本建立可搜索索引。是否需要这些机制，应由全量目录的基准结果决定，而不是固定数量阈值。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [快手大模型应用 Java 实习一面：Agent、SkillHub 与 Vibe Coding（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-1.md)（cluster-e2ae8847e22e）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366)

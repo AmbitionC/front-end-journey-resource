@@ -220,6 +220,12 @@ ANN 用部分召回换速度和资源。查询参数越激进，延迟可能更�
 - [ ] 模型升级使用新索引并保留回滚窗口。
 - [ ] 产品不会把相似度显示成事实正确概率。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [阿里 Agent 开发暑期实习一面（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-2.md)（cluster-9d9f0031dcd6）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Sentence-BERT 论文](https://arxiv.org/abs/1908.10084)

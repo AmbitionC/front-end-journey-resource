@@ -235,6 +235,12 @@ UI 不宜每收到一个 token 就触发一次完整渲染。可以先累计文�
 - [ ] `done`、流内错误、HTTP 错误和用户取消彼此可区分。
 - [ ] 重连策略与幂等/副作用规则一致。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 AI 全栈开发一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-13.md)（cluster-0cfd17469543）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [WHATWG HTML：Server-sent events](https://html.spec.whatwg.org/multipage/server-sent-events.html)

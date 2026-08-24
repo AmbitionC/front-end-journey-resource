@@ -104,6 +104,13 @@ Benchmark 适合发布前门禁、候选筛选和回归；线上 A/B 测试适�
 
 可解释的 Agent Benchmark 由任务集、数据集、Harness、Scorer 和版本合同组成。它报告分布、置信范围、失败切片与污染，而不是孤立总分；安全门禁不能被平均值抵消。只有能从报告回到逐任务证据，Benchmark 才能支持发布和选型，而不是制造排行榜幻觉。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [腾讯 TEG 后端一面：RAG 多智能体与分布式 LRU（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-6.md)（cluster-27070393eae6）
+- [快手大模型应用 Java 实习一面：Agent、SkillHub 与 Vibe Coding（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-1.md)（cluster-e2ae8847e22e）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [NIST：AI Test, Evaluation, Validation and Verification](https://www.nist.gov/ai-test-evaluation-validation-and-verification-tevv)

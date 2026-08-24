@@ -91,6 +91,7 @@ async function acceptResult(raw: unknown, ctx: ValidationContext) {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [阿里 Agent 开发暑期实习一面（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-2.md)（cluster-9d9f0031dcd6）
 - [蚂蚁 Agent 开发一面：多 Agent 并发与质量保障（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-1.md)（cluster-cc9e5dd82505）
 <!-- interview-source-history:end -->
 

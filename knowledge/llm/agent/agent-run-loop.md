@@ -90,6 +90,12 @@ trace 为 run/turn/model/tool 分层，记录状态版本、剩余预算、动�
 
 Run Loop 是状态机、预算器与证据循环的组合。观察必须来自版本化状态，动作先过确定性门禁，结果再写回，进展由可验证变化衡量。完整、放弃、升级、失败和取消都是正式终态；只有这样循环才会在该停时停，而不是靠轮数碰运气。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [阿里云 Agent 开发秋招一面（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-1.md)（cluster-1f550affd882）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenAI Agents SDK — Running agents](https://openai.github.io/openai-agents-python/running_agents/)

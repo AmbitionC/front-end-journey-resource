@@ -71,6 +71,12 @@ stale-while-revalidate 可以降低读取延迟，但只能用于明确允许陈
 
 Agent 缓存的核心是身份与新鲜度，而不是序列化速度。分别治理模型、工具、检索和结果缓存，用完整版本化 key、授权复查、显式 stale 契约和事件失效控制复用边界；副作用则交给幂等账本。只有“命中仍然正确”时，命中率才有意义。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [腾讯 TEG 后端一面：RAG 多智能体与分布式 LRU（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-6.md)（cluster-27070393eae6）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [RFC 9111：HTTP Caching](https://www.rfc-editor.org/rfc/rfc9111.html)

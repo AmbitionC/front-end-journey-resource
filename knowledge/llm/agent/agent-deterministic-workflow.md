@@ -93,6 +93,12 @@ trace 将 workflow/run、decision、activity、approval 和 operation ID 关联�
 
 确定性 Workflow 提供可重放的骨架，activity 隔离真实世界副作用，Agent 在受限节点内提供语义选择。结构化响应必须重新验证，审批和提交由工作流掌控，重试、版本与补偿各有清晰语义。这种分工让模型能力进入生产流程，却不接管流程的不变量。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 AI 全栈开发一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-13.md)（cluster-0cfd17469543）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Temporal — Workflow Definition](https://docs.temporal.io/workflow-definition)
