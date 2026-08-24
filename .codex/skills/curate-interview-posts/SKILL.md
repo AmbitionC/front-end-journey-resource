@@ -37,7 +37,7 @@ description: Turn raw collected interview experiences (牛客/nowcoder 面经) f
    - **全新** → 调 [`generate-knowledge-docs`](../generate-knowledge-docs/SKILL.md) 生成，`heat: 1`，来源=该面经。
    - 每次改动后把受影响父节点下 `knowledge/_tree.json` 兄弟叶子**按 `heat` 降序稳定重排**，使目录树热点→冷门（网站索引默认已按热度排序、无需改前端）。
    - 面经贴↔知识点互链。
-6. **记录与出队**：来源只保存在私有 `.codex/interview-source-history.json` 和审核证据中，不写入公开面经。提交前将每条来源的规范 URL、A/B 证据等级、`clusterId`、`articleKey`、`knowledgeKeys` 和处置结果 upsert 到私有历史；每个已发布 `articleKey` 都必须可由该记录追溯，`heat` 按其中的唯一 cluster 来源累计。普通人工流程按用户确认清理；自动 `publish` 模式在提交前不删除，只有 `master` 推送且该 SHA 的 `sync-content` Action 成功后，才删除本批已成功消费的本地条目（含 `assets/`）。失败、阻塞和待确认项保留。
+6. **记录与出队**：来源只保存在私有 `.codex/interview-source-history.json` 和审核证据中，不写入公开面经。提交前将每条来源的规范 URL、A/B 证据等级、`clusterId`、`articleKey`、`knowledgeKeys` 和处置结果 upsert 到私有历史；`interview/_tree.json` 中每个公开叶子必须恰好对应一条完整的 `published` 记录，`heat` 按其中的唯一 cluster 来源累计。普通人工流程按用户确认清理；自动 `publish` 模式在提交前不删除，只有 `master` 推送且该 SHA 的 `sync-content` Action 成功后，才删除本批已成功消费的本地条目（含 `assets/`）。失败、阻塞和待确认项保留。
 7. **图片**：面经贴/知识点若要用采集到的图，按 [references/fe-journey-integration.md](references/fe-journey-integration.md) 放到 `images/` 由同步流程发布；不要外链 `_inbox/assets`。
 
 ## 发布

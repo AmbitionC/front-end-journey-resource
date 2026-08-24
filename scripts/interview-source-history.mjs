@@ -27,6 +27,23 @@ function normalizedNowcoderUrl(value) {
   return url.toString();
 }
 
+function isCanonicalNowcoderUrl(value) {
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:'
+      && url.hostname === 'www.nowcoder.com'
+      && url.username === ''
+      && url.password === ''
+      && url.port === ''
+      && url.search === ''
+      && url.hash === ''
+      && !url.pathname.endsWith('/')
+      && url.toString() === value;
+  } catch {
+    return false;
+  }
+}
+
 function leaves(nodes) {
   return nodes.flatMap(node => node?.isLeaf ? [node] : leaves(node?.children ?? []));
 }
@@ -74,6 +91,7 @@ export async function validateInterviewSourceHistory(resourceRoot, history) {
   const knowledgeKeys = new Set(knowledgeLeaves.map(leaf => leaf.key));
   const seenUrls = new Map();
   const publishedClusters = new Map();
+  const publishedArticles = new Map();
 
   for (const [id, record] of Object.entries(history.records)) {
     const prefix = `来源记录 ${id}`;
@@ -114,18 +132,26 @@ export async function validateInterviewSourceHistory(resourceRoot, history) {
     }
 
     if (record.status !== 'published') continue;
+    if (!isCanonicalNowcoderUrl(record.url)) {
+      errors.push(`${prefix} 发布面经必须使用规范牛客 URL`);
+    }
     if (record.evidenceGrade !== 'A' && record.evidenceGrade !== 'B') {
       errors.push(`${prefix} 发布面经必须是 A/B 级证据`);
     }
     if (typeof record.articleKey !== 'string' || record.articleKey.length === 0) {
       errors.push(`${prefix} 发布面经缺少 articleKey`);
-    } else if (!leafByKey.has(record.articleKey)) {
-      errors.push(`${prefix} 的 articleKey 不在 interview/_tree.json`);
     } else {
-      const leaf = leafByKey.get(record.articleKey);
-      const expectedFile = `interview/${leaf.filePath}/${leaf.key}.md`;
-      if (!Array.isArray(record.publicFiles) || !record.publicFiles.includes(expectedFile)) {
-        errors.push(`${prefix} 的 articleKey 与 publicFiles 不匹配：应包含 ${expectedFile}`);
+      const sourceIds = publishedArticles.get(record.articleKey) ?? [];
+      sourceIds.push(id);
+      publishedArticles.set(record.articleKey, sourceIds);
+      if (!leafByKey.has(record.articleKey)) {
+        errors.push(`${prefix} 的 articleKey 不在 interview/_tree.json`);
+      } else {
+        const leaf = leafByKey.get(record.articleKey);
+        const expectedFile = `interview/${leaf.filePath}/${leaf.key}.md`;
+        if (!Array.isArray(record.publicFiles) || !record.publicFiles.includes(expectedFile)) {
+          errors.push(`${prefix} 的 articleKey 与 publicFiles 不匹配：应包含 ${expectedFile}`);
+        }
       }
     }
     if (!Array.isArray(record.publicFiles) || record.publicFiles.length === 0) {
@@ -146,6 +172,15 @@ export async function validateInterviewSourceHistory(resourceRoot, history) {
     if (previous) {
       errors.push(`同一 cluster 只能有一篇公开面经：${record.clusterId}（${previous}、${id}）`);
     } else publishedClusters.set(record.clusterId, id);
+  }
+
+  for (const leaf of treeLeaves) {
+    const sourceIds = publishedArticles.get(leaf.key) ?? [];
+    if (sourceIds.length === 0) {
+      errors.push(`公开面经缺少已发布来源记录：${leaf.key}`);
+    } else if (sourceIds.length > 1) {
+      errors.push(`公开面经只能对应一条已发布来源记录：${leaf.key}（${sourceIds.join('、')}）`);
+    }
   }
 
   for (const topic of topicFrequencies(history)) {

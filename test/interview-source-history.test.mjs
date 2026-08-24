@@ -7,6 +7,7 @@ import {
   topicFrequencies,
   validateInterviewSourceHistory,
 } from '../scripts/interview-source-history.mjs';
+import { publicInterviewDisclosures } from '../scripts/public-interview-contract.mjs';
 
 const ROOT = join(import.meta.dirname, '..');
 
@@ -43,10 +44,9 @@ test('keeps Nowcoder provenance private while every published article stays trac
   for (const file of files) {
     const contents = await readFile(file, 'utf8');
     const relativePath = file.slice(ROOT.length + 1);
-    if (/^## 来源\s*$/mu.test(contents)) publicViolations.push(`${relativePath}: 公开来源标题`);
-    if (/nowcoder\.com/iu.test(contents)) {
-      publicViolations.push(`${relativePath}: 公开牛客 URL`);
-    }
+    const disclosures = publicInterviewDisclosures(contents);
+    if (disclosures.has('source-heading')) publicViolations.push(`${relativePath}: 公开来源标题`);
+    if (disclosures.has('nowcoder-destination')) publicViolations.push(`${relativePath}: 公开牛客 URL`);
   }
 
   const history = JSON.parse(await readFile(join(ROOT, '.codex', 'interview-source-history.json'), 'utf8'));
@@ -106,6 +106,36 @@ test('validates published files and limits one public article per cluster', asyn
     };
 
     assert.deepEqual(await validateInterviewSourceHistory(root, valid), []);
+
+    const missingPublishedRecord = structuredClone(valid);
+    delete missingPublishedRecord.records.aaaaaaaaaaaa;
+    const missingPublishedErrors = await validateInterviewSourceHistory(root, missingPublishedRecord);
+
+    const duplicateArticle = structuredClone(valid);
+    duplicateArticle.records.bbbbbbbbbbbb = published({
+      url: 'https://www.nowcoder.com/feed/main/detail/source-b',
+      contentHash: '2222222222222222',
+      clusterId: 'cluster-another',
+      knowledgeKeys: [],
+    });
+    const duplicateArticleErrors = await validateInterviewSourceHistory(root, duplicateArticle);
+
+    const nonCanonical = structuredClone(valid);
+    nonCanonical.records.aaaaaaaaaaaa.url = 'https://nowcoder.com/feed/main/detail/source-a/?from=share';
+    const nonCanonicalErrors = await validateInterviewSourceHistory(root, nonCanonical);
+    assert.deepEqual({
+      missingPublishedRecord: missingPublishedErrors.some(
+        error => error.includes('公开面经缺少已发布来源记录：bytedance-agent-1'),
+      ),
+      duplicateArticle: duplicateArticleErrors.some(
+        error => error.includes('公开面经只能对应一条已发布来源记录：bytedance-agent-1'),
+      ),
+      nonCanonicalUrl: nonCanonicalErrors.some(error => error.includes('发布面经必须使用规范牛客 URL')),
+    }, {
+      missingPublishedRecord: true,
+      duplicateArticle: true,
+      nonCanonicalUrl: true,
+    });
 
     const duplicateCluster = structuredClone(valid);
     duplicateCluster.records.bbbbbbbbbbbb = published({

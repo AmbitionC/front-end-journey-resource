@@ -5,6 +5,7 @@ import {
   readInterviewSourceHistory,
   validateInterviewSourceHistory,
 } from './interview-source-history.mjs';
+import { publicInterviewDisclosures } from './public-interview-contract.mjs';
 
 const ROOT = resolve(import.meta.dirname, '..');
 const MODULES = ['interview', 'knowledge'];
@@ -70,11 +71,12 @@ const publicInterviewFiles = allMd(resolve(ROOT, 'interview'));
 for (const file of publicInterviewFiles) {
   const contents = readFileSync(file, 'utf8');
   const relativePath = file.replace(`${ROOT}/`, '');
-  if (/^## 来源\s*$/mu.test(contents)) {
+  const disclosures = publicInterviewDisclosures(contents);
+  if (disclosures.has('source-heading')) {
     console.error(`[interview-public] 公开面经不得包含来源标题: ${relativePath}`);
     errors++;
   }
-  if (/nowcoder\.com/iu.test(contents)) {
+  if (disclosures.has('nowcoder-destination')) {
     console.error(`[interview-public] 公开面经不得包含牛客 URL: ${relativePath}`);
     errors++;
   }

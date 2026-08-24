@@ -23,7 +23,7 @@
 ## 来源与公开边界
 
 - 原始来源仅保存在私有 `.codex/interview-source-history.json` 和审核证据中，不进入 `interview/**/*.md`。
-- 每条已发布记录必须保留规范牛客 URL、A/B 证据等级、`clusterId`、`articleKey` 和 `knowledgeKeys`，并由校验器确认每个已发布 `articleKey` 都能追溯到对应公开文件。
+- 每条已发布记录必须保留规范牛客 URL、A/B 证据等级、`clusterId`、`articleKey` 和 `knowledgeKeys`；校验器必须双向检查，确保每个公开面经叶子恰好对应一条完整的 `published` 记录，且每条记录都指向对应公开文件。
 - 删除或改写公开来源信息时，不得顺带改动题目、答案、公司/岗位/轮次/月度背景或面经与知识点之间的链接。
 
 ## `_tree.json` 叶子 schema
