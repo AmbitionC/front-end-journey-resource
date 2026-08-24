@@ -37,7 +37,3 @@
 大模型负责生成和决策；Agent 增加状态、循环、工具和控制边界；Function Calling 是一次模型输出结构化工具请求的能力；MCP 统一工具/资源的发现与调用；Skill 则封装特定任务的操作说明和可复用资源。它们是不同层次，不应互相替代。
 
 延伸阅读：[MCP / A2A 智能体通信协议](../../../knowledge/llm/agent/mcp-protocol.md)、[Agent Skill 设计](../../../knowledge/llm/agent/agent-skill-design.md)。
-
-## 来源
-
-- [牛客：腾讯后端 AI 开发实习面试原始记录](https://www.nowcoder.com/feed/main/detail/a99d5b46ab7848f992d8ae48a60c009c)（B 级第一手证据，发布于 2026-04-27；真实面试信号，不代表企业官方题库）

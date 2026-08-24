@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { mkdtemp, mkdir, rm, writeFile } from 'node:fs/promises';
+import { mkdtemp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
@@ -7,6 +7,18 @@ import {
   topicFrequencies,
   validateInterviewSourceHistory,
 } from '../scripts/interview-source-history.mjs';
+
+const ROOT = join(import.meta.dirname, '..');
+
+async function markdownFiles(directory) {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const nested = await Promise.all(entries.map(entry => {
+    const path = join(directory, entry.name);
+    if (entry.isDirectory()) return markdownFiles(path);
+    return entry.isFile() && entry.name.endsWith('.md') ? [path] : [];
+  }));
+  return nested.flat();
+}
 
 function published(overrides = {}) {
   return {
@@ -24,6 +36,46 @@ function published(overrides = {}) {
     ...overrides,
   };
 }
+
+test('keeps Nowcoder provenance private while every published article stays traceable', async () => {
+  const files = await markdownFiles(join(ROOT, 'interview'));
+  const publicViolations = [];
+  for (const file of files) {
+    const contents = await readFile(file, 'utf8');
+    const relativePath = file.slice(ROOT.length + 1);
+    if (/^## 来源\s*$/mu.test(contents)) publicViolations.push(`${relativePath}: 公开来源标题`);
+    if (/nowcoder\.com/iu.test(contents)) {
+      publicViolations.push(`${relativePath}: 公开牛客 URL`);
+    }
+  }
+
+  const history = JSON.parse(await readFile(join(ROOT, '.codex', 'interview-source-history.json'), 'utf8'));
+  const historyErrors = await validateInterviewSourceHistory(ROOT, history);
+  const publishedRecords = Object.values(history.records).filter(record => record.status === 'published');
+  const publishedArticleKeys = publishedRecords.map(record => record.articleKey);
+  for (const record of publishedRecords) {
+    const url = new URL(record.url);
+    if (
+      url.protocol !== 'https:'
+      || url.hostname !== 'www.nowcoder.com'
+      || url.search !== ''
+      || url.hash !== ''
+      || !['A', 'B'].includes(record.evidenceGrade)
+      || typeof record.clusterId !== 'string'
+      || record.clusterId.length === 0
+      || typeof record.articleKey !== 'string'
+      || record.articleKey.length === 0
+      || !Array.isArray(record.knowledgeKeys)
+    ) {
+      historyErrors.push(`发布面经的私有来源记录不完整：${record.articleKey ?? '(missing articleKey)'}`);
+    }
+  }
+  if (new Set(publishedArticleKeys).size !== publishedArticleKeys.length) {
+    historyErrors.push('发布面经的 articleKey 不唯一');
+  }
+
+  assert.deepEqual({ publicViolations, historyErrors }, { publicViolations: [], historyErrors: [] });
+});
 
 test('validates published files and limits one public article per cluster', async () => {
   const root = await mkdtemp(join(tmpdir(), 'interview-history-'));

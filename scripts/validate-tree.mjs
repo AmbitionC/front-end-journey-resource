@@ -66,6 +66,21 @@ for (const mod of MODULES) {
   console.log(`[${mod}] 叶子 ${ls.length} 个,校验完成`);
 }
 
+const publicInterviewFiles = allMd(resolve(ROOT, 'interview'));
+for (const file of publicInterviewFiles) {
+  const contents = readFileSync(file, 'utf8');
+  const relativePath = file.replace(`${ROOT}/`, '');
+  if (/^## 来源\s*$/mu.test(contents)) {
+    console.error(`[interview-public] 公开面经不得包含来源标题: ${relativePath}`);
+    errors++;
+  }
+  if (/nowcoder\.com/iu.test(contents)) {
+    console.error(`[interview-public] 公开面经不得包含牛客 URL: ${relativePath}`);
+    errors++;
+  }
+}
+console.log(`[interview-public] 公开面经 ${publicInterviewFiles.length} 篇,隐私边界校验完成`);
+
 const interviewHistory = await readInterviewSourceHistory(ROOT);
 const interviewHistoryErrors = await validateInterviewSourceHistory(ROOT, interviewHistory);
 for (const error of interviewHistoryErrors) {

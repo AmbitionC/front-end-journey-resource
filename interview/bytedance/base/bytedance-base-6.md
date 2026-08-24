@@ -61,10 +61,3 @@ Watchdog 会在持有者仍存活时周期续约，降低“业务正常但 TTL 
 #### （7）反问和结果沟通怎样处理？
 
 可以问团队当前最重要的工程问题、岗位前三个月的交付预期、面试官认为自己还欠缺的能力。结果时间由招聘流程决定，不应在公开面经保留私人联系方式或可定位个人的沟通细节。
-
-## 来源
-
-- [牛客：字节后端开发秋招二面原始记录](https://www.nowcoder.com/feed/main/detail/952da84e40f64e668041eeda887af775)（A 级第一手证据，面试日期 2026-08-21；真实面试信号，不代表企业官方题库）
-- [Redis 官方文档：Redis Cluster 规范](https://redis.io/docs/latest/operate/oss_and_stack/reference/cluster-spec/)
-- [Redis 官方文档：Distributed Locks with Redis](https://redis.io/docs/latest/develop/clients/patterns/distributed-locks/)
-- [Redisson Reference Guide：Locks and synchronizers](https://redisson.pro/docs/data-and-services/locks-and-synchronizers/)

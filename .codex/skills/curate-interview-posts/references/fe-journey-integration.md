@@ -18,7 +18,13 @@
 - 导航清单：`interview/_tree.json`、`knowledge/_tree.json`
 - 图片：`images/<name>`（发布时同步到 OSS；正文用 OSS URL 引用，不外链 `_inbox/assets`）
 
-文章正文 **不带 frontmatter**（标题等元信息在 `_tree.json` 的叶子里）；面经贴正文用「按题目分节」的既有风格。
+文章正文 **不带 frontmatter**（标题等元信息在 `_tree.json` 的叶子里）；面经贴正文用「按题目分节」的既有风格。公开面经保留公司、岗位、轮次、面试月份等背景和知识点导航，但不得包含标题为 `## 来源` 的模块或任何 `nowcoder.com` 原始链接。
+
+## 来源与公开边界
+
+- 原始来源仅保存在私有 `.codex/interview-source-history.json` 和审核证据中，不进入 `interview/**/*.md`。
+- 每条已发布记录必须保留规范牛客 URL、A/B 证据等级、`clusterId`、`articleKey` 和 `knowledgeKeys`，并由校验器确认每个已发布 `articleKey` 都能追溯到对应公开文件。
+- 删除或改写公开来源信息时，不得顺带改动题目、答案、公司/岗位/轮次/月度背景或面经与知识点之间的链接。
 
 ## `_tree.json` 叶子 schema
 
@@ -68,4 +74,4 @@ knowledge 叶子（含热度；`heat`/`currRank` 见 [dedup-and-heat.md](dedup-a
 
 ## 隐私红线
 
-面经属于公开发布内容。发布前必须去除：真实姓名、手机号/微信/QQ/邮箱、身份证、精确薪资、可定位到个人的信息。保留公司、岗位、轮次、题目与解法。提交前复核 diff。
+面经属于公开发布内容。发布前必须去除：真实姓名、手机号/微信/QQ/邮箱、身份证、精确薪资、可定位到个人的信息。保留公司、岗位、轮次、面试月份、题目与解法，以及有效的知识点导航。提交前复核 diff。

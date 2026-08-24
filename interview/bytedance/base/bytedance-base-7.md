@@ -52,7 +52,3 @@ function merge(nums1: number[], m: number, nums2: number[], n: number): void {
   }
 }
 ```
-
-## 来源
-
-- [牛客：字节 Agent 开发二面原始记录](https://www.nowcoder.com/feed/main/detail/eccea78e38b447c9a3ae73570c5d00b6)（A 级第一手证据，面试日期 2026-07-18；真实面试信号，不代表企业官方题库）

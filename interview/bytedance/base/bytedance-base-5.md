@@ -110,9 +110,3 @@ function removeDuplicateLetters(text: string): string {
 ```
 
 时间复杂度为 $O(n)$，因为每个字符最多入栈、出栈各一次。
-
-## 来源
-
-- [牛客：字节 Agent 开发日常实习一面原始记录](https://www.nowcoder.com/feed/main/detail/577bbe48f8f846159c5b4400c4f10204)（A 级第一手证据，发布于 2026-08-08；真实面试信号，不代表企业官方题库）
-- [LangGraph Graph API](https://docs.langchain.com/oss/python/langgraph/graph-api)
-- [Oracle Java 25 GC Tuning Guide：Generations](https://docs.oracle.com/en/java/javase/25/gctuning/garbage-collector-implementation.html)

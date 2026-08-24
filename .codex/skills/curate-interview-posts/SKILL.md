@@ -29,6 +29,7 @@ description: Turn raw collected interview experiences (牛客/nowcoder 面经) f
      - **公司面经**（能对应到某公司某岗某轮）：归到已有公司分组（见 `interview/_tree.json`，如 腾讯/`Tencent`、阿里/`alibaba`、字节/`bytedance`、美团/`meituan` …）；查不到合适公司分组时新建一个顶层公司节点。
      - **专题/题集面经**（无具体公司，如「AI 面试题合集」「手写题合集」这类按主题聚合、常带 `#…题解#` 标签的帖子）：归到一个「综合/专题」顶层分组（如 `common`，label「综合面经」），按主题建子分组；这类帖子往往更适合把重点放在**知识点提炼**（第 5 步），面经贴本身作为题目索引。
    - 用仓库既有面经贴风格：按题目分节（`#### （1）…`），每题给出清晰、准确、可教学的解答，而非照抄口水话。必要时补充标准答案与易错点。原帖只有问题没有答案时，由你补齐高质量解答。
+   - 保留公司、岗位、轮次、面试月份等必要背景，以及面经贴与知识点之间的导航链接；公开正文不得出现 `## 来源` 模块，也不得包含 `nowcoder.com` 原始链接。
    - 在 `interview/_tree.json` 对应分组下 upsert 叶子 `{ label, key, isLeaf: true, filePath, tags }`（`filePath` 为目录，`key` 为文件名去掉 `.md`，全库唯一；`tags` 用考点如 `JavaScript`/`React`/`手写题`/`系统设计`/`Agent`；`updatedAt` 设为当天日期，驱动站点「NEW」标记）。
 5. **提炼知识点（去重 + 热度加权）** → `knowledge/<子路径>/<key>.md`：**严格按 [references/dedup-and-heat.md](references/dedup-and-heat.md) 执行**，核心是「同一考点只留一条、越高频越靠前」：
    - 对每个知识点候选，先用站内检索 / embedding + 读 `knowledge/_tree.json` 找**语义相近**的既有知识点（不只看标题）。
@@ -36,13 +37,13 @@ description: Turn raw collected interview experiences (牛客/nowcoder 面经) f
    - **全新** → 调 [`generate-knowledge-docs`](../generate-knowledge-docs/SKILL.md) 生成，`heat: 1`，来源=该面经。
    - 每次改动后把受影响父节点下 `knowledge/_tree.json` 兄弟叶子**按 `heat` 降序稳定重排**，使目录树热点→冷门（网站索引默认已按热度排序、无需改前端）。
    - 面经贴↔知识点互链。
-6. **记录与出队**：提交前将每条来源的处置和 `knowledgeKeys` upsert 到 `.codex/interview-source-history.json`；`heat` 按其中的唯一 cluster 来源累计。普通人工流程按用户确认清理；自动 `publish` 模式在提交前不删除，只有 `master` 推送且该 SHA 的 `sync-content` Action 成功后，才删除本批已成功消费的本地条目（含 `assets/`）。失败、阻塞和待确认项保留。
+6. **记录与出队**：来源只保存在私有 `.codex/interview-source-history.json` 和审核证据中，不写入公开面经。提交前将每条来源的规范 URL、A/B 证据等级、`clusterId`、`articleKey`、`knowledgeKeys` 和处置结果 upsert 到私有历史；每个已发布 `articleKey` 都必须可由该记录追溯，`heat` 按其中的唯一 cluster 来源累计。普通人工流程按用户确认清理；自动 `publish` 模式在提交前不删除，只有 `master` 推送且该 SHA 的 `sync-content` Action 成功后，才删除本批已成功消费的本地条目（含 `assets/`）。失败、阻塞和待确认项保留。
 7. **图片**：面经贴/知识点若要用采集到的图，按 [references/fe-journey-integration.md](references/fe-journey-integration.md) 放到 `images/` 由同步流程发布；不要外链 `_inbox/assets`。
 
 ## 发布
 
 在仓库默认分支（`master`）提交整理产出（`interview/`、`knowledge/`、对应 `_tree.json`，以及被删除的 `_inbox` 条目）。合入 `master` 后由仓库的 `sync.yml` Action 自动同步到 OSS/DB/网站/检索 —— 无需手动调用 faas。提交前请复核 diff（尤其脱敏），把关面经质量与隐私。
 
-Data Collector 自动 `publish` 模式由总控 Skill 明确授权：校验通过后直接提交并推送 `master`，等待当前 commit 的 `sync-content` Action 成功才算上线；Action 失败时不得声称发布完成，也不得清理原始候选。`_inbox` 默认被 Git 忽略，因此成功后的本地清理不应伪装成发布提交。
+Data Collector 自动 `publish` 模式由总控 Skill 明确授权：校验通过后直接提交并推送 `master`，等待当前 commit 的 `sync-content` Action 成功才算上线；Action 失败时不得声称发布完成，也不得清理原始候选。`_inbox` 默认被 Git 忽略，因此成功后的本地清理不应伪装成发布提交。发布前还要运行公开/私有边界校验：公开面经无来源模块和牛客 URL，私有历史覆盖全部已发布面经并通过校验。
 
 `_tree.json` 校验：改完跑 `npm run validate:tree` 确认叶子与文件一致、key 唯一。
