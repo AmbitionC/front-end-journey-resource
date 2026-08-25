@@ -13,6 +13,7 @@ async function writeEntry(root, name, {
   candidateKinds = ['interview'],
   questions,
   batchId,
+  deliveryBatchId,
 }) {
   const directory = join(root, '_inbox', 'nowcoder', name);
   await mkdir(directory, { recursive: true });
@@ -27,6 +28,7 @@ async function writeEntry(root, name, {
       role: 'Agent 开发',
       round: '一面',
       ...(batchId ? { batchId } : {}),
+      ...(deliveryBatchId ? { deliveryBatchId } : {}),
     },
     feJourney: {
       clusterId,
@@ -133,7 +135,7 @@ test('limits generated reports to the requested Data Collector batch', async () 
     url: 'https://www.nowcoder.com/discuss/current',
     title: '当前批次',
     questions: ['如何设计 Agent 记忆？'],
-    batchId: 'batch-current',
+    deliveryBatchId: 'batch-current',
   });
   await writeEntry(root, 'old', {
     clusterId: 'cluster-old',

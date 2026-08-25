@@ -121,7 +121,8 @@ async function inboxEntries(resourceRoot, batch) {
     } catch {
       continue;
     }
-    if (batch && meta?.sourceMetadata?.batchId !== batch) continue;
+    const deliveryBatch = meta?.sourceMetadata?.deliveryBatchId ?? meta?.sourceMetadata?.batchId;
+    if (batch && deliveryBatch !== batch) continue;
     const originalPath = join(dirname(metaPath), 'original.md');
     let markdown = '';
     try {

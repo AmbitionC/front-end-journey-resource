@@ -86,6 +86,8 @@ Progressive discovery 的每一层仍要经过权限过滤。只隐藏具体函�
 - [字节 Coding Agent 日常实习一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)（cluster-1b2940d40f2e）
 - [阿里云 Agent 开发秋招一面（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-1.md)（cluster-1f550affd882）
 - [字节 Agent 开发二面（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-7.md)（cluster-29b42b69483b）
+- [小红书 Agent 开发一面：LangGraph 子图、Skill 进化与工程校验（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-2.md)（cluster-3fa76fc5d243）
+- [哔哩哔哩 AI 应用岗 Agent 开发一面（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-1.md)（cluster-c5c44d791f6e）
 <!-- interview-source-history:end -->
 
 ## 参考资料

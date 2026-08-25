@@ -97,6 +97,7 @@ Subagent 设计的重点是边界，而不是数量：以窄合同传入最小�
 
 <!-- interview-source-history:start -->
 - [阿里云 Agent 开发秋招一面（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-1.md)（cluster-1f550affd882）
+- [深信服 Agent 开发一面：MCP、多 Agent、安全与网络（2026 年 8 月）](../../../interview/sangfor/ai/sangfor-ai-1.md)（cluster-bb3431ce1c81）
 <!-- interview-source-history:end -->
 
 ## 参考资料

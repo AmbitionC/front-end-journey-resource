@@ -133,6 +133,12 @@ Prompt 优化应与模型版本、参数、检索和工具变更一起记录。�
 
 高质量 Prompt 是清晰目标、必要上下文、不可信输入边界、可执行约束、输出合同和可选示例的组合。把它像代码一样版本化、测试和回归，Prompt Engineering 才从写文案变成工程能力。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [大疆创新 AI Agent 开发面经：容错、Token 与后端基础（2026 年 8 月）](../../../interview/dji/ai/dji-ai-1.md)（cluster-4596af05b314）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenAI API：Prompt engineering](https://developers.openai.com/api/docs/guides/prompt-engineering)

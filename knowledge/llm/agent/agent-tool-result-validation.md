@@ -91,6 +91,8 @@ async function acceptResult(raw: unknown, ctx: ValidationContext) {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [拼多多 AI Agent 岗两轮技术面：RAG、多 Agent 与系统能力（2026 年 8 月）](../../../interview/pinduoduo/ai/pinduoduo-ai-1.md)（cluster-16e49722e8d7）
+- [小红书 Agent 开发一面：LangGraph 子图、Skill 进化与工程校验（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-2.md)（cluster-3fa76fc5d243）
 - [阿里 Agent 开发暑期实习一面（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-2.md)（cluster-9d9f0031dcd6）
 - [蚂蚁 Agent 开发一面：多 Agent 并发与质量保障（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-1.md)（cluster-cc9e5dd82505）
 <!-- interview-source-history:end -->

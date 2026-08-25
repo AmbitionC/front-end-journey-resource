@@ -240,7 +240,10 @@ function chunkDocument(nodes: Node[], limits: ChunkLimits) {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [拼多多 AI Agent 岗两轮技术面：RAG、多 Agent 与系统能力（2026 年 8 月）](../../../interview/pinduoduo/ai/pinduoduo-ai-1.md)（cluster-16e49722e8d7）
 - [字节 TikTok Agent 开发秋招一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-11.md)（cluster-26285b4c4c2b）
+- [字节大模型应用开发一面：Agent、RAG 与可靠性（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-16.md)（cluster-605f9ab081a6）
+- [哔哩哔哩 AI 应用岗 Agent 开发一面（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-1.md)（cluster-c5c44d791f6e）
 <!-- interview-source-history:end -->
 
 ## 参考资料

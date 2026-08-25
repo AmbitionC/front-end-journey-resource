@@ -238,6 +238,7 @@ UI 不宜每收到一个 token 就触发一次完整渲染。可以先累计文�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)（cluster-0c75d333d0e1）
 - [字节 AI 全栈开发一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-13.md)（cluster-0cfd17469543）
 <!-- interview-source-history:end -->
 

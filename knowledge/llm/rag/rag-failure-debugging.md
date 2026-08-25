@@ -103,7 +103,9 @@ RAG 调试是一条逆向证据链：先冻结可回放 trace，从 generation �
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节大模型应用开发一面：Agent、RAG 与可靠性（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-16.md)（cluster-605f9ab081a6）
 - [字节 AI 应用开发一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-12.md)（cluster-9e24453f3753）
+- [哔哩哔哩 AI 应用岗 Agent 开发一面（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-1.md)（cluster-c5c44d791f6e）
 <!-- interview-source-history:end -->
 
 ## 参考资料

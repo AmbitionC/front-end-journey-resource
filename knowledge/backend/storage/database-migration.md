@@ -46,6 +46,12 @@ WHERE id > $cursor
 
 在预发布环境演练“迁移任务中断后继续”“旧新应用同时写”“副本落后”“锁超时”“回滚应用版本”等场景。真正的完成标志不是新列出现，而是兼容代码和旧结构被有证据地收尾，数据契约回到单一、可维护状态。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [深信服 Agent 开发一面：MCP、多 Agent、安全与网络（2026 年 8 月）](../../../interview/sangfor/ai/sangfor-ai-1.md)（cluster-bb3431ce1c81）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [PostgreSQL：ALTER TABLE](https://www.postgresql.org/docs/18/sql-altertable.html)

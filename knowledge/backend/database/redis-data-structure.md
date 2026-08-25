@@ -373,6 +373,12 @@ ZSet score 编码优先级 + 时间戳（`priority * 1e13 + timestamp`），`ZPO
 **Q：什么是 Big Key？如何处理？**
 单个 String 超过 10 KB，或集合类型元素超过数千个，即视为 Big Key。会阻塞主线程（尤其是删除时）。处理方式：拆分 Key、用 `UNLINK` 异步删除、定期巡检。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [小红书 Agent 开发一面：多智能体、Memory 与广告投放优化（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-1.md)（cluster-7372c3e7fb1e）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Redis data types](https://redis.io/docs/latest/develop/data-types/)

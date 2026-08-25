@@ -144,6 +144,13 @@ sequenceDiagram
 
 三者不是替代关系,而是不同抽象层次的工具:操作系统用进程隔离程序、用线程压榨多核,而我们用协程在 IO 等待的缝隙里塞进海量并发。选对工具的前提,永远是先看清你的任务到底卡在 CPU 还是卡在 IO。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [拼多多 AI Agent 岗两轮技术面：RAG、多 Agent 与系统能力（2026 年 8 月）](../../../interview/pinduoduo/ai/pinduoduo-ai-1.md)（cluster-16e49722e8d7）
+- [字节 Agent 开发一面：Skill、MCP 与后端基础（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-15.md)（cluster-d0b4e8a8f482）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [POSIX General Concepts: Threads](https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap02.html#tag_02_09)

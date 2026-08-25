@@ -72,6 +72,13 @@ $$
 
 大模型是概率生成器，不是事实数据库、执行环境或责任主体。可靠系统的关键不是幻想模型永不出错，而是让证据、工具、权限、评估和人工复核共同包住模型的边界。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [大疆创新 AI Agent 开发面经：容错、Token 与后端基础（2026 年 8 月）](../../../interview/dji/ai/dji-ai-1.md)（cluster-4596af05b314）
+- [哔哩哔哩 AI 应用岗 Agent 开发一面（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-1.md)（cluster-c5c44d791f6e）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [NIST AI 600-1：Generative AI Profile](https://doi.org/10.6028/NIST.AI.600-1)

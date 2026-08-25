@@ -334,12 +334,14 @@ async function answerWithRag(question: string, session: Session) {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)（cluster-0c75d333d0e1）
 - [字节 AI 全栈开发一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-13.md)（cluster-0cfd17469543）
 - [腾讯 TEG 后端一面：RAG 多智能体与分布式 LRU（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-6.md)（cluster-27070393eae6）
 - [字节 Agent 开发二面（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-7.md)（cluster-29b42b69483b）
 - [蚂蚁 Code Agent 与 Agent 应用两轮面试（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-2.md)（cluster-2d9e5f67fe86）
 - [腾讯后端 AI 开发实习面试（2026 年 4 月）](../../../interview/tencent/ai/tencent-ai-3.md)（cluster-6ba888767532）
 - [腾讯微信支付 AI 软件工程一面（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-5.md)（cluster-ab43c892c4ed）
+- [哔哩哔哩 AI 应用岗 Agent 开发一面（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-1.md)（cluster-c5c44d791f6e）
 <!-- interview-source-history:end -->
 
 ## 参考资料

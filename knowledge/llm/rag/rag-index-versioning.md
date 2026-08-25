@@ -80,6 +80,12 @@ GC 前确认：回滚窗口结束、无 alias、无活跃查询/任务、构建�
 
 索引版本治理把不确定升级变成可审计发布：manifest 固定全部输入，新索引独立构建并追平事件，Golden Set 与 shadow query 共同门禁，alias 原子切换，旧版提供快速回滚，最后按条件 GC。生产稳定性来自“不原地修改”。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [深信服 Agent 开发一面：MCP、多 Agent、安全与网络（2026 年 8 月）](../../../interview/sangfor/ai/sangfor-ai-1.md)（cluster-bb3431ce1c81）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Elastic — Reindex documents](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-reindex)

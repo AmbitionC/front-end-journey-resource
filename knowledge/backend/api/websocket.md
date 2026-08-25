@@ -474,6 +474,12 @@ const wss = new WebSocketServer({ port: 8080, maxPayload: 1024 * 1024 }); // 1MB
 
 - **WebSocket 在 HTTP/2 下如何工作？** RFC 8441 定义了 WebSocket over HTTP/2（使用 `CONNECT` 方法在 HTTP/2 流上建立 WebSocket），可复用 HTTP/2 连接、节省端口，但目前生产环境多数仍走 HTTP/1.1 升级。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)（cluster-0c75d333d0e1）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [RFC 6455: The WebSocket Protocol](https://www.rfc-editor.org/rfc/rfc6455.html)

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-25",
+  "updatedAt": "2026-08-26",
   "records": {
     "00460f65f35e": {
       "source": "nowcoder",
@@ -377,6 +377,149 @@
       "knowledgeKeys": [],
       "reason": "岗位以模型基础设施为主，与 Agent Journey 当前内容定位不一致",
       "processedAt": "2026-08-24T21:28:00.000Z"
+    },
+    "b16e82004007": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/921444774287003648",
+      "contentHash": "0c75d333d0e13a67",
+      "clusterId": "cluster-0c75d333d0e1",
+      "company": "bytedance",
+      "evidenceGrade": "A",
+      "status": "published",
+      "articleKey": "bytedance-base-14",
+      "publicFiles": ["interview/bytedance/base/bytedance-base-14.md"],
+      "knowledgeKeys": ["rag-pipeline", "agent-coding", "llm-sse-streaming", "websocket", "mysql-index", "agent-concurrency", "os-thread-sync"],
+      "processedAt": "2026-08-25T18:30:00.000Z"
+    },
+    "b4e342b28c00": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/feed/main/detail/32abaced66d74376a61243efef6da8ec",
+      "contentHash": "d0b4e8a8f48210e0",
+      "clusterId": "cluster-d0b4e8a8f482",
+      "company": "bytedance",
+      "evidenceGrade": "B",
+      "status": "published",
+      "articleKey": "bytedance-base-15",
+      "publicFiles": ["interview/bytedance/base/bytedance-base-15.md"],
+      "knowledgeKeys": ["redis-cache", "agent-skill-design", "mcp-protocol", "agent-coding", "dns-analysis", "os-process-thread", "db-transaction-lock", "mysql-index"],
+      "processedAt": "2026-08-25T18:30:00.000Z"
+    },
+    "4b949903c450": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/916420927619928064",
+      "contentHash": "605f9ab081a6e256",
+      "clusterId": "cluster-605f9ab081a6",
+      "company": "bytedance",
+      "evidenceGrade": "A",
+      "status": "published",
+      "articleKey": "bytedance-base-16",
+      "publicFiles": ["interview/bytedance/base/bytedance-base-16.md"],
+      "knowledgeKeys": ["agent-coding", "agent-architecture", "agent-tool-design", "agent-memory", "agent-react", "multi-agent", "rag-chunking", "rag-failure-debugging", "ai-observability", "agent-tool-timeout"],
+      "processedAt": "2026-08-25T18:30:00.000Z"
+    },
+    "6a58a409c170": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/919948330229071872",
+      "contentHash": "cdb98481f4a4ecd2",
+      "clusterId": "cluster-cdb98481f4a4",
+      "company": "other",
+      "evidenceGrade": "A",
+      "status": "published",
+      "articleKey": "kuaishou-ai-2",
+      "publicFiles": ["interview/kuaishou/ai/kuaishou-ai-2.md"],
+      "knowledgeKeys": ["agent-project-evaluation", "os-thread-sync"],
+      "processedAt": "2026-08-25T18:30:00.000Z"
+    },
+    "7736e62eba52": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/918542384726540288",
+      "contentHash": "16e49722e8d7614e",
+      "clusterId": "cluster-16e49722e8d7",
+      "company": "other",
+      "evidenceGrade": "B",
+      "status": "published",
+      "articleKey": "pinduoduo-ai-1",
+      "publicFiles": ["interview/pinduoduo/ai/pinduoduo-ai-1.md"],
+      "knowledgeKeys": ["agent-data-privacy", "rag-chunking", "rag-evaluation", "agent-memory", "agent-tool-result-validation", "os-process-thread", "llm-tokenizer", "transformer-arch", "llm-long-context", "multi-agent"],
+      "processedAt": "2026-08-25T18:30:00.000Z"
+    },
+    "f27319623f70": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/feed/main/detail/0df78025653d492d86cc7b7273c2a0c2",
+      "contentHash": "c5c44d791f6e4e4b",
+      "clusterId": "cluster-c5c44d791f6e",
+      "company": "other",
+      "evidenceGrade": "A",
+      "status": "published",
+      "articleKey": "bilibili-ai-1",
+      "publicFiles": ["interview/bilibili/ai/bilibili-ai-1.md"],
+      "knowledgeKeys": ["agent-architecture", "rag-pipeline", "rag-chunking", "rag-failure-debugging", "embedding-models", "function-calling", "agent-tool-selection", "llm-capability-boundaries", "agent-run-loop", "agent-memory"],
+      "processedAt": "2026-08-25T18:30:00.000Z"
+    },
+    "0178488c1ee9": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/feed/main/detail/45b40914f438434b88b60a21e3d5ec1e",
+      "contentHash": "bb3431ce1c819444",
+      "clusterId": "cluster-bb3431ce1c81",
+      "company": "other",
+      "evidenceGrade": "A",
+      "status": "published",
+      "articleKey": "sangfor-ai-1",
+      "publicFiles": ["interview/sangfor/ai/sangfor-ai-1.md"],
+      "knowledgeKeys": ["database-migration", "mcp-protocol", "agent-skill-design", "rag-index-versioning", "agent-eval-framework", "agent-permission-model", "agent-subagents", "agent-failure-recovery", "context-engineering", "prompt-context-compression"],
+      "processedAt": "2026-08-25T18:30:00.000Z"
+    },
+    "bc646042b571": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/feed/main/detail/223fa82f976b4418b214894bd7d941fd",
+      "contentHash": "7372c3e7fb1edea8",
+      "clusterId": "cluster-7372c3e7fb1e",
+      "company": "other",
+      "evidenceGrade": "A",
+      "status": "published",
+      "articleKey": "redbook-ai-1",
+      "publicFiles": ["interview/redbook/ai/redbook-ai-1.md"],
+      "knowledgeKeys": ["agent-project-evaluation", "agent-architecture", "agent-coding", "multi-agent", "agent-concurrency", "agent-memory", "agent-react", "agent-planning", "prompt-context-compression", "redis-data-structure"],
+      "processedAt": "2026-08-25T18:30:00.000Z"
+    },
+    "e76beb43b427": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/feed/main/detail/e319aadc79a9479397a6661a7f5ca088",
+      "contentHash": "3fa76fc5d2437cd6",
+      "clusterId": "cluster-3fa76fc5d243",
+      "company": "other",
+      "evidenceGrade": "A",
+      "status": "published",
+      "articleKey": "redbook-ai-2",
+      "publicFiles": ["interview/redbook/ai/redbook-ai-2.md"],
+      "knowledgeKeys": ["agent-state-machine", "agent-multi-agent-messaging", "agent-skill-design", "mysql-index", "db-transaction-lock", "agent-coding", "agent-tool-result-validation", "agent-failure-recovery", "agent-tool-selection"],
+      "processedAt": "2026-08-25T18:30:00.000Z"
+    },
+    "96f6057a2692": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/feed/main/detail/bbd8f778c65e4401a53de3d7417e6f77",
+      "contentHash": "4596af05b314ae82",
+      "clusterId": "cluster-4596af05b314",
+      "company": "other",
+      "evidenceGrade": "A",
+      "status": "published",
+      "articleKey": "dji-ai-1",
+      "publicFiles": ["interview/dji/ai/dji-ai-1.md"],
+      "knowledgeKeys": ["agent-coding", "agent-architecture", "agent-memory", "agent-tool-timeout", "agent-failure-recovery", "llm-capability-boundaries", "prompt-basics", "llm-token-budget", "prompt-context-compression", "agent-skill-design"],
+      "processedAt": "2026-08-25T18:30:00.000Z"
+    },
+    "c1c2f0c0ab93": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/feed/main/detail/b406c87436a54864bfc0cf4a20299f62",
+      "contentHash": "5a01296368ff0ddb",
+      "clusterId": "cluster-5a01296368ff",
+      "company": "other",
+      "evidenceGrade": "A",
+      "status": "skipped",
+      "publicFiles": [],
+      "knowledgeKeys": [],
+      "reason": "跨公司模板化题序与大疆记录高度重合，仅保留证据更完整的一条，不重复发布或加权",
+      "processedAt": "2026-08-25T18:30:00.000Z"
     }
   }
 }

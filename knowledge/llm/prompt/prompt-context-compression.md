@@ -105,7 +105,10 @@
 
 <!-- interview-source-history:start -->
 - [字节 Coding Agent 日常实习一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)（cluster-1b2940d40f2e）
+- [大疆创新 AI Agent 开发面经：容错、Token 与后端基础（2026 年 8 月）](../../../interview/dji/ai/dji-ai-1.md)（cluster-4596af05b314）
+- [小红书 Agent 开发一面：多智能体、Memory 与广告投放优化（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-1.md)（cluster-7372c3e7fb1e）
 - [腾讯微信支付 AI 软件工程一面（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-5.md)（cluster-ab43c892c4ed）
+- [深信服 Agent 开发一面：MCP、多 Agent、安全与网络（2026 年 8 月）](../../../interview/sangfor/ai/sangfor-ai-1.md)（cluster-bb3431ce1c81）
 <!-- interview-source-history:end -->
 
 ## 参考资料

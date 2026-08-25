@@ -351,6 +351,8 @@ ReAct 适合探索性任务，每步行动取决于上一步结果，无法提�
 
 <!-- interview-source-history:start -->
 - [腾讯 AI 应用开发面试：跨会话记忆与多 Agent（2026 年 4 月）](../../../interview/tencent/ai/tencent-ai-4.md)（cluster-2fc69bb3d45d）
+- [字节大模型应用开发一面：Agent、RAG 与可靠性（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-16.md)（cluster-605f9ab081a6）
+- [小红书 Agent 开发一面：多智能体、Memory 与广告投放优化（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-1.md)（cluster-7372c3e7fb1e）
 <!-- interview-source-history:end -->
 
 ## 参考资料

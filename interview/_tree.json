@@ -8,6 +8,30 @@
         "key": "bytedance-base",
         "children": [
           {
+            "label": "字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）",
+            "key": "bytedance-base-14",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": ["Agent", "RAG", "AI Coding", "高并发"],
+            "updatedAt": "2026-08-26"
+          },
+          {
+            "label": "字节 Agent 开发一面：Skill、MCP 与后端基础（2026 年 7 月）",
+            "key": "bytedance-base-15",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": ["Agent", "Skill", "MCP", "后端"],
+            "updatedAt": "2026-08-26"
+          },
+          {
+            "label": "字节大模型应用开发一面：Agent、RAG 与可靠性（2026 年 8 月）",
+            "key": "bytedance-base-16",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": ["Agent", "沙箱", "多 Agent", "RAG"],
+            "updatedAt": "2026-08-26"
+          },
+          {
             "label": "字节 Coding Agent 日常实习一面（2026 年 8 月）",
             "key": "bytedance-base-10",
             "isLeaf": true,
@@ -180,6 +204,14 @@
         "key": "kuaishou-ai",
         "children": [
           {
+            "label": "快手 AI 应用开发秋招一面：线程池、OOM 与项目深挖（2026 年 8 月）",
+            "key": "kuaishou-ai-2",
+            "isLeaf": true,
+            "filePath": "kuaishou/ai",
+            "tags": ["Agent", "线程池", "并发", "工程风险"],
+            "updatedAt": "2026-08-26"
+          },
+          {
             "label": "快手大模型应用 Java 实习一面：Agent、SkillHub 与 Vibe Coding（2026 年 8 月）",
             "key": "kuaishou-ai-1",
             "isLeaf": true,
@@ -242,6 +274,114 @@
             "filePath": "antfin/ai",
             "tags": ["Agent", "Redis", "分布式锁", "系统设计"],
             "updatedAt": "2026-08-23"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "拼多多",
+    "key": "Pinduoduo",
+    "children": [
+      {
+        "label": "Agent 与 AI 应用",
+        "key": "pinduoduo-ai",
+        "children": [
+          {
+            "label": "拼多多 AI Agent 岗两轮技术面：RAG、多 Agent 与系统能力（2026 年 8 月）",
+            "key": "pinduoduo-ai-1",
+            "isLeaf": true,
+            "filePath": "pinduoduo/ai",
+            "tags": ["Agent", "RAG", "会议助手", "系统基础"],
+            "updatedAt": "2026-08-26"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "哔哩哔哩",
+    "key": "Bilibili",
+    "children": [
+      {
+        "label": "Agent 与 AI 应用",
+        "key": "bilibili-ai",
+        "children": [
+          {
+            "label": "哔哩哔哩 AI 应用岗 Agent 开发一面（2026 年 8 月）",
+            "key": "bilibili-ai-1",
+            "isLeaf": true,
+            "filePath": "bilibili/ai",
+            "tags": ["Agent", "RAG", "工具调用", "Memory"],
+            "updatedAt": "2026-08-26"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "深信服",
+    "key": "Sangfor",
+    "children": [
+      {
+        "label": "Agent 与 AI 应用",
+        "key": "sangfor-ai",
+        "children": [
+          {
+            "label": "深信服 Agent 开发一面：MCP、多 Agent、安全与网络（2026 年 8 月）",
+            "key": "sangfor-ai-1",
+            "isLeaf": true,
+            "filePath": "sangfor/ai",
+            "tags": ["Agent", "MCP", "Skill", "系统迁移"],
+            "updatedAt": "2026-08-26"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "小红书",
+    "key": "Redbook",
+    "children": [
+      {
+        "label": "Agent 与 AI 应用",
+        "key": "redbook-ai",
+        "children": [
+          {
+            "label": "小红书 Agent 开发一面：多智能体、Memory 与广告投放优化（2026 年 8 月）",
+            "key": "redbook-ai-1",
+            "isLeaf": true,
+            "filePath": "redbook/ai",
+            "tags": ["Agent", "多 Agent", "Memory", "系统设计"],
+            "updatedAt": "2026-08-26"
+          },
+          {
+            "label": "小红书 Agent 开发一面：LangGraph 子图、Skill 进化与工程校验（2026 年 8 月）",
+            "key": "redbook-ai-2",
+            "isLeaf": true,
+            "filePath": "redbook/ai",
+            "tags": ["Agent", "LangGraph", "Skill", "工程校验"],
+            "updatedAt": "2026-08-26"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "大疆创新",
+    "key": "DJI",
+    "children": [
+      {
+        "label": "Agent 与 AI 应用",
+        "key": "dji-ai",
+        "children": [
+          {
+            "label": "大疆创新 AI Agent 开发面经：容错、Token 与后端基础（2026 年 8 月）",
+            "key": "dji-ai-1",
+            "isLeaf": true,
+            "filePath": "dji/ai",
+            "tags": ["Agent", "容错", "Token", "后端"],
+            "updatedAt": "2026-08-26"
           }
         ]
       }

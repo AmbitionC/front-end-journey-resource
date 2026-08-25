@@ -92,6 +92,13 @@ const delay = Math.random() * cap;
 
 超时是观察边界，不是远端事实。全局 deadline 约束所有尝试，Abort 只发送取消意图，operation ID 与状态查询确定副作用真实状态。只有幂等、错误可恢复且时间充足才退避重试；已提交和迟到结果要获取验证，未知状态要隔离对账。这样系统才能停止等待，而不制造重复行动。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [大疆创新 AI Agent 开发面经：容错、Token 与后端基础（2026 年 8 月）](../../../interview/dji/ai/dji-ai-1.md)（cluster-4596af05b314）
+- [字节大模型应用开发一面：Agent、RAG 与可靠性（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-16.md)（cluster-605f9ab081a6）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [WHATWG DOM — Aborting ongoing activities](https://dom.spec.whatwg.org/#aborting-ongoing-activities)

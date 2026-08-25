@@ -326,6 +326,13 @@ SELECT * FROM performance_schema.data_lock_waits;
 SELECT * FROM performance_schema.data_locks;
 ```
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [小红书 Agent 开发一面：LangGraph 子图、Skill 进化与工程校验（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-2.md)（cluster-3fa76fc5d243）
+- [字节 Agent 开发一面：Skill、MCP 与后端基础（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-15.md)（cluster-d0b4e8a8f482）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [MySQL 8.4 InnoDB transaction isolation levels](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/innodb-transaction-isolation-levels.html)

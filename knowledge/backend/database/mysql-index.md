@@ -332,6 +332,14 @@ B+ 树叶子链表原生支持范围查询和排序；B 树数据分散在各层
 **Q：大表加索引如何不影响线上服务？**
 MySQL 5.6+ 支持 `ALTER TABLE ... ADD INDEX` 的在线 DDL（Online DDL），默认采用 `ALGORITHM=INPLACE, LOCK=NONE`，不会长时间锁表。也可借助 `pt-online-schema-change` 或 `gh-ost` 工具做零停机迁移。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)（cluster-0c75d333d0e1）
+- [小红书 Agent 开发一面：LangGraph 子图、Skill 进化与工程校验（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-2.md)（cluster-3fa76fc5d243）
+- [字节 Agent 开发一面：Skill、MCP 与后端基础（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-15.md)（cluster-d0b4e8a8f482）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [MySQL 8.4 Reference: InnoDB Index Types](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/innodb-index-types.html)

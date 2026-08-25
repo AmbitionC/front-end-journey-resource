@@ -105,6 +105,7 @@ Replan 输入为当前 envelope、未完成任务、结构化 observation 和剩
 
 <!-- interview-source-history:start -->
 - [字节 Agent 开发二面（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-7.md)（cluster-29b42b69483b）
+- [小红书 Agent 开发一面：多智能体、Memory 与广告投放优化（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-1.md)（cluster-7372c3e7fb1e）
 - [快手大模型应用 Java 实习一面：Agent、SkillHub 与 Vibe Coding（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-1.md)（cluster-e2ae8847e22e）
 <!-- interview-source-history:end -->
 

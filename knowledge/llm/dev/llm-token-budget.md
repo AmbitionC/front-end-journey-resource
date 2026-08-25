@@ -107,6 +107,12 @@ function pick(items: BudgetItem[], capacity: number) {
 
 Token 预算是一套上下文资源调度机制：先保护规则、当前意图和输出余量，再让历史、检索和工具按价值竞争空间；估算用于预检，真实 usage 用于校准。显式优先级、可追溯压缩和质量回归，比报错后的随机截断可靠得多。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [大疆创新 AI Agent 开发面经：容错、Token 与后端基础（2026 年 8 月）](../../../interview/dji/ai/dji-ai-1.md)（cluster-4596af05b314）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenAI Cookbook — How to count tokens with tiktoken](https://developers.openai.com/cookbook/examples/how_to_count_tokens_with_tiktoken)

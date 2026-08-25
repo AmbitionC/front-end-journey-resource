@@ -72,6 +72,12 @@ RBAC 表达岗位基线，如 reviewer 可读草稿；ReBAC 表达关系，如�
 
 Agent 权限来自受信任策略，而不是提示词。把每次动作建模为 subject—resource—operation—environment，请求最小范围 capability，高风险参数通过 step-up approval，再由工具执行点重新校验并审计。认证、授权、审批、幂等与沙箱各自解决不同问题，不能相互代替。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [深信服 Agent 开发一面：MCP、多 Agent、安全与网络（2026 年 8 月）](../../../interview/sangfor/ai/sangfor-ai-1.md)（cluster-bb3431ce1c81）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [NIST — Guide to Attribute Based Access Control](https://csrc.nist.gov/pubs/sp/800/162/upd2/final)

@@ -17,7 +17,7 @@ node .codex/skills/curate-fe-journey-inbox/scripts/build-interview-gap.mjs <reso
 
 脚本读取 `_inbox/**/meta.json` 与同目录 `original.md`，按以下顺序确定内容簇：
 
-固定计划交付时 `--batch` 必填，只读取 `sourceMetadata.batchId` 精确匹配的条目；历史人工流程可省略该参数。
+固定计划交付时 `--batch` 必填，只读取 `sourceMetadata.deliveryBatchId`（旧数据兼容 `batchId`）精确匹配的条目；历史人工流程可省略该参数。
 
 1. `feJourney.clusterId`
 2. `feJourney.contentHash`

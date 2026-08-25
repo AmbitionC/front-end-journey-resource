@@ -84,6 +84,7 @@ Transformer 的自注意力本身没有天然顺序，需要位置编码告诉�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [拼多多 AI Agent 岗两轮技术面：RAG、多 Agent 与系统能力（2026 年 8 月）](../../../interview/pinduoduo/ai/pinduoduo-ai-1.md)（cluster-16e49722e8d7）
 - [字节 TikTok Agent 开发秋招一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-11.md)（cluster-26285b4c4c2b）
 <!-- interview-source-history:end -->
 

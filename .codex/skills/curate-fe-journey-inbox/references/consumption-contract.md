@@ -2,7 +2,7 @@
 
 ## 数据优先级
 
-Data Collector 固定计划必须以 `sourceMetadata.batchId` 精确限定本轮；先运行 `scripts/inspect-batch.mjs`，报告和公开修改都不得读入其他批次。
+Data Collector 固定计划必须以 `sourceMetadata.deliveryBatchId`（旧数据兼容 `batchId`）精确限定本轮；先运行 `scripts/inspect-batch.mjs`，报告和公开修改都不得读入其他批次。
 
 以 `meta.json.feJourney` 为机器判定依据，以 `original.md` 为正文证据。不要根据标题自行覆盖明确的排除原因。关键字段：
 

@@ -74,6 +74,12 @@ schema 演进遵循向后兼容：新增可选字段，旧消费者忽略未知�
 
 多智能体通信是一套协议与状态机：类型化信封表达身份、因果和版本；ACK、任务状态与结果相互分离；at-least-once 通过去重和幂等吸收；局部顺序和版本检查保护共享状态；安全校验在消费边界重新执行。这样消息才是可追踪协作，而不是互相发送自然语言的黑箱。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [小红书 Agent 开发一面：LangGraph 子图、Skill 进化与工程校验（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-2.md)（cluster-3fa76fc5d243）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [CloudEvents — Specification](https://github.com/cloudevents/spec/blob/ce@stable/cloudevents/spec.md)

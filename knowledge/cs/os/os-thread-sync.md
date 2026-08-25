@@ -229,6 +229,13 @@ graph LR
 
 同步的本质不是"加锁",而是**管理共享可变状态的访问顺序**。理解了竞态从何而来,你才能在锁、信号量、条件变量、原子操作之间做出恰当的取舍——无论是在操作系统内核里,还是在一个高并发的 Agent 服务里。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)（cluster-0c75d333d0e1）
+- [快手 AI 应用开发秋招一面：线程池、OOM 与项目深挖（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-2.md)（cluster-cdb98481f4a4）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [POSIX pthread_mutex_lock](https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_mutex_lock.html)

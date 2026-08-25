@@ -63,6 +63,12 @@ DNS failover 通过健康检查改变答案，但缓存中的旧地址在 TTL �
 
 DNS 的可靠性来自委派正确、缓存可预测、多个权威真实独立，以及应用理解旧答案会继续存在。把它当“改一条记录马上生效”，就会在故障切换时低估最关键的时间边界。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 开发一面：Skill、MCP 与后端基础（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-15.md)（cluster-d0b4e8a8f482）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [RFC 1034：Domain Names—Concepts and Facilities](https://www.rfc-editor.org/rfc/rfc1034.html)

@@ -372,6 +372,12 @@ def recall_at_k(query_vecs, doc_vecs, relevant_doc_ids: list[list[int]], k: int 
 
 - **嵌入模型更换后需要做哪些工作？** 必须对所有已入库文档重新生成向量（旧向量与新模型不兼容），重建向量索引，并重新调整相似度阈值和 HNSW 参数。这是更换模型成本极高的根本原因，选型阶段应充分评估。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [哔哩哔哩 AI 应用岗 Agent 开发一面（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-1.md)（cluster-c5c44d791f6e）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks](https://arxiv.org/abs/1908.10084)
