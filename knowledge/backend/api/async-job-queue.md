@@ -80,6 +80,12 @@ deadline 到达后任务转 expired，Worker 不再发起新副作用。保留�
 
 异步 Job 是一份跨 HTTP、数据库、Broker 和 Worker 的协议。202 + Location 建立可查询资源，outbox 保证提交与发布衔接，租约定义执行所有权，ACK 在持久完成后发生，幂等处理重复，DLQ 和取消拥有明确生命周期。这样长任务才不依赖一条脆弱连接。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)（cluster-910d0b20a897）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [AsyncAPI Specification 3.0.0](https://www.asyncapi.com/docs/reference/specification/v3.0.0)

@@ -75,6 +75,7 @@ Agent 权限来自受信任策略，而不是提示词。把每次动作建模�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-3.md)（cluster-137857a2ba05）
 - [深信服 Agent 开发一面：MCP、多 Agent、安全与网络（2026 年 8 月）](../../../interview/sangfor/ai/sangfor-ai-1.md)（cluster-bb3431ce1c81）
 <!-- interview-source-history:end -->
 

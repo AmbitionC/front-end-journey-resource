@@ -70,6 +70,12 @@ evaluation_dataset_version
 
 Canary 是“完整行为 bundle + 代表性流量 + 可归因对照 + 绝对门禁 + 分级扩流 + 可演练回滚”。它不是把 5% 用户当测试员。只有版本、状态兼容和指标都能对应到同一个发布单元，Agent 团队才能在扩大影响面之前发现质量、安全和成本回退。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [哔哩哔哩 AI 应用岗一面：端到端 AI Coding 与生产治理（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-2.md)（cluster-1c24a80acde8）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Google SRE Workbook：Canarying Releases](https://sre.google/workbook/canarying-releases/)

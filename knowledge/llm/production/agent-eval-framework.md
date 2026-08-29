@@ -1,5 +1,5 @@
-![生产评估反馈环：版本化任务集→确定性执行环境→结果与轨迹采集→规则/模型/人工评分→切片分析→回归门禁→线上失败回流；标出盲测集和评分器校准](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-eval-framework-feedback-cycle-v1.webp)
-*图：沿图中的节点与箭头阅读，重点是将数据集、评分器、轨迹回放、回归门禁和线上反馈组成可迭代系统。*
+![Agent 分层评测与发布门禁：版本化评测集经过确定性运行、多层评分和切片仪表盘，决定发布或阻断，线上失败经复核回流](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-eval-slice-gate-v1.svg)
+*图：平均分之外，要分别观察意图、结论正确性、工具失败、安全、延迟与成本；人工标注用于校准模型裁判。*
 
 ---
 
@@ -630,6 +630,19 @@ flowchart TD
 | 人工评估 | 能结合复杂语境 | 标注者会分歧，成本与扩展性受限 | 数据集构建、校准 Judge |
 | A/B 测试 | 反映真实用户价值 | 慢（需流量积累）、有噪声 | 最终效果验证 |
 
+### 从项目追问反推评测契约
+
+面试官问“你们怎样评测 Agent”时，先把业务目标翻译成可判定事件，不要只回答“做了一个测试集”。常见项目可拆成：
+
+- **意图识别**：每类 precision、recall、F1、拒识率与澄清后成功率，必须看混淆矩阵和低频/高风险切片；
+- **分析结论**：事实与引用是否一致、关键约束是否遗漏、结构化字段是否通过 Schema 和业务规则；
+- **工具执行**：工具选择、参数、权限、终态和副作用是否正确，失败后是否按错误语义重试或停止；
+- **完整任务**：成功率、人工接管率、P95 延迟、Token/成本和恢复后完成率。
+
+“评测集有多少条”没有统一答案。应说明样本来自哪里、谁拥有标注责任、覆盖哪些切片、怎样防止训练/调试泄漏，以及新增线上失败如何进入下一版本。样本少时先保证关键场景和可复核 rubric，再用置信区间表达不确定性；不能用一个总准确率掩盖高风险漏判。
+
+对长任务保存完整 Trace，并把最终失败切回具体阶段：意图、检索、规划、工具、状态、合成或验证。评分器组合规则/测试、LLM Judge 与人工复核；Judge 必须在独立人工集上校准，评测对象不得修改 rubric、隐藏用例或验收脚本。
+
 ### 自进化 Agent 的受控评估闭环
 
 “Agent 自己发现问题并改进”仍然必须服从发布纪律。一个可审计闭环是：从线上失败或专家任务提取候选 → 冻结基线、数据与 Harness 版本 → 在沙箱生成改动 → 对同一任务做配对回放 → 按质量、安全、延迟与成本分层门禁 → 小流量发布 → 新失败进入下一轮数据集。
@@ -685,9 +698,13 @@ Agent 评估需要同时覆盖三个层次：工具调用层（选了正确的�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-3.md)（cluster-137857a2ba05）
 - [字节后端与 Code Review Agent 秋招一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-9.md)（cluster-5b6e09ee89e6）
+- [腾讯 AI 开发一面：Coding Agent 记忆、评测与可靠运行（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-8.md)（cluster-7ef1a4a8ef82）
+- [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)（cluster-910d0b20a897）
 - [字节 Agent 自进化方向实习一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-8.md)（cluster-b2a1c4e10ed2）
 - [深信服 Agent 开发一面：MCP、多 Agent、安全与网络（2026 年 8 月）](../../../interview/sangfor/ai/sangfor-ai-1.md)（cluster-bb3431ce1c81）
+- [快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-3.md)（cluster-cde9b480341e）
 - [腾讯大模型算法岗一二面：Agentic RL、PPO/GRPO 与 DeepSeek V4（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-7.md)（cluster-daad361f34b4）
 <!-- interview-source-history:end -->
 

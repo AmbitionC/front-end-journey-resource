@@ -155,6 +155,12 @@ if (!validate(parsed)) {
 
 生产结构化输出应形成完整链路：原生约束解码 → JSON 解析 → Schema 校验 → 语义/业务校验 → 受控重试、降级或人工处理。格式正确只是可靠对象的第一步。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-3.md)（cluster-137857a2ba05）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenAI API：Structured model outputs](https://developers.openai.com/api/docs/guides/structured-outputs)

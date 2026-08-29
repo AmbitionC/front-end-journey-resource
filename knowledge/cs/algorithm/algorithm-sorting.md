@@ -47,6 +47,12 @@ MapReduce 式 total order 常先采样确定 range partitions，再各分区内�
 
 排序选型的结论应是一组条件：在当前 key、稳定性、内存和输入分布下为什么合适，以及条件变化时切换到什么方案。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 开发一面：推理缓存、网络与存储基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-18.md)（cluster-265dac6c3b53）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [MIT OCW 6.006（2008）：Lecture Notes](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2008/resources/lecture-notes/)

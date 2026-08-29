@@ -69,6 +69,19 @@ type ToolResult<T> =
 
 不要把栈、SQL、内部 URL 或密钥返回模型。Partial 明确已完成与未完成部分，避免 Agent 把一半结果当全部成功。
 
+## MCP 工具调用的运行清单
+
+MCP 解决发现与调用协议，不替代工具本身的生产契约。把一个工具交给 Agent 前，至少检查：
+
+- **发现有界**：按任务与主体裁剪候选；分页加载工具描述，名称冲突按可信 server 标识消歧；
+- **输入可信度为零**：工具注解、网页内容和模型参数都可能受注入影响，执行端独立校验 Schema 与授权；
+- **输出有界**：限制字节、页数和 MIME，大结果存 Artifact 并返回摘要与引用，避免挤爆上下文；
+- **错误可决策**：区分协议错误、参数错误、临时依赖故障、策略拒绝、业务失败与副作用状态未知；
+- **重试可证明**：只有标记为可重试且满足幂等条件的调用才自动重试，遵守总 deadline 与 `retry-after`；
+- **高风险先确认**：确认页展示实际工具、目标资源和关键参数，批准绑定参数 hash，参数变化后重新确认。
+
+工具失败时，Agent 先读取 `retryable`、状态与证据，再选择修参、退避、替代工具、降级或转人工。不能把任意错误自由文本继续塞回模型形成无限循环，也不能因为 MCP 调用返回 `isError: false` 就跳过业务结果校验。
+
 ## Tool Contract Test
 
 每个工具独立于模型测试：合法/缺失/额外字段、边界值、跨租户、状态竞争、超时、幂等重复、相同 key 不同参数、部分成功、输出 schema 和敏感错误清理。
@@ -99,8 +112,11 @@ type ToolResult<T> =
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-3.md)（cluster-137857a2ba05）
 - [字节大模型应用开发一面：Agent、RAG 与可靠性（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-16.md)（cluster-605f9ab081a6）
+- [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)（cluster-910d0b20a897）
 - [字节 AI 应用开发一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-12.md)（cluster-9e24453f3753）
+- [快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-3.md)（cluster-cde9b480341e）
 - [快手大模型应用 Java 实习一面：Agent、SkillHub 与 Vibe Coding（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-1.md)（cluster-e2ae8847e22e）
 <!-- interview-source-history:end -->
 

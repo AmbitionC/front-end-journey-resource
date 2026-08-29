@@ -130,6 +130,12 @@ Gemini 的 [Interactions API](https://ai.google.dev/gemini-api/docs/interactions
 
 会话管理的本质是状态所有权。业务事实由业务系统负责，会话事件由应用以可审计方式持久化，模型上下文按本轮预算构造，供应商响应链或会话对象只是可替换的外部能力。明确权威源、版本、因果关系、分支和删除路径，才能让对话跨设备、跨供应商并在故障后可靠恢复。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)（cluster-650f7c304b11）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenAI — Conversation state](https://developers.openai.com/api/docs/guides/conversation-state)

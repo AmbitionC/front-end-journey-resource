@@ -392,6 +392,12 @@ SELECT * FROM ranked WHERE rnk <= 3;
 - **LAG/LEAD 实现时序计算**：如环比增长、相邻事件间隔、会话切割；能写出完整的 session 切割 SQL 是加分项。
 - **LAST_VALUE 陷阱**：考官常考"为什么 LAST_VALUE 返回的是当前行自身"，答案是默认帧终点为 CURRENT ROW，需显式扩展帧到 UNBOUNDED FOLLOWING。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)（cluster-650f7c304b11）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [PostgreSQL window functions tutorial](https://www.postgresql.org/docs/current/tutorial-window.html)

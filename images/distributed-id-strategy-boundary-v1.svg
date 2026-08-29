@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">分布式 ID 策略边界</title>
+  <desc id="desc">UUID、Snowflake 和号段三种方案分别在去中心化、近似时间有序和中心预分配之间取舍；所有生成路径最终写入数据库唯一约束。</desc>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#3B82F6"/></marker><style>text{font-family:Arial,'PingFang SC','Microsoft YaHei',sans-serif;fill:#172033}.h{font-size:25px;font-weight:700}.l{font-size:20px;font-weight:700}.s{font-size:15px}.k{font-size:14px;font-weight:700}.a{stroke:#3B82F6;stroke-width:3;fill:none;marker-end:url(#arrow)}</style></defs>
+  <rect width="1200" height="650" fill="#FBFDFF"/>
+  <text x="60" y="64" class="h">分布式 ID：从契约选择策略</text>
+  <text x="60" y="94" class="s" fill="#52627A">先明确唯一性、顺序性、整数需求和故障容忍度，再选择生成方式</text>
+  <rect x="60" y="145" width="310" height="260" rx="20" fill="#EAF2FF" stroke="#3B82F6" stroke-width="2"/>
+  <text x="90" y="188" class="l">UUIDv7</text><text x="90" y="222" class="s">时间前缀 + 随机性</text><text x="90" y="256" class="s">适合跨系统、离线生成</text><text x="90" y="290" class="s">无需 worker 协调</text>
+  <rect x="90" y="322" width="250" height="52" rx="12" fill="#fff"/><text x="215" y="354" text-anchor="middle" class="k">边界：128 位与字节序</text>
+  <rect x="445" y="145" width="310" height="260" rx="20" fill="#E8F7EE" stroke="#16A34A" stroke-width="2"/>
+  <text x="475" y="188" class="l">Snowflake</text><text x="475" y="222" class="s">时间戳 + worker + sequence</text><text x="475" y="256" class="s">紧凑 64 位、近似有序</text><text x="475" y="290" class="s">高吞吐本地发号</text>
+  <rect x="475" y="322" width="250" height="52" rx="12" fill="#fff"/><text x="600" y="354" text-anchor="middle" class="k">边界：worker 租约与时钟</text>
+  <rect x="830" y="145" width="310" height="260" rx="20" fill="#F3E8FF" stroke="#7C3AED" stroke-width="2"/>
+  <text x="860" y="188" class="l">号段 Segment</text><text x="860" y="222" class="s">中心事务预留一段整数</text><text x="860" y="256" class="s">本地消费 + 双缓冲</text><text x="860" y="290" class="s">易解释的递增序列</text>
+  <rect x="860" y="322" width="250" height="52" rx="12" fill="#fff"/><text x="985" y="354" text-anchor="middle" class="k">边界：续租与空洞</text>
+  <path d="M215 405V470H600" class="a"/><path d="M600 405V470" class="a"/><path d="M985 405V470H600" class="a"/>
+  <rect x="420" y="470" width="360" height="100" rx="20" fill="#FFF3D6" stroke="#D97706" stroke-width="2"/>
+  <text x="600" y="512" text-anchor="middle" class="l">写入边界：唯一约束</text><text x="600" y="543" text-anchor="middle" class="s">生成器负责策略；数据库唯一索引负责最终不变量</text>
+  <rect x="60" y="595" width="1080" height="30" rx="12" fill="#FFECEF"/><text x="600" y="616" text-anchor="middle" class="k" fill="#DC2626">警报：时钟回拨、重复 worker ID、号段耗尽和 JavaScript 64 位整数精度都必须被监控与演练。</text>
+</svg>

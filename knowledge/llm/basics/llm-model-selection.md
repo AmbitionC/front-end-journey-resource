@@ -117,6 +117,12 @@ $$
 
 可靠选型顺序是：定义业务任务 → 硬约束筛选 → 建立候选版本 → 真实数据评测 → 灰度发布 → 版本锁定与持续回归。最终选择是一个可验证、可降级、可回滚的系统配置，而不是一个品牌名称。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [腾讯 AI 开发一面：Coding Agent 记忆、评测与可靠运行（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-8.md)（cluster-7ef1a4a8ef82）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenAI API：Models](https://developers.openai.com/api/docs/models)

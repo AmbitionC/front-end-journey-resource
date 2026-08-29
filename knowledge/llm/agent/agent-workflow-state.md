@@ -98,6 +98,7 @@ Agent 工作流可靠性来自事件驱动状态和副作用协议：run/step ID
 - [字节 Agent 开发日常实习一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-5.md)（cluster-1cea2513548a）
 - [字节后端开发秋招二面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-6.md)（cluster-5ab99b43f10b）
 - [字节后端与 Code Review Agent 秋招一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-9.md)（cluster-5b6e09ee89e6）
+- [腾讯 AI 开发一面：Coding Agent 记忆、评测与可靠运行（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-8.md)（cluster-7ef1a4a8ef82）
 - [阿里 Agent 开发暑期实习一面（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-2.md)（cluster-9d9f0031dcd6）
 - [字节 Agent 自进化方向实习一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-8.md)（cluster-b2a1c4e10ed2）
 - [字节 AML / 火山方舟 AI Infra 一面：Agent Runtime、OS 与网络（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-17.md)（cluster-b8f79803b7ec）

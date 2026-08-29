@@ -263,7 +263,7 @@ export class AddAgentSessionIndex1700000000000 implements MigrationInterface {
 }
 ```
 
-## Agent 后端意义：全文检索与向量索引
+## Agent 后端意义：全文检索与向量检索边界
 
 对于 **RAG（Retrieval-Augmented Generation）** 系统，检索层是关键路径：
 
@@ -281,16 +281,19 @@ ORDER BY score DESC
 LIMIT 10;
 ```
 
-- **向量索引**：MySQL 8.4 开始原生支持 `VECTOR` 类型与 ANN 近似最近邻搜索（`VECTOR INDEX`），可存储 Embedding 向量并做语义检索，降低对独立向量数据库（Milvus/Qdrant）的依赖。
+- **向量检索要先确认版本与产品形态**：MySQL 8.4 的数据类型中没有 `VECTOR`；MySQL 9.x 虽提供 `VECTOR(N)` 列，但官方文档明确说明该列不能作为任何类型的 key。因此，不能把 `VECTOR INDEX` DDL 当作 MySQL Community Server 的通用能力。需要 ANN 检索时，应按实际部署选择专用向量数据库或具备向量检索能力的云产品，并单独验证版本、版本形态与索引语法。
 
 ```sql
--- MySQL 8.4+ 向量列与索引（简化示意）
-CREATE TABLE doc_embeddings (
-  id BIGINT PRIMARY KEY AUTO_INCREMENT,
-  doc_id BIGINT NOT NULL,
-  embedding VECTOR(1536) NOT NULL,   -- OpenAI text-embedding-3-small 维度
-  VECTOR INDEX idx_vec (embedding)   -- ANN 索引
-);
+-- 在 MySQL 中先用普通索引缩小租户与知识库范围，
+-- 再把候选 ID 交给实际的向量检索层做语义排序。
+CREATE INDEX idx_chunk_scope
+ON knowledge_chunks (tenant_id, knowledge_base_id, created_at);
+
+SELECT id
+FROM knowledge_chunks
+WHERE tenant_id = ? AND knowledge_base_id = ?
+ORDER BY created_at DESC
+LIMIT 1000;
 ```
 
 即使不使用原生向量索引，合理设计普通索引（按 `tenant_id`、`knowledge_base_id`、`created_at` 分区过滤）也能大幅缩减向量召回前的候选集，是 Agent 系统性能优化的低成本手段。
@@ -314,6 +317,14 @@ InnoDB 支持对 `NULL` 列建索引，`NULL` 值会被存储在索引中。但 
 
 ## 面试常问
 
+### 从 B+ 树一路答到最左前缀和 EXPLAIN
+
+一条完整回答链可以这样组织：InnoDB 用 B+ 树让非叶节点只承担导航、提高扇出；叶子有序，等值、范围和排序都能沿同一结构完成。聚簇索引叶子保存整行，二级索引叶子保存主键，因此查询可能回表；覆盖索引则直接从二级索引得到所需列。
+
+联合索引 `(a, b, c)` 按完整键的字典序排列。查询要从最左列建立连续可用前缀：`a = ? AND b = ?` 可有效缩小范围；缺少 `a` 通常不能利用这棵树的有序起点；某列进入范围后，右侧列通常不能继续用于缩小扫描区间，但仍可能用于索引下推、覆盖或排序，不能机械回答“范围后全部失效”。
+
+最后必须用 `EXPLAIN` 验证，而不是只看是否出现索引名。关注 `key`、`key_len`、`type`、`rows`、`filtered` 与 `Extra`，再结合真实基数和耗时判断。优化器可能因选择性低、统计过期、隐式转换、函数包裹或回表成本选择全表扫描；“建了索引”不等于“应该强制使用”。
+
 **Q：为什么 InnoDB 选择 B+ 树而不是 B 树或哈希索引？**
 B+ 树叶子链表原生支持范围查询和排序；B 树数据分散在各层，范围扫描需要回溯；哈希索引只支持等值查找，不支持范围、排序和 LIKE 前缀，场景受限。
 
@@ -336,7 +347,9 @@ MySQL 5.6+ 支持 `ALTER TABLE ... ADD INDEX` 的在线 DDL（Online DDL），�
 
 <!-- interview-source-history:start -->
 - [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)（cluster-0c75d333d0e1）
+- [字节 Agent 开发一面：推理缓存、网络与存储基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-18.md)（cluster-265dac6c3b53）
 - [小红书 Agent 开发一面：LangGraph 子图、Skill 进化与工程校验（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-2.md)（cluster-3fa76fc5d243）
+- [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)（cluster-910d0b20a897）
 - [字节 Agent 开发一面：Skill、MCP 与后端基础（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-15.md)（cluster-d0b4e8a8f482）
 <!-- interview-source-history:end -->
 
@@ -344,3 +357,5 @@ MySQL 5.6+ 支持 `ALTER TABLE ... ADD INDEX` 的在线 DDL（Online DDL），�
 
 - [MySQL 8.4 Reference: InnoDB Index Types](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/innodb-index-types.html)
 - [MySQL 8.4 Reference: EXPLAIN](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/explain.html)
+- [MySQL 8.4 Reference: Data Types](https://dev.mysql.com/doc/refman/8.4/en/data-types.html)
+- [MySQL 9.7 Reference: The VECTOR Type](https://dev.mysql.com/doc/refman/9.7/en/vector.html)

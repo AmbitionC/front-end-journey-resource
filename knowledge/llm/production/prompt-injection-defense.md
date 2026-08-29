@@ -107,6 +107,21 @@ flowchart TB
 
 [OWASP Prompt Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html) 区分直接与间接注入，并建议指令/数据分离、输入标记、最小权限和高风险操作审批；不存在能单独消除注入风险的提示词。
 
+### 面对 System Prompt 泄露与无限制工具，怎样分层回答
+
+先假设 System Prompt 可能被部分推断或泄露：其中不放密钥、隐式授权或只有“知道文本”才能保护的安全逻辑。模型可以拒绝复述高权限指令，输出层可以检测明显泄露，但真正的边界必须在模型之外。
+
+对工具调用采用四个确定性检查：
+
+1. **策略**：从受信任会话获得 principal、tenant、允许资源与动作，不能接受模型自报权限；
+2. **契约**：服务端再次做 Schema、范围、路径、收件人和业务状态校验；
+3. **执行**：限制网络出口、凭据、超时、次数和数据量，写操作使用幂等键；
+4. **确认与审计**：不可逆、外部通信或高价值动作绑定用户看到的精确参数并显式批准，记录 decision 与结果。
+
+最新 [MCP Tools 规范](https://modelcontextprotocol.io/specification/draft/server/tools)也强调工具注解来自不可信服务器时不能直接信任，并要求实现输入验证、访问控制、限流、输出清理、敏感操作确认与审计。协议让工具可发现、可调用，不会自动替应用完成授权。
+
+因此，“在 Prompt 里写不要泄露”“过滤 injection 关键词”“再找一个 LLM 判断”都只能降低概率，不能赋予或撤销权限。安全回答的落点应是：即使模型被诱导，攻击者仍无法越过确定性授权与最小权限边界。
+
 
 ### 输入隔离（Input Isolation）
 
@@ -422,6 +437,8 @@ OWASP 将 Prompt Injection 作为 LLM 应用的核心风险之一，并建议采
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-3.md)（cluster-137857a2ba05）
+- [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)（cluster-910d0b20a897）
 - [腾讯 Agent 开发一面：RAG、安全与后端工程（2026 年 5 月）](../../../interview/tencent/ai/tencent-ai-1.md)（cluster-b2e2c5d9624b）
 <!-- interview-source-history:end -->
 
@@ -429,3 +446,4 @@ OWASP 将 Prompt Injection 作为 LLM 应用的核心风险之一，并建议采
 
 - [OWASP LLM Prompt Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html)
 - [NIST AI 100-2: Adversarial Machine Learning](https://csrc.nist.gov/pubs/ai/100/2/e2025/final)
+- [Model Context Protocol — Tools](https://modelcontextprotocol.io/specification/draft/server/tools)

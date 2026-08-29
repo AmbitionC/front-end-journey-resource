@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">前端性能诊断证据链</title>
+  <desc id="desc">从用户交互和性能指标录制 trace，沿主线程、渲染、网络和 React 四条路径定位，再使用相同场景的指标验证修复。</desc>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#3B82F6"/></marker><style>text{font-family:Arial,'PingFang SC','Microsoft YaHei',sans-serif;fill:#172033}.h{font-size:25px;font-weight:700}.l{font-size:19px;font-weight:700}.s{font-size:14px}.k{font-size:14px;font-weight:700}.a{stroke:#3B82F6;stroke-width:3;fill:none;marker-end:url(#arrow)}.v{stroke:#7C3AED;stroke-width:3;fill:none;marker-end:url(#arrow)}</style></defs>
+  <rect width="1200" height="650" fill="#FBFDFF"/>
+  <text x="60" y="64" class="h">前端性能诊断：从体验信号到可验证修复</text>
+  <text x="60" y="94" class="s" fill="#52627A">不要先猜优化方案；先固定用户场景，读取同一次交互中的证据</text>
+  <rect x="60" y="145" width="190" height="120" rx="18" fill="#EAF2FF" stroke="#3B82F6" stroke-width="2"/>
+  <text x="155" y="188" text-anchor="middle" class="l">用户交互</text><text x="155" y="216" text-anchor="middle" class="s">点击、滚动、输入</text><text x="155" y="240" text-anchor="middle" class="s">RUM：INP / LCP / CLS</text>
+  <path d="M250 205H330" class="a"/>
+  <rect x="330" y="145" width="240" height="120" rx="18" fill="#F3E8FF" stroke="#7C3AED" stroke-width="2"/>
+  <text x="450" y="188" text-anchor="middle" class="l">Performance trace</text><text x="450" y="216" text-anchor="middle" class="s">同一场景、相同节流</text><text x="450" y="240" text-anchor="middle" class="s">Main / Frames / Network</text>
+  <rect x="610" y="105" width="520" height="265" rx="20" fill="none" stroke="#94A3B8" stroke-width="2" stroke-dasharray="7 7"/>
+  <text x="870" y="119" text-anchor="middle" class="k" fill="#52627A">四个独立证据切面</text>
+  <path d="M570 205H610" class="v"/>
+  <rect x="635" y="126" width="220" height="92" rx="16" fill="#FFECEF" stroke="#DC2626" stroke-width="2"/>
+  <text x="745" y="164" text-anchor="middle" class="l">主线程</text><text x="745" y="194" text-anchor="middle" class="s">长任务、脚本、GC</text>
+  <rect x="880" y="126" width="220" height="92" rx="16" fill="#FFF3D6" stroke="#D97706" stroke-width="2"/>
+  <text x="990" y="164" text-anchor="middle" class="l">渲染管线</text><text x="990" y="194" text-anchor="middle" class="s">style / layout / paint</text>
+  <rect x="635" y="258" width="220" height="92" rx="16" fill="#E8F7EE" stroke="#16A34A" stroke-width="2"/>
+  <text x="745" y="296" text-anchor="middle" class="l">网络</text><text x="745" y="326" text-anchor="middle" class="s">TTFB、排队、依赖瀑布</text>
+  <rect x="880" y="258" width="220" height="92" rx="16" fill="#EAF2FF" stroke="#3B82F6" stroke-width="2"/>
+  <text x="990" y="296" text-anchor="middle" class="l">React</text><text x="990" y="326" text-anchor="middle" class="s">render / commit / props</text>
+  <path d="M870 370V392H600V420" class="a"/>
+  <rect x="390" y="420" width="420" height="104" rx="20" fill="#EAF2FF" stroke="#3B82F6" stroke-width="2"/>
+  <text x="600" y="462" text-anchor="middle" class="l">最小、可逆的修复</text><text x="600" y="491" text-anchor="middle" class="s">拆分计算 · 批量读写 DOM · 优化关键请求 · 调整状态边界</text>
+  <path d="M600 524V580" class="a"/>
+  <rect x="390" y="580" width="420" height="44" rx="16" fill="#E8F7EE" stroke="#16A34A" stroke-width="2"/>
+  <text x="600" y="608" text-anchor="middle" class="k">同一场景复测：交互延迟、长任务、render 次数与网络时序</text>
+</svg>

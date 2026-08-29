@@ -11,8 +11,8 @@ Agent 记忆不是把所有历史塞回上下文，而是让系统在正确时�
 
 这些类别可以落在同一数据库，但检索和更新策略不同。用户今天说“本次用英文”可能只属于当前线程；“长期偏好英文”需要明确同意后才写入语义记忆；安全策略则不能由普通对话覆盖。
 
-![Agent 的当前目标、最近回合和计划位于 Active Context，记忆管理器从情景、语义、程序与原始证据层按写入策略、检索、排序和引用规则取用](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-memory-architecture-tiered-memory-v1.webp)
-*图：Active Context 是工作集，不是永久仓库；所有可引用结论保留到 Raw Evidence 的来源链。*
+![Agent 记忆写入与召回策略：请求和运行上下文经过写入门，按用途进入事实、证据或检查点存储，冲突和低置信内容进入隔离区](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-memory-write-recall-policy-v1.svg)
+*图：会话状态、长期事实与原始证据分开治理；相似度只能提供候选，不能替代写入授权、冲突检查和来源绑定。*
 
 ## 分层而不是无限上下文
 
@@ -50,6 +50,24 @@ type MemoryRecord = {
 不是每句话都值得记住。写入依次经过：候选提取、敏感性分类、用途/同意检查、去重与冲突检测、证据绑定、质量验证、持久化。候选可分为：用户明确要求记住、任务产出的稳定事实、成功/失败经验、运行策略更新。
 
 模型提出 memory candidate，受信任服务决定是否写。策略可以要求：长期个人偏好必须有显式同意；秘密默认不持久化；外部网页内容不得成为程序记忆；低置信事实只保存为待验证候选。
+
+### Markdown、RAG 与 Checkpoint 不是三选一
+
+面试中常问“为什么记忆用 Markdown，不用 RAG”。正确回答应先指出三者不是同一层：
+
+| 载体 | 适合保存 | 优点 | 主要边界 |
+|---|---|---|---|
+| Markdown / 结构化事实文件 | 少量、稳定、需要人工审阅的项目约束与结论 | 可读、可 diff、可版本化 | 全量扫描会随规模变慢，缺少天然权限与冲突治理 |
+| RAG 证据库 | 大量、动态、需要按查询召回的原文与历史片段 | 可扩展、按需取证 | 相似不等于真实，召回结果必须保留来源与权限 |
+| Checkpoint / 事件存储 | 当前 Run 的步骤、待办、工具结果与副作用状态 | 可恢复、可重放 | 不应被当作跨任务长期知识 |
+
+可组合做法是：Checkpoint 保存“任务做到哪”，Markdown 保存经过验证的少量稳定事实，RAG 保存可回溯的原始证据。回答“为什么选 Markdown”时，应给出实际规模、更新频率、审阅需求和迁移阈值；不能把文件格式包装成通用记忆架构。
+
+### 语义匹配怎样参与可靠更新
+
+语义相似度只负责召回可能相关的旧记录。写入服务还要比较主体、事实类型、时间范围、来源和否定关系，再选择 `append`、`supersede`、`merge` 或 `quarantine`。例如“这次用英文”和“长期偏好英文”向量可能很近，却不应互相覆盖。
+
+阈值应在标注过的冲突/重复样本上校准，并为临界区设置人工复核或保守追加；记录模型、Embedding、阈值与候选版本，便于重放。更新失败时保留原记录，不能因一次模型判断覆盖已验证事实。
 
 ## 检索与上下文组装
 
@@ -90,7 +108,10 @@ Agent 记忆是分层、受策略控制的数据系统：工作记忆服务当�
 <!-- interview-source-history:start -->
 - [字节 Coding Agent 日常实习一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)（cluster-1b2940d40f2e）
 - [腾讯 AI 应用开发面试：跨会话记忆与多 Agent（2026 年 4 月）](../../../interview/tencent/ai/tencent-ai-4.md)（cluster-2fc69bb3d45d）
+- [OPPO AI 全栈一面：Prompt 到 UI、RAG 与前端性能（2026 年 8 月）](../../../interview/oppo/ai/oppo-ai-2.md)（cluster-4a37152b165a）
 - [腾讯 Agent 项目二面：记忆、RAG 与 MCP（2026 年 5 月）](../../../interview/tencent/ai/tencent-ai-2.md)（cluster-7568c06b462a）
+- [腾讯 AI 开发一面：Coding Agent 记忆、评测与可靠运行（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-8.md)（cluster-7ef1a4a8ef82）
+- [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)（cluster-910d0b20a897）
 <!-- interview-source-history:end -->
 
 ## 参考资料

@@ -99,6 +99,7 @@ JavaScript 的 Map 支持任意值作为 key，并提供明确的 `has`、`size`
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)（cluster-650f7c304b11）
 - [字节 AML / 火山方舟 AI Infra 一面：Agent Runtime、OS 与网络（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-17.md)（cluster-b8f79803b7ec）
 <!-- interview-source-history:end -->
 

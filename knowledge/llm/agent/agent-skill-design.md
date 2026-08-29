@@ -25,6 +25,20 @@ Skill 是把「某类任务该怎么做」固化下来、供 Agent 按需加载�
 
 效果是**常驻开销 ∝ Skill 数量 × 一行描述**，而非 × 整篇正文；挂 100 个 Skill 仍然可控。这与上下文工程里的 JIT 加载是同一思想在「能力」维度的应用。
 
+### 懒加载的可执行链路
+
+“按需加载”不能只停在把正文晚一点读。一次可审计链路包含：
+
+1. **发现**：从受信任注册表读取 `skill_id`、描述、版本、入口、权限与内容哈希；
+2. **候选召回**：先用规则、标签或检索得到小候选集，禁止模型凭空指定未注册 Skill；
+3. **精排与阈值**：结合任务、当前状态和冲突项选择；低置信时澄清或不用 Skill；
+4. **正文加载**：只读取命中版本的主说明，引用资源继续按需加载；
+5. **完整性与来源校验**：校验版本、hash、签名/发布者、依赖和许可证，拒绝运行期被替换的内容；
+6. **权限绑定**：Skill 只能请求声明过的工具，真正授权仍由执行层按用户和资源判断；
+7. **记录与评测**：Trace 保存候选、选择原因、最终版本、读取资源和结果，便于回归与回滚。
+
+缓存元信息时用 registry revision 或 ETag 失效；正文缓存键包含 `skill_id@version + contentHash`。热更新后，在途 Run 继续固定旧版本，新 Run 才看到新索引，避免一半流程使用旧规则、一半使用新规则。
+
 ## 热插拔：不重启地新增、更新与下线
 
 热插拔的关键在于**索引与正文分离**——只有索引常驻，所以增删改代价小且可回滚：
@@ -75,8 +89,10 @@ Skill 是把「某类任务该怎么做」固化下来、供 Agent 按需加载�
 - [腾讯 AI 应用开发面试：跨会话记忆与多 Agent（2026 年 4 月）](../../../interview/tencent/ai/tencent-ai-4.md)（cluster-2fc69bb3d45d）
 - [小红书 Agent 开发一面：LangGraph 子图、Skill 进化与工程校验（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-2.md)（cluster-3fa76fc5d243）
 - [大疆创新 AI Agent 开发面经：容错、Token 与后端基础（2026 年 8 月）](../../../interview/dji/ai/dji-ai-1.md)（cluster-4596af05b314）
+- [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)（cluster-650f7c304b11）
 - [腾讯后端 AI 开发实习面试（2026 年 4 月）](../../../interview/tencent/ai/tencent-ai-3.md)（cluster-6ba888767532）
 - [腾讯 Agent 项目二面：记忆、RAG 与 MCP（2026 年 5 月）](../../../interview/tencent/ai/tencent-ai-2.md)（cluster-7568c06b462a）
+- [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)（cluster-910d0b20a897）
 - [OPPO AI 全栈一面：AI Coding、Skill 与数据结构（2026 年 8 月）](../../../interview/oppo/ai/oppo-ai-1.md)（cluster-b77e34981a25）
 - [深信服 Agent 开发一面：MCP、多 Agent、安全与网络（2026 年 8 月）](../../../interview/sangfor/ai/sangfor-ai-1.md)（cluster-bb3431ce1c81）
 - [字节 Agent 开发一面：Skill、MCP 与后端基础（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-15.md)（cluster-d0b4e8a8f482）

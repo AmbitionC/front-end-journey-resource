@@ -771,10 +771,10 @@
       "key": "agent-tool-design",
       "label": "Agent 工具契约、Schema 与错误语义",
       "filePath": "llm/agent",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-15",
-      "batch": "rag-production-agent-next-20-2026-07-15"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-08-29",
+      "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
     },
     {
       "key": "agent-workflow-state",
@@ -852,10 +852,10 @@
       "key": "agent-deterministic-workflow",
       "label": "确定性 Workflow 与 Agent 的组合",
       "filePath": "llm/agent",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-16",
-      "batch": "agent-orchestration-next-10-2026-07-16"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-08-29",
+      "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
     },
     {
       "key": "agent-dynamic-workflow",
@@ -942,10 +942,10 @@
       "key": "agent-memory-architecture",
       "label": "Agent 记忆系统架构设计",
       "filePath": "llm/agent",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-16",
-      "batch": "agent-multi-production-next-20-2026-07-16"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-08-29",
+      "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
     },
     {
       "key": "agent-memory-summarization",
@@ -987,10 +987,10 @@
       "key": "agent-coding",
       "label": "Coding Agent 的架构与执行循环",
       "filePath": "llm/agent",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-16",
-      "batch": "agent-multi-production-next-20-2026-07-16"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-08-29",
+      "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
     },
     {
       "key": "agent-voice",
@@ -1428,10 +1428,10 @@
       "key": "agent-state-storage",
       "label": "Agent 会话、检查点与任务状态存储",
       "filePath": "backend/storage",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-17",
-      "batch": "agent-platform-backend-next-20-2026-07-17"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-08-29",
+      "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
     },
     {
       "key": "postgresql-transaction",
@@ -1988,8 +1988,8 @@
       "filePath": "llm/production",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-08-29",
+      "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
     },
     {
       "key": "ai-rate-limiting",
@@ -2007,7 +2007,7 @@
       "status": "pending",
       "action": "updated",
       "recordedAt": "2026-08-29",
-      "batch": "nowcoder-agent-market-20260829032320626-7f773caa"
+      "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
     },
     {
       "key": "node-event-loop-deep",
@@ -2132,8 +2132,8 @@
       "filePath": "backend/database",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-08-29",
+      "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
     },
     {
       "key": "db-transaction-lock",
@@ -2141,8 +2141,8 @@
       "filePath": "backend/database",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-08-29",
+      "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
     },
     {
       "key": "redis-cache",
@@ -2737,6 +2737,51 @@
       "action": "created",
       "recordedAt": "2026-08-29",
       "batch": "nowcoder-agent-market-20260829032320626-7f773caa"
+    },
+    {
+      "key": "agent-skill-design",
+      "label": "Agent Skill：渐进式披露、热插拔与版本治理",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-08-29",
+      "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
+    },
+    {
+      "key": "agent-intent-clarification",
+      "label": "意图识别、澄清反问与对话路由",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-08-29",
+      "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
+    },
+    {
+      "key": "distributed-id",
+      "label": "分布式唯一 ID：生成、顺序性与时钟边界",
+      "filePath": "backend/storage",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-08-29",
+      "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
+    },
+    {
+      "key": "algorithm-interval-scheduling",
+      "label": "区间调度、会议室与扫描线",
+      "filePath": "cs/algorithm",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-08-29",
+      "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
+    },
+    {
+      "key": "frontend-performance-diagnostics",
+      "label": "前端卡顿定位与性能诊断",
+      "filePath": "frontend/engineering",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-08-29",
+      "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
     }
   ]
 }

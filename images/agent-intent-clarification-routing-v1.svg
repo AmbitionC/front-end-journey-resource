@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">Agent 意图澄清与路由流程</title>
+  <desc id="desc">用户输入被拆为目标、对象、约束和授权；完整且低风险的请求直接路由，低置信度或缺少信息的请求进入澄清，高风险请求还需确认或升级。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#3B82F6"/></marker>
+    <style>text{font-family:Arial,'PingFang SC','Microsoft YaHei',sans-serif;fill:#172033}.h{font-size:25px;font-weight:700}.l{font-size:18px;font-weight:700}.s{font-size:15px}.t{font-size:13px}.k{font-size:14px;font-weight:700;letter-spacing:.3px}.line{stroke:#3B82F6;stroke-width:3;fill:none;marker-end:url(#arrow)}.dash{stroke:#7C3AED;stroke-width:3;fill:none;stroke-dasharray:8 7;marker-end:url(#arrow)}</style>
+  </defs>
+  <rect width="1200" height="650" fill="#FBFDFF"/>
+  <text x="60" y="64" class="h">意图澄清：把模糊输入变成可授权的下一步</text>
+  <text x="60" y="94" class="s" fill="#52627A">置信度用于判断是否需要更多信息；风险与权限决定是否允许执行</text>
+  <rect x="60" y="150" width="190" height="130" rx="18" fill="#EAF2FF" stroke="#3B82F6" stroke-width="2"/>
+  <text x="155" y="194" text-anchor="middle" class="l">用户输入</text>
+  <text x="155" y="224" text-anchor="middle" class="s">“处理异常订单”</text>
+  <text x="155" y="252" text-anchor="middle" class="s">自然语言上下文</text>
+  <path d="M250 215H330" class="line"/>
+  <rect x="330" y="126" width="290" height="182" rx="18" fill="#F3E8FF" stroke="#7C3AED" stroke-width="2"/>
+  <text x="475" y="166" text-anchor="middle" class="l">意图树与槽位</text>
+  <rect x="355" y="187" width="98" height="44" rx="10" fill="#fff"/><text x="404" y="215" text-anchor="middle" class="k">目标</text>
+  <rect x="470" y="187" width="98" height="44" rx="10" fill="#fff"/><text x="519" y="215" text-anchor="middle" class="k">对象</text>
+  <rect x="412" y="247" width="98" height="44" rx="10" fill="#fff"/><text x="461" y="275" text-anchor="middle" class="k">约束 / 授权</text>
+  <path d="M620 215H700" class="line"/>
+  <rect x="700" y="126" width="205" height="182" rx="18" fill="#FFF3D6" stroke="#D97706" stroke-width="2"/>
+  <text x="802" y="168" text-anchor="middle" class="l">决策门</text>
+  <text x="802" y="202" text-anchor="middle" class="s">槽位完整？</text>
+  <text x="802" y="228" text-anchor="middle" class="s">候选差距足够？</text>
+  <text x="802" y="254" text-anchor="middle" class="s">策略允许？</text>
+  <path d="M905 181H976" class="line"/>
+  <rect x="976" y="132" width="165" height="96" rx="18" fill="#E8F7EE" stroke="#16A34A" stroke-width="2"/>
+  <text x="1058" y="170" text-anchor="middle" class="l">路由 / 执行</text>
+  <text x="1058" y="199" text-anchor="middle" class="s">低风险已验证计划</text>
+  <path d="M802 308V390H530" class="dash"/>
+  <text x="650" y="372" class="k" fill="#7C3AED">缺槽 / 分数接近</text>
+  <rect x="300" y="390" width="230" height="146" rx="18" fill="#F3E8FF" stroke="#7C3AED" stroke-width="2"/>
+  <text x="415" y="430" text-anchor="middle" class="l">最小澄清问题</text>
+  <text x="415" y="462" text-anchor="middle" class="s">一次消除一个分叉</text>
+  <text x="415" y="490" text-anchor="middle" class="s">回显已确认的槽位</text>
+  <path d="M300 462H190V280" class="dash"/>
+  <path d="M905 262H976" class="line"/>
+  <rect x="976" y="260" width="165" height="112" rx="18" fill="#FFECEF" stroke="#DC2626" stroke-width="2"/>
+  <text x="1058" y="300" text-anchor="middle" class="l">确认 / 升级</text>
+  <text x="1058" y="330" text-anchor="middle" class="s">副作用、权限不足</text>
+  <text x="1058" y="354" text-anchor="middle" class="s">或不可逆风险</text>
+  <rect x="650" y="446" width="491" height="90" rx="16" fill="#EAF2FF" stroke="#3B82F6" stroke-width="2"/>
+  <text x="675" y="480" class="l">评估与审计</text>
+  <text x="895" y="506" text-anchor="middle" class="t">记录：候选意图 · 缺失槽位 · 策略结果 · 确认计划 · 工具回执</text>
+  <text x="895" y="527" text-anchor="middle" class="t">指标：错误执行率 · 无效澄清率 · 澄清后任务成功率</text>
+</svg>

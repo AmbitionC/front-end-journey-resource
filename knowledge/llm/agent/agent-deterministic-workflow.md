@@ -26,8 +26,22 @@ Agent 节点只接收候选、限制、可用证据和输出 schema，返回 `ch
 
 [LangGraph 的 workflows and agents 文档](https://docs.langchain.com/oss/python/langgraph/workflows-agents)区分预先确定路径的 workflow 与动态决定过程的 agent，并展示 routing、parallelization、orchestrator-worker 等模式。具体库接口会演进，但“确定控制边界、在边界内使用模型判断”是可移植设计。
 
-![确定性工作流按输入验证、活动、受限 Agent 决策、选择校验、审批和提交推进，并用历史重放恢复顺序](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-deterministic-workflow-agent-boundary-v1.webp)
-*图：Agent 只返回结构化选择与证据；工作流拥有顺序、重试、审批和终态。*
+![Workflow、Supervisor 与 Agent Teams 的选择边界：三种编排拓扑最终都进入统一质量与副作用门禁](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-orchestration-choice-boundary-v1.svg)
+*图：实线是代码固定路径，虚线是模型动态选择；自治程度提高时，通信、状态一致性、评测和成本也同步增加。*
+
+## Workflow、Supervisor/Subagents 与 Agent Teams 怎样选
+
+[Anthropic 的 Agent 架构实践](https://www.anthropic.com/engineering/building-effective-agents)区分预定义代码路径的 Workflow 与由模型动态控制过程的 Agent，并建议只在结果可测地改善时增加复杂度。工程选型可以继续细分为三种拓扑：
+
+| 方案 | 控制权 | 适合任务 | 主要代价 |
+|---|---|---|---|
+| 确定性 Workflow | 代码固定步骤与分支 | 规则稳定、依赖明确、高风险流程 | 长尾语义分支需要持续补规则 |
+| Supervisor + Subagents | 中心 Agent 分解、委派和汇总 | 子任务可独立、需要上下文隔离与单一责任人 | Supervisor 成为瓶颈，汇总可能丢证据 |
+| Agent Teams | 多个角色共享目标并动态交接 | 信息分散、需要对等协商或互相质疑 | 通信放大、重复劳动、状态冲突、难以归因 |
+
+“Agent Teams 比 Workflow 强”不是成立的结论。先画任务依赖：固定、可验证的主链路留在 Workflow；专业子任务由 Supervisor 按合同委派；只有当角色需要根据新证据相互协商、计划难以预先枚举时，才考虑 Teams。三者都必须把权限、预算、幂等、质量门禁和终止条件放在模型之外。
+
+主 Agent + Subagent 强调树状责任和结果回收，Agent Teams 强调成员之间能直接协作；如果实际通信仍全部经过一个主节点，它在拓扑上仍更接近 Supervisor。面试回答应结合共享状态、失败归属、并发资源和评测方式，而不是只比较框架名称。
 
 ## Side Effect 放到 Activity
 
@@ -97,6 +111,7 @@ trace 将 workflow/run、decision、activity、approval 和 operation ID 关联�
 
 <!-- interview-source-history:start -->
 - [字节 AI 全栈开发一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-13.md)（cluster-0cfd17469543）
+- [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)（cluster-910d0b20a897）
 <!-- interview-source-history:end -->
 
 ## 参考资料
@@ -104,3 +119,4 @@ trace 将 workflow/run、decision、activity、approval 和 operation ID 关联�
 - [Temporal — Workflow Definition](https://docs.temporal.io/workflow-definition)
 - [Temporal Documentation — Python workflow basics](https://github.com/temporalio/documentation/blob/main/docs/develop/python/workflows/basics.mdx)
 - [LangGraph — Workflows and agents](https://docs.langchain.com/oss/python/langgraph/workflows-agents)
+- [Anthropic — Building effective agents](https://www.anthropic.com/engineering/building-effective-agents)

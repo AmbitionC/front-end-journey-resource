@@ -272,6 +272,12 @@ IP 限流无法区分正常用户和恶意用户，在 NAT 场景下多个用户
 
 **AI 服务特有的限流维度**：除常规请求速率外，还需控制 Token 消耗（费用）、并发 Agent 任务数（资源隔离）、模型维度（高成本模型单独限额），三者结合才能有效管控 AI 配额。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)（cluster-910d0b20a897）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [RFC 9333: RateLimit Fields for HTTP](https://www.rfc-editor.org/rfc/rfc9333.html)

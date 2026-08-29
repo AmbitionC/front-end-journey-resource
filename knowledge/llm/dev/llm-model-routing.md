@@ -131,6 +131,12 @@ expected_cost = first_call
 
 模型路由是一项治理与决策系统：任务提交需求与边界，能力目录提供带日期的证据，硬门禁保证可用与合规，软评分在质量、延迟和成本之间优化。适配器保留语义差异，fallback 重新决策，观测闭环校正预测。做到可解释、可评测、可回滚，才真正获得多供应商弹性。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [哔哩哔哩 AI 应用岗一面：端到端 AI Coding 与生产治理（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-2.md)（cluster-1c24a80acde8）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenAI — Models](https://developers.openai.com/api/docs/models)

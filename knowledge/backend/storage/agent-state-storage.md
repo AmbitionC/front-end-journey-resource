@@ -2,8 +2,8 @@ Agent 状态不是一段可以无限追加的聊天记录。生产系统至少�
 
 [LangGraph Persistence](https://docs.langchain.com/oss/python/langgraph/persistence)用 thread 组织连续执行，并在图步骤边界保存 checkpoint。这是一个具体框架的实现，但它清晰展示了“会话容器”和“某次执行快照”不是同一概念。
 
-![租户下的 Thread 包含 Run；Run 引用 Checkpoint、追加事件和 Artifact，Long-term Memory 独立存在；恢复读取快照和事件，外部副作用经幂等账本](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-state-storage-state-model-v1.webp)
-*图：持久事实用于恢复，渲染和派生结果可以重建；长期记忆不等于某次 Run 的事件历史。*
+![Agent 容器迁移与任务恢复：旧 Worker 写入事件、检查点和制品，迁移后新 Worker 恢复快照并查询幂等账本](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-state-migration-recovery-v1.svg)
+*图：运行时可以替换，任务身份、版本化状态和已提交副作用必须留在容器之外。*
 
 ## 聚合与标识
 
@@ -74,6 +74,23 @@ Resume 从最新可信 checkpoint 继续未完成工作；Replay 用历史 check
 
 所有外部副作用通过 idempotency ledger。Checkpoint 保存 operationId 与结果引用；恢复时先查询 committed、not_started 或 unknown。已提交读取旧结果，not_started 才执行，unknown 对账。重放分支默认使用模拟工具或新业务意图，不能借历史 UI 按钮再次扣款。
 
+### 本地 Agent、云 Agent 与容器迁移
+
+本地 Agent 可以把线程、事件和 Artifact 放在用户设备，但仍要用稳定目录、原子写入、文件锁、版本与校验和；进程内消息数组只适合缓存。云 Agent 的 Worker/容器是临时执行资源，权威状态应写入独立数据库、对象存储和幂等账本，不能依赖容器磁盘或内存。
+
+容器迁移或重启的恢复顺序是：
+
+1. 调度器为 `run_id` 获取新 lease 与 fencing token，阻止旧 Worker 继续写；
+2. 校验 release bundle 和 checkpoint checksum，恢复最近可信快照；
+3. 从 `eventSeq` 继续重放，重建派生状态和待执行节点；
+4. 对每个外部 operation 查询 `committed / not_started / unknown`，未知状态先对账；
+5. 重新建立 Trace 和流式连接，向客户端发送带序号的恢复事件；
+6. 通过不变量和验收器确认恢复结果，再继续模型决策。
+
+[LangGraph Persistence](https://docs.langchain.com/oss/python/langgraph/persistence)将状态快照按 thread 与 checkpoint 组织，并支持读取历史与从旧 checkpoint 重放。具体框架可以替换，但“临时 Worker + 持久状态 + 明确恢复语义”的边界不应改变。
+
+多 Agent 并行时，状态至少按 `tenant / thread / run / agent` 分区；共享字段通过 reducer、事务或 owner 规则合并。不要让多个 Agent 直接覆盖同一 JSON，也不要把状态隔离误解为把所有上下文复制一份——大 Artifact 应用不可变引用共享，权限与可写字段则保持隔离。
+
 ## 一致性与并发
 
 Run 更新使用 expectedVersion；Worker 同时带 lease fencing token。Thread head 的分支合并需要领域规则，不能 last-write-wins 覆盖审批或用户消息。对象写、事件写和索引更新之间使用事务、outbox 或可恢复两阶段协议。
@@ -99,6 +116,14 @@ Legal hold 与普通保留分开；删除操作生成审计，但审计不保存
 ## 小结
 
 Agent 状态存储通过明确边界获得可恢复性：Thread 组织上下文，Run 表示一次执行，Checkpoint 保存恢复快照，Event 解释变化，Artifact 承载产物，Long-term Memory 独立治理。再用版本、fencing、幂等账本、保留和加密把它们连接起来，系统才可以安全暂停、恢复、重放和删除。
+
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-3.md)（cluster-137857a2ba05）
+- [哔哩哔哩 AI 应用岗一面：端到端 AI Coding 与生产治理（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-2.md)（cluster-1c24a80acde8）
+- [腾讯 AI 开发一面：Coding Agent 记忆、评测与可靠运行（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-8.md)（cluster-7ef1a4a8ef82）
+<!-- interview-source-history:end -->
 
 ## 参考资料
 

@@ -69,6 +69,7 @@ TCP 只能根据收到的报文和本地定时器更新状态。若对端突然�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节 Agent 开发一面：推理缓存、网络与存储基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-18.md)（cluster-265dac6c3b53）
 - [字节 AML / 火山方舟 AI Infra 一面：Agent Runtime、OS 与网络（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-17.md)（cluster-b8f79803b7ec）
 <!-- interview-source-history:end -->
 

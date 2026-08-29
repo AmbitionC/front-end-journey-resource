@@ -80,6 +80,13 @@ head <-> most recent ... least recent <-> tail
 
 链表题的本质不是画箭头，而是在任何中间步骤都不丢节点，并让表示不变量支持你承诺的复杂度。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)（cluster-650f7c304b11）
+- [快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-3.md)（cluster-cde9b480341e）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [MIT OCW 6.006（2011）：Lecture Notes](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/pages/lecture-notes/)

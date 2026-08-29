@@ -105,6 +105,12 @@ $$
 
 Temperature 控制分布尖锐程度，Top-K 用固定数量裁剪候选，Top-P 用动态概率质量裁剪候选。生产环境应把它们视为模型特定的解码接口，通过评测选择，而不是套用永久有效的经验值。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)（cluster-910d0b20a897）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [The Curious Case of Neural Text Degeneration（Nucleus Sampling）](https://arxiv.org/abs/1904.09751)

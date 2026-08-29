@@ -111,6 +111,12 @@ $$
 
 引用溯源是数据模型与验证流程，不是排版功能。稳定来源身份、不可变版本、精确 span、原子声明映射、支持/覆盖/时效检查和明确拒答共同组成 Grounding。只有当用户能从声明回到真正支持它的证据，引用才提升可信度。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [OPPO AI 全栈一面：Prompt 到 UI、RAG 与前端性能（2026 年 8 月）](../../../interview/oppo/ai/oppo-ai-2.md)（cluster-4a37152b165a）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Es et al. — Ragas: Automated Evaluation of Retrieval Augmented Generation](https://arxiv.org/abs/2309.15217)

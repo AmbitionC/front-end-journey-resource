@@ -8,6 +8,22 @@
         "key": "bytedance-base",
         "children": [
           {
+            "label": "字节 Agent 开发一面：推理缓存、网络与存储基础（2026 年 8 月）",
+            "key": "bytedance-base-18",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": ["Agent", "KV Cache", "网络", "存储"],
+            "updatedAt": "2026-08-29"
+          },
+          {
+            "label": "字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）",
+            "key": "bytedance-base-19",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": ["Agent", "上下文", "Skill", "编程基础"],
+            "updatedAt": "2026-08-29"
+          },
+          {
             "label": "字节 AML / 火山方舟 AI Infra 一面：Agent Runtime、OS 与网络（2026 年 8 月）",
             "key": "bytedance-base-17",
             "isLeaf": true,
@@ -124,6 +140,14 @@
         "key": "tencent-ai",
         "children": [
           {
+            "label": "腾讯 AI 开发一面：Coding Agent 记忆、评测与可靠运行（2026 年 8 月）",
+            "key": "tencent-ai-8",
+            "isLeaf": true,
+            "filePath": "tencent/ai",
+            "tags": ["Coding Agent", "记忆", "评测", "状态恢复"],
+            "updatedAt": "2026-08-29"
+          },
+          {
             "label": "腾讯大模型算法岗一二面：Agentic RL、PPO/GRPO 与 DeepSeek V4（2026 年 8 月）",
             "key": "tencent-ai-7",
             "isLeaf": true,
@@ -220,6 +244,14 @@
         "key": "kuaishou-ai",
         "children": [
           {
+            "label": "快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理（2026 年 8 月）",
+            "key": "kuaishou-ai-3",
+            "isLeaf": true,
+            "filePath": "kuaishou/ai",
+            "tags": ["Agent", "意图澄清", "评测", "MCP"],
+            "updatedAt": "2026-08-29"
+          },
+          {
             "label": "快手 AI 应用开发秋招一面：线程池、OOM 与项目深挖（2026 年 8 月）",
             "key": "kuaishou-ai-2",
             "isLeaf": true,
@@ -248,6 +280,14 @@
         "key": "oppo-ai",
         "children": [
           {
+            "label": "OPPO AI 全栈一面：Prompt 到 UI、RAG 与前端性能（2026 年 8 月）",
+            "key": "oppo-ai-2",
+            "isLeaf": true,
+            "filePath": "oppo/ai",
+            "tags": ["AI 全栈", "RAG", "多 Agent", "前端性能"],
+            "updatedAt": "2026-08-29"
+          },
+          {
             "label": "OPPO AI 全栈一面：AI Coding、Skill 与数据结构（2026 年 8 月）",
             "key": "oppo-ai-1",
             "isLeaf": true,
@@ -267,6 +307,14 @@
         "label": "Agent 与 AI 应用",
         "key": "antfin-ai",
         "children": [
+          {
+            "label": "蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）",
+            "key": "antfin-ai-4",
+            "isLeaf": true,
+            "filePath": "antfin/ai",
+            "tags": ["Agent", "多 Agent", "质量门禁", "后端"],
+            "updatedAt": "2026-08-29"
+          },
           {
             "label": "蚂蚁 Agent 开发一面：多 Agent 并发与质量保障（2026 年 4 月）",
             "key": "antfin-ai-1",
@@ -324,6 +372,14 @@
         "key": "bilibili-ai",
         "children": [
           {
+            "label": "哔哩哔哩 AI 应用岗一面：端到端 AI Coding 与生产治理（2026 年 8 月）",
+            "key": "bilibili-ai-2",
+            "isLeaf": true,
+            "filePath": "bilibili/ai",
+            "tags": ["AI Coding", "MCP", "可观测性", "灰度发布"],
+            "updatedAt": "2026-08-29"
+          },
+          {
             "label": "哔哩哔哩 AI 应用岗 Agent 开发一面（2026 年 8 月）",
             "key": "bilibili-ai-1",
             "isLeaf": true,
@@ -363,6 +419,14 @@
         "label": "Agent 与 AI 应用",
         "key": "redbook-ai",
         "children": [
+          {
+            "label": "小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展（2026 年 8 月）",
+            "key": "redbook-ai-3",
+            "isLeaf": true,
+            "filePath": "redbook/ai",
+            "tags": ["Agent", "评测", "安全", "混合部署"],
+            "updatedAt": "2026-08-29"
+          },
           {
             "label": "小红书 Agent 开发一面：多智能体、Memory 与广告投放优化（2026 年 8 月）",
             "key": "redbook-ai-1",

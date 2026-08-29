@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Agent 分层评测与发布门禁闭环</title>
+  <desc id="desc">版本化评测集驱动确定性运行与轨迹采集，经规则、模型和人工评分后按意图、正确性、工具失败等切片判断发布；线上失败经复核回流下一版数据集。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#64748B"/></marker>
+    <style>.title{font:700 28px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#0F172A}.label{font:650 17px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#0F172A}.small{font:14px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#475569}.tiny{font:13px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#64748B}.line{stroke:#64748B;stroke-width:2.5;fill:none;marker-end:url(#arrow)}.cal{stroke:#7C3AED;stroke-width:2.5;stroke-dasharray:7 6;fill:none;marker-end:url(#arrow)}</style>
+  </defs>
+  <rect width="1200" height="720" rx="28" fill="#F8FAFC"/>
+  <text x="56" y="60" class="title">Agent 评测闭环：平均分之外，更要看轨迹与关键切片</text>
+  <text x="56" y="91" class="small">每个结果绑定模型、Prompt、工具、环境和数据版本；发布门禁对高风险切片单独阻断。</text>
+
+  <rect x="74" y="150" width="230" height="108" rx="18" fill="#EAF2FF" stroke="#3B82F6" stroke-width="2"/>
+  <text x="189" y="191" text-anchor="middle" class="label">版本化评测集</text>
+  <text x="189" y="219" text-anchor="middle" class="small">任务 · rubric · 预期终态</text>
+  <text x="189" y="242" text-anchor="middle" class="tiny">固定集 + 新鲜失败集</text>
+
+  <rect x="375" y="150" width="230" height="108" rx="18" fill="#F3E8FF" stroke="#7C3AED" stroke-width="2"/>
+  <text x="490" y="191" text-anchor="middle" class="label">确定性运行与 Trace</text>
+  <text x="490" y="219" text-anchor="middle" class="small">输出 · 工具 · 状态 · 成本</text>
+  <text x="490" y="242" text-anchor="middle" class="tiny">记录 release / seed / 环境</text>
+
+  <rect x="676" y="130" width="450" height="148" rx="20" fill="#FFF3D6" stroke="#D97706" stroke-width="2"/>
+  <text x="901" y="166" text-anchor="middle" class="label">多层评分器</text>
+  <rect x="704" y="188" width="116" height="58" rx="12" fill="#FFFFFF" stroke="#D97706"/><text x="762" y="213" text-anchor="middle" class="small">规则 / 测试</text><text x="762" y="234" text-anchor="middle" class="tiny">结构与终态</text>
+  <rect x="843" y="188" width="116" height="58" rx="12" fill="#FFFFFF" stroke="#D97706"/><text x="901" y="213" text-anchor="middle" class="small">LLM Judge</text><text x="901" y="234" text-anchor="middle" class="tiny">rubric 评分</text>
+  <rect x="982" y="188" width="116" height="58" rx="12" fill="#FFFFFF" stroke="#D97706"/><text x="1040" y="213" text-anchor="middle" class="small">人工复核</text><text x="1040" y="234" text-anchor="middle" class="tiny">校准与高风险</text>
+  <path d="M982 257 C956 300 864 300 844 257" class="cal"/>
+  <text x="918" y="311" text-anchor="middle" class="tiny">用人工标注校准 Judge</text>
+
+  <rect x="770" y="355" width="356" height="132" rx="20" fill="#FFFFFF" stroke="#94A3B8" stroke-width="2"/>
+  <text x="948" y="392" text-anchor="middle" class="label">切片仪表盘</text>
+  <text x="948" y="420" text-anchor="middle" class="small">意图分类 · 结论正确性 · 结构化输出</text>
+  <text x="948" y="446" text-anchor="middle" class="small">工具失败 · 权限 · 延迟 · 成本 · 长任务</text>
+  <text x="948" y="470" text-anchor="middle" class="tiny">同时展示均值、分布、严重度与样本证据</text>
+
+  <rect x="420" y="374" width="238" height="96" rx="20" fill="#E8F7EE" stroke="#16A34A" stroke-width="2"/>
+  <text x="539" y="411" text-anchor="middle" class="label">发布门禁</text>
+  <text x="539" y="439" text-anchor="middle" class="small">通过 / 阻断 / 人工审批</text>
+
+  <rect x="74" y="374" width="238" height="96" rx="20" fill="#EAF2FF" stroke="#3B82F6" stroke-width="2"/>
+  <text x="193" y="411" text-anchor="middle" class="label">线上采样</text>
+  <text x="193" y="439" text-anchor="middle" class="small">真实失败 · 漂移 · 用户反馈</text>
+
+  <rect x="74" y="554" width="1052" height="92" rx="20" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <text x="600" y="590" text-anchor="middle" class="label">数据更新门</text>
+  <text x="600" y="619" text-anchor="middle" class="small">脱敏 → 去重 → 标注/判据复核 → 防泄漏分割 → 新版本评测集；线上失败不能直接覆盖验收标准</text>
+
+  <path d="M304 204 H375" class="line"/><path d="M605 204 H676" class="line"/>
+  <path d="M901 278 C901 315 948 315 948 355" class="line"/>
+  <path d="M770 421 H658" class="line"/><path d="M420 421 H312" class="line"/>
+  <path d="M193 470 V554" class="line"/><path d="M600 554 C600 510 180 520 189 258" class="line"/>
+
+  <rect x="433" y="485" width="105" height="34" rx="10" fill="#E8F7EE"/><text x="485" y="507" text-anchor="middle" class="tiny" fill="#166534">PASS → 灰度</text>
+  <rect x="548" y="485" width="110" height="34" rx="10" fill="#FFECEF"/><text x="603" y="507" text-anchor="middle" class="tiny" fill="#991B1B">BLOCK → 修复</text>
+</svg>

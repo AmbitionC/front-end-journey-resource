@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">区间调度的两个目标</title>
+  <desc id="desc">左侧展示按最早结束时间选择最多兼容会议，右侧展示最少会议室等于时间线上同时重叠会议的峰值。</desc>
+  <defs><style>text{font-family:Arial,'PingFang SC','Microsoft YaHei',sans-serif;fill:#172033}.h{font-size:25px;font-weight:700}.l{font-size:20px;font-weight:700}.s{font-size:14px}.k{font-size:14px;font-weight:700}.t{font-size:12px;font-weight:700}.axis{stroke:#52627A;stroke-width:2}.dash{stroke:#D97706;stroke-width:2;stroke-dasharray:7 6}</style></defs>
+  <rect width="1200" height="650" fill="#FBFDFF"/>
+  <text x="60" y="64" class="h">区间调度：同一批会议，两种不同目标</text>
+  <text x="60" y="94" class="s" fill="#52627A">约定半开区间 [start, end)：结束时刻可立即复用资源</text>
+  <rect x="60" y="130" width="510" height="430" rx="20" fill="#EAF2FF" stroke="#3B82F6" stroke-width="2"/>
+  <text x="90" y="172" class="l">最多参加会议</text><text x="90" y="200" class="s">按结束时间升序；兼容就选择</text>
+  <line x1="115" y1="490" x2="520" y2="490" class="axis"/><text x="118" y="515" class="s">9:00</text><text x="220" y="515" class="s">10:00</text><text x="322" y="515" class="s">11:00</text><text x="424" y="515" class="s">12:00</text>
+  <text x="90" y="228" class="s" fill="#52627A">选择顺序：① → ② → ③；浅黄色区间因冲突跳过</text>
+  <rect x="120" y="250" width="120" height="42" rx="10" fill="#3B82F6"/><text x="180" y="277" text-anchor="middle" class="k" fill="#fff">① [9, 10)</text>
+  <rect x="190" y="315" width="155" height="42" rx="10" fill="#FFF3D6" stroke="#D97706" stroke-width="2"/><text x="267" y="342" text-anchor="middle" class="t">[9:40, 11:10) · 冲突</text>
+  <rect x="245" y="380" width="105" height="42" rx="10" fill="#16A34A"/><text x="297" y="407" text-anchor="middle" class="k" fill="#fff">② [10, 11)</text>
+  <rect x="360" y="250" width="115" height="42" rx="10" fill="#7C3AED"/><text x="417" y="277" text-anchor="middle" class="k" fill="#fff">③ [11, 12)</text>
+  <text x="90" y="545" class="k" fill="#16A34A">选择最早结束者，给后续留下最多空间</text>
+  <rect x="630" y="130" width="510" height="430" rx="20" fill="#F3E8FF" stroke="#7C3AED" stroke-width="2"/>
+  <text x="660" y="172" class="l">最少会议室</text><text x="660" y="200" class="s">答案 = 最大同时重叠数</text>
+  <line x1="685" y1="490" x2="1090" y2="490" class="axis"/><text x="688" y="515" class="s">9:00</text><text x="790" y="515" class="s">10:00</text><text x="892" y="515" class="s">11:00</text><text x="994" y="515" class="s">12:00</text>
+  <rect x="690" y="250" width="190" height="42" rx="10" fill="#3B82F6"/><text x="785" y="277" text-anchor="middle" class="k" fill="#fff">会议 A</text>
+  <rect x="760" y="315" width="220" height="42" rx="10" fill="#16A34A"/><text x="870" y="342" text-anchor="middle" class="k" fill="#fff">会议 B</text>
+  <rect x="855" y="380" width="170" height="42" rx="10" fill="#D97706"/><text x="940" y="407" text-anchor="middle" class="k" fill="#fff">会议 C</text>
+  <line x1="855" y1="225" x2="855" y2="470" class="dash"/><line x1="880" y1="225" x2="880" y2="470" class="dash"/>
+  <text x="867" y="232" text-anchor="middle" class="k" fill="#D97706">峰值 3</text><text x="660" y="545" class="k" fill="#7C3AED">最小堆复用最早结束的房间；扫描线直接累计峰值</text>
+</svg>

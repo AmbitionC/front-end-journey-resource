@@ -26,6 +26,16 @@ type CodingTask = {
 
 补丁保持小而连贯。优先复用现有抽象和风格，避免顺手重构、升级依赖或格式化无关目录。修改公共接口时搜索所有消费者；删除代码前确认没有动态引用、生成步骤或文档契约。
 
+## 端到端与跨模块任务怎样组织
+
+端到端 AI Coding 不是“一次把需求发给模型”。先把仓库快照、需求、允许路径和验收标准固化为任务合同，再用依赖图拆出检索、接口设计、实现、迁移、测试和发布检查。只有没有写冲突、没有前置依赖的节点才并行；跨模块接口先固定 Schema，再让各执行单元分别实现。
+
+DAG 的权威状态不属于聊天窗口，也不应只放在某个子 Agent 的长期记忆中。编排层保存节点状态、输入/输出引用、attempt、checkpoint、负责人和验证证据；子 Agent 获得最小上下文，结束时交付结构化结果。容器重启后从持久状态恢复，不能靠模型“回忆”做到哪一步。
+
+如果平台提供日志、代码搜索或构建等 MCP 工具，Coding Agent 仍需把工具返回当不可信证据：限制结果大小，保存可重取引用，校验路径和版本，并把日志中的自然语言与高权限指令隔离。工具协议解决接入，Harness 负责把任务说明、上下文、工具、反馈、预算与验证器组合成可执行环境。
+
+比较不同 Coding Agent 产品时，不宜用单次演示判断“谁更强”。应固定同一仓库快照和任务集，比较任务成功率、测试质量、补丁范围、恢复能力、权限模型、人工修订、延迟和成本；模型、工具和 Harness 都要锁定版本。产品名只是实现样本，能力合同和评测证据才可迁移。
+
 ## 隔离工作区
 
 [Git worktree](https://git-scm.com/docs/git-worktree)允许同一仓库拥有多个关联工作目录，适合把 Agent 变更与用户主工作区隔离。隔离不等于随意：仍从明确 base 创建分支，避免两个 Agent 写同一 worktree，结束前确认没有遗漏的未跟踪文件。
@@ -84,6 +94,7 @@ Trace 记录搜索、读取、编辑、命令、退出码、diff 统计和验证
 - [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)（cluster-0c75d333d0e1）
 - [字节 AI 全栈开发一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-13.md)（cluster-0cfd17469543）
 - [字节 Coding Agent 日常实习一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)（cluster-1b2940d40f2e）
+- [哔哩哔哩 AI 应用岗一面：端到端 AI Coding 与生产治理（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-2.md)（cluster-1c24a80acde8）
 - [蚂蚁 Code Agent 与 Agent 应用两轮面试（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-2.md)（cluster-2d9e5f67fe86）
 - [小红书 Agent 开发一面：LangGraph 子图、Skill 进化与工程校验（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-2.md)（cluster-3fa76fc5d243）
 - [大疆创新 AI Agent 开发面经：容错、Token 与后端基础（2026 年 8 月）](../../../interview/dji/ai/dji-ai-1.md)（cluster-4596af05b314）

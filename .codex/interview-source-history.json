@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-26",
+  "updatedAt": "2026-08-29",
   "records": {
     "00460f65f35e": {
       "source": "nowcoder",
@@ -559,6 +559,136 @@
       "publicFiles": ["interview/bytedance/base/bytedance-base-17.md"],
       "knowledgeKeys": ["build-agent-framework", "agent-sandbox", "agent-failure-recovery", "agent-workflow-state", "os-user-kernel-mode", "os-virtual-memory", "tcp-handshake", "algorithm-hash"],
       "processedAt": "2026-08-29T03:58:28.000Z"
+    },
+    "2950bccd974d": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/feed/main/detail/cf5a82411c1e473385d8fcae6c250a6e",
+      "contentHash": "4a37152b165a99a9",
+      "clusterId": "cluster-4a37152b165a",
+      "company": "other",
+      "evidenceGrade": "B",
+      "status": "published",
+      "articleKey": "oppo-ai-2",
+      "publicFiles": ["interview/oppo/ai/oppo-ai-2.md"],
+      "knowledgeKeys": ["rag-chunking", "rag-citation-grounding", "multi-agent", "agent-memory-architecture", "http-message", "frontend-performance-diagnostics"],
+      "processedAt": "2026-08-29T07:30:00.000Z"
+    },
+    "5cdf5adf0a9e": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/feed/main/detail/631e9b79e433415ca3dea24642f94b4c",
+      "contentHash": "8aa7c1a08b169ea9",
+      "clusterId": "cluster-cde9b480341e",
+      "company": "other",
+      "evidenceGrade": "A",
+      "status": "published",
+      "articleKey": "kuaishou-ai-3",
+      "publicFiles": ["interview/kuaishou/ai/kuaishou-ai-3.md"],
+      "knowledgeKeys": ["agent-intent-clarification", "agent-eval-framework", "mcp-protocol", "agent-tool-design", "agent-failure-recovery", "algorithm-linked-list"],
+      "processedAt": "2026-08-29T07:30:00.000Z"
+    },
+    "e231d8bca5f5": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/feed/main/detail/87eadf9db3b14bb6912064ee79267c30",
+      "contentHash": "1c24a80acde8986c",
+      "clusterId": "cluster-1c24a80acde8",
+      "company": "other",
+      "evidenceGrade": "B",
+      "status": "published",
+      "articleKey": "bilibili-ai-2",
+      "publicFiles": ["interview/bilibili/ai/bilibili-ai-2.md"],
+      "knowledgeKeys": ["agent-coding", "agent-state-storage", "mcp-protocol", "ai-observability", "agent-canary-release", "llm-token-budget", "llm-model-routing", "agent-subagents"],
+      "processedAt": "2026-08-29T07:30:00.000Z"
+    },
+    "8d5f3c2e1d32": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/921895095773696000",
+      "contentHash": "0f00385481f299de",
+      "clusterId": "cluster-fc5daec0577f",
+      "company": "other",
+      "evidenceGrade": "A",
+      "status": "merged",
+      "publicFiles": [],
+      "knowledgeKeys": [],
+      "reason": "与已发布 redbook-ai-2 的题序、项目描述和答案结构高度一致，作为近似转载或模板化来源合并，不重复发布或增加热度",
+      "processedAt": "2026-08-29T07:30:00.000Z"
+    },
+    "940bbaf789d5": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/921761916530196480",
+      "contentHash": "f8f4155a42e49158",
+      "clusterId": "cluster-f8f4155a42e4",
+      "company": "other",
+      "evidenceGrade": "B",
+      "status": "skipped",
+      "publicFiles": [],
+      "knowledgeKeys": [],
+      "reason": "正文以华为 OD 求职经验和薪资宣传为主，包含招聘导向与二手总结，不作为可核验的一手大厂 Agent 研发面经发布",
+      "processedAt": "2026-08-29T07:30:00.000Z"
+    },
+    "bb6e15a34f10": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/feed/main/detail/9f7361c709f4413396988b4f334a0d6f",
+      "contentHash": "137857a2ba058287",
+      "clusterId": "cluster-137857a2ba05",
+      "company": "other",
+      "evidenceGrade": "A",
+      "status": "published",
+      "articleKey": "redbook-ai-3",
+      "publicFiles": ["interview/redbook/ai/redbook-ai-3.md"],
+      "knowledgeKeys": ["agent-eval-framework", "prompt-structured-output", "prompt-injection-defense", "agent-permission-model", "agent-tool-design", "multi-agent", "agent-state-storage", "agent-deployment"],
+      "processedAt": "2026-08-29T07:30:00.000Z"
+    },
+    "477bed393f30": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/feed/main/detail/02718e9f48ff436f96d6ee8c6f11a47e",
+      "contentHash": "910d0b20a8979bae",
+      "clusterId": "cluster-910d0b20a897",
+      "company": "ant",
+      "evidenceGrade": "B",
+      "status": "published",
+      "articleKey": "antfin-ai-4",
+      "publicFiles": ["interview/antfin/ai/antfin-ai-4.md"],
+      "knowledgeKeys": ["agent-memory-architecture", "agent-deterministic-workflow", "multi-agent", "agent-subagents", "agent-quality-gates", "agent-eval-framework", "agent-tool-design", "mcp-protocol", "agent-skill-design", "prompt-injection-defense", "llm-inference-params", "db-transaction-lock", "mysql-index", "redis-cache", "async-job-queue", "rate-limit-circuit", "algorithm-interval-scheduling"],
+      "processedAt": "2026-08-29T07:30:00.000Z"
+    },
+    "9c3fd79d9cdb": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/feed/main/detail/3ffc762437274543b6a8f5e2ea6fb535",
+      "contentHash": "7ef1a4a8ef82e0a1",
+      "clusterId": "cluster-7ef1a4a8ef82",
+      "company": "tencent",
+      "evidenceGrade": "B",
+      "status": "published",
+      "articleKey": "tencent-ai-8",
+      "publicFiles": ["interview/tencent/ai/tencent-ai-8.md"],
+      "knowledgeKeys": ["agent-memory-architecture", "agent-state-storage", "agent-workflow-state", "agent-planning", "agent-eval-framework", "llm-model-selection", "llm-long-context", "prompt-context-compression"],
+      "processedAt": "2026-08-29T07:30:00.000Z"
+    },
+    "81051d227005": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/feed/main/detail/0bec32fbb3344ff98f16b97f47c7b857",
+      "contentHash": "265dac6c3b53957f",
+      "clusterId": "cluster-265dac6c3b53",
+      "company": "bytedance",
+      "evidenceGrade": "A",
+      "status": "published",
+      "articleKey": "bytedance-base-18",
+      "publicFiles": ["interview/bytedance/base/bytedance-base-18.md"],
+      "knowledgeKeys": ["llm-token-context", "http-message", "tcp-handshake", "mysql-index", "redis-cache", "distributed-id", "algorithm-sorting"],
+      "processedAt": "2026-08-29T07:30:00.000Z"
+    },
+    "0bf5a7b8e838": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/feed/main/detail/d2cf5165d1184b59879eff5793b7b453",
+      "contentHash": "650f7c304b11fcb1",
+      "clusterId": "cluster-650f7c304b11",
+      "company": "bytedance",
+      "evidenceGrade": "A",
+      "status": "published",
+      "articleKey": "bytedance-base-19",
+      "publicFiles": ["interview/bytedance/base/bytedance-base-19.md"],
+      "knowledgeKeys": ["context-engineering", "llm-conversation-state", "llm-token-context", "prompt-context-compression", "agent-skill-design", "agent-subagents", "multi-agent", "os-process-thread", "sql-window-function", "algorithm-linked-list", "algorithm-hash"],
+      "processedAt": "2026-08-29T07:30:00.000Z"
     }
   }
 }

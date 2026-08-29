@@ -73,6 +73,7 @@ Agent 发布以版本包为原子单位，把代码、模型、prompt、工具�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-3.md)（cluster-137857a2ba05）
 - [腾讯 AI 应用开发面试：跨会话记忆与多 Agent（2026 年 4 月）](../../../interview/tencent/ai/tencent-ai-4.md)（cluster-2fc69bb3d45d）
 <!-- interview-source-history:end -->
 

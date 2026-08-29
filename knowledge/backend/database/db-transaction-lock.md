@@ -68,6 +68,19 @@ flowchart TD
 
 **READ COMMITTED** 每次 SELECT 都生成新 ReadView，所以能看到其他事务最新提交。**REPEATABLE READ** 事务内只在第一次快照读时生成 ReadView，后续复用同一个，保证重复读结果一致。
 
+## 把 ACID、MVCC 与三类日志串成一条回答链
+
+常见追问会把 ACID、MVCC、redo、undo 和 binlog 连在一起。可以按“业务语义 → 读写并发 → 崩溃与复制”回答：
+
+- **undo log** 保存回滚与旧版本所需的信息，支撑原子回滚，也为一致性读提供版本链；
+- **redo log** 是 InnoDB 的预写式物理/物理逻辑恢复信息，已提交修改先持久到 redo，崩溃后可恢复尚未刷入数据页的变化；
+- **binlog** 位于 MySQL Server 层，记录逻辑变更事件，主要服务复制与时间点恢复；
+- **ReadView + undo 版本链**决定快照读看到哪个版本，行锁/间隙锁则约束当前读和并发写。
+
+三类日志不能互相替代：只有 binlog 无法直接恢复 InnoDB 内部页状态，只有 redo 又不能承担跨存储引擎的复制日志。提交过程需要协调 redo 与 binlog，避免“存储引擎认为提交、复制日志却没有”或相反的不一致。
+
+回答 MVCC 时也不要说“读永远不加锁”。普通一致性读通常基于快照；`SELECT ... FOR UPDATE`、更新与某些隔离语义使用当前读和锁。乐观/悲观锁是业务并发策略，MVCC 是存储引擎的多版本机制，三者位于不同层。
+
 ## 锁的类型体系
 
 ### 共享锁与排他锁
@@ -330,6 +343,7 @@ SELECT * FROM performance_schema.data_locks;
 
 <!-- interview-source-history:start -->
 - [小红书 Agent 开发一面：LangGraph 子图、Skill 进化与工程校验（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-2.md)（cluster-3fa76fc5d243）
+- [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)（cluster-910d0b20a897）
 - [字节 Agent 开发一面：Skill、MCP 与后端基础（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-15.md)（cluster-d0b4e8a8f482）
 <!-- interview-source-history:end -->
 
@@ -337,3 +351,6 @@ SELECT * FROM performance_schema.data_locks;
 
 - [MySQL 8.4 InnoDB transaction isolation levels](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/innodb-transaction-isolation-levels.html)
 - [MySQL 8.4 InnoDB locking](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/innodb-locking.html)
+- [MySQL 8.4 Reference — Redo Log](https://dev.mysql.com/doc/refman/8.4/en/innodb-redo-log.html)
+- [MySQL 8.4 Reference — Undo Logs](https://dev.mysql.com/doc/refman/8.4/en/innodb-undo-logs.html)
+- [MySQL 8.4 Reference — Binary Log](https://dev.mysql.com/doc/refman/8.4/en/binary-log.html)

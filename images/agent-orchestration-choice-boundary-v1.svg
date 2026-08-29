@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Workflow、Supervisor 与 Agent Teams 的选择边界</title>
+  <desc id="desc">同一任务按路径可预测性、协作强度和风险选择确定性工作流、监督者加子智能体或 Agent Teams，三种模式最终都必须经过质量与副作用门禁。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#64748B"/></marker>
+    <style>.title{font:700 28px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#0F172A}.label{font:650 18px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#0F172A}.small{font:14px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#475569}.tiny{font:13px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#64748B}.line{stroke:#64748B;stroke-width:2.5;fill:none;marker-end:url(#arrow)}.dash{stroke:#64748B;stroke-width:2.5;stroke-dasharray:8 7;fill:none;marker-end:url(#arrow)}</style>
+  </defs>
+  <rect width="1200" height="700" rx="28" fill="#F8FAFC"/>
+  <text x="56" y="60" class="title">编排不是越自治越好：按任务结构选择控制权</text>
+  <text x="56" y="91" class="small">实线表示代码固定路径，虚线表示模型选择；无论哪种拓扑，授权与验收都在模型之外。</text>
+  <rect x="435" y="118" width="330" height="76" rx="18" fill="#FFFFFF" stroke="#94A3B8" stroke-width="2"/>
+  <text x="600" y="149" text-anchor="middle" class="label">任务：目标、依赖、风险与成功标准</text>
+  <text x="600" y="174" text-anchor="middle" class="small">先判断路径是否可枚举、角色是否独立、是否需要动态协商</text>
+
+  <rect x="50" y="245" width="330" height="276" rx="22" fill="#EAF2FF" stroke="#3B82F6" stroke-width="2"/>
+  <text x="215" y="284" text-anchor="middle" class="label">确定性 Workflow</text>
+  <text x="215" y="312" text-anchor="middle" class="small">固定步骤 · 审批 · 补偿 · 可重放</text>
+  <rect x="90" y="345" width="92" height="54" rx="12" fill="#FFFFFF" stroke="#3B82F6"/><text x="136" y="378" text-anchor="middle" class="small">校验</text>
+  <rect x="238" y="345" width="92" height="54" rx="12" fill="#FFFFFF" stroke="#3B82F6"/><text x="284" y="378" text-anchor="middle" class="small">执行</text>
+  <path d="M182 372 H238" class="line"/>
+  <rect x="90" y="425" width="240" height="58" rx="12" fill="#FFFFFF" stroke="#3B82F6"/><text x="210" y="450" text-anchor="middle" class="small">适合：规则稳定、错误代价高</text><text x="210" y="472" text-anchor="middle" class="tiny">测试最容易 · 运行成本最低</text>
+
+  <rect x="435" y="245" width="330" height="276" rx="22" fill="#FFF3D6" stroke="#D97706" stroke-width="2"/>
+  <text x="600" y="284" text-anchor="middle" class="label">Supervisor + Subagents</text>
+  <text x="600" y="312" text-anchor="middle" class="small">中心分解 · 干净上下文 · 结果汇总</text>
+  <rect x="545" y="338" width="110" height="48" rx="12" fill="#FFFFFF" stroke="#D97706"/><text x="600" y="368" text-anchor="middle" class="small">Supervisor</text>
+  <rect x="475" y="423" width="100" height="48" rx="12" fill="#FFFFFF" stroke="#D97706"/><text x="525" y="453" text-anchor="middle" class="small">Agent A</text>
+  <rect x="625" y="423" width="100" height="48" rx="12" fill="#FFFFFF" stroke="#D97706"/><text x="675" y="453" text-anchor="middle" class="small">Agent B</text>
+  <path d="M575 386 L535 423" class="dash"/><path d="M625 386 L665 423" class="dash"/>
+  <text x="600" y="500" text-anchor="middle" class="tiny">适合：子任务可分、需要中心责任人</text>
+
+  <rect x="820" y="245" width="330" height="276" rx="22" fill="#F3E8FF" stroke="#7C3AED" stroke-width="2"/>
+  <text x="985" y="284" text-anchor="middle" class="label">Agent Teams</text>
+  <text x="985" y="312" text-anchor="middle" class="small">共享目标 · 对等协作 · 动态交接</text>
+  <circle cx="905" cy="386" r="42" fill="#FFFFFF" stroke="#7C3AED"/><text x="905" y="392" text-anchor="middle" class="small">研究</text>
+  <circle cx="985" cy="445" r="42" fill="#FFFFFF" stroke="#7C3AED"/><text x="985" y="451" text-anchor="middle" class="small">实现</text>
+  <circle cx="1065" cy="386" r="42" fill="#FFFFFF" stroke="#7C3AED"/><text x="1065" y="392" text-anchor="middle" class="small">评审</text>
+  <path d="M946 393 L971 421" class="dash"/><path d="M1026 421 L1049 403" class="dash"/><path d="M1023 368 L947 368" class="dash"/>
+  <text x="985" y="500" text-anchor="middle" class="tiny">适合：信息分散、需要协商与互相质疑</text>
+
+  <path d="M520 194 L215 245" class="line"/><path d="M600 194 V245" class="dash"/><path d="M680 194 L985 245" class="dash"/>
+  <rect x="164" y="576" width="872" height="74" rx="20" fill="#E8F7EE" stroke="#16A34A" stroke-width="2"/>
+  <text x="600" y="607" text-anchor="middle" class="label">统一质量与副作用门禁</text>
+  <text x="600" y="633" text-anchor="middle" class="small">Schema · 权限 · 幂等 · 测试/评测 · 预算 · 审批 · 审计 · 回滚</text>
+  <path d="M215 521 L360 576" class="line"/><path d="M600 521 V576" class="line"/><path d="M985 521 L840 576" class="line"/>
+</svg>
