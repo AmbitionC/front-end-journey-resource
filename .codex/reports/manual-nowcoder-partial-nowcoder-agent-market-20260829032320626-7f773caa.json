@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "reportType": "manual-nowcoder-partial-delivery",
+  "recordedAt": "2026-08-29T03:58:28.000Z",
+  "batch": {
+    "batchId": "nowcoder-agent-market-20260829032320626-7f773caa",
+    "planId": "nowcoder-agent-market",
+    "status": "completed_with_attention",
+    "startedAt": "2026-08-29T03:23:20.626Z",
+    "finishedAt": "2026-08-29T03:32:47.338Z",
+    "rounds": 5,
+    "requestedCount": 10,
+    "terminalCounts": {
+      "discovered": 24,
+      "accepted": 3,
+      "saved": 3,
+      "skipped": 0,
+      "failed": 21,
+      "needsAttention": 0
+    },
+    "error": "牛客合格候选不足 10 条（3/10）：已达到 24 条详情任务安全上限"
+  },
+  "authorization": {
+    "type": "explicit-user-fallback",
+    "condition": "网络重试仍无法完成十条时，记录当前有效候选",
+    "expectedCountAtAuthorization": 2,
+    "actualDeliveredCount": 3,
+    "note": "重试后识别出第三条有效候选，未人为丢弃；该授权不把原批次终态改写为成功。"
+  },
+  "delivery": {
+    "partial": true,
+    "atomic": true,
+    "deliveryBatchId": "nowcoder-agent-market-20260829032320626-7f773caa",
+    "deliveryIds": [
+      "0b433bbfdc83",
+      "90d77acba427",
+      "e4196e7876b4"
+    ],
+    "collectorCommit": "75c0892e6aafc08685230c743b4bab9099d1af88",
+    "targetBaseCommit": "0fd74c5dbee39c3de0693fa694568b568c8b686d"
+  },
+  "items": [
+    {
+      "contentId": "0b433bbfdc83",
+      "title": "腾讯大模型算法岗一二面面经",
+      "url": "https://www.nowcoder.com/feed/main/detail/0b6a9775cf3945efad01530fa0637b32",
+      "contentHash": "daad361f34b4522d",
+      "clusterId": "cluster-daad361f34b4",
+      "company": "tencent",
+      "evidenceGrade": "B",
+      "sourceBatchId": "nowcoder-agent-market-20260829032320626-7f773caa",
+      "sourceSha256": "13a1a466e04b8694524058f147b054573104aaa17fd3116ee2af4dfaceb811fe",
+      "disposition": "published",
+      "articleKey": "tencent-ai-7",
+      "publicFiles": [
+        "interview/tencent/ai/tencent-ai-7.md"
+      ],
+      "knowledgeKeys": [
+        "agentic-rl",
+        "agent-feedback-loop",
+        "agent-eval-framework",
+        "prompt-context-compression",
+        "on-policy-distillation",
+        "algorithm-array"
+      ]
+    },
+    {
+      "contentId": "90d77acba427",
+      "title": "小红书Agent开发一面面经",
+      "url": "https://www.nowcoder.com/feed/main/detail/f1ed02bfdae04730837753b62e0d58b9",
+      "contentHash": "a9b72b33420736ae",
+      "clusterId": "cluster-a9b72b334207",
+      "company": "other",
+      "evidenceGrade": "A",
+      "sourceBatchId": null,
+      "sourceSha256": "1bb0f32a6f2d86dff269b45146c89bd56fab36039d41c2b7b9125df628e5cf1a",
+      "disposition": "merged",
+      "publicFiles": [],
+      "knowledgeKeys": [],
+      "reason": "与已发布 redbook-ai-1 的题序和主题高度一致，不重复发布或增加知识热度"
+    },
+    {
+      "contentId": "e4196e7876b4",
+      "title": "字节跳动 AML / 火山方舟 机器学习平台研发 27秋招 AI Infra 一面面经",
+      "url": "https://www.nowcoder.com/discuss/921927475611869184",
+      "contentHash": "b8f79803b7eccd2a",
+      "clusterId": "cluster-b8f79803b7ec",
+      "company": "bytedance",
+      "evidenceGrade": "B",
+      "sourceBatchId": "nowcoder-agent-market-20260825164625153-4142f887",
+      "sourceSha256": "c039281a424763e763b037f5117287624b10bca8e8f1b6cb1b3af25ff8476155",
+      "disposition": "published",
+      "articleKey": "bytedance-base-17",
+      "publicFiles": [
+        "interview/bytedance/base/bytedance-base-17.md"
+      ],
+      "knowledgeKeys": [
+        "build-agent-framework",
+        "agent-sandbox",
+        "agent-failure-recovery",
+        "agent-workflow-state",
+        "os-user-kernel-mode",
+        "os-virtual-memory",
+        "tcp-handshake",
+        "algorithm-hash"
+      ]
+    }
+  ]
+}

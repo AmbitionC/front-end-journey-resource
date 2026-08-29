@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
-  "updatedAt": "2026-08-23",
+  "updatedAt": "2026-08-29",
   "records": [
     {
       "key": "transformer-arch",
@@ -429,10 +429,10 @@
       "key": "prompt-context-compression",
       "label": "上下文压缩、摘要与裁剪",
       "filePath": "llm/prompt",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-15",
-      "batch": "long-context-prompt-next-10-2026-07-15"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-08-29",
+      "batch": "nowcoder-agent-market-20260829032320626-7f773caa"
     },
     {
       "key": "prompt-cache-design",
@@ -782,8 +782,8 @@
       "filePath": "llm/agent",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-08-23",
-      "batch": "nowcoder-real-interviews-2026-08-23"
+      "recordedAt": "2026-08-29",
+      "batch": "nowcoder-agent-market-20260829032320626-7f773caa"
     },
     {
       "key": "agent-planning",
@@ -816,10 +816,10 @@
       "key": "agent-sandbox",
       "label": "代码执行、浏览器与文件操作沙箱",
       "filePath": "llm/agent",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-16",
-      "batch": "agent-orchestration-next-10-2026-07-16"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-08-29",
+      "batch": "nowcoder-agent-market-20260829032320626-7f773caa"
     },
     {
       "key": "agent-run-loop",
@@ -1023,10 +1023,10 @@
       "key": "agent-failure-recovery",
       "label": "失败分类、重试、补偿与恢复",
       "filePath": "llm/production",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-16",
-      "batch": "agent-multi-production-next-20-2026-07-16"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-08-29",
+      "batch": "nowcoder-agent-market-20260829032320626-7f773caa"
     },
     {
       "key": "agent-idempotency",
@@ -1068,10 +1068,10 @@
       "key": "agent-feedback-loop",
       "label": "线上反馈、评估集与持续改进闭环",
       "filePath": "llm/production",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-16",
-      "batch": "agent-multi-production-next-20-2026-07-16"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-08-29",
+      "batch": "nowcoder-agent-market-20260829032320626-7f773caa"
     },
     {
       "key": "agent-trace-model",
@@ -1925,8 +1925,8 @@
       "filePath": "llm/agent",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-08-29",
+      "batch": "nowcoder-agent-market-20260829032320626-7f773caa"
     },
     {
       "key": "mcp-protocol",
@@ -2006,8 +2006,8 @@
       "filePath": "llm/production",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-08-29",
+      "batch": "nowcoder-agent-market-20260829032320626-7f773caa"
     },
     {
       "key": "node-event-loop-deep",
@@ -2501,8 +2501,8 @@
       "filePath": "cs/os",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-08-29",
+      "batch": "nowcoder-agent-market-20260829032320626-7f773caa"
     },
     {
       "key": "http-message",
@@ -2546,8 +2546,8 @@
       "filePath": "network/tcpIp",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-08-29",
+      "batch": "nowcoder-agent-market-20260829032320626-7f773caa"
     },
     {
       "key": "tcp-udp",
@@ -2564,8 +2564,8 @@
       "filePath": "data-structure/algorithm",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-08-29",
+      "batch": "nowcoder-agent-market-20260829032320626-7f773caa"
     },
     {
       "key": "algorithm-hash",
@@ -2573,8 +2573,8 @@
       "filePath": "data-structure/algorithm",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-08-29",
+      "batch": "nowcoder-agent-market-20260829032320626-7f773caa"
     },
     {
       "key": "algorithm-tree",
@@ -2710,6 +2710,33 @@
       "action": "created",
       "recordedAt": "2026-08-23",
       "batch": "nowcoder-real-interviews-2026-08-23"
+    },
+    {
+      "key": "agentic-rl",
+      "label": "Agentic RL：长时序信用分配与策略优化",
+      "filePath": "llm/agent",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-08-29",
+      "batch": "nowcoder-agent-market-20260829032320626-7f773caa"
+    },
+    {
+      "key": "on-policy-distillation",
+      "label": "在线策略蒸馏（On-Policy Distillation）",
+      "filePath": "llm/basics",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-08-29",
+      "batch": "nowcoder-agent-market-20260829032320626-7f773caa"
+    },
+    {
+      "key": "os-user-kernel-mode",
+      "label": "操作系统的用户态、内核态与切换",
+      "filePath": "cs/os",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-08-29",
+      "batch": "nowcoder-agent-market-20260829032320626-7f773caa"
     }
   ]
 }

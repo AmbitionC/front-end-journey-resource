@@ -520,6 +520,45 @@
       "knowledgeKeys": [],
       "reason": "跨公司模板化题序与大疆记录高度重合，仅保留证据更完整的一条，不重复发布或加权",
       "processedAt": "2026-08-25T18:30:00.000Z"
+    },
+    "0b433bbfdc83": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/feed/main/detail/0b6a9775cf3945efad01530fa0637b32",
+      "contentHash": "daad361f34b4522d",
+      "clusterId": "cluster-daad361f34b4",
+      "company": "tencent",
+      "evidenceGrade": "B",
+      "status": "published",
+      "articleKey": "tencent-ai-7",
+      "publicFiles": ["interview/tencent/ai/tencent-ai-7.md"],
+      "knowledgeKeys": ["agentic-rl", "agent-feedback-loop", "agent-eval-framework", "prompt-context-compression", "on-policy-distillation", "algorithm-array"],
+      "processedAt": "2026-08-29T03:58:28.000Z"
+    },
+    "90d77acba427": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/feed/main/detail/f1ed02bfdae04730837753b62e0d58b9",
+      "contentHash": "a9b72b33420736ae",
+      "clusterId": "cluster-a9b72b334207",
+      "company": "other",
+      "evidenceGrade": "A",
+      "status": "merged",
+      "publicFiles": [],
+      "knowledgeKeys": [],
+      "reason": "与已发布 redbook-ai-1 的题序和主题高度一致，判定为同一场面试的近似改写来源；不重复发布或增加知识热度",
+      "processedAt": "2026-08-29T03:58:28.000Z"
+    },
+    "e4196e7876b4": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/921927475611869184",
+      "contentHash": "b8f79803b7eccd2a",
+      "clusterId": "cluster-b8f79803b7ec",
+      "company": "bytedance",
+      "evidenceGrade": "B",
+      "status": "published",
+      "articleKey": "bytedance-base-17",
+      "publicFiles": ["interview/bytedance/base/bytedance-base-17.md"],
+      "knowledgeKeys": ["build-agent-framework", "agent-sandbox", "agent-failure-recovery", "agent-workflow-state", "os-user-kernel-mode", "os-virtual-memory", "tcp-handshake", "algorithm-hash"],
+      "processedAt": "2026-08-29T03:58:28.000Z"
     }
   }
 }

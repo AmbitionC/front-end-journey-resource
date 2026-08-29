@@ -48,6 +48,14 @@
 
 [Lost in the Middle](https://arxiv.org/abs/2307.03172) 显示相关信息位置会影响长上下文表现。压缩不仅减少 token，也会重新排列位置；因此评估时要区分“内容被删掉”和“内容还在但位置改变”两种影响。
 
+## Agent 训练中把压缩记成显式状态或观测转移
+
+在长时序 Agent 训练里，摘要会把多个不同历史映射成相似状态。若训练器只保存压缩后的文本，早期工具动作、否定条件和旧策略概率会消失，最终奖励无法可靠归因，甚至把摘要器的错误当成策略错误。
+
+推理上下文可以压缩，训练证据不能随之丢失。外部轨迹仓应保留原始消息、动作、工具返回、环境版本和旧策略 Log Probability，同时记录压缩器版本、输入区间、摘要与删除片段引用。把压缩记录成轨迹中的显式状态或观测转移，在压缩边界建立检查点，并分别评估状态恢复率、关键信息保真度和最终任务成功率；只有当 Agent 主动选择“现在压缩”时，它才属于策略动作并需要对应的旧策略概率。
+
+如果压缩策略发生变化，应视为环境或观测函数版本变化，不能把新旧轨迹直接当作同分布样本。相关的信用分配问题见[Agentic RL：长时序信用分配与策略优化](../agent/agentic-rl.md)。
+
 ## 怎样验证保真度
 
 建立与任务相关的检查，而不是只比较摘要相似度：
@@ -109,6 +117,7 @@
 - [小红书 Agent 开发一面：多智能体、Memory 与广告投放优化（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-1.md)（cluster-7372c3e7fb1e）
 - [腾讯微信支付 AI 软件工程一面（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-5.md)（cluster-ab43c892c4ed）
 - [深信服 Agent 开发一面：MCP、多 Agent、安全与网络（2026 年 8 月）](../../../interview/sangfor/ai/sangfor-ai-1.md)（cluster-bb3431ce1c81）
+- [腾讯大模型算法岗一二面：Agentic RL、PPO/GRPO 与 DeepSeek V4（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-7.md)（cluster-daad361f34b4）
 <!-- interview-source-history:end -->
 
 ## 参考资料

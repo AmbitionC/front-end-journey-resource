@@ -70,6 +70,7 @@ Linux namespace 可以让进程看到不同的进程树、挂载点、网络、�
 
 <!-- interview-source-history:start -->
 - [字节 Agent 自进化方向实习一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-8.md)（cluster-b2a1c4e10ed2）
+- [字节 AML / 火山方舟 AI Infra 一面：Agent Runtime、OS 与网络（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-17.md)（cluster-b8f79803b7ec）
 <!-- interview-source-history:end -->
 
 ## 参考资料

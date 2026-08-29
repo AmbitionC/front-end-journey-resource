@@ -262,6 +262,81 @@ merge(nums1, 3, nums2, 3);
 console.log(nums1); // [1, 2, 2, 3, 5, 6]
 ```
 
+#### 11. 三数之和
+
+**问题**：返回数组中所有和为目标值的、不重复的三元组。
+
+先排序，枚举第一个位置，再用左右指针在剩余区间寻找另外两个数。固定值与命中后的左右值都要跳过重复元素；当前最小可能和已经大于目标时可提前结束，最大可能和小于目标时可跳过当前固定值。
+
+```javascript
+function threeSum(nums, target = 0) {
+  nums.sort((a, b) => a - b);
+  const result = [];
+
+  for (let i = 0; i < nums.length - 2; i += 1) {
+    if (i > 0 && nums[i] === nums[i - 1]) continue;
+
+    let left = i + 1;
+    let right = nums.length - 1;
+    while (left < right) {
+      const sum = nums[i] + nums[left] + nums[right];
+      if (sum < target) {
+        left += 1;
+      } else if (sum > target) {
+        right -= 1;
+      } else {
+        result.push([nums[i], nums[left], nums[right]]);
+        const leftValue = nums[left];
+        const rightValue = nums[right];
+        while (left < right && nums[left] === leftValue) left += 1;
+        while (left < right && nums[right] === rightValue) right -= 1;
+      }
+    }
+  }
+
+  return result;
+}
+```
+
+排序为 `O(n log n)`，外层枚举与双指针合计 `O(n²)`，所以总时间复杂度为 `O(n²)`；额外空间取决于排序实现与返回结果。
+
+#### 12. 两张图像差异的最小包围矩形
+
+若输入是两张同尺寸图像，并要求一个矩形覆盖全部差异像素，只需扫描全部像素并维护四个边界：
+
+```javascript
+function diffBounds(imageA, imageB, isDifferent) {
+  const height = imageA.length;
+  const width = height === 0 ? 0 : imageA[0].length;
+  let minRow = height;
+  let maxRow = -1;
+  let minCol = width;
+  let maxCol = -1;
+
+  for (let row = 0; row < height; row += 1) {
+    for (let col = 0; col < width; col += 1) {
+      if (!isDifferent(imageA[row][col], imageB[row][col])) continue;
+      minRow = Math.min(minRow, row);
+      maxRow = Math.max(maxRow, row);
+      minCol = Math.min(minCol, col);
+      maxCol = Math.max(maxCol, col);
+    }
+  }
+
+  return maxRow === -1
+    ? null
+    : {top: minRow, left: minCol, bottom: maxRow, right: maxCol};
+}
+```
+
+时间复杂度为 `O(HW)`，除返回值外空间为 `O(1)`。编码前应确认逐通道精确比较还是允许误差、边界采用闭区间还是半开区间，以及多个不连通差异是共用一个总包围框还是分别求连通分量。
+
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [腾讯大模型算法岗一二面：Agentic RL、PPO/GRPO 与 DeepSeek V4（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-7.md)（cluster-daad361f34b4）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [ECMAScript Array Objects](https://tc39.es/ecma262/multipage/indexed-collections.html#sec-array-objects)

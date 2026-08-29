@@ -204,6 +204,20 @@
             "heat": 6,
             "currRank": 4,
             "updatedAt": "2026-07-15"
+          },
+          {
+            "label": "在线策略蒸馏（On-Policy Distillation）",
+            "key": "on-policy-distillation",
+            "isLeaf": true,
+            "filePath": "llm/basics",
+            "contentStatus": "published",
+            "heat": 1,
+            "currRank": 1,
+            "updatedAt": "2026-08-29",
+            "interviewBaseHeat": 0,
+            "interviewClusters": [
+              "cluster-daad361f34b4"
+            ]
           }
         ]
       },
@@ -217,16 +231,17 @@
             "isLeaf": true,
             "filePath": "llm/prompt",
             "contentStatus": "published",
-            "heat": 11,
+            "heat": 12,
             "currRank": 5,
-            "updatedAt": "2026-07-15",
+            "updatedAt": "2026-08-29",
             "interviewBaseHeat": 6,
             "interviewClusters": [
               "cluster-1b2940d40f2e",
               "cluster-4596af05b314",
               "cluster-7372c3e7fb1e",
               "cluster-ab43c892c4ed",
-              "cluster-bb3431ce1c81"
+              "cluster-bb3431ce1c81",
+              "cluster-daad361f34b4"
             ]
           },
           {
@@ -1128,7 +1143,7 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 12,
+            "heat": 13,
             "currRank": 5,
             "updatedAt": "2026-08-23",
             "interviewClusters": [
@@ -1136,7 +1151,8 @@
               "cluster-5ab99b43f10b",
               "cluster-5b6e09ee89e6",
               "cluster-9d9f0031dcd6",
-              "cluster-b2a1c4e10ed2"
+              "cluster-b2a1c4e10ed2",
+              "cluster-b8f79803b7ec"
             ],
             "interviewBaseHeat": 7
           },
@@ -1164,11 +1180,12 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 11,
+            "heat": 12,
             "currRank": 5,
             "updatedAt": "2026-07-16",
             "interviewClusters": [
-              "cluster-b2a1c4e10ed2"
+              "cluster-b2a1c4e10ed2",
+              "cluster-b8f79803b7ec"
             ],
             "interviewBaseHeat": 10
           },
@@ -1366,6 +1383,20 @@
             ]
           },
           {
+            "label": "从零构建 Agent 运行时",
+            "key": "build-agent-framework",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published",
+            "heat": 7,
+            "currRank": 4,
+            "updatedAt": "2026-07-18",
+            "interviewBaseHeat": 6,
+            "interviewClusters": [
+              "cluster-b8f79803b7ec"
+            ]
+          },
+          {
             "label": "实现第一个 Thought-Action-Observation Agent",
             "key": "agent-first-demo",
             "isLeaf": true,
@@ -1384,16 +1415,6 @@
             "heat": 6,
             "currRank": 4,
             "updatedAt": "2026-07-14"
-          },
-          {
-            "label": "从零构建 Agent 运行时",
-            "key": "build-agent-framework",
-            "isLeaf": true,
-            "filePath": "llm/agent",
-            "contentStatus": "published",
-            "heat": 6,
-            "currRank": 4,
-            "updatedAt": "2026-07-18"
           },
           {
             "label": "智能体性能评估",
@@ -1514,6 +1535,20 @@
             "heat": 6,
             "currRank": 4,
             "updatedAt": "2026-07-16"
+          },
+          {
+            "label": "Agentic RL：长时序信用分配与策略优化",
+            "key": "agentic-rl",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published",
+            "heat": 1,
+            "currRank": 1,
+            "updatedAt": "2026-08-29",
+            "interviewBaseHeat": 0,
+            "interviewClusters": [
+              "cluster-daad361f34b4"
+            ]
           }
         ]
       },
@@ -1521,6 +1556,25 @@
         "label": "生产级 Agent",
         "key": "agent-production",
         "children": [
+          {
+            "label": "失败分类、重试、补偿与恢复",
+            "key": "agent-failure-recovery",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "published",
+            "heat": 12,
+            "currRank": 5,
+            "updatedAt": "2026-07-16",
+            "interviewClusters": [
+              "cluster-3fa76fc5d243",
+              "cluster-4596af05b314",
+              "cluster-ab43c892c4ed",
+              "cluster-b8f79803b7ec",
+              "cluster-bb3431ce1c81",
+              "cluster-cc9e5dd82505"
+            ],
+            "interviewBaseHeat": 6
+          },
           {
             "label": "模型、工具、检索与结果缓存",
             "key": "agent-cache",
@@ -1534,24 +1588,6 @@
             "interviewClusters": [
               "cluster-27070393eae6"
             ]
-          },
-          {
-            "label": "失败分类、重试、补偿与恢复",
-            "key": "agent-failure-recovery",
-            "isLeaf": true,
-            "filePath": "llm/production",
-            "contentStatus": "published",
-            "heat": 11,
-            "currRank": 5,
-            "updatedAt": "2026-07-16",
-            "interviewClusters": [
-              "cluster-3fa76fc5d243",
-              "cluster-4596af05b314",
-              "cluster-ab43c892c4ed",
-              "cluster-bb3431ce1c81",
-              "cluster-cc9e5dd82505"
-            ],
-            "interviewBaseHeat": 6
           },
           {
             "label": "Trace、Span、Run 与工具调用事件模型",
@@ -1584,6 +1620,23 @@
             "updatedAt": "2026-07-17"
           },
           {
+            "label": "生产级 Agent 评估系统设计",
+            "key": "agent-eval-framework",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "published",
+            "heat": 10,
+            "currRank": 5,
+            "updatedAt": "2026-08-23",
+            "interviewClusters": [
+              "cluster-5b6e09ee89e6",
+              "cluster-b2a1c4e10ed2",
+              "cluster-bb3431ce1c81",
+              "cluster-daad361f34b4"
+            ],
+            "interviewBaseHeat": 6
+          },
+          {
             "label": "发布质量门禁与回归阻断",
             "key": "agent-quality-gates",
             "isLeaf": true,
@@ -1596,22 +1649,6 @@
               "cluster-2d9e5f67fe86",
               "cluster-b2a1c4e10ed2",
               "cluster-cc9e5dd82505"
-            ],
-            "interviewBaseHeat": 6
-          },
-          {
-            "label": "生产级 Agent 评估系统设计",
-            "key": "agent-eval-framework",
-            "isLeaf": true,
-            "filePath": "llm/production",
-            "contentStatus": "published",
-            "heat": 9,
-            "currRank": 5,
-            "updatedAt": "2026-08-23",
-            "interviewClusters": [
-              "cluster-5b6e09ee89e6",
-              "cluster-b2a1c4e10ed2",
-              "cluster-bb3431ce1c81"
             ],
             "interviewBaseHeat": 6
           },
@@ -1677,6 +1714,21 @@
             ]
           },
           {
+            "label": "线上反馈、评估集与持续改进闭环",
+            "key": "agent-feedback-loop",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "published",
+            "heat": 8,
+            "currRank": 5,
+            "updatedAt": "2026-07-16",
+            "interviewClusters": [
+              "cluster-b2a1c4e10ed2",
+              "cluster-daad361f34b4"
+            ],
+            "interviewBaseHeat": 6
+          },
+          {
             "label": "Prompt Injection 与间接注入防御",
             "key": "prompt-injection-defense",
             "isLeaf": true,
@@ -1715,20 +1767,6 @@
             "updatedAt": "2026-07-16",
             "interviewClusters": [
               "cluster-2fc69bb3d45d"
-            ],
-            "interviewBaseHeat": 6
-          },
-          {
-            "label": "线上反馈、评估集与持续改进闭环",
-            "key": "agent-feedback-loop",
-            "isLeaf": true,
-            "filePath": "llm/production",
-            "contentStatus": "published",
-            "heat": 7,
-            "currRank": 4,
-            "updatedAt": "2026-07-16",
-            "interviewClusters": [
-              "cluster-b2a1c4e10ed2"
             ],
             "interviewBaseHeat": 6
           },
@@ -2989,6 +3027,20 @@
             ]
           },
           {
+            "label": "TCP 建连、断开与连接状态",
+            "key": "tcp-handshake",
+            "isLeaf": true,
+            "filePath": "network/tcpIp",
+            "contentStatus": "published",
+            "heat": 11,
+            "currRank": 5,
+            "updatedAt": "2026-08-29",
+            "interviewBaseHeat": 10,
+            "interviewClusters": [
+              "cluster-b8f79803b7ec"
+            ]
+          },
+          {
             "label": "OSI、TCP/IP 与端到端通信",
             "key": "tcpIp-model",
             "isLeaf": true,
@@ -3003,16 +3055,6 @@
             "key": "http-message",
             "isLeaf": true,
             "filePath": "network/http",
-            "contentStatus": "published",
-            "heat": 10,
-            "currRank": 5,
-            "updatedAt": "2026-07-18"
-          },
-          {
-            "label": "TCP 建连、断开与连接状态",
-            "key": "tcp-handshake",
-            "isLeaf": true,
-            "filePath": "network/tcpIp",
             "contentStatus": "published",
             "heat": 10,
             "currRank": 5,
@@ -3064,9 +3106,13 @@
             "isLeaf": true,
             "filePath": "cs/os",
             "contentStatus": "published",
-            "heat": 1,
-            "currRank": 1,
-            "updatedAt": "2026-07-18"
+            "heat": 2,
+            "currRank": 2,
+            "updatedAt": "2026-07-18",
+            "interviewBaseHeat": 1,
+            "interviewClusters": [
+              "cluster-b8f79803b7ec"
+            ]
           },
           {
             "label": "进程间通信（IPC）",
@@ -3087,6 +3133,20 @@
             "heat": 1,
             "currRank": 1,
             "updatedAt": "2026-07-18"
+          },
+          {
+            "label": "操作系统的用户态、内核态与切换",
+            "key": "os-user-kernel-mode",
+            "isLeaf": true,
+            "filePath": "cs/os",
+            "contentStatus": "published",
+            "heat": 1,
+            "currRank": 1,
+            "updatedAt": "2026-08-29",
+            "interviewBaseHeat": 0,
+            "interviewClusters": [
+              "cluster-b8f79803b7ec"
+            ]
           }
         ]
       },
@@ -3100,9 +3160,13 @@
             "isLeaf": true,
             "filePath": "data-structure/algorithm",
             "contentStatus": "published",
-            "heat": 10,
+            "heat": 11,
             "currRank": 5,
-            "updatedAt": "2026-07-18"
+            "updatedAt": "2026-07-18",
+            "interviewBaseHeat": 10,
+            "interviewClusters": [
+              "cluster-b8f79803b7ec"
+            ]
           },
           {
             "label": "时间复杂度、空间复杂度与性能估算",
@@ -3170,9 +3234,13 @@
             "isLeaf": true,
             "filePath": "data-structure/algorithm",
             "contentStatus": "published",
-            "heat": 1,
-            "currRank": 1,
-            "updatedAt": "2026-07-18"
+            "heat": 2,
+            "currRank": 2,
+            "updatedAt": "2026-08-29",
+            "interviewBaseHeat": 1,
+            "interviewClusters": [
+              "cluster-daad361f34b4"
+            ]
           },
           {
             "label": "树、图与遍历",

@@ -96,6 +96,12 @@ JavaScript 的 Map 支持任意值作为 key，并提供明确的 `has`、`size`
 
 如果任务只需要几十个固定字段，数组或对象可能更简单；需要有序范围查询时，树结构更合适。哈希表擅长精确 key lookup，不天然支持前缀、最小值或区间扫描。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 AML / 火山方舟 AI Infra 一面：Agent Runtime、OS 与网络（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-17.md)（cluster-b8f79803b7ec）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [NIST Dictionary of Algorithms and Data Structures: hash table](https://xlinux.nist.gov/dads/HTML/hashtab.html)

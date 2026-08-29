@@ -138,6 +138,12 @@ flowchart LR
 
 虚拟内存用一层"虚拟地址→物理地址"的翻译,一举解决了隔离、连续假象与超额分配三大问题。分页让映射变得可行,多级页表压缩了页表体积,TLB 把翻译加速到近乎免费;缺页中断与按需调页让程序可以"用到才加载",页面置换算法决定内存紧张时谁出局,而工作集装不下时就会陷入 thrashing。这套从硬件到操作系统协同的设计思想,不仅撑起了你电脑上每一个进程,也悄悄影响着今天大模型推理引擎的资源调度方式。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 AML / 火山方舟 AI Infra 一面：Agent Runtime、OS 与网络（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-17.md)（cluster-b8f79803b7ec）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Linux kernel memory management documentation](https://docs.kernel.org/mm/index.html)

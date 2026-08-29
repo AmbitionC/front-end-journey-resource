@@ -400,6 +400,12 @@ Context Window 有限，不做裁剪会导致调用失败。滑动窗口、摘�
 
 ---
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 AML / 火山方舟 AI Infra 一面：Agent Runtime、OS 与网络（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-17.md)（cluster-b8f79803b7ec）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents)

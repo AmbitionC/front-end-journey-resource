@@ -8,6 +8,14 @@
         "key": "bytedance-base",
         "children": [
           {
+            "label": "字节 AML / 火山方舟 AI Infra 一面：Agent Runtime、OS 与网络（2026 年 8 月）",
+            "key": "bytedance-base-17",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": ["Agent", "AI Infra", "操作系统", "网络"],
+            "updatedAt": "2026-08-29"
+          },
+          {
             "label": "字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）",
             "key": "bytedance-base-14",
             "isLeaf": true,
@@ -115,6 +123,14 @@
         "label": "Agent 与 AI 应用",
         "key": "tencent-ai",
         "children": [
+          {
+            "label": "腾讯大模型算法岗一二面：Agentic RL、PPO/GRPO 与 DeepSeek V4（2026 年 8 月）",
+            "key": "tencent-ai-7",
+            "isLeaf": true,
+            "filePath": "tencent/ai",
+            "tags": ["Agentic RL", "PPO/GRPO", "DeepSeek V4", "算法"],
+            "updatedAt": "2026-08-29"
+          },
           {
             "label": "腾讯微信支付 AI 软件工程一面（2026 年 8 月）",
             "key": "tencent-ai-5",
