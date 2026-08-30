@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-29",
+  "updatedAt": "2026-08-30",
   "records": {
     "00460f65f35e": {
       "source": "nowcoder",
@@ -689,6 +689,136 @@
       "publicFiles": ["interview/bytedance/base/bytedance-base-19.md"],
       "knowledgeKeys": ["context-engineering", "llm-conversation-state", "llm-token-context", "prompt-context-compression", "agent-skill-design", "agent-subagents", "multi-agent", "os-process-thread", "sql-window-function", "algorithm-linked-list", "algorithm-hash"],
       "processedAt": "2026-08-29T07:30:00.000Z"
+    },
+    "c5cace30f27c": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/877151327091027968",
+      "contentHash": "1f126324bc0f7806",
+      "clusterId": "cluster-1f126324bc0f",
+      "company": "other",
+      "evidenceGrade": "B",
+      "status": "merged",
+      "publicFiles": [],
+      "knowledgeKeys": [],
+      "reason": "二手聚合帖的蚂蚁 Agent 部分与已发布 antfin-ai-1 对应同源内容，其余部分仅保留摘要与原帖链接；本批完成收集和审阅，但不重复发布或增加知识热度",
+      "processedAt": "2026-08-30T14:17:58.000Z"
+    },
+    "c6bb44fd8597": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/879393838081597440",
+      "contentHash": "e392a4fd1f334cde",
+      "clusterId": "cluster-e392a4fd1f33",
+      "company": "alibaba",
+      "evidenceGrade": "B",
+      "status": "published",
+      "articleKey": "alibaba-ai-6",
+      "publicFiles": ["interview/alibaba/ai/alibaba-ai-6.md"],
+      "knowledgeKeys": ["agent-human-in-loop", "agent-permission-model", "agent-sandbox", "agent-audit-log", "agent-failure-recovery", "agent-memory-architecture", "agent-evaluation", "agent-tool-result-validation", "feature-store"],
+      "processedAt": "2026-08-30T14:17:58.000Z"
+    },
+    "214a7ac19dc5": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/888874988554448896",
+      "contentHash": "452705dd533fa79c",
+      "clusterId": "cluster-452705dd533f",
+      "company": "ant",
+      "evidenceGrade": "B",
+      "status": "published",
+      "articleKey": "antfin-ai-5",
+      "publicFiles": ["interview/antfin/ai/antfin-ai-5.md"],
+      "knowledgeKeys": ["llm-capability-boundaries", "llm-alignment", "agent-skill-design", "agent-coding", "rag-hybrid-search", "rag-pipeline", "tcp-handshake", "mysql-index"],
+      "processedAt": "2026-08-30T14:17:58.000Z"
+    },
+    "2eb95d31305b": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/921590204903723008",
+      "contentHash": "824645713b598e5a",
+      "clusterId": "cluster-824645713b59",
+      "company": "other",
+      "evidenceGrade": "B",
+      "status": "published",
+      "articleKey": "baidu-ai-1",
+      "publicFiles": ["interview/baidu/ai/baidu-ai-1.md"],
+      "knowledgeKeys": ["context-engineering", "prompt-context-compression", "agent-memory-summarization", "agent-coding", "rag-pipeline", "mysql-index", "algorithm-tree"],
+      "processedAt": "2026-08-30T14:17:58.000Z"
+    },
+    "378bf3c803e4": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/921485056302911488",
+      "contentHash": "10359bdec4338965",
+      "clusterId": "cluster-10359bdec433",
+      "company": "alibaba",
+      "evidenceGrade": "B",
+      "status": "published",
+      "articleKey": "alibaba-ai-3",
+      "publicFiles": ["interview/alibaba/ai/alibaba-ai-3.md"],
+      "knowledgeKeys": ["llm-training-overview", "llm-alignment", "agent-simulation", "agent-evaluation", "agent-computer-use"],
+      "processedAt": "2026-08-30T14:17:58.000Z"
+    },
+    "934ae86ddda0": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/922625105077751808",
+      "contentHash": "418d84d3fe663112",
+      "clusterId": "cluster-418d84d3fe66",
+      "company": "bytedance",
+      "evidenceGrade": "A",
+      "status": "published",
+      "articleKey": "bytedance-base-20",
+      "publicFiles": ["interview/bytedance/base/bytedance-base-20.md"],
+      "knowledgeKeys": ["agent-memory-architecture", "agent-memory-summarization", "agent-react", "agent-tool-result-validation", "agent-multi-agent-messaging", "agent-failure-recovery", "agent-tool-timeout", "agent-evaluation", "llm-cost-optimize"],
+      "processedAt": "2026-08-30T14:17:58.000Z"
+    },
+    "d3d9d28bded2": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/922452114809376768",
+      "contentHash": "456378924c8367d1",
+      "clusterId": "cluster-456378924c83",
+      "company": "alibaba",
+      "evidenceGrade": "B",
+      "status": "published",
+      "articleKey": "alibaba-ai-5",
+      "publicFiles": ["interview/alibaba/ai/alibaba-ai-5.md"],
+      "knowledgeKeys": ["rag-pipeline", "rag-evaluation", "ai-rate-limiting", "algorithm-heap", "agent-coding"],
+      "processedAt": "2026-08-30T14:17:58.000Z"
+    },
+    "f3e1a0459c76": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/922503904502259712",
+      "contentHash": "787120ee12490197",
+      "clusterId": "cluster-787120ee1249",
+      "company": "alibaba",
+      "evidenceGrade": "B",
+      "status": "published",
+      "articleKey": "alibaba-ai-4",
+      "publicFiles": ["interview/alibaba/ai/alibaba-ai-4.md"],
+      "knowledgeKeys": ["llm-training-overview", "llm-pretraining", "llm-alignment", "agent-simulation", "agent-evaluation", "agentic-rl"],
+      "processedAt": "2026-08-30T14:17:58.000Z"
+    },
+    "f515b0085e77": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/922907945363349504",
+      "contentHash": "9acb30c57710155c",
+      "clusterId": "cluster-9acb30c57710",
+      "company": "other",
+      "evidenceGrade": "B",
+      "status": "published",
+      "articleKey": "baidu-ai-2",
+      "publicFiles": ["interview/baidu/ai/baidu-ai-2.md"],
+      "knowledgeKeys": ["agent-state-storage", "agent-memory-architecture", "agent-memory-forgetting", "agent-multi-agent-messaging", "agent-tool-result-validation", "agent-permission-model", "agent-evaluation", "agent-metrics", "db-transaction-lock", "db-sharding"],
+      "processedAt": "2026-08-30T14:17:58.000Z"
+    },
+    "97915bb0cf1d": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/923528884249710592",
+      "contentHash": "cf26fe3b37d57834",
+      "clusterId": "cluster-cf26fe3b37d5",
+      "company": "alibaba",
+      "evidenceGrade": "B",
+      "status": "published",
+      "articleKey": "alibaba-ai-7",
+      "publicFiles": ["interview/alibaba/ai/alibaba-ai-7.md"],
+      "knowledgeKeys": ["sql-index-optimize", "algorithm-complexity", "algorithm-array", "algorithm-string"],
+      "processedAt": "2026-08-30T14:17:58.000Z"
     }
   }
 }

@@ -77,6 +77,14 @@ SFT 使用“输入—理想输出”示范继续训练模型。它适合教授�
 
 对齐是持续的系统工程：SFT 提供示范，偏好优化塑造选择，原则与红队探索边界，运行时控制限制真实能力，独立评估负责发现回归。它能降低风险、改善行为，但不能证明模型永远正确或安全。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [阿里国际 Accio Agent 算法一面：数据合成、任务环境与模型后训练（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-3.md)（cluster-10359bdec433）
+- [蚂蚁智能体与大模型应用一面：幻觉、Skill 与 RAG（2026 年 5 月）](../../../interview/antfin/ai/antfin-ai-5.md)（cluster-452705dd533f）
+- [淘天 Agent 算法一面：任务构造、轨迹验证与后训练（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-4.md)（cluster-787120ee1249）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Training language models to follow instructions with human feedback](https://arxiv.org/abs/2203.02155)

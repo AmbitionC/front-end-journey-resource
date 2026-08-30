@@ -29,6 +29,12 @@ Thread 保存稳定元数据：所有者、标题、当前分支、策略、默�
 
 Run 保存输入引用、release bundle、状态、deadline、预算、当前 step、终态、错误和父 Run。状态通过 compare-and-set 或版本号更新，防止两个 Worker 覆盖。取消、审批和 lease 是持久状态，不依赖进程内变量。
 
+### Session、Transcript、Summary 与 Checkpoint
+
+这四类数据不应混为一个“聊天历史”。`SessionMessage` 是当前模型可见的工作集，可随 token 预算裁剪；`Transcript` 是可追溯的原始事件或消息流；`Summary` 是带来源范围和版本的派生压缩；`Checkpoint` 是包含执行状态、待办和已提交副作用的恢复边界。恢复时先读取可信 Checkpoint，再按事件序号补齐 Transcript，并重新生成受预算约束的 SessionMessage，不能把全部原始消息直接塞回模型。
+
+“始终保留最近 N 条”只能作为软策略：单条工具结果就可能超过窗口，因此还要设置 token、字节和内容类型预算。多 Pod 部署中的粘性会话或一致性哈希可以降低缓存迁移，但不能承担正确性；扩缩容、故障切换后仍应从外部状态存储恢复同一个 Run。
+
 ## Checkpoint
 
 Checkpoint 是可恢复边界的版本化快照：
@@ -123,6 +129,7 @@ Agent 状态存储通过明确边界获得可恢复性：Thread 组织上下文�
 - [小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-3.md)（cluster-137857a2ba05）
 - [哔哩哔哩 AI 应用岗一面：端到端 AI Coding 与生产治理（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-2.md)（cluster-1c24a80acde8）
 - [腾讯 AI 开发一面：Coding Agent 记忆、评测与可靠运行（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-8.md)（cluster-7ef1a4a8ef82）
+- [百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测（2026 年 8 月）](../../../interview/baidu/ai/baidu-ai-2.md)（cluster-9acb30c57710）
 <!-- interview-source-history:end -->
 
 ## 参考资料

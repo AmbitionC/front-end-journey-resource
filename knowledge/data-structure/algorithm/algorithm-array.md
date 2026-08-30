@@ -334,6 +334,7 @@ function diffBounds(imageA, imageB, isDifferent) {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [阿里云可观测存储 AI Agent 工程岗一面：存储性能与查询优化（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-7.md)（cluster-cf26fe3b37d5）
 - [腾讯大模型算法岗一二面：Agentic RL、PPO/GRPO 与 DeepSeek V4（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-7.md)（cluster-daad361f34b4）
 <!-- interview-source-history:end -->
 

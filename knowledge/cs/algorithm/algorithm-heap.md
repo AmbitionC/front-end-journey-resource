@@ -66,6 +66,12 @@ pop 保存根，把最后元素移到根，再与更合适的子节点交换下�
 
 还应做属性测试：任意输入 heapify 后，连续 pop 必须等于同一 comparator 的排序结果；任意时刻 `size` 等于数组长度；索引表模式下每个 id 都指向真实位置。对 comparator 抛错、重复 id 和优先级更新不存在节点定义清晰失败语义，避免结构只坏一半。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [淘天 AI 应用研发一面：RAG、限流 Top-K 与优惠策略设计（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-5.md)（cluster-456378924c83）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [MIT OCW 6.006：Lecture Notes](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2008/resources/lecture-notes/)

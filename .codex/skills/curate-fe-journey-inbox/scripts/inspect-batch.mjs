@@ -129,9 +129,11 @@ export async function inspectBatch(resourceRoot, batch) {
     // provenance. Legacy single-run entries continue to use batchId.
     if ((meta?.sourceMetadata?.deliveryBatchId ?? meta?.sourceMetadata?.batchId) !== batch) continue;
     const id = clusterId(meta);
-    if (meta?.source !== 'nowcoder' || meta?.sourceMetadata?.planId !== 'nowcoder-agent-market' ||
+    const deliveryProvenance = meta?.sourceMetadata?.planId === 'nowcoder-agent-market'
+      || meta?.sourceMetadata?.deliveryKind === 'nowcoder-directed';
+    if (meta?.source !== 'nowcoder' || !deliveryProvenance ||
       typeof id !== 'string' || id.length === 0 || candidateKinds(meta).length === 0) {
-      malformed.push({ path: display, reason: '当前批次条目的来源、计划或候选元数据无效' });
+      malformed.push({ path: display, reason: '当前批次条目的来源、交付类型或候选元数据无效' });
       continue;
     }
     const originalPath = join(dirname(metaPath), 'original.md');

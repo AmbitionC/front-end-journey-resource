@@ -364,6 +364,12 @@ MySQL 的 Index Merge 合并代价不低；两侧选择性均高时，改写为 
 - **pgvector 混合查询为何有时不走向量索引**：元数据过滤后候选行数极少时，对子集做向量暴力扫描代价低于 HNSW 图遍历，优化器自动选择 B-Tree 先过滤。
 - **索引列做运算为何失效**：运算后列值不再与索引键对应，优化器无法定位，正确做法是将计算移到参数侧。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [阿里云可观测存储 AI Agent 工程岗一面：存储性能与查询优化（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-7.md)（cluster-cf26fe3b37d5）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [PostgreSQL Using EXPLAIN](https://www.postgresql.org/docs/current/using-explain.html)

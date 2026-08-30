@@ -77,6 +77,12 @@ type ApprovalSnapshot = {
 
 可靠的 HITL 门禁把高风险行动冻结成可验证快照，以持久化状态等待明确决定，并在批准后重新检查授权与现实状态。拒绝、过期和接管都是一等终态。这样人工监督才真正收回控制权，而不是给自动执行流程增加一个装饰按钮。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [淘宝闪购 Agent 算法一面：框架选型、人工接管与线上安全（2026 年 4 月）](../../../interview/alibaba/ai/alibaba-ai-6.md)（cluster-e392a4fd1f33）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenAI Agents SDK — Human-in-the-loop](https://openai.github.io/openai-agents-python/human_in_the_loop/)

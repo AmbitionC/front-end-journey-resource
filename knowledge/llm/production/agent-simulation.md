@@ -114,6 +114,13 @@ assert:
 
 用户模拟器负责目标与行为，环境模拟器负责规则与世界状态，两者通过正式观察/动作接口与 Agent 交互。固定状态机、虚拟时钟、故障注入、停止规则和可追溯种子让测试可重放；覆盖矩阵、真实校准和清晰局限让结果可解释。模拟能扩大测试面，但不能越过现实验证和代表性用户反馈。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [阿里国际 Accio Agent 算法一面：数据合成、任务环境与模型后训练（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-3.md)（cluster-10359bdec433）
+- [淘天 Agent 算法一面：任务构造、轨迹验证与后训练（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-4.md)（cluster-787120ee1249）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [NIST：AI Test, Evaluation, Validation and Verification](https://www.nist.gov/ai-test-evaluation-validation-and-verification-tevv)

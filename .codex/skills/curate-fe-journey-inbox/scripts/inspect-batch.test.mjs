@@ -109,6 +109,26 @@ test('scopes pooled delivery by deliveryBatchId while preserving the original ca
   }
 });
 
+test('accepts an explicitly directed delivery without pretending it came from the fixed plan', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'fe-inspect-directed-batch-'));
+  try {
+    await writeEntry(root, 'directed-source', meta({
+      sourceMetadata: {
+        deliveryBatchId: 'directed-run-1',
+        deliveryKind: 'nowcoder-directed',
+        evidenceGrade: 'A',
+      },
+    }));
+
+    const report = await inspectBatch(root, 'directed-run-1');
+
+    assert.deepEqual(report.publicContent.map(item => item.clusterId), ['cluster-agent-tools']);
+    assert.deepEqual(report.malformed, []);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
 test('separates exclusion, truncation, and malformed inputs without modifying files', async () => {
   const root = await mkdtemp(join(tmpdir(), 'fe-inspect-blocked-'));
   try {

@@ -45,6 +45,12 @@ Big-O 给出渐近上界，Big-Ω 给出下界，Big-Θ 表示上下界同阶。
 
 代码评审时写明 n 的业务上界、最坏输入、时间/空间阶、关键假设和 benchmark 证据。复杂度分析的最终目的，是在上线前知道增长会在哪里越过预算，而不是给代码贴一个公式标签。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [阿里云可观测存储 AI Agent 工程岗一面：存储性能与查询优化（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-7.md)（cluster-cf26fe3b37d5）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [MIT OCW 6.006（2011）：Lecture Notes](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/pages/lecture-notes/)

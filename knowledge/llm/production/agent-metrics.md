@@ -93,6 +93,12 @@ cost_per_qualified_success = total_eligible_cost / qualified_success_count
 
 好的 Agent 指标栈由业务结果、任务质量、可靠性、延迟和成本五层组成。每个指标先定义问题、分子、分母、时间窗和维度，再决定采集方式。指标用于发现和决策，Trace、日志与评审证据用于解释；只有把它们连接起来，团队才不会被漂亮但无行动价值的大盘误导。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测（2026 年 8 月）](../../../interview/baidu/ai/baidu-ai-2.md)（cluster-9acb30c57710）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenTelemetry：Signals](https://opentelemetry.io/docs/concepts/signals/)

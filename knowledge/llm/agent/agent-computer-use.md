@@ -65,6 +65,12 @@ Trace 记录 VM/job、截图 ID、分辨率、窗口/应用、意图、坐标、
 
 Computer-use 的能力来自像人一样操作 GUI，可靠性则来自比人更严格的循环：最新截图感知、焦点与坐标检查、最小动作、新截图复核。语义 API 能用则优先，纯坐标只在隔离环境中使用；高影响动作经人类审批，屏幕内容始终不可信，失败通过 checkpoint 和权威状态恢复。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [阿里国际 Accio Agent 算法一面：数据合成、任务环境与模型后训练（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-3.md)（cluster-10359bdec433）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenAI — Computer use](https://developers.openai.com/api/docs/guides/tools-computer-use)

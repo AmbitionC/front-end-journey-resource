@@ -51,6 +51,12 @@ Catalog 展示 owner、描述、实体、来源、使用模型、成本、质量
 
 测试 point-in-time fixture、晚到事件、TTL 边界、时区、重复实体、online 乱序写、物化中断和模型回滚。成熟 Feature Store 能为一次预测重建当时可见的特征值，并解释离线训练与线上服务为何一致。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [淘宝闪购 Agent 算法一面：框架选型、人工接管与线上安全（2026 年 4 月）](../../../interview/alibaba/ai/alibaba-ai-6.md)（cluster-e392a4fd1f33）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Feast：Point-in-time joins](https://docs.feast.dev/getting-started/concepts/point-in-time-joins)

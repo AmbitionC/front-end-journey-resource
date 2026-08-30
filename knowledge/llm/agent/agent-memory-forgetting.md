@@ -72,6 +72,12 @@ Tombstone 只保存最小标识、请求时间、处理状态和政策依据，�
 
 遗忘是记忆生命周期控制：衰减改变排序，过期退出有效集合，替代保留版本链，删除传播到所有派生副本。通过来源、时间、状态、同意与 current view 分层，Agent 才能纠错、尊重删除并避免让陈旧记忆持续支配决策。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测（2026 年 8 月）](../../../interview/baidu/ai/baidu-ai-2.md)（cluster-9acb30c57710）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [LangGraph — Add and manage memory](https://docs.langchain.com/oss/python/langgraph/add-memory)

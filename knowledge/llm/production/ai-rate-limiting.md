@@ -525,6 +525,12 @@ API 网关的限流粒度通常是 IP 或 API Key，无法感知业务语义（�
 
 WATCH/MULTI/EXEC 是乐观锁，高并发下频繁发生冲突时需要客户端重试，增加延迟和 Redis 负载。Lua 脚本在 Redis 服务端单线程原子执行，无并发冲突，无需重试，延迟恒定（O(1)），是生产环境限流的首选实现方式。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [淘天 AI 应用研发一面：RAG、限流 Top-K 与优惠策略设计（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-5.md)（cluster-456378924c83）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [RFC 9110 HTTP Semantics — 429 Too Many Requests](https://www.rfc-editor.org/rfc/rfc9110.html#name-429-too-many-requests)

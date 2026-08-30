@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
-  "updatedAt": "2026-08-29",
+  "updatedAt": "2026-08-30",
   "records": [
     {
       "key": "transformer-arch",
@@ -773,8 +773,8 @@
       "filePath": "llm/agent",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-08-29",
-      "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
+      "recordedAt": "2026-08-30",
+      "batch": "e2dba44a-025f-4188-b6da-efdf085842e1"
     },
     {
       "key": "agent-workflow-state",
@@ -1430,8 +1430,8 @@
       "filePath": "backend/storage",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-08-29",
-      "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
+      "recordedAt": "2026-08-30",
+      "batch": "e2dba44a-025f-4188-b6da-efdf085842e1"
     },
     {
       "key": "postgresql-transaction",
@@ -1889,8 +1889,8 @@
       "filePath": "llm/agent",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-08-30",
+      "batch": "e2dba44a-025f-4188-b6da-efdf085842e1"
     },
     {
       "key": "agent-react",
@@ -2006,8 +2006,8 @@
       "filePath": "llm/production",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-08-29",
-      "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
+      "recordedAt": "2026-08-30",
+      "batch": "e2dba44a-025f-4188-b6da-efdf085842e1"
     },
     {
       "key": "node-event-loop-deep",

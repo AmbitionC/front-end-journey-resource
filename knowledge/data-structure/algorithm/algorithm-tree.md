@@ -215,6 +215,12 @@ function postorderTraversal(root) {
 }
 ```
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [百度大模型研发一面：Context、Harness 与 RAG（2026 年 8 月）](../../../interview/baidu/ai/baidu-ai-1.md)（cluster-824645713b59）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Boost Graph Library breadth-first search](https://www.boost.org/doc/libs/latest/libs/graph/doc/breadth_first_search.html)

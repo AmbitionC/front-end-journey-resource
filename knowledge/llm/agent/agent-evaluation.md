@@ -228,6 +228,16 @@ async def evaluate(agent, cases, check_result):
 - **Q：如何在有限预算下设计评估方案？**  
   先覆盖高风险业务路径和历史失败，再用分层抽样补齐常见与长尾场景；确定性判定器优先，昂贵 Judge 和人工复核用于开放或高风险样本。样本量由目标误差、方差、切片覆盖和预算共同决定。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [阿里国际 Accio Agent 算法一面：数据合成、任务环境与模型后训练（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-3.md)（cluster-10359bdec433）
+- [字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-20.md)（cluster-418d84d3fe66）
+- [淘天 Agent 算法一面：任务构造、轨迹验证与后训练（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-4.md)（cluster-787120ee1249）
+- [百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测（2026 年 8 月）](../../../interview/baidu/ai/baidu-ai-2.md)（cluster-9acb30c57710）
+- [淘宝闪购 Agent 算法一面：框架选型、人工接管与线上安全（2026 年 4 月）](../../../interview/alibaba/ai/alibaba-ai-6.md)（cluster-e392a4fd1f33）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [AgentBench: Evaluating LLMs as Agents](https://arxiv.org/abs/2308.03688)

@@ -416,6 +416,12 @@ Hash 取模分片在扩容时需要迁移约 `(N-1)/N` 比例的数据。初始�
 
 - **读写分离主从延迟如何监控？** 在从库执行 `SHOW SLAVE STATUS`，观察 `Seconds_Behind_Master` 字段；或通过 Prometheus + mysqld_exporter 采集 `mysql_slave_lag_seconds` 指标，设置告警阈值（通常 >1s 触发告警）。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测（2026 年 8 月）](../../../interview/baidu/ai/baidu-ai-2.md)（cluster-9acb30c57710）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Sharding — MongoDB Manual](https://www.mongodb.com/docs/manual/sharding/index.html)

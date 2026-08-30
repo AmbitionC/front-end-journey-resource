@@ -74,6 +74,12 @@ actor 表示发起主体，delegate 表示代表其行动的 Agent 或服务；�
 
 可靠审计是一条受控证据链：稳定事件语义、清晰的主体与委托、策略和结果分离、有序标识、完整性保护、独立验证、敏感数据最小化和可执行的保留处置。所谓“不可抵赖”是身份、密钥、时间、存储、流程和验证共同形成的系统属性，不是一条日志配置。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [淘宝闪购 Agent 算法一面：框架选型、人工接管与线上安全（2026 年 4 月）](../../../interview/alibaba/ai/alibaba-ai-6.md)（cluster-e392a4fd1f33）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [NIST SP 800-92：Guide to Computer Security Log Management](https://csrc.nist.gov/pubs/sp/800/92/final)

@@ -84,6 +84,13 @@ SFT 的关键不是简单堆数量，而是覆盖行为边界并保持示范一�
 
 大模型训练是一套闭环系统：预训练学习通用分布，SFT 学习示范行为，偏好优化调整选择倾向，安全评估与线上监控约束真实使用。把阶段和目标分开，才能针对问题选择正确的改进手段。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [阿里国际 Accio Agent 算法一面：数据合成、任务环境与模型后训练（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-3.md)（cluster-10359bdec433）
+- [淘天 Agent 算法一面：任务构造、轨迹验证与后训练（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-4.md)（cluster-787120ee1249）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165)

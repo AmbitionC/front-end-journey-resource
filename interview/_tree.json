@@ -8,6 +8,14 @@
         "key": "bytedance-base",
         "children": [
           {
+            "label": "字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）",
+            "key": "bytedance-base-20",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": ["Agent", "状态管理", "容错", "评测"],
+            "updatedAt": "2026-08-30"
+          },
+          {
             "label": "字节 Agent 开发一面：推理缓存、网络与存储基础（2026 年 8 月）",
             "key": "bytedance-base-18",
             "isLeaf": true,
@@ -216,6 +224,46 @@
         "key": "alibaba-ai",
         "children": [
           {
+            "label": "阿里国际 Accio Agent 算法一面：数据合成、任务环境与模型后训练（2026 年 8 月）",
+            "key": "alibaba-ai-3",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "tags": ["Agent", "数据合成", "模型后训练", "GUI Agent"],
+            "updatedAt": "2026-08-30"
+          },
+          {
+            "label": "淘天 Agent 算法一面：任务构造、轨迹验证与后训练（2026 年 8 月）",
+            "key": "alibaba-ai-4",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "tags": ["Agent", "任务构造", "轨迹评测", "模型训练"],
+            "updatedAt": "2026-08-30"
+          },
+          {
+            "label": "淘天 AI 应用研发一面：RAG、限流 Top-K 与优惠策略设计（2026 年 8 月）",
+            "key": "alibaba-ai-5",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "tags": ["RAG", "限流", "Top-K", "AI Coding"],
+            "updatedAt": "2026-08-30"
+          },
+          {
+            "label": "淘宝闪购 Agent 算法一面：框架选型、人工接管与线上安全（2026 年 4 月）",
+            "key": "alibaba-ai-6",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "tags": ["Agent", "Human-in-the-loop", "安全", "评测"],
+            "updatedAt": "2026-08-30"
+          },
+          {
+            "label": "阿里云可观测存储 AI Agent 工程岗一面：存储性能与查询优化（2026 年 8 月）",
+            "key": "alibaba-ai-7",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "tags": ["Agent", "存储", "性能优化", "算法"],
+            "updatedAt": "2026-08-30"
+          },
+          {
             "label": "阿里云 Agent 开发秋招一面（2026 年 8 月）",
             "key": "alibaba-ai-1",
             "isLeaf": true,
@@ -230,6 +278,34 @@
             "filePath": "alibaba/ai",
             "tags": ["Agent", "RAG", "LangGraph", "Memory"],
             "updatedAt": "2026-08-25"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "百度",
+    "key": "Baidu",
+    "children": [
+      {
+        "label": "Agent 与 AI 应用",
+        "key": "baidu-ai",
+        "children": [
+          {
+            "label": "百度大模型研发一面：Context、Harness 与 RAG（2026 年 8 月）",
+            "key": "baidu-ai-1",
+            "isLeaf": true,
+            "filePath": "baidu/ai",
+            "tags": ["Agent", "上下文工程", "Harness", "RAG"],
+            "updatedAt": "2026-08-30"
+          },
+          {
+            "label": "百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测（2026 年 8 月）",
+            "key": "baidu-ai-2",
+            "isLeaf": true,
+            "filePath": "baidu/ai",
+            "tags": ["Agent", "状态恢复", "记忆", "系统设计"],
+            "updatedAt": "2026-08-30"
           }
         ]
       }
@@ -307,6 +383,14 @@
         "label": "Agent 与 AI 应用",
         "key": "antfin-ai",
         "children": [
+          {
+            "label": "蚂蚁智能体与大模型应用一面：幻觉、Skill 与 RAG（2026 年 5 月）",
+            "key": "antfin-ai-5",
+            "isLeaf": true,
+            "filePath": "antfin/ai",
+            "tags": ["Agent", "Skill", "RAG", "后端基础"],
+            "updatedAt": "2026-08-30"
+          },
           {
             "label": "蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）",
             "key": "antfin-ai-4",

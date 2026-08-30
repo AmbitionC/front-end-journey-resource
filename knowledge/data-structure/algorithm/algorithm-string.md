@@ -107,6 +107,12 @@ function indexOfKmp(text, pattern) {
 
 短文本的一次搜索通常直接用标准库最清晰。KMP 的价值是理解如何利用已知匹配信息避免回溯，并在需要线性最坏界、流式扫描或大量重复前缀时提供可预测行为。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [阿里云可观测存储 AI Agent 工程岗一面：存储性能与查询优化（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-7.md)（cluster-cf26fe3b37d5）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Fast Pattern Matching in Strings](https://www.cs.jhu.edu/~misha/ReadingSeminar/Papers/Knuth77.pdf)

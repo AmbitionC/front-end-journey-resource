@@ -430,6 +430,12 @@ Batch API 的完成时限和模型支持范围由提供商决定。在任务量�
 **Q：多轮对话中如何控制上下文成本增长？**  
 答：三种策略可以组合：①用按 token 预算配置的滑动窗口设上限；②对窗口外历史生成可追溯摘要；③按业务重要性保留偏好、关键决策和纠错。监控每轮输入 token、摘要遗漏率和任务成功率，确认成本下降没有破坏早期约束。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-20.md)（cluster-418d84d3fe66）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Amazon Bedrock token counting](https://docs.aws.amazon.com/bedrock/latest/userguide/count-tokens.html)
