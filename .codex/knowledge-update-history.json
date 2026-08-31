@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
-  "updatedAt": "2026-08-30",
+  "updatedAt": "2026-09-01",
   "records": [
     {
       "key": "transformer-arch",
@@ -222,10 +222,10 @@
       "key": "rag-hybrid-search",
       "label": "Hybrid Search 混合检索",
       "filePath": "llm/rag",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-14",
-      "batch": "rag-evaluation-and-agent-foundations-2026-07-14"
+      "recordedAt": "2026-09-01",
+      "batch": "nowcoder-partial-archive-2026-09-01"
     },
     {
       "key": "rag-evaluation",
@@ -645,10 +645,10 @@
       "key": "rag-table-retrieval",
       "label": "表格、数据库与结构化数据检索",
       "filePath": "llm/rag",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-15",
-      "batch": "rag-production-agent-next-20-2026-07-15"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-09-01",
+      "batch": "nowcoder-partial-archive-2026-09-01"
     },
     {
       "key": "rag-image-retrieval",
@@ -933,10 +933,10 @@
       "key": "agent-multi-agent-messaging",
       "label": "多智能体消息、协议与状态同步",
       "filePath": "llm/agent",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-16",
-      "batch": "agent-multi-production-next-20-2026-07-16"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-09-01",
+      "batch": "nowcoder-partial-archive-2026-09-01"
     },
     {
       "key": "agent-memory-architecture",
@@ -944,8 +944,8 @@
       "filePath": "llm/agent",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-08-29",
-      "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
+      "recordedAt": "2026-09-01",
+      "batch": "nowcoder-partial-archive-2026-09-01"
     },
     {
       "key": "agent-memory-summarization",
@@ -1898,8 +1898,8 @@
       "filePath": "llm/agent",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-09-01",
+      "batch": "nowcoder-partial-archive-2026-09-01"
     },
     {
       "key": "agent-paradigms",
@@ -1934,8 +1934,8 @@
       "filePath": "llm/agent",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-09-01",
+      "batch": "nowcoder-partial-archive-2026-09-01"
     },
     {
       "key": "multi-agent",
@@ -1943,8 +1943,8 @@
       "filePath": "llm/agent",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-09-01",
+      "batch": "nowcoder-partial-archive-2026-09-01"
     },
     {
       "key": "agent-evaluation",
@@ -1970,8 +1970,8 @@
       "filePath": "llm/production",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-09-01",
+      "batch": "nowcoder-partial-archive-2026-09-01"
     },
     {
       "key": "llm-cost-optimize",
@@ -2707,9 +2707,9 @@
       "label": "Redis 分布式锁：租约、续期与故障边界",
       "filePath": "backend/database",
       "status": "pending",
-      "action": "created",
-      "recordedAt": "2026-08-23",
-      "batch": "nowcoder-real-interviews-2026-08-23"
+      "action": "updated",
+      "recordedAt": "2026-09-01",
+      "batch": "nowcoder-partial-archive-2026-09-01"
     },
     {
       "key": "agentic-rl",
@@ -2744,8 +2744,8 @@
       "filePath": "llm/agent",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-08-29",
-      "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
+      "recordedAt": "2026-09-01",
+      "batch": "nowcoder-partial-archive-2026-09-01"
     },
     {
       "key": "agent-intent-clarification",

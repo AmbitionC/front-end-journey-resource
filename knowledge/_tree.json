@@ -790,6 +790,23 @@
             "interviewBaseHeat": 6
           },
           {
+            "label": "Hybrid Search 混合检索",
+            "key": "rag-hybrid-search",
+            "isLeaf": true,
+            "filePath": "llm/rag",
+            "contentStatus": "published",
+            "heat": 10,
+            "currRank": 5,
+            "updatedAt": "2026-09-01",
+            "interviewClusters": [
+              "cluster-19151a925152",
+              "cluster-452705dd533f",
+              "cluster-9e24453f3753",
+              "cluster-cc9e5dd82505"
+            ],
+            "interviewBaseHeat": 6
+          },
+          {
             "label": "RAG 失败诊断：数据、召回、排序与生成",
             "key": "rag-failure-debugging",
             "isLeaf": true,
@@ -804,22 +821,6 @@
               "cluster-9e24453f3753",
               "cluster-c5c44d791f6e"
             ]
-          },
-          {
-            "label": "Hybrid Search 混合检索",
-            "key": "rag-hybrid-search",
-            "isLeaf": true,
-            "filePath": "llm/rag",
-            "contentStatus": "published",
-            "heat": 9,
-            "currRank": 5,
-            "updatedAt": "2026-07-14",
-            "interviewClusters": [
-              "cluster-452705dd533f",
-              "cluster-9e24453f3753",
-              "cluster-cc9e5dd82505"
-            ],
-            "interviewBaseHeat": 6
           },
           {
             "label": "Embedding 原理与向量相似度",
@@ -878,6 +879,20 @@
             ]
           },
           {
+            "label": "表格、数据库与结构化数据检索",
+            "key": "rag-table-retrieval",
+            "isLeaf": true,
+            "filePath": "llm/rag",
+            "contentStatus": "published",
+            "heat": 7,
+            "currRank": 4,
+            "updatedAt": "2026-09-01",
+            "interviewClusters": [
+              "cluster-388e361cba4f"
+            ],
+            "interviewBaseHeat": 6
+          },
+          {
             "label": "查询改写、分解与扩展",
             "key": "rag-query-rewrite",
             "isLeaf": true,
@@ -920,16 +935,6 @@
           {
             "label": "文档 Loader、Parser 与版面解析",
             "key": "rag-loader-parser",
-            "isLeaf": true,
-            "filePath": "llm/rag",
-            "contentStatus": "published",
-            "heat": 6,
-            "currRank": 4,
-            "updatedAt": "2026-07-16"
-          },
-          {
-            "label": "表格、数据库与结构化数据检索",
-            "key": "rag-table-retrieval",
             "isLeaf": true,
             "filePath": "llm/rag",
             "contentStatus": "published",
@@ -1079,15 +1084,16 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 18,
+            "heat": 19,
             "currRank": 5,
-            "updatedAt": "2026-07-18",
+            "updatedAt": "2026-09-01",
             "interviewClusters": [
               "cluster-0cfd17469543",
               "cluster-137857a2ba05",
               "cluster-16e49722e8d7",
               "cluster-27070393eae6",
               "cluster-2fc69bb3d45d",
+              "cluster-45d2fa7cdacd",
               "cluster-4a37152b165a",
               "cluster-605f9ab081a6",
               "cluster-650f7c304b11",
@@ -1104,17 +1110,19 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 17,
+            "heat": 19,
             "currRank": 5,
-            "updatedAt": "2026-07-18",
+            "updatedAt": "2026-09-01",
             "interviewClusters": [
               "cluster-1b2940d40f2e",
               "cluster-1c24a80acde8",
               "cluster-29b42b69483b",
+              "cluster-388e361cba4f",
               "cluster-6ba888767532",
               "cluster-7568c06b462a",
               "cluster-910d0b20a897",
               "cluster-bb3431ce1c81",
+              "cluster-bef880c39332",
               "cluster-cc9e5dd82505",
               "cluster-cde9b480341e",
               "cluster-d0b4e8a8f482",
@@ -1128,13 +1136,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 16,
+            "heat": 18,
             "currRank": 5,
-            "updatedAt": "2026-08-29",
+            "updatedAt": "2026-09-01",
             "interviewClusters": [
               "cluster-1f550affd882",
               "cluster-2d9e5f67fe86",
               "cluster-2fc69bb3d45d",
+              "cluster-388e361cba4f",
               "cluster-3fa76fc5d243",
               "cluster-452705dd533f",
               "cluster-4596af05b314",
@@ -1144,6 +1153,7 @@
               "cluster-910d0b20a897",
               "cluster-b77e34981a25",
               "cluster-bb3431ce1c81",
+              "cluster-bef880c39332",
               "cluster-d0b4e8a8f482",
               "cluster-e11f3de537e5",
               "cluster-e2ae8847e22e"
@@ -1156,21 +1166,40 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 15,
+            "heat": 16,
             "currRank": 5,
-            "updatedAt": "2026-08-29",
+            "updatedAt": "2026-09-01",
             "interviewClusters": [
               "cluster-1b2940d40f2e",
               "cluster-2fc69bb3d45d",
               "cluster-418d84d3fe66",
               "cluster-4a37152b165a",
               "cluster-7568c06b462a",
+              "cluster-757b7d499173",
               "cluster-7ef1a4a8ef82",
               "cluster-910d0b20a897",
               "cluster-9acb30c57710",
               "cluster-e392a4fd1f33"
             ],
             "interviewBaseHeat": 6
+          },
+          {
+            "label": "ReAct：推理与行动框架",
+            "key": "agent-react",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published",
+            "heat": 15,
+            "currRank": 5,
+            "updatedAt": "2026-09-01",
+            "interviewClusters": [
+              "cluster-2fc69bb3d45d",
+              "cluster-388e361cba4f",
+              "cluster-418d84d3fe66",
+              "cluster-605f9ab081a6",
+              "cluster-7372c3e7fb1e"
+            ],
+            "interviewBaseHeat": 10
           },
           {
             "label": "工作流状态、检查点与断点续跑",
@@ -1191,23 +1220,6 @@
               "cluster-b8f79803b7ec"
             ],
             "interviewBaseHeat": 7
-          },
-          {
-            "label": "ReAct：推理与行动框架",
-            "key": "agent-react",
-            "isLeaf": true,
-            "filePath": "llm/agent",
-            "contentStatus": "published",
-            "heat": 14,
-            "currRank": 5,
-            "updatedAt": "2026-07-18",
-            "interviewClusters": [
-              "cluster-2fc69bb3d45d",
-              "cluster-418d84d3fe66",
-              "cluster-605f9ab081a6",
-              "cluster-7372c3e7fb1e"
-            ],
-            "interviewBaseHeat": 10
           },
           {
             "label": "智能体定义、类型、PEAS 与 Agent Loop",
@@ -1359,6 +1371,24 @@
             ]
           },
           {
+            "label": "多智能体消息、协议与状态同步",
+            "key": "agent-multi-agent-messaging",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published",
+            "heat": 11,
+            "currRank": 5,
+            "updatedAt": "2026-09-01",
+            "interviewBaseHeat": 6,
+            "interviewClusters": [
+              "cluster-3fa76fc5d243",
+              "cluster-418d84d3fe66",
+              "cluster-45d2fa7cdacd",
+              "cluster-757b7d499173",
+              "cluster-9acb30c57710"
+            ]
+          },
+          {
             "label": "事件驱动 Agent 与异步编排",
             "key": "agent-event-driven",
             "isLeaf": true,
@@ -1432,22 +1462,6 @@
               "cluster-418d84d3fe66",
               "cluster-4596af05b314",
               "cluster-605f9ab081a6"
-            ]
-          },
-          {
-            "label": "多智能体消息、协议与状态同步",
-            "key": "agent-multi-agent-messaging",
-            "isLeaf": true,
-            "filePath": "llm/agent",
-            "contentStatus": "published",
-            "heat": 9,
-            "currRank": 5,
-            "updatedAt": "2026-07-16",
-            "interviewBaseHeat": 6,
-            "interviewClusters": [
-              "cluster-3fa76fc5d243",
-              "cluster-418d84d3fe66",
-              "cluster-9acb30c57710"
             ]
           },
           {
@@ -1807,6 +1821,23 @@
             ]
           },
           {
+            "label": "Agent 可观测性与全链路 Tracing",
+            "key": "ai-observability",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "published",
+            "heat": 10,
+            "currRank": 5,
+            "updatedAt": "2026-09-01",
+            "interviewBaseHeat": 6,
+            "interviewClusters": [
+              "cluster-1c24a80acde8",
+              "cluster-605f9ab081a6",
+              "cluster-9e24453f3753",
+              "cluster-bef880c39332"
+            ]
+          },
+          {
             "label": "敏感数据、日志脱敏与隐私保护",
             "key": "agent-data-privacy",
             "isLeaf": true,
@@ -1836,22 +1867,6 @@
               "cluster-cc9e5dd82505"
             ],
             "interviewBaseHeat": 6
-          },
-          {
-            "label": "Agent 可观测性与全链路 Tracing",
-            "key": "ai-observability",
-            "isLeaf": true,
-            "filePath": "llm/production",
-            "contentStatus": "published",
-            "heat": 9,
-            "currRank": 5,
-            "updatedAt": "2026-07-18",
-            "interviewBaseHeat": 6,
-            "interviewClusters": [
-              "cluster-1c24a80acde8",
-              "cluster-605f9ab081a6",
-              "cluster-9e24453f3753"
-            ]
           },
           {
             "label": "Prompt Injection 与间接注入防御",
@@ -2618,10 +2633,11 @@
             "isLeaf": true,
             "filePath": "backend/database",
             "contentStatus": "published",
-            "heat": 4,
-            "currRank": 3,
-            "updatedAt": "2026-08-23",
+            "heat": 5,
+            "currRank": 4,
+            "updatedAt": "2026-09-01",
             "interviewClusters": [
+              "cluster-19151a925152",
               "cluster-5ab99b43f10b",
               "cluster-5b6e09ee89e6",
               "cluster-e11f3de537e5"

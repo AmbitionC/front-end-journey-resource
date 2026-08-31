@@ -89,6 +89,19 @@ sequenceDiagram
 - **Client**：协议通信，负责与 Server 建连、发请求
 - **Server**：功能实现，提供具体的工具/资源/提示词
 
+### Stdio 与 Streamable HTTP 怎么选
+
+传输方式不改变 MCP 的能力模型，只改变 Client 与 Server 如何建连：
+
+| 传输方式 | 运行边界 | 优点 | 主要治理点 |
+|------|------|------|------|
+| **Stdio** | Host 启动并管理本地子进程 | 部署简单、天然绑定本机进程、适合 IDE 和本地工具 | 进程生命周期、环境变量、文件权限、标准错误日志 |
+| **Streamable HTTP** | Server 作为独立网络服务 | 可远程访问、可独立扩缩容、便于多个 Client 复用 | 身份认证、租户隔离、连接恢复、超时与限流 |
+
+本地文件、命令行与开发工具优先考虑 Stdio；跨机器共享、集中治理或需要弹性扩容时再采用 Streamable HTTP。一个 Host 接多个 Server 时，应为每个 Server 单独维护连接、能力清单、权限范围和故障状态，避免某个 Server 的超时拖垮整个 Agent Loop。
+
+MCP 负责“能力如何发现和调用”，Skill 负责“任务如何被理解和执行”。Skill 可以按需加载说明并调用一个或多个 MCP 工具，但不应把认证、权限和重试策略藏进提示文本；这些仍由 Host 与 Client 的执行层强制保证。
+
 ### MCP 的三大核心能力
 
 | 能力 | 特性 | 典型场景 |
@@ -386,10 +399,12 @@ A2A 中的 Agent 有自己的推理能力和自主性，不是简单的函数调
 - [字节 Coding Agent 日常实习一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)（cluster-1b2940d40f2e）
 - [哔哩哔哩 AI 应用岗一面：端到端 AI Coding 与生产治理（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-2.md)（cluster-1c24a80acde8）
 - [字节 Agent 开发二面（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-7.md)（cluster-29b42b69483b）
+- [OPPO IT 开发一面：ReAct、MCP 与智能问数（2026 年 8 月）](../../../interview/oppo/ai/oppo-ai-3.md)（cluster-388e361cba4f）
 - [腾讯后端 AI 开发实习面试（2026 年 4 月）](../../../interview/tencent/ai/tencent-ai-3.md)（cluster-6ba888767532）
 - [腾讯 Agent 项目二面：记忆、RAG 与 MCP（2026 年 5 月）](../../../interview/tencent/ai/tencent-ai-2.md)（cluster-7568c06b462a）
 - [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)（cluster-910d0b20a897）
 - [深信服 Agent 开发一面：MCP、多 Agent、安全与网络（2026 年 8 月）](../../../interview/sangfor/ai/sangfor-ai-1.md)（cluster-bb3431ce1c81）
+- [快手主站 SRE 一二三面：Agent Skill、性能排障与数据链路（2026 年 4 月）](../../../interview/kuaishou/ai/kuaishou-ai-5.md)（cluster-bef880c39332）
 - [蚂蚁 Agent 开发一面：多 Agent 并发与质量保障（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-1.md)（cluster-cc9e5dd82505）
 - [快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-3.md)（cluster-cde9b480341e）
 - [字节 Agent 开发一面：Skill、MCP 与后端基础（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-15.md)（cluster-d0b4e8a8f482）

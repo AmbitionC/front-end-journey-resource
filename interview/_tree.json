@@ -148,6 +148,14 @@
         "key": "tencent-ai",
         "children": [
           {
+            "label": "腾讯 CSIG 后台开发一面：Agent Memory、SkillRouter 与多 Agent Code Review（2026 年 7 月）",
+            "key": "tencent-ai-9",
+            "isLeaf": true,
+            "filePath": "tencent/ai",
+            "tags": ["Agent", "Memory", "SkillRouter", "Code Review"],
+            "updatedAt": "2026-09-01"
+          },
+          {
             "label": "腾讯 AI 开发一面：Coding Agent 记忆、评测与可靠运行（2026 年 8 月）",
             "key": "tencent-ai-8",
             "isLeaf": true,
@@ -292,6 +300,14 @@
         "key": "baidu-ai",
         "children": [
           {
+            "label": "百度后端开发一面：Agent 安全、混合检索与 Redis（2026 年 8 月）",
+            "key": "baidu-ai-3",
+            "isLeaf": true,
+            "filePath": "baidu/ai",
+            "tags": ["Agent", "安全", "混合检索", "Redis"],
+            "updatedAt": "2026-09-01"
+          },
+          {
             "label": "百度大模型研发一面：Context、Harness 与 RAG（2026 年 8 月）",
             "key": "baidu-ai-1",
             "isLeaf": true,
@@ -319,6 +335,22 @@
         "label": "Agent 与 AI 应用",
         "key": "kuaishou-ai",
         "children": [
+          {
+            "label": "快手商业化效果营销一面：多 Agent 协作、Netty 与限流（2026 年 8 月）",
+            "key": "kuaishou-ai-4",
+            "isLeaf": true,
+            "filePath": "kuaishou/ai",
+            "tags": ["Agent", "多 Agent", "Netty", "限流"],
+            "updatedAt": "2026-09-01"
+          },
+          {
+            "label": "快手主站 SRE 一二三面：Agent Skill、性能排障与数据链路（2026 年 4 月）",
+            "key": "kuaishou-ai-5",
+            "isLeaf": true,
+            "filePath": "kuaishou/ai",
+            "tags": ["Agent", "SRE", "Skill", "性能排障"],
+            "updatedAt": "2026-09-01"
+          },
           {
             "label": "快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理（2026 年 8 月）",
             "key": "kuaishou-ai-3",
@@ -355,6 +387,14 @@
         "label": "AI 全栈",
         "key": "oppo-ai",
         "children": [
+          {
+            "label": "OPPO IT 开发一面：ReAct、MCP 与智能问数（2026 年 8 月）",
+            "key": "oppo-ai-3",
+            "isLeaf": true,
+            "filePath": "oppo/ai",
+            "tags": ["Agent", "ReAct", "MCP", "Text-to-SQL"],
+            "updatedAt": "2026-09-01"
+          },
           {
             "label": "OPPO AI 全栈一面：Prompt 到 UI、RAG 与前端性能（2026 年 8 月）",
             "key": "oppo-ai-2",

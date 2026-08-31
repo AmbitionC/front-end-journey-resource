@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-30",
+  "updatedAt": "2026-09-01",
   "records": {
     "00460f65f35e": {
       "source": "nowcoder",
@@ -819,6 +819,84 @@
       "publicFiles": ["interview/alibaba/ai/alibaba-ai-7.md"],
       "knowledgeKeys": ["sql-index-optimize", "algorithm-complexity", "algorithm-array", "algorithm-string"],
       "processedAt": "2026-08-30T14:17:58.000Z"
+    },
+    "fd8273d31117": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/923561467092160512",
+      "contentHash": "b39c06ba44307484",
+      "clusterId": "cluster-388e361cba4f",
+      "company": "other",
+      "evidenceGrade": "B",
+      "status": "published",
+      "articleKey": "oppo-ai-3",
+      "publicFiles": ["interview/oppo/ai/oppo-ai-3.md"],
+      "knowledgeKeys": ["agent-react", "mcp-protocol", "agent-skill-design", "rag-table-retrieval"],
+      "processedAt": "2026-08-31T20:43:42.000Z"
+    },
+    "efc4d593ef9f": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/923294149502042112",
+      "contentHash": "d26751def6bbf5c5",
+      "clusterId": "cluster-d26751def6bb",
+      "company": "other",
+      "evidenceGrade": "B",
+      "status": "skipped",
+      "publicFiles": [],
+      "knowledgeKeys": [],
+      "reason": "语义复核后确认正文为快手数据研发面经，Agent/AI 仅出现在招聘推广段；不属于 Agent 研发面经范围。",
+      "processedAt": "2026-08-31T20:43:42.000Z"
+    },
+    "5289976ed680": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/920340890072219648",
+      "contentHash": "45d2fa7cdacde608",
+      "clusterId": "cluster-45d2fa7cdacd",
+      "company": "other",
+      "evidenceGrade": "B",
+      "status": "published",
+      "articleKey": "kuaishou-ai-4",
+      "publicFiles": ["interview/kuaishou/ai/kuaishou-ai-4.md"],
+      "knowledgeKeys": ["multi-agent", "agent-multi-agent-messaging"],
+      "processedAt": "2026-08-31T20:43:42.000Z"
+    },
+    "f6386f563256": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/920032229999267840",
+      "contentHash": "19151a925152bbcd",
+      "clusterId": "cluster-19151a925152",
+      "company": "other",
+      "evidenceGrade": "A",
+      "status": "published",
+      "articleKey": "baidu-ai-3",
+      "publicFiles": ["interview/baidu/ai/baidu-ai-3.md"],
+      "knowledgeKeys": ["rag-hybrid-search", "redis-distributed-lock"],
+      "processedAt": "2026-08-31T20:43:42.000Z"
+    },
+    "74e600b0c5c9": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/906487631402364928",
+      "contentHash": "757b7d499173d4eb",
+      "clusterId": "cluster-757b7d499173",
+      "company": "tencent",
+      "evidenceGrade": "A",
+      "status": "published",
+      "articleKey": "tencent-ai-9",
+      "publicFiles": ["interview/tencent/ai/tencent-ai-9.md"],
+      "knowledgeKeys": ["agent-memory-architecture", "agent-multi-agent-messaging"],
+      "processedAt": "2026-08-31T20:43:42.000Z"
+    },
+    "e2368068c425": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/886975937227632640",
+      "contentHash": "bef880c3933215e3",
+      "clusterId": "cluster-bef880c39332",
+      "company": "other",
+      "evidenceGrade": "B",
+      "status": "published",
+      "articleKey": "kuaishou-ai-5",
+      "publicFiles": ["interview/kuaishou/ai/kuaishou-ai-5.md"],
+      "knowledgeKeys": ["mcp-protocol", "agent-skill-design", "ai-observability"],
+      "processedAt": "2026-08-31T20:43:42.000Z"
     }
   }
 }
