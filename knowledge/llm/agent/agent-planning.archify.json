@@ -1,0 +1,211 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "受约束的 Agent Planning 与有限重规划",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [1100, 580],
+    "views": [
+      {
+        "id": "goal-to-execution",
+        "label": "目标到可执行任务",
+        "focus": ["goal-envelope", "planner", "task-dag", "executor", "observer"],
+        "note": "冻结目标与约束后，Planner 生成带依赖和完成证据的 DAG，再调度 ready task。"
+      },
+      {
+        "id": "evidence-replan",
+        "label": "证据驱动重规划",
+        "focus": ["executor", "observer", "evidence-store", "task-dag", "planner"],
+        "note": "结构化观察先形成证据和状态变化，再以 plan diff 修改尚未完成的任务。"
+      },
+      {
+        "id": "planning-guards",
+        "label": "预算、审批与无进展",
+        "focus": ["goal-envelope", "budget-guard", "approval-gate", "executor", "observer", "loop-guard"],
+        "note": "预算和审批包围执行；无进展时停止、求助或 abstain，而不是无限重规划。"
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "goal-envelope",
+      "type": "external",
+      "label": "Goal Envelope",
+      "sublabel": "目标 · 约束 · success rubric",
+      "pos": [30, 250],
+      "size": [155, 68]
+    },
+    {
+      "id": "planner",
+      "type": "cloud",
+      "label": "Planner",
+      "sublabel": "分解任务 · 生成 plan diff",
+      "pos": [245, 250],
+      "size": [155, 68]
+    },
+    {
+      "id": "task-dag",
+      "type": "database",
+      "label": "Task DAG",
+      "sublabel": "依赖 · owner · done-when",
+      "pos": [465, 250],
+      "size": [160, 68]
+    },
+    {
+      "id": "executor",
+      "type": "backend",
+      "label": "Executor",
+      "sublabel": "执行 ready task",
+      "pos": [690, 250],
+      "size": [155, 68]
+    },
+    {
+      "id": "observer",
+      "type": "messagebus",
+      "label": "Observer",
+      "sublabel": "结构化结果与状态变化",
+      "pos": [920, 250],
+      "size": [145, 68]
+    },
+    {
+      "id": "budget-guard",
+      "type": "security",
+      "label": "Budget Guard",
+      "sublabel": "time · cost · turn · replan",
+      "pos": [245, 70],
+      "size": [155, 68]
+    },
+    {
+      "id": "approval-gate",
+      "type": "security",
+      "label": "Approval Boundary",
+      "sublabel": "动作 · 参数 hash · 过期时间",
+      "pos": [690, 70],
+      "size": [155, 68]
+    },
+    {
+      "id": "evidence-store",
+      "type": "database",
+      "label": "Evidence Store",
+      "sublabel": "回执 · 测试 · 用户批准",
+      "pos": [465, 430],
+      "size": [160, 68]
+    },
+    {
+      "id": "loop-guard",
+      "type": "security",
+      "label": "Loop Guard",
+      "sublabel": "停止 · 求助 · Abstain",
+      "pos": [700, 430],
+      "size": [155, 68]
+    }
+  ],
+  "connections": [
+    {
+      "id": "goal-envelope-to-planner",
+      "from": "goal-envelope",
+      "to": "planner",
+      "label": "冻结",
+      "variant": "emphasis"
+    },
+    {
+      "id": "budget-guard-to-planner",
+      "from": "budget-guard",
+      "to": "planner",
+      "label": "剩余预算",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelAt": [323, 152]
+    },
+    {
+      "id": "planner-to-task-dag",
+      "from": "planner",
+      "to": "task-dag",
+      "label": "任务",
+      "variant": "emphasis"
+    },
+    {
+      "id": "task-dag-to-executor",
+      "from": "task-dag",
+      "to": "executor",
+      "label": "就绪",
+      "variant": "emphasis"
+    },
+    {
+      "id": "task-dag-to-approval-gate",
+      "from": "task-dag",
+      "to": "approval-gate",
+      "label": "高风险任务",
+      "fromSide": "top",
+      "toSide": "left"
+    },
+    {
+      "id": "approval-gate-to-executor",
+      "from": "approval-gate",
+      "to": "executor",
+      "label": "精确批准",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelAt": [768, 152]
+    },
+    {
+      "id": "executor-to-observer",
+      "from": "executor",
+      "to": "observer",
+      "label": "结果",
+      "variant": "emphasis"
+    },
+    {
+      "id": "observer-to-evidence-store",
+      "from": "observer",
+      "to": "evidence-store",
+      "label": "验证事实",
+      "fromSide": "bottom",
+      "toSide": "right"
+    },
+    {
+      "id": "evidence-store-to-task-dag",
+      "from": "evidence-store",
+      "to": "task-dag",
+      "label": "完成证据",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "observer-to-planner",
+      "from": "observer",
+      "to": "planner",
+      "label": "触发 Replan",
+      "fromSide": "bottom",
+      "toSide": "bottom",
+      "via": [[992.5, 525], [322.5, 525]]
+    },
+    {
+      "id": "observer-to-loop-guard",
+      "from": "observer",
+      "to": "loop-guard",
+      "label": "进展指纹",
+      "variant": "security",
+      "fromSide": "bottom",
+      "toSide": "right"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "先冻结目标与约束",
+      "items": ["Goal 与 success rubric 描述可验证结果", "模型不能在重规划时删除授权和安全边界"]
+    },
+    {
+      "dot": "violet",
+      "title": "DAG 用证据推进",
+      "items": ["依赖决定哪些任务已经 ready", "done-when 由测试、回执或批准证明"]
+    },
+    {
+      "dot": "rose",
+      "title": "Replan 是有限修改",
+      "items": ["只修改未完成任务并保留已有副作用", "预算、审批和无进展检测阻止无限循环"]
+    }
+  ]
+}

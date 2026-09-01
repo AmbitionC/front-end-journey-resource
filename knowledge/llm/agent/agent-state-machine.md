@@ -34,8 +34,12 @@ waiting_tool + TOOL_RESULT
 
 同名事件在不同状态可以有不同含义；没有合法迁移的事件应被拒绝或记录，而不是偷偷修改 context。[XState transitions 文档](https://stately.ai/docs/transitions)区分目标状态、guard 和 action；这种分解能让迁移表直接成为测试输入。
 
-![Agent 状态机用事件、守卫和动作连接空闲、规划、等待工具、验证、完成与错误状态，并拒绝非法事件](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-state-machine-transition-guards-v1.webp)
-*图：工具结果只有在 call ID、状态版本和结果条件通过后，才能推动状态迁移。*
+<iframe
+  src="/archify/agent-state-machine.html"
+  title="Agent 状态机事件迁移与副作用边界交互架构图"
+></iframe>
+
+*图：沿“事件 → Guard → Transition → Outbox → Dispatcher”阅读主链路，再观察状态版本、结果事件与非法事件如何闭环；也可以[单独打开交互图](https://www.agent-journey.cn/archify/agent-state-machine.html)。*
 
 ## Guard 必须纯且可重放
 

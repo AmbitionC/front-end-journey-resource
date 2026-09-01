@@ -20,8 +20,12 @@ type SupervisorState = {
 
 [LangChain 的 Subagents 文档](https://docs.langchain.com/oss/python/langchain/multi-agent/subagents)明确区分 Supervisor 与 router：前者保持会话上下文并动态决定跨回合调用，后者通常是单步分类。把动态监督写成一串 if/else 路由，往往缺少失败恢复与终止语义。
 
-![Supervisor 根据目标和状态选择专门 Agent，收回结果与证据后验证，并在轮次和重试上限内完成、重规划或升级](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-supervisor-control-loop-v1.webp)
-*图：所有路径回到 Verify；Turn Limit 与 Retry Limit 使监督循环有界。*
+<iframe
+  src="/archify/agent-supervisor.html"
+  title="有界且有状态的 Supervisor 控制环交互架构图"
+></iframe>
+
+*图：从 Goal / Ledger 进入 Supervisor，窄合同只派给匹配专家；结果经过 Verify 与 Reducer 提交后，Budget / Terminal Gate 决定继续、完成或安全停止，也可以[单独打开交互图](https://www.agent-journey.cn/archify/agent-supervisor.html)。*
 
 ## 专家目录与路由
 

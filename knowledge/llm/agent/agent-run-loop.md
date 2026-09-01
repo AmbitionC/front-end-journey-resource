@@ -31,8 +31,12 @@ type Terminal = 'complete' | 'abstain' | 'escalate' | 'failed' | 'cancelled';
 
 轮次是调度单位，不是进展单位。一个回合可能调用多个并行只读工具，也可能只等待审批。状态版本应在每次写入时递增，旧 worker 的迟到结果不能覆盖新状态。
 
-![Agent 每轮按观察、决策、行动和结果吸收循环，并由预算、重复动作与无进展检测导向完成、放弃、升级或失败终态](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-run-loop-turn-state-v1.webp)
-*图：循环只有在结果被写回观察状态后才闭合；终止条件与预算是独立 guard。*
+<iframe
+  src="/archify/agent-run-loop.html"
+  title="Agent Run Loop 单轮执行与终止交互架构图"
+></iframe>
+
+*图：沿“Observe → Decide → Validate → Act → Ingest → Evaluate”阅读一轮，再查看版本化状态写回、继续回路与明确终态如何分流；也可以[单独打开交互图](https://www.agent-journey.cn/archify/agent-run-loop.html)。*
 
 ## 多个预算共同约束
 

@@ -46,7 +46,12 @@ PEAS 包含四项：
 
 PEAS 会暴露许多被 Prompt 掩盖的问题。例如“帮用户修改工单”看似简单，但执行器究竟只能生成草稿，还是能直接提交？绩效是否只看任务完成，还是必须包含审批与可追溯？这些都需要在模型调用前确定。
 
-![PEAS 定义环境、传感器、执行器和绩效目标，智能体内部通过观察、决策、行动、校验持续循环](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-architecture-peas-loop-v2.png)
+<iframe
+  src="/archify/agent-architecture.html"
+  title="PEAS 与 Agent 环境闭环交互架构图"
+></iframe>
+
+*图：沿“环境 → 传感器 → 决策 → 行动门禁 → 执行器”阅读闭环，再查看状态、绩效与停止条件如何约束下一轮；也可以[单独打开交互图](https://www.agent-journey.cn/archify/agent-architecture.html)。*
 
 读图时要抓住两条边界：
 
@@ -193,4 +198,3 @@ AIMA 常用以下类型帮助理解能力递进：
 - [Anthropic：Writing effective tools for agents](https://www.anthropic.com/engineering/writing-tools-for-agents)
 - [OpenAI：A practical guide to building agents](https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/)
 - [OpenAI：Guardrails and human review](https://developers.openai.com/api/docs/guides/agents/guardrails-approvals)
-

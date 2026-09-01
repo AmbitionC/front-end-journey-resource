@@ -1,0 +1,169 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "PEAS 与 Agent 环境闭环",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [1100, 580],
+    "views": [
+      {
+        "id": "peas-boundary",
+        "label": "PEAS 系统边界",
+        "focus": ["environment", "sensors", "actuators", "performance"],
+        "note": "环境只通过传感器进入系统，智能体也只能通过受控执行器影响环境。"
+      },
+      {
+        "id": "decision-loop",
+        "label": "观察—决策—行动闭环",
+        "focus": ["environment", "sensors", "state", "decision", "action-guard", "actuators"],
+        "note": "观察写入状态，模型提出动作，门禁校验后执行，结果再回到环境。"
+      },
+      {
+        "id": "bounded-action",
+        "label": "受控行动与绩效反馈",
+        "focus": ["decision", "action-guard", "actuators", "performance"],
+        "note": "模型输出只是动作提议；授权、预算与完成标准由确定性组件执行。"
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "environment",
+      "type": "external",
+      "label": "Environment",
+      "sublabel": "用户 · 系统 · 外部世界",
+      "pos": [30, 250],
+      "size": [150, 68]
+    },
+    {
+      "id": "sensors",
+      "type": "backend",
+      "label": "Sensors",
+      "sublabel": "身份 · 输入 · 工具结果",
+      "pos": [245, 250],
+      "size": [150, 68]
+    },
+    {
+      "id": "decision",
+      "type": "cloud",
+      "label": "决策模型",
+      "sublabel": "结合目标与当前状态",
+      "pos": [475, 250],
+      "size": [160, 68]
+    },
+    {
+      "id": "action-guard",
+      "type": "security",
+      "label": "Action Guard",
+      "sublabel": "权限 · 参数 · 预算 · 审批",
+      "pos": [710, 250],
+      "size": [150, 68]
+    },
+    {
+      "id": "actuators",
+      "type": "backend",
+      "label": "Actuators",
+      "sublabel": "受控工具与执行器",
+      "pos": [935, 250],
+      "size": [140, 68]
+    },
+    {
+      "id": "state",
+      "type": "database",
+      "label": "状态与记忆",
+      "sublabel": "目标 · 历史 · 剩余预算",
+      "pos": [475, 70],
+      "size": [160, 68]
+    },
+    {
+      "id": "performance",
+      "type": "backend",
+      "label": "绩效与完成判定",
+      "sublabel": "证据 · 质量 · 停止条件",
+      "pos": [475, 430],
+      "size": [160, 68]
+    }
+  ],
+  "connections": [
+    {
+      "id": "environment-to-sensors",
+      "from": "environment",
+      "to": "sensors",
+      "label": "观察",
+      "variant": "emphasis"
+    },
+    {
+      "id": "sensors-to-decision",
+      "from": "sensors",
+      "to": "decision",
+      "label": "输入状态",
+      "variant": "emphasis"
+    },
+    {
+      "id": "state-to-decision",
+      "from": "state",
+      "to": "decision",
+      "label": "目标与记忆",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelAt": [555, 152]
+    },
+    {
+      "id": "decision-to-action-guard",
+      "from": "decision",
+      "to": "action-guard",
+      "label": "动作提议",
+      "variant": "emphasis"
+    },
+    {
+      "id": "action-guard-to-actuators",
+      "from": "action-guard",
+      "to": "actuators",
+      "label": "授权动作",
+      "variant": "emphasis"
+    },
+    {
+      "id": "actuators-to-performance",
+      "from": "actuators",
+      "to": "performance",
+      "label": "执行回执",
+      "fromSide": "bottom",
+      "toSide": "right"
+    },
+    {
+      "id": "performance-to-decision",
+      "from": "performance",
+      "to": "decision",
+      "label": "绩效反馈",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "actuators-to-environment",
+      "from": "actuators",
+      "to": "environment",
+      "label": "作用环境",
+      "fromSide": "bottom",
+      "toSide": "bottom",
+      "via": [[1005, 525], [105, 525]]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "PEAS 先定义边界",
+      "items": ["Performance 定义怎样才算完成", "Environment、Actuators、Sensors 限定可见与可做"]
+    },
+    {
+      "dot": "rose",
+      "title": "模型输出不是授权",
+      "items": ["动作先经过权限、参数、预算与审批门禁", "副作用只由受控执行器落地"]
+    },
+    {
+      "dot": "violet",
+      "title": "闭环必须可停止",
+      "items": ["结果回写为新观察与绩效证据", "完成、求助、超限和拒绝都是合法出口"]
+    }
+  ]
+}

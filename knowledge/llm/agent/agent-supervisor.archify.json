@@ -1,0 +1,207 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "有界且有状态的 Supervisor 控制环",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [1100, 580],
+    "views": [
+      {
+        "id": "plan-and-dispatch",
+        "label": "规划与派发",
+        "focus": ["goal-ledger", "supervisor", "capability-directory", "narrow-contract", "specialist-a", "specialist-b"],
+        "note": "Supervisor 从权威账本与能力目录出发，只向匹配的专家发放窄任务合同。"
+      },
+      {
+        "id": "verify-and-commit",
+        "label": "验证与提交",
+        "focus": ["specialist-a", "specialist-b", "verify", "reducer-commit", "goal-ledger"],
+        "note": "专家结果先按合同和证据验证，再由 Reducer 版本化提交到全局状态。"
+      },
+      {
+        "id": "bounded-loop",
+        "label": "预算与终止",
+        "focus": ["goal-ledger", "budget-gate", "supervisor"],
+        "note": "每轮都检查预算、done-when 与无进展信号，只能继续、完成或安全停止。"
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "goal-ledger",
+      "type": "database",
+      "label": "Goal / Ledger",
+      "sublabel": "目标 · 任务 · 证据 · 版本",
+      "pos": [20, 230],
+      "size": [145, 68]
+    },
+    {
+      "id": "supervisor",
+      "type": "backend",
+      "label": "Supervisor",
+      "sublabel": "分解 · 路由 · 仲裁",
+      "tag": "bounded loop",
+      "pos": [205, 230],
+      "size": [145, 68]
+    },
+    {
+      "id": "capability-directory",
+      "type": "database",
+      "label": "Capability Directory",
+      "sublabel": "能力 · Schema · 权限",
+      "pos": [195, 60],
+      "size": [165, 68]
+    },
+    {
+      "id": "narrow-contract",
+      "type": "messagebus",
+      "label": "Narrow Contract",
+      "sublabel": "输入 · 输出 · done-when",
+      "pos": [390, 230],
+      "size": [150, 68]
+    },
+    {
+      "id": "specialist-a",
+      "type": "backend",
+      "label": "Specialist A",
+      "sublabel": "独立上下文与工具",
+      "pos": [590, 100],
+      "size": [145, 68]
+    },
+    {
+      "id": "specialist-b",
+      "type": "backend",
+      "label": "Specialist B",
+      "sublabel": "独立上下文与工具",
+      "pos": [590, 360],
+      "size": [145, 68]
+    },
+    {
+      "id": "verify",
+      "type": "security",
+      "label": "Verify",
+      "sublabel": "合同 · Schema · 证据",
+      "pos": [780, 230],
+      "size": [135, 68]
+    },
+    {
+      "id": "reducer-commit",
+      "type": "database",
+      "label": "Reducer / Commit",
+      "sublabel": "去重 · 归因 · 原子提交",
+      "pos": [955, 230],
+      "size": [125, 68]
+    },
+    {
+      "id": "budget-gate",
+      "type": "security",
+      "label": "Budget / Terminal Gate",
+      "sublabel": "turn · cost · deadline",
+      "tag": "complete | blocked | abstained",
+      "pos": [205, 410],
+      "size": [165, 68]
+    }
+  ],
+  "connections": [
+    {
+      "id": "goal-ledger-to-supervisor",
+      "from": "goal-ledger",
+      "to": "supervisor",
+      "label": "当前状态",
+      "labelAt": [185, 226],
+      "variant": "emphasis"
+    },
+    {
+      "id": "capability-directory-to-supervisor",
+      "from": "capability-directory",
+      "to": "supervisor",
+      "label": "能力候选",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelAt": [278, 142]
+    },
+    {
+      "id": "supervisor-to-narrow-contract",
+      "from": "supervisor",
+      "to": "narrow-contract",
+      "label": "窄合同",
+      "variant": "emphasis"
+    },
+    {
+      "id": "narrow-contract-to-specialist-a",
+      "from": "narrow-contract",
+      "to": "specialist-a",
+      "label": "派发 A"
+    },
+    {
+      "id": "narrow-contract-to-specialist-b",
+      "from": "narrow-contract",
+      "to": "specialist-b",
+      "label": "派发 B"
+    },
+    {
+      "id": "specialist-a-to-verify",
+      "from": "specialist-a",
+      "to": "verify",
+      "label": "结果 + 证据"
+    },
+    {
+      "id": "specialist-b-to-verify",
+      "from": "specialist-b",
+      "to": "verify",
+      "label": "结果 + 证据"
+    },
+    {
+      "id": "verify-to-reducer-commit",
+      "from": "verify",
+      "to": "reducer-commit",
+      "label": "校验通过",
+      "labelAt": [935, 226],
+      "variant": "emphasis"
+    },
+    {
+      "id": "reducer-commit-to-goal-ledger",
+      "from": "reducer-commit",
+      "to": "goal-ledger",
+      "label": "版本化提交",
+      "fromSide": "bottom",
+      "toSide": "bottom",
+      "via": [[1017.5, 515], [92.5, 515]]
+    },
+    {
+      "id": "goal-ledger-to-budget-gate",
+      "from": "goal-ledger",
+      "to": "budget-gate",
+      "label": "预算 / done-when",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "budget-gate-to-supervisor",
+      "from": "budget-gate",
+      "to": "supervisor",
+      "label": "继续 / 重规划",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "单一权威状态",
+      "items": ["专家读取不可变快照", "只有 Reducer 能版本化提交全局状态"]
+    },
+    {
+      "dot": "emerald",
+      "title": "窄专家合同",
+      "items": ["目录声明能力、Schema 与权限", "结果必须带可校验证据"]
+    },
+    {
+      "dot": "amber",
+      "title": "有界循环",
+      "items": ["限制轮次、重试、成本与截止时间", "无进展时进入 blocked 或 abstained"]
+    }
+  ]
+}

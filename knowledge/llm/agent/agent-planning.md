@@ -35,8 +35,12 @@ type PlanTask = {
 
 DAG 使无依赖任务可并行，也避免 B 尚未完成就启动依赖 B 的 C。Done 不是“Agent 说完成”，而是证据满足：测试输出、文件 hash、API 状态或用户批准。
 
-![目标与约束锁定后形成带依赖和完成证据的任务 DAG，执行观察只能触发受时间、成本、轮次、重规划次数与审批边界约束的有限重规划](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-planning-replan-loop-v1.webp)
-*图：无进展循环由 Loop Guard 终止并 Abstain；Replan 只修改未完成任务。*
+<iframe
+  src="/archify/agent-planning.html"
+  title="Agent 任务规划与有限重规划交互架构图"
+></iframe>
+
+*图：沿“Goal Envelope → Planner → Task DAG → Executor → Observer”阅读，再切换视图检查完成证据、预算、审批和 Loop Guard 如何限制 Replan；也可以[单独打开交互图](https://www.agent-journey.cn/archify/agent-planning.html)。*
 
 ## Plan、Act、Observe 分开
 

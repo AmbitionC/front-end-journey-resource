@@ -29,8 +29,12 @@ type ApprovalSnapshot = {
 
 [OpenAI Agents SDK 的 HITL 流程](https://openai.github.io/openai-agents-python/human_in_the_loop/)支持在敏感工具调用处暂停，序列化运行状态，为具体调用记录批准或拒绝，再恢复原运行。这是当前 SDK 的一种实现；无论框架如何，核心契约都应是“恢复被冻结的那次调用”，而不是重新让模型猜一次。
 
-![人工审批门禁将风险动作冻结为包含工具、参数、范围和期限的快照，并分流为批准、拒绝、过期或人工接管](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-human-in-loop-approval-gate-v1.webp)
-*图：批准后仍需重新校验；拒绝直接停止，过期需要续签，接管则把后续控制权交给人工。*
+<iframe
+  src="/archify/agent-human-in-loop.html"
+  title="Human-in-the-loop 持久审批协议交互架构图"
+></iframe>
+
+*图：沿“Proposed Action → Policy → Approval Snapshot → WAITING_APPROVAL”阅读持久审批主链；批准后仍需重新校验，拒绝、过期与人工接管各自拥有明确去向，也可以[单独打开交互图](https://www.agent-journey.cn/archify/agent-human-in-loop.html)。*
 
 ## 暂停与恢复必须可持久化
 

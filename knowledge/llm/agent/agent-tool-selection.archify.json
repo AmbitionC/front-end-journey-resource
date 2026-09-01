@@ -1,0 +1,198 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Agent 工具选择与授权漏斗",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [1100, 580],
+    "views": [
+      {
+        "id": "authorization-boundary",
+        "label": "授权先于发现",
+        "focus": ["principal_policy", "catalog", "hard_filter", "allowed_index"],
+        "note": "先按主体、策略和受控目录裁剪可见集合，未授权工具不进入模型上下文。"
+      },
+      {
+        "id": "relevance-ranking",
+        "label": "召回与排序",
+        "focus": ["task", "allowed_index", "recall", "ranker", "model_choice"],
+        "note": "任务只在允许索引中召回候选，再按确定性信号排序并交给模型选择。"
+      },
+      {
+        "id": "execution-authorization",
+        "label": "执行前再授权",
+        "focus": ["model_choice", "execution_auth"],
+        "note": "模型输出只是候选；实际工具、参数和资源必须重新授权，拒绝后重选或放弃。"
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "principal_policy",
+      "type": "security",
+      "label": "主体与策略",
+      "sublabel": "租户 · 区域 · Scope",
+      "pos": [30, 80],
+      "size": [145, 68]
+    },
+    {
+      "id": "catalog",
+      "type": "database",
+      "label": "能力目录",
+      "sublabel": "版本 · Schema · 风险",
+      "pos": [220, 80],
+      "size": [145, 68]
+    },
+    {
+      "id": "task",
+      "type": "external",
+      "label": "用户任务",
+      "sublabel": "意图 · 对象 · 约束",
+      "pos": [575, 80],
+      "size": [140, 68]
+    },
+    {
+      "id": "hard_filter",
+      "type": "security",
+      "label": "硬过滤",
+      "sublabel": "先隐藏未授权工具",
+      "pos": [205, 250],
+      "size": [140, 68]
+    },
+    {
+      "id": "allowed_index",
+      "type": "database",
+      "label": "允许索引",
+      "sublabel": "仅含可见能力",
+      "pos": [390, 250],
+      "size": [140, 68]
+    },
+    {
+      "id": "recall",
+      "type": "backend",
+      "label": "候选召回",
+      "sublabel": "Capability 匹配",
+      "pos": [575, 250],
+      "size": [140, 68]
+    },
+    {
+      "id": "ranker",
+      "type": "backend",
+      "label": "排序 / Top-k",
+      "sublabel": "风险 · 健康 · 成本",
+      "pos": [760, 250],
+      "size": [125, 68]
+    },
+    {
+      "id": "model_choice",
+      "type": "cloud",
+      "label": "模型选择",
+      "sublabel": "补参或 Abstain",
+      "pos": [925, 250],
+      "size": [130, 68]
+    },
+    {
+      "id": "execution_auth",
+      "type": "security",
+      "label": "执行授权",
+      "sublabel": "绑定实际参数与资源",
+      "tag": "deny → reselect / abstain",
+      "pos": [925, 420],
+      "size": [130, 68]
+    }
+  ],
+  "connections": [
+    {
+      "id": "principal_policy-to-hard_filter",
+      "from": "principal_policy",
+      "to": "hard_filter",
+      "label": "身份与策略",
+      "variant": "security"
+    },
+    {
+      "id": "catalog-to-hard_filter",
+      "from": "catalog",
+      "to": "hard_filter",
+      "label": "受控元数据",
+      "variant": "security",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "hard_filter-to-allowed_index",
+      "from": "hard_filter",
+      "to": "allowed_index",
+      "label": "授权集合",
+      "variant": "emphasis"
+    },
+    {
+      "id": "allowed_index-to-recall",
+      "from": "allowed_index",
+      "to": "recall",
+      "label": "允许候选",
+      "variant": "emphasis"
+    },
+    {
+      "id": "task-to-recall",
+      "from": "task",
+      "to": "recall",
+      "label": "任务意图",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelAt": [645, 175]
+    },
+    {
+      "id": "recall-to-ranker",
+      "from": "recall",
+      "to": "ranker",
+      "label": "匹配结果",
+      "variant": "emphasis"
+    },
+    {
+      "id": "ranker-to-model_choice",
+      "from": "ranker",
+      "to": "model_choice",
+      "label": "Top-k",
+      "variant": "emphasis"
+    },
+    {
+      "id": "model_choice-to-execution_auth",
+      "from": "model_choice",
+      "to": "execution_auth",
+      "label": "工具 + 实参",
+      "variant": "security",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelAt": [990, 332]
+    },
+    {
+      "id": "execution_auth-to-model_choice",
+      "from": "execution_auth",
+      "to": "model_choice",
+      "label": "拒绝：重选 / 放弃",
+      "variant": "dashed",
+      "fromSide": "right",
+      "toSide": "right",
+      "via": [[1075, 454], [1075, 284]],
+      "labelAt": [1045, 370]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "rose",
+      "title": "权限边界",
+      "items": ["硬过滤发生在语义排名之前", "未授权工具的名称与 Schema 都不可见"]
+    },
+    {
+      "dot": "cyan",
+      "title": "渐进发现",
+      "items": ["只在允许索引中召回并排序", "模型只看到少量差异清楚的 Top-k"]
+    },
+    {
+      "dot": "emerald",
+      "title": "安全执行",
+      "items": ["模型选择不等于获得授权", "低置信度或授权拒绝时正式放弃"]
+    }
+  ]
+}

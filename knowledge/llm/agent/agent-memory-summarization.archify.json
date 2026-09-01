@@ -1,0 +1,204 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "会话摘要与证据保真管线",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [1100, 580],
+    "views": [
+      {
+        "id": "fact-extraction",
+        "label": "从原文提炼事实",
+        "focus": ["timeline", "window", "extractor", "coreference", "fact_store"],
+        "note": "冻结待压缩区间，提取事实并消解指代；每条事实保留来源与状态。"
+      },
+      {
+        "id": "summary-quality",
+        "label": "生成与质量门",
+        "focus": ["fact_store", "generator", "quality_gate", "working_summary"],
+        "note": "摘要由结构化事实派生，覆盖、矛盾和不确定性校验通过后才成为工作视图。"
+      },
+      {
+        "id": "evidence-preservation",
+        "label": "证据从不被替代",
+        "focus": ["timeline", "fact_store", "quality_gate", "working_summary", "active_context"],
+        "note": "工作摘要用 Fact ID 回到事实，再用 Source ID 回到原文；失败时保留旧消息。"
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "timeline",
+      "type": "database",
+      "label": "原始时间线",
+      "sublabel": "Immutable Evidence",
+      "pos": [5, 230],
+      "size": [100, 68]
+    },
+    {
+      "id": "window",
+      "type": "backend",
+      "label": "冻结窗口",
+      "sublabel": "消息区间 + 版本",
+      "pos": [133, 230],
+      "size": [95, 68]
+    },
+    {
+      "id": "extractor",
+      "type": "backend",
+      "label": "事实提取",
+      "sublabel": "目标 · 决定 · 证据",
+      "pos": [256, 230],
+      "size": [95, 68]
+    },
+    {
+      "id": "coreference",
+      "type": "cloud",
+      "label": "指代消解",
+      "sublabel": "实体 · 时间 · 版本",
+      "pos": [379, 230],
+      "size": [95, 68]
+    },
+    {
+      "id": "fact_store",
+      "type": "database",
+      "label": "事实库",
+      "sublabel": "来源 · 置信度 · 状态",
+      "pos": [502, 230],
+      "size": [95, 68]
+    },
+    {
+      "id": "generator",
+      "type": "cloud",
+      "label": "摘要生成",
+      "sublabel": "结构化事实派生",
+      "pos": [625, 230],
+      "size": [95, 68]
+    },
+    {
+      "id": "quality_gate",
+      "type": "security",
+      "label": "质量门",
+      "sublabel": "覆盖 · 冲突 · 边界",
+      "pos": [748, 230],
+      "size": [95, 68]
+    },
+    {
+      "id": "working_summary",
+      "type": "database",
+      "label": "工作摘要",
+      "sublabel": "有损当前视图",
+      "pos": [871, 230],
+      "size": [95, 68]
+    },
+    {
+      "id": "active_context",
+      "type": "external",
+      "label": "Active Context",
+      "sublabel": "任务继续输入",
+      "pos": [994, 230],
+      "size": [100, 68]
+    }
+  ],
+  "connections": [
+    {
+      "id": "timeline-to-window",
+      "from": "timeline",
+      "to": "window",
+      "variant": "emphasis"
+    },
+    {
+      "id": "window-to-extractor",
+      "from": "window",
+      "to": "extractor",
+      "variant": "emphasis"
+    },
+    {
+      "id": "extractor-to-coreference",
+      "from": "extractor",
+      "to": "coreference",
+      "variant": "emphasis"
+    },
+    {
+      "id": "coreference-to-fact_store",
+      "from": "coreference",
+      "to": "fact_store",
+      "variant": "emphasis"
+    },
+    {
+      "id": "fact_store-to-generator",
+      "from": "fact_store",
+      "to": "generator",
+      "variant": "emphasis"
+    },
+    {
+      "id": "generator-to-quality_gate",
+      "from": "generator",
+      "to": "quality_gate",
+      "variant": "emphasis"
+    },
+    {
+      "id": "quality_gate-to-working_summary",
+      "from": "quality_gate",
+      "to": "working_summary",
+      "variant": "emphasis"
+    },
+    {
+      "id": "working_summary-to-active_context",
+      "from": "working_summary",
+      "to": "active_context",
+      "variant": "emphasis"
+    },
+    {
+      "id": "working_summary-to-fact_store",
+      "from": "working_summary",
+      "to": "fact_store",
+      "label": "Fact ID 回链",
+      "variant": "dashed",
+      "fromSide": "top",
+      "toSide": "right",
+      "via": [[918.5, 155], [620, 155], [620, 264]],
+      "labelAt": [770, 140]
+    },
+    {
+      "id": "fact_store-to-timeline",
+      "from": "fact_store",
+      "to": "timeline",
+      "label": "Source ID 回链",
+      "variant": "dashed",
+      "fromSide": "top",
+      "toSide": "top",
+      "via": [[549.5, 85], [55, 85]],
+      "labelAt": [300, 70]
+    },
+    {
+      "id": "quality_gate-to-timeline",
+      "from": "quality_gate",
+      "to": "timeline",
+      "label": "失败：保留原文",
+      "variant": "security",
+      "fromSide": "bottom",
+      "toSide": "bottom",
+      "via": [[795.5, 425], [55, 425]],
+      "labelAt": [425, 410]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "三层分离",
+      "items": ["原始时间线不可由摘要覆盖", "事实记录携带来源，工作摘要只是当前视图"]
+    },
+    {
+      "dot": "violet",
+      "title": "证据回链",
+      "items": ["摘要字段通过 Fact ID 回到结构化事实", "事实再通过 Source ID 回到原始消息或工具结果"]
+    },
+    {
+      "dot": "emerald",
+      "title": "安全压缩",
+      "items": ["质量门检查覆盖、冲突与不确定性", "校验失败先保留原文，不先删后补"]
+    }
+  ]
+}

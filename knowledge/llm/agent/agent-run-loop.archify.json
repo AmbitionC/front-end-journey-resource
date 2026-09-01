@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Agent Run Loop 的一轮、写回与终止",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [1100, 580],
+    "views": [
+      {
+        "id": "single-turn",
+        "label": "单轮执行链路",
+        "focus": ["observe", "decide", "validate", "act", "ingest", "evaluate"],
+        "note": "每轮从版本化输入快照开始，动作通过门禁后执行，结果写回再评价。"
+      },
+      {
+        "id": "state-writeback",
+        "label": "状态与证据写回",
+        "focus": ["run-state", "observe", "act", "ingest", "evaluate"],
+        "note": "工具结果按 call ID 与 state version 对账，写入状态后才成为下一轮观察。"
+      },
+      {
+        "id": "termination",
+        "label": "继续或进入终态",
+        "focus": ["validate", "ingest", "evaluate", "terminals", "observe"],
+        "note": "预算、进展和完成证据共同决定继续；停止会进入明确且可审计的终态。"
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "observe",
+      "type": "backend",
+      "label": "Observe",
+      "sublabel": "读取输入快照",
+      "pos": [30, 250],
+      "size": [140, 68]
+    },
+    {
+      "id": "decide",
+      "type": "cloud",
+      "label": "Decide",
+      "sublabel": "回答 · 工具 · 求助",
+      "pos": [220, 250],
+      "size": [140, 68]
+    },
+    {
+      "id": "validate",
+      "type": "security",
+      "label": "Validate",
+      "sublabel": "结构 · 权限 · 审批 · 预算",
+      "pos": [410, 250],
+      "size": [150, 68]
+    },
+    {
+      "id": "act",
+      "type": "backend",
+      "label": "Act",
+      "sublabel": "执行允许的动作",
+      "pos": [610, 250],
+      "size": [130, 68]
+    },
+    {
+      "id": "ingest",
+      "type": "messagebus",
+      "label": "Ingest",
+      "sublabel": "结果码 · trace · 证据",
+      "pos": [790, 250],
+      "size": [140, 68]
+    },
+    {
+      "id": "evaluate",
+      "type": "security",
+      "label": "Evaluate",
+      "sublabel": "完成 · 进展 · 继续",
+      "pos": [980, 250],
+      "size": [90, 68]
+    },
+    {
+      "id": "run-state",
+      "type": "database",
+      "label": "Run State",
+      "sublabel": "version · budget · facts",
+      "pos": [30, 430],
+      "size": [140, 68]
+    },
+    {
+      "id": "terminals",
+      "type": "external",
+      "label": "明确终态",
+      "sublabel": "Complete · Abstain · Escalate · Failed · Cancelled",
+      "pos": [730, 430],
+      "size": [300, 68]
+    }
+  ],
+  "connections": [
+    {
+      "id": "run-state-to-observe",
+      "from": "run-state",
+      "to": "observe",
+      "label": "输入快照",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "observe-to-decide",
+      "from": "observe",
+      "to": "decide",
+      "label": "状态",
+      "variant": "emphasis"
+    },
+    {
+      "id": "decide-to-validate",
+      "from": "decide",
+      "to": "validate",
+      "label": "动作",
+      "variant": "emphasis"
+    },
+    {
+      "id": "validate-to-act",
+      "from": "validate",
+      "to": "act",
+      "label": "放行",
+      "variant": "emphasis"
+    },
+    {
+      "id": "act-to-ingest",
+      "from": "act",
+      "to": "ingest",
+      "label": "结果",
+      "variant": "emphasis"
+    },
+    {
+      "id": "ingest-to-evaluate",
+      "from": "ingest",
+      "to": "evaluate",
+      "label": "证据",
+      "variant": "emphasis"
+    },
+    {
+      "id": "ingest-to-run-state",
+      "from": "ingest",
+      "to": "run-state",
+      "label": "版本化写回",
+      "fromSide": "bottom",
+      "toSide": "right",
+      "via": [[860, 380], [200, 380], [200, 464]]
+    },
+    {
+      "id": "evaluate-to-observe",
+      "from": "evaluate",
+      "to": "observe",
+      "label": "继续",
+      "fromSide": "top",
+      "toSide": "top",
+      "via": [[1025, 180], [100, 180]]
+    },
+    {
+      "id": "evaluate-to-terminals",
+      "from": "evaluate",
+      "to": "terminals",
+      "label": "停止条件",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "via": [[1025, 400], [880, 400]]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "轮次不是进展",
+      "items": ["每轮读取版本化状态与剩余预算", "新证据和状态变化才算真实推进"]
+    },
+    {
+      "dot": "rose",
+      "title": "动作先过确定性门禁",
+      "items": ["结构、权限、审批和预算在执行前重查", "错误码决定重试、求助还是停止"]
+    },
+    {
+      "dot": "violet",
+      "title": "终止是正式状态",
+      "items": ["Complete 必须有可验证完成证据", "Abstain、Escalate、Failed 与 Cancelled 都可审计"]
+    }
+  ]
+}

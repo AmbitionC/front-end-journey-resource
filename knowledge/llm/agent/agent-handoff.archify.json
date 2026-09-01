@@ -1,0 +1,198 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Router、Agent-as-Tool 与 Handoff 控制权",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [1100, 580],
+    "views": [
+      {
+        "id": "router-path",
+        "label": "Router：选择处理者",
+        "focus": ["user", "router", "specialist", "final-response"],
+        "note": "Router 做一次能力匹配并选择处理路径；是否转移会话所有权需由外围协议明确。"
+      },
+      {
+        "id": "agent-as-tool-path",
+        "label": "Agent-as-Tool：Manager 负责",
+        "focus": ["user", "manager", "specialist", "final-response"],
+        "note": "Specialist 只完成窄任务并返回结构化结果，Manager 继续拥有最终答复。"
+      },
+      {
+        "id": "handoff-path",
+        "label": "Handoff：转移所有权",
+        "focus": ["user", "manager", "permission-gate", "handoff-envelope", "target-owner", "final-response"],
+        "note": "权限通过后才传递最小 Envelope，并把后续用户交互所有权交给目标 Agent。"
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "user",
+      "type": "external",
+      "label": "User",
+      "sublabel": "请求与后续交互",
+      "pos": [20, 240],
+      "size": [120, 64]
+    },
+    {
+      "id": "router",
+      "type": "backend",
+      "label": "Router",
+      "sublabel": "意图 · 能力匹配",
+      "pos": [200, 70],
+      "size": [135, 64]
+    },
+    {
+      "id": "manager",
+      "type": "backend",
+      "label": "Manager",
+      "sublabel": "编排与最终责任",
+      "pos": [200, 240],
+      "size": [145, 68]
+    },
+    {
+      "id": "specialist",
+      "type": "backend",
+      "label": "Specialist",
+      "sublabel": "领域能力与窄工具",
+      "pos": [470, 70],
+      "size": [150, 68]
+    },
+    {
+      "id": "permission-gate",
+      "type": "security",
+      "label": "Permission Gate",
+      "sublabel": "委派范围 · ACL · scope",
+      "pos": [400, 410],
+      "size": [150, 68]
+    },
+    {
+      "id": "handoff-envelope",
+      "type": "messagebus",
+      "label": "Handoff Envelope",
+      "sublabel": "最小上下文 · 权限上限",
+      "pos": [610, 410],
+      "size": [170, 68]
+    },
+    {
+      "id": "target-owner",
+      "type": "backend",
+      "label": "Target Owner",
+      "sublabel": "新的 user-facing owner",
+      "pos": [835, 410],
+      "size": [150, 68]
+    },
+    {
+      "id": "final-response",
+      "type": "external",
+      "label": "Final Response",
+      "sublabel": "唯一用户可见答复",
+      "pos": [900, 240],
+      "size": [160, 64]
+    }
+  ],
+  "connections": [
+    {
+      "id": "user-to-router",
+      "from": "user",
+      "to": "router",
+      "label": "路由请求"
+    },
+    {
+      "id": "router-to-specialist",
+      "from": "router",
+      "to": "specialist",
+      "label": "选择处理者",
+      "variant": "emphasis"
+    },
+    {
+      "id": "specialist-to-final-response",
+      "from": "specialist",
+      "to": "final-response",
+      "label": "Router 路径答复",
+      "fromSide": "right",
+      "toSide": "top"
+    },
+    {
+      "id": "user-to-manager",
+      "from": "user",
+      "to": "manager",
+      "variant": "emphasis"
+    },
+    {
+      "id": "manager-to-specialist",
+      "from": "manager",
+      "to": "specialist",
+      "label": "窄任务",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "labelDx": -55
+    },
+    {
+      "id": "specialist-to-manager",
+      "from": "specialist",
+      "to": "manager",
+      "label": "结构化结果",
+      "fromSide": "left",
+      "toSide": "right"
+    },
+    {
+      "id": "manager-to-final-response",
+      "from": "manager",
+      "to": "final-response",
+      "label": "统一答复",
+      "variant": "emphasis"
+    },
+    {
+      "id": "manager-to-permission-gate",
+      "from": "manager",
+      "to": "permission-gate",
+      "label": "申请 Handoff",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "variant": "security"
+    },
+    {
+      "id": "permission-gate-to-handoff-envelope",
+      "from": "permission-gate",
+      "to": "handoff-envelope",
+      "label": "校验后封装",
+      "variant": "security"
+    },
+    {
+      "id": "handoff-envelope-to-target-owner",
+      "from": "handoff-envelope",
+      "to": "target-owner",
+      "label": "转移控制",
+      "variant": "emphasis"
+    },
+    {
+      "id": "target-owner-to-final-response",
+      "from": "target-owner",
+      "to": "final-response",
+      "label": "直接面向用户",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "variant": "emphasis"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Router",
+      "items": ["一次选择匹配的处理路径", "外围协议决定是否转移会话所有权"]
+    },
+    {
+      "dot": "emerald",
+      "title": "Agent-as-Tool",
+      "items": ["Manager 发放窄任务", "Specialist 返回结果，Manager 统一答复"]
+    },
+    {
+      "dot": "violet",
+      "title": "Handoff",
+      "items": ["先校验委派权限并裁剪上下文", "Target 成为唯一 user-facing owner"]
+    }
+  ]
+}

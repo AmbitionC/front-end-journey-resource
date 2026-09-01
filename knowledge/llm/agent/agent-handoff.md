@@ -24,8 +24,12 @@ Specialist 返回结构化结果或错误，manager 决定下一步和最终答�
 
 当前 [OpenAI Agents Tools 文档](https://openai.github.io/openai-agents-python/tools/)把 Agents as tools 描述为 manager 保持控制、调用 specialist；[Multi-agent 文档](https://openai.github.io/openai-agents-python/multi_agent/)也区分 manager 编排与 handoff 的去中心模式。具体 API 截至 2026-07-15 可作为实现例子，控制语义才是核心。
 
-![Router、Agent-as-Tool 与 Handoff 三种模式对比上下文、控制权和最终责任，Handoff 经过权限检查后才转移用户可见所有权](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-handoff-responsibility-boundary-v1.webp)
-*图：前两种模式的 Final Owner 仍是 Orchestrator；Handoff 另有 Return Control 与 Error 路径。*
+<iframe
+  src="/archify/agent-handoff.html"
+  title="Router、Agent-as-Tool 与 Handoff 控制权对比交互架构图"
+></iframe>
+
+*图：Router 只选择处理路径，Agent-as-Tool 由 Manager 保留最终答复，只有 Handoff 在权限校验与最小 Envelope 之后把 user-facing owner 转给目标 Agent，也可以[单独打开交互图](https://www.agent-journey.cn/archify/agent-handoff.html)。*
 
 ## Handoff：显式转移所有权
 

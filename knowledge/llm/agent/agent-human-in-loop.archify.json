@@ -1,0 +1,183 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Human-in-the-loop 持久审批协议",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [1100, 580],
+    "views": [
+      {
+        "id": "freeze-and-wait",
+        "label": "冻结与等待",
+        "focus": ["proposed-action", "policy", "approval-snapshot", "waiting", "human-review"],
+        "note": "策略要求审批时，系统冻结具体行动快照并持久化等待明确决定。"
+      },
+      {
+        "id": "approve-and-execute",
+        "label": "批准与执行",
+        "focus": ["human-review", "revalidation", "executor"],
+        "note": "批准只授权快照中的一次行动；执行前仍须重验授权、哈希与业务前置条件。"
+      },
+      {
+        "id": "stop-or-take-over",
+        "label": "拒绝、过期与接管",
+        "focus": ["human-review", "reject-expire", "takeover"],
+        "note": "拒绝或过期停止原提案；人工接管则显式把后续控制权切换给人。"
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "proposed-action",
+      "type": "external",
+      "label": "Proposed Action",
+      "sublabel": "工具 · 参数 · 资源范围",
+      "pos": [25, 240],
+      "size": [140, 68]
+    },
+    {
+      "id": "policy",
+      "type": "security",
+      "label": "Policy",
+      "sublabel": "allow · deny · approval",
+      "pos": [215, 240],
+      "size": [135, 68]
+    },
+    {
+      "id": "approval-snapshot",
+      "type": "database",
+      "label": "Approval Snapshot",
+      "sublabel": "不可变 · 单次 · 短期",
+      "pos": [400, 240],
+      "size": [155, 68]
+    },
+    {
+      "id": "waiting",
+      "type": "messagebus",
+      "label": "WAITING_APPROVAL",
+      "sublabel": "持久化暂停",
+      "pos": [605, 240],
+      "size": [145, 68]
+    },
+    {
+      "id": "human-review",
+      "type": "external",
+      "label": "Human Review",
+      "sublabel": "approve · reject · takeover",
+      "pos": [800, 240],
+      "size": [160, 68]
+    },
+    {
+      "id": "revalidation",
+      "type": "security",
+      "label": "Revalidation",
+      "sublabel": "主体 · 哈希 · 前置条件",
+      "pos": [735, 410],
+      "size": [160, 68]
+    },
+    {
+      "id": "executor",
+      "type": "backend",
+      "label": "Executor",
+      "sublabel": "授权 · 幂等",
+      "pos": [945, 410],
+      "size": [130, 68]
+    },
+    {
+      "id": "reject-expire",
+      "type": "external",
+      "label": "Reject / Expire",
+      "sublabel": "终止或重新提案",
+      "pos": [870, 70],
+      "size": [170, 64]
+    },
+    {
+      "id": "takeover",
+      "type": "external",
+      "label": "Human Takeover",
+      "sublabel": "owner = human",
+      "pos": [650, 70],
+      "size": [160, 64]
+    }
+  ],
+  "connections": [
+    {
+      "id": "proposed-action-to-policy",
+      "from": "proposed-action",
+      "to": "policy",
+      "label": "风险判断",
+      "variant": "emphasis"
+    },
+    {
+      "id": "policy-to-approval-snapshot",
+      "from": "policy",
+      "to": "approval-snapshot",
+      "label": "需审批",
+      "variant": "security"
+    },
+    {
+      "id": "approval-snapshot-to-waiting",
+      "from": "approval-snapshot",
+      "to": "waiting",
+      "label": "持久化"
+    },
+    {
+      "id": "waiting-to-human-review",
+      "from": "waiting",
+      "to": "human-review",
+      "label": "提交决定"
+    },
+    {
+      "id": "human-review-to-revalidation",
+      "from": "human-review",
+      "to": "revalidation",
+      "label": "approve",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "variant": "emphasis"
+    },
+    {
+      "id": "revalidation-to-executor",
+      "from": "revalidation",
+      "to": "executor",
+      "label": "重验通过",
+      "variant": "emphasis"
+    },
+    {
+      "id": "human-review-to-reject-expire",
+      "from": "human-review",
+      "to": "reject-expire",
+      "label": "reject / expire",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "variant": "dashed"
+    },
+    {
+      "id": "human-review-to-takeover",
+      "from": "human-review",
+      "to": "takeover",
+      "label": "takeover",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "variant": "security"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "不可变快照",
+      "items": ["绑定 callId、参数哈希、资源范围与策略版本", "任何行动变化都产生新快照"]
+    },
+    {
+      "dot": "emerald",
+      "title": "安全恢复",
+      "items": ["等待状态可跨进程持久化", "批准后重新校验并以幂等键执行"]
+    },
+    {
+      "dot": "rose",
+      "title": "明确终态",
+      "items": ["拒绝与过期不会静默执行", "接管通过服务端状态转移控制权"]
+    }
+  ]
+}

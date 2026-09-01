@@ -23,8 +23,12 @@ Discovery 回答“有哪些能力可能相关”，authorization 回答“当�
 5. **模型选择**：只在 top-k 中选择、补参或 abstain；
 6. **执行前再授权**：绑定实际参数与目标资源重新验证。
 
-![大型工具目录先经过身份、租户、区域与能力硬过滤，再在允许索引中匹配排序，模型选择后仍需重新授权](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-tool-selection-progressive-discovery-v1.webp)
-*图：未授权工具在排名前就进入不可见区；发现与排名都不能覆盖权限。*
+<iframe
+  src="/archify/agent-tool-selection.html"
+  title="Agent 工具选择与授权漏斗交互架构图"
+></iframe>
+
+*图：沿“主体与策略 → 硬过滤 → 允许索引 → 候选召回 → Top-k → 执行授权”阅读主链路；可切换上方视图区分授权边界、相关性排序与拒绝回路，也可以[单独打开交互图](https://www.agent-journey.cn/archify/agent-tool-selection.html)。*
 
 ## Progressive Discovery 控制规模
 

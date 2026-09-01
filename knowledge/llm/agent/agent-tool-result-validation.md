@@ -14,8 +14,12 @@
 
 结构通过后继续做语义检查，例如 `start <= end`、币种与金额匹配、分页 cursor 与请求一致、资源 ID 属于预期对象、总数等于明细汇总。Schema 能确认 `amount` 是 number，却不能确认金额来自真实账本或当前用户有权查看。
 
-![不可信工具输出依次通过响应信封、Schema、语义、策略、来源与新鲜度检查，失败进入重试、拒绝或隔离，通过后才写入 Agent 状态](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-tool-result-validation-trust-boundary-v1.webp)
-*图：成功状态不等于可信内容；任何重试结果都必须重新走完整验证管线。*
+<iframe
+  src="/archify/agent-tool-result-validation.html"
+  title="工具结果信任验证管线交互架构图"
+></iframe>
+
+*图：沿“原始工具输出 → 信封解析 → Schema → 语义校验 → 策略校验 → 来源/新鲜度 → Accepted Evidence → Agent 状态”阅读信任收口；可切换上方视图观察形状校验、信任边界与失败路由，也可以[单独打开交互图](https://www.agent-journey.cn/archify/agent-tool-result-validation.html)。*
 
 ## Policy 检查下游能否使用
 

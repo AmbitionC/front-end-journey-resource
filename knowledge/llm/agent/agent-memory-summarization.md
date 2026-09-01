@@ -28,8 +28,12 @@ type SummaryFact = {
 
 原始时间线不可由摘要覆盖；提炼事实是带 provenance 的结构化记录；工作摘要只是当前上下文视图。摘要更新时引用 fact ID，而不是反复对“上一版自然语言摘要”再总结，否则错误会像有损转码一样累积。
 
-![原始时间线经过事实提取、指代消解和摘要形成 Working Summary，原始证据保持不变，每条摘要通过 Provenance 回链并经过覆盖、矛盾与不确定性质量门](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-memory-summarization-evidence-compression-v1.webp)
-*图：摘要进入 Active Context 前先校验；Immutable Evidence 从不被摘要替代。*
+<iframe
+  src="/archify/agent-memory-summarization.html"
+  title="会话摘要与证据保真管线交互架构图"
+></iframe>
+
+*图：沿“原始时间线 → 冻结窗口 → 事实提取 → 指代消解 → 事实库 → 摘要生成 → 质量门 → Active Context”阅读压缩链路；可切换上方视图观察事实提炼、证据回链与失败保留原文，也可以[单独打开交互图](https://www.agent-journey.cn/archify/agent-memory-summarization.html)。*
 
 ## 为什么不能只依赖更长上下文
 

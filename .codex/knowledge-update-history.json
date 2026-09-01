@@ -240,10 +240,10 @@
       "key": "agent-architecture",
       "label": "智能体定义、类型、PEAS 与 Agent Loop",
       "filePath": "llm/agent",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-14",
-      "batch": "rag-evaluation-and-agent-foundations-2026-07-14"
+      "recordedAt": "2026-09-01",
+      "batch": "archify-diagram-10-2026-09-01"
     },
     {
       "key": "agent-first-demo",
@@ -789,28 +789,28 @@
       "key": "agent-planning",
       "label": "任务规划、分解与动态重规划",
       "filePath": "llm/agent",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-15",
-      "batch": "rag-production-agent-next-20-2026-07-15"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-09-01",
+      "batch": "archify-diagram-10-2026-09-01"
     },
     {
       "key": "agent-handoff",
       "label": "Handoff、Agent-as-Tool 与职责边界",
       "filePath": "llm/agent",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-15",
-      "batch": "rag-production-agent-next-20-2026-07-15"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-09-01",
+      "batch": "archify-diagram-10-2026-09-01"
     },
     {
       "key": "agent-human-in-loop",
       "label": "Human-in-the-loop 审批与人工接管",
       "filePath": "llm/agent",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-16",
-      "batch": "agent-orchestration-next-10-2026-07-16"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-09-01",
+      "batch": "archify-diagram-10-2026-09-01"
     },
     {
       "key": "agent-sandbox",
@@ -825,19 +825,19 @@
       "key": "agent-run-loop",
       "label": "Agent Run Loop、轮次与终止条件",
       "filePath": "llm/agent",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-16",
-      "batch": "agent-orchestration-next-10-2026-07-16"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-09-01",
+      "batch": "archify-diagram-10-2026-09-01"
     },
     {
       "key": "agent-state-machine",
       "label": "用状态机建模 Agent 行为",
       "filePath": "llm/agent",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-16",
-      "batch": "agent-orchestration-next-10-2026-07-16"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-09-01",
+      "batch": "archify-diagram-10-2026-09-01"
     },
     {
       "key": "agent-event-driven",
@@ -870,19 +870,19 @@
       "key": "agent-tool-selection",
       "label": "工具发现、选择与路由",
       "filePath": "llm/agent",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-16",
-      "batch": "agent-orchestration-next-10-2026-07-16"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-09-01",
+      "batch": "archify-diagram-10-2026-09-01"
     },
     {
       "key": "agent-tool-result-validation",
       "label": "工具结果校验、解析与反馈",
       "filePath": "llm/agent",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-16",
-      "batch": "agent-orchestration-next-10-2026-07-16"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-09-01",
+      "batch": "archify-diagram-10-2026-09-01"
     },
     {
       "key": "agent-tool-timeout",
@@ -915,10 +915,10 @@
       "key": "agent-supervisor",
       "label": "Supervisor 监督者模式",
       "filePath": "llm/agent",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-16",
-      "batch": "agent-multi-production-next-20-2026-07-16"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-09-01",
+      "batch": "archify-diagram-10-2026-09-01"
     },
     {
       "key": "agent-delegation",
@@ -951,10 +951,10 @@
       "key": "agent-memory-summarization",
       "label": "会话摘要、压缩与记忆提炼",
       "filePath": "llm/agent",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-16",
-      "batch": "agent-multi-production-next-20-2026-07-16"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-09-01",
+      "batch": "archify-diagram-10-2026-09-01"
     },
     {
       "key": "agent-memory-forgetting",

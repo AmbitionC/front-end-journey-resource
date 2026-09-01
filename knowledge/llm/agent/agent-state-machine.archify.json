@@ -1,0 +1,186 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Agent 状态机的事件与副作用边界",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [1100, 580],
+    "views": [
+      {
+        "id": "transition-decision",
+        "label": "事件驱动迁移",
+        "focus": ["event-inbox", "state-store", "guard", "transition-engine"],
+        "note": "事件携带事实，状态实例提供版本化上下文，纯 Guard 决定迁移是否启用。"
+      },
+      {
+        "id": "side-effect-delivery",
+        "label": "副作用一致性",
+        "focus": ["transition-engine", "outbox", "dispatcher", "external-system", "event-inbox"],
+        "note": "状态提交与命令写入同一事务，dispatcher 再以幂等方式投递外部副作用。"
+      },
+      {
+        "id": "invalid-events",
+        "label": "非法与迟到事件",
+        "focus": ["event-inbox", "state-store", "guard", "audit-sink"],
+        "note": "版本不符、重复或终态后的事件被拒绝、隔离并留下审计信号。"
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "event-inbox",
+      "type": "messagebus",
+      "label": "Event Inbox",
+      "sublabel": "事实事件 · event ID",
+      "pos": [30, 250],
+      "size": [150, 68]
+    },
+    {
+      "id": "guard",
+      "type": "security",
+      "label": "Pure Guard",
+      "sublabel": "状态 · 版本 · 策略条件",
+      "pos": [230, 250],
+      "size": [150, 68]
+    },
+    {
+      "id": "transition-engine",
+      "type": "backend",
+      "label": "Transition",
+      "sublabel": "选择目标状态与 action",
+      "pos": [450, 250],
+      "size": [165, 68]
+    },
+    {
+      "id": "outbox",
+      "type": "database",
+      "label": "Transactional Outbox",
+      "sublabel": "新状态与待发命令",
+      "pos": [690, 250],
+      "size": [150, 68]
+    },
+    {
+      "id": "dispatcher",
+      "type": "backend",
+      "label": "Dispatcher",
+      "sublabel": "幂等投递 · 重试",
+      "pos": [920, 250],
+      "size": [145, 68]
+    },
+    {
+      "id": "state-store",
+      "type": "database",
+      "label": "State Instance",
+      "sublabel": "context · version · sequence",
+      "pos": [450, 70],
+      "size": [165, 68]
+    },
+    {
+      "id": "external-system",
+      "type": "external",
+      "label": "外部工具系统",
+      "sublabel": "受控副作用与结果",
+      "pos": [920, 70],
+      "size": [145, 68]
+    },
+    {
+      "id": "audit-sink",
+      "type": "security",
+      "label": "拒绝与隔离",
+      "sublabel": "非法 · 重复 · stale event",
+      "pos": [230, 430],
+      "size": [150, 68]
+    }
+  ],
+  "connections": [
+    {
+      "id": "event-inbox-to-guard",
+      "from": "event-inbox",
+      "to": "guard",
+      "label": "事件",
+      "variant": "emphasis"
+    },
+    {
+      "id": "state-store-to-guard",
+      "from": "state-store",
+      "to": "guard",
+      "label": "状态快照",
+      "fromSide": "left",
+      "toSide": "top"
+    },
+    {
+      "id": "guard-to-transition-engine",
+      "from": "guard",
+      "to": "transition-engine",
+      "label": "允许",
+      "variant": "emphasis"
+    },
+    {
+      "id": "transition-engine-to-state-store",
+      "from": "transition-engine",
+      "to": "state-store",
+      "label": "CAS 提交",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "transition-engine-to-outbox",
+      "from": "transition-engine",
+      "to": "outbox",
+      "label": "命令入箱",
+      "variant": "emphasis"
+    },
+    {
+      "id": "outbox-to-dispatcher",
+      "from": "outbox",
+      "to": "dispatcher",
+      "label": "幂等投递",
+      "variant": "emphasis"
+    },
+    {
+      "id": "dispatcher-to-external-system",
+      "from": "dispatcher",
+      "to": "external-system",
+      "label": "执行副作用",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "external-system-to-event-inbox",
+      "from": "external-system",
+      "to": "event-inbox",
+      "label": "结果事件",
+      "fromSide": "top",
+      "toSide": "top",
+      "via": [[992.5, 35], [105, 35]]
+    },
+    {
+      "id": "guard-to-audit-sink",
+      "from": "guard",
+      "to": "audit-sink",
+      "label": "拒绝或隔离",
+      "variant": "security",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelAt": [305, 332]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "事件描述已发生事实",
+      "items": ["Event 不直接命令状态跳转", "同名事件在不同状态可有不同合法性"]
+    },
+    {
+      "dot": "rose",
+      "title": "Guard 保持纯函数",
+      "items": ["只检查版本化 context 与可信策略事实", "迟到、重复和非法事件显式拒绝"]
+    },
+    {
+      "dot": "violet",
+      "title": "副作用走 Outbox",
+      "items": ["状态迁移与待发命令原子写入", "operation ID 与幂等键支持恢复和重放"]
+    }
+  ]
+}

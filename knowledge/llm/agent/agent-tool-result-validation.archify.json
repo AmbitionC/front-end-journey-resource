@@ -1,0 +1,222 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "工具结果信任验证管线",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [1100, 580],
+    "views": [
+      {
+        "id": "shape-and-meaning",
+        "label": "从信封到语义",
+        "focus": ["raw_output", "envelope", "schema", "semantic"],
+        "note": "先限制输入并确认协议形状，再检查业务不变量；HTTP 200 不是可信证据。"
+      },
+      {
+        "id": "trust-boundary",
+        "label": "策略与来源",
+        "focus": ["semantic", "policy", "provenance", "accepted", "agent_state"],
+        "note": "内容只有通过用途授权、来源与新鲜度检查，才能成为 Accepted Evidence。"
+      },
+      {
+        "id": "failure-routing",
+        "label": "失败路由",
+        "focus": ["envelope", "schema", "semantic", "policy", "provenance", "failure"],
+        "note": "任一阶段失败都进入重试、拒绝或隔离；重试必须从原始输出重新走完整管线。"
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "raw_output",
+      "type": "external",
+      "label": "原始工具输出",
+      "sublabel": "不可信内容",
+      "pos": [20, 220],
+      "size": [110, 68]
+    },
+    {
+      "id": "envelope",
+      "type": "backend",
+      "label": "信封解析",
+      "sublabel": "大小 · 层级 · Call ID",
+      "pos": [155, 220],
+      "size": [110, 68]
+    },
+    {
+      "id": "schema",
+      "type": "security",
+      "label": "Schema",
+      "sublabel": "类型 · 必填 · 版本",
+      "pos": [290, 220],
+      "size": [110, 68]
+    },
+    {
+      "id": "semantic",
+      "type": "backend",
+      "label": "语义校验",
+      "sublabel": "业务不变量",
+      "pos": [425, 220],
+      "size": [110, 68]
+    },
+    {
+      "id": "policy",
+      "type": "security",
+      "label": "策略校验",
+      "sublabel": "主体 · 用途 · Scope",
+      "pos": [560, 220],
+      "size": [110, 68]
+    },
+    {
+      "id": "provenance",
+      "type": "database",
+      "label": "来源 / 新鲜度",
+      "sublabel": "版本 · 时间 · 范围",
+      "pos": [695, 220],
+      "size": [130, 68]
+    },
+    {
+      "id": "accepted",
+      "type": "database",
+      "label": "Accepted Evidence",
+      "sublabel": "可验证证据",
+      "pos": [850, 220],
+      "size": [120, 68]
+    },
+    {
+      "id": "agent_state",
+      "type": "database",
+      "label": "Agent 状态",
+      "sublabel": "唯一可信入口",
+      "pos": [995, 220],
+      "size": [85, 68]
+    },
+    {
+      "id": "failure",
+      "type": "security",
+      "label": "失败路由",
+      "sublabel": "Retry · Reject · Quarantine",
+      "tag": "fail closed",
+      "pos": [470, 405],
+      "size": [180, 68]
+    }
+  ],
+  "connections": [
+    {
+      "id": "raw_output-to-envelope",
+      "from": "raw_output",
+      "to": "envelope",
+      "variant": "emphasis"
+    },
+    {
+      "id": "envelope-to-schema",
+      "from": "envelope",
+      "to": "schema",
+      "variant": "emphasis"
+    },
+    {
+      "id": "schema-to-semantic",
+      "from": "schema",
+      "to": "semantic",
+      "variant": "emphasis"
+    },
+    {
+      "id": "semantic-to-policy",
+      "from": "semantic",
+      "to": "policy",
+      "variant": "emphasis"
+    },
+    {
+      "id": "policy-to-provenance",
+      "from": "policy",
+      "to": "provenance",
+      "variant": "emphasis"
+    },
+    {
+      "id": "provenance-to-accepted",
+      "from": "provenance",
+      "to": "accepted",
+      "variant": "emphasis"
+    },
+    {
+      "id": "accepted-to-agent_state",
+      "from": "accepted",
+      "to": "agent_state",
+      "variant": "emphasis"
+    },
+    {
+      "id": "envelope-to-failure",
+      "from": "envelope",
+      "to": "failure",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "left",
+      "via": [[210, 350], [430, 350], [430, 439]]
+    },
+    {
+      "id": "schema-to-failure",
+      "from": "schema",
+      "to": "failure",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "route": "orthogonal-v"
+    },
+    {
+      "id": "semantic-to-failure",
+      "from": "semantic",
+      "to": "failure",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "route": "orthogonal-v"
+    },
+    {
+      "id": "policy-to-failure",
+      "from": "policy",
+      "to": "failure",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "route": "orthogonal-v"
+    },
+    {
+      "id": "provenance-to-failure",
+      "from": "provenance",
+      "to": "failure",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "route": "orthogonal-v"
+    },
+    {
+      "id": "failure-to-raw_output",
+      "from": "failure",
+      "to": "raw_output",
+      "label": "Retry：完整重验",
+      "variant": "security",
+      "fromSide": "bottom",
+      "toSide": "bottom",
+      "via": [[560, 515], [75, 515]],
+      "labelAt": [300, 500]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "rose",
+      "title": "成功不等于可信",
+      "items": ["协议成功只说明某层未报告错误", "Schema 通过也不能证明事实真实或获授权"]
+    },
+    {
+      "dot": "emerald",
+      "title": "证据入口",
+      "items": ["来源、版本、时间与适用范围随证据保存", "只有 Accepted Evidence 能进入 Agent 状态"]
+    },
+    {
+      "dot": "amber",
+      "title": "失败语义",
+      "items": ["Retry、Reject 与 Quarantine 明确分流", "重试结果不能绕过任何验证阶段"]
+    }
+  ]
+}
