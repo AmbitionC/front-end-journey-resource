@@ -1,0 +1,166 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "最小 Agent 运行时",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [1100, 580],
+    "views": [
+      {
+        "id": "core-loop",
+        "label": "核心执行链路",
+        "focus": ["input", "planner", "executor", "response"],
+        "note": "从用户目标进入规划与执行，最终收敛为回复或交付物。"
+      },
+      {
+        "id": "reasoning",
+        "label": "推理决策",
+        "focus": ["planner", "executor", "llm"],
+        "note": "Planner 与 Executor 共用 LLM，但承担不同阶段的决策。"
+      },
+      {
+        "id": "tools-state",
+        "label": "工具与状态",
+        "focus": ["planner", "executor", "tools", "memory"],
+        "note": "工具产生副作用，Memory 保存状态并向下一轮规划补充上下文。"
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "input",
+      "type": "external",
+      "label": "用户目标",
+      "sublabel": "自然语言任务",
+      "pos": [30, 250],
+      "size": [130, 64]
+    },
+    {
+      "id": "planner",
+      "type": "backend",
+      "label": "Planner",
+      "sublabel": "拆解目标 · 生成计划",
+      "pos": [230, 250],
+      "size": [155, 68]
+    },
+    {
+      "id": "executor",
+      "type": "backend",
+      "label": "Executor",
+      "sublabel": "执行动作 · 收敛结果",
+      "tag": "max_steps = 8",
+      "pos": [485, 250],
+      "size": [165, 68]
+    },
+    {
+      "id": "response",
+      "type": "external",
+      "label": "最终回复",
+      "sublabel": "答案或交付物",
+      "pos": [900, 250],
+      "size": [150, 64]
+    },
+    {
+      "id": "llm",
+      "type": "cloud",
+      "label": "LLM 接口",
+      "sublabel": "推理与决策",
+      "pos": [360, 70],
+      "size": [155, 68]
+    },
+    {
+      "id": "memory",
+      "type": "database",
+      "label": "Memory",
+      "sublabel": "状态 · 历史 · 上下文",
+      "pos": [245, 430],
+      "size": [165, 68]
+    },
+    {
+      "id": "tools",
+      "type": "backend",
+      "label": "Tool Registry",
+      "sublabel": "检索 · API · 代码执行",
+      "pos": [680, 430],
+      "size": [175, 68]
+    }
+  ],
+  "connections": [
+    {
+      "from": "input",
+      "to": "planner",
+      "label": "任务输入",
+      "variant": "emphasis"
+    },
+    {
+      "from": "planner",
+      "to": "executor",
+      "label": "执行计划",
+      "variant": "emphasis"
+    },
+    {
+      "from": "executor",
+      "to": "response",
+      "label": "最终回复",
+      "variant": "emphasis"
+    },
+    {
+      "from": "planner",
+      "to": "llm",
+      "label": "规划推理",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "from": "executor",
+      "to": "llm",
+      "label": "行动决策",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "from": "executor",
+      "to": "tools",
+      "label": "调用工具",
+      "fromSide": "right",
+      "toSide": "top"
+    },
+    {
+      "from": "tools",
+      "to": "executor",
+      "label": "结果回传",
+      "fromSide": "left",
+      "toSide": "bottom"
+    },
+    {
+      "from": "executor",
+      "to": "memory",
+      "label": "更新状态"
+    },
+    {
+      "from": "memory",
+      "to": "planner",
+      "label": "注入上下文",
+      "fromSide": "top",
+      "toSide": "bottom"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "主循环",
+      "items": ["目标 → 规划 → 执行 → 回复", "Executor 用 max_steps 防止无界循环"]
+    },
+    {
+      "dot": "emerald",
+      "title": "受控副作用",
+      "items": ["工具统一注册与调用", "执行结果回传后再进入下一步决策"]
+    },
+    {
+      "dot": "violet",
+      "title": "可恢复状态",
+      "items": ["Memory 保存历史与阶段状态", "新一轮规划按需注入上下文"]
+    }
+  ]
+}

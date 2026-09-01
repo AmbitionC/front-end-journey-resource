@@ -1925,8 +1925,8 @@
       "filePath": "llm/agent",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-08-29",
-      "batch": "nowcoder-agent-market-20260829032320626-7f773caa"
+      "recordedAt": "2026-09-01",
+      "batch": "archify-pilot-2026-09-01"
     },
     {
       "key": "mcp-protocol",

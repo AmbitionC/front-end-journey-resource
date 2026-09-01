@@ -24,27 +24,12 @@ Agent 框架是连接大语言模型（LLM）与真实世界任务的工程骨�
 
 一个最小可用的 Agent 框架，只需要五个核心组件：
 
-```mermaid
-graph TD
-    User([用户输入]) --> Planner
-    Planner -->|计划| Executor
-    Executor -->|调用| Tool
-    Tool -->|结果| Executor
-    Executor -->|更新| Memory
-    Memory -->|上下文| Planner
-    Executor -->|最终回复| User
+<iframe
+  src="/archify/build-agent-framework.html"
+  title="最小 Agent 运行时交互架构图"
+></iframe>
 
-    subgraph "Agent 框架核心"
-        LLM[LLM 接口]
-        Memory[Memory 记忆]
-        Tool[Tool 工具]
-        Planner[Planner 规划器]
-        Executor[Executor 执行器]
-    end
-
-    Planner --- LLM
-    Executor --- LLM
-```
+*图：沿“用户目标 → Planner → Executor → 最终回复”阅读主链路；可切换上方视图观察 LLM、Memory 与 Tool Registry 的协作，也可以[单独打开交互图](https://www.agent-journey.cn/archify/build-agent-framework.html)。*
 
 ### 1. LLM 接口（Model Layer）
 
