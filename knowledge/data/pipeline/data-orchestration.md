@@ -45,6 +45,12 @@ DAG 必须无环，因为循环会让完成条件不明确。业务上的迭代�
 
 在单元测试验证日期区间、分支和模板；在集成测试运行小型历史数据。演练重复 retry、同区间并发、上游迟到、空分区、部分输出、回填与实时竞争、代码回滚。一个成熟 DAG 的任意 task instance 都能回答：处理哪个数据区间、输入版本是什么、重复执行会怎样、输出何时被视为已提交。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-23.md)（cluster-3f37b9b18f24）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Apache Airflow：DAGs](https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/dags.html)

@@ -448,6 +448,12 @@ ETL pipeline 是 AI 系统的数据基础设施层：
 
 核心看转换逻辑的复杂度和变更频率，以及目标系统的计算能力。AI 离线训练场景常用 ELT——数据先 Load 到数仓（Snowflake/BigQuery），再用 SQL 或 dbt 做特征工程，灵活性高；特征存储的实时特征写入场景用 ETL，需要在写入前完成特征计算以降低在线推理延迟。训练数据管道的数据质量要求更高，通常在 ETL 阶段加入严格的数据质量门控。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-23.md)（cluster-3f37b9b18f24）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Apache Airflow core concepts](https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/index.html)

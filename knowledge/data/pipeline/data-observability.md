@@ -45,6 +45,12 @@ SLO 示例：“工作日 08:15 前，`daily_revenue` 成功发布且完整率 �
 
 成熟度不以 dashboard 数量衡量，而看能否在用户发现前检测重要数据问题，快速定位实际 Run 和来源，评估下游影响，并通过门禁或降级限制错误传播。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-23.md)（cluster-3f37b9b18f24）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenTelemetry：Signals](https://opentelemetry.io/docs/concepts/signals/)

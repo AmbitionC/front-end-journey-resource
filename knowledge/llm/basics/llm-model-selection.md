@@ -120,6 +120,7 @@ $$
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)（cluster-1b2940d40f2e）
 - [腾讯 AI 开发一面：Coding Agent 记忆、评测与可靠运行（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-8.md)（cluster-7ef1a4a8ef82）
 <!-- interview-source-history:end -->
 

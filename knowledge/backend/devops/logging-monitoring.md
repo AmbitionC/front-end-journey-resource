@@ -371,6 +371,13 @@ function shouldSample(statusCode: number, durationMs: number): boolean {
 - **OpenTelemetry 的价值**：厂商中立的可观测性标准，一次埋点可同时接入 Jaeger / Zipkin / SLS / DataDog
 - **Agent 服务的监控重点**：LLM 调用延迟（比普通接口高 10-100x）、token 消耗（直接影响成本）、工具调用成功率、多轮会话中的错误传播
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Managed Agent 校招一面：评测、运行链路与后端基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-26.md)（cluster-40374dfc6b29）
+- [字节 Agent 暑期实习一面：摘要、工具预算与链表（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-27.md)（cluster-7116079e6b23）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenTelemetry signals](https://opentelemetry.io/docs/concepts/signals/)

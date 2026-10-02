@@ -427,6 +427,13 @@ LLM 推理是典型的"单次请求、持续响应"模型，客户端只需发�
 
 HTTP/2 原生支持多路复用，多个 SSE 流可以在同一个 TCP 连接上并发传输，解决了 HTTP/1.1 下浏览器同源连接数限制（通常 6 个）的问题，在大量并发 Agent 任务的场景下尤为重要。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-23.md)（cluster-3f37b9b18f24）
+- [字节 Managed Agent 校招一面：评测、运行链路与后端基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-26.md)（cluster-40374dfc6b29）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [HTML Standard: Server-sent events](https://html.spec.whatwg.org/multipage/server-sent-events.html)

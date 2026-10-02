@@ -223,6 +223,7 @@ ANN 用部分召回换速度和资源。查询参数越激进，延迟可能更�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节 Agent 暑期实习一面：摘要、工具预算与链表（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-27.md)（cluster-7116079e6b23）
 - [阿里 Agent 开发暑期实习一面（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-2.md)（cluster-9d9f0031dcd6）
 <!-- interview-source-history:end -->
 

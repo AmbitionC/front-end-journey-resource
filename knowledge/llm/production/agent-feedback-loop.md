@@ -75,7 +75,7 @@
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 Agent 自进化方向实习一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-8.md)（cluster-b2a1c4e10ed2）
+- [字节 Agent 开发实习一面：自进化与评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-8.md)（cluster-b2a1c4e10ed2）
 - [腾讯大模型算法岗一二面：Agentic RL、PPO/GRPO 与 DeepSeek V4（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-7.md)（cluster-daad361f34b4）
 <!-- interview-source-history:end -->
 

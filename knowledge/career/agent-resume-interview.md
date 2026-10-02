@@ -79,6 +79,12 @@ AI/Agent 岗位面试通常覆盖以下几个方向。学长不列具体题目�
 
 课程里每个环节都有动手任务，不只是看概念——**做一个项目产生的认知密度，远高于看十篇文章**。先把手弄脏，面试的事情反而会变得容易。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 后端实习一面：LangGraph、评测集与混合检索（2026 年 9 月）](../../interview/bytedance/base/bytedance-base-22.md)（cluster-a84ba0858191）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [How do I write a resume for a federal job? — USAJOBS Help Center](https://help.usajobs.gov/faq/application/documents/resume/what-to-include)

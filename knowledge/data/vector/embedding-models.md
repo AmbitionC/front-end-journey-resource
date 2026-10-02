@@ -375,6 +375,7 @@ def recall_at_k(query_vecs, doc_vecs, relevant_doc_ids: list[list[int]], k: int 
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节 Agent 暑期实习一面：摘要、工具预算与链表（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-27.md)（cluster-7116079e6b23）
 - [哔哩哔哩 AI 应用岗 Agent 开发一面（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-1.md)（cluster-c5c44d791f6e）
 <!-- interview-source-history:end -->
 

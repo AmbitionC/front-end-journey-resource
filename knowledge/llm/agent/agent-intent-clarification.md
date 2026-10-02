@@ -104,6 +104,7 @@ function nextStep(
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节 Agent 后端实习一面：LangGraph、评测集与混合检索（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-22.md)（cluster-a84ba0858191）
 - [快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-3.md)（cluster-cde9b480341e）
 <!-- interview-source-history:end -->
 

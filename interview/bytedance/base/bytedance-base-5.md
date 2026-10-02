@@ -1,6 +1,12 @@
 ### 字节 Agent 开发日常实习一面（2026 年 8 月）
 
-这份面经来自一篇 A 级第一手记录。下面保留真实提问范围，并把原帖中较零散的回答整理为可复习、可追问的版本。
+公司：字节跳动；岗位：Agent 开发；招聘场景：日常实习；轮次：一面。帖子发表于 2026 年 8 月，作者记录8.05、约1小时，日期文字未注明年份。
+
+背景、经历及提问范围来自候选人自述，未独立证实。原题按可见记录归纳；各题下的答题思路为教学整理，不代表作者实际作答或企业标准答案。
+
+## 教学演算：先走一次具体任务
+
+教学设定用户只读查询租户A的订单o1。初态goal={tenant:A,order:o1,action:read}、result为空；模型节点提出查询，执行器从授权状态核对A后读取DB，返回{order:o1,amount:100,status:paid}，结果节点写入tool_results并保存检查点，回答“已付款，金额100个约定最小单位”。金额单位必须来自业务合同；模型提出B的订单时拒绝。恢复使用已保存结果与版本，不把重连当重新执行副作用；两并行节点同step写result无reducer会报错，须分开键或定义合并。例子未在完整环境运行。
 
 #### （1）什么是 Token？
 
@@ -15,7 +21,7 @@ Token 是模型 tokenizer 按词表规则把输入切分后得到的离散单元
 LangGraph 适合把有状态、会分支、可循环的 Agent 流程显式建模为图：
 
 - **State** 保存节点共享的结构化数据；
-- **Node** 负责一次确定的计算、模型调用或工具调用；
+- **Node** 负责一个执行函数，可计算、调用模型或工具，不保证输出确定性；
 - **Edge** 决定下一步执行哪个节点，条件边可表达重试、审批和结束；
 - **Checkpointer** 在 graph super-step 边界保存状态，使中断恢复、人工审批和故障重试成为可能。
 
@@ -24,6 +30,8 @@ LangGraph 适合把有状态、会分支、可循环的 Agent 流程显式建模
 #### （3）LangGraph 的 State 应保存哪些字段？
 
 State 没有一套所有项目通用的固定字段，它由业务 schema 定义。一个工具型 Agent 可以包含：
+
+下面为未在完整项目运行的类型示意。
 
 ```python
 class AgentState(TypedDict):
@@ -37,15 +45,13 @@ class AgentState(TypedDict):
     error: str | None
 ```
 
-关键取舍是只保存驱动后续决策所需、能够序列化的状态；大文件、连接和临时句柄只存引用。`thread_id`、checkpoint ID 等运行标识通常放在运行配置或检查点元数据中，不应和业务字段混为一谈。并行节点写同一字段时还要定义 reducer，否则更新可能互相覆盖。
+关键取舍是只保存驱动后续决策所需、能够序列化的状态；大文件、连接和临时句柄只存引用。`thread_id`、checkpoint ID 等运行标识通常放在运行配置或检查点元数据中，不应和业务字段混为一谈。并行节点在同一 super-step 更新同一个未定义 reducer 的键，会触发 InvalidUpdateError；应定义合并语义或避免并行写同一键。
 
 延伸阅读：[工作流状态、检查点与断点续跑](../../../knowledge/llm/agent/agent-workflow-state.md)。
 
 #### （4）JVM 为什么区分新生代和老年代？
 
-分代收集利用“多数对象很快死亡，少数对象长期存活”的经验规律：新对象优先进入新生代，新生代满时只处理较小区域；多次存活的对象晋升到老年代，老年代以更低频率回收。这样大多数回收只扫描新生代中的少量存活对象，通常比每次遍历整个堆更高效。
-
-不要把“Minor GC 一定快、Major GC 一定慢”说成绝对规则；暂停时间还取决于收集器、堆布局、存活对象和并发阶段。面试中应先讲分代假设，再讲晋升、对象年龄和跨代引用带来的记忆集成本。
+以JDK21的G1为教学环境，分代假设是多数对象短命，因此年轻代回收可集中处理更可能释放的区域。G1把堆分成regions，普通对象从Eden分配，存活对象可能进入Survivor或Old；humongous对象可直接属于Old，并不是所有对象都先从新生代逐龄晋升。混合回收也会在处理年轻代的同时回收部分老年代区域，记忆集用于追踪跨区域引用。暂停受存活量、收集集合与并发阶段影响，目标不是绝对时限保证，参见[Oracle JDK21 G1 Heap Layout / GC Cycle](https://docs.oracle.com/en/java/javase/21/gctuning/garbage-first-g1-garbage-collector1.html)。原帖未披露所用JDK/收集器，不能据此还原作者项目。
 
 #### （5）怎样讲 Spring Boot 项目的亮点？
 
@@ -85,6 +91,8 @@ HTTPS 是在 HTTP 与传输层之间加入 TLS：握手阶段验证服务端证�
 
 这是“去除重复字母”的单调栈模型。统计每个字符剩余次数，用集合记录是否已入栈；新字符若比栈顶小、且栈顶后面还会再次出现，就弹出栈顶，给它以后重新进入的机会。
 
+下面为未在完整项目运行的代码示意。
+
 ```ts
 function removeDuplicateLetters(text: string): string {
   const remaining = new Map<string, number>();
@@ -110,3 +118,23 @@ function removeDuplicateLetters(text: string): string {
 ```
 
 时间复杂度为 $O(n)$，因为每个字符最多入栈、出栈各一次。
+
+## 面试口述与教学追问
+
+口述要点：图控制状态和恢复，工具执行权来自运行时；状态Schema合法不等于结果正确，按业务字段和证据验收，固定流程不必上复杂图。
+
+下面是模拟变条件追问，不是来源面经原题：
+
+- 如果图中两个并行节点写同一个状态键，怎样处理？——定义适合业务的 reducer，或分开键/所有者；不能默认后写覆盖。
+- 原始日志太长，是否删除它们只保留摘要？——可减少活跃上下文，源记录仍按保留策略持久化并用引用回取，关键约束单独验证。
+
+## 整理答案的核验资料
+
+核验于 2026-10-02。LangGraph 为滚动文档；MCP使用2026-07-28规范，MySQL使用8.4。未声称执行了作者的项目或复现其面试。
+
+- [LangGraph 状态 reducer 与并发错误](https://docs.langchain.com/oss/python/langgraph/errors/INVALID_CONCURRENT_GRAPH_UPDATE)
+- [LangGraph persistence](https://docs.langchain.com/oss/python/langgraph/persistence)
+
+- [JavaSE21 locks：锁与条件队列](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/locks/package-summary.html)
+- [OSTEP作者教材：Segmentation地址转换与保护](https://pages.cs.wisc.edu/~remzi/OSTEP/vm-segmentation.pdf)（教学地址模型，非特定现代系统承诺）
+- [RFC8446：TLS1.3握手与记录保护](https://www.rfc-editor.org/rfc/rfc8446)

@@ -60,7 +60,9 @@ Canary 让少量合格用户真实使用，限制工具和预算，设置自动�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../interview/bytedance/base/bytedance-base-23.md)（cluster-3f37b9b18f24）
 - [小红书 Agent 开发一面：多智能体、Memory 与广告投放优化（2026 年 8 月）](../../interview/redbook/ai/redbook-ai-1.md)（cluster-7372c3e7fb1e）
+- [字节 Agent 后端实习一面：LangGraph、评测集与混合检索（2026 年 9 月）](../../interview/bytedance/base/bytedance-base-22.md)（cluster-a84ba0858191）
 - [快手 AI 应用开发秋招一面：线程池、OOM 与项目深挖（2026 年 8 月）](../../interview/kuaishou/ai/kuaishou-ai-2.md)（cluster-cdb98481f4a4）
 <!-- interview-source-history:end -->
 

@@ -77,6 +77,7 @@ schema 演进遵循向后兼容：新增可选字段，旧消费者忽略未知�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)（cluster-1b2940d40f2e）
 - [小红书 Agent 开发一面：LangGraph 子图、Skill 进化与工程校验（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-2.md)（cluster-3fa76fc5d243）
 - [字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-20.md)（cluster-418d84d3fe66）
 - [快手商业化效果营销一面：多 Agent 协作、Netty 与限流（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-4.md)（cluster-45d2fa7cdacd）

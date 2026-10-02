@@ -152,6 +152,7 @@ RRF 的优点是稳定、少调参、容易建立基线；局限是它主要利�
 - [百度后端开发一面：Agent 安全、混合检索与 Redis（2026 年 8 月）](../../../interview/baidu/ai/baidu-ai-3.md)（cluster-19151a925152）
 - [蚂蚁智能体与大模型应用一面：幻觉、Skill 与 RAG（2026 年 5 月）](../../../interview/antfin/ai/antfin-ai-5.md)（cluster-452705dd533f）
 - [字节 AI 应用开发一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-12.md)（cluster-9e24453f3753）
+- [字节 Agent 后端实习一面：LangGraph、评测集与混合检索（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-22.md)（cluster-a84ba0858191）
 - [蚂蚁 Agent 开发一面：多 Agent 并发与质量保障（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-1.md)（cluster-cc9e5dd82505）
 <!-- interview-source-history:end -->
 

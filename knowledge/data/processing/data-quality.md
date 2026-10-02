@@ -370,6 +370,12 @@ Z-score 假设正态分布，且对极端离群点本身敏感（极端值会拉
 
 ① 入口校验层（Schema 校验 + 类型检查）；② 统计分析层（缺失率、唯一性、分布统计）；③ 规则引擎层（业务约束校验）；④ 告警与报告层（分级告警、指标持久化）；⑤ 血缘追踪层（记录每条数据的来源、处理版本，用于问题溯源）。生产环境中可以用 Great Expectations 或自研轻量 Pipeline 实现，关键是与数据摄入流程集成而非独立运行。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 后端实习一面：LangGraph、评测集与混合检索（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-22.md)（cluster-a84ba0858191）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [ISO/IEC 25012 Data Quality Model](https://www.iso.org/standard/35736.html)

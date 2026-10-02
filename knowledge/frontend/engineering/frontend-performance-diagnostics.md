@@ -82,6 +82,7 @@ Long Task 的 attribution 不是完整的函数级火焰图，跨源内容也可
 
 <!-- interview-source-history:start -->
 - [OPPO AI 全栈一面：Prompt 到 UI、RAG 与前端性能（2026 年 8 月）](../../../interview/oppo/ai/oppo-ai-2.md)（cluster-4a37152b165a）
+- [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)（cluster-650f7c304b11）
 <!-- interview-source-history:end -->
 
 ## 参考资料

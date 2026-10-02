@@ -47,6 +47,12 @@ append(order-42, expected=7) -> version 8
 
 测试覆盖同一命令并发、append 后崩溃、消息重复和乱序、旧 schema 重放、snapshot 丢失、投影重建切换以及副作用隔离。能够从空库确定性重建读模型，并证明不会再次发邮件或扣款，才算真正具备事件存储的恢复能力。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-23.md)（cluster-3f37b9b18f24）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Microsoft Azure Architecture Center：Event Sourcing pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/event-sourcing)
