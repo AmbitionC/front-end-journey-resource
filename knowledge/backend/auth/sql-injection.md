@@ -270,6 +270,13 @@ const systemPrompt = `
 - **时间盲注的检测难点**：无任何响应内容差异，只能通过响应时延判断，且网络抖动会干扰判断，自动化工具通过多次重试统计平均延迟来确认。
 - **如何测试是否存在注入**：在参数中输入 `'`，观察是否返回数据库报错；使用 `sqlmap -u "http://..." --forms` 自动检测。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [阿里云 Agent Infra 一面：SGX、吞吐与日志写入（2026 年 9 月发帖）](../../../interview/alibaba/ai/alibaba-ai-8.md)（cluster-21f88c2e7c88）
+- [字节飞书 AI 应用一面：Runtime、评测与后端基础（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-24.md)（cluster-78d45fa26bfd）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OWASP SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html)

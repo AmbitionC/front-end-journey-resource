@@ -97,6 +97,12 @@ tenant:{tenantId}:authz:{policyHash}:dataset:{version}:query:{queryHash}
 
 RAG 权限是一项端到端不变量：可信身份产生服务端策略，策略在摄取与检索中执行，namespace/metadata、缓存、上下文、工具、日志和删除都继承同一租户边界。模型拒答可以改善表达，却永远不能修复已经越权进入系统的证据。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节抖音电商 Agent 一面：分层、上下文与 GRPO（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-21.md)（cluster-b34d62449917）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [NIST SP 800-207 — Zero Trust Architecture](https://csrc.nist.gov/pubs/sp/800/207/final)

@@ -591,7 +591,7 @@
       "key": "rag-reranking",
       "label": "Rerank 重排序原理与实践",
       "filePath": "llm/rag",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-02",
       "batch": "nowcoder-byte-campus-pilot-10-20261002",
@@ -604,7 +604,13 @@
         "recordedAt": "2026-07-15",
         "batch": "ai-app-rag-next-10-2026-07-15"
       },
-      "reason": "本批具体原题相关内容修订；独立五门审核及官方机制核验，等待合并同步终态。"
+      "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
+      "publication": {
+        "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
+        "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
+        "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
+        "syncConclusion": "success"
+      }
     },
     {
       "key": "rag-metadata-filtering",
@@ -961,7 +967,7 @@
       "key": "agent-memory-summarization",
       "label": "会话摘要、压缩与记忆提炼",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-02",
       "batch": "nowcoder-byte-campus-pilot-10-20261002",
@@ -974,7 +980,13 @@
         "recordedAt": "2026-09-01",
         "batch": "archify-diagram-10-2026-09-01"
       },
-      "reason": "本批具体原题相关内容修订；独立五门审核及官方机制核验，等待合并同步终态。"
+      "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
+      "publication": {
+        "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
+        "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
+        "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
+        "syncConclusion": "success"
+      }
     },
     {
       "key": "agent-memory-forgetting",
@@ -1187,7 +1199,7 @@
       "key": "agent-quality-gates",
       "label": "发布质量门禁与回归阻断",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-02",
       "batch": "nowcoder-byte-campus-pilot-10-20261002",
@@ -1200,7 +1212,13 @@
         "recordedAt": "2026-07-16",
         "batch": "agent-observability-security-next-20-2026-07-16"
       },
-      "reason": "本批具体原题相关内容修订；独立五门审核及官方机制核验，等待合并同步终态。"
+      "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
+      "publication": {
+        "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
+        "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
+        "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
+        "syncConclusion": "success"
+      }
     },
     {
       "key": "agent-prompt-regression",
@@ -1404,7 +1422,7 @@
       "key": "async-job-queue",
       "label": "消息队列、异步任务与后台 Job",
       "filePath": "backend/api",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-02",
       "batch": "nowcoder-byte-campus-pilot-10-20261002",
@@ -1417,7 +1435,13 @@
         "recordedAt": "2026-07-17",
         "batch": "agent-platform-backend-next-20-2026-07-17"
       },
-      "reason": "本批具体原题相关内容修订；独立五门审核及官方机制核验，等待合并同步终态。"
+      "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
+      "publication": {
+        "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
+        "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
+        "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
+        "syncConclusion": "success"
+      }
     },
     {
       "key": "grpc-basics",
@@ -1981,7 +2005,7 @@
       "key": "multi-agent",
       "label": "多智能体协作与适用边界",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-02",
       "batch": "nowcoder-byte-campus-pilot-10-20261002",
@@ -1994,7 +2018,13 @@
         "recordedAt": "2026-09-01",
         "batch": "nowcoder-partial-archive-2026-09-01"
       },
-      "reason": "本批具体原题相关内容修订；独立五门审核及官方机制核验，等待合并同步终态。"
+      "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
+      "publication": {
+        "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
+        "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
+        "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
+        "syncConclusion": "success"
+      }
     },
     {
       "key": "agent-evaluation",
@@ -2054,7 +2084,7 @@
       "key": "agent-eval-framework",
       "label": "生产级 Agent 评估系统设计",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-02",
       "batch": "nowcoder-byte-campus-pilot-10-20261002",
@@ -2067,7 +2097,13 @@
         "recordedAt": "2026-08-30",
         "batch": "e2dba44a-025f-4188-b6da-efdf085842e1"
       },
-      "reason": "本批具体原题相关内容修订；独立五门审核及官方机制核验，等待合并同步终态。"
+      "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
+      "publication": {
+        "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
+        "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
+        "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
+        "syncConclusion": "success"
+      }
     },
     {
       "key": "node-event-loop-deep",
@@ -2190,7 +2226,7 @@
       "key": "mysql-index",
       "label": "数据库索引原理与查询优化",
       "filePath": "backend/database",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-02",
       "batch": "nowcoder-byte-campus-pilot-10-20261002",
@@ -2203,7 +2239,13 @@
         "recordedAt": "2026-08-29",
         "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
       },
-      "reason": "本批具体原题相关内容修订；独立五门审核及官方机制核验，等待合并同步终态。"
+      "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
+      "publication": {
+        "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
+        "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
+        "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
+        "syncConclusion": "success"
+      }
     },
     {
       "key": "db-transaction-lock",
@@ -2218,7 +2260,7 @@
       "key": "redis-cache",
       "label": "Redis 缓存策略与一致性",
       "filePath": "backend/database",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-02",
       "batch": "nowcoder-byte-campus-pilot-10-20261002",
@@ -2231,7 +2273,13 @@
         "recordedAt": "2026-07-18",
         "batch": "complete-remaining-91-2026-07-18"
       },
-      "reason": "本批具体原题相关内容修订；独立五门审核及官方机制核验，等待合并同步终态。"
+      "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
+      "publication": {
+        "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
+        "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
+        "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
+        "syncConclusion": "success"
+      }
     },
     {
       "key": "typeorm-entity",
@@ -2498,7 +2546,7 @@
       "key": "sql-index-optimize",
       "label": "索引、执行计划与查询优化",
       "filePath": "data/sql",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-02",
       "batch": "nowcoder-byte-campus-pilot-10-20261002",
@@ -2511,7 +2559,13 @@
         "recordedAt": "2026-07-18",
         "batch": "complete-remaining-91-2026-07-18"
       },
-      "reason": "本批具体原题相关内容修订；独立五门审核及官方机制核验，等待合并同步终态。"
+      "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
+      "publication": {
+        "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
+        "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
+        "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
+        "syncConclusion": "success"
+      }
     },
     {
       "key": "clickhouse-intro",
@@ -2872,6 +2926,16 @@
       "action": "created",
       "recordedAt": "2026-08-29",
       "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
+    },
+    {
+      "key": "sgx-multitenant-compute",
+      "label": "SGX 多租户计算：EPC、分页保护与吞吐边界",
+      "filePath": "backend/auth",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-10-02",
+      "batch": "nowcoder-original-six-completion-20261002",
+      "reason": "原批阿里云具体 SGX 原题缺失知识文章；已研究一手资料并独立审核，网站完成状态等待本批合并同步。"
     }
   ]
 }

@@ -97,6 +97,12 @@
 
 在线评估由隐私过滤、随机/风险/触发采样、自动评分、人工复核、质量信号、漂移与事故组成。所有样本通过 Run/Trace 关联到版本与行为，反馈只进入受治理的离线集，不直接改变生产。它让真实世界问题变成可审计证据，同时保持采样偏差、隐私和因果边界清晰。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节飞书 AI 应用一面：Runtime、评测与后端基础（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-24.md)（cluster-78d45fa26bfd）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenTelemetry：Signals](https://opentelemetry.io/docs/concepts/signals/)

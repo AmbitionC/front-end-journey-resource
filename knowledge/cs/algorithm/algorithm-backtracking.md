@@ -60,6 +60,12 @@ forward checking 在赋值后删除邻居不可能的 domain；arc consistency �
 
 写好回溯的关键是把“生成选择、验证约束、修改状态、撤销状态”分开，使每个剪枝都有可解释的正确性理由。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节飞书 AI 应用一面：Runtime、评测与后端基础（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-24.md)（cluster-78d45fa26bfd）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [UC Berkeley CS188：Solving Constraint Satisfaction Problems](https://inst.eecs.berkeley.edu/~cs188/textbook/csp/solving.html)

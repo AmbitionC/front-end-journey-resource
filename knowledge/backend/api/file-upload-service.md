@@ -87,6 +87,12 @@ READY 文件的下载 URL 同样短时、按主体和用途签发。敏感文件
 
 文件上传服务是一套状态协议：服务端创建受限会话，客户端直传有编号和校验的 parts，Complete 对账完整对象，再经过类型、安全和业务验证后发布 READY。Abort、恢复和生命周期清理同样是主流程，不能等账单异常时再补。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [腾讯 Agent 实习一面：RAG、工具与通信（2026 年 3 月发帖）](../../../interview/tencent/ai/tencent-ai-10.md)（cluster-fa3a6af4ebe6）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Amazon S3：Uploading and copying objects using multipart upload](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html)

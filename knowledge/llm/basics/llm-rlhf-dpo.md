@@ -73,6 +73,7 @@ RLHF、RLAIF 与 DPO 是三种把偏好变成模型行为的路径。RLHF 用奖
 
 <!-- interview-source-history:start -->
 - [字节 TikTok Agent 开发秋招一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-11.md)（cluster-26285b4c4c2b）
+- [字节抖音电商 Agent 一面：分层、上下文与 GRPO（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-21.md)（cluster-b34d62449917）
 <!-- interview-source-history:end -->
 
 ## 参考资料

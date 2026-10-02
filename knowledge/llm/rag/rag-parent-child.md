@@ -103,6 +103,12 @@ Parent 权限不能比 child 更宽。检索前在 child index 过滤 ACL，回�
 
 Parent-Child Retrieval 通过职责分离化解分块矛盾：child 为召回优化，parent 为上下文完整性优化。稳定 parent ID、更新原子性、去重预算和权限复核是工程关键；效果要与小块、大块和相邻窗口基线逐类比较。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节抖音电商 Agent 一面：分层、上下文与 GRPO（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-21.md)（cluster-b34d62449917）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [LangChain — Retrievers integrations](https://python.langchain.com/docs/integrations/retrievers/)

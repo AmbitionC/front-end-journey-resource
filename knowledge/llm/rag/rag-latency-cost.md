@@ -96,6 +96,12 @@ Embedding、retrieval、rerank 和 answer cache 分层设计，键包含版本�
 
 RAG 性能工程先分阶段计量：离线看 freshness/吞吐，在线看 route、retrieve、rerank、generate 与排队。用少工作、并行、批处理、token 预算、缓存和早停优化；在容量压力下按 Full/Degraded/Abstain 明确降级，并始终用质量曲线约束速度和费用。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [腾讯 Agent 实习一面：RAG、工具与通信（2026 年 3 月发帖）](../../../interview/tencent/ai/tencent-ai-10.md)（cluster-fa3a6af4ebe6）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenAI — Latency optimization](https://developers.openai.com/api/docs/guides/latency-optimization)

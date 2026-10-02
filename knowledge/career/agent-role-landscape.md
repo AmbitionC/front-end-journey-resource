@@ -95,6 +95,12 @@ Infra 工程师关心的是：**Agent 在大规模生产环境下能不能跑起
 
 转型顺序也不必固定。更稳妥的做法是选择一个能复用既有经验、又能产出完整证据链的项目：实现可运行功能，记录架构取舍，用 eval 和 trace 展示质量，并明确权限与失败边界。项目证据比“赛道热度”更能说明适配度。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [vivo Agent 秋招线下面：Harness 与工程诊断（2026 年 9 月发帖）](../../interview/vivo/ai/vivo-ai-1.md)（cluster-798d1749a171）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [GitHub Certified: Agentic AI Developer (beta)](https://learn.microsoft.com/en-us/credentials/certifications/agentic-ai-developer/)

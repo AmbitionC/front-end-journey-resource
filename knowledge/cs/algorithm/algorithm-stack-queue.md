@@ -64,6 +64,12 @@ dequeue():
 
 栈与队列看似基础，却训练了一个重要习惯：先明确可观察顺序和不变量，再选择满足复杂度与故障语义的实现。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [阿里云 Agent Infra 一面：SGX、吞吐与日志写入（2026 年 9 月发帖）](../../../interview/alibaba/ai/alibaba-ai-8.md)（cluster-21f88c2e7c88）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [MIT OCW 6.006（2011）：Lecture Notes](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/pages/lecture-notes/)

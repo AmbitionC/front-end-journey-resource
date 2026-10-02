@@ -170,6 +170,12 @@ LangChain 确实强大，但如果你不知道 ReAct 是什么、不懂 Tool Cal
 
 我在终点等你。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [vivo Agent 秋招线下面：Harness 与工程诊断（2026 年 9 月发帖）](../../interview/vivo/ai/vivo-ai-1.md)（cluster-798d1749a171）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [ACM/IEEE-CS/AAAI Computer Science Curricula 2023](https://csed.acm.org/final-report/)

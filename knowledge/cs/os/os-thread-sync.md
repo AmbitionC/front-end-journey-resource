@@ -234,6 +234,7 @@ graph LR
 <!-- interview-source-history:start -->
 - [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)（cluster-0c75d333d0e1）
 - [快手 AI 应用开发秋招一面：线程池、OOM 与项目深挖（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-2.md)（cluster-cdb98481f4a4）
+- [腾讯 Agent 实习一面：RAG、工具与通信（2026 年 3 月发帖）](../../../interview/tencent/ai/tencent-ai-10.md)（cluster-fa3a6af4ebe6）
 <!-- interview-source-history:end -->
 
 ## 参考资料

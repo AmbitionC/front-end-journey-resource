@@ -53,6 +53,12 @@ L4 负载均衡按连接信息，L7 理解 HTTP 等应用协议。连接级均�
 
 “ping 通”只说明某类 ICMP 路径，并不保证 TCP 443、TLS 或应用健康；反过来禁 ping 也不代表服务故障。抓包内容可能敏感，生产使用最小过滤和受控保存。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节飞书 AI 应用一面：Runtime、评测与后端基础（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-24.md)（cluster-78d45fa26bfd）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [RFC 1122：Requirements for Internet Hosts](https://www.rfc-editor.org/rfc/rfc1122.html)
