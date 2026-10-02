@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
-  "updatedAt": "2026-09-01",
+  "updatedAt": "2026-10-02",
   "records": [
     {
       "key": "transformer-arch",
@@ -591,10 +591,20 @@
       "key": "rag-reranking",
       "label": "Rerank 重排序原理与实践",
       "filePath": "llm/rag",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-15",
-      "batch": "ai-app-rag-next-10-2026-07-15"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-02",
+      "batch": "nowcoder-byte-campus-pilot-10-20261002",
+      "previousRecord": {
+        "key": "rag-reranking",
+        "label": "Rerank 重排序原理与实践",
+        "filePath": "llm/rag",
+        "status": "published",
+        "action": "created",
+        "recordedAt": "2026-07-15",
+        "batch": "ai-app-rag-next-10-2026-07-15"
+      },
+      "reason": "本批具体原题相关内容修订；独立五门审核及官方机制核验，等待合并同步终态。"
     },
     {
       "key": "rag-metadata-filtering",
@@ -953,8 +963,18 @@
       "filePath": "llm/agent",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-09-01",
-      "batch": "archify-diagram-10-2026-09-01"
+      "recordedAt": "2026-10-02",
+      "batch": "nowcoder-byte-campus-pilot-10-20261002",
+      "previousRecord": {
+        "key": "agent-memory-summarization",
+        "label": "会话摘要、压缩与记忆提炼",
+        "filePath": "llm/agent",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-09-01",
+        "batch": "archify-diagram-10-2026-09-01"
+      },
+      "reason": "本批具体原题相关内容修订；独立五门审核及官方机制核验，等待合并同步终态。"
     },
     {
       "key": "agent-memory-forgetting",
@@ -1167,10 +1187,20 @@
       "key": "agent-quality-gates",
       "label": "发布质量门禁与回归阻断",
       "filePath": "llm/production",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-16",
-      "batch": "agent-observability-security-next-20-2026-07-16"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-02",
+      "batch": "nowcoder-byte-campus-pilot-10-20261002",
+      "previousRecord": {
+        "key": "agent-quality-gates",
+        "label": "发布质量门禁与回归阻断",
+        "filePath": "llm/production",
+        "status": "published",
+        "action": "created",
+        "recordedAt": "2026-07-16",
+        "batch": "agent-observability-security-next-20-2026-07-16"
+      },
+      "reason": "本批具体原题相关内容修订；独立五门审核及官方机制核验，等待合并同步终态。"
     },
     {
       "key": "agent-prompt-regression",
@@ -1374,10 +1404,20 @@
       "key": "async-job-queue",
       "label": "消息队列、异步任务与后台 Job",
       "filePath": "backend/api",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-17",
-      "batch": "agent-platform-backend-next-20-2026-07-17"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-02",
+      "batch": "nowcoder-byte-campus-pilot-10-20261002",
+      "previousRecord": {
+        "key": "async-job-queue",
+        "label": "消息队列、异步任务与后台 Job",
+        "filePath": "backend/api",
+        "status": "published",
+        "action": "created",
+        "recordedAt": "2026-07-17",
+        "batch": "agent-platform-backend-next-20-2026-07-17"
+      },
+      "reason": "本批具体原题相关内容修订；独立五门审核及官方机制核验，等待合并同步终态。"
     },
     {
       "key": "grpc-basics",
@@ -1943,8 +1983,18 @@
       "filePath": "llm/agent",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-09-01",
-      "batch": "nowcoder-partial-archive-2026-09-01"
+      "recordedAt": "2026-10-02",
+      "batch": "nowcoder-byte-campus-pilot-10-20261002",
+      "previousRecord": {
+        "key": "multi-agent",
+        "label": "多智能体协作与适用边界",
+        "filePath": "llm/agent",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-09-01",
+        "batch": "nowcoder-partial-archive-2026-09-01"
+      },
+      "reason": "本批具体原题相关内容修订；独立五门审核及官方机制核验，等待合并同步终态。"
     },
     {
       "key": "agent-evaluation",
@@ -2006,8 +2056,18 @@
       "filePath": "llm/production",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-08-30",
-      "batch": "e2dba44a-025f-4188-b6da-efdf085842e1"
+      "recordedAt": "2026-10-02",
+      "batch": "nowcoder-byte-campus-pilot-10-20261002",
+      "previousRecord": {
+        "key": "agent-eval-framework",
+        "label": "生产级 Agent 评估系统设计",
+        "filePath": "llm/production",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-08-30",
+        "batch": "e2dba44a-025f-4188-b6da-efdf085842e1"
+      },
+      "reason": "本批具体原题相关内容修订；独立五门审核及官方机制核验，等待合并同步终态。"
     },
     {
       "key": "node-event-loop-deep",
@@ -2132,8 +2192,18 @@
       "filePath": "backend/database",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-08-29",
-      "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
+      "recordedAt": "2026-10-02",
+      "batch": "nowcoder-byte-campus-pilot-10-20261002",
+      "previousRecord": {
+        "key": "mysql-index",
+        "label": "数据库索引原理与查询优化",
+        "filePath": "backend/database",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-08-29",
+        "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
+      },
+      "reason": "本批具体原题相关内容修订；独立五门审核及官方机制核验，等待合并同步终态。"
     },
     {
       "key": "db-transaction-lock",
@@ -2150,8 +2220,18 @@
       "filePath": "backend/database",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-10-02",
+      "batch": "nowcoder-byte-campus-pilot-10-20261002",
+      "previousRecord": {
+        "key": "redis-cache",
+        "label": "Redis 缓存策略与一致性",
+        "filePath": "backend/database",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-07-18",
+        "batch": "complete-remaining-91-2026-07-18"
+      },
+      "reason": "本批具体原题相关内容修订；独立五门审核及官方机制核验，等待合并同步终态。"
     },
     {
       "key": "typeorm-entity",
@@ -2420,8 +2500,18 @@
       "filePath": "data/sql",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-10-02",
+      "batch": "nowcoder-byte-campus-pilot-10-20261002",
+      "previousRecord": {
+        "key": "sql-index-optimize",
+        "label": "索引、执行计划与查询优化",
+        "filePath": "data/sql",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-07-18",
+        "batch": "complete-remaining-91-2026-07-18"
+      },
+      "reason": "本批具体原题相关内容修订；独立五门审核及官方机制核验，等待合并同步终态。"
     },
     {
       "key": "clickhouse-intro",

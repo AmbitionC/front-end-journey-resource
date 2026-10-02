@@ -738,7 +738,7 @@
             "contentStatus": "published",
             "heat": 11,
             "currRank": 5,
-            "updatedAt": "2026-07-15",
+            "updatedAt": "2026-10-02",
             "interviewBaseHeat": 10,
             "interviewClusters": [
               "cluster-9e24453f3753"
@@ -1086,7 +1086,7 @@
             "contentStatus": "published",
             "heat": 19,
             "currRank": 5,
-            "updatedAt": "2026-09-01",
+            "updatedAt": "2026-10-02",
             "interviewClusters": [
               "cluster-0cfd17469543",
               "cluster-137857a2ba05",
@@ -1423,7 +1423,7 @@
             "contentStatus": "published",
             "heat": 10,
             "currRank": 5,
-            "updatedAt": "2026-07-16",
+            "updatedAt": "2026-10-02",
             "interviewClusters": [
               "cluster-2fc69bb3d45d",
               "cluster-418d84d3fe66",
@@ -1729,7 +1729,7 @@
             "contentStatus": "published",
             "heat": 14,
             "currRank": 5,
-            "updatedAt": "2026-08-29",
+            "updatedAt": "2026-10-02",
             "interviewClusters": [
               "cluster-137857a2ba05",
               "cluster-5b6e09ee89e6",
@@ -1794,7 +1794,7 @@
             "contentStatus": "published",
             "heat": 10,
             "currRank": 5,
-            "updatedAt": "2026-07-17",
+            "updatedAt": "2026-10-02",
             "interviewClusters": [
               "cluster-2d9e5f67fe86",
               "cluster-910d0b20a897",
@@ -2438,7 +2438,7 @@
             "contentStatus": "published",
             "heat": 2,
             "currRank": 2,
-            "updatedAt": "2026-07-17",
+            "updatedAt": "2026-10-02",
             "interviewBaseHeat": 1,
             "interviewClusters": [
               "cluster-910d0b20a897"
@@ -2518,7 +2518,7 @@
             "contentStatus": "published",
             "heat": 16,
             "currRank": 5,
-            "updatedAt": "2026-07-18",
+            "updatedAt": "2026-10-02",
             "interviewClusters": [
               "cluster-265dac6c3b53",
               "cluster-27070393eae6",
@@ -2574,7 +2574,7 @@
             "contentStatus": "published",
             "heat": 8,
             "currRank": 5,
-            "updatedAt": "2026-08-29",
+            "updatedAt": "2026-10-02",
             "interviewBaseHeat": 1,
             "interviewClusters": [
               "cluster-0c75d333d0e1",
@@ -3056,7 +3056,7 @@
             "contentStatus": "published",
             "heat": 2,
             "currRank": 2,
-            "updatedAt": "2026-07-18",
+            "updatedAt": "2026-10-02",
             "interviewBaseHeat": 1,
             "interviewClusters": [
               "cluster-cf26fe3b37d5"
