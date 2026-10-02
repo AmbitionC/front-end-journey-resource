@@ -88,6 +88,13 @@ Memoized recursion 是自顶向下：只访问从初始问题可达的状态，�
 - memo key 是否包含所有结果依赖；
 - 最大深度、最大状态数与内存预算。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Managed Agent 校招一面：评测、运行链路与后端基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-26.md)（cluster-40374dfc6b29）
+- [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)（cluster-650f7c304b11）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [NIST Dictionary of Algorithms and Data Structures: recursion](https://xlinux.nist.gov/dads/HTML/recursion.html)

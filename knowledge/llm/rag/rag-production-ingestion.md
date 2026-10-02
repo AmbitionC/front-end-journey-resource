@@ -120,6 +120,12 @@ chunk_id = hash(tenant_id, source_id, source_version,
 
 生产级 ingestion 是一个版本化状态机：稳定事件驱动幂等阶段，派生产物携带血缘，删除与更新同等重要，升级先进入影子索引，再经门禁原子发布。真正可靠的标准不是“任务跑完”，而是同一输入可重放、同一证据可追溯、同一发布可回滚。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 后端实习一面：LangGraph、评测集与混合检索（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-22.md)（cluster-a84ba0858191）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Apache Tika — The Parser interface](https://tika.apache.org/2.6.0/parser.html)

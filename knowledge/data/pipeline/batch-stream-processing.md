@@ -45,6 +45,12 @@ exactly-once 描述的是特定边界和协议，不代表所有外部副作用�
 
 正确的时间模型能回答：这条记录属于哪个窗口、结果何时首次可用、何时近似最终、迟到后怎样修正、失败后从哪里恢复。回答不了这些问题，“实时”只是一种模糊的延迟承诺。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-23.md)（cluster-3f37b9b18f24）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Apache Flink：Overview](https://nightlies.apache.org/flink/flink-docs-stable/docs/learn-flink/overview/)

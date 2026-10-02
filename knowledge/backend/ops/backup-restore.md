@@ -50,6 +50,12 @@ PITR 的目标点应在破坏性操作之前，并预留事务时间边界的不
 
 持续监控最近成功基础备份、WAL 归档延迟与缺口、不可变保留状态、容量、校验失败和最近一次恢复演练时间。每次 schema、扩展、加密或基础设施重大变更后重新演练。最终交付物不是一堆备份文件，而是有日期、有耗时、有业务签字的恢复证据。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-23.md)（cluster-3f37b9b18f24）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [PostgreSQL：Backup and Restore](https://www.postgresql.org/docs/18/backup.html)

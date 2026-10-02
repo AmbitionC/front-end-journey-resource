@@ -282,6 +282,12 @@ AI Agent 服务有其特殊性：一次任务调用可能耗时数十秒乃至�
 - **Token 过期怎么处理**：`jwt.verify` 抛 `TokenExpiredError`，返回 401 + `code: TOKEN_EXPIRED`，客户端用 Refresh Token 换新 Access Token，若 Refresh Token 也过期则跳登录。
 - **如何实现"踢下线"**：方案一：Redis 黑名单记录 `jti`；方案二：数据库存 `tokenVersion`，Token Payload 携带版本号，不匹配则拒绝。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Managed Agent 校招一面：评测、运行链路与后端基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-26.md)（cluster-40374dfc6b29）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [RFC 7519: JSON Web Token](https://www.rfc-editor.org/rfc/rfc7519.html)

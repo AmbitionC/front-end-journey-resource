@@ -48,6 +48,7 @@ Big-O 给出渐近上界，Big-Ω 给出下界，Big-Θ 表示上下界同阶。
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节 Managed Agent 校招一面：评测、运行链路与后端基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-26.md)（cluster-40374dfc6b29）
 - [阿里云可观测存储 AI Agent 工程岗一面：存储性能与查询优化（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-7.md)（cluster-cf26fe3b37d5）
 <!-- interview-source-history:end -->
 

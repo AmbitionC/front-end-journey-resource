@@ -1,272 +1,88 @@
-![Orchestrator–Worker 多智能体架构：主智能体拆分三个独立子任务，并行 worker 各自使用工具，结果经过证据校验后汇总；旁边展示共享状态冲突、重复工作、成本放大三类风险](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/multi-agent-orchestrator-worker-tradeoffs-v1.webp)
-*图：沿图中的节点与箭头阅读，重点是说明何时并行分工真正有收益，以及协调、共享状态、汇总和成本如何限制扩展。*
+多 Agent 的价值来自可验证的分工：不同执行者各自持有任务上下文、调用工具、返回证据，再由协调者合并。增加角色或层级本身不保证效果。读完本文，应能回答“这项工作为何需要独立 Agent，哪些步骤用普通代码更合适”，并设计能证明这一选择的对比实验。
 
----
+## 从一个数据异常归因任务开始
 
-单个 Agent 可以完成工具调用和推理循环，但面对需要并行分工、专业互补的复杂任务时，单体架构会遇到上下文过长、能力单一、错误传播等瓶颈。多智能体系统（Multi-Agent System，MAS）通过让多个 Agent 分工协作完成任务，是突破这些限制的核心范式。（参见 [How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system)）
+假设用户问：“店铺 A 在 2026 年 10 月 1 日支付金额下降，查原因，只读分析，不改业务配置。”系统已有订单、流量和支付错误三类查询工具。所有方案都要使用同一数据快照、租户 A 的权限范围和相同截止时间，输出有证据的原因及无法确认之处。
 
-## 为什么需要多智能体
+朴素方案是一个 Agent：接收问题，查询三类数据，发现支付错误异常后追查具体渠道，形成报告。这是有效基线。**单 Agent 不等于串行工具调用**：模型可以在同一轮提出多个独立调用，运行时也可以并发执行；有数据依赖的调用仍须等待前置结果。OpenAI 的 [Function calling 文档](https://developers.openai.com/api/docs/guides/function-calling#parallel-function-calling)说明了多调用模式及支持范围（滚动文档，核验于 2026-10-02）。并行执行工具与多个 Agent 分别进行多轮探索，是两个设计维度。
 
-单体 Agent 的局限来自三个方向：
+只有当某个分支需要反复观察、改查询、消化大量局部证据时，独立上下文才可能带来额外价值。例如流量分支先按来源拆分，再追踪活动结束；支付分支先按渠道拆分，再查看失败码。两者暂时互不依赖，可以各自探索后汇总。[Anthropic 的研究系统经验](https://www.anthropic.com/engineering/multi-agent-research-system)解释了这种独立上下文与结果压缩的作用，也指出高依赖、需要共享大量上下文的任务不一定适合多 Agent；其研究产品经验不能当成所有业务的收益保证。
 
-1. **上下文窗口限制**：大型任务的中间状态动辄数万 token，单 Agent 难以持续追踪；
-2. **能力专注度**：同一个 Agent 既要做代码审查又要写产品文档，提示词冲突严重，质量下降；
-3. **串行瓶颈**：一些子任务可以并行执行，串行处理浪费时间；
-4. **相互验证缺失**：一个 Agent 既是生产者又是评审者，缺乏制衡。
+## 最小两级系统怎样跑完一次任务
 
-多智能体通过**角色分工**（Role Specialization）、**信息传递**（Message Passing）和**状态共享**（Shared State）来突破这些限制。
+这里的两级是“主 Agent → 专项 Agent”，层级按决策关系计数，工具和确定性校验器不自动算成 Agent。Agent 是能够根据工具反馈继续决定动作的执行循环；固定 SQL、类型检查或结果合并函数是程序步骤。
 
-## 四大协作范式
+主 Agent 持有用户目标和全局进度。它提出流量与支付两个子任务；运行时校验任务契约、权限与预算后，才创建独立执行会话。流量 Agent 收到店铺、时间窗口、指标定义、数据快照和输出格式；它请求查询，运行时检查参数并执行，外部系统返回聚合结果。流量 Agent 据此决定下一次查询，最终交回“观察、假设、证据引用、未完成项”。支付 Agent 按相同契约完成另一分支。
 
-[AutoGen 原始论文](https://arxiv.org/abs/2308.08155) 提出以可组合的多智能体会话构建应用，并允许不同 Agent 组合模型、人类输入和工具；收益仍取决于任务能否有效分解。
+主 Agent 收到结果后不能把两段自然语言直接拼成结论。它先检查是否在同一时间窗口和口径上比较；若支付分支说“退款增加”，但原始指标是“支付金额”，还要确认退款是否影响该指标。缺证据的结论退回补查，无法补齐则保留不确定性。最后由运行时检查引用、禁止写操作等不变量，再返回报告。
 
+下面的图适合观察“契约进入独立探索，证据回到汇总，再经过校验”的方向。横向 PARALLEL 虚线表示可并行，不能据此假设 worker 必须互发消息；存储节点负责保存状态，权限仍由运行时校验。
 
-### 1. 单体自主循环（Autonomous Loop）
+![主智能体派发任务契约给三个专项智能体，各自返回证据后汇总和校验；共享存储与并行关系需要显式规则](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/multi-agent-orchestrator-worker-tradeoffs-v1.webp)
+*图：模型提出分工和查询，运行时决定能否执行；只有带来源的结果才进入汇总。图中三个专项节点是结构示意，不规定本例必须用三个。*
 
-最基础的范式，一个 Agent 独立完成任务，用 ReAct（Reason + Act）循环驱动：
+## 为什么“三级职责清晰”还不足以证明必要
 
-```mermaid
-graph LR
-    A[用户请求] --> B[Agent]
-    B --> C{思考 Thought}
-    C --> D[调用工具 Action]
-    D --> E[观察结果 Observation]
-    E --> C
-    C --> F[完成任务 Finish]
+可以把两级扩展成“主 Agent → 领域负责人 → 执行 Agent”。支付负责人分配银行、钱包等执行分支。这增加一次决策与一次交接，也增加信息压缩、等待和错误传播的机会。
+
+先问中间层是否会做真正的动态决策。如果支付分析每次都固定查三张表、按相同规则合并，那么函数或任务图已经能表达这个流程；让一个 LLM 再复述规则未必有价值。如果不同异常会临时引入不同分支，负责人需要根据局部证据修改计划，且主 Agent 无须读完整支付日志，中间层才有待验证的理由。[Building effective agents 的 Orchestrator-workers 小节](https://www.anthropic.com/engineering/building-effective-agents#workflow-orchestrator-workers)区分了预定义并行与动态拆分；这里的三级选择是基于该区别的工程推论，并非文档推荐的固定层数。
+
+用相同输入和约束比较以下方案，才知道收益来自哪里：
+
+| 方案 | 谁决定下一步 | 要检验的原因 |
+| --- | --- | --- |
+| 单 Agent + 并行工具 | 一个模型循环；运行时并发独立查询 | 原问题是否本来就能由一个上下文解决 |
+| 确定性编排 + 专项调用 | 程序固定分支和合并规则 | 分工、并行是否已经够用，是否需要动态编排 |
+| 两级 Agent | 主 Agent 动态派发，专项 Agent 自主探索 | 独立上下文和局部探索是否改善任务成功 |
+| 三级 Agent | 中间负责人再动态拆分与收敛 | 多一次决策是否减少主 Agent 负担并弥补交接成本 |
+
+预算要计入所有 Agent 的 token、工具调用、重试和汇总，不能给三级方案更多资源后把收益全归因于层级。先在同模型与同总预算下做比较，再报告各方案达到目标质量需要的资源。按相同用例配对、多次运行，观察结论正确、证据完整、约束遵守、耗时和总成本，并单列复杂支付切片。另做“拿掉中间负责人、保留执行分支”的消融；如果效果不退化，就没有证据支持保留该层。
+
+这些是实验设计，不是本文完成的性能实验。相同数据并不保证相同轨迹，因此还要报告失败样本与波动，不能以一次更快或一句“角色更专业”作为结论。
+
+## 主子上下文怎样避免丢字段和串状态
+
+任务契约最好把机器必须使用的字段与可压缩解释分开。以下是应用层数据示意，未在完整 Agent 环境运行：
+
+```json
+{
+  "task_id": "pay-analysis-1",
+  "parent_task_id": "shop-a-1",
+  "tenant_id": "A",
+  "snapshot_id": "snapshot-42",
+  "time_window": {"start": "2026-10-01T00:00:00Z", "end": "2026-10-02T00:00:00Z"},
+  "metric": "paid_amount_before_refund",
+  "allowed_actions": ["read"],
+  "question": "解释支付金额下降",
+  "required_output": ["observations", "evidence_ids", "uncertainties"]
+}
 ```
 
-**优点**：实现简单，调试方便。  
-**适用场景**：单一领域、信息依赖线性的任务（如文档摘要、单步代码生成）。  
-**局限**：无法并行，长任务上下文膨胀，缺少专业分工。
+主 Agent 的摘要只写“查支付下降”，很容易丢掉退款口径、快照版本或只读约束。运行时应检查必填字段、字段值和证据是否可访问，子 Agent 也应在开始前确认口径；缺关键字段时退回补齐，不能猜。JSON Schema 可以限制结构，却不能证明“paid_amount”与用户要的业务含义一致。
 
-### 2. 角色扮演对话（CAMEL 范式）
+独立 session 隔离对话历史，业务隔离还涉及租户数据、缓存键、工作目录、存储命名空间、工具凭证和日志。两个 Agent 使用不同 session ID，却写同一个 `result.json` 或复用跨租户缓存，仍会串状态。只读证据可以共享；可变任务状态宜有明确所有者。worker 返回带任务 ID、快照和版本的结果，由父运行时校验后合并；重复回报按幂等键去重，旧版本不得覆盖新结论。
 
-CAMEL（Communicative Agents for Mind Exploration of Large Language Models）是 2023 年提出的经典多智能体框架，核心思想是**两个 Agent 进行角色扮演式对话**：一个扮演 AI 助手（执行方），一个扮演用户/任务指派方（指挥方），双方通过多轮结构化对话共同推进任务。
+更多摘要丢字段和迟到覆盖的处理见[会话摘要与证据保真](./agent-memory-summarization.md)。
 
-```mermaid
-sequenceDiagram
-    participant S as Task Specifier（任务细化）
-    participant U as User Agent（指挥方）
-    participant A as Assistant Agent（执行方）
-    S->>U: 细化并明确任务描述
-    U->>A: 发出第一条指令
-    A->>U: 执行并汇报结果
-    U->>A: 发出下一步指令
-    A->>U: 继续执行
-    U->>S: 任务完成
-```
+## 协作范式与终止条件
 
-CAMEL 的核心洞见：**让每个 Agent 清晰知道自己的角色**，避免角色混淆导致的幻觉和偏离。它证明了 LLM 可以在无人工介入的情况下通过角色扮演自主完成复杂任务，是多智能体协作的理论基础之一。
+点对点对话适合两个执行者交换局部问题，但也可能反复讨论而无进展；中央调度适合本例按任务 ID 汇总；固定阶段流水线适合输入输出可预测的流程；状态图适合显式分支、重试和恢复。框架名称不是选型依据，要看它能否表达所需状态、依赖和恢复语义。
 
-### 3. 组织化工作流（MetaGPT / CrewAI）
+多一个评审 Agent 也不自动带来独立验证。如果它只读上游结论，可能重复相同误解；应提供原始证据和独立判据。最大步数、递归深度、每任务超时、总预算和显式完成条件分别限制不同问题。达到上限时返回已确认事实、未完成项和阻断原因；循环计数器只能止损，不能证明任务完成。
 
-这两个框架都借鉴了真实企业的组织结构，将 Agent 分配到职能角色，通过**工作流（Workflow）**驱动协作。
+本例若每一步都依赖上一条查询，且任务必须在很短延迟内返回，额外交接会成为负担，应优先单体或固定流程。如果新增领域负责人能在大量局部日志中独立决定分支，且受控评测显示同预算下改善任务成功，三级才有保留依据。子任务模型大小也要按切片验证，不能默认“子 Agent 用小模型一定划算”。
 
-**MetaGPT** 以软件公司为隐喻，设计了产品经理、架构师、工程师、QA 工程师等角色，每个角色都有明确的输入输出文档格式（称为标准化操作程序，SOP）：
+## 面试口述短答
 
-```python
-# MetaGPT 角色流水线示意（以官方文档为准）
-from metagpt.roles import ProjectManager, Architect, Engineer, QaEngineer
+“我不会因为三级职责清晰就采用三级。先用能并行工具的单 Agent 和确定性编排做基线；专项 Agent 的理由是独立多轮探索和上下文隔离，中间负责人的理由是证据驱动的动态拆分。所有层都用契约传目标、权限、版本和证据，在同总预算下消融中间层，看任务成功和交接错误。固定流程或强依赖任务没有足够收益时，我会减少层级。”
 
-# 各角色通过结构化文档传递信息，而非自由对话：
-# ProjectManager  接收 → 用户需求   输出 → PRD 文档
-# Architect       接收 → PRD 文档   输出 → 系统设计文档
-# Engineer        接收 → 系统设计   输出 → 代码实现
-# QaEngineer      接收 → 代码       输出 → 测试报告
-```
+## 教学补充：改变条件的模拟追问
 
-MetaGPT 的关键创新是**结构化文档传递**：角色间通过规范化文档而非自由对话沟通，大大减少了信息失真和格式混乱。
+以下是教学模拟，不代表原面经逐字提问。
 
-**CrewAI** 更轻量，聚焦于 Agent 的任务分配和依赖管理：
-
-```python
-from crewai import Agent, Task, Crew
-# 以官方文档为准
-
-researcher = Agent(
-    role="研究员",
-    goal="深入研究指定主题",
-    backstory="你是一位资深行业分析师",
-    tools=[search_tool]
-)
-
-writer = Agent(
-    role="内容撰稿人",
-    goal="将研究成果转化为文章",
-    backstory="你擅长把复杂信息写成易懂的内容"
-)
-
-research_task = Task(
-    description="调研 AI Agent 的最新进展",
-    agent=researcher
-)
-
-write_task = Task(
-    description="基于调研结果，撰写一篇 1000 字的综述",
-    agent=writer,
-    context=[research_task]  # 声明对前序任务的依赖
-)
-
-crew = Crew(agents=[researcher, writer], tasks=[research_task, write_task])
-result = crew.kickoff()
-```
-
-### 4. 状态图架构（LangGraph）
-
-LangGraph 是 LangChain 团队推出的图结构多智能体框架，将工作流建模为**有向图（Directed Graph）**，每个节点是一个处理步骤（Agent 调用、工具执行等），边代表状态流转条件，支持原生循环。
-
-```mermaid
-graph TD
-    A[START] --> B[Planner Node]
-    B --> C{条件边：路由}
-    C -->|需要搜索| D[Search Node]
-    C -->|需要计算| E[Calculator Node]
-    C -->|任务完成| F[END]
-    D --> B
-    E --> B
-```
-
-LangGraph 的核心是 **State**（类型化状态对象）在节点间流动：
-
-```python
-from langgraph.graph import StateGraph, END
-from typing import TypedDict, Annotated, Sequence
-from langchain_core.messages import BaseMessage
-import operator
-# 以官方文档为准
-
-class AgentState(TypedDict):
-    messages: Annotated[Sequence[BaseMessage], operator.add]
-    plan: str
-
-def planner_node(state: AgentState) -> AgentState:
-    # 处理 state，返回部分更新
-    ...
-
-def tools_node(state: AgentState) -> AgentState:
-    ...
-
-def should_continue(state: AgentState) -> str:
-    # 条件边：决定下一个节点
-    last_msg = state["messages"][-1]
-    if last_msg.content == "DONE":
-        return "end"
-    return "tools"
-
-workflow = StateGraph(AgentState)
-workflow.add_node("planner", planner_node)
-workflow.add_node("tools", tools_node)
-workflow.add_conditional_edges("planner", should_continue, {
-    "tools": "tools",
-    "end": END
-})
-workflow.add_edge("tools", "planner")  # 形成循环
-
-app = workflow.compile()
-```
-
-LangGraph 的核心优势：支持**循环**（Agent 可以反复迭代直到收敛）、**条件分支**（动态路由到不同子图）、**人工介入（Human-in-the-Loop）节点**以及**状态持久化与回溯（Checkpoint）**。
-
-**AutoGen**（微软）采用更灵活的**对话式多智能体**架构，Agent 之间通过异步消息通信，支持动态加入/退出对话，特别擅长代码生成与自动执行场景。
-
-## 四大框架横向对比
-
-| 维度 | CrewAI | AutoGen | MetaGPT | LangGraph |
-|------|--------|---------|---------|-----------|
-| 核心范式 | 任务分配工作流 | 对话式协作 | SOP 组织化 | 状态图驱动 |
-| 上手难度 | 低 | 中 | 中高 | 中高 |
-| 适合场景 | 内容生成流水线 | 复杂对话/代码协作 | 软件研发流程 | 有状态复杂工作流 |
-| 流程控制 | 顺序/并行任务 | 自由对话轮次 | 角色驱动 SOP | 条件分支图 |
-| 循环支持 | 有限 | 支持（对话轮次） | 支持 | 原生支持（图回路） |
-| 人工介入 | 有限 | 支持 | 有限 | 原生支持 |
-| 状态管理 | 任务上下文 | 对话历史 | 结构化文档 | 类型化 State + Reducer |
-| TypeScript 支持 | 有限（主 Python） | 有限（主 Python） | 有限（主 Python） | 完整（@langchain/langgraph） |
-| 开源 | 是 | 是 | 是 | 是 |
-
-## 关键设计问题
-
-### 任务分解策略
-
-```python
-# 垂直分工：按流程阶段顺序执行
-tasks = [
-    Task("数据收集", agent=collector),
-    Task("数据分析", agent=analyst, depends_on=["数据收集"]),
-    Task("报告生成", agent=writer, depends_on=["数据分析"]),
-]
-
-# 水平分工：领域并行 + 汇总
-tasks = [
-    Task("Python 代码审查", agent=python_reviewer),  # 并行执行
-    Task("安全漏洞检查", agent=security_reviewer),    # 并行执行
-    Task("综合评审报告", agent=synthesizer,
-         depends_on=["Python 代码审查", "安全漏洞检查"]),
-]
-```
-
-### 通信协议选择
-
-Agent 间通信分三种模式：
-
-- **点对点（P2P）**：一个 Agent 直接发消息给另一个，适合简单两两协作；
-- **广播**：通知类场景；
-- **中央调度（Hub-and-Spoke）**：有一个 Orchestrator 负责分发任务，其他 Agent 只负责执行。MetaGPT 和 CrewAI 都接近这种模式。
-
-建议 Agent 间传递**结构化数据（JSON / Markdown）**而非自由文本，减少解析歧义。
-
-### 避免循环和死锁
-
-多智能体系统容易陷入"Agent A 等待 Agent B，Agent B 等待 Agent A"的死锁：
-
-1. **最大步数限制**：每个 Agent 最多执行 N 步（LangGraph 的 `recursionLimit`）；
-2. **超时机制**：任务设定时间上限；
-3. **显式终止条件**：在条件边或 Agent 提示词中明确定义"何时停止"，例如"如果工具连续调用失败 2 次，停止并报告错误"。
-
-## 选型决策树
-
-```
-需要快速原型 / 简单流水线？
-├── 是 → CrewAI（任务依赖配置简单）
-└── 否
-    ├── 需要精确状态控制 / 循环收敛 / 人工介入？
-    │   └── 是 → LangGraph
-    ├── 构建软件研发类严格流程自动化？
-    │   └── 是 → MetaGPT
-    └── 需要灵活的多方对话协商 / 代码自动执行？
-        └── 是 → AutoGen
-```
-
-## 常见误区与最佳实践
-
-**误区 1：Agent 越多越好**  
-每增加一个 Agent 都会引入通信开销和出错概率。先从最少的 Agent 数量验证可行性，再按需扩展。
-
-**误区 2：让 Agent 自由通信**  
-无限制的自由对话会导致绕圈、无法收敛。应为每个 Agent 明确定义输入/输出契约（接口约定）。
-
-**误区 3：忽略 Orchestrator 的作用**  
-在 CrewAI 等框架中，任务依赖关系设计比单个 Agent 能力设计更重要。
-
-**最佳实践**：
-- 每个 Agent 的系统提示词（System Prompt）聚焦**单一职责**；
-- 关键步骤用 JSON Schema 约束输出格式；
-- 先用单 Agent 验证任务可行性，再拆分为多 Agent；
-- 记录每个 Agent 的输入输出，方便追溯和优化；
-- 子 Agent 使用小模型降低成本，只有 Orchestrator 使用强模型。
-
-## 面试常问
-
-- **Q：LangGraph 和 LangChain AgentExecutor 有什么区别？**  
-  AgentExecutor 是单 Agent 的顺序循环，不支持分支和真正的多节点协作；LangGraph 用图结构支持复杂的状态流转、循环和多节点并发，并且支持状态持久化（Checkpoint）实现长任务断点续跑。
-
-- **Q：MetaGPT 和 CrewAI 最大的差异是什么？**  
-  MetaGPT 强调 SOP 和结构化文档传递，适合软件工程类严格流程；CrewAI 更轻量，任务依赖配置简单，适合内容生产类流水线。
-
-- **Q：如何防止多智能体系统的"幻觉传播"？**  
-  在关键节点做事实验证（Fact-checking）、用 JSON Schema 约束输出格式、引入人工介入节点审查关键中间结果，以及让下游 Agent 对上游输出的可信度打分后再决定是否采用。
-
-- **Q：什么场景不适合多 Agent？**  
-  任务简单、上下文短、延迟敏感（如实时问答）、调试预算有限的场景，单 Agent 更合适。多 Agent 的额外复杂性要有对应的收益才值得引入。
+1. **三个分支每次查询都固定，只需并行，为什么不让主 Agent 再动态分工？** 要点：确定性编排能保留并行和专用提示，减少不必要决策；只有输入改变导致分支无法预定时再测动态编排。对应“三级必要性”。
+2. **三级正确率提高了，但 token 也增加了一倍，能证明层级有效吗？** 要点：先做同总预算对比及拿掉中间层消融；另外报告达到同质量的资源需求，区分多花资源与架构收益。
+3. **两个独立 session 的 worker 都更新共享结论，先回来的新证据被旧结果覆盖，怎样修？** 要点：给共享状态设所有者，结果携带版本与快照，运行时做冲突检查和幂等合并；session 隔离不能替代状态一致性。
 
 ## 出现于（热度来源）
 
@@ -288,5 +104,6 @@ Agent 间通信分三种模式：
 
 ## 参考资料
 
-- [How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system)
-- [AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation](https://arxiv.org/abs/2308.08155)
+- [Anthropic — Building effective agents，工作流与动态 Agent 的区别](https://www.anthropic.com/engineering/building-effective-agents)（2024-12-19；架构相关小节核验于 2026-10-02）。
+- [Anthropic — How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system)（2025-06-13；核验于 2026-10-02；产品经验不等于本业务基准）。
+- [OpenAI — Function calling：执行循环与并行调用](https://developers.openai.com/api/docs/guides/function-calling)（滚动文档，核验于 2026-10-02）。

@@ -126,6 +126,12 @@ quality = {
 
 Loader 建立可信的字节边界，Parser 建立可审计的结构解释。两层之间用明确 envelope 连接；Parser 输出元素树、坐标、顺序、来源类型和质量信号。OCR、表格恢复与版面分类都保留不确定性，最后通过分格式 corpus 和下游检索一起验证。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 后端实习一面：LangGraph、评测集与混合检索（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-22.md)（cluster-a84ba0858191）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Apache Tika — The Parser interface](https://tika.apache.org/2.6.0/parser.html)

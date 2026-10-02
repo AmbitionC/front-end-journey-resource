@@ -105,6 +105,12 @@ q3: B 版本的回滚步骤与限制
 
 查询改写是一层受控的检索规划：先识别缺陷，再选择规范化、澄清、分解、多查询或 HyDE；原始意图和硬约束始终保留，所有生成内容只用于召回。最终证据必须来自真实、已授权语料，并用离线召回与端到端质量共同证明收益。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 后端实习一面：LangGraph、评测集与混合检索（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-22.md)（cluster-a84ba0858191）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Gao et al. — Precise Zero-Shot Dense Retrieval without Relevance Labels (HyDE)](https://arxiv.org/abs/2212.10496)

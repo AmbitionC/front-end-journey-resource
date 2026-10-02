@@ -8,6 +8,46 @@
         "key": "bytedance-base",
         "children": [
           {
+            "label": "字节 Agent 暑期实习一面：摘要、工具预算与链表（2026 年 7 月）",
+            "key": "bytedance-base-27",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": ["Memory", "Token", "RAG", "链表"],
+            "updatedAt": "2026-10-02"
+          },
+          {
+            "label": "字节 Managed Agent 校招一面：评测、运行链路与后端基础（2026 年 8 月）",
+            "key": "bytedance-base-26",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": ["Agent Loop", "评测", "Skill", "认证"],
+            "updatedAt": "2026-10-02"
+          },
+          {
+            "label": "字节 Agent Infra 校招：运行时、MySQL 与 LRU（2026 年 9 月）",
+            "key": "bytedance-base-25",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": ["Agent Runtime", "MySQL", "LRU"],
+            "updatedAt": "2026-10-02"
+          },
+          {
+            "label": "字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）",
+            "key": "bytedance-base-23",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": ["AI Pipeline", "Doris", "MQ", "缓存一致性"],
+            "updatedAt": "2026-10-02"
+          },
+          {
+            "label": "字节 Agent 后端实习一面：LangGraph、评测集与混合检索（2026 年 9 月）",
+            "key": "bytedance-base-22",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": ["LangGraph", "RAG", "RRF", "评测"],
+            "updatedAt": "2026-10-02"
+          },
+          {
             "label": "字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）",
             "key": "bytedance-base-20",
             "isLeaf": true,
@@ -29,7 +69,7 @@
             "isLeaf": true,
             "filePath": "bytedance/base",
             "tags": ["Agent", "上下文", "Skill", "编程基础"],
-            "updatedAt": "2026-08-29"
+            "updatedAt": "2026-10-02"
           },
           {
             "label": "字节 AML / 火山方舟 AI Infra 一面：Agent Runtime、OS 与网络（2026 年 8 月）",
@@ -64,12 +104,12 @@
             "updatedAt": "2026-08-26"
           },
           {
-            "label": "字节 Coding Agent 日常实习一面（2026 年 8 月）",
+            "label": "字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）",
             "key": "bytedance-base-10",
             "isLeaf": true,
             "filePath": "bytedance/base",
             "tags": ["Agent", "Coding Agent", "MCP", "评测"],
-            "updatedAt": "2026-08-25"
+            "updatedAt": "2026-10-02"
           },
           {
             "label": "字节 TikTok Agent 开发秋招一面（2026 年 8 月）",
@@ -104,12 +144,12 @@
             "updatedAt": "2026-08-23"
           },
           {
-            "label": "字节 Agent 自进化方向实习一面（2026 年 8 月）",
+            "label": "字节 Agent 开发实习一面：自进化与评测（2026 年 8 月）",
             "key": "bytedance-base-8",
             "isLeaf": true,
             "filePath": "bytedance/base",
             "tags": ["Agent", "评测", "沙箱", "Go"],
-            "updatedAt": "2026-08-23"
+            "updatedAt": "2026-10-02"
           },
           {
             "label": "字节 Agent 开发二面（2026 年 7 月）",
@@ -133,7 +173,7 @@
             "isLeaf": true,
             "filePath": "bytedance/base",
             "tags": ["Agent", "LangGraph", "Java", "算法"],
-            "updatedAt": "2026-08-23"
+            "updatedAt": "2026-10-02"
           }
         ]
       }

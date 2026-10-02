@@ -105,6 +105,7 @@ Token 决定序列如何表示和计量；Context Window 规定一次请求的�
 - [字节 Agent 开发日常实习一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-5.md)（cluster-1cea2513548a）
 - [字节 Agent 开发一面：推理缓存、网络与存储基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-18.md)（cluster-265dac6c3b53）
 - [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)（cluster-650f7c304b11）
+- [字节 Agent 暑期实习一面：摘要、工具预算与链表（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-27.md)（cluster-7116079e6b23）
 <!-- interview-source-history:end -->
 
 ## 参考资料

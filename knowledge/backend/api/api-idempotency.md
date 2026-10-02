@@ -93,6 +93,12 @@ IETF 的 [Idempotency-Key HTTP Header Field](https://datatracker.ietf.org/doc/dr
 
 API 幂等需要一个原子账本，而不只是 Header。key 在明确作用域内绑定请求指纹，首个请求独占执行，完成结果可重放，并发相同请求等待或复用，不同请求冲突；崩溃恢复先对账未知副作用。TTL 和响应保存策略补齐生命周期后，POST 才真正具备可预测的重试安全性。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-23.md)（cluster-3f37b9b18f24）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [RFC 9110：HTTP Semantics](https://www.rfc-editor.org/rfc/rfc9110.html)

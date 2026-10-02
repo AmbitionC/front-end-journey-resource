@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-01",
+  "updatedAt": "2026-10-02",
   "records": {
     "00460f65f35e": {
       "source": "nowcoder",
@@ -12,8 +12,27 @@
       "status": "published",
       "articleKey": "bytedance-base-8",
       "publicFiles": ["interview/bytedance/base/bytedance-base-8.md"],
-      "knowledgeKeys": ["agent-eval-framework", "agent-sandbox", "agent-workflow-state", "agent-feedback-loop", "agent-quality-gates"],
-      "processedAt": "2026-08-23T16:00:00.000Z"
+      "knowledgeKeys": ["agent-eval-framework", "agent-sandbox", "agent-workflow-state", "agent-feedback-loop", "agent-quality-gates", "build-agent-framework"],
+      "processedAt": "2026-10-02T06:42:42.556Z",
+      "batch": "nowcoder-byte-campus-pilot-10-20261002",
+      "publishedAt": "2026-08-05T13:59:00.000Z",
+      "recruitmentScene": "internship_29_cohort",
+      "roleStratum": "agent_rnd",
+      "editorialReview": {
+        "automatedEvidenceGrade": "A",
+        "automatedQualityScore": 82,
+        "automatedExclusionReasons": [],
+        "editorialEvidenceGrade": "A",
+        "decision": "publishable_with_source_limits",
+        "reviewedAt": "2026-10-02T06:42:42.556Z",
+        "reason": "完整作者自述与具体问题已按原文独立复核；企业事实及经历真实性未外部证实，答案和教学模拟分开。原自动C不改写为自动A/B。",
+        "contentSha256": "0aa215a04059da44cfee5771439ebbf7bbb21ecac1e14887e15e0f6a19b4dddd"
+      },
+      "publication": {
+        "status": "pending",
+        "note": "published为资源文章/树关联契约；本次网站更新以合并SHA对应sync-content Action成功为准。"
+      },
+      "independence": "来源与经历均为候选人自述，未外部证实；cluster热度表示已整理来源计数，不等于独立真实面试频率。"
     },
     "023d8f39e4e4": {
       "source": "nowcoder",
@@ -155,7 +174,26 @@
       "articleKey": "bytedance-base-5",
       "publicFiles": ["interview/bytedance/base/bytedance-base-5.md"],
       "knowledgeKeys": ["llm-token-context", "agent-workflow-state"],
-      "processedAt": "2026-08-23T16:00:00.000Z"
+      "processedAt": "2026-10-02T06:42:42.556Z",
+      "batch": "nowcoder-byte-campus-pilot-10-20261002",
+      "publishedAt": "2026-08-08T19:01:00.000Z",
+      "recruitmentScene": "daily_internship",
+      "roleStratum": "agent_rnd",
+      "editorialReview": {
+        "automatedEvidenceGrade": "A",
+        "automatedQualityScore": 92,
+        "automatedExclusionReasons": [],
+        "editorialEvidenceGrade": "A",
+        "decision": "publishable_with_source_limits",
+        "reviewedAt": "2026-10-02T06:42:42.556Z",
+        "reason": "完整作者自述与具体问题已按原文独立复核；企业事实及经历真实性未外部证实，答案和教学模拟分开。原自动C不改写为自动A/B。",
+        "contentSha256": "2f0a879d503c49757d6440657014e865b0fad5fbfc02e5b66b89d68e466f74ee"
+      },
+      "publication": {
+        "status": "pending",
+        "note": "published为资源文章/树关联契约；本次网站更新以合并SHA对应sync-content Action成功为准。"
+      },
+      "independence": "来源与经历均为候选人自述，未外部证实；cluster热度表示已整理来源计数，不等于独立真实面试频率。"
     },
     "db3994b4895c": {
       "source": "nowcoder",
@@ -219,8 +257,27 @@
       "status": "published",
       "articleKey": "bytedance-base-10",
       "publicFiles": ["interview/bytedance/base/bytedance-base-10.md"],
-      "knowledgeKeys": ["agent-coding", "agent-memory-architecture", "agent-tool-selection", "mcp-protocol", "prompt-context-compression"],
-      "processedAt": "2026-08-24T20:55:00.000Z"
+      "knowledgeKeys": ["agent-coding", "agent-memory-architecture", "agent-tool-selection", "mcp-protocol", "prompt-context-compression", "agent-react", "agent-planning", "agent-memory", "rag-evaluation", "llm-model-selection", "agent-multi-agent-messaging"],
+      "processedAt": "2026-10-02T06:42:42.556Z",
+      "batch": "nowcoder-byte-campus-pilot-10-20261002",
+      "publishedAt": "2026-08-18T08:43:00.000Z",
+      "recruitmentScene": "daily_internship",
+      "roleStratum": "agent_rnd",
+      "editorialReview": {
+        "automatedEvidenceGrade": "B",
+        "automatedQualityScore": 82,
+        "automatedExclusionReasons": [],
+        "editorialEvidenceGrade": "B",
+        "decision": "publishable_with_source_limits",
+        "reviewedAt": "2026-10-02T06:42:42.556Z",
+        "reason": "完整作者自述与具体问题已按原文独立复核；企业事实及经历真实性未外部证实，答案和教学模拟分开。原自动C不改写为自动A/B。",
+        "contentSha256": "a6ce3f4a4b29c30b29ca95bafff3b37bede38f27c2c8fe090c81c7501ad212ac"
+      },
+      "publication": {
+        "status": "pending",
+        "note": "published为资源文章/树关联契约；本次网站更新以合并SHA对应sync-content Action成功为准。"
+      },
+      "independence": "来源与经历均为候选人自述，未外部证实；cluster热度表示已整理来源计数，不等于独立真实面试频率。"
     },
     "8713087bd7d6": {
       "source": "nowcoder",
@@ -346,11 +403,36 @@
       "clusterId": "cluster-40374dfc6b29",
       "company": "bytedance",
       "evidenceGrade": "B",
-      "status": "merged",
-      "publicFiles": [],
-      "knowledgeKeys": [],
-      "reason": "问题与本批已发布的字节 Coding Agent 内容高度重合，仅作为频次证据合并",
-      "processedAt": "2026-08-24T21:28:00.000Z"
+      "status": "published",
+      "articleKey": "bytedance-base-26",
+      "publicFiles": ["interview/bytedance/base/bytedance-base-26.md"],
+      "knowledgeKeys": ["agent-eval-framework", "agent-benchmark", "logging-monitoring", "function-calling", "agent-run-loop", "agent-tool-result-validation", "context-engineering", "agent-react", "agent-coding", "agent-skill-design", "agent-quality-gates", "websocket", "sse-server", "async-job-queue", "localStorage-sessionStorage", "jwt-auth", "algorithm-loop", "algorithm-complexity", "algorithm-hash"],
+      "processedAt": "2026-10-02T06:42:42.556Z",
+      "batch": "nowcoder-byte-campus-pilot-10-20261002",
+      "publishedAt": "2026-08-13T15:41:00.000Z",
+      "recruitmentScene": "campus_27_autumn",
+      "roleStratum": "agent_rnd",
+      "editorialReview": {
+        "automatedEvidenceGrade": "B",
+        "automatedQualityScore": 100,
+        "automatedExclusionReasons": [],
+        "editorialEvidenceGrade": "B",
+        "decision": "publishable_with_source_limits",
+        "reviewedAt": "2026-10-02T06:42:42.556Z",
+        "reason": "完整作者自述与具体问题已按原文独立复核；企业事实及经历真实性未外部证实，答案和教学模拟分开。原自动C不改写为自动A/B。",
+        "contentSha256": "fc71edb8f0a7d2172ed272c3bac908c2f2af0d2e61d411d50bc715cc8c92f5bb"
+      },
+      "publication": {
+        "status": "pending",
+        "note": "published为资源文章/树关联契约；本次网站更新以合并SHA对应sync-content Action成功为准。"
+      },
+      "independence": "来源与经历均为候选人自述，未外部证实；cluster热度表示已整理来源计数，不等于独立真实面试频率。",
+      "sourceCorrelationNote": "同作者的不同岗位/日期上下文，未证明同次或独立真实经历；按来源保留，不能按独立经历频率解释。",
+      "previousDisposition": {
+        "status": "merged",
+        "reason": "问题与本批已发布的字节 Coding Agent 内容高度重合，仅作为频次证据合并",
+        "processedAt": "2026-08-24T21:28:00.000Z"
+      }
     },
     "9cfe3ccfb4d6": {
       "source": "nowcoder",
@@ -687,8 +769,27 @@
       "status": "published",
       "articleKey": "bytedance-base-19",
       "publicFiles": ["interview/bytedance/base/bytedance-base-19.md"],
-      "knowledgeKeys": ["context-engineering", "llm-conversation-state", "llm-token-context", "prompt-context-compression", "agent-skill-design", "agent-subagents", "multi-agent", "os-process-thread", "sql-window-function", "algorithm-linked-list", "algorithm-hash"],
-      "processedAt": "2026-08-29T07:30:00.000Z"
+      "knowledgeKeys": ["context-engineering", "llm-conversation-state", "llm-token-context", "prompt-context-compression", "agent-skill-design", "agent-subagents", "multi-agent", "os-process-thread", "sql-window-function", "algorithm-linked-list", "algorithm-hash", "frontend-performance-diagnostics", "algorithm-loop"],
+      "processedAt": "2026-10-02T06:42:42.556Z",
+      "batch": "nowcoder-byte-campus-pilot-10-20261002",
+      "publishedAt": "2026-08-27T12:11:00.000Z",
+      "recruitmentScene": "daily_internship",
+      "roleStratum": "agent_rnd",
+      "editorialReview": {
+        "automatedEvidenceGrade": "A",
+        "automatedQualityScore": 62,
+        "automatedExclusionReasons": [],
+        "editorialEvidenceGrade": "A",
+        "decision": "publishable_with_source_limits",
+        "reviewedAt": "2026-10-02T06:42:42.556Z",
+        "reason": "完整作者自述与具体问题已按原文独立复核；企业事实及经历真实性未外部证实，答案和教学模拟分开。原自动C不改写为自动A/B。",
+        "contentSha256": "61abe14f96a5ed506ef2c661d3e81dac8b7d57ec278193923aecfb0f34d93e35"
+      },
+      "publication": {
+        "status": "pending",
+        "note": "published为资源文章/树关联契约；本次网站更新以合并SHA对应sync-content Action成功为准。"
+      },
+      "independence": "来源与经历均为候选人自述，未外部证实；cluster热度表示已整理来源计数，不等于独立真实面试频率。"
     },
     "c5cace30f27c": {
       "source": "nowcoder",
@@ -897,6 +998,155 @@
       "publicFiles": ["interview/kuaishou/ai/kuaishou-ai-5.md"],
       "knowledgeKeys": ["mcp-protocol", "agent-skill-design", "ai-observability"],
       "processedAt": "2026-08-31T20:43:42.000Z"
+    },
+    "bbd0b83c38f9": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/932295617999622144",
+      "contentHash": "a84ba08581910c79",
+      "clusterId": "cluster-a84ba0858191",
+      "company": "bytedance",
+      "evidenceGrade": "A",
+      "status": "published",
+      "articleKey": "bytedance-base-22",
+      "publicFiles": ["interview/bytedance/base/bytedance-base-22.md"],
+      "knowledgeKeys": ["agent-workflow-state", "agent-deterministic-workflow", "agent-eval-framework", "rag-testing", "data-quality", "rag-evaluation", "rag-query-rewrite", "agent-intent-clarification", "rag-production-ingestion", "rag-loader-parser", "rag-chunking", "rag-hybrid-search", "rag-reranking", "agent-project-evaluation", "agent-resume-interview"],
+      "processedAt": "2026-10-02T06:42:42.556Z",
+      "batch": "nowcoder-byte-campus-pilot-10-20261002",
+      "publishedAt": "2026-09-24T00:13:00.000Z",
+      "recruitmentScene": "daily_internship",
+      "roleStratum": "agent_rnd",
+      "editorialReview": {
+        "automatedEvidenceGrade": "A",
+        "automatedQualityScore": 92,
+        "automatedExclusionReasons": [],
+        "editorialEvidenceGrade": "A",
+        "decision": "publishable_with_source_limits",
+        "reviewedAt": "2026-10-02T06:42:42.556Z",
+        "reason": "完整作者自述与具体问题已按原文独立复核；企业事实及经历真实性未外部证实，答案和教学模拟分开。原自动C不改写为自动A/B。",
+        "contentSha256": "43a6217a2c3c9dffe7fe3e7c093b14c35eb196e5fcde23b5879d7c7305c0c3db"
+      },
+      "publication": {
+        "status": "pending",
+        "note": "published为资源文章/树关联契约；本次网站更新以合并SHA对应sync-content Action成功为准。"
+      },
+      "independence": "来源与经历均为候选人自述，未外部证实；cluster热度表示已整理来源计数，不等于独立真实面试频率。"
+    },
+    "ca2c67ac61bf": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/932587389027962880",
+      "contentHash": "3f37b9b18f24817d",
+      "clusterId": "cluster-3f37b9b18f24",
+      "company": "bytedance",
+      "evidenceGrade": "B",
+      "status": "published",
+      "articleKey": "bytedance-base-23",
+      "publicFiles": ["interview/bytedance/base/bytedance-base-23.md"],
+      "knowledgeKeys": ["agent-deterministic-workflow", "agent-project-evaluation", "agent-quality-gates", "agent-tool-result-validation", "rag-citation-grounding", "agent-eval-framework", "agent-coding", "etl-design", "data-orchestration", "data-observability", "sql-index-optimize", "batch-stream-processing", "async-job-queue", "redis-data-structure", "agent-state-storage", "websocket", "redis-cache", "backup-restore", "event-store", "api-idempotency", "sse-server", "sql-core", "mysql-index"],
+      "processedAt": "2026-10-02T06:42:42.556Z",
+      "batch": "nowcoder-byte-campus-pilot-10-20261002",
+      "publishedAt": "2026-09-24T02:54:00.000Z",
+      "recruitmentScene": "campus",
+      "roleStratum": "ai_fullstack",
+      "editorialReview": {
+        "automatedEvidenceGrade": "C",
+        "automatedQualityScore": 37,
+        "automatedExclusionReasons": ["面经证据不足"],
+        "editorialEvidenceGrade": "B",
+        "decision": "publishable_with_source_limits",
+        "reviewedAt": "2026-10-02T06:42:42.556Z",
+        "reason": "完整作者自述与具体问题已按原文独立复核；企业事实及经历真实性未外部证实，答案和教学模拟分开。原自动C不改写为自动A/B。",
+        "contentSha256": "9b025cfd7188b4856963c9e66a667a295832a903fbd617a2999d14b1d0417b32"
+      },
+      "publication": {
+        "status": "pending",
+        "note": "published为资源文章/树关联契约；本次网站更新以合并SHA对应sync-content Action成功为准。"
+      },
+      "independence": "来源与经历均为候选人自述，未外部证实；cluster热度表示已整理来源计数，不等于独立真实面试频率。"
+    },
+    "9caad58064ff": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/930155293864914944",
+      "contentHash": "74e92db1eff9b698",
+      "clusterId": "cluster-74e92db1eff9",
+      "company": "bytedance",
+      "evidenceGrade": "A",
+      "status": "published",
+      "articleKey": "bytedance-base-25",
+      "publicFiles": ["interview/bytedance/base/bytedance-base-25.md"],
+      "knowledgeKeys": ["agent-run-loop", "build-agent-framework", "agent-tool-design", "agent-workflow-state", "agent-deterministic-workflow", "agent-memory", "agent-memory-summarization", "mcp-protocol", "agent-skill-design", "agent-sandbox", "redis-cache", "db-transaction-lock", "mysql-index", "sql-index-optimize", "algorithm-hash", "algorithm-linked-list"],
+      "processedAt": "2026-10-02T06:42:42.556Z",
+      "batch": "nowcoder-byte-campus-pilot-10-20261002",
+      "publishedAt": "2026-09-17T10:31:00.000Z",
+      "recruitmentScene": "campus_27_autumn",
+      "roleStratum": "agent_rnd",
+      "editorialReview": {
+        "automatedEvidenceGrade": "A",
+        "automatedQualityScore": 87,
+        "automatedExclusionReasons": [],
+        "editorialEvidenceGrade": "A",
+        "decision": "publishable_with_source_limits",
+        "reviewedAt": "2026-10-02T06:42:42.556Z",
+        "reason": "完整作者自述与具体问题已按原文独立复核；企业事实及经历真实性未外部证实，答案和教学模拟分开。原自动C不改写为自动A/B。",
+        "contentSha256": "0a81ff268c17c2c059b72ee81db1bd70db1c86d94d27b473cbc0c2ef116df450"
+      },
+      "publication": {
+        "status": "pending",
+        "note": "published为资源文章/树关联契约；本次网站更新以合并SHA对应sync-content Action成功为准。"
+      },
+      "independence": "来源与经历均为候选人自述，未外部证实；cluster热度表示已整理来源计数，不等于独立真实面试频率。",
+      "sourceCorrelationNote": "同作者的不同岗位/日期上下文，未证明同次或独立真实经历；按来源保留，不能按独立经历频率解释。"
+    },
+    "d043306c8a8f": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/feed/main/detail/6bb1ad75b88c4498933e6cc6434de4e1",
+      "contentHash": "7116079e6b23378d",
+      "clusterId": "cluster-7116079e6b23",
+      "company": "bytedance",
+      "evidenceGrade": "B",
+      "status": "published",
+      "articleKey": "bytedance-base-27",
+      "publicFiles": ["interview/bytedance/base/bytedance-base-27.md"],
+      "knowledgeKeys": ["llm-token-context", "agent-memory-summarization", "agent-state-storage", "agent-memory", "agent-memory-architecture", "agent-tool-selection", "agent-skill-design", "rag-pipeline", "rag-evaluation", "rag-testing", "embedding-basics", "embedding-models", "agent-eval-framework", "algorithm-linked-list", "logging-monitoring", "build-agent-framework"],
+      "processedAt": "2026-10-02T06:42:42.556Z",
+      "batch": "nowcoder-byte-campus-pilot-10-20261002",
+      "publishedAt": "2026-07-21T09:04:00.000Z",
+      "recruitmentScene": "summer_internship",
+      "roleStratum": "agent_rnd",
+      "editorialReview": {
+        "automatedEvidenceGrade": "C",
+        "automatedQualityScore": 67,
+        "automatedExclusionReasons": ["面经证据不足"],
+        "editorialEvidenceGrade": "B",
+        "decision": "publishable_with_source_limits",
+        "reviewedAt": "2026-10-02T06:42:42.556Z",
+        "reason": "完整作者自述与具体问题已按原文独立复核；企业事实及经历真实性未外部证实，答案和教学模拟分开。原自动C不改写为自动A/B。",
+        "contentSha256": "21daea8789823fc75788a35adc759b12025739a2f6555500685d999ae930c270"
+      },
+      "publication": {
+        "status": "pending",
+        "note": "published为资源文章/树关联契约；本次网站更新以合并SHA对应sync-content Action成功为准。"
+      },
+      "independence": "来源与经历均为候选人自述，未外部证实；cluster热度表示已整理来源计数，不等于独立真实面试频率。"
+    },
+    "9ac38cfb290d": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/904029765160497152",
+      "contentHash": "a03dc17ce95d9bca",
+      "clusterId": "cluster-a03dc17ce95d",
+      "company": "bytedance",
+      "evidenceGrade": "C",
+      "status": "needs_review",
+      "publicFiles": [],
+      "knowledgeKeys": [],
+      "processedAt": "2026-10-02T06:42:42.556Z",
+      "batch": "nowcoder-byte-campus-pilot-10-20261002",
+      "reason": "多公司合集字节段只给主题范围，业务追问与手写题缺题面；题目级A/B阻断，不用其他公司内容补造。",
+      "editorialReview": {
+        "automatedEvidenceGrade": "C",
+        "automatedQualityScore": 92,
+        "decision": "blocked_for_question_level_AB",
+        "reviewedAt": "2026-10-02T06:42:42.556Z"
+      }
     }
   }
 }

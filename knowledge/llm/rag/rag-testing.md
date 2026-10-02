@@ -98,6 +98,13 @@ Retriever 使用 Recall@K、Precision@K；reranker 使用 MRR、nDCG；路由器
 
 RAG 测试是一座金字塔：底层确定性契约保证数据与权限，中层分别测召回、排名和路由，版本化 Golden Set 驱动端到端答案与引用回归，线上监控发现漂移，再经复核形成下一版数据。发布决策必须按关键切片、统计差异和风险硬门禁共同做出。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 暑期实习一面：摘要、工具预算与链表（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-27.md)（cluster-7116079e6b23）
+- [字节 Agent 后端实习一面：LangGraph、评测集与混合检索（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-22.md)（cluster-a84ba0858191）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Es et al. — RAGAS](https://arxiv.org/abs/2309.15217)

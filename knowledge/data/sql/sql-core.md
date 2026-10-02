@@ -432,6 +432,12 @@ WHERE manager_id IS NULL
 
 10. **子查询 vs CTE**：功能上等价，CTE 可复用、可逐步调试；多数现代优化器对 CTE 和等价子查询的执行计划相同，但 CTE 的可读性和可维护性显著更优。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-23.md)（cluster-3f37b9b18f24）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [PostgreSQL SQL language tutorial](https://www.postgresql.org/docs/current/tutorial-sql.html)
