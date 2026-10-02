@@ -119,6 +119,12 @@ type VisualCitation = {
 
 图像 RAG 应围绕原始 asset 建立多条派生通道：OCR 提供文字和坐标，caption 提供可检索语义，视觉 embedding 提供外观匹配。隐私与权限先于派生和检索，融合结果始终保留 asset/page/bbox，使模型的视觉断言可以回到原始像素。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [腾讯 Agent 实习一面：RAG、工具与通信（2026 年 3 月发帖）](../../../interview/tencent/ai/tencent-ai-10.md)（cluster-fa3a6af4ebe6）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Tesseract — User Manual](https://tesseract-ocr.github.io/tessdoc/)

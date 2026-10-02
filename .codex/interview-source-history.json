@@ -29,8 +29,12 @@
         "contentSha256": "0aa215a04059da44cfee5771439ebbf7bbb21ecac1e14887e15e0f6a19b4dddd"
       },
       "publication": {
-        "status": "pending",
-        "note": "published为资源文章/树关联契约；本次网站更新以合并SHA对应sync-content Action成功为准。"
+        "status": "published",
+        "verifiedAt": "2026-10-02T07:47:28.923Z",
+        "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
+        "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
+        "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
+        "syncConclusion": "success"
       },
       "independence": "来源与经历均为候选人自述，未外部证实；cluster热度表示已整理来源计数，不等于独立真实面试频率。"
     },
@@ -190,8 +194,12 @@
         "contentSha256": "2f0a879d503c49757d6440657014e865b0fad5fbfc02e5b66b89d68e466f74ee"
       },
       "publication": {
-        "status": "pending",
-        "note": "published为资源文章/树关联契约；本次网站更新以合并SHA对应sync-content Action成功为准。"
+        "status": "published",
+        "verifiedAt": "2026-10-02T07:47:28.923Z",
+        "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
+        "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
+        "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
+        "syncConclusion": "success"
       },
       "independence": "来源与经历均为候选人自述，未外部证实；cluster热度表示已整理来源计数，不等于独立真实面试频率。"
     },
@@ -274,8 +282,12 @@
         "contentSha256": "a6ce3f4a4b29c30b29ca95bafff3b37bede38f27c2c8fe090c81c7501ad212ac"
       },
       "publication": {
-        "status": "pending",
-        "note": "published为资源文章/树关联契约；本次网站更新以合并SHA对应sync-content Action成功为准。"
+        "status": "published",
+        "verifiedAt": "2026-10-02T07:47:28.923Z",
+        "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
+        "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
+        "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
+        "syncConclusion": "success"
       },
       "independence": "来源与经历均为候选人自述，未外部证实；cluster热度表示已整理来源计数，不等于独立真实面试频率。"
     },
@@ -423,8 +435,12 @@
         "contentSha256": "fc71edb8f0a7d2172ed272c3bac908c2f2af0d2e61d411d50bc715cc8c92f5bb"
       },
       "publication": {
-        "status": "pending",
-        "note": "published为资源文章/树关联契约；本次网站更新以合并SHA对应sync-content Action成功为准。"
+        "status": "published",
+        "verifiedAt": "2026-10-02T07:47:28.923Z",
+        "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
+        "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
+        "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
+        "syncConclusion": "success"
       },
       "independence": "来源与经历均为候选人自述，未外部证实；cluster热度表示已整理来源计数，不等于独立真实面试频率。",
       "sourceCorrelationNote": "同作者的不同岗位/日期上下文，未证明同次或独立真实经历；按来源保留，不能按独立经历频率解释。",
@@ -786,8 +802,12 @@
         "contentSha256": "61abe14f96a5ed506ef2c661d3e81dac8b7d57ec278193923aecfb0f34d93e35"
       },
       "publication": {
-        "status": "pending",
-        "note": "published为资源文章/树关联契约；本次网站更新以合并SHA对应sync-content Action成功为准。"
+        "status": "published",
+        "verifiedAt": "2026-10-02T07:47:28.923Z",
+        "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
+        "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
+        "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
+        "syncConclusion": "success"
       },
       "independence": "来源与经历均为候选人自述，未外部证实；cluster热度表示已整理来源计数，不等于独立真实面试频率。"
     },
@@ -1026,8 +1046,12 @@
         "contentSha256": "43a6217a2c3c9dffe7fe3e7c093b14c35eb196e5fcde23b5879d7c7305c0c3db"
       },
       "publication": {
-        "status": "pending",
-        "note": "published为资源文章/树关联契约；本次网站更新以合并SHA对应sync-content Action成功为准。"
+        "status": "published",
+        "verifiedAt": "2026-10-02T07:47:28.923Z",
+        "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
+        "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
+        "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
+        "syncConclusion": "success"
       },
       "independence": "来源与经历均为候选人自述，未外部证实；cluster热度表示已整理来源计数，不等于独立真实面试频率。"
     },
@@ -1058,8 +1082,12 @@
         "contentSha256": "9b025cfd7188b4856963c9e66a667a295832a903fbd617a2999d14b1d0417b32"
       },
       "publication": {
-        "status": "pending",
-        "note": "published为资源文章/树关联契约；本次网站更新以合并SHA对应sync-content Action成功为准。"
+        "status": "published",
+        "verifiedAt": "2026-10-02T07:47:28.923Z",
+        "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
+        "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
+        "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
+        "syncConclusion": "success"
       },
       "independence": "来源与经历均为候选人自述，未外部证实；cluster热度表示已整理来源计数，不等于独立真实面试频率。"
     },
@@ -1090,8 +1118,12 @@
         "contentSha256": "0a81ff268c17c2c059b72ee81db1bd70db1c86d94d27b473cbc0c2ef116df450"
       },
       "publication": {
-        "status": "pending",
-        "note": "published为资源文章/树关联契约；本次网站更新以合并SHA对应sync-content Action成功为准。"
+        "status": "published",
+        "verifiedAt": "2026-10-02T07:47:28.923Z",
+        "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
+        "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
+        "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
+        "syncConclusion": "success"
       },
       "independence": "来源与经历均为候选人自述，未外部证实；cluster热度表示已整理来源计数，不等于独立真实面试频率。",
       "sourceCorrelationNote": "同作者的不同岗位/日期上下文，未证明同次或独立真实经历；按来源保留，不能按独立经历频率解释。"
@@ -1123,8 +1155,12 @@
         "contentSha256": "21daea8789823fc75788a35adc759b12025739a2f6555500685d999ae930c270"
       },
       "publication": {
-        "status": "pending",
-        "note": "published为资源文章/树关联契约；本次网站更新以合并SHA对应sync-content Action成功为准。"
+        "status": "published",
+        "verifiedAt": "2026-10-02T07:47:28.923Z",
+        "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
+        "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
+        "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
+        "syncConclusion": "success"
       },
       "independence": "来源与经历均为候选人自述，未外部证实；cluster热度表示已整理来源计数，不等于独立真实面试频率。"
     },
@@ -1147,6 +1183,235 @@
         "decision": "blocked_for_question_level_AB",
         "reviewedAt": "2026-10-02T06:42:42.556Z"
       }
+    },
+    "d90d373e9788": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/932407145864130560",
+      "contentHash": "b34d62449917deb4",
+      "clusterId": "cluster-b34d62449917",
+      "company": "bytedance",
+      "evidenceGrade": "A",
+      "status": "published",
+      "articleKey": "bytedance-base-21",
+      "publicFiles": ["interview/bytedance/base/bytedance-base-21.md"],
+      "knowledgeKeys": ["multi-agent", "agent-architecture", "agent-memory-summarization", "context-engineering", "agent-tool-design", "rag-parent-child", "rag-evaluation", "algorithm-loop", "data-formats", "agent-eval-framework", "agent-benchmark", "agent-state-storage", "agent-workflow-state", "rag-access-control", "agentic-rl", "llm-rlhf-dpo"],
+      "processedAt": "2026-10-02T07:47:28.923Z",
+      "batch": "nowcoder-original-six-completion-20261002",
+      "publishedAt": "2026-09-23T14:53:00.000Z",
+      "editorialReview": {
+        "automatedEvidenceGrade": "A",
+        "automatedCompany": "bytedance",
+        "automatedQualityScore": 92,
+        "automatedExclusionReasons": [],
+        "editorialEvidenceGrade": "A",
+        "decision": "publishable_with_source_limits",
+        "reviewedAt": "2026-10-02T07:54:23.436Z",
+        "contentSha256": "1b1cf62cf21bc5524d1c09749ed6fe4c4b92a9a81dbaf5e82112b99fe25847d1",
+        "reason": "完整原文逐题核对、脱敏与独立五门终审；原题与教学补充区分，日期及轮次缺项保留，不把作者经历或企业业务转述当独立证实事实。",
+        "fiveGates": {
+          "correctness": "passed",
+          "timeliness": "passed",
+          "evidence": "passed",
+          "comprehensibility": "passed",
+          "interviewTransfer": "passed"
+        }
+      },
+      "publication": {
+        "status": "pending",
+        "note": "published 为现有资源文章与目录契约；网站完成以本批合并 SHA 对应内容同步 Action 成功为准。"
+      },
+      "independence": "cluster 计数是已整理来源数，不代表外部证实的独立真实面试频率。"
+    },
+    "ab6575bbe6f6": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/924245733962719232",
+      "contentHash": "21f88c2e7c889d12",
+      "clusterId": "cluster-21f88c2e7c88",
+      "company": "alibaba",
+      "evidenceGrade": "B",
+      "status": "published",
+      "articleKey": "alibaba-ai-8",
+      "publicFiles": ["interview/alibaba/ai/alibaba-ai-8.md"],
+      "knowledgeKeys": ["sgx-multitenant-compute", "os-virtual-memory", "logging-monitoring", "algorithm-loop", "algorithm-stack-queue", "async-job-queue", "etl-design", "data-schema-evolution", "sql-injection"],
+      "processedAt": "2026-10-02T07:47:28.923Z",
+      "batch": "nowcoder-original-six-completion-20261002",
+      "publishedAt": "2026-09-01T02:22:00.000Z",
+      "editorialReview": {
+        "automatedEvidenceGrade": "B",
+        "automatedCompany": "alibaba",
+        "automatedQualityScore": 62,
+        "automatedExclusionReasons": [],
+        "editorialEvidenceGrade": "B",
+        "decision": "publishable_with_source_limits",
+        "reviewedAt": "2026-10-02T07:54:23.436Z",
+        "contentSha256": "6b0da937850eb555f9eacdcfebf80e2d0cca1560ff9970ef73f40b20fe34f6d1",
+        "reason": "完整原文逐题核对、脱敏与独立五门终审；原题与教学补充区分，日期及轮次缺项保留，不把作者经历或企业业务转述当独立证实事实。",
+        "fiveGates": {
+          "correctness": "passed",
+          "timeliness": "passed",
+          "evidence": "passed",
+          "comprehensibility": "passed",
+          "interviewTransfer": "passed"
+        }
+      },
+      "publication": {
+        "status": "pending",
+        "note": "published 为现有资源文章与目录契约；网站完成以本批合并 SHA 对应内容同步 Action 成功为准。"
+      },
+      "independence": "cluster 计数是已整理来源数，不代表外部证实的独立真实面试频率。"
+    },
+    "893cc804b5da": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/894720138258173952",
+      "contentHash": "de2ee20bc8904881",
+      "clusterId": "cluster-de2ee20bc890",
+      "company": "antfin",
+      "evidenceGrade": "B",
+      "status": "published",
+      "articleKey": "antfin-ai-6",
+      "publicFiles": ["interview/antfin/ai/antfin-ai-6.md"],
+      "knowledgeKeys": ["agent-resume-interview", "redis-cache", "async-job-queue", "api-idempotency", "docker-compose", "redis-data-structure", "backup-restore", "db-transaction-lock", "build-agent-framework", "agent-workflow-state", "rag-pipeline", "rag-hybrid-search", "rag-production-ingestion", "agent-run-loop", "os-process-thread", "ai-rate-limiting", "llm-model-selection", "agent-coding", "agent-human-in-loop"],
+      "processedAt": "2026-10-02T07:47:28.923Z",
+      "batch": "nowcoder-original-six-completion-20261002",
+      "publishedAt": "2026-06-11T14:58:00.000Z",
+      "editorialReview": {
+        "automatedEvidenceGrade": "B",
+        "automatedCompany": "ant",
+        "automatedQualityScore": 82,
+        "automatedExclusionReasons": [],
+        "editorialEvidenceGrade": "B",
+        "decision": "publishable_with_source_limits",
+        "reviewedAt": "2026-10-02T07:54:23.436Z",
+        "contentSha256": "70bdde6432afe691b481a0ef6e75fb832962df11edac492ed919de4be9c3259c",
+        "reason": "完整原文逐题核对、脱敏与独立五门终审；原题与教学补充区分，日期及轮次缺项保留，不把作者经历或企业业务转述当独立证实事实。",
+        "fiveGates": {
+          "correctness": "passed",
+          "timeliness": "passed",
+          "evidence": "passed",
+          "comprehensibility": "passed",
+          "interviewTransfer": "passed"
+        }
+      },
+      "publication": {
+        "status": "pending",
+        "note": "published 为现有资源文章与目录契约；网站完成以本批合并 SHA 对应内容同步 Action 成功为准。"
+      },
+      "independence": "cluster 计数是已整理来源数，不代表外部证实的独立真实面试频率。"
+    },
+    "af66f0c6a6fa": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/933023499399024640",
+      "contentHash": "78d45fa26bfdc52e",
+      "clusterId": "cluster-78d45fa26bfd",
+      "company": "bytedance",
+      "evidenceGrade": "B",
+      "status": "published",
+      "articleKey": "bytedance-base-24",
+      "publicFiles": ["interview/bytedance/base/bytedance-base-24.md"],
+      "knowledgeKeys": ["algorithm-backtracking", "algorithm-complexity", "build-agent-framework", "agent-coding", "agent-memory-summarization", "agent-state-storage", "agent-eval-framework", "agent-quality-gates", "agent-online-eval", "agent-resume-interview", "rag-table-retrieval", "multi-agent", "agent-memory", "context-engineering", "data-schema-evolution", "sql-injection", "logging-monitoring", "mysql-index", "sql-index-optimize", "db-transaction-lock", "tcpIp-model", "tcp-udp", "os-process-thread", "os-user-kernel-mode"],
+      "processedAt": "2026-10-02T07:47:28.923Z",
+      "batch": "nowcoder-original-six-completion-20261002",
+      "publishedAt": "2026-09-25T07:42:00.000Z",
+      "editorialReview": {
+        "automatedEvidenceGrade": "B",
+        "automatedCompany": "bytedance",
+        "automatedQualityScore": 97,
+        "automatedExclusionReasons": [],
+        "editorialEvidenceGrade": "B",
+        "decision": "publishable_with_source_limits",
+        "reviewedAt": "2026-10-02T07:54:23.436Z",
+        "contentSha256": "beb9451dc7132cfcd85160e7a9900d6ca6740dfb9c5d1401e6f1e2630a021470",
+        "reason": "完整原文逐题核对、脱敏与独立五门终审；原题与教学补充区分，日期及轮次缺项保留，不把作者经历或企业业务转述当独立证实事实。",
+        "fiveGates": {
+          "correctness": "passed",
+          "timeliness": "passed",
+          "evidence": "passed",
+          "comprehensibility": "passed",
+          "interviewTransfer": "passed"
+        }
+      },
+      "publication": {
+        "status": "pending",
+        "note": "published 为现有资源文章与目录契约；网站完成以本批合并 SHA 对应内容同步 Action 成功为准。"
+      },
+      "independence": "cluster 计数是已整理来源数，不代表外部证实的独立真实面试频率。"
+    },
+    "c82a400348e3": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/feed/main/detail/86c7a1d799984400905ce219c818515f",
+      "contentHash": "fa3a6af4ebe6d31b",
+      "clusterId": "cluster-fa3a6af4ebe6",
+      "company": "tencent",
+      "evidenceGrade": "A",
+      "status": "published",
+      "articleKey": "tencent-ai-10",
+      "publicFiles": ["interview/tencent/ai/tencent-ai-10.md"],
+      "knowledgeKeys": ["rag-pipeline", "agent-resume-interview", "rag-production-ingestion", "rag-chunking", "file-upload-service", "rag-reranking", "rag-evaluation", "rag-latency-cost", "agent-architecture", "agent-react", "agent-run-loop", "agent-planning", "agent-workflow-state", "agent-tool-design", "agent-tool-selection", "sse-server", "websocket", "http-message", "rag-image-retrieval", "llm-model-selection", "os-process-thread", "os-thread-sync", "redis-distributed-lock", "mcp-protocol", "agent-coding", "agent-skill-design", "build-agent-framework"],
+      "processedAt": "2026-10-02T07:47:28.923Z",
+      "batch": "nowcoder-original-six-completion-20261002",
+      "publishedAt": "2026-03-30T10:50:00.000Z",
+      "editorialReview": {
+        "automatedEvidenceGrade": "A",
+        "automatedCompany": "tencent",
+        "automatedQualityScore": 92,
+        "automatedExclusionReasons": [],
+        "editorialEvidenceGrade": "A",
+        "decision": "publishable_with_source_limits",
+        "reviewedAt": "2026-10-02T07:54:23.436Z",
+        "contentSha256": "ab5f105e8ff562d2c16f358989ad5411b1280d1a21dace93850da1e0a932e99d",
+        "reason": "完整原文逐题核对、脱敏与独立五门终审；原题与教学补充区分，日期及轮次缺项保留，不把作者经历或企业业务转述当独立证实事实。",
+        "fiveGates": {
+          "correctness": "passed",
+          "timeliness": "passed",
+          "evidence": "passed",
+          "comprehensibility": "passed",
+          "interviewTransfer": "passed"
+        }
+      },
+      "publication": {
+        "status": "pending",
+        "note": "published 为现有资源文章与目录契约；网站完成以本批合并 SHA 对应内容同步 Action 成功为准。"
+      },
+      "independence": "cluster 计数是已整理来源数，不代表外部证实的独立真实面试频率。"
+    },
+    "2e665104f6e3": {
+      "source": "nowcoder",
+      "url": "https://www.nowcoder.com/discuss/932016298563809280",
+      "contentHash": "798d1749a171dbbc",
+      "clusterId": "cluster-798d1749a171",
+      "company": "vivo",
+      "evidenceGrade": "B",
+      "status": "published",
+      "articleKey": "vivo-ai-1",
+      "publicFiles": ["interview/vivo/ai/vivo-ai-1.md"],
+      "knowledgeKeys": ["build-agent-framework", "agent-architecture", "agent-quality-gates", "agent-tool-result-validation", "agent-state-storage", "agent-deterministic-workflow", "agent-eval-framework", "agent-learning-roadmap", "agent-role-landscape"],
+      "processedAt": "2026-10-02T07:47:28.923Z",
+      "batch": "nowcoder-original-six-completion-20261002",
+      "publishedAt": "2026-09-22T13:00:00.000Z",
+      "editorialReview": {
+        "automatedEvidenceGrade": "B",
+        "automatedCompany": "other",
+        "automatedQualityScore": 62,
+        "automatedExclusionReasons": [],
+        "editorialEvidenceGrade": "B",
+        "decision": "publishable_with_source_limits",
+        "reviewedAt": "2026-10-02T07:54:23.436Z",
+        "contentSha256": "5b8e69c4af113f7362f75b5a652343576e3d26cd959b2e8c15f45814e56ca2d7",
+        "reason": "完整原文逐题核对、脱敏与独立五门终审；原题与教学补充区分，日期及轮次缺项保留，不把作者经历或企业业务转述当独立证实事实。",
+        "companyCorrectionReason": "标题及原文明确 vivo；产品类比不用于推定面试公司。原始自动公司 other 保留。",
+        "fiveGates": {
+          "correctness": "passed",
+          "timeliness": "passed",
+          "evidence": "passed",
+          "comprehensibility": "passed",
+          "interviewTransfer": "passed"
+        }
+      },
+      "publication": {
+        "status": "pending",
+        "note": "published 为现有资源文章与目录契约；网站完成以本批合并 SHA 对应内容同步 Action 成功为准。"
+      },
+      "independence": "cluster 计数是已整理来源数，不代表外部证实的独立真实面试频率。"
     }
   }
 }

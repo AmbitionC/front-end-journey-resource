@@ -316,6 +316,12 @@ docker compose config
 - **Volume bind mount 和 named volume 的区别**：bind mount 映射宿主机目录，适合开发热重载；named volume 由 Docker 管理，适合生产数据持久化，容器重建后数据不丢失。
 - **`docker compose down -v` 的风险**：会同时删除 named volumes，数据库数据永久丢失，生产环境严禁随意执行。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [蚂蚁 Agent 实习一面：缓存、消息与 RAG（2026 年 6 月发帖）](../../../interview/antfin/ai/antfin-ai-6.md)（cluster-de2ee20bc890）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Compose file reference](https://docs.docker.com/reference/compose-file/)

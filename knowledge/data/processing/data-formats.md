@@ -338,6 +338,12 @@ JSON 表示一个完整文档；常见 `json.load()` 会一次构建整个对象
 
 列式布局把同一字段的值放在一起；若该列有重复值、连续游程或较小值域，字典编码与 RLE 就有机会用更紧凑的表示。之后的压缩 codec 还能利用编码后或原始数据中的重复模式。行式数据同样可以被 gzip 等通用算法压缩，只是列式布局与专用编码可能让某些数据分布更容易被利用；收益必须实测。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节抖音电商 Agent 一面：分层、上下文与 GRPO（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-21.md)（cluster-b34d62449917）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [RFC 8259: The JavaScript Object Notation Data Interchange Format](https://www.rfc-editor.org/rfc/rfc8259.html)

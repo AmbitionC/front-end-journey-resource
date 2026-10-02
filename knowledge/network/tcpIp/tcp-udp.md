@@ -49,6 +49,12 @@ QUIC 使用 UDP 承载，却自行提供加密握手、可靠流、丢包恢复�
 
 TCP 的核心是连接状态下的可靠有序字节流；UDP 的核心是保留边界的独立数据报。UDP 有长度与校验和，但没有交付、排序和拥塞保证。性能来自完整协议和网络条件，选型应围绕应用容错契约，而不是“快/慢”的绝对标签。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节飞书 AI 应用一面：Runtime、评测与后端基础（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-24.md)（cluster-78d45fa26bfd）
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [RFC 9293: Transmission Control Protocol](https://www.rfc-editor.org/rfc/rfc9293.html)

@@ -8,6 +8,22 @@
         "key": "bytedance-base",
         "children": [
           {
+            "label": "字节飞书 AI 应用一面：Runtime、评测与后端基础（2026 年 9 月发帖）",
+            "key": "bytedance-base-24",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": ["Agent Runtime", "Memory", "数据库", "Go"],
+            "updatedAt": "2026-10-02"
+          },
+          {
+            "label": "字节抖音电商 Agent 一面：分层、上下文与 GRPO（2026 年 9 月发帖）",
+            "key": "bytedance-base-21",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": ["Multi-Agent", "Context", "GRPO", "JSON"],
+            "updatedAt": "2026-10-02"
+          },
+          {
             "label": "字节 Agent 暑期实习一面：摘要、工具预算与链表（2026 年 7 月）",
             "key": "bytedance-base-27",
             "isLeaf": true,
@@ -188,6 +204,14 @@
         "key": "tencent-ai",
         "children": [
           {
+            "label": "腾讯 Agent 实习一面：RAG、工具与通信（2026 年 3 月发帖）",
+            "key": "tencent-ai-10",
+            "isLeaf": true,
+            "filePath": "tencent/ai",
+            "tags": ["RAG", "ReAct", "MCP", "SSE"],
+            "updatedAt": "2026-10-02"
+          },
+          {
             "label": "腾讯 CSIG 后台开发一面：Agent Memory、SkillRouter 与多 Agent Code Review（2026 年 7 月）",
             "key": "tencent-ai-9",
             "isLeaf": true,
@@ -271,6 +295,14 @@
         "label": "Agent 与 AI 应用",
         "key": "alibaba-ai",
         "children": [
+          {
+            "label": "阿里云 Agent Infra 一面：SGX、吞吐与日志写入（2026 年 9 月发帖）",
+            "key": "alibaba-ai-8",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "tags": ["Agent Infra", "SGX", "数据管道", "系统设计"],
+            "updatedAt": "2026-10-02"
+          },
           {
             "label": "阿里国际 Accio Agent 算法一面：数据合成、任务环境与模型后训练（2026 年 8 月）",
             "key": "alibaba-ai-3",
@@ -464,6 +496,14 @@
         "key": "antfin-ai",
         "children": [
           {
+            "label": "蚂蚁 Agent 实习一面：缓存、消息与 RAG（2026 年 6 月发帖）",
+            "key": "antfin-ai-6",
+            "isLeaf": true,
+            "filePath": "antfin/ai",
+            "tags": ["Redis", "MQ", "RAG", "Spring AI"],
+            "updatedAt": "2026-10-02"
+          },
+          {
             "label": "蚂蚁智能体与大模型应用一面：幻觉、Skill 与 RAG（2026 年 5 月）",
             "key": "antfin-ai-5",
             "isLeaf": true,
@@ -626,6 +666,26 @@
             "filePath": "dji/ai",
             "tags": ["Agent", "容错", "Token", "后端"],
             "updatedAt": "2026-08-26"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "vivo",
+    "key": "Vivo",
+    "children": [
+      {
+        "label": "Agent 与 AI 应用",
+        "key": "vivo-ai",
+        "children": [
+          {
+            "label": "vivo Agent 秋招线下面：Harness 与工程诊断（2026 年 9 月发帖）",
+            "key": "vivo-ai-1",
+            "isLeaf": true,
+            "filePath": "vivo/ai",
+            "tags": ["Harness", "Agent", "AI Pipeline"],
+            "updatedAt": "2026-10-02"
           }
         ]
       }
