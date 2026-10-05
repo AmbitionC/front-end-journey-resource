@@ -65,7 +65,7 @@ test('detail panels retain the overview and require approved matching bytes',()=
 test('standalone SVG keeps its original alternative text and every detail panel',()=>fixture(async f=>{
   const vectorPath='images/source.svg',vector=Buffer.from('<svg xmlns="http://www.w3.org/2000/svg"/>');
   const sourceText='https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/'+vectorPath;
-  f.text=`![原图中文说明](${sourceText})\n`;
+  f.text=`![原图中文说明](${sourceText})\n*图：原文说明保留。*\n`;
   Object.assign(f.entry,{kind:'svg',sourceText,sourceSha256:sha256(sourceText),articleSha256:sha256(f.text),vectorPath,vectorSha256:sha256(vector)});
   f.entry.panels=[{outputPath:'images/pdf-detail.png',outputSha256:f.entry.outputSha256,width:100,height:80}];
   await writeFile(join(f.root,vectorPath),vector);f.approved.set(vectorPath,sha256(vector));
@@ -75,6 +75,7 @@ test('standalone SVG keeps its original alternative text and every detail panel'
   const render=await createPdfStaticRenderer(f.root,f.approved),html=render(f.leaf,f.text);
   assert.match(html,/<figure class="pdf-diagram">/);assert.match(html,/alt="原图中文说明"/);
   assert.match(html,/pdf-sample.png/);assert.match(html,/pdf-detail.png/);
+  assert.match(html,/<em>图：原文说明保留。<\/em>/);
   assert.doesNotMatch(html,/<p>\s*<figure/);
 }));
 test('book contents are clickable in article order with stable internal destinations',()=>{

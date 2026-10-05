@@ -80,8 +80,9 @@ export async function createPdfStaticRenderer(root,approved,{sourceCommit}={}) {
       if(!row || used.has(row.id))throw new Error('PDF 图解缺精确已审静态映射');
       used.add(row.id);return row;
     }
-    function figure(e,alternative){
+    function figure(e,alternative,caption){
       let html=`<figure class="pdf-diagram"><img src="${ORIGIN}${esc(e.outputPath)}" alt="${esc(alternative??(e.kind==='archify'?e.spec.meta?.title??'交互架构图':'原文图解'))}" width="${e.width}" height="${e.height}">`;
+      if(caption)html+=`<figcaption>${caption}</figcaption>`;
       if(e.normalization?.kind==='legacy-left-join-regions-v1')for(const line of e.normalization.supplement??[])html+=`<p>${esc(line).replace(/\n/gu,'<br>')}</p>`;
       if(e.kind==='archify'){
         for(const view of e.spec.meta?.views??[])html+=`<p><strong>${esc(view.label)}</strong>：${esc(view.note??'')}</p>`;
@@ -106,8 +107,9 @@ export async function createPdfStaticRenderer(root,approved,{sourceCommit}={}) {
       }
       for(const child of token.children??[])if(child.type==='image'&&/\.svg$/iu.test(child.attrGet('src')??'')){
         const e=match('svg',token.map[0]+1,child.attrGet('src'));
-        if(token.children.length!==1||tokens[index-1]?.type!=='paragraph_open'||tokens[index+1]?.type!=='paragraph_close')throw new Error('PDF SVG 必须为独立图段，防止细节图被省略');
-        token.type='html_block';token.content=figure(e,child.content);token.children=null;
+        if(token.children.filter(c=>c.type==='image').length!==1||tokens[index-1]?.type!=='paragraph_open'||tokens[index+1]?.type!=='paragraph_close')throw new Error('PDF SVG 必须为独立图段，防止细节图被省略');
+        const imageIndex=token.children.indexOf(child),prefix=md.renderer.renderInline(token.children.slice(0,imageIndex),md.options,{}),caption=md.renderer.renderInline(token.children.slice(imageIndex+1),md.options,{});
+        token.type='html_block';token.content=(prefix?`<p>${prefix}</p>`:'')+figure(e,child.content,caption);token.children=null;
         tokens[index-1].hidden=true;tokens[index+1].hidden=true;
       }
     }
