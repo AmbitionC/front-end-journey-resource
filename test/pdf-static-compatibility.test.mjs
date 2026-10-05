@@ -62,6 +62,21 @@ test('detail panels retain the overview and require approved matching bytes',()=
   f.entry.panels[0].outputSha256='0'.repeat(64);await f.save();
   await assert.rejects(createPdfStaticRenderer(f.root,f.approved));
 }));
+test('standalone SVG keeps its original alternative text and every detail panel',()=>fixture(async f=>{
+  const vectorPath='images/source.svg',vector=Buffer.from('<svg xmlns="http://www.w3.org/2000/svg"/>');
+  const sourceText='https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/'+vectorPath;
+  f.text=`![原图中文说明](${sourceText})\n`;
+  Object.assign(f.entry,{kind:'svg',sourceText,sourceSha256:sha256(sourceText),articleSha256:sha256(f.text),vectorPath,vectorSha256:sha256(vector)});
+  f.entry.panels=[{outputPath:'images/pdf-detail.png',outputSha256:f.entry.outputSha256,width:100,height:80}];
+  await writeFile(join(f.root,vectorPath),vector);f.approved.set(vectorPath,sha256(vector));
+  await writeFile(join(f.root,f.entry.articlePath),f.text);f.approved.set(f.entry.articlePath,sha256(f.text));
+  await writeFile(join(f.root,'images/pdf-detail.png'),await (await import('node:fs/promises')).readFile(join(f.root,f.entry.outputPath)));
+  f.approved.set('images/pdf-detail.png',f.entry.outputSha256);await f.save();
+  const render=await createPdfStaticRenderer(f.root,f.approved),html=render(f.leaf,f.text);
+  assert.match(html,/<figure class="pdf-diagram">/);assert.match(html,/alt="原图中文说明"/);
+  assert.match(html,/pdf-sample.png/);assert.match(html,/pdf-detail.png/);
+  assert.doesNotMatch(html,/<p>\s*<figure/);
+}));
 test('book contents are clickable in article order with stable internal destinations',()=>{
   const html=buildHtml({label:'书',children:[{key:'one',label:'一',isLeaf:true},{key:'two',label:'二',isLeaf:true}]},'类',()=> '正文。').html;
   assert.match(html,/href="#pdf-one"/);assert.match(html,/id="pdf-two"/);

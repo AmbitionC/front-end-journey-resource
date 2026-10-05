@@ -80,8 +80,8 @@ export async function createPdfStaticRenderer(root,approved,{sourceCommit}={}) {
       if(!row || used.has(row.id))throw new Error('PDF 图解缺精确已审静态映射');
       used.add(row.id);return row;
     }
-    function figure(e){
-      let html=`<figure class="pdf-diagram"><img src="${ORIGIN}${esc(e.outputPath)}" alt="${esc(e.kind==='archify'?e.spec.meta?.title??'交互架构图':'原文图解')}" width="${e.width}" height="${e.height}">`;
+    function figure(e,alternative){
+      let html=`<figure class="pdf-diagram"><img src="${ORIGIN}${esc(e.outputPath)}" alt="${esc(alternative??(e.kind==='archify'?e.spec.meta?.title??'交互架构图':'原文图解'))}" width="${e.width}" height="${e.height}">`;
       if(e.normalization?.kind==='legacy-left-join-regions-v1')for(const line of e.normalization.supplement??[])html+=`<p>${esc(line).replace(/\n/gu,'<br>')}</p>`;
       if(e.kind==='archify'){
         for(const view of e.spec.meta?.views??[])html+=`<p><strong>${esc(view.label)}</strong>：${esc(view.note??'')}</p>`;
@@ -91,7 +91,7 @@ export async function createPdfStaticRenderer(root,approved,{sourceCommit}={}) {
       return html+'</figure>\n';
     }
     const tokens=md.parse(text,{});
-    for(const token of tokens){
+    for(const [index,token] of tokens.entries()){
       if(token.type==='fence'&&/^mermaid(?:\s|$)/iu.test(token.info.trim())){
         const e=match('mermaid',token.map[0]+1,token.content);
         token.type='html_block';token.content=figure(e);
@@ -105,7 +105,10 @@ export async function createPdfStaticRenderer(root,approved,{sourceCommit}={}) {
         for(const r of replacements.sort((a,b)=>b.start-a.start))token.content=token.content.slice(0,r.start)+r.html+token.content.slice(r.end);
       }
       for(const child of token.children??[])if(child.type==='image'&&/\.svg$/iu.test(child.attrGet('src')??'')){
-        const e=match('svg',token.map[0]+1,child.attrGet('src'));child.attrSet('src',ORIGIN+e.outputPath);
+        const e=match('svg',token.map[0]+1,child.attrGet('src'));
+        if(token.children.length!==1||tokens[index-1]?.type!=='paragraph_open'||tokens[index+1]?.type!=='paragraph_close')throw new Error('PDF SVG 必须为独立图段，防止细节图被省略');
+        token.type='html_block';token.content=figure(e,child.content);token.children=null;
+        tokens[index-1].hidden=true;tokens[index+1].hidden=true;
       }
     }
     if(used.size!==entries.length)throw new Error('PDF 静态映射存在未消费节点；源与清单不同步');
