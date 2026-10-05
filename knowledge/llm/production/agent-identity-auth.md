@@ -107,6 +107,12 @@ Supervisor 委派子 Agent 时，不把原 token 原样转发。为子任务交�
 
 安全 Agent 身份链同时保留用户 Subject、Agent Actor、工作负载和目标服务。认证证明身份，Token Exchange 签发面向目标的短期委托，目标服务再按资源和策略授权。委托不隐藏执行者，scope 不替代资源判断，规划不替代授权。这样系统既能自动行动，也能回答“谁代表谁，以什么权限做了什么”。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 实习：模型选择与可信通信](../../../interview/bytedance/base/bytedance-base-54.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [RFC 8693：OAuth 2.0 Token Exchange](https://www.rfc-editor.org/info/rfc8693/)

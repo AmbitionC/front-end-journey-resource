@@ -47,10 +47,34 @@ MapReduce 式 total order 常先采样确定 range partitions，再各分区内�
 
 排序选型的结论应是一组条件：在当前 key、稳定性、内存和输入分布下为什么合适，以及条件变化时切换到什么方案。
 
+## 允许重复值的最多可排序块
+
+[LeetCode 768](https://leetcode.com/problems/max-chunks-to-make-sorted-ii/)要求每块独立排序再拼接仍等于全数组排序，并允许重复值。排列版“前缀最大值等于下标”条件不适用于这里。
+
+维护各块最大值的单调栈：新值不小于最后块最大值，可成为新块；否则它与前面块存在跨块逆序，必须向前合并，保留所合并块的最大值。每块进出栈至多一次，时间 O(n)、空间 O(n)。下面是对有限整数数组的教学实现。
+
+```javascript
+function maxSortedChunks(values) {
+  const maxima = [];
+  for (const value of values) {
+    if (!maxima.length || value >= maxima[maxima.length-1]) maxima.push(value);
+    else {
+      const maximum = maxima.pop();
+      while (maxima.length && value < maxima[maxima.length-1]) maxima.pop();
+      maxima.push(maximum);
+    }
+  }
+  return maxima.length;
+}
+```
+
+例如包含重复值时，相等边界可以分开；降序数组只能合成一块。可用穷举所有切分、逐块排序并与整体排序比较的小输入校验，避免只测排列样例。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 Agent 开发一面：推理缓存、网络与存储基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-18.md)（cluster-265dac6c3b53）
+- [字节 Agent 开发一面：推理缓存、网络与存储基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-18.md)
+- [字节 Agent 实习：生成质量、多智能体与缓存](../../../interview/bytedance/base/bytedance-base-52.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

@@ -98,6 +98,13 @@ XML 标签、Markdown 围栏或清晰标题能让模型区分“任务”与“�
 
 可靠 Prompt 模板把固定规则、带类型变量和不可信数据明确分区，经校验、转义、渲染、快照与任务评估后才发送。模板引擎解决的是可复用文本构建；消息语义、Prompt Injection 与真实权限分别需要适配器、防护策略和应用代码处理。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
+- [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../../interview/bytedance/base/bytedance-base-48.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Jinja — Template Designer Documentation](https://jinja.palletsprojects.com/en/stable/templates/)

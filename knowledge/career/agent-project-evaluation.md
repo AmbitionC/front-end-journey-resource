@@ -60,10 +60,16 @@ Canary 让少量合格用户真实使用，限制工具和预算，设置自动�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../interview/bytedance/base/bytedance-base-23.md)（cluster-3f37b9b18f24）
-- [小红书 Agent 开发一面：多智能体、Memory 与广告投放优化（2026 年 8 月）](../../interview/redbook/ai/redbook-ai-1.md)（cluster-7372c3e7fb1e）
-- [字节 Agent 后端实习一面：LangGraph、评测集与混合检索（2026 年 9 月）](../../interview/bytedance/base/bytedance-base-22.md)（cluster-a84ba0858191）
-- [快手 AI 应用开发秋招一面：线程池、OOM 与项目深挖（2026 年 8 月）](../../interview/kuaishou/ai/kuaishou-ai-2.md)（cluster-cdb98481f4a4）
+- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../interview/bytedance/base/bytedance-base-23.md)
+- [小红书 Agent 开发一面：多智能体、Memory 与广告投放优化（2026 年 8 月）](../../interview/redbook/ai/redbook-ai-1.md)
+- [字节 Agent 后端实习一面：LangGraph、评测集与混合检索（2026 年 9 月）](../../interview/bytedance/base/bytedance-base-22.md)
+- [快手 AI 应用开发秋招一面：线程池、OOM 与项目深挖（2026 年 8 月）](../../interview/kuaishou/ai/kuaishou-ai-2.md)
+- [字节全栈二、三面：幂等、索引与字符串匹配](../../interview/bytedance/base/bytedance-base-32.md)
+- [字节 AI 平台一面：Agent 评测、框架与数据结构](../../interview/bytedance/base/bytedance-base-33.md)
+- [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../interview/bytedance/base/bytedance-base-36.md)
+- [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../interview/bytedance/base/bytedance-base-42.md)
+- [字节全栈：多智能体导购、客户端与系统评测](../../interview/bytedance/base/bytedance-base-43.md)
+- [字节 Agent：幻觉、任务恢复与 Java 基础](../../interview/bytedance/base/bytedance-base-50.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

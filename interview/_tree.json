@@ -8,11 +8,58 @@
         "key": "bytedance-base",
         "children": [
           {
+            "label": "字节 Agent 二面：RAG 分块、查询改写与随机采样",
+            "key": "bytedance-base-28",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "Agent",
+              "RAG",
+              "Chunking",
+              "随机采样"
+            ],
+            "updatedAt": "2026-10-03",
+            "contentFormat": "short-qa-v1"
+          },
+          {
+            "label": "字节 AI 平台一面：Agent 评测、框架与数据结构",
+            "key": "bytedance-base-33",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "Agent",
+              "评测",
+              "RAG",
+              "Trie"
+            ],
+            "updatedAt": "2026-10-03",
+            "contentFormat": "short-qa-v1"
+          },
+          {
+            "label": "字节 AI 应用一、二面：MySQL、Redis 与编程基础",
+            "key": "bytedance-base-36",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "AI Coding",
+              "MySQL",
+              "Redis",
+              "链表"
+            ],
+            "updatedAt": "2026-10-03",
+            "contentFormat": "short-qa-v1"
+          },
+          {
             "label": "字节飞书 AI 应用一面：Runtime、评测与后端基础（2026 年 9 月发帖）",
             "key": "bytedance-base-24",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "tags": ["Agent Runtime", "Memory", "数据库", "Go"],
+            "tags": [
+              "Agent Runtime",
+              "Memory",
+              "数据库",
+              "Go"
+            ],
             "updatedAt": "2026-10-02"
           },
           {
@@ -20,7 +67,12 @@
             "key": "bytedance-base-21",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "tags": ["Multi-Agent", "Context", "GRPO", "JSON"],
+            "tags": [
+              "Multi-Agent",
+              "Context",
+              "GRPO",
+              "JSON"
+            ],
             "updatedAt": "2026-10-02"
           },
           {
@@ -28,7 +80,12 @@
             "key": "bytedance-base-27",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "tags": ["Memory", "Token", "RAG", "链表"],
+            "tags": [
+              "Memory",
+              "Token",
+              "RAG",
+              "链表"
+            ],
             "updatedAt": "2026-10-02"
           },
           {
@@ -36,7 +93,12 @@
             "key": "bytedance-base-26",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "tags": ["Agent Loop", "评测", "Skill", "认证"],
+            "tags": [
+              "Agent Loop",
+              "评测",
+              "Skill",
+              "认证"
+            ],
             "updatedAt": "2026-10-02"
           },
           {
@@ -44,7 +106,11 @@
             "key": "bytedance-base-25",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "tags": ["Agent Runtime", "MySQL", "LRU"],
+            "tags": [
+              "Agent Runtime",
+              "MySQL",
+              "LRU"
+            ],
             "updatedAt": "2026-10-02"
           },
           {
@@ -52,7 +118,12 @@
             "key": "bytedance-base-23",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "tags": ["AI Pipeline", "Doris", "MQ", "缓存一致性"],
+            "tags": [
+              "AI Pipeline",
+              "Doris",
+              "MQ",
+              "缓存一致性"
+            ],
             "updatedAt": "2026-10-02"
           },
           {
@@ -60,7 +131,12 @@
             "key": "bytedance-base-22",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "tags": ["LangGraph", "RAG", "RRF", "评测"],
+            "tags": [
+              "LangGraph",
+              "RAG",
+              "RRF",
+              "评测"
+            ],
             "updatedAt": "2026-10-02"
           },
           {
@@ -68,7 +144,12 @@
             "key": "bytedance-base-20",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "tags": ["Agent", "状态管理", "容错", "评测"],
+            "tags": [
+              "Agent",
+              "状态管理",
+              "容错",
+              "评测"
+            ],
             "updatedAt": "2026-08-30"
           },
           {
@@ -76,7 +157,12 @@
             "key": "bytedance-base-18",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "tags": ["Agent", "KV Cache", "网络", "存储"],
+            "tags": [
+              "Agent",
+              "KV Cache",
+              "网络",
+              "存储"
+            ],
             "updatedAt": "2026-08-29"
           },
           {
@@ -84,7 +170,12 @@
             "key": "bytedance-base-19",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "tags": ["Agent", "上下文", "Skill", "编程基础"],
+            "tags": [
+              "Agent",
+              "上下文",
+              "Skill",
+              "编程基础"
+            ],
             "updatedAt": "2026-10-02"
           },
           {
@@ -92,7 +183,12 @@
             "key": "bytedance-base-17",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "tags": ["Agent", "AI Infra", "操作系统", "网络"],
+            "tags": [
+              "Agent",
+              "AI Infra",
+              "操作系统",
+              "网络"
+            ],
             "updatedAt": "2026-08-29"
           },
           {
@@ -100,7 +196,12 @@
             "key": "bytedance-base-14",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "tags": ["Agent", "RAG", "AI Coding", "高并发"],
+            "tags": [
+              "Agent",
+              "RAG",
+              "AI Coding",
+              "高并发"
+            ],
             "updatedAt": "2026-08-26"
           },
           {
@@ -108,7 +209,12 @@
             "key": "bytedance-base-15",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "tags": ["Agent", "Skill", "MCP", "后端"],
+            "tags": [
+              "Agent",
+              "Skill",
+              "MCP",
+              "后端"
+            ],
             "updatedAt": "2026-08-26"
           },
           {
@@ -116,7 +222,12 @@
             "key": "bytedance-base-16",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "tags": ["Agent", "沙箱", "多 Agent", "RAG"],
+            "tags": [
+              "Agent",
+              "沙箱",
+              "多 Agent",
+              "RAG"
+            ],
             "updatedAt": "2026-08-26"
           },
           {
@@ -124,7 +235,12 @@
             "key": "bytedance-base-10",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "tags": ["Agent", "Coding Agent", "MCP", "评测"],
+            "tags": [
+              "Agent",
+              "Coding Agent",
+              "MCP",
+              "评测"
+            ],
             "updatedAt": "2026-10-02"
           },
           {
@@ -132,7 +248,12 @@
             "key": "bytedance-base-11",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "tags": ["Agent", "RAG", "多 Agent", "算法"],
+            "tags": [
+              "Agent",
+              "RAG",
+              "多 Agent",
+              "算法"
+            ],
             "updatedAt": "2026-08-25"
           },
           {
@@ -140,7 +261,12 @@
             "key": "bytedance-base-12",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "tags": ["Agent", "Tool", "Memory", "可观测性"],
+            "tags": [
+              "Agent",
+              "Tool",
+              "Memory",
+              "可观测性"
+            ],
             "updatedAt": "2026-08-25"
           },
           {
@@ -148,7 +274,12 @@
             "key": "bytedance-base-13",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "tags": ["Agent", "RAG", "SSE", "算法"],
+            "tags": [
+              "Agent",
+              "RAG",
+              "SSE",
+              "算法"
+            ],
             "updatedAt": "2026-08-25"
           },
           {
@@ -156,7 +287,12 @@
             "key": "bytedance-base-9",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "tags": ["Agent", "Code Agent", "Redis", "评测"],
+            "tags": [
+              "Agent",
+              "Code Agent",
+              "Redis",
+              "评测"
+            ],
             "updatedAt": "2026-08-23"
           },
           {
@@ -164,7 +300,12 @@
             "key": "bytedance-base-8",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "tags": ["Agent", "评测", "沙箱", "Go"],
+            "tags": [
+              "Agent",
+              "评测",
+              "沙箱",
+              "Go"
+            ],
             "updatedAt": "2026-10-02"
           },
           {
@@ -172,7 +313,12 @@
             "key": "bytedance-base-7",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "tags": ["Agent", "Planning", "记忆", "MCP"],
+            "tags": [
+              "Agent",
+              "Planning",
+              "记忆",
+              "MCP"
+            ],
             "updatedAt": "2026-08-23"
           },
           {
@@ -180,7 +326,12 @@
             "key": "bytedance-base-6",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "tags": ["Redis", "分布式锁", "Agent", "系统设计"],
+            "tags": [
+              "Redis",
+              "分布式锁",
+              "Agent",
+              "系统设计"
+            ],
             "updatedAt": "2026-08-23"
           },
           {
@@ -188,8 +339,231 @@
             "key": "bytedance-base-5",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "tags": ["Agent", "LangGraph", "Java", "算法"],
+            "tags": [
+              "Agent",
+              "LangGraph",
+              "Java",
+              "算法"
+            ],
             "updatedAt": "2026-10-02"
+          },
+          {
+            "label": "字节 Agent 一面：会话记忆、并发更新与算法",
+            "key": "bytedance-base-29",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "Agent",
+              "Memory",
+              "幂等",
+              "算法"
+            ],
+            "updatedAt": "2026-10-03",
+            "contentFormat": "short-qa-v1"
+          },
+          {
+            "label": "字节剪映 AI 前端一面：Agent 运行时、MCP 与性能",
+            "key": "bytedance-base-30",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "Agent Runtime",
+              "MCP",
+              "前端性能",
+              "LRU"
+            ],
+            "updatedAt": "2026-10-03",
+            "contentFormat": "short-qa-v1"
+          },
+          {
+            "label": "字节 Agent 后端一面：进程线程、Transformer 与训练",
+            "key": "bytedance-base-31",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "Agent",
+              "操作系统",
+              "Transformer",
+              "训练"
+            ],
+            "updatedAt": "2026-10-03",
+            "contentFormat": "short-qa-v1"
+          },
+          {
+            "label": "字节全栈二、三面：幂等、索引与字符串匹配",
+            "key": "bytedance-base-32",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "全栈",
+              "幂等",
+              "MySQL",
+              "算法"
+            ],
+            "updatedAt": "2026-10-03",
+            "contentFormat": "short-qa-v1"
+          },
+          {
+            "label": "字节财经保险 AI 全栈实习一面：项目设计、AI Coding 与 Diff",
+            "key": "bytedance-base-34",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "全栈",
+              "AI Coding",
+              "OCR",
+              "算法"
+            ],
+            "updatedAt": "2026-10-03",
+            "contentFormat": "short-qa-v1"
+          },
+          {
+            "label": "字节全栈一面：RAG、Java与线程池",
+            "key": "bytedance-base-37",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "全栈",
+              "RAG",
+              "Java"
+            ],
+            "updatedAt": "2026-10-03",
+            "contentFormat": "short-qa-v1"
+          },
+          {
+            "label": "字节前端全栈实习一面：渲染、Worker与认证",
+            "key": "bytedance-base-38",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "前端",
+              "全栈",
+              "实习"
+            ],
+            "updatedAt": "2026-10-03",
+            "contentFormat": "short-qa-v1"
+          },
+          {
+            "label": "字节抖音Agent一面：Skill、MCP与记忆",
+            "key": "bytedance-base-39",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "Agent",
+              "Skill",
+              "MCP"
+            ],
+            "updatedAt": "2026-10-03",
+            "contentFormat": "short-qa-v1"
+          },
+          {
+            "label": "字节Agent全栈一面：工具、评测与编码",
+            "key": "bytedance-base-40",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "Agent",
+              "全栈",
+              "算法"
+            ],
+            "updatedAt": "2026-10-03",
+            "contentFormat": "short-qa-v1"
+          },
+          {
+            "label": "字节 Agent 实习：异步消息、上下文与容器隔离",
+            "key": "bytedance-base-41",
+            "isLeaf": true,
+            "filePath": "bytedance/base"
+          },
+          {
+            "label": "字节 Agent 与全栈：视频工作流、工具权限与 RAG",
+            "key": "bytedance-base-42",
+            "isLeaf": true,
+            "filePath": "bytedance/base"
+          },
+          {
+            "label": "字节全栈：多智能体导购、客户端与系统评测",
+            "key": "bytedance-base-43",
+            "isLeaf": true,
+            "filePath": "bytedance/base"
+          },
+          {
+            "label": "字节全栈：预请求、列表复用与 ThreadLocal",
+            "key": "bytedance-base-44",
+            "isLeaf": true,
+            "filePath": "bytedance/base"
+          },
+          {
+            "label": "字节 Agent：任务取消、Spring 配置与并发执行",
+            "key": "bytedance-base-45",
+            "isLeaf": true,
+            "filePath": "bytedance/base"
+          },
+          {
+            "label": "字节全栈实习：Session、权限与前端基础",
+            "key": "bytedance-base-46",
+            "isLeaf": true,
+            "filePath": "bytedance/base"
+          },
+          {
+            "label": "字节 Agent 实习：缓存一致性、定时任务与后端基础",
+            "key": "bytedance-base-47",
+            "isLeaf": true,
+            "filePath": "bytedance/base"
+          },
+          {
+            "label": "字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding",
+            "key": "bytedance-base-48",
+            "isLeaf": true,
+            "filePath": "bytedance/base"
+          },
+          {
+            "label": "字节 Agent：AI Coding、技能设计与模型工程",
+            "key": "bytedance-base-49",
+            "isLeaf": true,
+            "filePath": "bytedance/base"
+          },
+          {
+            "label": "字节 Agent：幻觉、任务恢复与 Java 基础",
+            "key": "bytedance-base-50",
+            "isLeaf": true,
+            "filePath": "bytedance/base"
+          },
+          {
+            "label": "字节 Agent 实习：推理、微调与工具编排",
+            "key": "bytedance-base-51",
+            "isLeaf": true,
+            "filePath": "bytedance/base"
+          },
+          {
+            "label": "字节 Agent 实习：生成质量、多智能体与缓存",
+            "key": "bytedance-base-52",
+            "isLeaf": true,
+            "filePath": "bytedance/base"
+          },
+          {
+            "label": "字节全栈一二面：调度器、流式恢复与浏览器网络",
+            "key": "bytedance-base-53",
+            "isLeaf": true,
+            "filePath": "bytedance/base"
+          },
+          {
+            "label": "字节 Agent 实习：模型选择与可信通信",
+            "key": "bytedance-base-54",
+            "isLeaf": true,
+            "filePath": "bytedance/base"
+          },
+          {
+            "label": "字节后端与 Agent：运行链路、数据库与网络",
+            "key": "bytedance-base-55",
+            "isLeaf": true,
+            "filePath": "bytedance/base"
+          },
+          {
+            "label": "字节全栈与测试：JVM、并发与 SQL 排查",
+            "key": "bytedance-base-56",
+            "isLeaf": true,
+            "filePath": "bytedance/base"
           }
         ]
       }
@@ -208,7 +582,12 @@
             "key": "tencent-ai-10",
             "isLeaf": true,
             "filePath": "tencent/ai",
-            "tags": ["RAG", "ReAct", "MCP", "SSE"],
+            "tags": [
+              "RAG",
+              "ReAct",
+              "MCP",
+              "SSE"
+            ],
             "updatedAt": "2026-10-02"
           },
           {
@@ -216,7 +595,12 @@
             "key": "tencent-ai-9",
             "isLeaf": true,
             "filePath": "tencent/ai",
-            "tags": ["Agent", "Memory", "SkillRouter", "Code Review"],
+            "tags": [
+              "Agent",
+              "Memory",
+              "SkillRouter",
+              "Code Review"
+            ],
             "updatedAt": "2026-09-01"
           },
           {
@@ -224,7 +608,12 @@
             "key": "tencent-ai-8",
             "isLeaf": true,
             "filePath": "tencent/ai",
-            "tags": ["Coding Agent", "记忆", "评测", "状态恢复"],
+            "tags": [
+              "Coding Agent",
+              "记忆",
+              "评测",
+              "状态恢复"
+            ],
             "updatedAt": "2026-08-29"
           },
           {
@@ -232,7 +621,12 @@
             "key": "tencent-ai-7",
             "isLeaf": true,
             "filePath": "tencent/ai",
-            "tags": ["Agentic RL", "PPO/GRPO", "DeepSeek V4", "算法"],
+            "tags": [
+              "Agentic RL",
+              "PPO/GRPO",
+              "DeepSeek V4",
+              "算法"
+            ],
             "updatedAt": "2026-08-29"
           },
           {
@@ -240,7 +634,12 @@
             "key": "tencent-ai-5",
             "isLeaf": true,
             "filePath": "tencent/ai",
-            "tags": ["Agent", "Coding Agent", "软件工程", "RAG"],
+            "tags": [
+              "Agent",
+              "Coding Agent",
+              "软件工程",
+              "RAG"
+            ],
             "updatedAt": "2026-08-25"
           },
           {
@@ -248,7 +647,12 @@
             "key": "tencent-ai-6",
             "isLeaf": true,
             "filePath": "tencent/ai",
-            "tags": ["Agent", "RAG", "上下文", "成本"],
+            "tags": [
+              "Agent",
+              "RAG",
+              "上下文",
+              "成本"
+            ],
             "updatedAt": "2026-08-25"
           },
           {
@@ -256,7 +660,12 @@
             "key": "tencent-ai-1",
             "isLeaf": true,
             "filePath": "tencent/ai",
-            "tags": ["Agent", "RAG", "安全", "后端"],
+            "tags": [
+              "Agent",
+              "RAG",
+              "安全",
+              "后端"
+            ],
             "updatedAt": "2026-08-23"
           },
           {
@@ -264,7 +673,12 @@
             "key": "tencent-ai-2",
             "isLeaf": true,
             "filePath": "tencent/ai",
-            "tags": ["Agent", "记忆", "RAG", "MCP"],
+            "tags": [
+              "Agent",
+              "记忆",
+              "RAG",
+              "MCP"
+            ],
             "updatedAt": "2026-08-23"
           },
           {
@@ -272,7 +686,12 @@
             "key": "tencent-ai-3",
             "isLeaf": true,
             "filePath": "tencent/ai",
-            "tags": ["Agent", "RAG", "后端", "算法"],
+            "tags": [
+              "Agent",
+              "RAG",
+              "后端",
+              "算法"
+            ],
             "updatedAt": "2026-08-23"
           },
           {
@@ -280,7 +699,12 @@
             "key": "tencent-ai-4",
             "isLeaf": true,
             "filePath": "tencent/ai",
-            "tags": ["Agent", "记忆", "多 Agent", "Skill"],
+            "tags": [
+              "Agent",
+              "记忆",
+              "多 Agent",
+              "Skill"
+            ],
             "updatedAt": "2026-08-23"
           }
         ]
@@ -300,7 +724,12 @@
             "key": "alibaba-ai-8",
             "isLeaf": true,
             "filePath": "alibaba/ai",
-            "tags": ["Agent Infra", "SGX", "数据管道", "系统设计"],
+            "tags": [
+              "Agent Infra",
+              "SGX",
+              "数据管道",
+              "系统设计"
+            ],
             "updatedAt": "2026-10-02"
           },
           {
@@ -308,7 +737,12 @@
             "key": "alibaba-ai-3",
             "isLeaf": true,
             "filePath": "alibaba/ai",
-            "tags": ["Agent", "数据合成", "模型后训练", "GUI Agent"],
+            "tags": [
+              "Agent",
+              "数据合成",
+              "模型后训练",
+              "GUI Agent"
+            ],
             "updatedAt": "2026-08-30"
           },
           {
@@ -316,7 +750,12 @@
             "key": "alibaba-ai-4",
             "isLeaf": true,
             "filePath": "alibaba/ai",
-            "tags": ["Agent", "任务构造", "轨迹评测", "模型训练"],
+            "tags": [
+              "Agent",
+              "任务构造",
+              "轨迹评测",
+              "模型训练"
+            ],
             "updatedAt": "2026-08-30"
           },
           {
@@ -324,7 +763,12 @@
             "key": "alibaba-ai-5",
             "isLeaf": true,
             "filePath": "alibaba/ai",
-            "tags": ["RAG", "限流", "Top-K", "AI Coding"],
+            "tags": [
+              "RAG",
+              "限流",
+              "Top-K",
+              "AI Coding"
+            ],
             "updatedAt": "2026-08-30"
           },
           {
@@ -332,7 +776,12 @@
             "key": "alibaba-ai-6",
             "isLeaf": true,
             "filePath": "alibaba/ai",
-            "tags": ["Agent", "Human-in-the-loop", "安全", "评测"],
+            "tags": [
+              "Agent",
+              "Human-in-the-loop",
+              "安全",
+              "评测"
+            ],
             "updatedAt": "2026-08-30"
           },
           {
@@ -340,7 +789,12 @@
             "key": "alibaba-ai-7",
             "isLeaf": true,
             "filePath": "alibaba/ai",
-            "tags": ["Agent", "存储", "性能优化", "算法"],
+            "tags": [
+              "Agent",
+              "存储",
+              "性能优化",
+              "算法"
+            ],
             "updatedAt": "2026-08-30"
           },
           {
@@ -348,7 +802,12 @@
             "key": "alibaba-ai-1",
             "isLeaf": true,
             "filePath": "alibaba/ai",
-            "tags": ["Agent", "Coding Agent", "Skill", "工具调用"],
+            "tags": [
+              "Agent",
+              "Coding Agent",
+              "Skill",
+              "工具调用"
+            ],
             "updatedAt": "2026-08-25"
           },
           {
@@ -356,7 +815,12 @@
             "key": "alibaba-ai-2",
             "isLeaf": true,
             "filePath": "alibaba/ai",
-            "tags": ["Agent", "RAG", "LangGraph", "Memory"],
+            "tags": [
+              "Agent",
+              "RAG",
+              "LangGraph",
+              "Memory"
+            ],
             "updatedAt": "2026-08-25"
           }
         ]
@@ -376,7 +840,12 @@
             "key": "baidu-ai-3",
             "isLeaf": true,
             "filePath": "baidu/ai",
-            "tags": ["Agent", "安全", "混合检索", "Redis"],
+            "tags": [
+              "Agent",
+              "安全",
+              "混合检索",
+              "Redis"
+            ],
             "updatedAt": "2026-09-01"
           },
           {
@@ -384,7 +853,12 @@
             "key": "baidu-ai-1",
             "isLeaf": true,
             "filePath": "baidu/ai",
-            "tags": ["Agent", "上下文工程", "Harness", "RAG"],
+            "tags": [
+              "Agent",
+              "上下文工程",
+              "Harness",
+              "RAG"
+            ],
             "updatedAt": "2026-08-30"
           },
           {
@@ -392,7 +866,12 @@
             "key": "baidu-ai-2",
             "isLeaf": true,
             "filePath": "baidu/ai",
-            "tags": ["Agent", "状态恢复", "记忆", "系统设计"],
+            "tags": [
+              "Agent",
+              "状态恢复",
+              "记忆",
+              "系统设计"
+            ],
             "updatedAt": "2026-08-30"
           }
         ]
@@ -412,7 +891,12 @@
             "key": "kuaishou-ai-4",
             "isLeaf": true,
             "filePath": "kuaishou/ai",
-            "tags": ["Agent", "多 Agent", "Netty", "限流"],
+            "tags": [
+              "Agent",
+              "多 Agent",
+              "Netty",
+              "限流"
+            ],
             "updatedAt": "2026-09-01"
           },
           {
@@ -420,7 +904,12 @@
             "key": "kuaishou-ai-5",
             "isLeaf": true,
             "filePath": "kuaishou/ai",
-            "tags": ["Agent", "SRE", "Skill", "性能排障"],
+            "tags": [
+              "Agent",
+              "SRE",
+              "Skill",
+              "性能排障"
+            ],
             "updatedAt": "2026-09-01"
           },
           {
@@ -428,7 +917,12 @@
             "key": "kuaishou-ai-3",
             "isLeaf": true,
             "filePath": "kuaishou/ai",
-            "tags": ["Agent", "意图澄清", "评测", "MCP"],
+            "tags": [
+              "Agent",
+              "意图澄清",
+              "评测",
+              "MCP"
+            ],
             "updatedAt": "2026-08-29"
           },
           {
@@ -436,7 +930,12 @@
             "key": "kuaishou-ai-2",
             "isLeaf": true,
             "filePath": "kuaishou/ai",
-            "tags": ["Agent", "线程池", "并发", "工程风险"],
+            "tags": [
+              "Agent",
+              "线程池",
+              "并发",
+              "工程风险"
+            ],
             "updatedAt": "2026-08-26"
           },
           {
@@ -444,7 +943,12 @@
             "key": "kuaishou-ai-1",
             "isLeaf": true,
             "filePath": "kuaishou/ai",
-            "tags": ["Agent", "Skill", "Kafka", "浏览器插件"],
+            "tags": [
+              "Agent",
+              "Skill",
+              "Kafka",
+              "浏览器插件"
+            ],
             "updatedAt": "2026-08-25"
           }
         ]
@@ -464,7 +968,12 @@
             "key": "oppo-ai-3",
             "isLeaf": true,
             "filePath": "oppo/ai",
-            "tags": ["Agent", "ReAct", "MCP", "Text-to-SQL"],
+            "tags": [
+              "Agent",
+              "ReAct",
+              "MCP",
+              "Text-to-SQL"
+            ],
             "updatedAt": "2026-09-01"
           },
           {
@@ -472,7 +981,12 @@
             "key": "oppo-ai-2",
             "isLeaf": true,
             "filePath": "oppo/ai",
-            "tags": ["AI 全栈", "RAG", "多 Agent", "前端性能"],
+            "tags": [
+              "AI 全栈",
+              "RAG",
+              "多 Agent",
+              "前端性能"
+            ],
             "updatedAt": "2026-08-29"
           },
           {
@@ -480,7 +994,12 @@
             "key": "oppo-ai-1",
             "isLeaf": true,
             "filePath": "oppo/ai",
-            "tags": ["AI Coding", "Skill", "协作", "算法"],
+            "tags": [
+              "AI Coding",
+              "Skill",
+              "协作",
+              "算法"
+            ],
             "updatedAt": "2026-08-25"
           }
         ]
@@ -500,7 +1019,12 @@
             "key": "antfin-ai-6",
             "isLeaf": true,
             "filePath": "antfin/ai",
-            "tags": ["Redis", "MQ", "RAG", "Spring AI"],
+            "tags": [
+              "Redis",
+              "MQ",
+              "RAG",
+              "Spring AI"
+            ],
             "updatedAt": "2026-10-02"
           },
           {
@@ -508,7 +1032,12 @@
             "key": "antfin-ai-5",
             "isLeaf": true,
             "filePath": "antfin/ai",
-            "tags": ["Agent", "Skill", "RAG", "后端基础"],
+            "tags": [
+              "Agent",
+              "Skill",
+              "RAG",
+              "后端基础"
+            ],
             "updatedAt": "2026-08-30"
           },
           {
@@ -516,7 +1045,12 @@
             "key": "antfin-ai-4",
             "isLeaf": true,
             "filePath": "antfin/ai",
-            "tags": ["Agent", "多 Agent", "质量门禁", "后端"],
+            "tags": [
+              "Agent",
+              "多 Agent",
+              "质量门禁",
+              "后端"
+            ],
             "updatedAt": "2026-08-29"
           },
           {
@@ -524,7 +1058,12 @@
             "key": "antfin-ai-1",
             "isLeaf": true,
             "filePath": "antfin/ai",
-            "tags": ["Agent", "多 Agent", "并发", "RAG"],
+            "tags": [
+              "Agent",
+              "多 Agent",
+              "并发",
+              "RAG"
+            ],
             "updatedAt": "2026-08-23"
           },
           {
@@ -532,7 +1071,12 @@
             "key": "antfin-ai-2",
             "isLeaf": true,
             "filePath": "antfin/ai",
-            "tags": ["Code Agent", "质量门禁", "上下文工程", "Skill"],
+            "tags": [
+              "Code Agent",
+              "质量门禁",
+              "上下文工程",
+              "Skill"
+            ],
             "updatedAt": "2026-08-23"
           },
           {
@@ -540,7 +1084,12 @@
             "key": "antfin-ai-3",
             "isLeaf": true,
             "filePath": "antfin/ai",
-            "tags": ["Agent", "Redis", "分布式锁", "系统设计"],
+            "tags": [
+              "Agent",
+              "Redis",
+              "分布式锁",
+              "系统设计"
+            ],
             "updatedAt": "2026-08-23"
           }
         ]
@@ -560,7 +1109,12 @@
             "key": "pinduoduo-ai-1",
             "isLeaf": true,
             "filePath": "pinduoduo/ai",
-            "tags": ["Agent", "RAG", "会议助手", "系统基础"],
+            "tags": [
+              "Agent",
+              "RAG",
+              "会议助手",
+              "系统基础"
+            ],
             "updatedAt": "2026-08-26"
           }
         ]
@@ -580,7 +1134,12 @@
             "key": "bilibili-ai-2",
             "isLeaf": true,
             "filePath": "bilibili/ai",
-            "tags": ["AI Coding", "MCP", "可观测性", "灰度发布"],
+            "tags": [
+              "AI Coding",
+              "MCP",
+              "可观测性",
+              "灰度发布"
+            ],
             "updatedAt": "2026-08-29"
           },
           {
@@ -588,7 +1147,12 @@
             "key": "bilibili-ai-1",
             "isLeaf": true,
             "filePath": "bilibili/ai",
-            "tags": ["Agent", "RAG", "工具调用", "Memory"],
+            "tags": [
+              "Agent",
+              "RAG",
+              "工具调用",
+              "Memory"
+            ],
             "updatedAt": "2026-08-26"
           }
         ]
@@ -608,7 +1172,12 @@
             "key": "sangfor-ai-1",
             "isLeaf": true,
             "filePath": "sangfor/ai",
-            "tags": ["Agent", "MCP", "Skill", "系统迁移"],
+            "tags": [
+              "Agent",
+              "MCP",
+              "Skill",
+              "系统迁移"
+            ],
             "updatedAt": "2026-08-26"
           }
         ]
@@ -628,7 +1197,12 @@
             "key": "redbook-ai-3",
             "isLeaf": true,
             "filePath": "redbook/ai",
-            "tags": ["Agent", "评测", "安全", "混合部署"],
+            "tags": [
+              "Agent",
+              "评测",
+              "安全",
+              "混合部署"
+            ],
             "updatedAt": "2026-08-29"
           },
           {
@@ -636,7 +1210,12 @@
             "key": "redbook-ai-1",
             "isLeaf": true,
             "filePath": "redbook/ai",
-            "tags": ["Agent", "多 Agent", "Memory", "系统设计"],
+            "tags": [
+              "Agent",
+              "多 Agent",
+              "Memory",
+              "系统设计"
+            ],
             "updatedAt": "2026-08-26"
           },
           {
@@ -644,7 +1223,12 @@
             "key": "redbook-ai-2",
             "isLeaf": true,
             "filePath": "redbook/ai",
-            "tags": ["Agent", "LangGraph", "Skill", "工程校验"],
+            "tags": [
+              "Agent",
+              "LangGraph",
+              "Skill",
+              "工程校验"
+            ],
             "updatedAt": "2026-08-26"
           }
         ]
@@ -664,7 +1248,12 @@
             "key": "dji-ai-1",
             "isLeaf": true,
             "filePath": "dji/ai",
-            "tags": ["Agent", "容错", "Token", "后端"],
+            "tags": [
+              "Agent",
+              "容错",
+              "Token",
+              "后端"
+            ],
             "updatedAt": "2026-08-26"
           }
         ]
@@ -684,7 +1273,11 @@
             "key": "vivo-ai-1",
             "isLeaf": true,
             "filePath": "vivo/ai",
-            "tags": ["Harness", "Agent", "AI Pipeline"],
+            "tags": [
+              "Harness",
+              "Agent",
+              "AI Pipeline"
+            ],
             "updatedAt": "2026-10-02"
           }
         ]

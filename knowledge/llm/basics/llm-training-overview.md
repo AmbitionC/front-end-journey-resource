@@ -48,6 +48,22 @@ Tokenizer 把原始文本变成 token ID。训练系统再把文档拼接或切�
 
 评估结果必须带版本、提示模板、解码参数和数据集版本。单个聚合分数无法替代真实业务任务的错误分析。
 
+## 训练、验证与泛化：欠拟合和过拟合怎么判断
+
+**欠拟合**是模型还没有充分学会任务中可学的规律，**过拟合**是过度适应训练样本，导致未见数据上的表现变差。判断依赖未参与当前参数学习的数据，以及与任务有关的指标，不能只看训练 loss 的一个数值。[Google：过拟合与泛化](https://developers.google.com/machine-learning/crash-course/overfitting/overfitting)。
+
+训练集用于更新参数，验证集辅助选择超参数和 checkpoint，测试集用于在确定方案后检查泛化。按用户、文档或时间分组划分可减少近重复泄漏；选择方式取决于实际部署分布。反复根据测试结果挑模型，就把测试集用于调优了，应另保留独立验收数据。[Google：划分训练、验证与测试数据](https://developers.google.com/machine-learning/crash-course/overfitting/dividing-datasets)。
+
+| 观察到的现象 | 可以提出的诊断 | 还应核实什么 |
+| --- | --- | --- |
+| 训练和验证指标都很差 | 表达能力、有效训练量或优化可能不足 | 标签噪声、目标定义、数据分布是否合理 |
+| 训练持续改善，验证在同条件下退化 | 可能对训练数据过拟合 | 数据泄漏、样本量与方差、评测条件是否变化 |
+| 验证 loss 改善，业务成功率却下降 | 优化目标与业务要求可能不一致 | 错误切片、交互行为、工具与环境的变化 |
+
+这些是诊断线索，不能单凭曲线给模型定性。欠拟合可能通过改进特征、模型容量或优化解决，但增加训练轮次不能修复错误标签；过拟合可考虑更可靠和多样的数据、适当正则化、早停或减少容量，但各方法要在相同验证条件下比较。更大的模型、更低训练 loss 或更多 epoch 都不是普遍答案。
+
+大模型还需区分预训练、SFT 和实际 Agent 执行：窄数据上的 SFT 可能改善示范任务却损害其他能力，应检查覆盖范围和能力回归，而不能据此直接认定原因是过拟合；Agent 出错也可能来自检索、工具契约或运行环境，并非模型欠拟合。先定位错误落在哪一层，再决定是否需要训练。[Llama 3 技术报告](https://arxiv.org/abs/2407.21783)。
+
 ## 阶段五：监督微调（SFT）
 
 预训练模型会续写文本，却不一定按“用户—助手”协议回答。SFT 使用高质量的指令—回答示范，继续做有监督的 token 预测，让模型学习任务格式、语气、工具调用结构和拒答范式。
@@ -87,8 +103,10 @@ SFT 的关键不是简单堆数量，而是覆盖行为边界并保持示范一�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [阿里国际 Accio Agent 算法一面：数据合成、任务环境与模型后训练（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-3.md)（cluster-10359bdec433）
-- [淘天 Agent 算法一面：任务构造、轨迹验证与后训练（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-4.md)（cluster-787120ee1249）
+- [阿里国际 Accio Agent 算法一面：数据合成、任务环境与模型后训练（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-3.md)
+- [淘天 Agent 算法一面：任务构造、轨迹验证与后训练（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-4.md)
+- [字节 Agent 后端一面：进程线程、Transformer 与训练](../../../interview/bytedance/base/bytedance-base-31.md)
+- [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
@@ -96,3 +114,6 @@ SFT 的关键不是简单堆数量，而是覆盖行为边界并保持示范一�
 - [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165)
 - [Training language models to follow instructions with human feedback](https://arxiv.org/abs/2203.02155)
 - [The Llama 3 Herd of Models](https://arxiv.org/abs/2407.21783)
+
+- [Google：过拟合与泛化](https://developers.google.com/machine-learning/crash-course/overfitting/overfitting)（滚动文档，核验于 2026-10-03）
+- [Google：训练、验证与测试数据](https://developers.google.com/machine-learning/crash-course/overfitting/dividing-datasets)（滚动文档，核验于 2026-10-03）

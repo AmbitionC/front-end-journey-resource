@@ -131,6 +131,12 @@ interface ProviderAdapter {
 
 好的供应商抽象层围绕“领域契约 + 能力目录 + 适配器 + 策略路由 + 契约测试”组织。它统一的是业务必须稳定的语义，显式承认的是接口无法抹平的差异。这样迁移、降级和多供应商路由才是可验证工程能力，而不是分散的条件判断。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenAI — Text generation](https://developers.openai.com/api/docs/guides/text)

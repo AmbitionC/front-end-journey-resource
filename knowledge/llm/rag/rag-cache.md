@@ -110,6 +110,12 @@ Prompt cache 减少模型重复处理前缀，不代表答案缓存，也不负�
 
 RAG 缓存的核心是“键即契约”：每层键完整描述输入、权限、索引和模型版本，事件失效处理状态变化，TTL 只做上限。命中还要检查新鲜度；语义缓存、stale serving 和跨租户复用需要更严格的风险证明。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [RFC 9111 — HTTP Caching](https://datatracker.ietf.org/doc/html/rfc9111)

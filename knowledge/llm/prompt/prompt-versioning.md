@@ -162,6 +162,12 @@ A/B 用于比较，灰度用于限制风险。生产发布可按以下顺序：
 
 Prompt 版本管理的核心是可复现：把模板、模型、工具、检索和输出结构打成不可变提示包；变更先过离线评测，再通过稳定分流的灰度或 A/B 验证；用预定义指标决定发布或回滚。这样每次变化都能回答三个问题：线上运行的到底是什么、为什么发布、出问题如何快速退回。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenAI：Text generation 中的 Prompt 工程化建议](https://developers.openai.com/api/docs/guides/text)

@@ -229,12 +229,22 @@ graph LR
 
 同步的本质不是"加锁",而是**管理共享可变状态的访问顺序**。理解了竞态从何而来,你才能在锁、信号量、条件变量、原子操作之间做出恰当的取舍——无论是在操作系统内核里,还是在一个高并发的 Agent 服务里。
 
+## Java 线程状态与操作系统状态分开
+
+[Java 21 Thread.State](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Thread.State.html)给出六种 JVM 状态：NEW 尚未启动；RUNNABLE 在 JVM 中可执行；BLOCKED 等待进入 monitor；WAITING 无限期等待某动作；TIMED_WAITING 有期限等待；TERMINATED 已结束。RUNNABLE 不能直接等同于操作系统此刻正在 CPU 上运行。
+
+`Object.wait()` 在满足持锁条件后释放对应 monitor 并等待通知，返回前还须重新取得它；`sleep` 不因为睡眠而释放已持有 monitor。等 synchronized 锁通常表现为 BLOCKED，park 等机制可能是 WAITING，不能只凭“线程没往下走”猜锁类型。状态采样是一时快照，结合线程栈、持锁者、资源等待与时间序列判断。
+
+排查时问线程在等哪项条件、谁负责满足、是否有期限与取消，再选择同步协议。业务状态与线程状态也不同：一个任务排队不意味着某个线程必然 WAITING。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)（cluster-0c75d333d0e1）
-- [快手 AI 应用开发秋招一面：线程池、OOM 与项目深挖（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-2.md)（cluster-cdb98481f4a4）
-- [腾讯 Agent 实习一面：RAG、工具与通信（2026 年 3 月发帖）](../../../interview/tencent/ai/tencent-ai-10.md)（cluster-fa3a6af4ebe6）
+- [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)
+- [快手 AI 应用开发秋招一面：线程池、OOM 与项目深挖（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-2.md)
+- [腾讯 Agent 实习一面：RAG、工具与通信（2026 年 3 月发帖）](../../../interview/tencent/ai/tencent-ai-10.md)
+- [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../../interview/bytedance/base/bytedance-base-36.md)
+- [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

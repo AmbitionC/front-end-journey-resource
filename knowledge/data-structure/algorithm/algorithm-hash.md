@@ -84,6 +84,13 @@ function twoSum(nums, target) {
 
 计数问题的 value 是频次；分组问题的 key 是规范化签名；去重只关心成员关系，使用 Set 更直接。若问题要求稳定输出、全部配对或保留重复位置，value 就可能是数组而不是单个索引。
 
+## 无序流、Bitmap 与空间边界
+
+有限无序输入可把较小一侧放入哈希集合，再扫描另一侧查成员；需要多重集合交集时，保存计数并在命中后扣减。若流没有结束标记，就不能声称已得到完整交集：未来元素仍可能与过去匹配。面对无界值域和无界历史，精确成员判断需要保留区分已见集合的信息，固定内存不能无条件处理任意增长的唯一元素。
+
+Bitmap 以整数值对应位下标，已知有限值域 `[0,U)` 时用 U 位表达成员，空间约为 U/8 字节（另有结构开销），而不是只与已出现数量有关。Java `BitSet` 可增长，但容量增长仍要分配空间；这种 API 不会把巨大稀疏值域变成固定空间。[Java 21：BitSet 的下标与容量](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/BitSet.html)。
+
+因此先确认值域、是否有序、窗口、是否可外存和何时算完成。可用哈希集合适应稀疏值，或在明确有限窗口内计算交集；分批需要持久保存跨批匹配信息，不能凭“每批很小”证明总空间有界。近似成员结构可能给出误报，若要求精确结果还需回查；不要把近似方案冒充精确交集。
 ## JavaScript Map、Set 与 Object
 
 JavaScript 的 Map 支持任意值作为 key，并提供明确的 `has`、`size` 与插入顺序迭代。Set 只保存唯一成员。[Python 映射类型文档](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict)同样强调 key 必须可哈希，并说明字典操作与插入顺序语义；这些是语言契约，不能反推运行时必须采用某一种哈希表内部布局。
@@ -96,13 +103,31 @@ JavaScript 的 Map 支持任意值作为 key，并提供明确的 `has`、`size`
 
 如果任务只需要几十个固定字段，数组或对象可能更简单；需要有序范围查询时，树结构更合适。哈希表擅长精确 key lookup，不天然支持前缀、最小值或区间扫描。
 
+## Java HashMap：遍历删除不是并发协议
+
+HashMap 的集合视图迭代器对结构变化执行尽力而为的 fail-fast 检查；在迭代器建立后直接增删 map，可能触发 ConcurrentModificationException。单线程正确删除应通过迭代器自身 remove，或让集合视图 removeIf 按其契约处理；仅更新已有 key 的 value 与增删映射不是同一类结构修改。[JDK 21 HashMap 契约](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/HashMap.html)同时指出，不能依赖该异常证明程序并发正确。
+
+下面只展示操作顺序的伪代码，本机无 JDK，不冒充已编译运行的 Java：
+
+```text
+iterator = map.entrySet().iterator()
+while iterator.hasNext():
+    entry = iterator.next()
+    if shouldRemove(entry):
+        iterator.remove()  // 删除刚由 next 返回的映射
+```
+
+一次 next 后最多删除该项一次，先 remove 或重复 remove 不符合迭代器状态。增强 for 隐含使用迭代器，但循环内直接 map.remove 并不是这个迭代器的 remove。多线程共享 HashMap 还需外部同步或采用具有合适契约的并发集合；“没抛异常”不是线程安全证据。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 Managed Agent 校招一面：评测、运行链路与后端基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-26.md)（cluster-40374dfc6b29）
-- [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)（cluster-650f7c304b11）
-- [字节 Agent Infra 校招：运行时、MySQL 与 LRU（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-25.md)（cluster-74e92db1eff9）
-- [字节 AML / 火山方舟 AI Infra 一面：Agent Runtime、OS 与网络（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-17.md)（cluster-b8f79803b7ec）
+- [字节 Managed Agent 校招一面：评测、运行链路与后端基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-26.md)
+- [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)
+- [字节 Agent Infra 校招：运行时、MySQL 与 LRU（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-25.md)
+- [字节 AML / 火山方舟 AI Infra 一面：Agent Runtime、OS 与网络（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-17.md)
+- [字节 Agent 一面：会话记忆、并发更新与算法](../../../interview/bytedance/base/bytedance-base-29.md)
+- [字节全栈一面：RAG、Java与线程池](../../../interview/bytedance/base/bytedance-base-37.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

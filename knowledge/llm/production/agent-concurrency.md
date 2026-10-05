@@ -78,12 +78,40 @@ Worker 池按主要瓶颈分开：CPU 任务、模型协调、浏览器和高内
 
 并发治理是一条资源责任链：入口有界准入，租户配额定义份额，公平调度决定先后，Worker 池与 cgroup 限制真实资源，下游饱和通过背压反馈。把公平、隔离和过载拆开观察，才能避免“系统整体利用率很高，但某些用户永远没有进展”。
 
+## 同 key 串行：入队与运行标志必须协调
+
+当合同是 submit(key,task)、同 key FIFO、不同 key 可并行时，可以为每个 key 维护队列与 running 标志。提交顺序指在同步边界内成功入队的顺序；并发调用没有天然唯一的墙钟先后。业务任务在锁外执行，不能拿全局锁包住任务本身。
+
+下面是未运行的并发算法伪代码，假设 executor 异步接收任务、错误报告不抛出，省略总并发 N、取消和容量上限：
+
+```text
+submit(key, task):
+  在同一 guard 下：
+    取得或创建 key 的状态 s，向 FIFO 入队 task
+    如果 s.running 为 false：
+      将 s.running 设为 true，提交 drain(key,s)
+      若执行器拒绝：撤销本次入队与启动标志，清理空状态，返回失败
+
+drain(key, s):
+  重复：
+    在 guard 下：
+      若队列空：清除 running，条件删除同一 s，返回
+      否则取出队头 task
+    在锁外运行 task，记录任务错误后继续下一项
+```
+
+若 worker 在锁外判断空，而 submit 又看到旧 running=true，可能发生“任务已入队却没人启动”的丢唤醒。空队列检查、清标志与新提交必须受同一协议保护。删除 map 状态也要验证仍是同一个 s，避免删掉后创建的新队列。[Java Executor 合同](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/Executor.html)提醒执行器不一定异步，也可能拒绝任务，因此不能不加条件把任意 Executor 代入该算法。
+
+验证在队列即将排空时并发 submit，同 key 次序、不同 key 重叠、任务异常和执行器拒绝。生产还需有界队列、空闲 key 清理与意外 worker 退出后的恢复，不能把题目暂不考虑 N 理解为可以无限占资源。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)（cluster-0c75d333d0e1）
-- [小红书 Agent 开发一面：多智能体、Memory 与广告投放优化（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-1.md)（cluster-7372c3e7fb1e）
-- [蚂蚁 Agent 开发一面：多 Agent 并发与质量保障（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-1.md)（cluster-cc9e5dd82505）
+- [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)
+- [小红书 Agent 开发一面：多智能体、Memory 与广告投放优化（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-1.md)
+- [蚂蚁 Agent 开发一面：多 Agent 并发与质量保障（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-1.md)
+- [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
+- [字节 Agent 实习：生成质量、多智能体与缓存](../../../interview/bytedance/base/bytedance-base-52.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

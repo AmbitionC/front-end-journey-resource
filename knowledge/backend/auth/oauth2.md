@@ -284,6 +284,12 @@ OAuth2 是授权框架（你有没有权限访问某资源），OIDC 是认证�
 **Q：refresh_token 如何安全存储？**
 服务端存数据库（加密存储），通过 HttpOnly Secure Cookie 下发 session 标识，绝不直接将 refresh_token 返回给前端 JavaScript 环境。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 实习：模型选择与可信通信](../../../interview/bytedance/base/bytedance-base-54.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [RFC 6749: The OAuth 2.0 Authorization Framework](https://www.rfc-editor.org/rfc/rfc6749.html)

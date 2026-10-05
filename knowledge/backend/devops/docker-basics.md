@@ -275,6 +275,12 @@ trivy image my-agent:1.0
 - **ENTRYPOINT 与 CMD 的区别**：ENTRYPOINT 定义容器主进程，CMD 提供可覆盖的默认参数；两者配合使用实现灵活的容器入口
 - **容器数据持久化**：Volume（由 Docker 管理，适合生产）vs Bind Mount（绑定宿主机目录，适合开发调试）
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Docker: What is a container?](https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-a-container/)

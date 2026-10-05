@@ -93,14 +93,25 @@ Trace 记录合同版本、输入摘要/hash、授予工具、预算、每次调
 
 Subagent 设计的重点是边界，而不是数量：以窄合同传入最小充分上下文，以独立命名空间执行，以最小工具授权，以结构化证据返回。主 Agent 始终承担验证、合并和用户交付责任，才不会把复杂度藏进更多模型调用。
 
+## Deep Agents：把委派边界画清楚
+
+[Deep Agents 官方概览](https://docs.langchain.com/oss/python/deepagents/overview)把它描述为基于 LangChain 组件与 LangGraph 运行时的 agent harness，提供文件上下文、子代理和可配置能力。当前文档说明从 v0.7 起任务规划为可选能力，不能把旧版默认计划工具当所有版本固定合同。这里解释机制，不声称候选人使用过某个版本。
+
+![子代理委派与结果归并](https://fe-static-oss.ai-fe-nexus.com/images/deep-agent-delegation-archify-v1.png)
+
+委派时主代理保留目标与任务所有权，把限定子任务、必要材料与工具交给子代理；子代理在自己的上下文中执行并返回可核验产物。文件可用于卸载长材料，但要明确路径权限、文件版本与产物引用，不能把共同文件系统误认为自动共享完整对话。计划列表跟踪目标与进度，不是授权机制。
+
+白板设计先画主任务、子任务输入输出和归并点，再补失败、取消、超时与预算。共享文件若可写，应约定所有者或版本检测，避免两份结果覆盖。多个子代理增加调度和核验成本，适用于可独立取证的任务；强依赖或很小的任务可能更适合单一执行链。“agent swarm”没有指定产品时先澄清实现，不推断其消息或一致性模型。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [哔哩哔哩 AI 应用岗一面：端到端 AI Coding 与生产治理（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-2.md)（cluster-1c24a80acde8）
-- [阿里云 Agent 开发秋招一面（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-1.md)（cluster-1f550affd882）
-- [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)（cluster-650f7c304b11）
-- [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)（cluster-910d0b20a897）
-- [深信服 Agent 开发一面：MCP、多 Agent、安全与网络（2026 年 8 月）](../../../interview/sangfor/ai/sangfor-ai-1.md)（cluster-bb3431ce1c81）
+- [哔哩哔哩 AI 应用岗一面：端到端 AI Coding 与生产治理（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-2.md)
+- [阿里云 Agent 开发秋招一面（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-1.md)
+- [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)
+- [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)
+- [深信服 Agent 开发一面：MCP、多 Agent、安全与网络（2026 年 8 月）](../../../interview/sangfor/ai/sangfor-ai-1.md)
+- [字节 Agent：AI Coding、技能设计与模型工程](../../../interview/bytedance/base/bytedance-base-49.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

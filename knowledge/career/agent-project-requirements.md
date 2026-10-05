@@ -55,3 +55,16 @@ Out of scope 与需求同样重要：不处理紧急投诉、不自动发送、�
 
 - [NIST AI RMF：Core](https://airc.nist.gov/airmf-resources/airmf/5-sec-core/)
 - [People + AI Guidebook：Mental Models](https://pair.withgoogle.com/guidebook-v2/chapter/mental-models/)
+
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节财经保险 AI 全栈实习一面：项目设计、AI Coding 与 Diff](../../interview/bytedance/base/bytedance-base-34.md)
+- [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../interview/bytedance/base/bytedance-base-36.md)
+- [字节前端全栈实习一面：渲染、Worker与认证](../../interview/bytedance/base/bytedance-base-38.md)
+- [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../interview/bytedance/base/bytedance-base-42.md)
+- [字节全栈：预请求、列表复用与 ThreadLocal](../../interview/bytedance/base/bytedance-base-44.md)
+- [字节全栈实习：Session、权限与前端基础](../../interview/bytedance/base/bytedance-base-46.md)
+- [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../interview/bytedance/base/bytedance-base-47.md)
+- [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../interview/bytedance/base/bytedance-base-48.md)
+<!-- interview-source-history:end -->

@@ -104,6 +104,18 @@ function parseUser(value: unknown): User {
 - 公共类型减少不必要断言并开启严格模式；
 - 外部数据先解析，解析失败进入显式错误路径。
 
+## 先看 JS 运行时值，再谈静态类型
+
+ECMAScript 的运行时类型包括 Undefined、Null、Boolean、String、Symbol、Number、BigInt 与 Object。[语言类型规范](https://tc39.es/ecma262/multipage/ecmascript-data-types-and-values.html)定义了这些值。函数、数组属于对象范畴；typeof 的字符串结果并非完整类型分类，例如 typeof null 为 object。
+
+这与 TypeScript 的 any、unknown、never 等静态建模概念不同。网络返回值没有自动附带可信类型；运行时判空、Array.isArray 与字段解析，才把实际数据转换为应用可用对象。不要因注解写了 number 就认为外部字符串已转成数字。
+
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节全栈实习：Session、权限与前端基础](../../../interview/bytedance/base/bytedance-base-46.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [TypeScript handbook: Type Compatibility](https://www.typescriptlang.org/docs/handbook/type-compatibility.html)

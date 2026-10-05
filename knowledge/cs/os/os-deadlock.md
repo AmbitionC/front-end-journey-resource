@@ -177,6 +177,13 @@ UPDATE account SET balance = balance + 50 WHERE id = 1;   -- 等待 id=1 的行�
 
 应对策略有三层:**预防**(从设计上破坏某个条件,统一加锁顺序最实用)、**避免**(以银行家算法的思想做分配前的安全性评估)、**检测与恢复**(允许发生,事后找环并回滚)。落到工程里,记住三板斧足以应对大多数场景——**统一加锁顺序、tryLock 加超时、减小锁粒度**。而无论是操作系统、数据库,还是多 Agent 编排系统,这套规律都是通用的:谁先松手、按什么顺序拿、等多久就放弃,想清楚这三件事,死锁就无处藏身。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
+- [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [PostgreSQL explicit locking: Deadlocks](https://www.postgresql.org/docs/current/explicit-locking.html#LOCKING-DEADLOCKS)

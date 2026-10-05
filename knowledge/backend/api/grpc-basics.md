@@ -82,6 +82,20 @@ gRPC 不是传巨大文件的最佳默认方案。设置接收和发送上限，
 
 gRPC 把 proto 契约生成成多语言调用边界，并通过 HTTP/2 支持 unary 与流式通信。生产可用性取决于显式 deadline、协作取消、稳定 Status、Metadata 安全、流控和字段编号兼容。生成代码减少样板，但不会替代协议设计。
 
+## Java HTTP 客户端与 RPC 的层次
+
+[Java 21 HttpClient](https://docs.oracle.com/en/java/javase/21/docs/api/java.net.http/java/net/http/HttpClient.html)可构建请求并用 `send` 等待响应，或用 `sendAsync` 得到 CompletableFuture。客户端、请求、响应体处理器分别表达连接配置、单次操作与结果消费；业务仍要检查状态码、限制响应大小并明确请求期限。异步返回不表示请求已在远端成功。
+
+RPC 是调用远端服务的方法与契约抽象，HTTP 是可承载通信的协议。gRPC 采用自己的方法、消息与状态合同，常运行在 HTTP/2 上；普通 HTTP JSON 客户端不会因调用 URL 就自动具备 gRPC 编解码。比较时看 schema、序列化、流式能力、deadline、错误与兼容演进，而不是把 HTTP 和 RPC 当互斥协议。
+
+取消 future 是尝试停止交换，Java API 明确远端请求仍可能发出或已开始处理。写操作超时后先按幂等键或查询结果对账，不能直接认为远端回滚并无限重试。本节是 API 合同说明，未声称在本环境运行 Java 示例。
+
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [gRPC：Introduction](https://grpc.io/docs/what-is-grpc/introduction/)

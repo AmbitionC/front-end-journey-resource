@@ -70,6 +70,13 @@ CSP 不能替代上下文编码和 sanitization。宽泛的 `unsafe-inline`、�
 
 安全测试覆盖多层编码、重复参数、大小写、Unicode、重定向链和错误路径。日志保留 request ID、规则命中和最小必要上下文，不复制 secret 或完整恶意载荷到多个系统。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节前端全栈实习一面：渲染、Worker与认证](../../../interview/bytedance/base/bytedance-base-38.md)
+- [字节全栈实习：Session、权限与前端基础](../../../interview/bytedance/base/bytedance-base-46.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OWASP Cross Site Scripting Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html)

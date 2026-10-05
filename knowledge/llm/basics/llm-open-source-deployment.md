@@ -92,6 +92,21 @@
 
 开源模型部署是一条从许可审查到生产验收的链路。先以业务任务和硬件预算筛选模型，再验证格式、tokenizer 与运行时兼容；量化要用真实任务评估，服务要补齐认证、背压、监控和回滚。能够启动只代表实验开始，能够在目标负载下稳定、合法、可观察地运行才算部署完成。
 
+## 从 CUDA 执行到分布式梯度同步
+
+[NVIDIA CUDA 编程模型](https://docs.nvidia.com/cuda/cuda-programming-guide/01-introduction/programming-model.html)把 GPU kernel 的工作组织为线程、线程块与 grid。硬件执行与内存层级决定访存、同步和分支成本；框架调用 CUDA 并不表示应用作者编写过 kernel，也不能仅凭 GPU 型号推导吞吐。
+
+训练资源估算须分别计权重、梯度、优化器状态和中间激活；推理常还要计 KV Cache。数据并行通常给每个进程一份模型、分配不同数据，反向得到局部梯度，再同步后更新。[PyTorch DDP 设计](https://docs.pytorch.org/docs/2.14/notes/ddp.html)说明 autograd hook 将就绪梯度组织为 bucket，按约定顺序进行 all-reduce，并等待必要通信完成，使对应参数使用一致的平均梯度。计算通信可重叠，但 collective 次序不一致可能挂起；DDP 不会自动替应用完成所有数据划分。
+
+部署模型与训练模型要分开回答。推理引擎可比较 [vLLM](https://docs.vllm.ai/)、[TensorRT-LLM](https://nvidia.github.io/TensorRT-LLM/) 与 [llama.cpp](https://github.com/ggml-org/llama.cpp)，逐项核对具体版本的模型、硬件、量化、批处理与并行支持，再在固定输入长度和并发下测首 token、逐 token 时延、吞吐与错误。这里列选型入口，不宣称它们都支持同一模型或设备。
+
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent：AI Coding、技能设计与模型工程](../../../interview/bytedance/base/bytedance-base-49.md)
+- [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Hugging Face Model Cards](https://huggingface.co/docs/hub/model-cards)

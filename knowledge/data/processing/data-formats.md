@@ -341,7 +341,8 @@ JSON 表示一个完整文档；常见 `json.load()` 会一次构建整个对象
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节抖音电商 Agent 一面：分层、上下文与 GRPO（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-21.md)（cluster-b34d62449917）
+- [字节抖音电商 Agent 一面：分层、上下文与 GRPO（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-21.md)
+- [字节财经保险 AI 全栈实习一面：项目设计、AI Coding 与 Diff](../../../interview/bytedance/base/bytedance-base-34.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

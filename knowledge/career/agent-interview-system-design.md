@@ -63,6 +63,12 @@ Trace 按 run 关联 model/retrieval/tool，metrics 看 SLO、队列、成本和
 
 最后回扣目标：当前设计满足哪些 SLO、最大风险在哪里、下一阶段数据达到什么阈值才扩展。强答案不是组件最多，而是每个选择都从需求、数字和故障语义推导出来。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节全栈实习：Session、权限与前端基础](../../interview/bytedance/base/bytedance-base-46.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Google SRE：Service Level Objectives](https://sre.google/sre-book/service-level-objectives/)

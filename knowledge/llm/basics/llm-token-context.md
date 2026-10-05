@@ -99,13 +99,25 @@ KV Cache 通常指**一次请求内部**为自回归解码保存的状态；Pref
 
 Token 决定序列如何表示和计量；Context Window 规定一次请求的总预算；KV Cache 用显存换取自回归生成速度。优化 LLM 应用时，应把它们作为一条链路共同测量，而不是分别背三个定义。
 
+## Prefill / Decode 分离与 Mooncake 的 KV 中心设计
+
+自回归模型的 Prefill 对输入序列建立计算结果及 KV Cache；Decode 在既有 KV 上逐步生成并扩展缓存。两阶段的计算形态、批处理和资源需求不同，但具体瓶颈由模型、长度、并发与硬件决定，不能把“一个必然算力受限、另一个必然带宽受限”当无条件规则。
+
+![PD 分离与 KV 交接](https://fe-static-oss.ai-fe-nexus.com/images/prefill-decode-split-archify-v1.png)
+
+[Mooncake 原始论文](https://arxiv.org/abs/2407.00079)提出以 KV Cache 为中心的分离式服务设计，把 Prefill 与 Decode 集群解耦并利用 CPU DRAM、SSD 等资源。这里依据论文解释架构，不将论文中的实验成绩搬成任何项目的收益，也不把论文架构等同于当前仓库所有版本接口。
+
+一次请求先完成输入计算，再让 Decode 取得对应 KV。缓存目录、传输、请求调度、容量回收与失败处理都影响成本；外置缓存可以扩大容量或促进复用，但多了一段数据移动。要比较同一负载下的缓存命中、KV 传输量、等待、首 token 时延、逐 token 时延和总吞吐，长输入与高并发分别测。KV 的模型版本、位置与请求隔离须正确，不能将另一模型或另一用户的缓存直接复用。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 Agent 开发日常实习一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-5.md)（cluster-1cea2513548a）
-- [字节 Agent 开发一面：推理缓存、网络与存储基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-18.md)（cluster-265dac6c3b53）
-- [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)（cluster-650f7c304b11）
-- [字节 Agent 暑期实习一面：摘要、工具预算与链表（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-27.md)（cluster-7116079e6b23）
+- [字节 Agent 开发日常实习一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-5.md)
+- [字节 Agent 开发一面：推理缓存、网络与存储基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-18.md)
+- [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)
+- [字节 Agent 暑期实习一面：摘要、工具预算与链表（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-27.md)
+- [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../../interview/bytedance/base/bytedance-base-48.md)
+- [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

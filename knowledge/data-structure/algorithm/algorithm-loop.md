@@ -78,6 +78,61 @@ Memoized recursion 是自顶向下：只访问从初始问题可达的状态，�
 
 选择时比较状态数量、转移成本、自然拓扑顺序、栈深和答案恢复需求。若只需最终值，可把完整二维表压缩为滚动行；若要重建路径，还需保留 predecessor 或重新计算决策。
 
+## 前缀状态：只含 ? 和 * 的通配匹配
+
+先限定语法：`?` 匹配一个字符，`*` 匹配零个或多个字符，其余字符逐字相等；这是通配匹配，不是正则。Python `fnmatch` 文档提供这两种符号的语义，本文只采用这个子集，不实现其方括号模式或平台大小写规则。[Python：通配符语义](https://docs.python.org/3/library/fnmatch.html)。
+
+令 `dp[i][j]` 表示输入前 i 个字符能否被模式前 j 个字符完全匹配。普通字符或 `?` 消耗双方一个字符，依赖左上角；`*` 要么匹配空串（左侧状态），要么继续消费一个输入字符（上侧状态）。空输入只匹配全部由 `*` 组成的模式前缀。
+
+```javascript
+function wildcardMatch(text, pattern) {
+  const s = Array.from(text), p = Array.from(pattern);
+  const dp = Array.from({ length: s.length + 1 }, () => Array(p.length + 1).fill(false));
+  dp[0][0] = true;
+  for (let j = 1; j <= p.length; j++) dp[0][j] = p[j - 1] === '*' && dp[0][j - 1];
+  for (let i = 1; i <= s.length; i++) {
+    for (let j = 1; j <= p.length; j++) {
+      dp[i][j] = p[j - 1] === '*'
+        ? dp[i][j - 1] || dp[i - 1][j]
+        : (p[j - 1] === '?' || p[j - 1] === s[i - 1]) && dp[i - 1][j - 1];
+    }
+  }
+  return dp[s.length][p.length];
+}
+```
+
+时间和表空间 O(nm)。示例按 Unicode code point 处理，“一个字符”不等于用户感知的字形簇；空串、连续星号和模式比输入长都要测试。自顶向下缓存同样的 `(i,j)` 状态也能避免重复搜索，区别是求值顺序而非匹配语义。
+
+## 后缀状态与路径恢复：keep、delete、add
+
+把旧行数组变成新行数组，若只允许保留相同行、删除旧行和添加新行，并最小化新增与删除总数，可以寻找最长公共子序列（LCS）作为保留骨架。子序列要求相对顺序一致，不要求连续；它与最长公共子串不同。[NIST：最长公共子序列](https://xlinux.nist.gov/dads/HTML/longestCommonSubsequence.html)。
+
+令 `dp[i][j]` 为旧数组从 i 开始与新数组从 j 开始的 LCS 长度。行相同时可以保留，值为 `1+dp[i+1][j+1]`；不同时选择跳过旧行或新行的较大者。沿这些选择恢复路径，就能输出操作，而不只是一个长度。
+
+```javascript
+function diffLines(oldLines, newLines) {
+  const n = oldLines.length, m = newLines.length;
+  const dp = Array.from({ length: n + 1 }, () => Array(m + 1).fill(0));
+  for (let i = n - 1; i >= 0; i--) {
+    for (let j = m - 1; j >= 0; j--) {
+      dp[i][j] = oldLines[i] === newLines[j]
+        ? 1 + dp[i + 1][j + 1] : Math.max(dp[i + 1][j], dp[i][j + 1]);
+    }
+  }
+  const operations = [];
+  let i = 0, j = 0;
+  while (i < n || j < m) {
+    if (i < n && j < m && oldLines[i] === newLines[j]) {
+      operations.push({ type: 'keep', line: oldLines[i++] }); j++;
+    } else if (j === m || (i < n && dp[i + 1][j] >= dp[i][j + 1])) {
+      operations.push({ type: 'delete', line: oldLines[i++] });
+    } else operations.push({ type: 'add', line: newLines[j++] });
+  }
+  return operations;
+}
+```
+
+每次 keep 同时消费双方相同行，delete 只消费旧行，add 只消费新行；执行后的输出必须恰好等于新数组。最少新增与删除数为 `n+m-2*dp[0][0]`。若允许替换、移动或不同权重，就变成另一份优化契约。二维表时间、空间均为 O(nm)，输出路径另占 O(n+m)；重复行可产生多个同样最优的路径，示例固定在平局时先删除，避免把唯一输出当成正确性要求。
 ## 测试清单
 
 - base case、最小非 base case 与非法输入；
@@ -88,13 +143,65 @@ Memoized recursion 是自顶向下：只访问从初始问题可达的状态，�
 - memo key 是否包含所有结果依赖；
 - 最大深度、最大状态数与内存预算。
 
+## 目标和：先定义题目，再选计数状态
+
+只有“目标和”题名时，不能推断完整输入输出。以下是明确标注的教学契约：对数组每一项都选择正号或负号，计数表达式和等于 target 的方案；空数组对 target=0 有一种空方案。若实际题目要求选子集、输出路径或输入含其他约束，应重新建模。
+
+```javascript
+function countTargetSigns(nums, target) {
+  if (!Array.isArray(nums) || !Number.isSafeInteger(target) ||
+      nums.some(value => !Number.isSafeInteger(value))) {
+    throw new TypeError('Expected safe integers');
+  }
+  let counts = new Map([[0, 1n]]);
+  for (const value of nums) {
+    const next = new Map();
+    for (const [sum, ways] of counts) {
+      for (const total of [sum + value, sum - value]) {
+        if (!Number.isSafeInteger(total)) throw new RangeError('Unsafe sum');
+        next.set(total, (next.get(total) ?? 0n) + ways);
+      }
+    }
+    counts = next;
+  }
+  return counts.get(target) ?? 0n;
+}
+```
+
+状态保留“处理到当前项后，各个和有几种方案”，上一层的每种方案分别延伸正、负分支；滚动 Map 不会把同一元素反复使用。0 的两个符号在此契约中是两种选择，所以 `[0,0]`、target=0 得 4n。计数用 BigInt，但和仍用 Number，输入与中间和必须保持安全整数；极大和值需要另换表示或拒绝，不能靠 BigInt 计数解决和值精度。
+
+若每项非负且总和为 S，正号集合之和 P 满足 `2P=S+target`；右侧为负、超过 2S 或奇数时无解，否则可转为子集计数。DFS加记忆化并非错误方法，关键是状态 `(index,sum)`、计数语义和约束；不能仅因题目叫 DP 就断言搜索一定错。Map 状态数在最坏情况下仍可能指数增长，应根据实际值域选择数组 DP 或其他方法。
+
+## 100 扇门：先写模拟，再证明因数奇偶
+
+第 r 轮切换 r 的倍数，因此第 k 扇门被切换的次数等于 k 的正因数数量。非平方数的因数可配成不同的 a 与 k/a；平方数只有平方根不与另一个不同因数配对。因此只有平方数被切换奇数次，初始关闭时最终打开。
+
+这段证明是依据题目规则推导的教学解释，不是模型扩展出来的面试原题。100 门的答案为 1、4、9、16、25、36、49、64、81、100。下面独立模拟可验证该有限输入，并推广检查更多 n；证明说明为什么结果成立，模拟本身不能证明所有 n。
+
+```javascript
+function simulateDoors(n) {
+  if (!Number.isInteger(n) || n < 0) throw new RangeError('Invalid door count');
+  const open = Array(n + 1).fill(false);
+  for (let round=1; round<=n; round++) {
+    for (let k=round; k<=n; k+=round) open[k] = !open[k];
+  }
+  return open.flatMap((isOpen,k) => isOpen ? [k] : []);
+}
+```
+
+按完全平方数直接列结果只需 O(√n) 次输出；模拟约有 n∑(1/r) 次切换。两者回答同一题，但前者利用结构，后者保留直观校验。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [阿里云 Agent Infra 一面：SGX、吞吐与日志写入（2026 年 9 月发帖）](../../../interview/alibaba/ai/alibaba-ai-8.md)（cluster-21f88c2e7c88）
-- [字节 Managed Agent 校招一面：评测、运行链路与后端基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-26.md)（cluster-40374dfc6b29）
-- [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)（cluster-650f7c304b11）
-- [字节抖音电商 Agent 一面：分层、上下文与 GRPO（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-21.md)（cluster-b34d62449917）
+- [阿里云 Agent Infra 一面：SGX、吞吐与日志写入（2026 年 9 月发帖）](../../../interview/alibaba/ai/alibaba-ai-8.md)
+- [字节 Managed Agent 校招一面：评测、运行链路与后端基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-26.md)
+- [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)
+- [字节抖音电商 Agent 一面：分层、上下文与 GRPO（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-21.md)
+- [字节全栈二、三面：幂等、索引与字符串匹配](../../../interview/bytedance/base/bytedance-base-32.md)
+- [字节财经保险 AI 全栈实习一面：项目设计、AI Coding 与 Diff](../../../interview/bytedance/base/bytedance-base-34.md)
+- [字节全栈一面：RAG、Java与线程池](../../../interview/bytedance/base/bytedance-base-37.md)
+- [字节全栈：多智能体导购、客户端与系统评测](../../../interview/bytedance/base/bytedance-base-43.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

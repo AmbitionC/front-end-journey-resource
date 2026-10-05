@@ -121,6 +121,12 @@ Zero-Shot 只给任务说明和当前输入；Few-Shot 额外提供若干示例�
 
 先建立 Zero-Shot 基线，再用少量正确、统一、覆盖边界的示例验证增益。输入分布复杂时再引入动态检索，并对示例库、版本和评测泄漏做完整治理。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../../interview/bytedance/base/bytedance-base-48.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165)

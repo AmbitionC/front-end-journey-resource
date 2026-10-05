@@ -80,13 +80,48 @@ head <-> most recent ... least recent <-> tail
 
 链表题的本质不是画箭头，而是在任何中间步骤都不丢节点，并让表示不变量支持你承诺的复杂度。
 
+## k 个一组反转：先确认边界，再改指针
+
+[LeetCode 25 的题目](https://leetcode.com/problems/reverse-nodes-in-k-group/)要求只改节点连接，不足 k 的末段保留。每组先找 kth，保存 groupNext，再把组内指针反转到 groupNext，最后连接前一组与新组头。以下代码也允许空链表或 k 大于长度，保持原状。
+
+```javascript
+function reverseKGroup(head, k) {
+  if (!Number.isInteger(k) || k < 1) throw new RangeError('Invalid k');
+  const dummy = {next:head};
+  let before = dummy;
+  while (true) {
+    let kth = before;
+    for (let i=0; i<k && kth; i++) kth = kth.next;
+    if (!kth) break;
+    const after = kth.next, oldHead = before.next;
+    let prev = after, current = oldHead;
+    while (current !== after) {
+      const next = current.next;
+      current.next = prev; prev = current; current = next;
+    }
+    before.next = kth;
+    before = oldHead;
+  }
+  return dummy.next;
+}
+```
+
+时间 O(n)、额外空间 O(1)，输入须无环。测试 k=1、整段反转、有残余尾段与节点身份不变，尤其检查有没有把 oldHead 接错而形成环。
+
+重排链表是另一个原题：按 [LeetCode 143](https://leetcode.com/problems/reorder-list/)规格，把前后两端交替排列。可以先找中点、断开并反转后半，再交替合并；它不是简单整链反转，也不能通过只改节点值代替连接变更。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)（cluster-650f7c304b11）
-- [字节 Agent 暑期实习一面：摘要、工具预算与链表（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-27.md)（cluster-7116079e6b23）
-- [字节 Agent Infra 校招：运行时、MySQL 与 LRU（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-25.md)（cluster-74e92db1eff9）
-- [快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-3.md)（cluster-cde9b480341e）
+- [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)
+- [字节 Agent 暑期实习一面：摘要、工具预算与链表（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-27.md)
+- [字节 Agent Infra 校招：运行时、MySQL 与 LRU（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-25.md)
+- [快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-3.md)
+- [字节剪映 AI 前端一面：Agent 运行时、MCP 与性能](../../../interview/bytedance/base/bytedance-base-30.md)
+- [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../../interview/bytedance/base/bytedance-base-36.md)
+- [字节Agent全栈一面：工具、评测与编码](../../../interview/bytedance/base/bytedance-base-40.md)
+- [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../../interview/bytedance/base/bytedance-base-47.md)
+- [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

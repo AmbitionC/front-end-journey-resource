@@ -45,12 +45,20 @@ Big-O 给出渐近上界，Big-Ω 给出下界，Big-Θ 表示上下界同阶。
 
 代码评审时写明 n 的业务上界、最坏输入、时间/空间阶、关键假设和 benchmark 证据。复杂度分析的最终目的，是在上线前知道增长会在哪里越过预算，而不是给代码贴一个公式标签。
 
+## 题意未知时，先界定规格
+
+复杂度分析依赖输入规模、合法操作与输出目标。只留下“连续一”或“找出小于 n 的最大数”的记录，不能确定是扫描、窗口还是受限数字构造。先澄清输入、是否允许修改、可用数字与重复规则，再选择模型；未取得原题图片时，明确缺失，不用熟悉的题型代替原题。
+
+规格确定后，分别分析访问次数、数据结构操作与数值表示成本。比如对无限制整数求小于 n 的最大整数，与限制数字集合构造答案，是完全不同的合同。承认规格不足比给出一个看似完整、实际回答另一题的算法更准确。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 Managed Agent 校招一面：评测、运行链路与后端基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-26.md)（cluster-40374dfc6b29）
-- [字节飞书 AI 应用一面：Runtime、评测与后端基础（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-24.md)（cluster-78d45fa26bfd）
-- [阿里云可观测存储 AI Agent 工程岗一面：存储性能与查询优化（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-7.md)（cluster-cf26fe3b37d5）
+- [字节 Managed Agent 校招一面：评测、运行链路与后端基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-26.md)
+- [字节飞书 AI 应用一面：Runtime、评测与后端基础（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-24.md)
+- [阿里云可观测存储 AI Agent 工程岗一面：存储性能与查询优化（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-7.md)
+- [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
+- [字节 Agent：AI Coding、技能设计与模型工程](../../../interview/bytedance/base/bytedance-base-49.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

@@ -68,6 +68,20 @@ DOM 层级通常是实现细节，但 role、accessible name、focus 和 form be
 
 文档包含何时使用/不用、最小示例、状态所有权、事件时机、可访问要求和扩展点。版本变更按公开语义判断 breaking change，不因 TypeScript 编译通过就视为兼容。
 
+## 逻辑复用与视图复用不是同一件事
+
+Vue 3 Composition API 可把一个功能的响应式状态与行为封装为 composable，而 Options API 主要按 data、methods 等选项组织；二者可以共存。[Vue 官方 FAQ](https://vuejs.org/guide/extras/composition-api-faq.html)解释的是代码组织与逻辑复用，不能据此认定共享了同一份业务状态。
+
+RecyclerView 的回收则复用视图实例：[Android 文档](https://developer.android.com/develop/ui/views/layout/recyclerview)将数据绑定交给适配器。绑定每条数据时应完整设置圆角、可见性、文本、监听器等状态；若只在某分支设置顶部圆角，复用到末尾卡片时会带入旧样式。稳定项身份与完整绑定能避免“上一条的界面状态泄漏到下一条”。
+
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节全栈：预请求、列表复用与 ThreadLocal](../../../interview/bytedance/base/bytedance-base-44.md)
+- [字节全栈实习：Session、权限与前端基础](../../../interview/bytedance/base/bytedance-base-46.md)
+- [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [React：Sharing State Between Components](https://react.dev/learn/sharing-state-between-components)

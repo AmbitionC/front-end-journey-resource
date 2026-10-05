@@ -373,12 +373,26 @@ ZSet score 编码优先级 + 时间戳（`priority * 1e13 + timestamp`），`ZPO
 **Q：什么是 Big Key？如何处理？**
 单个 String 超过 10 KB，或集合类型元素超过数千个，即视为 Big Key。会阻塞主线程（尤其是删除时）。处理方式：拆分 Key、用 `UNLINK` 异步删除、定期巡检。
 
+## Streams 消费恢复与字典渐进迁移
+
+[Redis XREADGROUP](https://redis.io/docs/latest/commands/xreadgroup/)在消费组中分派消息；通常用 `>` 读取未分派的新消息，已分派未确认的消息保存在 PEL。处理成功后 `XACK` 移除 pending 记录，不等于删除 stream 正文。消费者崩溃时消息仍可能 pending；读自身历史或由其他消费者按策略接管，而不是一律重新读新消息。
+
+[XAUTOCLAIM](https://redis.io/docs/latest/commands/xautoclaim/)从 Redis 6.2 起可按空闲时间和游标转移 pending 所有权，适合恢复失联消费者。接管不能证明旧处理没有完成，业务写入仍需幂等，重试次数超限另设隔离与人工处理。PEL、正文裁剪及持久化策略一起影响恢复能力，Streams 不是自动实现端到端恰好一次处理的系统。
+
+字典 rehash 是不同层次的问题。[Redis 7.2 dict.c 源码](https://github.com/redis/redis/blob/7.2/src/dict.c)中的实现保留旧、新哈希表与迁移进度，按步迁移桶；普通访问可推进迁移，查找在需要时考虑两表，完成后释放旧表。迁移一个桶仍可能遇到较长链，渐进不表示每次操作绝对常数或无停顿。具体行为随版本与暂停条件变化，也不能把 List、Stream 等所有类型都当成这个字典实现。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-23.md)（cluster-3f37b9b18f24）
-- [小红书 Agent 开发一面：多智能体、Memory 与广告投放优化（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-1.md)（cluster-7372c3e7fb1e）
-- [蚂蚁 Agent 实习一面：缓存、消息与 RAG（2026 年 6 月发帖）](../../../interview/antfin/ai/antfin-ai-6.md)（cluster-de2ee20bc890）
+- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-23.md)
+- [小红书 Agent 开发一面：多智能体、Memory 与广告投放优化（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-1.md)
+- [蚂蚁 Agent 实习一面：缓存、消息与 RAG（2026 年 6 月发帖）](../../../interview/antfin/ai/antfin-ai-6.md)
+- [字节全栈二、三面：幂等、索引与字符串匹配](../../../interview/bytedance/base/bytedance-base-32.md)
+- [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
+- [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
+- [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../../interview/bytedance/base/bytedance-base-47.md)
+- [字节 Agent 实习：生成质量、多智能体与缓存](../../../interview/bytedance/base/bytedance-base-52.md)
+- [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

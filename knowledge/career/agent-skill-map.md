@@ -118,3 +118,13 @@ flowchart TD
 - [GitHub Certified: Agentic AI Developer (beta)](https://learn.microsoft.com/en-us/credentials/certifications/agentic-ai-developer/)
 - [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/)
 - [SFIA 9 Levels of responsibility](https://sfia-online.org/en/sfia-9/responsibilities)
+
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 二面：RAG 分块、查询改写与随机采样](../../interview/bytedance/base/bytedance-base-28.md)
+- [字节财经保险 AI 全栈实习一面：项目设计、AI Coding 与 Diff](../../interview/bytedance/base/bytedance-base-34.md)
+- [字节全栈：多智能体导购、客户端与系统评测](../../interview/bytedance/base/bytedance-base-43.md)
+- [字节全栈实习：Session、权限与前端基础](../../interview/bytedance/base/bytedance-base-46.md)
+- [字节全栈与测试：JVM、并发与 SQL 排查](../../interview/bytedance/base/bytedance-base-56.md)
+<!-- interview-source-history:end -->

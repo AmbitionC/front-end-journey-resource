@@ -102,14 +102,25 @@ deadline 到达后任务转 expired，Worker 不再发起新副作用。保留�
 
 异步 Job 是一份跨 HTTP、数据库、Broker 和 Worker 的协议。202 + Location 建立可查询资源，outbox 保证提交与发布衔接，租约定义执行所有权，ACK 在持久完成后发生，幂等处理重复，DLQ 和取消拥有明确生命周期。这样长任务才不依赖一条脆弱连接。
 
+## 延时消息、死信与周期任务分开设计
+
+RocketMQ 5.0 的[延时消息文档](https://rocketmq.apache.org/docs/featureBehavior/02delaymessage/)描述先存入定时存储、到指定时刻转为可投递消息的机制；该文档给出默认最大 24 小时的时间范围，其他部署参数需另核对。投递到期不保证消费者立即执行，也不表示自动周期重复。旧版本的延时级别接口不能与 5.x 的时间戳方式混写。
+
+RabbitMQ 的 TTL 限制消息存活期，死信交换机路由过期、拒收等条件下的消息；配合可形成某些延迟模式。但[TTL 文档](https://www.rabbitmq.com/docs/ttl)说明了过期处理与队头等边界，不能把它当精确计时器，也不能把死信本身说成周期调度。
+
+若需求是“每 30 天更新”，先确定固定时长还是按日历周期，再保存 scheduleId、nextRunAt 和已生成周期。持久调度器查到期任务，生成带 periodId 的幂等 Job；成功或按约定失败策略推进下一期。漏跑如何补、重复扫描如何去重、远端故障如何恢复，都属于周期合同。仅一条 30 天延时消息没有表达下一周期和恢复规则。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [阿里云 Agent Infra 一面：SGX、吞吐与日志写入（2026 年 9 月发帖）](../../../interview/alibaba/ai/alibaba-ai-8.md)（cluster-21f88c2e7c88）
-- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-23.md)（cluster-3f37b9b18f24）
-- [字节 Managed Agent 校招一面：评测、运行链路与后端基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-26.md)（cluster-40374dfc6b29）
-- [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)（cluster-910d0b20a897）
-- [蚂蚁 Agent 实习一面：缓存、消息与 RAG（2026 年 6 月发帖）](../../../interview/antfin/ai/antfin-ai-6.md)（cluster-de2ee20bc890）
+- [阿里云 Agent Infra 一面：SGX、吞吐与日志写入（2026 年 9 月发帖）](../../../interview/alibaba/ai/alibaba-ai-8.md)
+- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-23.md)
+- [字节 Managed Agent 校招一面：评测、运行链路与后端基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-26.md)
+- [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)
+- [蚂蚁 Agent 实习一面：缓存、消息与 RAG（2026 年 6 月发帖）](../../../interview/antfin/ai/antfin-ai-6.md)
+- [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
+- [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
+- [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../../interview/bytedance/base/bytedance-base-47.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

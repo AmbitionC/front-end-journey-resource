@@ -82,10 +82,29 @@ AI/Agent 岗位面试通常覆盖以下几个方向。学长不列具体题目�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节飞书 AI 应用一面：Runtime、评测与后端基础（2026 年 9 月发帖）](../../interview/bytedance/base/bytedance-base-24.md)（cluster-78d45fa26bfd）
-- [字节 Agent 后端实习一面：LangGraph、评测集与混合检索（2026 年 9 月）](../../interview/bytedance/base/bytedance-base-22.md)（cluster-a84ba0858191）
-- [蚂蚁 Agent 实习一面：缓存、消息与 RAG（2026 年 6 月发帖）](../../interview/antfin/ai/antfin-ai-6.md)（cluster-de2ee20bc890）
-- [腾讯 Agent 实习一面：RAG、工具与通信（2026 年 3 月发帖）](../../interview/tencent/ai/tencent-ai-10.md)（cluster-fa3a6af4ebe6）
+- [字节飞书 AI 应用一面：Runtime、评测与后端基础（2026 年 9 月发帖）](../../interview/bytedance/base/bytedance-base-24.md)
+- [字节 Agent 后端实习一面：LangGraph、评测集与混合检索（2026 年 9 月）](../../interview/bytedance/base/bytedance-base-22.md)
+- [蚂蚁 Agent 实习一面：缓存、消息与 RAG（2026 年 6 月发帖）](../../interview/antfin/ai/antfin-ai-6.md)
+- [腾讯 Agent 实习一面：RAG、工具与通信（2026 年 3 月发帖）](../../interview/tencent/ai/tencent-ai-10.md)
+- [字节全栈二、三面：幂等、索引与字符串匹配](../../interview/bytedance/base/bytedance-base-32.md)
+- [字节财经保险 AI 全栈实习一面：项目设计、AI Coding 与 Diff](../../interview/bytedance/base/bytedance-base-34.md)
+- [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../interview/bytedance/base/bytedance-base-36.md)
+- [字节全栈一面：RAG、Java与线程池](../../interview/bytedance/base/bytedance-base-37.md)
+- [字节前端全栈实习一面：渲染、Worker与认证](../../interview/bytedance/base/bytedance-base-38.md)
+- [字节抖音Agent一面：Skill、MCP与记忆](../../interview/bytedance/base/bytedance-base-39.md)
+- [字节Agent全栈一面：工具、评测与编码](../../interview/bytedance/base/bytedance-base-40.md)
+- [字节 Agent 实习：异步消息、上下文与容器隔离](../../interview/bytedance/base/bytedance-base-41.md)
+- [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../interview/bytedance/base/bytedance-base-42.md)
+- [字节全栈：多智能体导购、客户端与系统评测](../../interview/bytedance/base/bytedance-base-43.md)
+- [字节 Agent：任务取消、Spring 配置与并发执行](../../interview/bytedance/base/bytedance-base-45.md)
+- [字节全栈实习：Session、权限与前端基础](../../interview/bytedance/base/bytedance-base-46.md)
+- [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../interview/bytedance/base/bytedance-base-47.md)
+- [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../interview/bytedance/base/bytedance-base-48.md)
+- [字节 Agent：AI Coding、技能设计与模型工程](../../interview/bytedance/base/bytedance-base-49.md)
+- [字节 Agent：幻觉、任务恢复与 Java 基础](../../interview/bytedance/base/bytedance-base-50.md)
+- [字节 Agent 实习：生成质量、多智能体与缓存](../../interview/bytedance/base/bytedance-base-52.md)
+- [字节全栈一二面：调度器、流式恢复与浏览器网络](../../interview/bytedance/base/bytedance-base-53.md)
+- [字节全栈与测试：JVM、并发与 SQL 排查](../../interview/bytedance/base/bytedance-base-56.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

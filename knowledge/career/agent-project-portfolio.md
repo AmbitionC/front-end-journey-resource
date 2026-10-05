@@ -141,3 +141,23 @@ Orchestrator 解析 PR diff，分发给各专项 Agent，收集结果后合并�
 - [Demystifying evals for AI agents — Anthropic](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents)
 - [Tracing — OpenAI Agents SDK](https://openai.github.io/openai-agents-python/tracing/)
 - [Guardrails — OpenAI Agents SDK](https://openai.github.io/openai-agents-python/guardrails/)
+
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 AI 平台一面：Agent 评测、框架与数据结构](../../interview/bytedance/base/bytedance-base-33.md)
+- [字节全栈一面：RAG、Java与线程池](../../interview/bytedance/base/bytedance-base-37.md)
+- [字节前端全栈实习一面：渲染、Worker与认证](../../interview/bytedance/base/bytedance-base-38.md)
+- [字节抖音Agent一面：Skill、MCP与记忆](../../interview/bytedance/base/bytedance-base-39.md)
+- [字节 Agent 实习：异步消息、上下文与容器隔离](../../interview/bytedance/base/bytedance-base-41.md)
+- [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../interview/bytedance/base/bytedance-base-42.md)
+- [字节全栈：多智能体导购、客户端与系统评测](../../interview/bytedance/base/bytedance-base-43.md)
+- [字节全栈：预请求、列表复用与 ThreadLocal](../../interview/bytedance/base/bytedance-base-44.md)
+- [字节全栈实习：Session、权限与前端基础](../../interview/bytedance/base/bytedance-base-46.md)
+- [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../interview/bytedance/base/bytedance-base-47.md)
+- [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../interview/bytedance/base/bytedance-base-48.md)
+- [字节 Agent：幻觉、任务恢复与 Java 基础](../../interview/bytedance/base/bytedance-base-50.md)
+- [字节 Agent 实习：推理、微调与工具编排](../../interview/bytedance/base/bytedance-base-51.md)
+- [字节全栈一二面：调度器、流式恢复与浏览器网络](../../interview/bytedance/base/bytedance-base-53.md)
+- [字节后端与 Agent：运行链路、数据库与网络](../../interview/bytedance/base/bytedance-base-55.md)
+<!-- interview-source-history:end -->

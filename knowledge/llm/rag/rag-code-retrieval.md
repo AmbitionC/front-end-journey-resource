@@ -98,6 +98,12 @@ ACL 在任何检索和图遍历前执行。一个可见文件引用不可见实�
 
 代码 RAG 是“快照 + 多索引 + 结构化路由”：Tree-sitter 提供跨语言语法结构，language server 补充类型化定义与引用，文本/向量索引处理概念问题。所有结果保持文件、行号和 commit 血缘，并在 ACL、freshness 与不可信代码边界内装配上下文。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节抖音Agent一面：Skill、MCP与记忆](../../../interview/bytedance/base/bytedance-base-39.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Tree-sitter — Introduction](https://tree-sitter.github.io/tree-sitter/index.html)

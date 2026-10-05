@@ -92,10 +92,35 @@ function minRooms(intervals: Interval[]) {
 
 区间题的第一步不是写堆，而是确认目标：最多数量用最早结束的交换贪心；最少资源用最大重叠，堆和扫描线都是构造方法。把端点、权重和输出要求说清楚，才能判断这道题是否仍属于这两个基础模型。
 
+## 合并区间与选择区间是不同目标
+
+合并要求输出恰好覆盖所有输入区间的并集，不是选取尽量多的兼容区间。这里使用闭区间：`[1,2]` 与 `[2,3]` 在端点相交，合并为 `[1,3]`；前面的会议室示例使用半开区间，不能把同一边界条件直接搬过来。
+
+```javascript
+function mergeClosedIntervals(intervals) {
+  const sorted = intervals.map(([start, end]) => {
+    if (!Number.isFinite(start) || !Number.isFinite(end) || start > end) {
+      throw new RangeError('Invalid closed interval');
+    }
+    return [start, end];
+  }).sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  const result = [];
+  for (const [start, end] of sorted) {
+    const last = result.at(-1);
+    if (!last || start > last[1]) result.push([start, end]);
+    else last[1] = Math.max(last[1], end);
+  }
+  return result;
+}
+```
+
+按起点排序后，下一段起点不会向左移动。如果它与末段相交，扩展末段能保持并集覆盖；若在末段右侧完全分离，也不会再与更早段相交，可以安全另开一段。算法复制输入，排序 O(n log n)，扫描 O(n)，额外空间 O(n)；重复和被包含区间无需特殊分支。若模型改为开区间或混合端点类型，必须连同相交判定和输出端点一并改写。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)（cluster-910d0b20a897）
+- [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)
+- [字节Agent全栈一面：工具、评测与编码](../../../interview/bytedance/base/bytedance-base-40.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

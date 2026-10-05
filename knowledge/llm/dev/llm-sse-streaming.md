@@ -235,11 +235,45 @@ UI 不宜每收到一个 token 就触发一次完整渲染。可以先累计文�
 - [ ] `done`、流内错误、HTTP 错误和用户取消彼此可区分。
 - [ ] 重连策略与幂等/副作用规则一致。
 
+## ToolCall 参数：完整事件里仍可能只有半截 JSON
+
+网络 chunk、SSE 事件和工具参数完成是三个不同边界。即便已经解析出完整 SSE 帧，它的 data 仍可能只包含一段参数增量。以 [Claude 的工具流示例](https://platform.claude.com/docs/en/build-with-claude/streaming)为例，input_json_delta 携带 partial_json，完整输入在对应内容块结束后才能解析；这只是该提供方协议，其他适配器须核对自身完成信号。
+
+应用应按 run 与工具调用标识关联增量，校验它属于已开始的调用，再顺序拼接。不同调用不得共享同一字符串缓冲；断流时未完成调用不能执行。完成后解析 JSON、校验 Schema 与业务授权，再交工具执行器。预览界面可以展示未完成字段，但“尽量修复半截 JSON”不能成为执行副作用的依据。
+
+```javascript
+class ToolArguments {
+  pending = new Map();
+  start(id) {
+    if (this.pending.has(id)) throw new Error('Duplicate call');
+    this.pending.set(id, '');
+  }
+  delta(id, text) {
+    if (!this.pending.has(id)) throw new Error('Unknown call');
+    this.pending.set(id, this.pending.get(id) + text);
+  }
+  finish(id, validate) {
+    if (!this.pending.has(id)) throw new Error('Unknown call');
+    const text = this.pending.get(id);
+    this.pending.delete(id);
+    const value = JSON.parse(text);
+    if (!validate(value)) throw new Error('Invalid arguments');
+    return value;
+  }
+  abort() { this.pending.clear(); }
+}
+```
+
+这是单 run 内、适配器已正确去重和分帧的教学组件，不是完整提供方 SDK。实际服务还需限制参数缓冲大小、校验 delta 类型，并按事件 ID 去重；SSE 重放否则会重复拼接。这里把执行留在完成与校验之后，解析成功也不自动授予调用权限。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)（cluster-0c75d333d0e1）
-- [字节 AI 全栈开发一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-13.md)（cluster-0cfd17469543）
+- [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)
+- [字节 AI 全栈开发一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-13.md)
+- [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
+- [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
+- [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

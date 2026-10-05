@@ -84,6 +84,12 @@ CSS 隐藏的大图仍可能下载，需正确响应式图片标记。不同 DPR
 
 响应式设计的成熟标准是：内容和组件在一段连续条件空间中保持可理解、可操作，断点只是修复约束失败的少数工具，而不是设备名单。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节全栈实习：Session、权限与前端基础](../../../interview/bytedance/base/bytedance-base-46.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [W3C：CSS Flexible Box Layout](https://www.w3.org/TR/css-flexbox-1/)

@@ -118,6 +118,12 @@ OpenAI 官方 Node SDK 的[仓库文档](https://github.com/openai/openai-node)�
 
 可靠的大模型调用先分类错误，再用总 deadline、幂等键和重试预算控制恢复；限流遵守 `Retry-After`，瞬时故障采用有界抖动退避，未知结果保留因果证据。Fallback 必须经过合规、能力和质量门禁。系统的目标不是永远返回内容，而是在故障中仍保持可解释、可控且不产生重复副作用。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [RFC 9110 — HTTP Semantics](https://www.rfc-editor.org/rfc/rfc9110.html)

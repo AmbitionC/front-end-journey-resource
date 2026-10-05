@@ -103,7 +103,28 @@ server cache 是远端真相的客户端副本，不应与本地领域 state 复
 
 好的状态模型让非法组合难以表达，让每个事件只有可解释的迁移，并让 server data 的新鲜度与失效成为显式策略。
 
+## 路由也是状态：URL、历史与宿主边界
+
+浏览器客户端路由把 URL 映射到页面状态。History 方式可用 pushState/replaceState 写入记录、popstate 响应前进后退；hash 方式利用片段变化。pushState 自身不会派发 popstate，路由器须自行更新视图；直接刷新路径还需要服务端返回正确入口。[WHATWG 历史与导航规则](https://html.spec.whatwg.org/multipage/browsing-the-web.html)定义底层合同。
+
+可分享的资源 ID、筛选条件放 URL，暂存 UI 状态留组件或 store；敏感令牌不要放查询串。路由守卫不替代服务端授权，切换用户或租户时还要清理对应缓存。
+
+状态原则也适用于 Native/Lynx，但运行宿主不同：Native 通常指平台原生 UI；[Lynx 官方快速开始](https://lynxjs.org/guide/start/quick-start.html)展示跨平台 UI 的运行方式。浏览器的 localStorage、History 或 DOM API 不能直接当作原生存储与导航实现。先确认宿主，临时状态放内存，需要跨启动恢复时采用该平台支持的持久化接口并定义有效期。未确认的产品名称不按读音猜测。
+
+### Vue 响应式数据如何保存
+
+[Vue 3 响应式核心 API](https://vuejs.org/api/reactivity-core.html)中 ref 用 `.value` 包装值，reactive 为对象建立响应式代理；computed 从依赖计算派生值，变化后由框架调度相关消费更新。reactive 不是任意原始值的包装器，把对象字段解构成普通变量可能失去响应式连接，应按需要保留引用或使用对应接口。共享 composable 代码不意味着每次调用共享同一状态实例；持久化又是独立合同，刷新后恢复需要序列化、版本与授权边界。
+
 ## 参考资料
 
 - [React choosing the state structure](https://react.dev/learn/choosing-the-state-structure)
 - [TanStack Query important defaults](https://tanstack.com/query/latest/docs/framework/react/guides/important-defaults)
+
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节财经保险 AI 全栈实习一面：项目设计、AI Coding 与 Diff](../../../interview/bytedance/base/bytedance-base-34.md)
+- [字节全栈：预请求、列表复用与 ThreadLocal](../../../interview/bytedance/base/bytedance-base-44.md)
+- [字节全栈实习：Session、权限与前端基础](../../../interview/bytedance/base/bytedance-base-46.md)
+- [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
+<!-- interview-source-history:end -->

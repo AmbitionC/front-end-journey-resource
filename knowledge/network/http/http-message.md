@@ -58,12 +58,25 @@ HTTP/1.1 不允许 `request-target` 包含空白字符；收到畸形请求行�
 
 [RFC 9112](https://www.rfc-editor.org/rfc/rfc9112.html) 专门规定 HTTP/1.1 报文语法、连接管理和 framing；`Content-Length` 与 `Transfer-Encoding` 的冲突会造成解析差异，必须按规范拒绝或处理。
 
+## HTTP/2 与 HTTP/3：应用语义延续，传输边界不同
+
+[RFC 9113](https://www.rfc-editor.org/rfc/rfc9113)定义 HTTP/2 的二进制分帧与多路复用：多条 stream 可以共用一个 TCP 连接，流控和头部压缩按协议处理。TCP 向上提供有序字节流，一段丢失仍可能让该连接后续数据等待；应用 stream 多路复用不消除所有传输队头阻塞。
+
+[RFC 9114](https://www.rfc-editor.org/rfc/rfc9114)将 HTTP/3 映射到 QUIC。[RFC 9000](https://www.rfc-editor.org/rfc/rfc9000)中 QUIC 基于 UDP 实现可靠传输、独立流与连接管理；HTTP/3 并非“UDP 所以不可靠”。单条流丢失不必阻塞另一条独立流按序交付，但共享拥塞控制、应用依赖与压缩依赖仍可造成等待。HTTP 方法、状态码等语义不因换传输就全部改变。
+
+实际协议由客户端、服务端和中间网络共同协商，不能看到 HTTPS 就判定 HTTP/2 或 HTTP/3。排查时分别记录协议、连接复用、丢包与响应依赖，避免用总耗时推断某版本必然更快。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 Agent 开发一面：推理缓存、网络与存储基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-18.md)（cluster-265dac6c3b53）
-- [OPPO AI 全栈一面：Prompt 到 UI、RAG 与前端性能（2026 年 8 月）](../../../interview/oppo/ai/oppo-ai-2.md)（cluster-4a37152b165a）
-- [腾讯 Agent 实习一面：RAG、工具与通信（2026 年 3 月发帖）](../../../interview/tencent/ai/tencent-ai-10.md)（cluster-fa3a6af4ebe6）
+- [字节 Agent 开发一面：推理缓存、网络与存储基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-18.md)
+- [OPPO AI 全栈一面：Prompt 到 UI、RAG 与前端性能（2026 年 8 月）](../../../interview/oppo/ai/oppo-ai-2.md)
+- [腾讯 Agent 实习一面：RAG、工具与通信（2026 年 3 月发帖）](../../../interview/tencent/ai/tencent-ai-10.md)
+- [字节全栈实习：Session、权限与前端基础](../../../interview/bytedance/base/bytedance-base-46.md)
+- [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../../interview/bytedance/base/bytedance-base-47.md)
+- [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
+- [字节 Agent 实习：模型选择与可信通信](../../../interview/bytedance/base/bytedance-base-54.md)
+- [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

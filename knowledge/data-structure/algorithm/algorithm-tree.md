@@ -215,10 +215,58 @@ function postorderTraversal(root) {
 }
 ```
 
+## 二叉树子结构：候选根与局部匹配
+
+子结构与整棵子树相等是两个条件。本文约定：B 的节点值和左右关系须出现在 A 的某个根下，但 A 可以有 B 未要求的额外节点；公开接口把空 B 判为不是子结构。若题目要求整棵子树相等，双空与单空的判定必须另写。
+
+外层遍历 A 的每个候选起点，内层只检查 B 提出的要求。内层 B 已空表示该分支要求匹配完；B 未空而 A 已空、或值不同，则匹配失败。这个 base case 不能与外层空 B 的约定混为一谈。
+
+```javascript
+function isSubstructure(a, b) {
+  if (!a || !b) return false;
+  function matches(x, y) {
+    if (!y) return true;
+    if (!x || x.val !== y.val) return false;
+    return matches(x.left, y.left) && matches(x.right, y.right);
+  }
+  return matches(a, b) || isSubstructure(a.left, b) || isSubstructure(a.right, b);
+}
+```
+
+例如 A 的根值为 2、左孩子为 1，另有额外右孩子，B 只要求根 2 与左孩子 1，可以匹配；若 B 要求右孩子 3 而 A 没有，就失败。重复根值时，第一次局部失败不能提前否定所有后续候选。对节点数 n、m，朴素最坏时间 O(nm)，递归栈取决于树高，粗上界 O(hA+hB)。代码假设是真正无环的树；一般有环对象图需另处理重复访问。
+## 最大宽度：数位置，而非节点数
+
+[LeetCode 662 的规格](https://leetcode.com/problems/maximum-width-of-binary-tree/)把两端非空节点之间的空位也计入宽度。因此只数一层有几个节点会错。给根位置 0，左右孩子位置分别为 2i 与 2i+1，一层的宽度是末位置减首位置再加一。
+
+每层减去该层首位置不改变相对距离，可以减少不必要的增长。下面的 JS 教学实现用 BigInt 保存位置，返回 BigInt；一般树的宽度可能超过 Number 安全整数。它假定输入无环，每个节点只访问一次，空间 O(w)，整数运算成本还受位置位数影响。
+
+```javascript
+function maximumWidth(root) {
+  if (!root) return 0n;
+  let queue = [[root, 0n]], best = 0n;
+  while (queue.length) {
+    const base = queue[0][1], next = [];
+    const width = queue[queue.length - 1][1] - base + 1n;
+    if (width > best) best = width;
+    for (const [node, position] of queue) {
+      const i = position - base;
+      if (node.left) next.push([node.left, 2n * i]);
+      if (node.right) next.push([node.right, 2n * i + 1n]);
+    }
+    queue = next;
+  }
+  return best;
+}
+```
+
+测试空树、单边深链和同层两端稀疏节点，后者可以证明空位不能省略。位置编号是教学算法的辅助数据，不需要真的创建全部空节点。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [百度大模型研发一面：Context、Harness 与 RAG（2026 年 8 月）](../../../interview/baidu/ai/baidu-ai-1.md)（cluster-824645713b59）
+- [百度大模型研发一面：Context、Harness 与 RAG（2026 年 8 月）](../../../interview/baidu/ai/baidu-ai-1.md)
+- [字节 Agent 一面：会话记忆、并发更新与算法](../../../interview/bytedance/base/bytedance-base-29.md)
+- [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
