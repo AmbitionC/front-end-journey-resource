@@ -13,6 +13,7 @@ import MarkdownIt from 'markdown-it';
 import puppeteer from 'puppeteer';
 import OSS from 'ali-oss';
 import parse5 from 'parse5';
+import { configurePdfMarkdown, createPdfStaticRenderer } from './pdf-static-images.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const KNOWLEDGE = join(ROOT, 'knowledge');
@@ -21,7 +22,7 @@ const DIST = join(ROOT, 'dist', 'materials');
 const OSS_PREFIX = 'materials/knowledge/';
 let approvedFiles;
 
-const md = new MarkdownIt({ html: true, linkify: true, breaks: false });
+const md = configurePdfMarkdown(new MarkdownIt({ html: true, linkify: true, breaks: false }));
 
 /** 递归收集某分类下已发布叶子（按树序），带层级面包屑 */
 function collectLeaves(node, trail, out) {
@@ -54,19 +55,23 @@ const CSS = `
   p { margin:8px 0; }
   a { color:#369e50; text-decoration:none; }
   code { background:#f2f2ef; border-radius:3px; padding:1px 4px; font-family:"SFMono-Regular",Consolas,monospace; font-size:12px; }
-  pre { background:#f7f7f4; border:1px solid #e6e5e0; border-radius:8px; padding:12px; overflow:auto; page-break-inside:avoid; }
+  pre { background:#f7f7f4; border:1px solid #e6e5e0; border-radius:8px; padding:12px; overflow:visible; white-space:pre-wrap; overflow-wrap:anywhere; page-break-inside:auto; }
   pre code { background:none; padding:0; }
   table { border-collapse:collapse; width:100%; margin:12px 0; page-break-inside:avoid; }
   th,td { border:1px solid #dcdcd6; padding:6px 10px; text-align:left; vertical-align:top; }
   th { background:#f2f6f2; font-weight:600; }
-  img { max-width:100%; height:auto; display:block; margin:12px auto; page-break-inside:avoid; }
+  .pdf-align-left { text-align:left; } .pdf-align-center { text-align:center; } .pdf-align-right { text-align:right; }
+  img { max-width:100%; max-height:235mm; object-fit:contain; height:auto; display:block; margin:12px auto; page-break-inside:avoid; }
+  figure.pdf-diagram { margin:12px 0; } figure.pdf-diagram p { font-size:12px; }
   blockquote { margin:12px 0; padding:6px 14px; border-left:3px solid #40b35d; background:#f6faf7; color:#5a5852; }
   ul,ol { padding-left:22px; }
   .foot { margin-top:8px; text-align:center; color:#b8b6ad; font-size:11px; }
+  .pdf-toc { page-break-after:always; } .pdf-toc li { margin:4px 0; }
+  h3 { break-after:avoid; } tr { break-inside:avoid; }
 `;
 
 /** 为某个二级分类节点构建整册 HTML（封面=二级分类名，章节=更深层目录） */
-export function buildHtml(sub, parentLabel, readArticle=readLeafMd) {
+export function buildHtml(sub, parentLabel, readArticle=readLeafMd, renderArticle=(_leaf,text)=>md.render(text)) {
   const out = [];
   collectLeaves(sub, [], out);
   if (!out.length) return null;
@@ -74,6 +79,7 @@ export function buildHtml(sub, parentLabel, readArticle=readLeafMd) {
     `<h1 class="cover">${esc(sub.label)}` +
     `<div class="sub">${esc(parentLabel)}</div>` +
     `<div class="foot">FrontEnd Journey · 会员资料</div></h1>`;
+  body+=`<nav class="pdf-toc"><h2>目录</h2><ol>${out.map(({leaf})=>`<li><a href="#pdf-${esc(leaf.key)}">${esc(leaf.label)}</a></li>`).join('')}</ol></nav>`;
   let lastSection = '';
   for (const { leaf, trail } of out) {
     const section = trail.slice(1).join(' · '); // 去掉本二级分类名，保留更深层目录
@@ -82,7 +88,7 @@ export function buildHtml(sub, parentLabel, readArticle=readLeafMd) {
       lastSection = section;
     }
     const mdText = readArticle(leaf);
-    body += `<article><h3>${esc(leaf.label)}</h3>${md.render(mdText)}</article>`;
+    body += `<article id="pdf-${esc(leaf.key)}"><h3>${esc(leaf.label)}</h3>${renderArticle(leaf,mdText)}</article>`;
   }
   const html = `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><style>${CSS}</style></head><body>${body}</body></html>`;
   validatePdfHtml(html);
@@ -111,7 +117,7 @@ export function validatePdfHtml(html) {
 
 export function localReviewedImagePath(value) {
   const url = new URL(value);
-  if (url.origin!=='https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com'
+  if (!['https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com','https://fe-static-oss.ai-fe-nexus.com'].includes(url.origin)
       || !url.pathname.startsWith('/images/') || url.search || url.hash) return null;
   return safeRelativePath(decodeURIComponent(url.pathname.slice(1)));
 }
@@ -147,6 +153,40 @@ export async function preflightPdfImages(root, html, approved) {
   return sources.length;
 }
 
+export async function renderPdfBook(browser,root,approved,built) {
+  const requiredImages=await preflightPdfImages(root,built.html,approved);
+  const page=await browser.newPage();
+  try{
+    await page.setJavaScriptEnabled(false);
+    await page.setRequestInterception(true);
+    page.on('request',async request=>{
+      try{
+        const path=localReviewedImagePath(request.url());
+        if(!path||request.resourceType()!=='image'){await request.abort();return;}
+        const bytes=await readBounded(root,path,'images');
+        if(sha256(bytes)!==approved.get(path))throw new Error('PDF 图片与已审版本不一致');
+        await request.respond({status:200,body:bytes,contentType:reviewedRasterImageType(path,bytes)});
+      }catch{await request.abort();}
+    });
+    await page.setContent(built.html,{waitUntil:'networkidle0',timeout:120000});
+    const acceptance=await page.evaluate(()=>({
+      images:[...document.images].map(i=>({src:i.getAttribute('src'),complete:i.complete&&i.naturalWidth>0,naturalWidth:i.naturalWidth,naturalHeight:i.naturalHeight})),
+      brokenContents:[...document.querySelectorAll('.pdf-toc a')].filter(a=>!document.getElementById(a.getAttribute('href').slice(1))).length,
+      relativeLinks:[...document.querySelectorAll('a[href]')].map(a=>a.getAttribute('href')).filter(h=>!/^([a-z][a-z0-9+.-]*:|#|\/\/)/i.test(h)),
+      articleCount:document.querySelectorAll('article').length,
+    }));
+    if(acceptance.images.length!==requiredImages||acceptance.images.some(i=>!i.complete)||acceptance.brokenContents||acceptance.relativeLinks.length||acceptance.articleCount!==built.count)throw new Error('PDF 图片、目录或正文完整性校验失败');
+    const bytes=Buffer.from(await page.pdf({format:'A4',printBackground:true,outline:true,margin:{top:'18mm',bottom:'18mm',left:'16mm',right:'16mm'}}));
+    return {bytes,acceptance};
+  }finally{await page.close();}
+}
+
+export async function verifyUploadedMaterial(client,key,bytes) {
+  const actual=await client.get(key),acl=await client.getACL(key);
+  if(!Buffer.isBuffer(actual.content)||sha256(actual.content)!==sha256(bytes)||acl.acl!=='private')throw new Error('PDF 商品上传读回字节或私有 ACL 不匹配');
+  return {key,sha256:sha256(bytes),sizeBytes:bytes.length,acl:'private'};
+}
+
 async function main() {
   const head = spawnSync('git',['rev-parse','HEAD'],{cwd:ROOT,encoding:'utf8'}).stdout.trim();
   const before = process.env.RELEASE_BEFORE_SHA || spawnSync('git',['rev-parse','HEAD^1'],{cwd:ROOT,encoding:'utf8'}).stdout.trim();
@@ -154,6 +194,7 @@ async function main() {
   const snapshot = await publicInventory(ROOT);
   if (snapshot.digest!==approval.publicationDigest) throw new Error('PDF 输入在最终审核后改变');
   approvedFiles = new Map(snapshot.files.map(x=>[x.path,x.sha256]));
+  const renderArticle=await createPdfStaticRenderer(ROOT,approvedFiles,{sourceCommit:head});
   const treeBytes = await readBounded(ROOT,'knowledge/_tree.json','knowledge');
   if (sha256(treeBytes)!==approvedFiles.get('knowledge/_tree.json')) throw new Error('PDF 目录与已审版本不一致');
   const tree = JSON.parse(treeBytes);
@@ -163,7 +204,7 @@ async function main() {
     safeKey(cat.key);
     for(const sub of cat.children??[]) {
       safeKey(sub.key);
-      const built=buildHtml(sub,cat.label);
+      const built=buildHtml(sub,cat.label,readLeafMd,renderArticle);
       if(!built) continue;
       await preflightPdfImages(ROOT,built.html,approvedFiles);
       preparedBooks.set(sub.key,built);
@@ -206,31 +247,9 @@ async function main() {
         console.log(`skip ${cat.key}/${sub.key}: 无已发布文章`);
         continue;
       }
-      const page = await browser.newPage();
-      await page.setJavaScriptEnabled(false);
-      await page.setRequestInterception(true);
-      page.on('request',async request=>{
-        try {
-          const path = localReviewedImagePath(request.url());
-          if (!path || request.resourceType()!=='image') { await request.abort(); return; }
-          const bytes = await readBounded(ROOT,path,'images');
-          if (sha256(bytes)!==approvedFiles.get(path)) throw new Error('PDF 图片与已审版本不一致');
-          const contentType=reviewedRasterImageType(path,bytes);
-          await request.respond({status:200,body:bytes,contentType});
-        } catch { await request.abort(); }
-      });
-      await page.setContent(built.html, { waitUntil: 'networkidle0', timeout: 120000 });
-      const imagesReady = await page.evaluate(()=>[...document.images].every(image=>image.complete&&image.naturalWidth>0));
-      if (!imagesReady) throw new Error('PDF 必需图片缺失或未通过审核绑定');
-      const pdf = await page.pdf({
-        format: 'A4',
-        printBackground: true,
-        margin: { top: '18mm', bottom: '18mm', left: '16mm', right: '16mm' },
-      });
-      await page.close();
-
-      const buf = Buffer.from(pdf);
+      const {bytes:buf,acceptance}=await renderPdfBook(browser,ROOT,approvedFiles,built);
       writeFileSync(join(DIST, `${sub.key}.pdf`), buf);
+      writeFileSync(join(DIST, `${sub.key}.acceptance.json`),JSON.stringify({sourceCommit:head,publicationDigest:snapshot.digest,pdfSha256:sha256(buf),...acceptance},null,2));
 
       uploads.push({key:sub.key,buf});
       items.push({
@@ -252,12 +271,16 @@ async function main() {
   const manifestStr = JSON.stringify(manifest, null, 2);
   writeFileSync(join(DIST, 'manifest.json'), manifestStr);
   if (client) {
-    for (const {key,buf} of uploads) await client.put(`${OSS_PREFIX}${key}.pdf`,buf, {
-      headers:{'Content-Type':'application/pdf','x-oss-object-acl':'private'},
-    });
+    const readback=[];
+    for (const {key,buf} of uploads) {
+      await client.put(`${OSS_PREFIX}${key}.pdf`,buf,{headers:{'Content-Type':'application/pdf','x-oss-object-acl':'private'}});
+      readback.push(await verifyUploadedMaterial(client,`${OSS_PREFIX}${key}.pdf`,buf));
+    }
     await client.put(`${OSS_PREFIX}manifest.json`, Buffer.from(manifestStr), {
       headers: { 'Content-Type': 'application/json; charset=utf-8', 'x-oss-object-acl': 'private' },
     });
+    readback.push(await verifyUploadedMaterial(client,`${OSS_PREFIX}manifest.json`,Buffer.from(manifestStr)));
+    writeFileSync(join(DIST,'upload-readback.json'),JSON.stringify({sourceCommit:head,publicationDigest:snapshot.digest,objects:readback},null,2));
   }
 
   console.log(
