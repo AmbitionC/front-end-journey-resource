@@ -38,43 +38,15 @@ function published(overrides = {}) {
   };
 }
 
-test('keeps Nowcoder provenance private while every published article stays traceable', async () => {
-  const files = await markdownFiles(join(ROOT, 'interview'));
-  const publicViolations = [];
-  for (const file of files) {
-    const contents = await readFile(file, 'utf8');
-    const relativePath = file.slice(ROOT.length + 1);
-    const disclosures = publicInterviewDisclosures(contents);
-    if (disclosures.has('source-heading')) publicViolations.push(`${relativePath}: 公开来源标题`);
-    if (disclosures.has('nowcoder-destination')) publicViolations.push(`${relativePath}: 公开牛客 URL`);
-  }
-
-  const history = JSON.parse(await readFile(join(ROOT, '.codex', 'interview-source-history.json'), 'utf8'));
-  const historyErrors = await validateInterviewSourceHistory(ROOT, history);
-  const publishedRecords = Object.values(history.records).filter(record => record.status === 'published');
-  const publishedArticleKeys = publishedRecords.map(record => record.articleKey);
-  for (const record of publishedRecords) {
-    const url = new URL(record.url);
-    if (
-      url.protocol !== 'https:'
-      || url.hostname !== 'www.nowcoder.com'
-      || url.search !== ''
-      || url.hash !== ''
-      || !['A', 'B'].includes(record.evidenceGrade)
-      || typeof record.clusterId !== 'string'
-      || record.clusterId.length === 0
-      || typeof record.articleKey !== 'string'
-      || record.articleKey.length === 0
-      || !Array.isArray(record.knowledgeKeys)
-    ) {
-      historyErrors.push(`发布面经的私有来源记录不完整：${record.articleKey ?? '(missing articleKey)'}`);
+test('keeps original interview URLs out of public articles', async () => {
+  const violations = [];
+  for (const file of await markdownFiles(join(ROOT, 'interview'))) {
+    for (const disclosure of publicInterviewDisclosures(await readFile(file, 'utf8'))) {
+      violations.push(`${file.slice(ROOT.length + 1)}: ${disclosure}`);
     }
   }
-  if (new Set(publishedArticleKeys).size !== publishedArticleKeys.length) {
-    historyErrors.push('发布面经的 articleKey 不唯一');
-  }
-
-  assert.deepEqual({ publicViolations, historyErrors }, { publicViolations: [], historyErrors: [] });
+  assert.deepEqual(violations, []);
+  // All-source coverage belongs to validate:release with an explicit private ledger.
 });
 
 test('validates published files and limits one public article per cluster', async () => {

@@ -1,11 +1,14 @@
 // 按知识库一级分类生成会员资料 PDF，以私有 ACL 上传 OSS + 写 manifest。
 // 内容源：knowledge/_tree.json（一级分类=顶层节点）；叶子文件 knowledge/<filePath>/<key>.md。
-// 图片：markdown 内已是公网 OSS 绝对地址，puppeteer 直接联网加载，无需重写。
-// 运行：node scripts/build-materials.mjs   （CI 里带 OSS_* 环境变量即上传；无则只产出本地 dist）
-// 注：OSS secrets 配好后手动重跑一次，把二级 PDF 首次私有上传 OSS。
+// 图片：拦截既有 OSS 图片地址，仅从同一已审提交读取本地图片，禁止外部可变内容。
+// 运行：node scripts/build-materials.mjs；须有最终提交审查和同 SHA 同步成功证据。
 import { readFileSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
-import { join, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { join, dirname, resolve } from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { spawnSync } from 'node:child_process';
+import { isDirectExecution, leafPath, readBounded, safeRelativePath } from './resource-paths.mjs';
+import { requireReviewedRelease } from './validate-release.mjs';
+import { publicInventory, sha256 } from './content-review.mjs';
 import MarkdownIt from 'markdown-it';
 import puppeteer from 'puppeteer';
 import OSS from 'ali-oss';
@@ -13,10 +16,9 @@ import OSS from 'ali-oss';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const KNOWLEDGE = join(ROOT, 'knowledge');
 const DIST = join(ROOT, 'dist', 'materials');
-mkdirSync(DIST, { recursive: true });
 
 const OSS_PREFIX = 'materials/knowledge/';
-const tree = JSON.parse(readFileSync(join(KNOWLEDGE, '_tree.json'), 'utf8'));
+let approvedFiles;
 
 const md = new MarkdownIt({ html: true, linkify: true, breaks: false });
 
@@ -30,8 +32,9 @@ function collectLeaves(node, trail, out) {
 }
 
 function readLeafMd(leaf) {
-  const p = join(KNOWLEDGE, leaf.filePath || '', `${leaf.key}.md`);
-  return existsSync(p) ? readFileSync(p, 'utf8') : '';
+  const path = leafPath('knowledge',leaf), bytes = readFileSync(join(ROOT,path));
+  if (sha256(bytes)!==approvedFiles.get(path)) throw new Error('PDF 正文与已审版本不一致');
+  return bytes.toString();
 }
 
 function esc(s) {
@@ -62,7 +65,7 @@ const CSS = `
 `;
 
 /** 为某个二级分类节点构建整册 HTML（封面=二级分类名，章节=更深层目录） */
-function buildHtml(sub, parentLabel) {
+export function buildHtml(sub, parentLabel, readArticle=readLeafMd) {
   const out = [];
   collectLeaves(sub, [], out);
   if (!out.length) return null;
@@ -77,19 +80,36 @@ function buildHtml(sub, parentLabel) {
       body += `<h2 class="section">${esc(section)}</h2>`;
       lastSection = section;
     }
-    const mdText = readLeafMd(leaf);
+    const mdText = readArticle(leaf);
     body += `<article><h3>${esc(leaf.label)}</h3>${md.render(mdText)}</article>`;
   }
   const html = `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><style>${CSS}</style></head><body>${body}</body></html>`;
   return { html, count: out.length };
 }
 
+export function localReviewedImagePath(value) {
+  const url = new URL(value);
+  if (url.origin!=='https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com'
+      || !url.pathname.startsWith('/images/') || url.search || url.hash) return null;
+  return safeRelativePath(decodeURIComponent(url.pathname.slice(1)));
+}
+
 async function main() {
+  const head = spawnSync('git',['rev-parse','HEAD'],{cwd:ROOT,encoding:'utf8'}).stdout.trim();
+  const before = process.env.RELEASE_BEFORE_SHA || spawnSync('git',['rev-parse','HEAD^1'],{cwd:ROOT,encoding:'utf8'}).stdout.trim();
+  const approval = await requireReviewedRelease(ROOT,before,process.env.RELEASE_AFTER_SHA || head,{requireSync:true});
+  const snapshot = await publicInventory(ROOT);
+  if (snapshot.digest!==approval.publicationDigest) throw new Error('PDF 输入在最终审核后改变');
+  approvedFiles = new Map(snapshot.files.map(x=>[x.path,x.sha256]));
+  const treeBytes = await readBounded(ROOT,'knowledge/_tree.json','knowledge');
+  if (sha256(treeBytes)!==approvedFiles.get('knowledge/_tree.json')) throw new Error('PDF 目录与已审版本不一致');
+  const tree = JSON.parse(treeBytes);
+  mkdirSync(DIST,{recursive:true});
   const browser = await puppeteer.launch({
     headless: 'new',
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
   });
-
+  try {
   let client = null;
   const { OSS_ACCESS_KEY_ID, OSS_ACCESS_KEY_SECRET } = process.env;
   if (OSS_ACCESS_KEY_ID && OSS_ACCESS_KEY_SECRET) {
@@ -106,6 +126,7 @@ async function main() {
   const now = new Date().toISOString();
   const groups = [];
   let total = 0;
+  const uploads = [];
 
   // 按「一级分类 → 二级分类」拆分：每个二级分类一册 PDF（控制单册体积）
   for (const cat of tree) {
@@ -119,7 +140,20 @@ async function main() {
         continue;
       }
       const page = await browser.newPage();
+      await page.setJavaScriptEnabled(false);
+      await page.setRequestInterception(true);
+      page.on('request',async request=>{
+        try {
+          const path = localReviewedImagePath(request.url());
+          if (!path || request.resourceType()!=='image') { await request.abort(); return; }
+          const bytes = await readBounded(ROOT,path,'images');
+          if (sha256(bytes)!==approvedFiles.get(path)) throw new Error('PDF 图片与已审版本不一致');
+          await request.respond({status:200,body:bytes});
+        } catch { await request.abort(); }
+      });
       await page.setContent(built.html, { waitUntil: 'networkidle0', timeout: 120000 });
+      const imagesReady = await page.evaluate(()=>[...document.images].every(image=>image.complete&&image.naturalWidth>0));
+      if (!imagesReady) throw new Error('PDF 必需图片缺失或未通过审核绑定');
       const pdf = await page.pdf({
         format: 'A4',
         printBackground: true,
@@ -130,11 +164,7 @@ async function main() {
       const buf = Buffer.from(pdf);
       writeFileSync(join(DIST, `${sub.key}.pdf`), buf);
 
-      if (client) {
-        await client.put(`${OSS_PREFIX}${sub.key}.pdf`, buf, {
-          headers: { 'Content-Type': 'application/pdf', 'x-oss-object-acl': 'private' },
-        });
-      }
+      uploads.push({key:sub.key,buf});
       items.push({
         key: sub.key,
         label: sub.label,
@@ -154,18 +184,20 @@ async function main() {
   const manifestStr = JSON.stringify(manifest, null, 2);
   writeFileSync(join(DIST, 'manifest.json'), manifestStr);
   if (client) {
+    for (const {key,buf} of uploads) await client.put(`${OSS_PREFIX}${key}.pdf`,buf, {
+      headers:{'Content-Type':'application/pdf','x-oss-object-acl':'private'},
+    });
     await client.put(`${OSS_PREFIX}manifest.json`, Buffer.from(manifestStr), {
       headers: { 'Content-Type': 'application/json; charset=utf-8', 'x-oss-object-acl': 'private' },
     });
   }
 
-  await browser.close();
   console.log(
     `done: ${groups.length} 个一级分类 / ${total} 册二级 PDF${client ? ' 已上传 OSS' : '（本地）'}。`,
   );
+  } finally { await browser.close(); }
 }
 
-main().catch((e) => {
-  console.error(e);
-  process.exit(1);
-});
+if (isDirectExecution(import.meta.url)) {
+  main().catch(() => { console.error('正式 PDF 生成/上传失败；审核、同 SHA 同步及图片条件必须全部满足'); process.exitCode=1; });
+}

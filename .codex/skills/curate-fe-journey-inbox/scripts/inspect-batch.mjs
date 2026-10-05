@@ -2,6 +2,8 @@
 import { readFile, readdir, realpath } from 'node:fs/promises';
 import { basename, dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { createHash } from 'node:crypto';
+import { isDirectExecution } from '../../../../scripts/resource-paths.mjs';
 import { readInterviewSourceHistory } from '../../../../scripts/interview-source-history.mjs';
 
 const BATCH = /^[A-Za-z0-9][A-Za-z0-9._-]{0,199}$/u;
@@ -96,10 +98,10 @@ function privateItem(cluster, eligible, kind) {
   };
 }
 
-export async function inspectBatch(resourceRoot, batch) {
+export async function inspectBatch(resourceRoot, batch, {historyPath}={}) {
   if (!BATCH.test(batch) || batch.includes('..')) throw new Error('batch 标识无效');
   const root = await realpath(resolve(resourceRoot));
-  const history = await readInterviewSourceHistory(root);
+  const history = await readInterviewSourceHistory(root,historyPath);
   const historyRecords = Object.values(history?.records ?? {});
   const malformed = [];
   const inputs = [];
@@ -128,7 +130,7 @@ export async function inspectBatch(resourceRoot, batch) {
     // delivery batch when present, while retaining batchId/sourceBatchId as immutable capture
     // provenance. Legacy single-run entries continue to use batchId.
     if ((meta?.sourceMetadata?.deliveryBatchId ?? meta?.sourceMetadata?.batchId) !== batch) continue;
-    const id = clusterId(meta);
+    let id = clusterId(meta);
     const deliveryProvenance = meta?.sourceMetadata?.planId === 'nowcoder-agent-market'
       || meta?.sourceMetadata?.deliveryKind === 'nowcoder-directed';
     if (meta?.source !== 'nowcoder' || !deliveryProvenance ||
@@ -137,13 +139,21 @@ export async function inspectBatch(resourceRoot, batch) {
       continue;
     }
     const originalPath = join(dirname(metaPath), 'original.md');
+    let original;
     try {
-      await readFile(originalPath, 'utf8');
+      const actual = await realpath(originalPath), location = relative(root,actual);
+      if (location==='..' || location.startsWith(`..${sep}`) || isAbsolute(location)) throw new Error('original.md 越界');
+      original = await readFile(actual,'utf8');
     } catch {
       malformed.push({ path: display, reason: '缺少 original.md' });
       continue;
     }
-    inputs.push({ clusterId: id, source: sourceOf(root, metaPath, meta) });
+    const body = original.replace(/^\uFEFF?---\r?\n[\s\S]*?\r?\n---(?:\r?\n|$)/u,'').normalize('NFKC').replace(/\s/gu,'');
+    if (!body) { malformed.push({path:display,reason:'原始正文为空'}); continue; }
+    const normalizedBodySha256 = createHash('sha256').update(body).digest('hex');
+    // Actual frozen body wins over caller-editable clusterId/contentHash.
+    id = `body-${normalizedBodySha256}`;
+    inputs.push({ clusterId:id, source:{...sourceOf(root,metaPath,meta),normalizedBodySha256} });
   }
 
   const grouped = new Map();
@@ -163,15 +173,18 @@ export async function inspectBatch(resourceRoot, batch) {
   const previouslyProcessed = [];
 
   for (const cluster of clusters) {
+    if (cluster.members.some(member=>historyRecords.some(record=>record.url===member.url && !record.normalizedBodySha256))) {
+      blocked.push({clusterId:cluster.clusterId,reason:'既有来源缺实际原文指纹，须审核回填；不使用可编辑元数据推断未变化',paths:cluster.members.map(item=>item.path)}); continue;
+    }
     const changedExistingSource = cluster.members.some(member => {
       const previous = historyRecords.find(record => record?.url === member.url);
-      return previous && previous.contentHash !== member.contentHash;
+      return previous && previous.normalizedBodySha256 !== member.normalizedBodySha256;
     });
     const unchangedExistingSource = cluster.members.some(member => historyRecords.some(record =>
-      record?.url === member.url && record.contentHash === member.contentHash &&
+      record?.url === member.url && record.normalizedBodySha256 === member.normalizedBodySha256 &&
       record.status !== 'needs_review'));
-    const finalizedCluster = historyRecords.some(record =>
-      record?.clusterId === cluster.clusterId && record.status !== 'needs_review');
+    const finalizedCluster = historyRecords.some(record=>cluster.members.some(member=>
+      record.normalizedBodySha256===member.normalizedBodySha256) && record.status!=='needs_review');
     if (!changedExistingSource && (unchangedExistingSource || finalizedCluster)) {
       previouslyProcessed.push({
         clusterId: cluster.clusterId,
@@ -238,14 +251,15 @@ function parseArgs(argv) {
   const root = args.shift();
   const batchIndex = args.indexOf('--batch');
   const batch = batchIndex >= 0 ? args[batchIndex + 1] : undefined;
-  if (!root || !batch) throw new Error('用法：inspect-batch.mjs <resource-root> --batch <id>');
-  return { root, batch };
+  const historyIndex=args.indexOf('--history'), historyPath=historyIndex>=0?args[historyIndex+1]:undefined;
+  if (!root || !batch || !historyPath) throw new Error('用法：inspect-batch.mjs <resource-root> --batch <id> --history /private/history.json');
+  return { root, batch, historyPath };
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
+if (isDirectExecution(import.meta.url)) {
   try {
-    const { root, batch } = parseArgs(process.argv.slice(2));
-    process.stdout.write(`${JSON.stringify(await inspectBatch(root, batch))}\n`);
+    const { root, batch, historyPath } = parseArgs(process.argv.slice(2));
+    process.stdout.write(`${JSON.stringify(await inspectBatch(root, batch,{historyPath}))}\n`);
   } catch (error) {
     process.stderr.write(`${error instanceof Error ? error.message : error}\n`);
     process.exitCode = 1;

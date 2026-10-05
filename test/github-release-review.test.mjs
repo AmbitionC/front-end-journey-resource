@@ -1,0 +1,84 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import { writeFile, mkdir } from 'node:fs/promises';
+import { join } from 'node:path';
+import { reviewFixture, git } from './release-review-fixture.mjs';
+import { matchingReview, validateGithubRelease, requireSuccessfulSync } from '../scripts/github-release-review.mjs';
+import { requireReviewedRelease } from '../scripts/validate-release.mjs';
+
+const repo='AmbitionC/front-end-journey-resource',head='a'.repeat(40),digest='b'.repeat(64);
+const pr={number:12,user:{login:'author'},head:{sha:head,repo:{full_name:repo}},base:{ref:'master',repo:{full_name:repo}}};
+const approved=()=>({id:1,user:{login:'reviewer'},author_association:'COLLABORATOR',state:'APPROVED',commit_id:head,submitted_at:'2026-10-05T01:00:00Z',body:`content-release:v1 head=${head} digest=${digest}`});
+
+test('GitHub approval must be trusted, independent, current head and exact digest',()=>{
+  assert.equal(matchingReview(pr,[approved()],digest).id,1);
+  for(const patch of [{author_association:'CONTRIBUTOR'},{commit_id:'c'.repeat(40)},{state:'COMMENTED'},{state:'DISMISSED'},{user:{login:'author'}},{body:`content-release:v1 head=${head} digest=${'d'.repeat(64)}`}]) {
+    assert.equal(matchingReview(pr,[{...approved(),...patch}],digest),undefined);
+  }
+  const dismissed={...approved(),id:2,submitted_at:'2026-10-05T02:00:00Z',state:'DISMISSED'};
+  assert.equal(matchingReview(pr,[approved(),dismissed],digest),undefined);
+  const changes={...approved(),user:{login:'other-reviewer'},state:'CHANGES_REQUESTED'};
+  assert.equal(matchingReview(pr,[approved(),changes],digest),null);
+});
+
+test('sole owner comment is an explicit publication attestation of private independent review',()=>{
+  const owner={...approved(),user:{login:'author'},author_association:'OWNER',state:'COMMENTED'};
+  assert.equal(matchingReview(pr,[owner],digest),undefined);
+  owner.body+='\nprivate-independent-review:verified';
+  assert.equal(matchingReview(pr,[owner],digest).id,1);
+  assert.equal(matchingReview(pr,[{...owner,author_association:'COLLABORATOR'}],digest),undefined);
+});
+
+async function githubFixture(f) {
+  git(f.root,'add','.');git(f.root,'commit','-qm','reviewed content');
+  const reviewedHead=git(f.root,'rev-parse','HEAD');
+  git(f.root,'commit','--allow-empty','-qm','merged publication');
+  const after=git(f.root,'rev-parse','HEAD');
+  const finalPr={...structuredClone(pr),merged:true,merge_commit_sha:after,head:{sha:reviewedHead,repo:{full_name:repo}}};
+  const review={...approved(),commit_id:reviewedHead,body:`content-release:v1 head=${reviewedHead} digest=${f.review.publicationDigest}`};
+  const read=async path=>{
+    if(path.startsWith(`commits/${after}/pulls?`)) return [{number:12}];
+    if(path==='pulls/12') return finalPr;
+    if(path.startsWith('pulls/12/reviews?')) return [review];
+    throw new Error('unexpected fixture API path');
+  };
+  return {after,finalPr,review,read};
+}
+
+test('release proof uses actual committed inventory and actual merged PR, not a caller approval JSON',()=>reviewFixture(async f=>{
+  const g=await githubFixture(f);
+  const proof=await validateGithubRelease(f.root,f.baseCommit,g.after,{read:g.read});
+  assert.equal(proof.afterSha,g.after);assert.equal(proof.prNumber,12);
+  g.finalPr.merged=false;
+  await assert.rejects(validateGithubRelease(f.root,f.baseCommit,g.after,{read:g.read}),/可信 GitHub/u);
+  g.finalPr.merged=true;g.finalPr.head.repo.full_name='someone/fork';
+  await assert.rejects(validateGithubRelease(f.root,f.baseCommit,g.after,{read:g.read}),/可信 GitHub/u);
+  g.finalPr.head.repo.full_name=repo;
+  await writeFile(join(f.root,'images/image.png'),'uncommitted image replacement');
+  await assert.rejects(validateGithubRelease(f.root,f.baseCommit,g.after,{read:g.read}),/最终提交不一致/u);
+}));
+
+test('formal entry rejects legacy public private ledger and cross-SHA Action replay',()=>reviewFixture(async f=>{
+  const g=await githubFixture(f);
+  assert.equal((await requireReviewedRelease(f.root,f.baseCommit,g.after,{read:g.read})).afterSha,g.after);
+  await mkdir(join(f.root,'.codex'));await writeFile(join(f.root,'.codex/interview-source-history.json'),'private legacy ledger');
+  await assert.rejects(requireReviewedRelease(f.root,f.baseCommit,g.after,{read:g.read}),/旧私有采集账本/u);
+  const oldActions=process.env.GITHUB_ACTIONS,oldSha=process.env.GITHUB_SHA;
+  try {
+    process.env.GITHUB_ACTIONS='true';process.env.GITHUB_SHA='e'.repeat(40);
+    await assert.rejects(requireReviewedRelease(f.root,f.baseCommit,g.after,{read:g.read}),/跨提交重放/u);
+  } finally {
+    if(oldActions===undefined)delete process.env.GITHUB_ACTIONS;else process.env.GITHUB_ACTIONS=oldActions;
+    if(oldSha===undefined)delete process.env.GITHUB_SHA;else process.env.GITHUB_SHA=oldSha;
+  }
+}));
+
+const syncRun=()=>({id:8,head_sha:head,head_branch:'master',path:'.github/workflows/sync.yml',head_repository:{full_name:repo},event:'push',status:'completed',conclusion:'success'});
+test('PDF requires latest successful same-SHA sync; unrelated or failed runs cannot substitute',async()=>{
+  const read=runs=>async()=>({workflow_runs:runs});
+  assert.equal((await requireSuccessfulSync(head,{read:read([syncRun()])})).syncRunId,8);
+  for(const patch of [{conclusion:'failure'},{conclusion:'cancelled'},{status:'in_progress'},{head_sha:'f'.repeat(40)},{event:'pull_request'},{path:'.github/workflows/other.yml'},{head_repository:{full_name:'someone/fork'}}]) {
+    await assert.rejects(requireSuccessfulSync(head,{read:read([{...syncRun(),...patch}])}),/同步未成功/u);
+  }
+  await assert.rejects(requireSuccessfulSync(head,{read:read([syncRun(),{...syncRun(),id:9,status:'queued',conclusion:null}])}),/同步未成功/u);
+});

@@ -20,7 +20,7 @@ test('adds one heat per new source cluster and stays idempotent', async () => {
         { label: '记忆', key: 'agent-memory', isLeaf: true, filePath: 'llm', heat: 6, currRank: 4 },
       ],
     }]));
-    await writeFile(join(root, '.codex', 'interview-source-history.json'), JSON.stringify({
+    await writeFile(`${root}.private-history.json`, JSON.stringify({
       schemaVersion: 1,
       updatedAt: '2026-08-23',
       records: {
@@ -37,10 +37,10 @@ test('adds one heat per new source cluster and stays idempotent', async () => {
     }]));
     await writeFile(join(root, 'knowledge', 'llm', 'agent-memory.md'), '# 记忆\n\n## 参考资料\n');
 
-    assert.deepEqual(await syncInterviewTopicWeights(root), {
+    assert.deepEqual(await syncInterviewTopicWeights(root,{historyPath:`${root}.private-history.json`}), {
       updatedTopics: 1, addedClusters: 2, removedClusters: 0, updatedArticles: 1,
     });
-    assert.deepEqual(await syncInterviewTopicWeights(root), {
+    assert.deepEqual(await syncInterviewTopicWeights(root,{historyPath:`${root}.private-history.json`}), {
       updatedTopics: 0, addedClusters: 0, removedClusters: 0, updatedArticles: 0,
     });
 
@@ -54,11 +54,11 @@ test('adds one heat per new source cluster and stays idempotent', async () => {
     assert.match(article, /面经 A.*cluster-a/u);
     assert.match(article, /面经 B.*cluster-b/u);
 
-    const historyPath = join(root, '.codex', 'interview-source-history.json');
+    const historyPath = `${root}.private-history.json`;
     const history = JSON.parse(await readFile(historyPath, 'utf8'));
     history.records.cccccccccccc.status = 'skipped';
     await writeFile(historyPath, JSON.stringify(history));
-    assert.deepEqual(await syncInterviewTopicWeights(root), {
+    assert.deepEqual(await syncInterviewTopicWeights(root,{historyPath:`${root}.private-history.json`}), {
       updatedTopics: 1, addedClusters: 0, removedClusters: 1, updatedArticles: 1,
     });
     tree = JSON.parse(await readFile(join(root, 'knowledge', '_tree.json'), 'utf8'));
@@ -68,5 +68,6 @@ test('adds one heat per new source cluster and stays idempotent', async () => {
     assert.doesNotMatch(article, /cluster-b/u);
   } finally {
     await rm(root, { recursive: true, force: true });
+    await rm(`${root}.private-history.json`,{force:true});
   }
 });

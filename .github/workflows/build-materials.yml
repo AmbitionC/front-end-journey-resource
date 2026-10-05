@@ -7,7 +7,17 @@ on:
     branches: [master, main]
     paths:
       - 'knowledge/**'
+      - 'images/**'
       - 'scripts/build-materials.mjs'
+      - 'scripts/*release*.mjs'
+      - 'scripts/content-review.mjs'
+      - 'scripts/resource-paths.mjs'
+      - 'scripts/public-interview-contract.mjs'
+      - 'scripts/validate-tree.mjs'
+      - 'scripts/interview-source-history.mjs'
+      - 'scripts/validate-private-interview-history.mjs'
+      - 'package.json'
+      - 'package-lock.json'
       - '.github/workflows/build-materials.yml'
   workflow_dispatch: {}
 
@@ -20,6 +30,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -33,7 +45,15 @@ jobs:
           sudo fc-cache -f
 
       - name: Install deps
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
+
+      - name: Require final review and successful sync of same commit
+        env:
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+        run: |
+          if [ -z "$BEFORE" ]; then BEFORE=$(git rev-parse HEAD^1); fi
+          node scripts/validate-release.mjs --ci "$BEFORE" "$AFTER" --wait-sync
 
       # puppeteer v24 自带 Chromium 下载；确保可用
       - name: Ensure Chromium
@@ -45,6 +65,8 @@ jobs:
           OSS_REGION: ${{ secrets.OSS_REGION }}
           OSS_ACCESS_KEY_ID: ${{ secrets.OSS_ACCESS_KEY_ID }}
           OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
+          RELEASE_BEFORE_SHA: ${{ github.event.before }}
+          RELEASE_AFTER_SHA: ${{ github.sha }}
         run: npm run build:materials
 
       - name: Upload artifacts (调试留档)

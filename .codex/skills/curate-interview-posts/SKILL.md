@@ -22,7 +22,7 @@ description: Turn raw collected interview experiences (牛客/nowcoder 面经) f
 ## 每条的处理流程
 
 1. **读原文**：读 `original.md` + `meta.json`，理解这是哪家公司、什么岗位/轮次、考了哪些题。
-2. **原文去重**：先按 [references/dedup-and-heat.md](references/dedup-and-heat.md) §一 判断这条是否已入库，并先查已提交的 `.codex/interview-source-history.json`（同 URL 幂等；跨 URL 转载按 `clusterId` / `meta.json.contentHash` 聚合）。已存在则并入来源、不重复建贴，也不重复增加知识热度。
+2. **原文去重**：先按 [references/dedup-and-heat.md](references/dedup-and-heat.md) §一 判断这条是否已入库，并先查仓库外的私有来源历史（读取真实正文，以 NFKC 去空白的完整 SHA-256 聚合；同 URL 幂等，跨 URL 同正文复用已有 key，不信任可编辑的 `clusterId` / `contentHash`）。既有已提交历史仅用于迁移核对，不把新原帖 URL、内容指纹或评级提交到公开仓库。已存在则并入来源、不重复建贴，也不重复增加知识热度。
 3. **脱敏（强制）**：面经属于公开发布内容，务必去除个人隐私 —— 真实姓名、手机号/微信/邮箱、身份证、具体薪资数字、可定位到个人的细节。保留公司、岗位、轮次、题目与答题思路。
 4. **写面经贴** → `interview/<目录>/<key>.md`：
    - **判断归属**：
@@ -37,13 +37,13 @@ description: Turn raw collected interview experiences (牛客/nowcoder 面经) f
    - **全新** → 调 [`generate-knowledge-docs`](../generate-knowledge-docs/SKILL.md) 生成，`heat: 1`，来源=该面经。
    - 每次改动后把受影响父节点下 `knowledge/_tree.json` 兄弟叶子**按 `heat` 降序稳定重排**，使目录树热点→冷门（网站索引默认已按热度排序、无需改前端）。
    - 面经贴↔知识点互链。
-6. **记录与出队**：来源只保存在私有 `.codex/interview-source-history.json` 和审核证据中，不写入公开面经。提交前将每条来源的规范 URL、A/B 证据等级、`clusterId`、`articleKey`、`knowledgeKeys` 和处置结果 upsert 到私有历史；`interview/_tree.json` 中每个公开叶子必须恰好对应一条完整的 `published` 记录，`heat` 按其中的唯一 cluster 来源累计。普通人工流程按用户确认清理；自动 `publish` 模式在提交前不删除，只有 `master` 推送且该 SHA 的 `sync-content` Action 成功后，才删除本批已成功消费的本地条目（含 `assets/`）。失败、阻塞和待确认项保留。
+6. **记录与出队**：来源、原文和逐题映射只保存在仓库外的私有历史与审核证据中；规范 URL、A/B 证据、实际正文 `normalizedBodySha256`、独立过程 `processUnitId`、公开 key 和知识 key 均需与冻结原文对应。独立审核冻结所有公开正文、目录、速读、图片及图片补同步清单，审核回执的 SHA-256 由审核方在私账外交付。执行 `npm run validate:release -- /absolute/private/history.json /absolute/private/review.json <review-sha256>`，不得从账本中的 approved 字段推断通过。详情见 [最终版本发布审核](references/release-review.md)。变更任何冻结输入都须重新审核；热度草稿写入后也必须重新冻结。未证实关键词的原题组保持明确待补，不猜题、不计热度。同过程不同轮次的独立页面例外须有已审证据；补充既有流程优先复用稳定 key。只有 PR 合并、该最终 SHA 同步与发布端核验成功后才把私有状态记为 `published` 并清理本批成功消费的本地候选，失败与待补项保留。
 7. **图片**：面经贴/知识点若要用采集到的图，按 [references/fe-journey-integration.md](references/fe-journey-integration.md) 放到 `images/` 由同步流程发布；不要外链 `_inbox/assets`。
 
 ## 发布
 
-在仓库默认分支（`master`）提交整理产出（`interview/`、`knowledge/`、对应 `_tree.json`，以及被删除的 `_inbox` 条目）。合入 `master` 后由仓库的 `sync.yml` Action 自动同步到 OSS/DB/网站/检索 —— 无需手动调用 faas。提交前请复核 diff（尤其脱敏），把关面经质量与隐私。
+按用户授权的 PR 流程提交公开内容，复核隐私和 diff，运行 `npm run validate:tree` 与上述冻结私有审核。正式同步和直接 PDF 入口都要求 GitHub 真实审查绑定已审 PR head 与公开资源快照，并核对合并 SHA；具体信任边界及操作见 [最终版本发布审核](references/release-review.md)。公开目录检查、本地冻结绑定、可信发布审查、同步结果和网站可见行为各自记录，前一项通过不代表后一项完成。
 
-Data Collector 自动 `publish` 模式由总控 Skill 明确授权：校验通过后直接提交并推送 `master`，等待当前 commit 的 `sync-content` Action 成功才算上线；Action 失败时不得声称发布完成，也不得清理原始候选。`_inbox` 默认被 Git 忽略，因此成功后的本地清理不应伪装成发布提交。发布前还要运行公开/私有边界校验：公开面经无来源模块和牛客 URL，私有历史覆盖全部已发布面经并通过校验。
+原先自动 publish 直接推送 master 的方式不能满足新审查门槛；仅推送后校验也不能补上缺失的 PR 回执。未知来源、八篇既有流程补充的最新线上 key 未核对、FaaS 未按 afterSha 固定读取，或生产阅读端未证实消费知识关联时应报告阻断，不记上线成功。无需改权限、增加凭据或外部服务。
 
-`_tree.json` 校验：改完跑 `npm run validate:tree` 确认叶子与文件一致、key 唯一。
+旧公开来源账本移到仓外后，从当前公开树删除；这不擦除过去 Git 提交，不得声称历史原帖链接已全部撤回。

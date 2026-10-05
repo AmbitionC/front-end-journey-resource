@@ -8,6 +8,7 @@
     "test": "node --test test/*.test.mjs .codex/skills/curate-fe-journey-inbox/scripts/*.test.mjs",
     "migrate:tree": "node scripts/migrate-tree.mjs",
     "validate:tree": "node scripts/validate-tree.mjs",
+    "validate:release": "node scripts/validate-release.mjs",
     "build:materials": "node scripts/build-materials.mjs"
   },
   "devDependencies": {
@@ -16,6 +17,7 @@
   "dependencies": {
     "ali-oss": "^6.23.0",
     "markdown-it": "^14.1.0",
-    "puppeteer": "^24.10.0"
+    "puppeteer": "^24.10.0",
+    "parse5": "6.0.1"
   }
 }
