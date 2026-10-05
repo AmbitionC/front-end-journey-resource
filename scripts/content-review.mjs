@@ -2,7 +2,7 @@ import { readFile, realpath, lstat } from 'node:fs/promises';
 import { resolve, relative, isAbsolute, sep } from 'node:path';
 import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
-import { boundedFiles, readBounded, safeRelativePath } from './resource-paths.mjs';
+import { boundedFiles, readBounded, safeRelativePath, leafPath } from './resource-paths.mjs';
 import { validateTree, leaves } from './validate-tree.mjs';
 import { isCanonicalNowcoderUrl, verifiedHistoricalFingerprint, normalizedSourceBody } from './interview-source-history.mjs';
 
@@ -92,13 +92,17 @@ export async function validateContentReview(root, historyPath, reviewPath, revie
     // A removed historical record cannot make a known public page disappear
     // from duplicate checks. This inspects provenance, not article rewriting.
     for (const key of previousLeaves.keys()) {
-      if (!byKey.has(key) || review.articleKeys.includes(key)) continue;
+      if (review.articleKeys.includes(key)) continue;
+      if (!byKey.has(key)) {
+        const path=leafPath('interview',previousLeaves.get(key));
+        if(snapshot.files.some(file=>file.path===path) || !review.deletedPublicPaths?.includes(path)) throw new Error('既有面经目录删除缺正文删除及明确独立审核；不能留下孤儿绕过去重');
+      }
       if (!Object.values(history.records ?? {}).some(record => record.articleKey===key
           && ['prepared','published','merged'].includes(record.status))) throw new Error('既有公开面经缺历史来源覆盖，不能证明去重完整');
     }
     const historical=[];
     for(const record of Object.values(history.records??{})) {
-      if(!review.articleKeys.includes(record.articleKey) && byKey.has(record.articleKey)
+      if(!review.articleKeys.includes(record.articleKey) && (byKey.has(record.articleKey) || previousLeaves.has(record.articleKey))
           && ['prepared','published','merged'].includes(record.status)) {
         historical.push({record,fingerprint:await verifiedHistoricalFingerprint(root,record)});
       }
@@ -120,7 +124,7 @@ export async function validateContentReview(root, historyPath, reviewPath, revie
       if (!source.sourceId || evidenceBySource.has(source.sourceId)) throw new Error('来源证据重复或缺失');
       seenOriginals.set(fingerprint, source); evidenceBySource.set(source.sourceId, { ...source, document, fingerprint });
       const previousPage = Object.values(history.records ?? {}).find(r=>r.processUnitId===source.processUnitId
-        && byKey.has(r.articleKey) && r.articleKey!==source.articleKey && ['prepared','published','merged'].includes(r.status));
+        && (byKey.has(r.articleKey) || previousLeaves.has(r.articleKey)) && r.articleKey!==source.articleKey && ['prepared','published','merged'].includes(r.status));
       if (previousPage && !review.distinctRoundPairs?.some(pair=>pair.includes(previousPage.articleKey)&&pair.includes(source.articleKey))) throw new Error('既有流程必须复用已有 key；独立轮次例外须有已审证据');
     }
     for (const key of review.articleKeys) {

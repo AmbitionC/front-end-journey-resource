@@ -156,3 +156,12 @@ test('removing a known public-page history record cannot conceal historical dedu
   await writeFile(f.historyPath,JSON.stringify(f.history));await freezeFixtureReview(f);
   assert.match((await check(f)).join(),/历史来源覆盖/u);
 }));
+
+
+for(const removeRecord of [false,true]) test(`removing a baseline directory leaf with unchanged old body cannot conceal duplicate originals (${removeRecord})`,()=>reviewFixture(async f=>{
+  await historicalBaseline(f,'问题😀','forged-older-process');
+  await writeFile(join(f.root,'interview/_tree.json'),JSON.stringify([f.interview]));
+  if(removeRecord) delete f.history.records.bbbbbbbbbbbb;
+  await writeFile(f.historyPath,JSON.stringify(f.history));await freezeFixtureReview(f);
+  assert.match((await check(f)).join(),/留下孤儿绕过去重/u);
+}));

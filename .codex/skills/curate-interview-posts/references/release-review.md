@@ -26,7 +26,7 @@ npm run validate:release -- /absolute/private/history.json /absolute/private/rev
 - `questionLedger`：每页逐题 `sourceId/sourceSpan/sourceLiteral/publicQuestion/knowledgeKey/teachingAnswer/bindingStatus`。原文坐标是 Unicode codepoint 的半开区间；公开题、短答和绑定与实际可见结构逐项比对。原帖缺关键词时只能明确标记 `pending_missing_keyword`，保留未绑定问题，不猜题、不增加热度。私账 knowledgeKeys 必须逐来源等于本批逐题映射中 bindingStatus=bound 的知识 key 集合，不能用旧字段让 pending 组计热。
 - `distinctRoundPairs`：仅用于已经独立审核确认的同流程不同轮次；不能用它为补充材料重复建页。
 
-实际原文先去掉采集器 frontmatter，再以 NFKC 去空白后计算完整 SHA-256；私账的 `normalizedBodySha256` 必须与它一致。跨 URL 同正文不得重复公开建页或增加独立过程频次。历史已存的完整正文指纹必须由仓外冻结 `originalBodyEvidenceFile/originalBodySha256` 重新读取核对（采集 JSON 标 `originalBodyDocumentJson: true`）；缺证据时不得将该指纹用于去重。缺 normalizedBodySha256 时仍从冻结原文复算，不跳过历史记录；既有公开叶子删除整条历史记录也会阻断。旧未回填来源不能当作完整历史覆盖证明，自动去重所涉及的既有公开来源须先补充原文证据。这是来源校验，不能借此重写全库文章。对照最新已发布目录与私账复用稳定 key，不能仅凭本地旧分支证明线上不存在重复页。
+实际原文先去掉采集器 frontmatter，再以 NFKC 去空白后计算完整 SHA-256；私账的 `normalizedBodySha256` 必须与它一致。跨 URL 同正文不得重复公开建页或增加独立过程频次。历史已存的完整正文指纹必须由仓外冻结 `originalBodyEvidenceFile/originalBodySha256` 重新读取核对（采集 JSON 标 `originalBodyDocumentJson: true`）；缺证据时不得将该指纹用于去重。缺 normalizedBodySha256 时仍从冻结原文复算，不跳过历史记录；既有公开叶子删除整条历史记录也会阻断。基线目录移除旧叶子不能使未变的旧正文退出历史去重；目录/正文删除须在独立审核中明确，去重仍读取已知基线来源证据。旧未回填来源不能当作完整历史覆盖证明，自动去重所涉及的既有公开来源须先补充原文证据。这是来源校验，不能借此重写全库文章。对照最新已发布目录与私账复用稳定 key，不能仅凭本地旧分支证明线上不存在重复页。
 
 任一正文、知识文章、quickRead、目录、图片或原文证据改变，旧回执失效。`sync-interview-topic-weights` 的写入是草稿更新，必须重新冻结并审核再发布。保留正确既有内容，限定本批 keys。
 
@@ -56,7 +56,7 @@ OWNER/作者的 COMMENTED review 与“已核验私有独立审核”的自述�
 
 同步先检查真实终态 `success === true`、`data.errors` 为空及计数字段合法；这仍不证明 FaaS 固定读取 afterSha。资源、FaaS 和线上阅读端都完成对应版本核验后才能记为发布成功。
 
-PDF Action 与直接 `build-materials.mjs` 入口都要求最终 commit 的可信审查，且同一 SHA 的最新 sync.yml run 已完成并成功。构建仅使用冻结知识正文和本地已审图片；浏览器脚本禁用，外部可变请求不参与正式 PDF。所有分组与叶子 key 都必须是安全单个组件。iframe、未建立完整加载验证的内联 SVG、picture/srcset、作者 CSS 与其他未支持媒体会阻断 PDF，不能依同名图片猜测等价或静默移除图解。保留既有 PDF keys、manifest version 2、私有 ACL 与下载协议。
+PDF Action 与直接 `build-materials.mjs` 入口都要求最终 commit 的可信审查，且同一 SHA 的最新 sync.yml run 已完成并成功。构建仅使用冻结知识正文和本地已审图片；浏览器脚本禁用，外部可变请求不参与正式 PDF。所有分组与叶子 key 都必须是安全单个组件。PDF 只支持明确列出的静态 HTML 元素、构建器自有 CSS 及经过字节绑定和加载核验的 img。iframe、内联 SVG/MathML、picture/srcset、作者 CSS、非 img 图片入口和导航元数据会阻断。阅读端会将 Mermaid fence 转图，当前 PDF 没有经审核的转换机制，所以该输入也阻断，不把图解静默降成代码。上述未支持输入会阻断 PDF，不能依同名图片猜测等价或静默移除图解。保留既有 PDF keys、manifest version 2、私有 ACL 与下载协议。
 
 ## 当前基础设施边界
 

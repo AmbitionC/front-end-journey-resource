@@ -89,10 +89,15 @@ export function buildHtml(sub, parentLabel, readArticle=readLeafMd) {
   return { html, count: out.length };
 }
 
+const PDF_HTML_TAGS = new Set('html head meta style body article h1 h2 h3 h4 h5 h6 p div span section header footer main aside nav address blockquote pre code kbd samp var strong em b i u s del ins small sub sup mark br hr wbr a img ul ol li dl dt dd table caption colgroup col thead tbody tfoot tr th td details summary figure figcaption'.split(' '));
+
 export function validatePdfHtml(html) {
   function visit(node) {
-    if(['iframe','object','embed','video','audio','canvas','picture','source','svg','image','use','foreignObject','script'].includes(node.tagName)) throw new Error('PDF 含无已核验静态回退的媒体；禁止静默丢失图解');
+    if(node.tagName && !PDF_HTML_TAGS.has(node.tagName)) throw new Error('PDF 含无已核验静态回退的媒体；禁止静默丢失图解');
     const attrs=Object.fromEntries((node.attrs??[]).map(a=>[a.name,a.value]));
+    if(node.tagName==='meta' && (node.parentNode?.tagName!=='head' || (node.attrs??[]).length!==1
+        || attrs.charset?.toLowerCase()!=='utf-8') || 'background' in attrs) throw new Error('PDF 含未支持的资源或导航入口；禁止静默丢失图解');
+    if(node.tagName==='code' && attrs.class?.split(/\s+/u).includes('language-mermaid')) throw new Error('PDF 不具备已核验 Mermaid 静态图解；禁止将阅读端图解静默降为代码');
     // The builder owns its only stylesheet. Author CSS/SVG resource loading
     // is not covered by document.images readiness and must fail closed.
     if (node.tagName==='style' && ((node.childNodes??[]).map(n=>n.value??'').join('')!==CSS || node.parentNode?.tagName!=='head')

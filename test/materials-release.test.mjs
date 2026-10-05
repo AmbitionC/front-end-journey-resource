@@ -49,3 +49,20 @@ test('SVG resources and CSS images cannot bypass required PDF media readiness',(
   ]) assert.throws(()=>buildHtml({label:'图解',isLeaf:true},'类别',()=>body),/静默丢失图解/u);
   assert.throws(()=>buildHtml({label:'待核验静态矢量',isLeaf:true},'类别',()=>'<svg viewBox="0 0 10 10"><path d="M0 0L10 10"></path></svg>'),/静态回退/u);
 });
+
+
+test('PDF rejects every unsupported non-img resource and navigation entry before rendering',()=>{
+  for(const body of [
+    '<input type="image" src="https://example.invalid/diagram.png">',
+    '<body background="https://example.invalid/diagram.png"><p>正文</p></body>',
+    '<math><mglyph src="https://example.invalid/diagram.png"></mglyph></math>',
+    '<meta http-equiv="refresh" content="0;url=https://example.invalid/other">',
+  ]) assert.throws(()=>buildHtml({label:'不支持入口',isLeaf:true},'类别',()=>body),/静默丢失图解/u);
+  assert.doesNotThrow(()=>buildHtml({label:'受支持正文',isLeaf:true},'类别',()=>'<details><summary>原理</summary><p>静态正文。</p></details>'));
+});
+
+test('reader Mermaid diagrams require reviewed static PDF conversion instead of becoming code',()=>{
+  const diagram='```mermaid\ngraph LR\n A --> B\n```';
+  assert.throws(()=>buildHtml({label:'流程',isLeaf:true},'类别',()=>diagram),/Mermaid 静态图解/u);
+  assert.doesNotThrow(()=>buildHtml({label:'代码示例',isLeaf:true},'类别',()=> '````markdown\n'+diagram+'\n````'));
+});

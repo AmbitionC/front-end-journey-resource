@@ -141,6 +141,7 @@ test('styles in hidden containers or SVG still invalidate visible questions and 
     '<div hidden><style>details,p {display:none}</style></div>',
     '<svg><style>a {opacity:0}</style></svg>',
     '<div hidden><link rel="stylesheet" href="https://example.invalid/hide.css"></div>',
+    '<div hidden><link rel="StyleSheet" href="https://example.invalid/hide.css"></div>',
   ]) {
     await writeFile(join(root,'interview/company/article.md'),style+'\n'+original);
     assert.match((await validateTree(root)).errors.join(),/注入改变可见结构的样式/u);

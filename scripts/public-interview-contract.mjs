@@ -18,7 +18,7 @@ function renderedDocument(contents) {
   // Inspect the complete parsed tree before pruning invisible text nodes.
   function collectStyles(node) {
     const attrs = Object.fromEntries((node.attrs ?? []).map(a => [a.name, a.value]));
-    if (node.tagName==='style' || node.tagName==='link' && attrs.rel?.split(/\s/u).includes('stylesheet')) activeStyleNodes.push(node);
+    if (node.tagName==='style' || node.tagName==='link' && attrs.rel?.toLowerCase().split(/\s+/u).includes('stylesheet')) activeStyleNodes.push(node);
     for (const child of node.childNodes ?? []) collectStyles(child);
     if (node.content) collectStyles(node.content);
   }
