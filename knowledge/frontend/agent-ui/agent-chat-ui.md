@@ -59,6 +59,13 @@ type ContentPart =
 
 可靠 Chat UI 的核心是身份与状态可对账：任何气泡都能追到 message/run，任何重试都不会复制事实，任何重连都能从服务端序号恢复一致视图。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节全栈：多智能体导购、客户端与系统评测](../../../interview/bytedance/base/bytedance-base-43.md)
+- [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [W3C：Using role=log to identify sequential information updates](https://www.w3.org/WAI/WCAG21/Techniques/aria/ARIA23)

@@ -103,20 +103,48 @@ type MemoryRecord = {
 
 Agent 记忆是分层、受策略控制的数据系统：工作记忆服务当前任务，情景记录经历，语义保存有来源的稳定知识，程序记忆提供可复用方法。写入要经过用途与质量门，检索先授权再排序，所有派生记忆保留 provenance，并支持版本更新和完整删除。
 
+## Checkpointer 保存运行状态，不自动创建长期知识
+
+以下适用本次核验的 LangGraph Python 滚动文档。编译 StateGraph 时传入 checkpointer，调用时在 configurable 中提供 thread_id；节点返回状态更新，再由状态字段 reducer 合并。普通局部变量没有返回到状态，就不会因为挂了 saver 而自动成为消息或 checkpoint。
+
+[官方 Checkpointers 文档](https://docs.langchain.com/oss/python/langgraph/checkpointers)区分完整 super-step 快照与步内任务写入：一个 super-step 中的并行节点完成时可持久化 pending writes，整步完成后才提交完整 StateSnapshot。恢复失败步骤可保留成功节点的写入；这不等于外部 HTTP/数据库副作用恰好执行一次，外部动作仍需幂等和恢复策略。
+
+| 教学阶段 | 可保存什么 | 不应推断什么 |
+|---|---|---|
+| 输入进入线程 | 初始状态及线程归属 | thread_id 本身提供了用户授权 |
+| 同一步 A 完成，B 未完成 | A 的任务写入 | 该步完整状态已提交 |
+| B 也完成、状态合并 | 该 super-step 的完整快照 | 副作用可无条件重放 |
+| 跨线程持久事实 | 应用定义的 store/namespace | 所有线程状态自动变成长期事实 |
+
+InMemorySaver 适合内存内示范，不保证进程重启后恢复；持久 saver 的连接、访问边界和清理策略另配。thread 是会话状态标识，也不等于操作系统线程或受信用户身份。
+
+## Claude Code：持久文件与已加载上下文
+
+以 2026-10-03 实际打开的[官方 memory 文档](https://code.claude.com/docs/en/memory)为准：CLAUDE.md 组织项目指令，自动记忆使用项目记忆目录中的 MEMORY.md 索引及主题文件。索引受启动加载限额约束，主题文件按需读取；未加载文件不占当前模型上下文，存在文件也不证明内容正确。
+
+这些具体路径和限额是产品行为，不是所有 Agent 的标准。回答“上下文就是记忆吗”时，应区分当前已输入模型的内容、可恢复运行状态、外部事实和证据。事实依旧要治理来源、冲突与删除，不能只因为跨会话保存就提升为高权限指令。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)（cluster-1b2940d40f2e）
-- [腾讯 AI 应用开发面试：跨会话记忆与多 Agent（2026 年 4 月）](../../../interview/tencent/ai/tencent-ai-4.md)（cluster-2fc69bb3d45d）
-- [字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-20.md)（cluster-418d84d3fe66）
-- [OPPO AI 全栈一面：Prompt 到 UI、RAG 与前端性能（2026 年 8 月）](../../../interview/oppo/ai/oppo-ai-2.md)（cluster-4a37152b165a）
-- [字节 Agent 暑期实习一面：摘要、工具预算与链表（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-27.md)（cluster-7116079e6b23）
-- [腾讯 Agent 项目二面：记忆、RAG 与 MCP（2026 年 5 月）](../../../interview/tencent/ai/tencent-ai-2.md)（cluster-7568c06b462a）
-- [腾讯 CSIG 后台开发一面：Agent Memory、SkillRouter 与多 Agent Code Review（2026 年 7 月）](../../../interview/tencent/ai/tencent-ai-9.md)（cluster-757b7d499173）
-- [腾讯 AI 开发一面：Coding Agent 记忆、评测与可靠运行（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-8.md)（cluster-7ef1a4a8ef82）
-- [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)（cluster-910d0b20a897）
-- [百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测（2026 年 8 月）](../../../interview/baidu/ai/baidu-ai-2.md)（cluster-9acb30c57710）
-- [淘宝闪购 Agent 算法一面：框架选型、人工接管与线上安全（2026 年 4 月）](../../../interview/alibaba/ai/alibaba-ai-6.md)（cluster-e392a4fd1f33）
+- [字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)
+- [腾讯 AI 应用开发面试：跨会话记忆与多 Agent（2026 年 4 月）](../../../interview/tencent/ai/tencent-ai-4.md)
+- [字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-20.md)
+- [OPPO AI 全栈一面：Prompt 到 UI、RAG 与前端性能（2026 年 8 月）](../../../interview/oppo/ai/oppo-ai-2.md)
+- [字节 Agent 暑期实习一面：摘要、工具预算与链表（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-27.md)
+- [腾讯 Agent 项目二面：记忆、RAG 与 MCP（2026 年 5 月）](../../../interview/tencent/ai/tencent-ai-2.md)
+- [腾讯 CSIG 后台开发一面：Agent Memory、SkillRouter 与多 Agent Code Review（2026 年 7 月）](../../../interview/tencent/ai/tencent-ai-9.md)
+- [腾讯 AI 开发一面：Coding Agent 记忆、评测与可靠运行（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-8.md)
+- [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)
+- [百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测（2026 年 8 月）](../../../interview/baidu/ai/baidu-ai-2.md)
+- [淘宝闪购 Agent 算法一面：框架选型、人工接管与线上安全（2026 年 4 月）](../../../interview/alibaba/ai/alibaba-ai-6.md)
+- [字节前端全栈实习一面：渲染、Worker与认证](../../../interview/bytedance/base/bytedance-base-38.md)
+- [字节抖音Agent一面：Skill、MCP与记忆](../../../interview/bytedance/base/bytedance-base-39.md)
+- [字节Agent全栈一面：工具、评测与编码](../../../interview/bytedance/base/bytedance-base-40.md)
+- [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
+- [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
+- [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../../interview/bytedance/base/bytedance-base-48.md)
+- [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

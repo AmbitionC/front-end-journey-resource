@@ -3,9 +3,19 @@ import { mkdtemp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promis
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
+import { createHash } from 'node:crypto';
 import { inspectBatch } from './inspect-batch.mjs';
 
-async function writeEntry(root, name, meta, original = '#### 如何设计 Agent 工具调用？\n') {
+const ORIGINAL='#### 如何设计 Agent 工具调用？\n';
+const fingerprint=text=>createHash('sha256').update(text.normalize('NFKC').replace(/\s/gu,'')).digest('hex');
+const bodyCluster=text=>`body-${fingerprint(text)}`;
+async function inspect(root,batch) {
+  const historyPath=`${root}.private-history.json`;
+  try {await readFile(historyPath);} catch(error) {if(error.code!=='ENOENT')throw error; await writeFile(historyPath,JSON.stringify({schemaVersion:1,records:{}}));}
+  return inspectBatch(root,batch,{historyPath});
+}
+async function writeEntry(root, name, meta, original) {
+  original ??= meta.feJourney.clusterId==='cluster-agent-tools'?ORIGINAL:`#### ${meta.feJourney.clusterId}\n`;
   const directory = join(root, '_inbox', 'nowcoder', name);
   await mkdir(directory, { recursive: true });
   await writeFile(join(directory, 'meta.json'), `${JSON.stringify(meta)}\n`);
@@ -67,15 +77,15 @@ test('scopes one batch, deduplicates clusters, filters C evidence, and isolates 
     }));
     const before = await readdir(join(root, '_inbox', 'nowcoder'));
 
-    const report = await inspectBatch(root, 'batch-current');
+    const report = await inspect(root, 'batch-current');
 
     assert.equal(report.clusters.length, 3);
-    assert.deepEqual(report.publicContent.map(item => item.clusterId), ['cluster-agent-tools']);
+    assert.deepEqual(report.publicContent.map(item => item.clusterId), [bodyCluster(ORIGINAL)]);
     assert.deepEqual(report.publicContent[0].sources.map(source => source.grade), ['A', 'B']);
-    assert.deepEqual(report.operation.map(item => item.clusterId), ['cluster-operation']);
-    assert.equal(report.operation.some(item => item.clusterId === 'cluster-agent-tools'), false);
+    assert.deepEqual(report.operation.map(item => item.clusterId), [bodyCluster('#### cluster-operation\n')]);
+    assert.equal(report.operation.some(item => item.clusterId === bodyCluster(ORIGINAL)), false);
     assert.deepEqual(report.blocked, [{
-      clusterId: 'cluster-c-only',
+      clusterId: bodyCluster('#### cluster-c-only\n'),
       reason: '公开内容没有 A/B 证据',
       paths: ['_inbox/nowcoder/c-only-public'],
     }]);
@@ -83,6 +93,7 @@ test('scopes one batch, deduplicates clusters, filters C evidence, and isolates 
     assert.deepEqual(await readdir(join(root, '_inbox', 'nowcoder')), before);
   } finally {
     await rm(root, { recursive: true, force: true });
+    await rm(`${root}.private-history.json`,{force:true});await rm(`${root}.private-body.md`,{force:true});
   }
 });
 
@@ -99,13 +110,14 @@ test('scopes pooled delivery by deliveryBatchId while preserving the original ca
       },
     }));
 
-    const delivered = await inspectBatch(root, 'batch-delivered-now');
-    const captured = await inspectBatch(root, 'batch-captured-earlier');
+    const delivered = await inspect(root, 'batch-delivered-now');
+    const captured = await inspect(root, 'batch-captured-earlier');
 
-    assert.deepEqual(delivered.publicContent.map(item => item.clusterId), ['cluster-agent-tools']);
+    assert.deepEqual(delivered.publicContent.map(item => item.clusterId), [bodyCluster(ORIGINAL)]);
     assert.deepEqual(captured.publicContent, []);
   } finally {
     await rm(root, { recursive: true, force: true });
+    await rm(`${root}.private-history.json`,{force:true});await rm(`${root}.private-body.md`,{force:true});
   }
 });
 
@@ -120,12 +132,13 @@ test('accepts an explicitly directed delivery without pretending it came from th
       },
     }));
 
-    const report = await inspectBatch(root, 'directed-run-1');
+    const report = await inspect(root, 'directed-run-1');
 
-    assert.deepEqual(report.publicContent.map(item => item.clusterId), ['cluster-agent-tools']);
+    assert.deepEqual(report.publicContent.map(item => item.clusterId), [bodyCluster(ORIGINAL)]);
     assert.deepEqual(report.malformed, []);
   } finally {
     await rm(root, { recursive: true, force: true });
+    await rm(`${root}.private-history.json`,{force:true});await rm(`${root}.private-body.md`,{force:true});
   }
 });
 
@@ -146,7 +159,7 @@ test('separates exclusion, truncation, and malformed inputs without modifying fi
     await writeFile(join(broken, 'original.md'), '正文');
     const brokenBefore = await readFile(join(broken, 'meta.json'), 'utf8');
 
-    const report = await inspectBatch(root, 'batch-current');
+    const report = await inspect(root, 'batch-current');
 
     assert.equal(report.skipped[0].reason, '营销内容');
     assert.equal(report.blocked.some(item => item.reason === '正文被截断'), true);
@@ -154,6 +167,7 @@ test('separates exclusion, truncation, and malformed inputs without modifying fi
     assert.equal(await readFile(join(broken, 'meta.json'), 'utf8'), brokenBefore);
   } finally {
     await rm(root, { recursive: true, force: true });
+    await rm(`${root}.private-history.json`,{force:true});await rm(`${root}.private-body.md`,{force:true});
   }
 });
 
@@ -161,8 +175,8 @@ test('skips an unchanged source already recorded in committed history', async ()
   const root = await mkdtemp(join(tmpdir(), 'fe-inspect-history-'));
   try {
     await writeEntry(root, 'already-published', meta());
-    await mkdir(join(root, '.codex'), { recursive: true });
-    await writeFile(join(root, '.codex', 'interview-source-history.json'), `${JSON.stringify({
+    await writeFile(`${root}.private-body.md`,ORIGINAL);
+    await writeFile(`${root}.private-history.json`, `${JSON.stringify({
       schemaVersion: 1,
       updatedAt: '2026-08-23',
       records: {
@@ -170,6 +184,9 @@ test('skips an unchanged source already recorded in committed history', async ()
           source: 'nowcoder',
           url: 'https://www.nowcoder.com/discuss/1001',
           contentHash: '0123456789abcdef',
+          normalizedBodySha256: fingerprint(ORIGINAL),
+          originalBodyEvidenceFile: `${root}.private-body.md`,
+          originalBodySha256: createHash('sha256').update(ORIGINAL).digest('hex'),
           clusterId: 'cluster-agent-tools',
           company: 'bytedance',
           evidenceGrade: 'A',
@@ -182,11 +199,11 @@ test('skips an unchanged source already recorded in committed history', async ()
       },
     }, null, 2)}\n`);
 
-    const report = await inspectBatch(root, 'batch-current');
+    const report = await inspect(root, 'batch-current');
 
     assert.deepEqual(report.publicContent, []);
     assert.deepEqual(report.previouslyProcessed, [{
-      clusterId: 'cluster-agent-tools',
+      clusterId: bodyCluster(ORIGINAL),
       reason: '来源内容未变化且已有处理记录',
       paths: ['_inbox/nowcoder/already-published'],
       sources: [{
@@ -197,5 +214,28 @@ test('skips an unchanged source already recorded in committed history', async ()
     }]);
   } finally {
     await rm(root, { recursive: true, force: true });
+    await rm(`${root}.private-history.json`,{force:true});await rm(`${root}.private-body.md`,{force:true});
   }
+});
+
+test('actual body deduplication ignores forged cluster metadata and capture-only front matter',async()=>{
+  const root=await mkdtemp(join(tmpdir(),'fe-real-dedup-'));
+  try {
+    await writeEntry(root,'one',meta(),`---\nurl: first\n---\n${ORIGINAL}`);
+    await writeEntry(root,'two',meta({id:'bbbbbbbbbbbb',url:'https://www.nowcoder.com/discuss/9999',contentHash:'ffffffffffffffff',feJourney:{candidateKinds:['interview'],qualityScore:80,clusterId:'forged-cluster'}}),`---\nurl: second\n---\n${ORIGINAL}`);
+    const report=await inspect(root,'batch-current');
+    assert.equal(report.clusters.length,1);assert.equal(report.publicContent[0].sources.length,2);
+    assert.equal(report.publicContent[0].representative.normalizedBodySha256,fingerprint(ORIGINAL));
+  } finally {await rm(root,{recursive:true,force:true});await rm(`${root}.private-history.json`,{force:true});await rm(`${root}.private-body.md`,{force:true});}
+});
+
+test('missing actual historical fingerprint blocks guessing whether an existing source changed',async()=>{
+  const root=await mkdtemp(join(tmpdir(),'fe-legacy-dedup-'));
+  try {
+    await writeEntry(root,'one',meta());
+    await writeFile(`${root}.private-history.json`,JSON.stringify({schemaVersion:1,records:{old:{url:meta().url,contentHash:meta().contentHash,status:'published'}}}));
+    const report=await inspect(root,'batch-current');
+    assert.equal(report.publicContent.length,0);assert.match(report.blocked[0].reason,/缺实际原文指纹|缺少可复算/u);
+    await assert.rejects(inspectBatch(root,'batch-current'),/绝对路径/u);
+  } finally {await rm(root,{recursive:true,force:true});await rm(`${root}.private-history.json`,{force:true});await rm(`${root}.private-body.md`,{force:true});}
 });

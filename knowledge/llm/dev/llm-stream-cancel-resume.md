@@ -136,6 +136,12 @@ Google Gen AI JavaScript SDK 的[官方文档](https://googleapis.github.io/js-g
 
 可靠流式调用以事件状态机为中心：正确处理帧、UTF-8、背压和流内错误，用 AbortSignal 传播本地取消，但不夸大服务端保证。持久化完成 item 与业务副作用，通过任务查询或应用确认点恢复，而不是从任意 token 续接。这样流式体验才不会牺牲一致性和可审计性。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenAI — Streaming API responses](https://developers.openai.com/api/docs/guides/streaming-responses)

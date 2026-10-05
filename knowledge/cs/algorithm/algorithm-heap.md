@@ -66,10 +66,70 @@ pop 保存根，把最后元素移到根，再与更合适的子节点交换下�
 
 还应做属性测试：任意输入 heapify 后，连续 pop 必须等于同一 comparator 的排序结果；任意时刻 `size` 等于数组长度；索引表模式下每个 id 都指向真实位置。对 comparator 抛错、重复 id 和优先级更新不存在节点定义清晰失败语义，避免结构只坏一半。
 
+## 二维接雨水：从最低可逃逸边界向内扩展
+
+[LeetCode 407](https://leetcode.com/problems/trapping-rain-water-ii/)输入二维高度网格，求格子上方水的体积，不是一维双指针题。一个内部格子的水位由通向外界路径上的最低可行瓶颈决定，不能只看四个最近邻的最大高度。
+
+把所有边界格放入最小堆，堆中高度表示当前有效边界。每次弹出最低边界 h，访问尚未入队的邻格 v：新增水量为 max(0,h−v)，随后以 max(h,v) 作为新边界入堆。入队时标记，避免从不同方向重复计水。矩形非负有限高度输入下，总时间 O(mn log(mn))、空间 O(mn)。
+
+```javascript
+class CellMinHeap {
+  data = [];
+  push(cell) {
+    const a = this.data; a.push(cell);
+    for (let i = a.length - 1; i > 0;) {
+      const p = Math.floor((i - 1) / 2);
+      if (a[p][0] <= a[i][0]) break;
+      [a[p], a[i]] = [a[i], a[p]]; i = p;
+    }
+  }
+  pop() {
+    const a = this.data;
+    if (!a.length) return undefined;
+    const root = a[0], last = a.pop();
+    if (a.length) {
+      a[0] = last;
+      for (let i = 0;;) {
+        let j = i, l = 2 * i + 1, r = l + 1;
+        if (l < a.length && a[l][0] < a[j][0]) j = l;
+        if (r < a.length && a[r][0] < a[j][0]) j = r;
+        if (j === i) break;
+        [a[i], a[j]] = [a[j], a[i]]; i = j;
+      }
+    }
+    return root;
+  }
+}
+function trapRainGrid(grid) {
+  const m = grid.length, n = grid[0]?.length ?? 0;
+  if (m < 3 || n < 3) return 0;
+  const seen = Array.from({length:m}, () => Array(n).fill(false));
+  const heap = new CellMinHeap();
+  function add(r,c,h) { seen[r][c] = true; heap.push([h,r,c]); }
+  for (let r=0; r<m; r++) for (let c=0; c<n; c++) {
+    if (r===0 || r===m-1 || c===0 || c===n-1) add(r,c,grid[r][c]);
+  }
+  let total = 0;
+  while (heap.data.length) {
+    const [h,r,c] = heap.pop();
+    for (const [dr,dc] of [[1,0],[-1,0],[0,1],[0,-1]]) {
+      const nr=r+dr, nc=c+dc;
+      if (nr<0 || nr>=m || nc<0 || nc>=n || seen[nr][nc]) continue;
+      total += Math.max(0,h-grid[nr][nc]);
+      add(nr,nc,Math.max(h,grid[nr][nc]));
+    }
+  }
+  return total;
+}
+```
+
+例如外圈高度 3、中心高度 0 的 3×3 网格可存 3 单位水；若外圈存在通向中心的低缺口，则水位下降。测试低缺口与非矩形非法数据的契约，不能把示例的输入假设默默扩展到任意对象。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [淘天 AI 应用研发一面：RAG、限流 Top-K 与优惠策略设计（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-5.md)（cluster-456378924c83）
+- [淘天 AI 应用研发一面：RAG、限流 Top-K 与优惠策略设计（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-5.md)
+- [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

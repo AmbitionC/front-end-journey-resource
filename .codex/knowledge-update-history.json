@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
-  "updatedAt": "2026-10-02",
+  "updatedAt": "2026-10-04",
   "records": [
     {
       "key": "transformer-arch",
@@ -17,8 +17,8 @@
       "filePath": "llm/basics",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-08-23",
-      "batch": "nowcoder-real-interviews-2026-08-23"
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
     },
     {
       "key": "llm-model-compare",
@@ -141,10 +141,10 @@
       "key": "llm-sse-streaming",
       "label": "SSE 流式响应与增量渲染",
       "filePath": "llm/dev",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-14",
-      "batch": "deepseek-streaming-tools-and-frontend-integration-2026-07-14"
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
     },
     {
       "key": "function-calling",
@@ -294,10 +294,10 @@
       "key": "llm-training-overview",
       "label": "大模型训练全流程概览",
       "filePath": "llm/basics",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-14",
-      "batch": "llm-foundations-next-10-2026-07-14"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-03",
+      "batch": "interview-content-local-20261003"
     },
     {
       "key": "llm-pretraining",
@@ -366,10 +366,10 @@
       "key": "llm-open-source-deployment",
       "label": "开源模型选型、推理与本地部署",
       "filePath": "llm/basics",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-15",
-      "batch": "long-context-prompt-next-10-2026-07-15"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
     },
     {
       "key": "prompt-testing-debugging",
@@ -528,10 +528,10 @@
       "key": "llm-vision-app",
       "label": "视觉理解与图像生成应用",
       "filePath": "llm/dev",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-15",
-      "batch": "ai-application-next-10-2026-07-15"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
     },
     {
       "key": "llm-audio-realtime",
@@ -922,10 +922,10 @@
       "key": "agent-subagents",
       "label": "Subagent 子智能体设计",
       "filePath": "llm/agent",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-16",
-      "batch": "agent-multi-production-next-20-2026-07-16"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
     },
     {
       "key": "agent-supervisor",
@@ -960,8 +960,8 @@
       "filePath": "llm/agent",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-09-01",
-      "batch": "nowcoder-partial-archive-2026-09-01"
+      "recordedAt": "2026-10-03",
+      "batch": "interview-content-local-20261003"
     },
     {
       "key": "agent-memory-summarization",
@@ -1341,10 +1341,10 @@
       "key": "agent-concurrency",
       "label": "并发控制、资源隔离与公平调度",
       "filePath": "llm/production",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-17",
-      "batch": "agent-platform-backend-next-20-2026-07-17"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
     },
     {
       "key": "agent-timeout-budget",
@@ -1422,10 +1422,10 @@
       "key": "async-job-queue",
       "label": "消息队列、异步任务与后台 Job",
       "filePath": "backend/api",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-02",
-      "batch": "nowcoder-byte-campus-pilot-10-20261002",
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004",
       "previousRecord": {
         "key": "async-job-queue",
         "label": "消息队列、异步任务与后台 Job",
@@ -1447,10 +1447,10 @@
       "key": "grpc-basics",
       "label": "gRPC、Protobuf 与服务通信",
       "filePath": "backend/api",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-17",
-      "batch": "agent-platform-backend-next-20-2026-07-17"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
     },
     {
       "key": "webhook-design",
@@ -1663,10 +1663,10 @@
       "key": "algorithm-complexity",
       "label": "时间复杂度、空间复杂度与性能估算",
       "filePath": "cs/algorithm",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-17",
-      "batch": "complete-knowledge-next-50-2026-07-17"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
     },
     {
       "key": "algorithm-stack-queue",
@@ -1681,19 +1681,19 @@
       "key": "algorithm-heap",
       "label": "堆、优先队列与 Top-K",
       "filePath": "cs/algorithm",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-17",
-      "batch": "complete-knowledge-next-50-2026-07-17"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
     },
     {
       "key": "algorithm-linked-list",
       "label": "链表、指针与 LRU",
       "filePath": "cs/algorithm",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-17",
-      "batch": "complete-knowledge-next-50-2026-07-17"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
     },
     {
       "key": "algorithm-trie",
@@ -1708,19 +1708,19 @@
       "key": "algorithm-sorting",
       "label": "排序算法、稳定性与外部排序",
       "filePath": "cs/algorithm",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-17",
-      "batch": "complete-knowledge-next-50-2026-07-17"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
     },
     {
       "key": "algorithm-graph",
       "label": "BFS、DFS、最短路与拓扑排序",
       "filePath": "cs/algorithm",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-17",
-      "batch": "complete-knowledge-next-50-2026-07-17"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-03",
+      "batch": "interview-content-local-20261003"
     },
     {
       "key": "algorithm-backtracking",
@@ -1744,10 +1744,10 @@
       "key": "probability-statistics-ai",
       "label": "概率、分布、采样与统计估计",
       "filePath": "cs/algorithm",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-17",
-      "batch": "complete-knowledge-next-50-2026-07-17"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-03",
+      "batch": "interview-content-local-20261003"
     },
     {
       "key": "web-semantic-accessibility",
@@ -1762,10 +1762,10 @@
       "key": "vite-testing",
       "label": "Vite、前端构建与测试基础",
       "filePath": "frontend/engineering",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-17",
-      "batch": "complete-knowledge-next-50-2026-07-17"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-03",
+      "batch": "interview-content-local-20261003"
     },
     {
       "key": "agent-chat-ui",
@@ -1879,10 +1879,10 @@
       "key": "promise",
       "label": "Promise、async/await 与异步控制流",
       "filePath": "js-es6-ts/es6",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-17",
-      "batch": "complete-knowledge-next-50-2026-07-17"
+      "recordedAt": "2026-10-03",
+      "batch": "interview-content-local-20261003"
     },
     {
       "key": "responsive-layout",
@@ -1924,10 +1924,10 @@
       "key": "design-components",
       "label": "可复用组件、状态与通信设计",
       "filePath": "fe/design",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-17",
-      "batch": "complete-knowledge-next-50-2026-07-17"
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
     },
     {
       "key": "node-knowledge",
@@ -1989,8 +1989,8 @@
       "filePath": "llm/agent",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-09-01",
-      "batch": "archify-pilot-2026-09-01"
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
     },
     {
       "key": "mcp-protocol",
@@ -2082,12 +2082,12 @@
     },
     {
       "key": "agent-eval-framework",
-      "label": "生产级 Agent 评估系统设计",
+      "label": "Agent 评测原理：任务、轨迹与环境结果",
       "filePath": "llm/production",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-02",
-      "batch": "nowcoder-byte-campus-pilot-10-20261002",
+      "recordedAt": "2026-10-03",
+      "batch": "interview-content-local-20261003",
       "previousRecord": {
         "key": "agent-eval-framework",
         "label": "生产级 Agent 评估系统设计",
@@ -2226,10 +2226,10 @@
       "key": "mysql-index",
       "label": "数据库索引原理与查询优化",
       "filePath": "backend/database",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-02",
-      "batch": "nowcoder-byte-campus-pilot-10-20261002",
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004",
       "previousRecord": {
         "key": "mysql-index",
         "label": "数据库索引原理与查询优化",
@@ -2253,8 +2253,8 @@
       "filePath": "backend/database",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-08-29",
-      "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
     },
     {
       "key": "redis-cache",
@@ -2296,8 +2296,8 @@
       "filePath": "backend/database",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
     },
     {
       "key": "db-sharding",
@@ -2314,8 +2314,8 @@
       "filePath": "backend/auth",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-10-03",
+      "batch": "interview-content-local-20261003"
     },
     {
       "key": "oauth2",
@@ -2654,8 +2654,8 @@
       "filePath": "network/http",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
     },
     {
       "key": "os-ipc",
@@ -2672,8 +2672,8 @@
       "filePath": "cs/os",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
     },
     {
       "key": "os-deadlock",
@@ -2690,8 +2690,8 @@
       "filePath": "network/tcpIp",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-08-29",
-      "batch": "nowcoder-agent-market-20260829032320626-7f773caa"
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
     },
     {
       "key": "tcp-udp",
@@ -2708,8 +2708,8 @@
       "filePath": "data-structure/algorithm",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-08-29",
-      "batch": "nowcoder-agent-market-20260829032320626-7f773caa"
+      "recordedAt": "2026-10-03",
+      "batch": "interview-content-local-20261003"
     },
     {
       "key": "algorithm-hash",
@@ -2717,8 +2717,8 @@
       "filePath": "data-structure/algorithm",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-08-29",
-      "batch": "nowcoder-agent-market-20260829032320626-7f773caa"
+      "recordedAt": "2026-10-03",
+      "batch": "interview-content-local-20261003"
     },
     {
       "key": "algorithm-tree",
@@ -2726,8 +2726,8 @@
       "filePath": "data-structure/algorithm",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
     },
     {
       "key": "algorithm-loop",
@@ -2735,8 +2735,8 @@
       "filePath": "data-structure/algorithm",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
     },
     {
       "key": "algorithm-string",
@@ -2744,8 +2744,8 @@
       "filePath": "data-structure/algorithm",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
     },
     {
       "key": "event-loop",
@@ -2780,8 +2780,8 @@
       "filePath": "js-es6-ts/ts",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
     },
     {
       "key": "react-hooks",
@@ -2798,8 +2798,8 @@
       "filePath": "fe/design",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
     },
     {
       "key": "agent-role-landscape",
@@ -2888,8 +2888,8 @@
       "filePath": "llm/agent",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-09-01",
-      "batch": "nowcoder-partial-archive-2026-09-01"
+      "recordedAt": "2026-10-03",
+      "batch": "interview-content-local-20261003"
     },
     {
       "key": "agent-intent-clarification",
@@ -2914,18 +2914,18 @@
       "label": "区间调度、会议室与扫描线",
       "filePath": "cs/algorithm",
       "status": "pending",
-      "action": "created",
-      "recordedAt": "2026-08-29",
-      "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
+      "action": "updated",
+      "recordedAt": "2026-10-03",
+      "batch": "interview-content-local-20261003"
     },
     {
       "key": "frontend-performance-diagnostics",
       "label": "前端卡顿定位与性能诊断",
       "filePath": "frontend/engineering",
       "status": "pending",
-      "action": "created",
-      "recordedAt": "2026-08-29",
-      "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
+      "action": "updated",
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
     },
     {
       "key": "sgx-multitenant-compute",
@@ -2936,6 +2936,114 @@
       "recordedAt": "2026-10-02",
       "batch": "nowcoder-original-six-completion-20261002",
       "reason": "原批阿里云具体 SGX 原题缺失知识文章；已研究一手资料并独立审核，网站完成状态等待本批合并同步。"
+    },
+    {
+      "key": "database-models",
+      "label": "数据库数据模型：查询、约束与选择",
+      "filePath": "backend/db",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-10-03",
+      "batch": "interview-content-local-20261003"
+    },
+    {
+      "key": "server-rendering-hydration",
+      "label": "服务端渲染与 hydration：HTML 和交互",
+      "filePath": "fe/browser",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-10-03",
+      "batch": "interview-content-local-20261003"
+    },
+    {
+      "key": "garbage-collection",
+      "label": "垃圾回收：可达性、标记与生命周期",
+      "filePath": "cs/os",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-10-03",
+      "batch": "interview-content-local-20261003"
+    },
+    {
+      "key": "browser-navigation-rendering",
+      "label": "浏览器导航与渲染：从 URL 到像素",
+      "filePath": "fe/browser",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-10-03",
+      "batch": "interview-content-local-20261003"
+    },
+    {
+      "key": "java-thread-pool",
+      "label": "Java线程池：容量、排队与拒绝",
+      "filePath": "backend/java",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-10-03",
+      "batch": "interview-content-local-20261003"
+    },
+    {
+      "key": "java-value-semantics",
+      "label": "Java值语义：参数、字符串与返回",
+      "filePath": "backend/java",
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
+    },
+    {
+      "key": "browser-worker-tasks",
+      "label": "浏览器Worker：分片、取消与结果归属",
+      "filePath": "fe/browser",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-10-03",
+      "batch": "interview-content-local-20261003"
+    },
+    {
+      "key": "java-thread-local",
+      "label": "ThreadLocal：线程绑定、清理与传播",
+      "filePath": "backend/java",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
+    },
+    {
+      "key": "java-runtime-memory",
+      "label": "JVM 内存、类加载与 OOM 定位",
+      "filePath": "backend/java",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
+    },
+    {
+      "key": "spring-container",
+      "label": "Spring 容器：BeanFactory 与 ApplicationContext",
+      "filePath": "backend/java",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
+    },
+    {
+      "key": "spring-external-config",
+      "label": "Spring 外部配置：优先级、刷新与版本对账",
+      "filePath": "backend/java",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
+    },
+    {
+      "key": "java-nio-reactor",
+      "label": "Java NIO 与 Reactor：就绪、缓冲与背压",
+      "filePath": "backend/java",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-10-04",
+      "batch": "next-twenty-source-increments-20261004"
     }
   ]
 }

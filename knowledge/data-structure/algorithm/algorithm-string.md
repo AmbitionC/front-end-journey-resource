@@ -107,10 +107,35 @@ function indexOfKmp(text, pattern) {
 
 短文本的一次搜索通常直接用标准库最清晰。KMP 的价值是理解如何利用已知匹配信息避免回溯，并在需要线性最坏界、流式扫描或大量重复前缀时提供可预测行为。
 
+## 版本号分段比较：不要先转成浮点数
+
+[LeetCode 165](https://leetcode.com/problems/compare-version-numbers/)比较用点分隔的非负整数字段，忽略前导零，缺失段当零；它不是带预发布标签的完整 SemVer。`1.10` 不能按小数与 `1.2` 比较，超长字段也不能直接 parseInt 后假定无溢出。
+
+去掉前导零后，先比较数字字符长度，再比较等长 ASCII 数字串，便可避免整数范围问题。以下实现额外拒绝空字段等非法输入，合法输入下扫描与比较总时间 O(n+m)，拆分数组占 O(n+m) 空间。
+
+```javascript
+function compareVersions(a, b) {
+  const valid = /^\d+(\.\d+)*$/;
+  if (!valid.test(a) || !valid.test(b)) throw new TypeError('Invalid version');
+  const x = a.split('.'), y = b.split('.');
+  for (let i = 0; i < Math.max(x.length, y.length); i++) {
+    const left = (x[i] ?? '0').replace(/^0+/, '') || '0';
+    const right = (y[i] ?? '0').replace(/^0+/, '') || '0';
+    if (left.length !== right.length) return left.length < right.length ? -1 : 1;
+    if (left !== right) return left < right ? -1 : 1;
+  }
+  return 0;
+}
+```
+
+例如 `1.01` 与 `1.001` 相同，`1.0.0` 与 `1` 相同，`1.10` 大于 `1.2`。测试还应覆盖超出安全整数的字段和非法输入，不能只依赖原帖缺失截图。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [阿里云可观测存储 AI Agent 工程岗一面：存储性能与查询优化（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-7.md)（cluster-cf26fe3b37d5）
+- [阿里云可观测存储 AI Agent 工程岗一面：存储性能与查询优化（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-7.md)
+- [字节全栈实习：Session、权限与前端基础](../../../interview/bytedance/base/bytedance-base-46.md)
+- [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

@@ -1,118 +1,136 @@
-Agent 评测要判断“用户任务是否在约束内完成”，再用过程证据解释为什么成功或失败。最终回答写得流畅、某个节点准确率提高、工具调用减少，都不能单独证明系统变好。本文用会议室预订贯穿数据构造、评分与版本比较，重点回答 AI 生成评测集如何校准，以及局部提升为何会造成总体负优化。
+Agent 会选择工具、改变外部状态并持续执行。评测因此要回答三个问题：任务是否完成，执行过程中是否遵守约束，结果为什么成功或失败。最终回复只是其中一项证据；写了“已经完成”，不等于文件存在、代码可用或业务状态已经更新。
 
-## 从一个能判定终态的任务开始
+## 先分清五个概念
 
-假设用户授权预订：“2026 年 10 月 3 日 15:00 UTC，30 分钟，4 人会议室。”隔离测试环境有固定日历快照，两间符合条件的空房。成功意味着创建一条时间、人数和房间条件都正确的预约，并返回对应预约 ID；只输出“已订好”不算成功。这是教学场景，没有实际预订外部会议室。
-
-朴素方案拿回答与参考文本做相似度比较，会把“已订好”误判为成功；要求必须选择某一间房，又会把另一间合法选择误判为失败。应先定义允许的终态，再看运行轨迹。轨迹包括模型输入输出、工具提议、运行时校验、实际执行结果和环境变化；模型声称的完成状态只是其中一项证据。[Anthropic 的 Agent 评测文章](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents)区分了 transcript、outcome 和代码/模型/人工评分器，强调评分器需要适配任务。
-
-一次最小评测这样运行：评测器恢复日历夹具，给 Agent 用户输入及允许的工具；Agent 提出查空房和预约动作；运行时校验参数及权限后执行模拟服务；评测器读取服务端事件与最终日历；终态判定器（oracle）检查是否恰好创建一个有效预约；语言裁判只检查回答是否正确解释结果。判定器不能使用 Agent 自报的 `success=true` 代替服务端事实。
-
-## 一个用例要保存什么
-
-用例应保存输入、初始环境、允许终态、约束、评分判据及切片标签。原有“典型场景、边缘案例、历史失败、对抗样本”四类仍有用，但要对应明确行为：正常预订、缺少时间应澄清、工具失败不能谎称成功、注入要求外发数据应被阻止。
-
-以下是用例数据示意，未在完整评测环境运行：
-
-```json
-{
-  "case_id": "room-001",
-  "input": "预订2026-10-03 15:00 UTC开始、30分钟、4人的会议室",
-  "fixture_version": "calendar-v1",
-  "allowed_actions": ["search_rooms", "book_room"],
-  "expected_state": {
-    "new_booking_count": 1,
-    "start": "2026-10-03T15:00:00Z",
-    "duration_minutes": 30,
-    "min_capacity": 4
-  },
-  "hard_constraints": ["no_external_email", "no_duplicate_booking"],
-  "slices": ["booking", "explicit-time", "side-effect"]
-}
-```
-
-工具名称覆盖率可帮助排查，但不是成功判据。调用了 `book_room` 却参数错误仍应失败；合法缓存路径可能不需要每次调用同一个查询工具。仅对业务要求的步骤设路径断言，对其他路径允许合理变化。缺少任何可执行判据的用例是评测配置缺陷，不能默认通过。
-
-## AI 生成评测集为什么需要独立校准
-
-模型可以把正常预订改写成口语、错别字、多轮约束变化，扩展成本较低。但它也可能生成“明天午后”却标注唯一时间，或者生成预期答案时忘记“不要发邮件”。如果出题、答案和裁判共享同一误解，三者相互同意也不证明正确。[OpenAI Evaluation best practices](https://developers.openai.com/api/docs/guides/evaluation-best-practices)把合成数据列为来源之一，并要求数据反映实际分布、自动评分用人工反馈校准（滚动文档，核验于 2026-10-02）。
-
-本例先由产品规则和领域人员定义任务类别与终态判据，再让 AI 扩展表达。随后检查每条题是否有足够输入、预期动作是否可行、答案是否能从夹具或业务规则推出。对“明天下午”这种信息不足的输入，正确行为可能是澄清，不能让出题模型自行补时间。去重时要看任务和底层情境，而不是只看句子是否相同；同一日历快照的一组改写不能分散到训练与验收集，制造“泛化”假象。
-
-保留一份独立的人工或专家标注校准集，包含 AI 容易漏掉的失败、歧义和约束；校准集不用于反复改提示词。抽查合成样本的标签正确性、可判定性和分类覆盖，记录弃用与修正原因。新增罕见条件也要留有来源或业务理由，不能因为生成了很多题就声称覆盖真实流量。
-
-数据至少区分三种用途：开发集允许反复调方案；回归集保护已经能完成的任务；留出验收集衡量未用于调试的效果。能力集可以专门包含难题，不能把它的分布当成线上比例。真实问题需脱敏、授权、去重和重新标注后入库；线上失败能成为新用例，不能自动改写验收标准。换一个模型生成参考答案或增加第二个 Judge 只是交叉检查，独立证据与人工校准仍然必要。
-
-## 评分如何同时保留结果和原因
-
-| 层次 | 本例检查 | 不能替代的结论 |
+| 概念 | 含义 | 容易混淆的边界 |
 | --- | --- | --- |
-| 结果终态 | 有且仅有一条合法预约，时间与容量正确 | 回答相似度不能证明预约存在 |
-| 过程与约束 | 请求校验、权限、重试、外发、重复写入 | 调了工具不能证明结果正确 |
-| 解释质量 | 回复准确说明预约 ID 或失败原因，不编造 | 内容流畅不能抵消错误副作用 |
-| 资源与可靠性 | 耗时分布、token、重试、成本及重复运行成功 | 步数更少不等于任务更好 |
+| 任务用例（task/case） | 用户输入、初始环境、允许动作、成功判据组成的评测单位 | 一道问题加一句参考答案，往往不足以描述可执行任务 |
+| 一次执行（trial） | 某个 Agent 版本在该用例上的一次完整运行 | 同一用例重复运行，可能走出不同路径 |
+| 执行轨迹（trace） | 可记录的模型与工具交互、返回值、时间和错误 | 轨迹记录不等于模型隐藏的思维过程，也不保证日志完整 |
+| 环境结果（outcome） | 执行后实际存在的状态或产物 | 要从环境、文件、数据库或测试读取，不能只接受 Agent 自述 |
+| 评分器（grader） | 按成功判据检查证据、给出分数或判断的程序、模型或人工流程 | 评分器也会出错；评分结果不是未经核验的真值 |
 
-安全和副作用约束宜独立作为门禁：错误预约不能被文采、简洁度的高分平均掉。开放式部分使用明确 rubric，例如“结论与服务端终态一致”“缺信息时说清缺什么”；让 Judge 引用输出中的问题位置。规则能查的字段先用代码查，Judge 留给解释等语义问题，高风险或分歧样本给人工。
+这组区分让“有没有做成”和“怎么做的”可以分别检查。不同路径可能达到同一个有效结果；同一句最终回复也可能对应完全不同的环境状态。[Anthropic：Agent 评测的基本概念](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents)。
 
-LLM Judge 会波动，也可能受答案顺序或冗长度影响。配对比较时交换顺序，隐藏方案身份；在含“长但错”“短且对”的人工标注样本上测其误判。应观察 false pass 与 false fail，而不是只有与人工的总体一致率；错误副作用被放行比风格误判代价更高。Judge 更换、rubric 修改后也要重做校准，不能只重跑被评系统。
+## 一次评测如何运行
 
-## 局部提升怎样导致总体负优化
+![Agent 评测结构：执行器恢复隔离环境并启动 Agent，轨迹和实际状态分别送入评分器，成功规则直接约束评分，最后形成结果报告。](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-eval-framework-task-trace-outcome-archify-v1.png)
+*图：使用 Archify v2.16.0 绘制；验收同时读取运行轨迹和环境终态，成功规则由评分器检查。*
 
-假设优化后 Agent 减少了澄清，让正常预约更快，却在信息不足时直接猜时间。以下数字纯属教学算例，不是实测，也不是建议的数据比例；两版在相同 100 条用例和相同终态标准上比较：
+图中的任务用例提供输入、初始状态和成功规则。评测执行器（Eval Runner）恢复隔离环境后启动 Agent；Agent 调用工具，环境返回结果并保存实际变化。运行结束后，轨迹记录（Trace Log）与状态快照（State Snapshot）分别进入评分器（Graders），再汇总为带理由和场景分类的报告。
 
-| 切片 | 用例数 | 旧版成功 | 新版成功 |
-| --- | ---: | ---: | ---: |
-| 信息完整的常见预约 | 80 | 72 | 76 |
-| 歧义或缺字段 | 20 | 12 | 6 |
-| 合计 | 100 | 84 | 82 |
+成功规则中的隐藏验收条件供评分器使用，不应作为额外提示泄露给被测 Agent；Agent 可以知道正常任务本来就应告知的要求。轨迹采集、状态读取和评分应尽量由被测 Agent 之外的评测系统完成，避免让它自己决定“是否通过”。
 
-常见预约从 72/80 到 76/80，局部提高 5 个百分点；缺字段切片下降 30 个百分点，使总体任务成功从 84% 降到 82%。如果只挑常见样本或只看“平均少问一次”，会把猜时间的错误奖励成优化。即使总体成功上升，出现未经授权的外发或重复预约，也仍可能触发独立阻断。
+隔离环境尤其重要：前一次执行留下的文件、数据或缓存，可能帮助下一次执行碰巧通过。恢复初始状态，是让两次比较面对同一道任务的前提。τ-bench 采用任务目标与环境数据库终态的比较来验收执行，说明对有状态任务，验收可以独立于对话措辞。[τ-bench 原始论文](https://arxiv.org/html/2406.12045v1)。
 
-处理时先核对数据、版本和评分器是否变化，再定位退化轨迹：意图识别错、必要信息丢失、参数构造错，还是工具失败被隐藏。撤回引发退化的改动，或把快路径限制在输入完整的条件；重新运行整套回归和留出验收，报告每个重要切片与整体，而不是只重测修好的几条。
+## 成功判据先于评分方法
 
-总体加权口径必须预先定义。如果线上流量比例已知，可报告按该分布加权的估计，同时保留风险切片；若未知，就报告本次评测集的分布与结果，不把它叫线上成功率。基线、新版用相同用例配对、多次试验，并报告波动及不确定性。不能挑每版最好的一次，也不能把可重试场景的多次尝试成功率当成一次完成率。
+写用例时，先明确目标和限制，再决定怎样判分。至少要能回答：用户要什么，起始环境是什么，哪些动作允许，什么状态算完成，哪些情况即使结果看似正确也不能通过。
 
-## 离线到线上怎样形成闭环
+例如，“导出订单汇总”可以要求指定范围、字段和一致的合计，允许不同的查询与计算路径；只读任务则不能通过偷偷修改数据来让结果成立。这些是设计示例，具体条件应来自业务要求，而非随意增加的评分偏好。
 
-先固定模型、Prompt、工具定义、索引或知识快照、夹具和判据版本，保存完整结果，再从失败回到对应轨迹。固定这些条件是在控制实验变量，**不保证模型每次输出相同**；记录 seed 也不能自动保证所有服务和模型完全复现。工具模拟要覆盖超时、错误和重复响应，避免只在永远成功的假环境中测。
+对于有硬约束的任务，可以把成功定义为“目标成立，并且全部硬约束满足”。再单独报告表达质量、延迟和成本。若把权限违规与漂亮文案一起求平均，较高的文案分数就可能掩盖一次不可接受的执行。
 
-上线前可以影子运行，只记录新方案的判断、禁止其执行真实预约；需要隔离工具写权限，不能仅依赖提示词“别写”。灰度阶段关注真实任务成功、约束和资源变化，能撤回版本，并区分不同版本的日志。点击复制、点赞、重新提问和退出只能作为发现线索：复制可能用于质疑，澄清可能是合理完成步骤，退出也可能是放弃。不要固定把这些行为当成功或失败标签。
+| 证据维度 | 适合检查什么 | 不能单独证明什么 |
+| --- | --- | --- |
+| 最终回复 | 内容正确性、表达完整性、是否明确说明未完成 | 外部写入真的成功、产物真的可用 |
+| 环境状态与产物 | 文件内容、数据变化、测试结果、任务终态 | 中途是否越权、是否造成过已被回滚的副作用 |
+| 执行轨迹 | 工具与参数、异常恢复、禁止动作、耗时去向 | 最终任务一定完成；日志缺失时尤其不能据此下结论 |
 
-流量较大时可先对可获得的请求计算确定性信号，再对异常与重要切片采样给 Judge，最后将分歧和高风险样本交人工。日志包含哪些字段、保留多久和采样比例由业务、隐私及预算决定，没有通用固定比例。[Anthropic 文中 Capability vs. regression evals](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents#capability-vs-regression-evals)强调同时保留能力提升与回归保护；新失败经确认后应补回对应集合，而不只做一次修复。
+因此，验收结果与检查过程互相补充。过程约束应只检查业务真正要求的条件；如果把一条示范工具序列当成唯一正确路径，就会误拒绝有效的替代方案。
 
-## 面试口述短答
+## 确定条件用程序，开放质量用经校准的判断
 
-“我先定义用户任务的允许终态和不能违反的约束，用环境 oracle 验证实际预约，再用轨迹定位原因、用校准过的 Judge 评开放式解释。AI 生成数据只是扩表达，标签要由业务规则、独立证据和人工留出集校准，并按情境防泄漏分割。比较版本时固定输入与预算、重复运行，同时看总体与关键切片；局部少问问题可能增加错误预约，安全副作用也不能靠平均分抵消。”
+程序评分适合结构、数值、状态与测试这类可执行规则。例如 Coding Agent 声称修好了缺陷，应检查原失败测试是否通过，以及需要保留的原通过测试是否仍通过；SWE-bench 的评分实现就区分这两类测试。测试通过只能说明满足了相应测试的条件，不能证明所有可能输入都正确。[SWE-bench 评分实现](https://github.com/SWE-bench/SWE-bench/blob/main/swebench/harness/grading.py)。
 
-## 教学补充：改变条件的模拟追问
+对于解释是否清晰、总结是否覆盖重点等开放质量，可以使用模型评分，但应给出明确量表、必要证据和经人工审核的示例。裁判输出的分数与理由仍需抽查；它可能偏好较长回答，或在成对比较中受答案位置影响。早期 MT-Bench 研究分析了这些偏差，具体强度依赖当时的模型和实验，不能直接当成今天所有裁判的表现。[LLM-as-a-judge 原始研究](https://arxiv.org/html/2306.05685v4)。
 
-以下是教学模拟，不代表原面经逐字提问。
+实践中可以抽取成功、失败和边界案例，与人工判断比较，查看裁判最常错在哪类任务；成对比较时交换或随机化顺序，观察结论是否改变。人工判断也要有一致规则，并处理意见分歧。模型、程序和人工各自适合不同证据，不必把所有维度压成一个模型总分。[OpenAI：评测与人工校准](https://developers.openai.com/api/docs/guides/evaluation-best-practices)。
 
-1. **AI 出题、AI 标答案、两个 Judge 都同意，为什么还不能当黄金集？** 要点：错误可能相关，题目也可能不可判定；用独立业务证据、专家标注校准集查标签和覆盖，换模型不等于已证明正确。
-2. **整体成功率提高，但重复预约增加，能上线吗？** 要点：先查副作用门禁与重复写轨迹；总体平均不能抵消关键约束，修复后配对回归。对应“评分”和“总体负优化”。
-3. **离线全通过，线上用户频繁澄清，是否立刻判成退化？** 要点：澄清可能处理新分布或缺字段；取样复核真实目标与终态，补切片和标签，再用影子/灰度验证，行为反馈不是直接质量标签。
+证据缺失时应输出“无法判断”或明确的错误状态。例如测试容器未启动，不能记为测试通过，也不应未经诊断就归因于 Agent 能力。报告应同时列出计划执行数、有效执行数、环境故障数和任务失败数，说明分母，避免靠删除坏运行抬高成功率。
+
+## 回归比较为什么要看切片和重复执行
+
+Agent 的改动可能影响工具选择、提示词、检索、上下文管理或运行逻辑。为了判断改动是否有效，应保存基线版本、用例版本、环境配置、工具版本、预算和评分规则，再在可比较条件下运行新版本。固定这些条件能够减少混杂因素，但不保证模型每次输出完全相同。
+
+按任务类型、歧义程度、执行长度或已知失败模式拆分结果，能发现总分掩盖的退化。例如一项改动提高了普通检索成功率，却降低了需要澄清的查询成功率；若普通检索占比很高，平均值仍可能上升。此时应检查变化发生在哪些任务，以及失败轨迹是否指向同一原因。
+
+同一任务重复执行，可以观察偶然成功与持续可靠性的差别。“k 次里至少成功一次”和“k 次全部成功”回答不同问题，不能相互替代；只有在独立、同分布等假设成立时，才适合用简单概率公式互推。重复次数、重试政策和环境故障处理方式都应随结果一起报告。[τ-bench：重复执行的可靠性指标](https://arxiv.org/html/2406.12045v1)。
+
+用于开发的错例集可以持续加入新案例，回归集保留已解决的问题，独立保留集用于检查对未参与调优任务的表现。反复根据保留集失败去改系统，会逐渐失去独立评估的意义；应记录数据用途与版本，而不是把同一批题同时用于调优和最终证明。
+
+## 线上观测与离线评测如何形成闭环
+
+离线评测在已知条件下比较版本，线上观测则反映真实任务分布和系统运行状况。二者可以共享失败分类和评分思路，但数据获取方式、可用证据及问题分布往往不同。[LangSmith：离线与线上评测](https://docs.langchain.com/langsmith/evaluation-concepts)。
+
+负反馈是调查线索。用户不满意可能来自答案错误、需求被误解、响应太慢，也可能来自任务本身无法完成；沉默或点赞同样不能直接证明外部结果正确。将获准保留的记录脱敏后，结合工具轨迹与环境证据定位原因，再把能够复现且经过审核的任务加入适当的数据集。
+
+长程任务的观测要区分正在取得进展、卡在重复调用和等待外部系统。执行较久不必然失败，是否超限应依据任务预算和完成条件；按不同任务分别观察耗时分布，比统一设置一条“慢即失败”的规则更有解释力。
+
+对于无法取得后台数据的产品比较，统一可见的输入、任务目标、测试时间和可用资源，说明产品版本及观测边界。只能据此讨论外部表现，不能从结果倒推出其隐藏工具、数据或内部轨迹。
+
+## 生成评测用例也需要独立验收
+
+模型可以辅助扩充用例、扰动输入和提出候选成功条件，但生成器的输出仍是待审核材料。先用人工维护的少量真实任务确定任务分布和量表，再检查生成样本是否可执行、答案是否有独立证据、是否混入评测系统的隐藏判据。随机抽查不足时，另抽查失败、低置信度和分歧样本，保留被拒样本与理由。[OpenAI：评测与人工校准](https://developers.openai.com/api/docs/guides/evaluation-best-practices)。
+
+比较版本还要保持切片权重可比。教学示例中，普通任务从 72/80 提高到 76/80，而边界任务从 12/20 降到 6/20，总成功数就从 84/100 降到 82/100；“大部分任务提升”不能推出整体提升。反过来，若新版本恰好测试了更多简单任务，未经固定分布或分层比较的总体分数也可能误导。示例数字用于解释计算，不代表真实产品成绩。
+
+## 检查理解
+
+下面两问用于自检理解：
+
+- 两条不同调用路径都完成了任务，为什么可能都应通过？因为验收针对目标和必要约束，示范路径通常不是唯一有效实现。
+- 最终回复正确、环境结果却错误时如何处理？按实际成功判据判失败或未完成，再用轨迹定位是理解、调用、执行还是验证出了问题。
+
+## 相关考点与延伸阅读
+
+本篇展开 Agent 评测框架这一核心主题，其余相关考点可继续阅读已有文章。以下链接对应现有知识条目。
+
+| 相关考点 | 知识文章 |
+| --- | --- |
+| 评测框架、轨迹与结果 | [Agent 评测框架](https://www.agent-journey.cn/knowledge?activeKey=agent-eval-framework) |
+| 修复错例与发现退化 | [Agent 提示词回归](https://www.agent-journey.cn/knowledge?activeKey=agent-prompt-regression) |
+| 标题切分与整篇输入比较 | [RAG 文档分块](https://www.agent-journey.cn/knowledge?activeKey=rag-chunking) |
+| 离线指标、线上反馈与错例回流 | [Agent 项目评测](https://www.agent-journey.cn/knowledge?activeKey=agent-project-evaluation) |
+| 项目职责、设计和验证 | [Agent 项目展示](https://www.agent-journey.cn/knowledge?activeKey=agent-project-portfolio) |
+| 查询意图消歧 | [RAG 路由](https://www.agent-journey.cn/knowledge?activeKey=rag-routing) |
+| 自研循环、图编排与框架选择 | [构建 Agent 框架](https://www.agent-journey.cn/knowledge?activeKey=build-agent-framework) |
+| 通用任务与竞品公平比较 | [Agent 基准评测](https://www.agent-journey.cn/knowledge?activeKey=agent-benchmark) |
+| 单词与前缀查询 | [Trie](https://www.agent-journey.cn/knowledge?activeKey=algorithm-trie) |
+| 有序数组的线性合并 | [数组算法](https://www.agent-journey.cn/knowledge?activeKey=algorithm-array) |
 
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-3.md)（cluster-137857a2ba05）
-- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-23.md)（cluster-3f37b9b18f24）
-- [字节 Managed Agent 校招一面：评测、运行链路与后端基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-26.md)（cluster-40374dfc6b29）
-- [字节后端与 Code Review Agent 秋招一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-9.md)（cluster-5b6e09ee89e6）
-- [字节 Agent 暑期实习一面：摘要、工具预算与链表（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-27.md)（cluster-7116079e6b23）
-- [字节飞书 AI 应用一面：Runtime、评测与后端基础（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-24.md)（cluster-78d45fa26bfd）
-- [vivo Agent 秋招线下面：Harness 与工程诊断（2026 年 9 月发帖）](../../../interview/vivo/ai/vivo-ai-1.md)（cluster-798d1749a171）
-- [腾讯 AI 开发一面：Coding Agent 记忆、评测与可靠运行（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-8.md)（cluster-7ef1a4a8ef82）
-- [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)（cluster-910d0b20a897）
-- [字节 Agent 后端实习一面：LangGraph、评测集与混合检索（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-22.md)（cluster-a84ba0858191）
-- [字节 Agent 开发实习一面：自进化与评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-8.md)（cluster-b2a1c4e10ed2）
-- [字节抖音电商 Agent 一面：分层、上下文与 GRPO（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-21.md)（cluster-b34d62449917）
-- [深信服 Agent 开发一面：MCP、多 Agent、安全与网络（2026 年 8 月）](../../../interview/sangfor/ai/sangfor-ai-1.md)（cluster-bb3431ce1c81）
-- [快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-3.md)（cluster-cde9b480341e）
-- [腾讯大模型算法岗一二面：Agentic RL、PPO/GRPO 与 DeepSeek V4（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-7.md)（cluster-daad361f34b4）
+- [小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-3.md)
+- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-23.md)
+- [字节 Managed Agent 校招一面：评测、运行链路与后端基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-26.md)
+- [字节后端与 Code Review Agent 秋招一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-9.md)
+- [字节 Agent 暑期实习一面：摘要、工具预算与链表（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-27.md)
+- [字节飞书 AI 应用一面：Runtime、评测与后端基础（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-24.md)
+- [vivo Agent 秋招线下面：Harness 与工程诊断（2026 年 9 月发帖）](../../../interview/vivo/ai/vivo-ai-1.md)
+- [腾讯 AI 开发一面：Coding Agent 记忆、评测与可靠运行（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-8.md)
+- [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)
+- [字节 Agent 后端实习一面：LangGraph、评测集与混合检索（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-22.md)
+- [字节 Agent 开发实习一面：自进化与评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-8.md)
+- [字节抖音电商 Agent 一面：分层、上下文与 GRPO（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-21.md)
+- [深信服 Agent 开发一面：MCP、多 Agent、安全与网络（2026 年 8 月）](../../../interview/sangfor/ai/sangfor-ai-1.md)
+- [快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-3.md)
+- [腾讯大模型算法岗一二面：Agentic RL、PPO/GRPO 与 DeepSeek V4（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-7.md)
+- [字节 AI 平台一面：Agent 评测、框架与数据结构](../../../interview/bytedance/base/bytedance-base-33.md)
+- [字节Agent全栈一面：工具、评测与编码](../../../interview/bytedance/base/bytedance-base-40.md)
+- [字节 Agent：AI Coding、技能设计与模型工程](../../../interview/bytedance/base/bytedance-base-49.md)
+- [字节 Agent 实习：生成质量、多智能体与缓存](../../../interview/bytedance/base/bytedance-base-52.md)
 <!-- interview-source-history:end -->
+
 
 ## 参考资料
 
-- [Anthropic — Demystifying evals for AI agents，评分器、能力与回归评测、非确定性](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents)（一手工程文章，核验于 2026-10-02）。
-- [OpenAI — Evaluation best practices，数据来源、真实分布与人工校准](https://developers.openai.com/api/docs/guides/evaluation-best-practices)（滚动文档，核验于 2026-10-02；本文采用评测方法，不依赖其平台 API）。
+引用用于核对技术概念；例子为教学设计，不代表实际产品数据。滚动文档核验于 2026-10-03，论文版本分别见原文。
+
+- [Anthropic：Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents)：任务、执行、轨迹、结果与评分器。
+- [τ-bench 原始论文](https://arxiv.org/html/2406.12045v1)：有状态任务验收与重复执行指标。
+- [SWE-bench 评分实现](https://github.com/SWE-bench/SWE-bench/blob/main/swebench/harness/grading.py)：原失败测试和原通过测试的检查。
+- [Judging LLM-as-a-Judge](https://arxiv.org/html/2306.05685v4)：裁判偏差及其边界。
+- [OpenAI：Evaluation best practices](https://developers.openai.com/api/docs/guides/evaluation-best-practices)：任务专属评测、人工校准与持续评测。
+- [LangSmith：Evaluation concepts](https://docs.langchain.com/langsmith/evaluation-concepts)：数据集、实验及线上线下评测。

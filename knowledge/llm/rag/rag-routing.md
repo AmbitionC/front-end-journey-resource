@@ -104,3 +104,10 @@ Routing 自身不能成为最慢阶段。规则和轻量分类器并行或级联
 
 - [Microsoft GraphRAG — Query Engine](https://microsoft.github.io/graphrag/query/overview/)
 - [OpenAI — Latency optimization](https://developers.openai.com/api/docs/guides/latency-optimization)
+
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 AI 平台一面：Agent 评测、框架与数据结构](../../../interview/bytedance/base/bytedance-base-33.md)
+- [字节全栈：多智能体导购、客户端与系统评测](../../../interview/bytedance/base/bytedance-base-43.md)
+<!-- interview-source-history:end -->

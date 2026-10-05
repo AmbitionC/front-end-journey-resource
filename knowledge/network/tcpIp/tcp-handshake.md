@@ -66,12 +66,30 @@ TCP 只能根据收到的报文和本地定时器更新状态。若对端突然�
 
 三次握手同步双向序列号和选项；关闭阶段让两个方向独立发送 FIN 并确认；TIME-WAIT 与重传保证最后阶段仍可恢复。把每个报文放回 RFC 状态机，就能解释丢包、重复、半连接、half-close 与异常 RST，而无需死记固定报文张数。
 
+## 经典拥塞控制与快速恢复
+
+接收窗口限制对端接收能力，拥塞窗口限制网络中未确认数据，二者作用不同。[RFC 5681](https://www.rfc-editor.org/rfc/rfc5681)描述经典慢启动、拥塞避免、快速重传与快速恢复。慢启动中窗口随确认较快增长，达到阈值后转为较缓慢的拥塞避免；“慢”指从小窗口探测，并非总传输速度低。
+
+经典快速重传由重复 ACK 提示可能丢失，比只等重传计时器更早重发。快速恢复调整阈值和窗口，在收到适当新确认后结束该阶段；超时与三个重复 ACK 的处理不同。重复 ACK 也可能来自乱序，不能仅凭一个 ACK 就认定丢包。
+
+这是一套经典基线，不代表现代系统只使用 Reno 或所有实现参数完全相同。CUBIC、BBR、SACK 与恢复扩展应按实际栈核对。三次握手建立连接、可靠传输处理确认与重传、拥塞控制约束发包规模，三个机制回答不同问题。
+
+## HTTP、TLS 与 TCP：先确定是哪一层握手
+
+[RFC 9110 §4.2.2](https://www.rfc-editor.org/rfc/rfc9110.html#section-4.2.2)中的 HTTPS 使用受保护的 HTTP 通信，TLS 提供对端身份验证、机密性与完整性。对使用 TCP 的 HTTPS 连接，TCP 建连、TLS 协商和 HTTP 请求是不同阶段；HTTP/3 使用 QUIC，不能把所有 HTTPS 都套进 TCP 三次握手。
+
+[TLS 1.2 §7.3](https://www.rfc-editor.org/rfc/rfc5246.html#section-7.3)的完整流程包含 ClientHello、服务端协商与按条件发送的证书/密钥交换消息，再交换 Finished；会话恢复可缩短流程。[TLS 1.3 §2](https://www.rfc-editor.org/rfc/rfc8446.html#section-2)将密钥交换前移到 Hello，ServerHello 后的握手消息受保护；按认证方式可省略证书，HelloRetryRequest 则可能增加往返。因此必须区分逻辑消息、发送批次、网络报文与 RTT，不能把 TLS 统一背成固定“四次握手”。
+
+原题若只写“四次握手”，先询问是在说 TCP 四次挥手、某版本 TLS 流程，还是实际抓包。未补充条件前保留题意歧义，不替原作者选定协议版本或恢复方式。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 Agent 开发一面：推理缓存、网络与存储基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-18.md)（cluster-265dac6c3b53）
-- [蚂蚁智能体与大模型应用一面：幻觉、Skill 与 RAG（2026 年 5 月）](../../../interview/antfin/ai/antfin-ai-5.md)（cluster-452705dd533f）
-- [字节 AML / 火山方舟 AI Infra 一面：Agent Runtime、OS 与网络（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-17.md)（cluster-b8f79803b7ec）
+- [字节 Agent 开发一面：推理缓存、网络与存储基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-18.md)
+- [蚂蚁智能体与大模型应用一面：幻觉、Skill 与 RAG（2026 年 5 月）](../../../interview/antfin/ai/antfin-ai-5.md)
+- [字节 AML / 火山方舟 AI Infra 一面：Agent Runtime、OS 与网络（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-17.md)
+- [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../../interview/bytedance/base/bytedance-base-47.md)
+- [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

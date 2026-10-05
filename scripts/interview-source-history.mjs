@@ -1,9 +1,12 @@
-import { access, readFile } from 'node:fs/promises';
-import { dirname, join, normalize, relative, resolve, sep } from 'node:path';
+import { access, readFile, realpath } from 'node:fs/promises';
+import { dirname, join, normalize, relative, resolve, sep, isAbsolute } from 'node:path';
+import { isDirectExecution, leafPath, readBounded, safeRelativePath } from './resource-paths.mjs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { visibleLinkTargets } from './public-interview-contract.mjs';
+import { createHash } from 'node:crypto';
 
 export const INTERVIEW_SOURCE_HISTORY = '.codex/interview-source-history.json';
-const STATUSES = new Set(['published', 'merged', 'skipped', 'retired', 'needs_review']);
+const STATUSES = new Set(['published', 'prepared', 'merged', 'skipped', 'retired', 'needs_review']);
 const EVIDENCE_GRADES = new Set(['A', 'B', 'C']);
 
 function emptyHistory() {
@@ -27,7 +30,7 @@ function normalizedNowcoderUrl(value) {
   return url.toString();
 }
 
-function isCanonicalNowcoderUrl(value) {
+export function isCanonicalNowcoderUrl(value) {
   try {
     const url = new URL(value);
     return url.protocol === 'https:'
@@ -57,16 +60,33 @@ async function pathExists(path) {
   }
 }
 
-export async function readInterviewSourceHistory(resourceRoot) {
-  try {
-    return JSON.parse(await readFile(join(resourceRoot, INTERVIEW_SOURCE_HISTORY), 'utf8'));
-  } catch (error) {
-    if (error?.code === 'ENOENT') return emptyHistory();
-    throw error;
-  }
+export async function readInterviewSourceHistory(resourceRoot, historyPath) {
+  if (!isAbsolute(historyPath ?? '')) throw new Error('来源历史必须显式指定仓库外绝对路径');
+  const root = await realpath(resourceRoot), file = await realpath(historyPath), location = relative(root,file);
+  if (location !== '..' && !location.startsWith(`..${sep}`) && !isAbsolute(location)) throw new Error('来源历史必须位于公开仓库外');
+  return JSON.parse(await readFile(file,'utf8'));
 }
 
-export async function validateInterviewSourceHistory(resourceRoot, history) {
+export function normalizedSourceBody(text) {
+  return text.replace(/^\uFEFF?---\r?\n[\s\S]*?\r?\n---(?:\r?\n|$)/u,'').normalize('NFKC').replace(/\s/gu,'');
+}
+
+export async function verifiedHistoricalFingerprint(root, record) {
+  if (!isAbsolute(record.originalBodyEvidenceFile??'') || !/^[a-f0-9]{64}$/u.test(record.originalBodySha256??'')) throw new Error('历史原文缺仓外冻结证据');
+  const base=await realpath(root),file=await realpath(record.originalBodyEvidenceFile),location=relative(base,file);
+  if(location!=='..' && !location.startsWith(`..${sep}`) && !isAbsolute(location)) throw new Error('历史原文证据必须在公开仓外');
+  const bytes=await readFile(file),hash=value=>createHash('sha256').update(value).digest('hex');
+  if(hash(bytes)!==record.originalBodySha256) throw new Error('历史冻结原文指纹不一致');
+  const capture=record.originalBodyDocumentJson?JSON.parse(bytes).document:null;
+  if(capture && (capture.canonicalUrl||capture.url)!==record.url) throw new Error('历史冻结原文 URL 不一致');
+  const text=capture?capture.text:bytes.toString();
+  if(typeof text!=='string' || !text.trim()) throw new Error('历史冻结原文正文为空');
+  const actual=hash(normalizedSourceBody(text));
+  if(record.normalizedBodySha256!==undefined && actual!==record.normalizedBodySha256) throw new Error('历史正文指纹未由冻结原文复算确认');
+  return actual;
+}
+
+export async function validateInterviewSourceHistory(resourceRoot, history, options = {}) {
   const errors = [];
   if (!isObject(history) || history.schemaVersion !== 1 || !isObject(history.records)) {
     return ['面经来源历史格式无效：需要 schemaVersion=1 和 records 对象'];
@@ -78,12 +98,12 @@ export async function validateInterviewSourceHistory(resourceRoot, history) {
   let treeLeaves = [];
   let knowledgeLeaves = [];
   try {
-    treeLeaves = leaves(JSON.parse(await readFile(join(resourceRoot, 'interview', '_tree.json'), 'utf8')));
+    treeLeaves = leaves(JSON.parse((await readBounded(resourceRoot,'interview/_tree.json','interview')).toString()));
   } catch {
     errors.push('无法读取 interview/_tree.json');
   }
   try {
-    knowledgeLeaves = leaves(JSON.parse(await readFile(join(resourceRoot, 'knowledge', '_tree.json'), 'utf8')));
+    knowledgeLeaves = leaves(JSON.parse((await readBounded(resourceRoot,'knowledge/_tree.json','knowledge')).toString()));
   } catch {
     errors.push('无法读取 knowledge/_tree.json');
   }
@@ -117,6 +137,10 @@ export async function validateInterviewSourceHistory(resourceRoot, history) {
     }
     if (!EVIDENCE_GRADES.has(record.evidenceGrade)) errors.push(`${prefix} 的 evidenceGrade 无效`);
     if (!STATUSES.has(record.status)) errors.push(`${prefix} 的 status 无效`);
+    if ((record.processUnitId !== undefined || (options.includePrepared && record.status === 'prepared'))
+      && (typeof record.processUnitId !== 'string' || !record.processUnitId.trim())) {
+      errors.push(`${prefix} 的独立面试过程 processUnitId 不能为空`);
+    }
     if (!stringArray(record.publicFiles)) errors.push(`${prefix} 的 publicFiles 必须是字符串数组`);
     if (!stringArray(record.knowledgeKeys) && !(Array.isArray(record.knowledgeKeys) && record.knowledgeKeys.length === 0)) {
       errors.push(`${prefix} 的 knowledgeKeys 必须是字符串数组`);
@@ -131,7 +155,7 @@ export async function validateInterviewSourceHistory(resourceRoot, history) {
       errors.push(`${prefix} 的 processedAt 必须是 ISO 时间`);
     }
 
-    if (record.status !== 'published') continue;
+    if (record.status !== 'published' && !(options.includePrepared && record.status === 'prepared')) continue;
     if (!isCanonicalNowcoderUrl(record.url)) {
       errors.push(`${prefix} 发布面经必须使用规范牛客 URL`);
     }
@@ -148,8 +172,10 @@ export async function validateInterviewSourceHistory(resourceRoot, history) {
         errors.push(`${prefix} 的 articleKey 不在 interview/_tree.json`);
       } else {
         const leaf = leafByKey.get(record.articleKey);
-        const expectedFile = `interview/${leaf.filePath}/${leaf.key}.md`;
-        if (!Array.isArray(record.publicFiles) || !record.publicFiles.includes(expectedFile)) {
+        let expectedFile;
+        try { expectedFile = leafPath('interview',leaf); await readBounded(resourceRoot,expectedFile,'interview'); }
+        catch { errors.push(`${prefix} 的公开文件不存在或面经路径无效、越界`); }
+        if (expectedFile && (!Array.isArray(record.publicFiles) || !record.publicFiles.includes(expectedFile))) {
           errors.push(`${prefix} 的 articleKey 与 publicFiles 不匹配：应包含 ${expectedFile}`);
         }
       }
@@ -158,13 +184,10 @@ export async function validateInterviewSourceHistory(resourceRoot, history) {
       errors.push(`${prefix} 发布面经缺少 publicFiles`);
     } else {
       for (const relativePath of record.publicFiles) {
-        const normalized = normalize(relativePath);
-        if (!normalized.startsWith(`interview${sep}`) || normalized.includes(`..${sep}`)) {
-          errors.push(`${prefix} 的公开文件路径越界：${relativePath}`);
+        try { safeRelativePath(relativePath); await readBounded(resourceRoot,relativePath,'interview'); }
+        catch(error) {
+          errors.push(`${prefix} 的${error.code==='ENOENT'?'公开文件不存在':'公开文件路径越界'}：${relativePath}`);
           continue;
-        }
-        if (!await pathExists(join(resourceRoot, normalized))) {
-          errors.push(`${prefix} 的公开文件不存在：${relativePath}`);
         }
       }
     }
@@ -183,13 +206,18 @@ export async function validateInterviewSourceHistory(resourceRoot, history) {
     }
   }
 
-  for (const topic of topicFrequencies(history)) {
+  const relationHistory = options.includePrepared ? {
+    ...history, records: Object.fromEntries(Object.entries(history.records).map(([id, record]) => [
+      id, record.status === 'prepared' ? { ...record, status: 'published' } : record,
+    ])),
+  } : history;
+  for (const topic of topicFrequencies(relationHistory)) {
     const knowledgeLeaf = knowledgeLeaves.find(leaf => leaf.key === topic.key);
     if (!knowledgeLeaf) continue;
     const knowledgeFile = join(resourceRoot, 'knowledge', knowledgeLeaf.filePath, `${knowledgeLeaf.key}.md`);
     let contents;
     try {
-      contents = await readFile(knowledgeFile, 'utf8');
+      contents = (await readBounded(resourceRoot,leafPath('knowledge',knowledgeLeaf),'knowledge')).toString();
     } catch {
       errors.push(`知识点正文不存在：${topic.key}`);
       continue;
@@ -209,7 +237,10 @@ export async function validateInterviewSourceHistory(resourceRoot, history) {
         `${interviewLeaf.key}.md`,
       );
       const link = relative(dirname(knowledgeFile), interviewFile).split(sep).join('/');
-      if (!contents.includes(`](${link.startsWith('.') ? link : `./${link}`})（${cluster}）`)) {
+      const suffix = options.requireClusterAnnotations === false ? '' : `（${cluster}）`;
+      let realLink=false;
+      try { realLink=visibleLinkTargets(contents,leafPath('knowledge',knowledgeLeaf)).has(leafPath('interview',interviewLeaf)); } catch {}
+      if (!realLink || suffix && !contents.includes(`](${link.startsWith('.') ? link : `./${link}`})${suffix}`)) {
         errors.push(`知识点 ${topic.key} 缺少来源反链：${cluster}`);
       }
     }
@@ -228,6 +259,7 @@ export function topicFrequencies(history) {
       const current = topics.get(key) ?? {
         key,
         clusters: new Set(),
+        processes: new Set(),
         companies: new Set(),
         lastSeenAt: '',
       };
@@ -235,6 +267,7 @@ export function topicFrequencies(history) {
         counted.add(identity);
         current.clusters.add(record.clusterId);
       }
+      current.processes.add(record.processUnitId ?? record.clusterId);
       if (typeof record.company === 'string' && record.company.length > 0) {
         current.companies.add(record.company);
       }
@@ -247,7 +280,7 @@ export function topicFrequencies(history) {
   return [...topics.values()]
     .map(topic => ({
       key: topic.key,
-      count: topic.clusters.size,
+      count: topic.processes.size,
       clusters: [...topic.clusters].sort(),
       companies: [...topic.companies].sort(),
       lastSeenAt: topic.lastSeenAt,
@@ -255,10 +288,10 @@ export function topicFrequencies(history) {
     .sort((left, right) => right.count - left.count || left.key.localeCompare(right.key));
 }
 
-const isMain = process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href;
+const isMain = isDirectExecution(import.meta.url);
 if (isMain) {
   const resourceRoot = process.argv[2]
     ? resolve(process.argv[2])
     : resolve(fileURLToPath(new URL('..', import.meta.url)));
-  console.log(JSON.stringify(topicFrequencies(await readInterviewSourceHistory(resourceRoot)), null, 2));
+  console.log(JSON.stringify(topicFrequencies(await readInterviewSourceHistory(resourceRoot, process.argv[3])), null, 2));
 }

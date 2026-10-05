@@ -15,6 +15,7 @@ async function runValidator(interviewContents) {
     await mkdir(join(fixture, 'interview', 'company'), { recursive: true });
     await mkdir(join(fixture, 'knowledge'), { recursive: true });
     await copyFile(join(ROOT, 'scripts', 'validate-tree.mjs'), join(fixture, 'scripts', 'validate-tree.mjs'));
+    await copyFile(join(ROOT,'scripts','resource-paths.mjs'),join(fixture,'scripts','resource-paths.mjs'));
     await copyFile(
       join(ROOT, 'scripts', 'interview-source-history.mjs'),
       join(fixture, 'scripts', 'interview-source-history.mjs'),
@@ -69,13 +70,18 @@ test('tree validation rejects every public interview source disclosure', async (
     ['entity-encoded Nowcoder link', '# 面经\n\n[原始记录](https://nowcoder&#46;com/feed/main/detail/example)\n'],
     ['percent-encoded Nowcoder link', '# 面经\n\n[原始记录](https://www%2Enowcoder%2Ecom/feed/main/detail/example)\n'],
     ['case-insensitive Nowcoder hostname', '# 面经\n\n<https://WWW.NOWCODER.COM/feed/main/detail/example>\n'],
+    ['HTML details link', '<details><summary>问题</summary><a href="https://www.nowcoder.com/discuss/example">原帖</a></details>'],
+    ['encoded HTML details link', '<details><a href="https://www&#46;nowcoder&#46;com/discuss/example">原帖</a></details>'],
+    ['protocol relative HTML link', '<div><a href="//www.nowcoder.com/discuss/example">原帖</a></div>'],
+    ['fenced original URL', '```text\nhttps://www.nowcoder.com/discuss/example\n```'],
+    ['HTML source heading', '<h2>来源</h2>'],
   ];
 
   const missedDisclosures = [];
   for (const [name, contents] of cases) {
     const result = await runValidator(contents);
     const output = `${result.stdout}\n${result.stderr}`;
-    if (result.status === 0 || !/公开面经不得包含/u.test(output)) missedDisclosures.push(name);
+    if (result.status === 0 || !/公开面经不得包含/u.test(output)) missedDisclosures.push({name,status:result.status,output});
   }
   assert.deepEqual(missedDisclosures, []);
 });

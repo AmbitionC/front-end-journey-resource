@@ -64,6 +64,12 @@ Trace 记录 observation ID、URL/origin（必要时脱敏）、locator、action
 
 Browser-use 的可靠性来自语义和验证：用 DOM/可访问性信息构造 locator，以 actionability 抵抗页面竞态，每次动作后重新观察并验证业务后置条件。隔离登录态、限制域名和文件、把页面内容视为不可信，并在最终提交前审批，才能把网页自动化从“会点击”提升为可控执行。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Playwright — Locators](https://playwright.dev/docs/locators)

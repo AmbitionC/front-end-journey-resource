@@ -87,6 +87,13 @@ Provider 测试证明实现符合 OpenAPI；Consumer 测试证明真实客户端
 
 API Schema 治理是一条闭环：固定规范版本，设计时 lint 与兼容检查，运行时分别验证形状和业务规则，用稳定 Problem Details 返回错误，再由 Provider 与 Consumer 契约测试防止漂移。文档生成只是结果之一，真正目标是让客户端和服务端对边界行为有同一份可执行理解。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节全栈：预请求、列表复用与 ThreadLocal](../../../interview/bytedance/base/bytedance-base-44.md)
+- [字节全栈实习：Session、权限与前端基础](../../../interview/bytedance/base/bytedance-base-46.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenAPI Specification：Latest](https://spec.openapis.org/oas/latest.html)

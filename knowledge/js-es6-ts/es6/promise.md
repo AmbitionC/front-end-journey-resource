@@ -51,7 +51,7 @@ async function loadDashboard() {
 }
 ```
 
-若两个调用互不依赖，先创建再 `Promise.all`；逐个 await 会无意串行。若第二步依赖第一步，则串行才正确。try/catch 只捕获其作用域内 awaited/returned Promise；启动后不 await 的任务不会被外层可靠捕获。
+若两个调用互不依赖，先创建再 `Promise.all`；逐个 await 会无意串行。若第二步依赖第一步，则串行才正确。try/catch 可捕获作用域内同步抛错与实际 await 到的 rejection；直接 return 一个稍后 reject 的 Promise 不会被该层 catch 捕获，需 return await 或显式 .catch。启动后不 await 的任务也不会被外层可靠捕获。
 
 ## 组合器语义
 
@@ -89,6 +89,42 @@ async function load(url, { signal }) {
 用可控 deferred Promise 测顺序，不依赖真实 sleep；覆盖同步 executor 异常、thenable、组合器空输入、部分拒绝、Abort、超时竞态和并发上限。fake timer 要同时推进 microtask。
 
 判断异步代码是否可靠，可以问四个问题：谁等待它、错误到哪里、能否取消、最多并发多少。Promise 只回答第一个问题的一部分，其余需要显式协议。
+
+## 手写并发上限：惰性任务与结果策略
+
+输入若已经是运行中的 Promise，就无法用外层调度器限制其启动。下面的教学接口接收无参任务函数，采用“全部尝试、逐项记录成功或失败”的策略，并按输入顺序返回；它没有取消和超时功能，不能当完整生产调度器。
+
+```javascript
+async function settleLimit(taskFns, limit) {
+  if (!Number.isInteger(limit) || limit < 1) throw new RangeError('Invalid limit');
+  if (!Array.isArray(taskFns) || Array.from(taskFns).some(fn => typeof fn !== 'function')) {
+    throw new TypeError('Tasks must be lazy functions');
+  }
+  const results = new Array(taskFns.length);
+  let cursor = 0;
+  async function worker() {
+    while (cursor < taskFns.length) {
+      const index = cursor++;
+      try { results[index] = {status: 'fulfilled', value: await taskFns[index]()}; }
+      catch (reason) { results[index] = {status: 'rejected', reason}; }
+    }
+  }
+  await Promise.all(Array.from({length: Math.min(limit, taskFns.length)}, worker));
+  return results;
+}
+```
+
+一个工作者等待当前任务 settle 后才领取下一项；同一 JavaScript 执行环境中，读取并递增 cursor 之间没有 await，所以每项只分配一次。工作者数不超过 limit，控制的是返回 Promise 所代表的未完成任务，而不是任意函数背后未报告的后台工作。同步抛错也被逐项捕获，后续任务继续；若题目要求遇错停止启动或取消已启动项，必须改契约与实现。
+
+测试应使用可控 deferred Promise：让后启动的先完成，检查最大在途数、任务只启动一次、结果仍按输入顺序；再混入同步 throw 和异步 reject，并覆盖空输入与非法 limit。只测最终数组无法证明并发上限。
+
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节前端全栈实习一面：渲染、Worker与认证](../../../interview/bytedance/base/bytedance-base-38.md)
+- [字节全栈实习：Session、权限与前端基础](../../../interview/bytedance/base/bytedance-base-46.md)
+- [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
+<!-- interview-source-history:end -->
 
 ## 参考资料
 

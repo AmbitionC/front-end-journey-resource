@@ -122,3 +122,9 @@ Prompt、模型、工具、策略和数据是独立又会交互的变化轴。�
 - [NIST：AI Test, Evaluation, Validation and Verification](https://www.nist.gov/ai-test-evaluation-validation-and-verification-tevv)
 - [NIST：Choosing an experimental design](https://www.itl.nist.gov/div898/handbook/pri/section3/pri3.htm)
 - [OpenTelemetry：Semantic conventions](https://opentelemetry.io/docs/specs/semconv/)
+
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 AI 平台一面：Agent 评测、框架与数据结构](../../../interview/bytedance/base/bytedance-base-33.md)
+<!-- interview-source-history:end -->

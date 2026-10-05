@@ -61,3 +61,9 @@ Trie 只快速找到 prefix 对应子树。推荐顺序可能综合历史频次�
 ## 参考资料
 
 - [Princeton Algorithms：Tries](https://algs4.cs.princeton.edu/52trie/)
+
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 AI 平台一面：Agent 评测、框架与数据结构](../../../interview/bytedance/base/bytedance-base-33.md)
+<!-- interview-source-history:end -->

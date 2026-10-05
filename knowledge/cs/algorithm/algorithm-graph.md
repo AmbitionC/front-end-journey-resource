@@ -59,6 +59,51 @@ parent 只在严格改善时更新；相等路径若需要确定 tie-break，明
 
 大图工程还要考虑输入无法一次装入内存、热点超级节点和并行分区。分布式遍历会把“访问一条边”变成网络通信，理论 O(V+E) 仍成立却不足以预测成本。先压缩 ID、按边分区、限制 frontier，并把算法层数、活跃节点、跨分区消息和倾斜纳入观测；复杂度模型与实际执行计划必须一起评审。
 
+## 依赖任务的批次不是一条拓扑序
+
+任务边从前置指向后置。Kahn 算法每次冻结当前所有零入度节点为一批，再删除整批出边，下一轮才加入新零入度节点；这保证依赖不落在同一批。教学接口输入唯一 ID 及边，不执行任务，也不检查共享资源竞争。
+
+```javascript
+function dependencyBatches(ids, edges) {
+  if (new Set(ids).size !== ids.length) throw new Error('Duplicate ID');
+  const outgoing = new Map(ids.map(id => [id, new Set()]));
+  const degree = new Map(ids.map(id => [id, 0]));
+  for (const [from, to] of edges) {
+    if (!outgoing.has(from) || !outgoing.has(to)) throw new Error('Unknown ID');
+    if (!outgoing.get(from).has(to)) {
+      outgoing.get(from).add(to); degree.set(to, degree.get(to) + 1);
+    }
+  }
+  let ready = ids.filter(id => degree.get(id) === 0);
+  const batches = []; let completed = 0;
+  while (ready.length) {
+    batches.push(ready); completed += ready.length;
+    const next = [];
+    for (const id of ready) for (const target of outgoing.get(id)) {
+      degree.set(target, degree.get(target) - 1);
+      if (degree.get(target) === 0) next.push(target);
+    }
+    ready = next;
+  }
+  if (completed !== ids.length) throw new Error('Dependency cycle');
+  return batches;
+}
+```
+
+同一批只满足已建模的数据依赖，不保证没有共享写入冲突或配额争抢；执行时还需并发限制与失败策略。依赖未知 ID 要拒绝，重复边不能多计入度，存在环应报错而不是返回一个看似完整的部分批次。构图和扫描 O(V+E)，其中 E 指去重后的边；空图返回空批次。
+
+## “最小割集”需要先确认最小的含义
+
+若任务讨论图连通性，先说明删除点还是边、要分开哪些目标，以及是否有权值。包含关系极小表示不能再删去集合中的任何项而仍满足条件；全局最小代价则比较所有可行集合的大小或权重，两者不是同义词。一个不可继续缩减的集合仍可能比另一个可行集合昂贵。
+
+[Princeton 的最大流/最小 s-t 割资料](https://algs4.cs.princeton.edu/64maxflow/)讨论的是带容量网络的 s-t 分离问题，不证明每个业务“最小割集”都属于这一模型。如果业务实际指失效事件组合，应先定义顶层失效条件；原问题未给完整业务模型时，正确下一步是澄清，而不是硬套最大流算法。
+
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节前端全栈实习一面：渲染、Worker与认证](../../../interview/bytedance/base/bytedance-base-38.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [MIT OCW 6.006：Lecture Notes](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2008/resources/lecture-notes/)

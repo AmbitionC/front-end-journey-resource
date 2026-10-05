@@ -84,6 +84,12 @@ Effect 适合连接 WebSocket、订阅浏览器 API、控制非 React widget、�
 
 这套顺序把 Hook 从 API 清单变成渲染模型：state 驱动下一快照，commit 更新宿主，Effect 只负责外部同步。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [React useState reference](https://react.dev/reference/react/useState)

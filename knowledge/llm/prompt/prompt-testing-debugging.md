@@ -100,6 +100,12 @@ CI 不必每次跑最昂贵的全集，可以分层：
 
 Prompt 调试的核心是可复现的证据链：行为契约决定数据集，确定性规则和经校准的评分器给出信号，失败分类指导最小修改，回归门禁阻止局部优化破坏其他场景。这样 Prompt 才从“手艺”变成可维护的工程资产。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenAI — Evaluation best practices](https://developers.openai.com/api/docs/guides/evaluation-best-practices)

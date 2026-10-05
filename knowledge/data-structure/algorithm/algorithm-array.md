@@ -30,41 +30,51 @@ console.log(uniqueArr); // [1, 2, 3, 4]
 
 
 
-#### 3. 归并两个排序数组
+#### 3. 两个升序数组归并成降序数组
 
-[Purdue 的竞赛编程讲义](https://www.cs.purdue.edu/homes/ninghui/courses/390_Fall19/lectures.html) 总结了双指针和滑动窗口模式：每次移动端点时都要维护一个能排除候选的循环不变量。
-
-**问题**：合并两个已排序的数组，使合并后的数组也是有序的。  
-**解法**：使用双指针从后向前归并。
+两个输入数组各自升序，尾部就是当前未处理部分的最大值。每次取两个尾部的较大者追加到输出，并仅移动它的指针；不变量是“输出已经降序，且已输出值不小于所有未处理值”。一个数组耗尽后，另一个也要从尾部逐个追加，不能把其升序余段直接拼接。[Princeton：归并使用有序子序列](https://algs4.cs.princeton.edu/22mergesort/)。
 
 ```javascript
-const merge = (arr1, arr2) => {
-  let result = [];
+function mergeDescending(arr1, arr2) {
+  const result = [];
   let i = arr1.length - 1;
   let j = arr2.length - 1;
-
   while (i >= 0 && j >= 0) {
-    if (arr1[i] > arr2[j]) {
-      result.push(arr1[i--]);
-    } else {
-      result.push(arr2[j--]);
-    }
+    if (arr1[i] > arr2[j]) result.push(arr1[i--]);
+    else result.push(arr2[j--]);
   }
+  while (i >= 0) result.push(arr1[i--]);
+  while (j >= 0) result.push(arr2[j--]);
+  return result;
+}
 
-  // 将剩余元素添加到结果数组中
-  return result.concat(i >= 0 ? arr1.slice(0, i + 1) : arr2.slice(0, j + 1));
-};
-
-const arr1 = [1, 3, 5];
-const arr2 = [2, 4, 6];
-console.log(merge(arr1, arr2)); // [1, 2, 3, 4, 5, 6]
+console.log(mergeDescending([1, 3, 5], [6])); // [6, 5, 3, 1]
+console.log(mergeDescending([1, 3], [2, 3])); // [3, 3, 2, 1]
 ```
 
+重复元素按原输入保留；不修改输入。每步消耗一个元素，时间 O(n+m)，输出空间 O(n+m)。若题目要求升序输出，改为从两头部选较小者；若要求在预留容量的输入数组原地合并，则使用第 10 节从尾部填入较大值的写法，不能混用追加方向。
 
+#### 3.1 两个升序序列的交集
 
+两个指针从头开始。值不相等时移动较小者：它不可能与另一侧当前或更大的未处理值相等；相等时输出并同时移动。每个位置最多访问一次，时间 O(n+m)，除输出外空间 O(1)。这依赖两个输入都有序，不能直接套到无序流。
+
+```javascript
+function intersectSorted(a, b) {
+  const result = [];
+  let i = 0, j = 0;
+  while (i < a.length && j < b.length) {
+    if (a[i] < b[j]) i += 1;
+    else if (a[i] > b[j]) j += 1;
+    else { result.push(a[i]); i += 1; j += 1; }
+  }
+  return result;
+}
+```
+
+这段实现是多重集合交集：`[1,1,2]` 与 `[1,2,2]` 得 `[1,2]`，重复次数取两侧最小值。若要求唯一集合，应在命中后跳过双方相同值；不要在未确认题目契约时悄悄去重。
 #### 4. 找出数组中第K大的元素
 **问题**：找出数组中第K大的元素。  
-**解法**：使用快速选择算法（类似于快速排序）。
+**解法**：使用快速选择算法（类似于快速排序）。`k` 必须是 `1..arr.length` 内的整数；重复元素分别占一个名次。这段实现会原地调整数组，若需保留原数组，应传入副本。
 
 ```javascript
 const partition = (arr, low, high) => {
@@ -81,8 +91,11 @@ const partition = (arr, low, high) => {
 };
 
 const quickSelect = (arr, k) => {
-  const low = 0;
-  const high = arr.length - 1;
+  if (!Number.isInteger(k) || k < 1 || k > arr.length) {
+    throw new RangeError('k must be an integer between 1 and arr.length');
+  }
+  let low = 0;
+  let high = arr.length - 1;
   while (true) {
     const pivotIndex = partition(arr, low, high);
     if (pivotIndex === k - 1) {
@@ -234,7 +247,7 @@ console.log(isPalindrome(str)); // true
 [Princeton COS 226 双指针材料](https://www.cs.princeton.edu/courses/archive/spring26/cos226/precepts/advanced-precept5.pdf) 展示了利用有序性单调排除候选区间的线性扫描；“两个指针”本身不是正确性的证明，不变量才是。
 
 **问题**：给定两个有序整数数组，在原地合并它们，使它们成为一个有序数组。  
-**解法**：从后向前填充较小的元素。
+**解法**：从后向前填充较大的元素。
 
 ```javascript
 const merge = (nums1, m, nums2, n) => {
@@ -334,8 +347,12 @@ function diffBounds(imageA, imageB, isDifferent) {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [阿里云可观测存储 AI Agent 工程岗一面：存储性能与查询优化（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-7.md)（cluster-cf26fe3b37d5）
-- [腾讯大模型算法岗一二面：Agentic RL、PPO/GRPO 与 DeepSeek V4（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-7.md)（cluster-daad361f34b4）
+- [阿里云可观测存储 AI Agent 工程岗一面：存储性能与查询优化（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-7.md)
+- [腾讯大模型算法岗一二面：Agentic RL、PPO/GRPO 与 DeepSeek V4（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-7.md)
+- [字节 Agent 一面：会话记忆、并发更新与算法](../../../interview/bytedance/base/bytedance-base-29.md)
+- [字节全栈二、三面：幂等、索引与字符串匹配](../../../interview/bytedance/base/bytedance-base-32.md)
+- [字节 AI 平台一面：Agent 评测、框架与数据结构](../../../interview/bytedance/base/bytedance-base-33.md)
+- [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

@@ -419,7 +419,8 @@ Hash 取模分片在扩容时需要迁移约 `(N-1)/N` 比例的数据。初始�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测（2026 年 8 月）](../../../interview/baidu/ai/baidu-ai-2.md)（cluster-9acb30c57710）
+- [百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测（2026 年 8 月）](../../../interview/baidu/ai/baidu-ai-2.md)
+- [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

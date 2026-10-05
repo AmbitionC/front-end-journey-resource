@@ -1,0 +1,60 @@
+服务端渲染（SSR）先在服务器生成页面 HTML；hydration 则让客户端组件逻辑接管已有 HTML，使页面具备应用定义的交互。前者回答首批内容怎样送到浏览器，后者回答这些内容怎样与状态、事件和后续更新结合。看到文字与能够完成交互，是两个不同的检查点。
+
+
+![服务端先生成 HTML，浏览器解析已有 DOM，客户端代码与一致初始数据通过 hydration 关联组件逻辑。](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/server-rendering-hydration-archify-v1.png)
+*图：使用 Archify v2.16.0 绘制。HTML 展示与组件交互的接管是不同阶段，箭头表示依赖关系，不要求全部 HTML 传输完成后才执行客户端脚本。*
+
+## HTML、DOM 与组件逻辑的分工
+
+HTML 是发送的标记文本，DOM 是浏览器解析后形成的对象结构，组件代码描述界面应怎样随数据和状态变化。浏览器可以在应用 JavaScript 尚未加载时解析 HTML、显示文字，普通链接与表单也可以具有原生行为；这不等于组件定义的按钮处理函数已就绪。
+
+客户端渲染主要由浏览器执行组件代码来建立应用界面。SSR 把初次内容生成移到服务器；静态生成则把生成时点前移到构建或预渲染阶段。页面可以组合这些方式，但“服务器发了 HTML”不能单独证明采用了哪种完整框架方案。
+
+React 官方分别提供服务器渲染与客户端接管接口；本文只用它们说明职责，不把某个框架的缓存、路由或部署规则当成 SSR 的通用定义。[React：服务器生成 HTML](https://react.dev/reference/react-dom/server/renderToString)、[React：hydrateRoot](https://react.dev/reference/react-dom/client/hydrateRoot)。
+
+## 从首批内容到应用交互
+
+服务器根据本次数据生成 HTML；浏览器收到后解析并展示已有内容，同时加载相应组件代码和必要数据。客户端首次渲染应描述与服务器一致的初始界面，框架才能把现有 DOM 与组件逻辑对应起来。完成接管后，后续状态变化再按客户端更新机制处理。
+
+因此，SSR 通常仍需要客户端 JavaScript。服务端 HTML 可以让首批内容较早可见，但还要检查下载、执行和 hydration 的成本，不能据此保证所有性能指标都提高。复杂脚本或长任务仍可能延迟交互。
+
+把 hydration 解释成“重新创建全部 HTML”也不准确。它的目标是接管已有内容；发生不一致时，恢复可能带来额外工作，不能把恢复路径当成正常机制。[React：接管已有 HTML 与不一致边界](https://react.dev/reference/react-dom/client/hydrateRoot)。
+
+## 初始一致性为什么重要
+
+教学例子中，服务器展示金额 `100`，客户端第一次却展示 `120`。如果双方没有使用一致的数据快照，就无法可靠对应同一份初始内容。问题不只在文字是否闪一下，还可能影响状态及事件对应，必须检查数据流和初始渲染条件。
+
+常见差异还包括随机值、当前时间、区域格式，以及只在浏览器存在的状态。需要客户端才知道的信息，可以在明确的后续更新阶段处理；不能直接让服务器与客户端第一次渲染采用互相矛盾的条件。
+
+HTML 不一致应作为缺陷定位。忽略警告不是通用修复；也不应承诺框架总会把所有属性修成期望值。服务端发送的数据若包含用户信息，还要确认序列化和输出边界，不能把隐藏界面当成数据已经脱敏。
+
+## 渲染时点与传输方式是两回事
+
+请求时生成、提前生成和浏览器生成，讨论的是内容计算在哪里、何时发生；整段发送或流式发送，讨论的是产物怎样到达浏览器。流式 SSR 可以逐步交付就绪内容，但具体等待、错误处理和 hydration 调度依赖框架与接口。
+
+例如，React 的 `renderToString` 直接返回字符串，不支持等待数据和流式传输；这只是该接口的边界，不能概括成“SSR 不能流式”。本文的基础机制不要求采用这个接口搭建生产应用。[React：renderToString 的限制与替代接口](https://react.dev/reference/react-dom/server/renderToString)。
+
+选方案时，应分别检查内容可见时间、交互就绪时间、服务器负载、数据新鲜度和缓存边界。公开内容可能适合提前生成，依赖当前用户的内容需要隔离数据；选择 SSR 也不能省掉鉴权与授权。
+
+## 面试口述与条件变化
+
+可以这样回答：“SSR 在服务器生成首批 HTML，浏览器可先解析展示；hydration 让客户端逻辑接管这份内容，之后才能完成应用定义的交互。双方初始界面要一致。SSR、静态生成、流式传输与交互就绪是不同维度，需要分别评价成本和边界。”
+
+以下为教学追问：
+
+- 页面已显示，按钮仍没有应用行为，可能是哪一阶段未完成？检查脚本下载、执行和接管阶段，不能只检查 HTML 响应。
+- 服务器与客户端金额不同，能靠隐藏 hydration 警告修好吗？应先找数据快照或初始条件的差异；隐藏警告不能建立一致性。
+- 静态生成的 HTML 能 hydration 吗？可以；生成时点不决定是否需要客户端接管，是否交互取决于页面设计与框架契约。
+
+## 参考资料
+
+React 滚动文档核验于 2026-10-03（页面标记 v19.3）。本文讲通用职责，未运行完整 SSR 应用，也未声明性能收益。
+
+- [React：hydrateRoot](https://react.dev/reference/react-dom/client/hydrateRoot)。
+- [React：renderToString](https://react.dev/reference/react-dom/server/renderToString)。
+
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节剪映 AI 前端一面：Agent 运行时、MCP 与性能](../../../interview/bytedance/base/bytedance-base-30.md)
+<!-- interview-source-history:end -->

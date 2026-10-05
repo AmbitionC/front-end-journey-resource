@@ -10,12 +10,10 @@ JWT（JSON Web Token）是一种常见的 claims 表示格式，可用于携带�
 [RFC 7519](https://www.rfc-editor.org/rfc/rfc7519.html) 定义 JWT 的紧凑 claims 表示及 `iss`、`aud`、`exp`、`nbf` 等注册声明；解析出 payload 并不代表签名和这些声明已经通过验证。
 
 
-JWT 由三段 Base64URL 编码的字符串拼接而成，用 `.` 分隔：
+本文图示与后续例子限定为签名 JWT 的 JWS 紧凑形式：header.payload.signature 三段；加密 JWT 可以采用 JWE，不能把三段当作所有 JWT 的定义。下面仅展示结构，不是能通过验签的真实令牌：
 
-```
-eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9
-.eyJzdWIiOiJ1c2VyXzEyMyIsInJvbGUiOiJhZ2VudCIsImV4cCI6MTcxNjAwMDAwMH0
-.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+```text
+base64url(header).base64url(claims).signature_placeholder
 ```
 
 ### Header
@@ -34,7 +32,7 @@ eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9
 承载 Claims（声明），分为三类：
 
 - **Registered Claims**（注册声明）：`iss`（签发方）、`sub`（主题/用户ID）、`exp`（过期时间）、`iat`（签发时间）、`jti`（唯一标识，用于吊销）
-- **Public Claims**：公开约定的字段，如 `email`、`role`
+- **Public Claims**：按公共注册或抗冲突名称约定的字段；业务里常用的 `role` 不因此自动成为标准声明
 - **Private Claims**：业务自定义字段，如 `agentQuota`、`tenantId`
 
 ```json
@@ -71,189 +69,84 @@ RSASHA256(
 |------|------|------|----------|--------|
 | HS256 | 对称（HMAC） | 签名和验证用同一密钥 | 单体应用、内部服务 | 密钥泄露全线崩溃 |
 | RS256 | 非对称（RSA） | 私钥签名，公钥验证 | 微服务、跨服务鉴权 | 高，私钥只在签发方 |
-| ES256 | 非对称（ECDSA） | 私钥签名，公钥验证 | 对性能有要求的场景 | 高，密钥更短更快 |
+| ES256 | 非对称（ECDSA） | 私钥签名，公钥验证 | 对性能有要求的场景 | 高，签名较短；性能需按实现测量 |
 
-**Agent 服务推荐 RS256 或 ES256**：当多个 Agent Worker 节点需要独立验证 Token 时，只需分发公钥，私钥由 Auth 服务集中管理，大幅降低密钥泄露风险。
+**多个服务独立验签时可选 RS256 或 ES256**：当多个 Agent Worker 节点需要独立验证 Token 时，只需分发公钥，私钥由 Auth 服务集中管理，大幅降低密钥泄露风险。
 
 ## Token 生命周期
 
 JWT 的生命周期包含四个阶段：**签发 → 传输 → 验证 → 刷新/吊销**。
 
-```mermaid
-sequenceDiagram
-    participant C as 客户端 / Agent SDK
-    participant A as Auth 服务
-    participant G as API Gateway
-    participant W as Agent Worker
+生命周期顺序是：校验登录凭据 → 签发访问令牌并保存刷新会话 → 通过 TLS 传递 → 固定验证规则并检查当前授权 → 按刷新会话策略原子轮换或撤销。网关传递身份还需受保护的内部信任通道；不能接受客户端自行填写的身份头。有效期由产品风险与会话策略确定，15 分钟或 7 天只可能是示例配置。
 
-    C->>A: POST /auth/login { username, password }
-    A->>A: 验证凭据，生成 access_token (15m) + refresh_token (7d)
-    A-->>C: { access_token, refresh_token (HttpOnly Cookie) }
+## Node.js 验证与授权的职责
 
-    C->>G: POST /api/agent/run  Authorization: Bearer <access_token>
-    G->>G: 验证签名 & exp（用公钥，无需访问数据库）
-    G->>W: 转发请求 + 解码后的 userId / role
-    W-->>C: Agent 执行结果
+[jsonwebtoken 的官方 API](https://github.com/auth0/node-jsonwebtoken)提供 algorithms、issuer、audience 等校验选项，但调用方仍须定义并校验必需 claims 的类型、用途和当前授权。下面是刻意使用占位函数的伪代码，用于说明顺序；不是可直接部署的认证模块，未声明已执行验签或端到端安全测试。
 
-    note over C,A: access_token 过期后
-    C->>A: POST /auth/refresh (携带 HttpOnly Cookie)
-    A->>A: 验证 refresh_token，查 Redis 确认未吊销
-    A-->>C: 新 access_token
+```text
+verifyAccess(token):
+  claims = jwt.verify(token, trustedPublicKey, {
+    algorithms: ['RS256'], issuer: expectedIssuer, audience: resourceAudience
+  })
+  require claims 是对象
+  require sub 是非空字符串，exp 是有限的未来 NumericDate
+  require token_use == 'access'，必要的业务字段符合当前 schema
+  return 服务端构造的身份对象
+
+runAgent(request):
+  identity = verifyAccess(extractBearer(request))
+  input = parseAllowedFields(request.body)       # 不接收 userId / tenantId 覆盖
+  require currentPolicyAllows(identity, input)  # 验签不等于有权执行
+  return runTask(input, trustedIdentity=identity)
 ```
 
-## Node.js / TypeScript 实现
+令牌签发方应与验证规则一致地设置用途、受众、发行方、主题和过期时间。不要把 `jwt.decode` 当验证；也不要用 TypeScript 类型断言代替运行时 schema 检查。客户端传来的 key URL 或身份字段不得覆盖受信配置。`kid` 仅能在受信密钥集合中选择，轮换时也要拒绝未知或用途不符的密钥。
 
-安装依赖：
-
-```bash
-npm install jsonwebtoken
-npm install -D @types/jsonwebtoken
-```
-
-### 签发 Token
-
-```typescript
-import jwt from 'jsonwebtoken';
-import { readFileSync } from 'fs';
-
-// RS256：从文件或环境变量加载密钥
-const PRIVATE_KEY = readFileSync('./keys/private.pem');
-const PUBLIC_KEY = readFileSync('./keys/public.pem');
-const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET!;
-
-interface TokenPayload {
-  sub: string;
-  role: string;
-  jti?: string;
-}
-
-// 签发 Access Token（短期，15 分钟）
-export function signAccessToken(userId: string, role: string): string {
-  return jwt.sign(
-    { sub: userId, role } satisfies TokenPayload,
-    PRIVATE_KEY,
-    {
-      algorithm: 'RS256',
-      expiresIn: '15m',
-      issuer: 'https://api.example.com',
-      jwtid: crypto.randomUUID(), // jti，用于吊销
-    }
-  );
-}
-
-// 签发 Refresh Token（长期，7 天，使用对称密钥即可）
-export function signRefreshToken(userId: string): string {
-  return jwt.sign({ sub: userId }, REFRESH_SECRET, {
-    expiresIn: '7d',
-    jwtid: crypto.randomUUID(),
-  });
-}
-
-// 验证 Access Token（使用公钥）
-export function verifyAccessToken(token: string): TokenPayload {
-  return jwt.verify(token, PUBLIC_KEY, {
-    algorithms: ['RS256'],    // 明确指定算法，防止 alg:none 攻击
-    issuer: 'https://api.example.com',
-  }) as TokenPayload;
-}
-```
-
-### 鉴权中间件
-
-```typescript
-import { Request, Response, NextFunction } from 'express';
-
-export function authMiddleware(req: Request, res: Response, next: NextFunction) {
-  const authHeader = req.headers.authorization;
-  if (!authHeader?.startsWith('Bearer ')) {
-    return res.status(401).json({ code: 'MISSING_TOKEN' });
-  }
-
-  const token = authHeader.slice(7);
-  try {
-    const payload = verifyAccessToken(token);
-    req.user = { id: payload.sub, role: payload.role };
-    next();
-  } catch (err) {
-    if (err instanceof jwt.TokenExpiredError) {
-      return res.status(401).json({ code: 'TOKEN_EXPIRED' });
-    }
-    return res.status(401).json({ code: 'INVALID_TOKEN' });
-  }
-}
-```
-
-### 保护 Agent API 端点
-
-```typescript
-import express from 'express';
-import { authMiddleware } from './middleware/auth';
-
-const router = express.Router();
-
-// /api/agent/run 端点：需要有效 JWT 才能触发 Agent 执行
-router.post('/api/agent/run', authMiddleware, async (req, res) => {
-  const { id: userId, role } = req.user!;
-
-  // 可根据 role 做细粒度鉴权
-  if (role !== 'agent_user' && role !== 'admin') {
-    return res.status(403).json({ code: 'FORBIDDEN' });
-  }
-
-  const result = await runAgentTask({ userId, ...req.body });
-  res.json(result);
-});
-```
+失败应终止请求；访问令牌过期可触发受限刷新流程，签名或受众无效不能被刷新重试掩盖。日志记录可用失败类型和会话标识，避免记录完整 bearer 凭据。
 
 ## Access Token + Refresh Token 双令牌机制
 
 | 令牌类型 | 有效期 | 存储位置 | 用途 |
 |----------|--------|----------|------|
-| Access Token | 15m – 1h | 内存 / sessionStorage | 每次请求携带，鉴权入口 |
-| Refresh Token | 7d – 30d | HttpOnly Secure Cookie | 仅用于换取新 Access Token |
+| Access Token | 按资源风险设置的较短期限 | 常见浏览器方案使用内存；脚本可读存储有 XSS 暴露面 | 资源请求入口验证与授权 |
+| Refresh Token | 按会话策略设置，不是固定天数标准 | 浏览器方案可用作用域受限的 HttpOnly、Secure Cookie | 仅交给刷新端点，需重放与撤销策略 |
 
-**刷新端点实现：**
+刷新需要服务器维护的会话/族状态。以下为“随机刷新凭据＋轮换”方案的伪代码；原子操作、Cookie 作用域、CSRF 防护和错误恢复由真实服务实现，不能将先读后写替代原子轮换：
 
-```typescript
-export async function refreshHandler(req: Request, res: Response) {
-  const refreshToken = req.cookies.refresh_token;
-  if (!refreshToken) return res.status(401).end();
-
-  try {
-    const payload = jwt.verify(refreshToken, REFRESH_SECRET) as { sub: string; jti: string };
-
-    // 查 Redis：确认此 refresh token 未被加入黑名单
-    const isRevoked = await redis.get(`revoked:${payload.jti}`);
-    if (isRevoked) return res.status(401).json({ code: 'TOKEN_REVOKED' });
-
-    const newAccessToken = signAccessToken(payload.sub, await getUserRole(payload.sub));
-    return res.json({ access_token: newAccessToken });
-  } catch {
-    return res.status(401).json({ code: 'INVALID_REFRESH_TOKEN' });
-  }
-}
+```text
+refresh(request):
+  require 合法请求来源与本方案的 CSRF 校验
+  old = extractRefreshCookie(request)
+  result = sessionStore.consumeAndRotateAtomically(hash(old))
+  # 同时检查有效期、撤销、用途和族关系；旧凭据只消费一次
+  if result 表示重放: 按策略撤销对应族，要求重新认证
+  if result 失败: 清理刷新 Cookie，返回失败
+  setRefreshCookie(result.newCredential, HttpOnly, Secure, configuredSameSiteScope)
+  return issueAccessToken(result.subject, currentAuthorization)
 ```
+
+轮换成功而响应丢失、同一用户多标签页同时刷新等情况，需要明确的重试与并发策略；任意放宽旧凭据重用窗口会影响重放检测，不能悄悄宣称兼得。若刷新凭据也使用 JWT，仍需独立固定算法、issuer、audience、用途和 claims schema 校验，并结合会话状态；仅验签或仅查黑名单不等于完成轮换。
 
 ## Token 吊销策略
 
-JWT 无状态天然无法主动失效，以下是三种工程实践：
+已签发的 JWT 若只验证密码学与时间条件，就不会获知服务端刚发生的撤销。即时撤销需要检查额外状态；以下是三种取舍：
 
 | 策略 | 实现 | 适用场景 |
 |------|------|----------|
-| 短过期时间 | Access Token 15 分钟自动失效 | 低风险场景，依赖 Refresh Token 续期 |
-| Redis 黑名单 | 登出时将 `jti` 存入 Redis，TTL 与 Token 过期一致 | 需要即时吊销（如账号封禁） |
+| 短过期时间 | 按配置过期后失效；过期前仍可能有效 | 低风险场景，依赖 Refresh Token 续期 |
+| Redis 黑名单 | 登出时将 `jti` 存入 Redis，TTL 与 Token 过期一致 | 仅在每次敏感请求查询撤销状态时提供即时效果 |
 | Token Version | 用户表存 `tokenVersion`，强制登出时 +1，Payload 携带版本号比对 | 需要批量吊销某用户所有 Token |
 
 ## JWT 在 Agent 服务中的应用
 
 AI Agent 服务有其特殊性：一次任务调用可能耗时数十秒乃至数分钟，期间 Access Token 可能过期；同时 Agent 调用链涉及多个微服务，需要在服务间传递身份上下文。
 
-**推荐实践：**
+**长任务的身份边界：**
 
-1. **任务启动时验证，执行中不重复验证**：在 `/api/agent/run` 入口校验 Token，颁发一次性的 `taskToken`（短期内部 Token）传入 Worker，避免长任务中途 401。
-2. **Payload 携带 Agent 配额信息**：在 JWT Payload 中携带 `agentQuota`、`modelAccess` 等轻量权限字段，避免每次请求都查数据库。
-3. **服务间使用 RS256 传递身份**：API Gateway 解码 Token 后，通过 `X-User-Id`、`X-User-Role` 等 Header 向下游 Agent Worker 传递身份，Worker 无需重新验证签名。
-4. **Webhook 回调使用独立 Token**：Agent 异步回调时携带签名 Token，防止伪造回调请求。
+1. 启动时验证并建立任务身份；后续敏感工具调用仍按当前策略检查范围、账号状态和授权，是否允许令牌到期后继续执行由任务协议明确定义。
+2. JWT 内的配额和角色可能已经过时；消耗配额或访问高风险资源时，使用服务端当前状态判断，不把旧 claims 当永远有效的额度。
+3. 网关先去除外部伪造身份头，再通过经过认证、访问受限的内部通道传递身份；另一选择是下游验证受众与权限范围明确的委托凭据。单纯“解码后加 Header”没有建立可信边界。
+4. 回调使用作用域和受众限定的凭据或签名，并检查关联任务、时间与重放条件；独立 Token 本身不能防止同一回调重复提交。
 
 ## 常见误区 / 最佳实践 / 面试要点
 
@@ -261,7 +154,7 @@ AI Agent 服务有其特殊性：一次任务调用可能耗时数十秒乃至�
 
 - **把敏感数据放 Payload**：Payload 是 Base64URL 编码，不是加密，任何人可解码。只放最小必要字段（userId、role），敏感数据用 `sub` 引用，在服务端按需查询。
 - **不验证 `alg` 字段（alg:none 攻击）**：攻击者可将 Header 的 `alg` 改为 `none`，绕过签名验证。**务必在 `jwt.verify` 中显式指定 `algorithms` 白名单**。
-- **所有 Token 用同一密钥**：Access Token 和 Refresh Token 应使用不同的密钥/算法，防止一方泄露影响另一方。
+- **令牌用途不隔离**：访问与刷新的验证规则要防止交叉接受，明确用途、受众与服务边界；按风险采用分开的密钥也是一种隔离手段，不要求两者必须用不同算法。
 - **Token 存 localStorage**：localStorage 可被 XSS 脚本读取；Access Token 存内存，Refresh Token 存 HttpOnly Cookie。
 
 ### 最佳实践
@@ -269,26 +162,43 @@ AI Agent 服务有其特殊性：一次任务调用可能耗时数十秒乃至�
 [JWT BCP（RFC 8725）](https://www.rfc-editor.org/rfc/rfc8725.html) 要求调用方固定允许的算法、校验密钥与 claims，并防止不同用途的 JWT 被交叉接受。
 
 
-- 生产环境优先 RS256/ES256，私钥集中管理，各服务只持有公钥
+- 按验证方的信任边界选择算法；非对称方案把签发私钥与验证公钥职责分开
 - `jti` + Redis 黑名单实现精准吊销
 - 合理设置 `iss` 和 `aud`，防止 Token 在不同服务间被跨站复用
 - 密钥轮换策略：支持多公钥（`kid` 字段），平滑过渡
 
 ### 面试要点
 
-- **JWT vs Session**：Session 服务端有状态（需 Session Store，水平扩展需 Sticky Session 或共享 Redis）；JWT 无状态，天然适合水平扩展，代价是吊销复杂。
+- **JWT vs Session**：服务端 Session 需管理会话状态；JWT 可在部分场景本地验签，但刷新、即时撤销和授权仍可能有状态。水平扩展取决于这些状态如何共享，不仅由令牌格式决定。
 - **HS256 vs RS256**：HS256 对称，所有验证方必须持有同一密钥，密钥泄露风险高；RS256 非对称，私钥仅签发方持有，验证方只需公钥，更适合微服务。
 - **如何防篡改**：修改 Payload 后签名验证失败，服务端拒绝请求；前提是 `algorithms` 白名单不包含 `none`。
 - **Token 过期怎么处理**：`jwt.verify` 抛 `TokenExpiredError`，返回 401 + `code: TOKEN_EXPIRED`，客户端用 Refresh Token 换新 Access Token，若 Refresh Token 也过期则跳登录。
 - **如何实现"踢下线"**：方案一：Redis 黑名单记录 `jti`；方案二：数据库存 `tokenVersion`，Token Payload 携带版本号，不匹配则拒绝。
 
+## 双令牌的边界与并发刷新
+
+访问令牌用于资源请求，刷新令牌交给授权/认证服务换取新访问令牌；刷新令牌可以是不可解释的随机凭据，不要求两者都采用 JWT。服务端会话、单令牌与双令牌是不同设计取舍，不能仅凭令牌数量判断安全。
+
+浏览器方案可以把访问令牌放内存，将刷新凭据置于 HttpOnly、Secure 且适当 SameSite 的 Cookie；HttpOnly 限制脚本读取，却不能阻止 XSS 发起已登录请求，也不单独防 CSRF。[Set-Cookie 契约](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie)还要求按域、路径与跨站需求设置作用范围，普通远程爬虫并不会因此自动拿到用户浏览器本地凭据。
+
+[RFC 9700 §2.2.2 与 §4.14](https://www.rfc-editor.org/rfc/rfc9700.html)要求 OAuth 公共客户端采用发送方约束或刷新令牌轮换，不能仅用“有效期较长”保护刷新凭据。轮换在每次刷新后废止旧令牌并保留族关系，以检测重放；重放被检测时还可能迫使正常用户重新授权。非 OAuth 自定义方案也应明确自己的重放与撤销契约，不能冒称已符合该协议。
+
+无感刷新应共享一次在途刷新，令同一上下文的并发过期请求等待它，然后按明确次数重试；不同标签页仍需要协调。失败不能无限刷新，非幂等操作也不能因客户端未收到响应而盲目重发。这里描述一般机制，原面经没有提供其项目实际采用的策略。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 Managed Agent 校招一面：评测、运行链路与后端基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-26.md)（cluster-40374dfc6b29）
+- [字节 Managed Agent 校招一面：评测、运行链路与后端基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-26.md)
+- [字节前端全栈实习一面：渲染、Worker与认证](../../../interview/bytedance/base/bytedance-base-38.md)
+- [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
+- [字节全栈实习：Session、权限与前端基础](../../../interview/bytedance/base/bytedance-base-46.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
 
 - [RFC 7519: JSON Web Token](https://www.rfc-editor.org/rfc/rfc7519.html)
 - [RFC 8725: JSON Web Token Best Current Practices](https://www.rfc-editor.org/rfc/rfc8725.html)
+
+- [jsonwebtoken 官方文档](https://github.com/auth0/node-jsonwebtoken)（滚动文档，2026-10-03核验）
+- [RFC 9700：OAuth 2.0 Security Best Current Practice](https://www.rfc-editor.org/rfc/rfc9700.html)
+- [MDN：Set-Cookie](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie)

@@ -130,6 +130,13 @@ Prompt Injection 的本质是：不可信输入试图被模型解释成更高优
 
 好的 System Prompt 是清晰的行为契约：稳定规则与动态数据分离，工具策略与真实权限分离，输出要求与程序校验配合。它能显著提高一致性，却不能替代鉴权、Schema、沙箱、审计和人工复核。把它纳入版本管理与自动评测，才能从“提示词技巧”升级为可靠的系统工程。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../../interview/bytedance/base/bytedance-base-48.md)
+- [字节 Agent：AI Coding、技能设计与模型工程](../../../interview/bytedance/base/bytedance-base-49.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenAI：Text generation 与指令角色](https://developers.openai.com/api/docs/guides/text)

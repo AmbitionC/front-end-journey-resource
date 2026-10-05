@@ -129,7 +129,10 @@ Loader 建立可信的字节边界，Parser 建立可审计的结构解释。两
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 Agent 后端实习一面：LangGraph、评测集与混合检索（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-22.md)（cluster-a84ba0858191）
+- [字节 Agent 后端实习一面：LangGraph、评测集与混合检索（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-22.md)
+- [字节 Agent 二面：RAG 分块、查询改写与随机采样](../../../interview/bytedance/base/bytedance-base-28.md)
+- [字节财经保险 AI 全栈实习一面：项目设计、AI Coding 与 Diff](../../../interview/bytedance/base/bytedance-base-34.md)
+- [字节全栈一面：RAG、Java与线程池](../../../interview/bytedance/base/bytedance-base-37.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

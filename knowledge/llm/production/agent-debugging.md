@@ -137,3 +137,9 @@ Agent 调试是一门复现实验：定义失败、冻结快照、还原因果�
 - [NIST：AI Test, Evaluation, Validation and Verification](https://www.nist.gov/ai-test-evaluation-validation-and-verification-tevv)
 - [W3C：Trace Context](https://www.w3.org/TR/trace-context/)
 - [OpenTelemetry：Semantic conventions for events](https://opentelemetry.io/docs/specs/semconv/general/events/)
+
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节剪映 AI 前端一面：Agent 运行时、MCP 与性能](../../../interview/bytedance/base/bytedance-base-30.md)
+<!-- interview-source-history:end -->

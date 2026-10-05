@@ -115,6 +115,12 @@ Tree of Thoughts 等方法把中间状态组织为搜索树，但调用量、状
 
 CoT 的价值在于为复杂任务提供额外计算和分解空间。现代工程实践应把重点放在推理预算、候选策略、可验证证据和失败回路上，而不是收集或展示完整私有思维过程。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Chain-of-Thought Prompting Elicits Reasoning in Large Language Models](https://arxiv.org/abs/2201.11903)

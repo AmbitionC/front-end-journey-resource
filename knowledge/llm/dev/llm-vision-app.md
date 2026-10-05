@@ -128,6 +128,20 @@ Anthropic 的[视觉指南](https://platform.claude.com/docs/en/build-with-claud
 
 视觉应用的可靠性来自任务化管线：理解侧保留证据、验证事实并承认不确定，生成侧保存完整规格、筛选候选并记录来源。专用算法、规则、不同模型与人工共同承担门禁，线上反馈进入有授权的评测闭环。视觉能力变化再快，也不应跳过可测量、可追溯和可删除的工程边界。
 
+## 视频生成任务：时间维度与异步交付
+
+静态图片理解或生成不等于视频生成。视频还需约定时长、帧间连续性、素材、声音与输出格式；任务可能异步执行，应保存任务 ID、状态和结果位置，而不是让前端一直等一个普通短请求。这里给出通用产品工程合同，不宣称某厂商 CLI 或版本支持具体参数。
+
+链路可分为输入验证、提交生成、查询或接收状态、获取文件、媒体与内容审核、最终交付。重试要绑定原任务，失败产物不记成功；生成文件存在也不证明画面连续、时长达标或素材使用合规。接口层与文件处理可复用[异步 Job](../../backend/api/async-job-queue.md)和[文件上传](../../backend/api/file-upload-service.md)的状态与资源边界。
+
+演示一条成功样例只能证明该样例完成，稳定性需要定义测试集与成功标准。网页驱动容易受布局与会话变化影响，可按真实可用接口比较维护成本；原帖缺少已核实版本时不编具体 SDK 调用。
+
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenAI — Images and vision](https://developers.openai.com/api/docs/guides/images-vision)

@@ -56,3 +56,21 @@ bundle size budget 和 chunk 列表可发现意外依赖；但大小变化不一
 - [Vite：Why Vite](https://vite.dev/guide/why.html)
 - [Vite：Guide](https://vite.dev/guide/)
 - [Vitest：Guide](https://vitest.dev/guide/)
+
+## Monorepo 的范围与构建边界
+
+Monorepo 指把多个应用或包放在一个版本库管理，并不表示它们必须一起发布。回答范围时应列出真实 workspace：哪些应用消费哪些共享包、谁维护公共 API、哪些包有独立测试和发布；不是把目录树背一遍。
+
+[pnpm Workspace 文档](https://pnpm.io/workspaces)以 pnpm-workspace.yaml 定义工作区成员，workspace: 协议能要求解析到本地工作区包。这个机制解决包引用，不自动给出缓存正确性、任务依赖图或部署方案。
+
+例如 web 应用依赖 ui 包，ui 再依赖 tokens：tokens 的变更应触发相关检查；只有工作区路径、输入、环境和依赖关系进入缓存键，复用构建产物才有依据。共享包的内部文件不应被其他包任意深层导入，否则“独立包”只剩目录名字。Vite 的单应用构建与跨包任务编排也应分别说明。
+
+教学追问：同仓库能否只部署 web？可以，但其依赖的已验证产物要一致；两个包共享一个可变配置怎么办？应把该输入纳入受影响范围，而不是仅凭文件修改位置判断；workspace 管好了是否意味着权限也隔离？不意味着，运行和发布权限仍需单独设计。
+
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节剪映 AI 前端一面：Agent 运行时、MCP 与性能](../../../interview/bytedance/base/bytedance-base-30.md)
+- [字节财经保险 AI 全栈实习一面：项目设计、AI Coding 与 Diff](../../../interview/bytedance/base/bytedance-base-34.md)
+- [字节前端全栈实习一面：渲染、Worker与认证](../../../interview/bytedance/base/bytedance-base-38.md)
+<!-- interview-source-history:end -->

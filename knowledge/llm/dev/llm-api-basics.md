@@ -125,6 +125,13 @@ created → validated → dispatched → streaming/tool_wait → completed
 
 大模型 API 的基础不是某个 SDK 方法，而是端到端契约：结构化输入经过能力与安全校验，由适配器送往模型，再把多类型结果、终止状态、用量和追踪信息统一返回。把计量与价格分开、把逻辑请求与网络尝试分开、把模型输出继续视为不可信输入，系统才有资格从 Demo 进入生产。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
+- [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenAI — Text generation](https://developers.openai.com/api/docs/guides/text)

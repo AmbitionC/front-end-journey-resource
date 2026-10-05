@@ -96,7 +96,8 @@ Agent 供应链安全把模型、工具、MCP、Prompt、软件和评估资产�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [快手大模型应用 Java 实习一面：Agent、SkillHub 与 Vibe Coding（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-1.md)（cluster-e2ae8847e22e）
+- [快手大模型应用 Java 实习一面：Agent、SkillHub 与 Vibe Coding（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-1.md)
+- [字节 Agent 实习：模型选择与可信通信](../../../interview/bytedance/base/bytedance-base-54.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
