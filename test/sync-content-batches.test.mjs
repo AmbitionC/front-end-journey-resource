@@ -44,6 +44,8 @@ test('recovery requires actual failed workflow at the exact parent with unchange
   assert.equal(await recoveryBaseline(f.root,failed,after,{read:async p=>{assert.equal(p,'actions/runs/7');return run;}}),f.baseCommit);
   for(const patch of [{id:8},{head_sha:after},{status:'in_progress'},{conclusion:'success'},{path:'other.yml'},{head_branch:'topic'},{event:'pull_request'},{head_repository:{full_name:'untrusted/repo'}}])await assert.rejects(recoveryBaseline(f.root,failed,after,{read:async()=>({...run,...patch})}));
   assert.equal(await recoveryBaseline(f.root,after,after,{read:async()=>assert.fail('consumed recovery must not call GitHub')}),after);
+  await writeFile(join(f.root,'later-code.txt'),'later code-only release');git(f.root,'add','.');git(f.root,'commit','-qm','later code');
+  await assert.rejects(recoveryBaseline(f.root,failed,git(f.root,'rev-parse','HEAD'),{read:async()=>run}),/直接父提交/u);
   await writeFile(join(f.root,'knowledge/topic/topic-key.md'),'# changed public bytes');git(f.root,'add','.');git(f.root,'commit','-qm','changed content');const changed=git(f.root,'rev-parse','HEAD');
   await assert.rejects(recoveryBaseline(f.root,failed,changed,{read:async()=>run}),/已变化/u);
 }));

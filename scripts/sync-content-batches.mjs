@@ -19,13 +19,15 @@ export async function recoveryBaseline(root,before,after,{read=githubRead}={}) {
   try{recovery=JSON.parse(await readFile(resolve(root,'.codex/content-sync-recovery.json'),'utf8'));}
   catch(e){if(e.code==='ENOENT')return before;throw e;}
   if(recovery.failedAfterSha!==before)return before;
-  if(recovery.schemaVersion!==1 || !SHA.test(recovery.baselineSha??'') || !SHA.test(before)
+  if(recovery.schemaVersion!==1 || !SHA.test(recovery.baselineSha??'') || !SHA.test(before) || !SHA.test(after??'')
       || !Number.isSafeInteger(recovery.failedRunId) || recovery.failedRunId<=0
       || !/^[a-f0-9]{64}$/u.test(recovery.publicationDigest??''))throw new Error('同步恢复说明无效');
   if(spawnSync('git',['merge-base','--is-ancestor',recovery.baselineSha,before],{cwd:root}).status!==0
       || spawnSync('git',['merge-base','--is-ancestor',before,after],{cwd:root}).status!==0)throw new Error('同步恢复范围不是有效祖先链');
   const old=gitPublicationFiles(root,before),current=gitPublicationFiles(root,after);
   if(JSON.stringify(old)!==JSON.stringify(current) || sha256(JSON.stringify(current))!==recovery.publicationDigest)throw new Error('恢复范围的公开内容已变化，必须重新审核');
+  const parent=spawnSync('git',['rev-parse',after+'^1'],{cwd:root,encoding:'utf8'});
+  if(parent.status!==0 || parent.stdout.trim()!==before)throw new Error('恢复仅允许失败提交的直接父提交关系');
   const run=await read('actions/runs/'+recovery.failedRunId);
   if(run.id!==recovery.failedRunId || run.head_sha!==before || run.status!=='completed' || run.conclusion!=='failure'
       || run.path!=='.github/workflows/sync.yml' || run.head_branch!=='master'
