@@ -235,7 +235,7 @@ test('missing actual historical fingerprint blocks guessing whether an existing 
     await writeEntry(root,'one',meta());
     await writeFile(`${root}.private-history.json`,JSON.stringify({schemaVersion:1,records:{old:{url:meta().url,contentHash:meta().contentHash,status:'published'}}}));
     const report=await inspect(root,'batch-current');
-    assert.equal(report.publicContent.length,0);assert.match(report.blocked[0].reason,/缺实际原文指纹/u);
+    assert.equal(report.publicContent.length,0);assert.match(report.blocked[0].reason,/缺实际原文指纹|缺少可复算/u);
     await assert.rejects(inspectBatch(root,'batch-current'),/绝对路径/u);
   } finally {await rm(root,{recursive:true,force:true});await rm(`${root}.private-history.json`,{force:true});await rm(`${root}.private-body.md`,{force:true});}
 });

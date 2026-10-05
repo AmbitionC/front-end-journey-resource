@@ -3,16 +3,16 @@ import test from 'node:test';
 import { writeFile, mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { reviewFixture, git } from './release-review-fixture.mjs';
-import { matchingReview, validateGithubRelease, requireSuccessfulSync } from '../scripts/github-release-review.mjs';
+import { matchingReview, validateGithubRelease, requireSuccessfulSync, validateGithubPrivateReview } from '../scripts/github-release-review.mjs';
 import { requireReviewedRelease } from '../scripts/validate-release.mjs';
 
-const repo='AmbitionC/front-end-journey-resource',head='a'.repeat(40),digest='b'.repeat(64);
+const repo='AmbitionC/front-end-journey-resource',head='a'.repeat(40),digest='b'.repeat(64),receipt='f'.repeat(64);
 const pr={number:12,user:{login:'author'},head:{sha:head,repo:{full_name:repo}},base:{ref:'master',repo:{full_name:repo}}};
-const approved=()=>({id:1,user:{login:'reviewer'},author_association:'COLLABORATOR',state:'APPROVED',commit_id:head,submitted_at:'2026-10-05T01:00:00Z',body:`content-release:v1 head=${head} digest=${digest}`});
+const approved=()=>({id:1,user:{login:'reviewer'},author_association:'COLLABORATOR',state:'APPROVED',commit_id:head,submitted_at:'2026-10-05T01:00:00Z',body:`content-release:v2 head=${head} digest=${digest} receipt=${receipt}`});
 
 test('GitHub approval must be trusted, independent, current head and exact digest',()=>{
   assert.equal(matchingReview(pr,[approved()],digest).id,1);
-  for(const patch of [{author_association:'CONTRIBUTOR'},{commit_id:'c'.repeat(40)},{state:'COMMENTED'},{state:'DISMISSED'},{user:{login:'author'}},{body:`content-release:v1 head=${head} digest=${'d'.repeat(64)}`}]) {
+  for(const patch of [{author_association:'CONTRIBUTOR'},{commit_id:'c'.repeat(40)},{state:'COMMENTED'},{state:'DISMISSED'},{user:{login:'author'}},{body:`content-release:v2 head=${head} digest=${'d'.repeat(64)} receipt=${receipt}`}]) {
     assert.equal(matchingReview(pr,[{...approved(),...patch}],digest),undefined);
   }
   const dismissed={...approved(),id:2,submitted_at:'2026-10-05T02:00:00Z',state:'DISMISSED'};
@@ -35,7 +35,7 @@ async function githubFixture(f) {
   git(f.root,'commit','--allow-empty','-qm','merged publication');
   const after=git(f.root,'rev-parse','HEAD');
   const finalPr={...structuredClone(pr),merged:true,merge_commit_sha:after,head:{sha:reviewedHead,repo:{full_name:repo}}};
-  const review={...approved(),commit_id:reviewedHead,body:`content-release:v1 head=${reviewedHead} digest=${f.review.publicationDigest}`};
+  const review={...approved(),commit_id:reviewedHead,body:`content-release:v2 head=${reviewedHead} digest=${f.review.publicationDigest} receipt=${f.options.reviewSha256}`};
   const read=async path=>{
     if(path==='') return {default_branch:'master'};
     if(path==='branches/master') return {commit:{sha:after}};
@@ -89,4 +89,35 @@ test('PDF requires latest successful same-SHA sync; unrelated or failed runs can
     await assert.rejects(requireSuccessfulSync(head,{read:read([{...syncRun(),...patch}])}),/同步未成功/u);
   }
   await assert.rejects(requireSuccessfulSync(head,{read:read([syncRun(),{...syncRun(),id:9,status:'queued',conclusion:null}])}),/同步未成功/u);
+});
+
+
+test('authenticated final private check binds actual external originals to the real review receipt pin',()=>reviewFixture(async f=>{
+  const g=await githubFixture(f);
+  git(f.root,'checkout','--detach',g.finalPr.head.sha);
+  const proof=await validateGithubPrivateReview(f.root,f.historyPath,f.reviewPath,f.options.reviewSha256,12,{read:g.read});
+  assert.equal(proof.privateInputsVerified,true);
+  assert.equal(proof.privateReviewReceiptSha256,f.options.reviewSha256);
+  g.review.body=g.review.body.replace(f.options.reviewSha256,'c'.repeat(64));
+  await assert.rejects(validateGithubPrivateReview(f.root,f.historyPath,f.reviewPath,f.options.reviewSha256,12,{read:g.read}),/摘要不一致/u);
+  g.review.body=g.review.body.replace('c'.repeat(64),f.options.reviewSha256);
+  await writeFile(f.sourcePath,'replaced original after authentic review');
+  await assert.rejects(validateGithubPrivateReview(f.root,f.historyPath,f.reviewPath,f.options.reviewSha256,12,{read:g.read}),/私有最终版本校验失败/u);
+  // CI has no private files. Its scope is explicitly the approved frozen
+  // pointer; this result cannot replace the required private final step.
+  git(f.root,'checkout','--detach',g.after);
+  const pointer=await validateGithubRelease(f.root,f.baseCommit,g.after,{read:g.read});
+  assert.equal(pointer.privateEvidenceMode,'authenticated-reviewed-receipt-pointer');
+  assert.equal(pointer.privateReviewReceiptSha256,f.options.reviewSha256);
+}));
+
+test('missing, malformed, ambiguous or mismatched authenticated receipt pins are rejected',()=>{
+  for(const body of [
+    `content-release:v1 head=${head} digest=${digest}`,
+    `content-release:v2 head=${head} digest=${digest}`,
+    `content-release:v2 head=${head} digest=${digest} receipt=bad`,
+    approved().body+'\n'+approved().body,
+  ]) assert.equal(matchingReview(pr,[{...approved(),body}],digest),undefined);
+  assert.equal(matchingReview(pr,[approved()],digest,'e'.repeat(64)),undefined);
+  assert.equal(matchingReview(pr,[approved()],digest,receipt).id,1);
 });

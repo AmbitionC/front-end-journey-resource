@@ -4,6 +4,7 @@ import { writeFile, readFile, mkdir, symlink } from 'node:fs/promises';
 import { join } from 'node:path';
 import { reviewFixture, freezeFixtureReview, git } from './release-review-fixture.mjs';
 import { sha256, normalizedOriginal } from '../scripts/content-review.mjs';
+import { syncInterviewTopicWeights } from '../scripts/sync-interview-topic-weights.mjs';
 import { validatePrivateInterviewHistory } from '../scripts/validate-private-interview-history.mjs';
 
 const check=f=>validatePrivateInterviewHistory(f.root,f.historyPath,f.options);
@@ -94,7 +95,14 @@ test('missing-keyword questions require an explicit frozen pending reason',()=>r
   assert.match((await check(f)).join(),/待补原因/u);
   f.ledger.rows[0].questions[0].bindingStatus='pending_missing_keyword';
   await writeFile(f.ledgerPath,JSON.stringify(f.ledger)); await freezeFixtureReview(f);
+  assert.match((await check(f)).join(),/待补题不得计热/u);
+  await assert.rejects(syncInterviewTopicWeights(f.root,{...f.options,privacyMode:true,historyPath:f.historyPath,keys:['real-key']}),/不更新热度/u);
+  f.history.records.aaaaaaaaaaaa.knowledgeKeys=[];
+  await writeFile(f.historyPath,JSON.stringify(f.history));await freezeFixtureReview(f);
   assert.deepEqual(await check(f),[]);
+  await syncInterviewTopicWeights(f.root,{...f.options,privacyMode:true,historyPath:f.historyPath,keys:['real-key']});
+  const tree=JSON.parse(await readFile(join(f.root,'knowledge/_tree.json'),'utf8'));
+  assert.equal(tree[0].heat??0,0);assert.equal(tree[0].interviewCount??0,0);
 }));
 
 test('image resync input is covered by both snapshot and final version binding',()=>reviewFixture(async f=>{
@@ -132,4 +140,19 @@ test('registering an unchanged orphan body as a new page still requires source r
   await writeFile(join(f.root,'interview/_tree.json'),JSON.stringify([f.interview,{key:'orphan',filePath:'company',isLeaf:true}]));
   await freezeFixtureReview(f);
   assert.match((await check(f)).join(),/新增或迁移面经目录叶子缺本批原文审核/u);
+}));
+
+
+test('removing a historical normalized hash cannot conceal the frozen duplicate original',()=>reviewFixture(async f=>{
+  await historicalBaseline(f,'问题😀','forged-older-process');
+  delete f.history.records.bbbbbbbbbbbb.normalizedBodySha256;
+  await writeFile(f.historyPath,JSON.stringify(f.history));await freezeFixtureReview(f);
+  assert.match((await check(f)).join(),/跨批同原文/u);
+}));
+
+test('removing a known public-page history record cannot conceal historical dedup coverage',()=>reviewFixture(async f=>{
+  await historicalBaseline(f,'问题😀','forged-older-process');
+  delete f.history.records.bbbbbbbbbbbb;
+  await writeFile(f.historyPath,JSON.stringify(f.history));await freezeFixtureReview(f);
+  assert.match((await check(f)).join(),/历史来源覆盖/u);
 }));

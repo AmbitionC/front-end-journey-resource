@@ -82,7 +82,7 @@ export async function verifiedHistoricalFingerprint(root, record) {
   const text=capture?capture.text:bytes.toString();
   if(typeof text!=='string' || !text.trim()) throw new Error('历史冻结原文正文为空');
   const actual=hash(normalizedSourceBody(text));
-  if(actual!==record.normalizedBodySha256) throw new Error('历史正文指纹未由冻结原文复算确认');
+  if(record.normalizedBodySha256!==undefined && actual!==record.normalizedBodySha256) throw new Error('历史正文指纹未由冻结原文复算确认');
   return actual;
 }
 

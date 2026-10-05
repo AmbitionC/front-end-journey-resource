@@ -1,5 +1,5 @@
 import { spawnSync } from 'node:child_process';
-import { gitPublicationFiles, publicInventory, sha256 } from './content-review.mjs';
+import { gitPublicationFiles, publicInventory, sha256, validateContentReview } from './content-review.mjs';
 
 const REPOSITORY = 'AmbitionC/front-end-journey-resource';
 const SHA = /^[a-f0-9]{40}$/u;
@@ -25,7 +25,16 @@ async function allPages(path, read) {
   throw new Error('GitHub 审核证据未完整分页');
 }
 
-export function matchingReview(pr, reviews, digest) {
+export function reviewReceiptSha256(review, head, digest) {
+  const lines=(review.body??'').split(/\r?\n/u).map(line=>line.trim()).filter(line=>line.startsWith('content-release:'));
+  if(lines.length!==1) return null;
+  const prefix=`content-release:v2 head=${head} digest=${digest} receipt=`;
+  if(!lines[0].startsWith(prefix)) return null;
+  const pin=lines[0].slice(prefix.length);
+  return /^[a-f0-9]{64}$/u.test(pin)?pin:null;
+}
+
+export function matchingReview(pr, reviews, digest, expectedReceiptSha256) {
   const latest = new Map();
   for (const review of reviews) {
     if (!review.submitted_at || !review.user?.login) continue;
@@ -35,8 +44,8 @@ export function matchingReview(pr, reviews, digest) {
   }
   const trusted = [...latest.values()].filter(r=>['OWNER','COLLABORATOR'].includes(r.author_association));
   if (trusted.some(r=>r.state==='CHANGES_REQUESTED')) return null;
-  const marker = `content-release:v1 head=${pr.head.sha} digest=${digest}`;
-  return trusted.find(r=>r.commit_id===pr.head.sha && r.body?.split(/\r?\n/u).some(line=>line.trim()===marker)
+  return trusted.find(r=>r.commit_id===pr.head.sha && reviewReceiptSha256(r,pr.head.sha,digest)
+    && (!expectedReceiptSha256 || reviewReceiptSha256(r,pr.head.sha,digest)===expectedReceiptSha256)
     && r.state==='APPROVED' && r.user.login.toLowerCase()!==pr.user.login.toLowerCase());
 }
 
@@ -67,9 +76,30 @@ export async function validateGithubRelease(root, before, after, {read=githubRea
     if (reviewedDigest!==snapshot.digest) continue;
     const reviews = await allPages(`pulls/${pr.number}/reviews`,read);
     const review = matchingReview(pr,reviews,snapshot.digest);
-    if (review) return {afterSha:after,reviewedHeadSha:pr.head.sha,publicationDigest:snapshot.digest,prNumber:pr.number,reviewId:review.id};
+    if (review) return {afterSha:after,reviewedHeadSha:pr.head.sha,publicationDigest:snapshot.digest,privateReviewReceiptSha256:reviewReceiptSha256(review,pr.head.sha,snapshot.digest),reviewerLogin:review.user.login,prNumber:pr.number,reviewId:review.id,privateEvidenceMode:'authenticated-reviewed-receipt-pointer'};
   }
   throw new Error('缺最终提交及实际资源快照绑定的可信 GitHub 审核回执');
+}
+
+// Run in the authorized private workspace after the final authenticated review
+// and before merge. CI has no private files: its result attests the frozen
+// receipt pointer, while this step verifies every input behind that pointer.
+export async function validateGithubPrivateReview(root, historyPath, reviewPath, receiptSha256, prNumber, {read=githubRead}={}) {
+  if (!Number.isSafeInteger(prNumber) || prNumber<=0) throw new Error('PR 编号无效');
+  const errors=await validateContentReview(root,historyPath,reviewPath,receiptSha256);
+  if(errors.length) throw new Error('认证发布前的私有最终版本校验失败；详情仅在私有审核中查看');
+  const head=spawnSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).stdout.trim();
+  if(!SHA.test(head)) throw new Error('最终已审 PR head 不可读');
+  const snapshot=await publicInventory(root);
+  if(JSON.stringify(snapshot.files)!==JSON.stringify(gitPublicationFiles(root,head))) throw new Error('最终私有审核工作区尚未冻结到提交');
+  const pr=await read(`pulls/${prNumber}`);
+  if(pr.head?.sha!==head || pr.base?.ref!=='master' || pr.base?.repo?.full_name!==REPOSITORY
+      || pr.head?.repo?.full_name!==REPOSITORY) throw new Error('私有最终审核未对应实际仓库 PR head');
+  const reviews=await allPages(`pulls/${prNumber}/reviews`,read);
+  const review=matchingReview(pr,reviews,snapshot.digest,receiptSha256);
+  if(!review) throw new Error('私有审核回执与实际独立 APPROVED 审查摘要不一致');
+  return {reviewedHeadSha:head,publicationDigest:snapshot.digest,privateReviewReceiptSha256:receiptSha256,
+    reviewerLogin:review.user.login,reviewId:review.id,prNumber,privateInputsVerified:true};
 }
 
 export async function requireSuccessfulSync(after, {read=githubRead}={}) {

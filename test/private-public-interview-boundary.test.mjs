@@ -131,3 +131,21 @@ test('unsafe category keys are rejected before they can become PDF output paths'
     assert.match((await validateTree(f.root)).errors.join(),/节点 key 路径无效/u);
   }
 }));
+
+
+test('styles in hidden containers or SVG still invalidate visible questions and backlinks',()=>reviewFixture(async f=>{
+  const root=f.root;
+  const original=await readFile(join(root,'interview/company/article.md'),'utf8');
+  const body=await readFile(join(root,'knowledge/topic/real-key.md'),'utf8');
+  for(const style of [
+    '<div hidden><style>details,p {display:none}</style></div>',
+    '<svg><style>a {opacity:0}</style></svg>',
+    '<div hidden><link rel="stylesheet" href="https://example.invalid/hide.css"></div>',
+  ]) {
+    await writeFile(join(root,'interview/company/article.md'),style+'\n'+original);
+    assert.match((await validateTree(root)).errors.join(),/注入改变可见结构的样式/u);
+    await writeFile(join(root,'interview/company/article.md'),original);
+    await writeFile(join(root,'knowledge/topic/real-key.md'),style+'\n'+body);
+    assert.match((await validateTree(root)).errors.join(),/不可证明可见|缺少面经反链/u);
+  }
+}));

@@ -14,9 +14,17 @@ function renderedDocument(contents) {
     onParseError: error => { if (error.code === 'duplicate-attribute') errors.push(error); },
   });
   const nodes = [], activeStyleNodes = [];
-  function visit(node) {
+  // Global styles still apply when their owner is hidden or inside SVG.
+  // Inspect the complete parsed tree before pruning invisible text nodes.
+  function collectStyles(node) {
     const attrs = Object.fromEntries((node.attrs ?? []).map(a => [a.name, a.value]));
     if (node.tagName==='style' || node.tagName==='link' && attrs.rel?.split(/\s/u).includes('stylesheet')) activeStyleNodes.push(node);
+    for (const child of node.childNodes ?? []) collectStyles(child);
+    if (node.content) collectStyles(node.content);
+  }
+  collectStyles(tree);
+  function visit(node) {
+    const attrs = Object.fromEntries((node.attrs ?? []).map(a => [a.name, a.value]));
     if (['pre','code','script','style','template','noscript','svg','math'].includes(node.tagName)
         || 'hidden' in attrs || attrs['aria-hidden'] === 'true'
         || /(?:display\s*:\s*none|visibility\s*:\s*hidden)/iu.test(attrs.style ?? '')) return;

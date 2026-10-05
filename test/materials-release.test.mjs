@@ -37,3 +37,15 @@ test('unsupported iframe or active media cannot silently vanish from approved PD
   assert.throws(()=>buildHtml({label:'章节',isLeaf:true},'类别',()=>'<iframe src="https://example.invalid/chart.html"></iframe>'),/静态回退/u);
   assert.doesNotThrow(()=>validatePdfHtml('<p>正文</p><img src="reviewed-image.png">'));
 });
+
+
+test('SVG resources and CSS images cannot bypass required PDF media readiness',()=>{
+  for(const body of [
+    '<svg><image href="https://example.invalid/diagram.png"></image></svg>',
+    '<svg><use href="https://example.invalid/sprite.svg#diagram"></use></svg>',
+    '<div style="background-image:url(https://example.invalid/diagram.png)">图解</div>',
+    '<style>.diagram {background-image:image-set(url(https://example.invalid/chart.png) 1x)}</style><div class="diagram"></div>',
+    '<picture><source srcset="https://example.invalid/chart.png"><img src="fallback.png"></picture>',
+  ]) assert.throws(()=>buildHtml({label:'图解',isLeaf:true},'类别',()=>body),/静默丢失图解/u);
+  assert.throws(()=>buildHtml({label:'待核验静态矢量',isLeaf:true},'类别',()=>'<svg viewBox="0 0 10 10"><path d="M0 0L10 10"></path></svg>'),/静态回退/u);
+});

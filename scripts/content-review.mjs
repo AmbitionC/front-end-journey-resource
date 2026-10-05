@@ -58,7 +58,8 @@ export async function readPrivatePinned(root, descriptor) {
 
 // The pin is supplied by the reviewer outside the editable ledger. Local
 // hashes establish binding, not reviewer identity; CI additionally requires
-// an authenticated repository-owner review tied to this publication digest.
+// an authenticated independent OWNER/COLLABORATOR review tied to this
+// publication digest and the immutable private receipt pointer.
 export async function validateContentReview(root, historyPath, reviewPath, reviewSha256) {
   const errors = [];
   try {
@@ -88,10 +89,17 @@ export async function validateContentReview(root, historyPath, reviewPath, revie
       if (leaf && !review.articleKeys.includes(leaf.key)) throw new Error('变更面经被排除在本批原文审核之外');
       if (!leaf && !review.deletedPublicPaths?.includes(path)) throw new Error('删除或孤儿面经缺审核说明');
     }
+    // A removed historical record cannot make a known public page disappear
+    // from duplicate checks. This inspects provenance, not article rewriting.
+    for (const key of previousLeaves.keys()) {
+      if (!byKey.has(key) || review.articleKeys.includes(key)) continue;
+      if (!Object.values(history.records ?? {}).some(record => record.articleKey===key
+          && ['prepared','published','merged'].includes(record.status))) throw new Error('既有公开面经缺历史来源覆盖，不能证明去重完整');
+    }
     const historical=[];
     for(const record of Object.values(history.records??{})) {
       if(!review.articleKeys.includes(record.articleKey) && byKey.has(record.articleKey)
-          && ['prepared','published','merged'].includes(record.status) && record.normalizedBodySha256) {
+          && ['prepared','published','merged'].includes(record.status)) {
         historical.push({record,fingerprint:await verifiedHistoricalFingerprint(root,record)});
       }
     }
@@ -149,6 +157,13 @@ export async function validateContentReview(root, historyPath, reviewPath, revie
         if (actual[i].key !== expected.knowledgeKey || actual[i].summary !== `（${i+1}）${expected.publicQuestion}`
             || actual[i].answer.trim() !== expected.teachingAnswer) throw new Error('实际问题、短答或知识关联与审核映射不一致');
         if (expected.knowledgeKey === null && expected.bindingStatus !== 'pending_missing_keyword') throw new Error('未绑定问题缺少明确待补原因');
+        if (expected.knowledgeKey !== null && expected.bindingStatus !== 'bound') throw new Error('已绑定问题缺少明确绑定状态');
+      }
+      for (const [sourceId, record] of Object.entries(history.records ?? {}).filter(([,record])=>record.articleKey===key
+          && ['prepared','published','merged'].includes(record.status))) {
+        const boundKeys=[...new Set(row.questions.filter(q=>q.sourceId===sourceId && q.bindingStatus==='bound'
+          && typeof q.knowledgeKey==='string').map(q=>q.knowledgeKey))].sort();
+        if (JSON.stringify([...(record.knowledgeKeys ?? [])].sort())!==JSON.stringify(boundKeys)) throw new Error('计热知识 key 必须与已审逐题绑定一致；待补题不得计热');
       }
     }
     errors.push(...(await validateTree(root)).errors);

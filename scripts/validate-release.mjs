@@ -4,7 +4,7 @@ import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { validateTree } from './validate-tree.mjs';
 import { validatePrivateInterviewHistory } from './validate-private-interview-history.mjs';
-import { validateGithubRelease, requireSuccessfulSync } from './github-release-review.mjs';
+import { validateGithubRelease, requireSuccessfulSync, validateGithubPrivateReview } from './github-release-review.mjs';
 
 export async function requireReviewedRelease(root, before, after, options={}) {
   if (process.env.GITHUB_ACTIONS==='true' && after!==process.env.GITHUB_SHA) throw new Error('正式发布必须使用当前 Action 的最终 SHA，不支持跨提交重放');
@@ -24,7 +24,10 @@ export async function requireReviewedRelease(root, before, after, options={}) {
 if (isDirectExecution(import.meta.url)) {
   const root = resolve(import.meta.dirname,'..');
   try {
-    if (process.argv[2]==='--ci') {
+    if (process.argv[2]==='--private-pr') {
+      const approval=await validateGithubPrivateReview(root,process.argv[4],process.argv[5],process.argv[6],Number(process.argv[3]));
+      console.log(JSON.stringify(approval));
+    } else if (process.argv[2]==='--ci') {
       const approval = await requireReviewedRelease(root,process.argv[3],process.argv[4]);
       if (process.argv.includes('--wait-sync')) {
         const deadline = Date.now()+10*60*1000;

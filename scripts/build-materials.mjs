@@ -91,8 +91,15 @@ export function buildHtml(sub, parentLabel, readArticle=readLeafMd) {
 
 export function validatePdfHtml(html) {
   function visit(node) {
-    if(['iframe','object','embed','video','audio','canvas'].includes(node.tagName)) throw new Error('PDF 含无已核验静态回退的媒体；禁止静默丢失图解');
+    if(['iframe','object','embed','video','audio','canvas','picture','source','svg','image','use','foreignObject','script'].includes(node.tagName)) throw new Error('PDF 含无已核验静态回退的媒体；禁止静默丢失图解');
+    const attrs=Object.fromEntries((node.attrs??[]).map(a=>[a.name,a.value]));
+    // The builder owns its only stylesheet. Author CSS/SVG resource loading
+    // is not covered by document.images readiness and must fail closed.
+    if (node.tagName==='style' && ((node.childNodes??[]).map(n=>n.value??'').join('')!==CSS || node.parentNode?.tagName!=='head')
+        || node.tagName==='link' || 'style' in attrs || 'srcset' in attrs
+        || (node.attrs??[]).some(a=>a.name.startsWith('on'))) throw new Error('PDF 含未受支持的样式或资源入口；禁止静默丢失图解');
     for(const child of node.childNodes??[])visit(child);
+    if(node.content)visit(node.content);
   }
   visit(parse5.parse(html));
 }

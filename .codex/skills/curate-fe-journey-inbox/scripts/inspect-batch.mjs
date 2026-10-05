@@ -104,8 +104,8 @@ export async function inspectBatch(resourceRoot, batch, {historyPath}={}) {
   const history = await readInterviewSourceHistory(root,historyPath);
   const historyRecords = Object.values(history?.records ?? {});
   let unverifiedHistoricalFingerprint=false;
-  for(const record of historyRecords.filter(r=>r.normalizedBodySha256)) {
-    try { await verifiedHistoricalFingerprint(root,record); }
+  for(const record of historyRecords.filter(r=>['prepared','published','merged'].includes(r.status))) {
+    try { record.normalizedBodySha256=await verifiedHistoricalFingerprint(root,record); }
     catch { unverifiedHistoricalFingerprint=true; }
   }
   const malformed = [];
