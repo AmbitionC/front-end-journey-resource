@@ -67,7 +67,7 @@ const CSS = `
   ul,ol { padding-left:22px; }
   .foot { margin-top:8px; text-align:center; color:#b8b6ad; font-size:11px; }
   .pdf-toc { page-break-after:always; } .pdf-toc li { margin:4px 0; }
-  h3 { break-after:avoid; } tr { break-inside:avoid; }
+  h3, article :is(h1,h2,h3,h4,h5,h6) { break-after:avoid; } tr { break-inside:avoid; }
 `;
 
 /** 为某个二级分类节点构建整册 HTML（封面=二级分类名，章节=更深层目录） */
