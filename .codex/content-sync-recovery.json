@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "failedAfterSha": "925f364c52a710b4e5ae778536eb05fe645033c9",
+  "baselineSha": "f67f80c0adf0c78327df38055c1e5029d85af207",
+  "failedRunId": 37285956672,
+  "publicationDigest": "c7246b3ce3635e4bc1b444767d5d53131772db5c505111aa66e3f0c124ec423a",
+  "reason": "The reviewed 190-input release returned HTTP 502 before a verified terminal receipt. Recover the same public bytes in bounded requests at the next reviewed release commit."
+}

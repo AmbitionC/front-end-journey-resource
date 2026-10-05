@@ -16,9 +16,11 @@ on:
       - 'scripts/validate-tree.mjs'
       - 'scripts/interview-source-history.mjs'
       - 'scripts/validate-private-interview-history.mjs'
+      - 'scripts/sync-content-batches.mjs'
       - 'package.json'
       - 'package-lock.json'
       - '.github/workflows/build-materials.yml'
+      - '.github/workflows/sync.yml'
   workflow_dispatch: {}
 
 concurrency:
