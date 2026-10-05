@@ -3,6 +3,7 @@ import { dirname, join, normalize, relative, resolve, sep, isAbsolute } from 'no
 import { isDirectExecution, leafPath, readBounded, safeRelativePath } from './resource-paths.mjs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { visibleLinkTargets } from './public-interview-contract.mjs';
+import { createHash } from 'node:crypto';
 
 export const INTERVIEW_SOURCE_HISTORY = '.codex/interview-source-history.json';
 const STATUSES = new Set(['published', 'prepared', 'merged', 'skipped', 'retired', 'needs_review']);
@@ -64,6 +65,25 @@ export async function readInterviewSourceHistory(resourceRoot, historyPath) {
   const root = await realpath(resourceRoot), file = await realpath(historyPath), location = relative(root,file);
   if (location !== '..' && !location.startsWith(`..${sep}`) && !isAbsolute(location)) throw new Error('来源历史必须位于公开仓库外');
   return JSON.parse(await readFile(file,'utf8'));
+}
+
+export function normalizedSourceBody(text) {
+  return text.replace(/^\uFEFF?---\r?\n[\s\S]*?\r?\n---(?:\r?\n|$)/u,'').normalize('NFKC').replace(/\s/gu,'');
+}
+
+export async function verifiedHistoricalFingerprint(root, record) {
+  if (!isAbsolute(record.originalBodyEvidenceFile??'') || !/^[a-f0-9]{64}$/u.test(record.originalBodySha256??'')) throw new Error('历史原文缺仓外冻结证据');
+  const base=await realpath(root),file=await realpath(record.originalBodyEvidenceFile),location=relative(base,file);
+  if(location!=='..' && !location.startsWith(`..${sep}`) && !isAbsolute(location)) throw new Error('历史原文证据必须在公开仓外');
+  const bytes=await readFile(file),hash=value=>createHash('sha256').update(value).digest('hex');
+  if(hash(bytes)!==record.originalBodySha256) throw new Error('历史冻结原文指纹不一致');
+  const capture=record.originalBodyDocumentJson?JSON.parse(bytes).document:null;
+  if(capture && (capture.canonicalUrl||capture.url)!==record.url) throw new Error('历史冻结原文 URL 不一致');
+  const text=capture?capture.text:bytes.toString();
+  if(typeof text!=='string' || !text.trim()) throw new Error('历史冻结原文正文为空');
+  const actual=hash(normalizedSourceBody(text));
+  if(actual!==record.normalizedBodySha256) throw new Error('历史正文指纹未由冻结原文复算确认');
+  return actual;
 }
 
 export async function validateInterviewSourceHistory(resourceRoot, history, options = {}) {

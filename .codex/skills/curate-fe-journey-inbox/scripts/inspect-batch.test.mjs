@@ -93,7 +93,7 @@ test('scopes one batch, deduplicates clusters, filters C evidence, and isolates 
     assert.deepEqual(await readdir(join(root, '_inbox', 'nowcoder')), before);
   } finally {
     await rm(root, { recursive: true, force: true });
-    await rm(`${root}.private-history.json`,{force:true});
+    await rm(`${root}.private-history.json`,{force:true});await rm(`${root}.private-body.md`,{force:true});
   }
 });
 
@@ -117,7 +117,7 @@ test('scopes pooled delivery by deliveryBatchId while preserving the original ca
     assert.deepEqual(captured.publicContent, []);
   } finally {
     await rm(root, { recursive: true, force: true });
-    await rm(`${root}.private-history.json`,{force:true});
+    await rm(`${root}.private-history.json`,{force:true});await rm(`${root}.private-body.md`,{force:true});
   }
 });
 
@@ -138,7 +138,7 @@ test('accepts an explicitly directed delivery without pretending it came from th
     assert.deepEqual(report.malformed, []);
   } finally {
     await rm(root, { recursive: true, force: true });
-    await rm(`${root}.private-history.json`,{force:true});
+    await rm(`${root}.private-history.json`,{force:true});await rm(`${root}.private-body.md`,{force:true});
   }
 });
 
@@ -167,7 +167,7 @@ test('separates exclusion, truncation, and malformed inputs without modifying fi
     assert.equal(await readFile(join(broken, 'meta.json'), 'utf8'), brokenBefore);
   } finally {
     await rm(root, { recursive: true, force: true });
-    await rm(`${root}.private-history.json`,{force:true});
+    await rm(`${root}.private-history.json`,{force:true});await rm(`${root}.private-body.md`,{force:true});
   }
 });
 
@@ -175,6 +175,7 @@ test('skips an unchanged source already recorded in committed history', async ()
   const root = await mkdtemp(join(tmpdir(), 'fe-inspect-history-'));
   try {
     await writeEntry(root, 'already-published', meta());
+    await writeFile(`${root}.private-body.md`,ORIGINAL);
     await writeFile(`${root}.private-history.json`, `${JSON.stringify({
       schemaVersion: 1,
       updatedAt: '2026-08-23',
@@ -184,6 +185,8 @@ test('skips an unchanged source already recorded in committed history', async ()
           url: 'https://www.nowcoder.com/discuss/1001',
           contentHash: '0123456789abcdef',
           normalizedBodySha256: fingerprint(ORIGINAL),
+          originalBodyEvidenceFile: `${root}.private-body.md`,
+          originalBodySha256: createHash('sha256').update(ORIGINAL).digest('hex'),
           clusterId: 'cluster-agent-tools',
           company: 'bytedance',
           evidenceGrade: 'A',
@@ -211,7 +214,7 @@ test('skips an unchanged source already recorded in committed history', async ()
     }]);
   } finally {
     await rm(root, { recursive: true, force: true });
-    await rm(`${root}.private-history.json`,{force:true});
+    await rm(`${root}.private-history.json`,{force:true});await rm(`${root}.private-body.md`,{force:true});
   }
 });
 
@@ -223,7 +226,7 @@ test('actual body deduplication ignores forged cluster metadata and capture-only
     const report=await inspect(root,'batch-current');
     assert.equal(report.clusters.length,1);assert.equal(report.publicContent[0].sources.length,2);
     assert.equal(report.publicContent[0].representative.normalizedBodySha256,fingerprint(ORIGINAL));
-  } finally {await rm(root,{recursive:true,force:true});await rm(`${root}.private-history.json`,{force:true});}
+  } finally {await rm(root,{recursive:true,force:true});await rm(`${root}.private-history.json`,{force:true});await rm(`${root}.private-body.md`,{force:true});}
 });
 
 test('missing actual historical fingerprint blocks guessing whether an existing source changed',async()=>{
@@ -234,5 +237,5 @@ test('missing actual historical fingerprint blocks guessing whether an existing 
     const report=await inspect(root,'batch-current');
     assert.equal(report.publicContent.length,0);assert.match(report.blocked[0].reason,/缺实际原文指纹/u);
     await assert.rejects(inspectBatch(root,'batch-current'),/绝对路径/u);
-  } finally {await rm(root,{recursive:true,force:true});await rm(`${root}.private-history.json`,{force:true});}
+  } finally {await rm(root,{recursive:true,force:true});await rm(`${root}.private-history.json`,{force:true});await rm(`${root}.private-body.md`,{force:true});}
 });

@@ -7,7 +7,7 @@ const SHA = /^[a-f0-9]{40}$/u;
 export async function githubRead(path) {
   // This repository uses public read endpoints. No token, new permission,
   // configurable API host or caller-supplied response file is accepted.
-  const response = await fetch(`https://api.github.com/repos/${REPOSITORY}/${path}`, {
+  const response = await fetch(`https://api.github.com/repos/${REPOSITORY}${path?`/${path}`:''}`, {
     headers: { Accept:'application/vnd.github+json' }, redirect:'error',
     signal: AbortSignal.timeout(20000),
   });
@@ -37,12 +37,7 @@ export function matchingReview(pr, reviews, digest) {
   if (trusted.some(r=>r.state==='CHANGES_REQUESTED')) return null;
   const marker = `content-release:v1 head=${pr.head.sha} digest=${digest}`;
   return trusted.find(r=>r.commit_id===pr.head.sha && r.body?.split(/\r?\n/u).some(line=>line.trim()===marker)
-    && (r.state==='APPROVED' && r.user.login.toLowerCase()!==pr.user.login.toLowerCase()
-      // A sole repository owner can attest that the private independent review
-      // was checked. This is a publication attestation, never a claim that the
-      // author performed an independent review of their own work.
-      || r.state==='COMMENTED' && r.author_association==='OWNER'
-        && r.body.split(/\r?\n/u).some(line=>line.trim()==='private-independent-review:verified')));
+    && r.state==='APPROVED' && r.user.login.toLowerCase()!==pr.user.login.toLowerCase());
 }
 
 export async function validateGithubRelease(root, before, after, {read=githubRead}={}) {
@@ -53,6 +48,8 @@ export async function validateGithubRelease(root, before, after, {read=githubRea
   if (ancestor.status!==0) throw new Error('发布范围非有效祖先链');
   const snapshot = await publicInventory(root), committed = gitPublicationFiles(root,after);
   if (JSON.stringify(snapshot.files)!==JSON.stringify(committed)) throw new Error('工作区资源与最终提交不一致');
+  const repository=await read(''),branch=await read('branches/master');
+  if(repository.default_branch!=='master' || branch.commit?.sha!==after) throw new Error('最终发布 SHA 不是当前默认分支 head，禁止旧任务重放');
   const prs = await allPages(`commits/${after}/pulls`,read);
   for (const item of prs) {
     const pr = await read(`pulls/${item.number}`);

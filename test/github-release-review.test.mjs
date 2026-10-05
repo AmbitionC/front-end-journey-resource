@@ -21,12 +21,12 @@ test('GitHub approval must be trusted, independent, current head and exact diges
   assert.equal(matchingReview(pr,[approved(),changes],digest),null);
 });
 
-test('sole owner comment is an explicit publication attestation of private independent review',()=>{
+test('author/owner comments cannot substitute for an independent authenticated approval',()=>{
   const owner={...approved(),user:{login:'author'},author_association:'OWNER',state:'COMMENTED'};
   assert.equal(matchingReview(pr,[owner],digest),undefined);
   owner.body+='\nprivate-independent-review:verified';
-  assert.equal(matchingReview(pr,[owner],digest).id,1);
-  assert.equal(matchingReview(pr,[{...owner,author_association:'COLLABORATOR'}],digest),undefined);
+  assert.equal(matchingReview(pr,[owner],digest),undefined);
+  assert.equal(matchingReview(pr,[{...owner,state:'APPROVED'}],digest),undefined);
 });
 
 async function githubFixture(f) {
@@ -37,6 +37,8 @@ async function githubFixture(f) {
   const finalPr={...structuredClone(pr),merged:true,merge_commit_sha:after,head:{sha:reviewedHead,repo:{full_name:repo}}};
   const review={...approved(),commit_id:reviewedHead,body:`content-release:v1 head=${reviewedHead} digest=${f.review.publicationDigest}`};
   const read=async path=>{
+    if(path==='') return {default_branch:'master'};
+    if(path==='branches/master') return {commit:{sha:after}};
     if(path.startsWith(`commits/${after}/pulls?`)) return [{number:12}];
     if(path==='pulls/12') return finalPr;
     if(path.startsWith('pulls/12/reviews?')) return [review];
@@ -56,6 +58,12 @@ test('release proof uses actual committed inventory and actual merged PR, not a 
   g.finalPr.head.repo.full_name=repo;
   await writeFile(join(f.root,'images/image.png'),'uncommitted image replacement');
   await assert.rejects(validateGithubRelease(f.root,f.baseCommit,g.after,{read:g.read}),/最终提交不一致/u);
+}));
+
+test('old approved commits cannot be replayed after the actual default branch advances',()=>reviewFixture(async f=>{
+  const g=await githubFixture(f);
+  const read=async path=>path==='branches/master'?{commit:{sha:'c'.repeat(40)}}:g.read(path);
+  await assert.rejects(validateGithubRelease(f.root,f.baseCommit,g.after,{read}),/旧任务重放/u);
 }));
 
 test('formal entry rejects legacy public private ledger and cross-SHA Action replay',()=>reviewFixture(async f=>{

@@ -2,7 +2,8 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { writeFile, readFile, mkdir, symlink } from 'node:fs/promises';
 import { join } from 'node:path';
-import { reviewFixture, freezeFixtureReview } from './release-review-fixture.mjs';
+import { reviewFixture, freezeFixtureReview, git } from './release-review-fixture.mjs';
+import { sha256, normalizedOriginal } from '../scripts/content-review.mjs';
 import { validatePrivateInterviewHistory } from '../scripts/validate-private-interview-history.mjs';
 
 const check=f=>validatePrivateInterviewHistory(f.root,f.historyPath,f.options);
@@ -47,7 +48,7 @@ test('changed new article cannot be silently excluded from the reviewed source s
   await writeFile(join(f.root,'interview/company/unreviewed.md'),'new unreviewed article');
   await writeFile(join(f.root,'interview/_tree.json'),JSON.stringify([f.interview,{...f.interview,key:'unreviewed'}]));
   await freezeFixtureReview(f);
-  assert.match((await check(f)).join(),/排除在本批原文审核之外/u);
+  assert.match((await check(f)).join(),/缺本批原文审核/u);
 }));
 
 test('actual identical originals across URLs reject a new page despite forged metadata hashes and clusters',()=>reviewFixture(async f=>{
@@ -59,15 +60,21 @@ test('actual identical originals across URLs reject a new page despite forged me
   assert.match((await check(f)).join(),/跨 URL 同原文/u);
 }));
 
-test('existing process reuses its public key unless reviewed distinct-round evidence allows both',()=>reviewFixture(async f=>{
-  const old={...f.interview,key:'prior-page'};
-  await writeFile(join(f.root,'interview/_tree.json'),JSON.stringify([f.interview,old]));
+async function historicalBaseline(f,text,processUnitId) {
+  const old={key:'prior-page',filePath:'company',isLeaf:true},url='https://www.nowcoder.com/discuss/987654321';
   await writeFile(join(f.root,'interview/company/prior-page.md'),'历史面经。');
-  f.history.records.bbbbbbbbbbbb={...f.history.records.aaaaaaaaaaaa,url:'https://www.nowcoder.com/discuss/987654321',articleKey:'prior-page',status:'published'};
-  f.review.articleKeys.push('prior-page');
-  await writeFile(f.historyPath,JSON.stringify(f.history));
-  await freezeFixtureReview(f);
-  assert.match((await check(f)).join(),/复用已有 key/u);
+  await writeFile(join(f.root,'interview/_tree.json'),JSON.stringify([old]));
+  git(f.root,'add','interview/_tree.json','interview/company/prior-page.md');git(f.root,'commit','-qm','existing historical page');
+  f.baseCommit=git(f.root,'rev-parse','HEAD');f.review.baseCommit=f.baseCommit;
+  await writeFile(join(f.root,'interview/_tree.json'),JSON.stringify([f.interview,old]));
+  const path=join(f.folder,'historical-source.json');await writeFile(path,JSON.stringify({document:{canonicalUrl:url,text}}));
+  f.history.records.bbbbbbbbbbbb={...f.history.records.aaaaaaaaaaaa,url,articleKey:'prior-page',status:'published',processUnitId,normalizedBodySha256:sha256(normalizedOriginal(text)),originalBodyEvidenceFile:path,originalBodySha256:(await f.pin(path)).sha256,originalBodyDocumentJson:true};
+  await writeFile(f.historyPath,JSON.stringify(f.history));await freezeFixtureReview(f);
+}
+
+test('existing process reuses its public key unless reviewed distinct-round evidence allows both',()=>reviewFixture(async f=>{
+  await historicalBaseline(f,'旧轮次的不同原文','process-a');
+  assert.match((await check(f)).join(),/既有流程必须复用已有 key/u);
 }));
 
 test('question spans use Unicode codepoints and reject overshooting or mismatched short answers',()=>reviewFixture(async f=>{
@@ -96,4 +103,33 @@ test('image resync input is covered by both snapshot and final version binding',
   await freezeFixtureReview(f); assert.deepEqual(await check(f),[]);
   await writeFile(join(f.root,'.codex/image-resync.txt'),'images/unreviewed.png\n');
   assert.match((await check(f)).join(),/最终审核版本不一致/u);
+}));
+
+test('removing format metadata does not let an empty question ledger approve a new source article',()=>reviewFixture(async f=>{
+  delete f.interview.contentFormat;
+  await writeFile(join(f.root,'interview/_tree.json'),JSON.stringify([f.interview]));
+  await writeFile(join(f.root,'interview/company/article.md'),'候选人自述，无原题。');
+  f.ledger.rows[0].questions=[];await writeFile(f.ledgerPath,JSON.stringify(f.ledger));await freezeFixtureReview(f);
+  assert.match((await check(f)).join(),/非空真实问题映射/u);
+}));
+
+test('historical same original cannot be republished under another URL or invented process',()=>reviewFixture(async f=>{
+  await historicalBaseline(f,'问题😀','invented-other-process');
+  assert.match((await check(f)).join(),/跨批同原文/u);
+}));
+
+test('historical fingerprint without frozen original proof cannot drive deduplication',()=>reviewFixture(async f=>{
+  await historicalBaseline(f,'历史不同题','different-process');
+  delete f.history.records.bbbbbbbbbbbb.originalBodyEvidenceFile;
+  await writeFile(f.historyPath,JSON.stringify(f.history));await freezeFixtureReview(f);
+  assert.match((await check(f)).join(),/历史原文缺仓外冻结证据/u);
+}));
+
+test('registering an unchanged orphan body as a new page still requires source review',()=>reviewFixture(async f=>{
+  await writeFile(join(f.root,'interview/company/orphan.md'),'既有孤儿正文。');
+  git(f.root,'add','interview/company/orphan.md');git(f.root,'commit','-qm','historical orphan');
+  f.baseCommit=git(f.root,'rev-parse','HEAD');f.review.baseCommit=f.baseCommit;
+  await writeFile(join(f.root,'interview/_tree.json'),JSON.stringify([f.interview,{key:'orphan',filePath:'company',isLeaf:true}]));
+  await freezeFixtureReview(f);
+  assert.match((await check(f)).join(),/新增或迁移面经目录叶子缺本批原文审核/u);
 }));

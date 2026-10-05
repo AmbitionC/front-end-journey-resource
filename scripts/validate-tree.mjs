@@ -1,6 +1,6 @@
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { isDirectExecution, boundedFiles, leafPath, readBounded } from './resource-paths.mjs';
+import { isDirectExecution, boundedFiles, leafPath, readBounded, safeKey } from './resource-paths.mjs';
 import { publicInterviewDisclosures, validatePublicKnowledgeRelations } from './public-interview-contract.mjs';
 
 export function leaves(nodes) {
@@ -17,6 +17,7 @@ export async function validateTree(root) {
       function groups(nodes) {
         for (const node of nodes) {
           if (!node || typeof node.key !== 'string' || !node.key.trim()) errors.push(`${module} 节点缺 key`);
+          try { safeKey(node?.key); } catch { errors.push(`${module} 节点 key 路径无效`); }
           if (seen.has(node.key)) errors.push(`${module} 重复 key`); seen.add(node.key);
           if (!node.isLeaf) groups(node.children ?? []);
         }

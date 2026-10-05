@@ -7,6 +7,7 @@ import { validatePrivateInterviewHistory } from '../scripts/validate-private-int
 import { validateInterviewSourceHistory, topicFrequencies } from '../scripts/interview-source-history.mjs';
 import { syncInterviewTopicWeights } from '../scripts/sync-interview-topic-weights.mjs';
 import { readBounded, safeRelativePath } from '../scripts/resource-paths.mjs';
+import { validateTree } from '../scripts/validate-tree.mjs';
 import { reviewFixture, freezeFixtureReview } from './release-review-fixture.mjs';
 
 const question='<details data-knowledge-key="real-key"><summary>（1）问题😀</summary></details>\n\n教学短答。\n';
@@ -110,4 +111,23 @@ test('private weight draft generation requires scope and final pin, emits aggreg
   await freezeFixtureReview(f);
   const second=await syncInterviewTopicWeights(f.root,{...options,...f.options});
   assert.deepEqual(second,{updatedTopics:0,addedClusters:0,removedClusters:0,updatedArticles:0});
+}));
+
+test('opacity and author CSS cannot satisfy visible questions, independent short answers or backlinks',()=>reviewFixture(async f=>{
+  for(const body of [question.replace('<details ','<details style="opacity:0" '),question.replace('教学短答。','<p style="opacity:0">教学短答。</p>')]) {
+    await writeFile(join(f.root,'interview/company/article.md'),body);
+    assert.match((await relations(f)).join(),/真实首个 summary/u);
+  }
+  await writeFile(join(f.root,'interview/company/article.md'),question);
+  for(const body of ['<a href="../../interview/company/article.md"></a>','<style>a{display:none}</style><a href="../../interview/company/article.md">面经</a>','<p style="opacity:0"><a href="../../interview/company/article.md">面经</a></p>']) {
+    await writeFile(join(f.root,'knowledge/topic/real-key.md'),body);
+    assert.match((await relations(f)).join(),/反链/u);
+  }
+}));
+
+test('unsafe category keys are rejected before they can become PDF output paths',()=>reviewFixture(async f=>{
+  for(const key of ['../../escape','/tmp/escape','group/child','..']) {
+    await writeFile(join(f.root,'knowledge/_tree.json'),JSON.stringify([{key,children:[f.knowledge]}]));
+    assert.match((await validateTree(f.root)).errors.join(),/节点 key 路径无效/u);
+  }
 }));

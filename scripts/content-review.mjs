@@ -4,10 +4,10 @@ import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import { boundedFiles, readBounded, safeRelativePath } from './resource-paths.mjs';
 import { validateTree, leaves } from './validate-tree.mjs';
-import { isCanonicalNowcoderUrl } from './interview-source-history.mjs';
+import { isCanonicalNowcoderUrl, verifiedHistoricalFingerprint, normalizedSourceBody } from './interview-source-history.mjs';
 
 export const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
-export const normalizedOriginal = text => text.normalize('NFKC').replace(/\s/gu, '');
+export const normalizedOriginal = normalizedSourceBody;
 
 export function gitPublicationFiles(root, commit) {
   if (!/^[a-f0-9]{40}$/u.test(commit ?? '')) throw new Error('审核基线必须是完整 commit SHA');
@@ -76,10 +76,24 @@ export async function validateContentReview(root, historyPath, reviewPath, revie
     if (!Array.isArray(review.articleKeys) || new Set(review.articleKeys).size !== review.articleKeys.length || !Array.isArray(review.sourceEvidence)) throw new Error('审核批次范围不完整');
     const tree = leaves(JSON.parse((await readBounded(root, 'interview/_tree.json', 'interview')).toString()));
     const byKey = new Map(tree.map(n=>[n.key,n]));
+    const baselineTree=spawnSync('git',['show',`${review.baseCommit}:interview/_tree.json`],{cwd:root,encoding:'utf8'});
+    if(baselineTree.status!==0) throw new Error('审核基线面经目录不可读');
+    const previousLeaves=new Map(leaves(JSON.parse(baselineTree.stdout)).map(n=>[n.key,n]));
+    for(const leaf of tree) {
+      const previous=previousLeaves.get(leaf.key);
+      if((!previous || previous.filePath!==leaf.filePath) && !review.articleKeys.includes(leaf.key)) throw new Error('新增或迁移面经目录叶子缺本批原文审核');
+    }
     for (const path of changed.filter(p=>p.startsWith('interview/') && p.endsWith('.md'))) {
       const leaf = tree.find(n=>`interview/${n.filePath}/${n.key}.md`===path);
       if (leaf && !review.articleKeys.includes(leaf.key)) throw new Error('变更面经被排除在本批原文审核之外');
       if (!leaf && !review.deletedPublicPaths?.includes(path)) throw new Error('删除或孤儿面经缺审核说明');
+    }
+    const historical=[];
+    for(const record of Object.values(history.records??{})) {
+      if(!review.articleKeys.includes(record.articleKey) && byKey.has(record.articleKey)
+          && ['prepared','published','merged'].includes(record.status) && record.normalizedBodySha256) {
+        historical.push({record,fingerprint:await verifiedHistoricalFingerprint(root,record)});
+      }
     }
     const seenOriginals = new Map(), evidenceBySource = new Map();
     for (const source of review.sourceEvidence) {
@@ -93,6 +107,8 @@ export async function validateContentReview(root, historyPath, reviewPath, revie
       const previous = seenOriginals.get(fingerprint);
       if (previous && previous.articleKey !== source.articleKey) throw new Error('跨 URL 同原文不得重复公开建页');
       if (previous && previous.processUnitId !== source.processUnitId) throw new Error('同内容不得增加独立过程频次');
+      const existing=historical.find(item=>item.fingerprint===fingerprint && item.record.articleKey!==source.articleKey);
+      if(existing) throw new Error('跨批同原文已存在公开页，必须复用已有 key');
       if (!source.sourceId || evidenceBySource.has(source.sourceId)) throw new Error('来源证据重复或缺失');
       seenOriginals.set(fingerprint, source); evidenceBySource.set(source.sourceId, { ...source, document, fingerprint });
       const previousPage = Object.values(history.records ?? {}).find(r=>r.processUnitId===source.processUnitId
@@ -120,10 +136,11 @@ export async function validateContentReview(root, historyPath, reviewPath, revie
       if (!row) throw new Error('本批面经缺逐题审核映射');
       const leaf = byKey.get(key), path = `interview/${leaf.filePath}/${leaf.key}.md`;
       const actual = questionStructure((await readBounded(root, path, 'interview')).toString()).questions;
+      if(!Array.isArray(row.questions) || row.questions.length===0 || actual.length===0) throw new Error('本批来源面经必须含非空真实问题映射');
       if (actual.length !== row.questions.length) throw new Error('可见问题组数与审核映射不一致');
       for (let i=0; i<actual.length; i++) {
         const expected = row.questions[i], source = evidenceBySource.get(expected.sourceId);
-        if (!source || !Array.isArray(expected.sourceSpan) || expected.sourceSpan.length !== 2
+        if (!source || source.articleKey!==key || !Array.isArray(expected.sourceSpan) || expected.sourceSpan.length !== 2
             || !expected.sourceSpan.every(Number.isInteger) || expected.sourceSpan[0] < 0
             || expected.sourceSpan[1] <= expected.sourceSpan[0]
             || expected.sourceSpan[1] > Array.from(source.document).length) throw new Error('原题坐标或冻结来源缺失');

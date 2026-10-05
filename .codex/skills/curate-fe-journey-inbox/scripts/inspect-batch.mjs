@@ -4,7 +4,7 @@ import { basename, dirname, isAbsolute, join, relative, resolve, sep } from 'nod
 import { pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
 import { isDirectExecution } from '../../../../scripts/resource-paths.mjs';
-import { readInterviewSourceHistory } from '../../../../scripts/interview-source-history.mjs';
+import { readInterviewSourceHistory, verifiedHistoricalFingerprint, normalizedSourceBody } from '../../../../scripts/interview-source-history.mjs';
 
 const BATCH = /^[A-Za-z0-9][A-Za-z0-9._-]{0,199}$/u;
 const PUBLIC_KINDS = new Set(['interview', 'knowledge']);
@@ -103,6 +103,11 @@ export async function inspectBatch(resourceRoot, batch, {historyPath}={}) {
   const root = await realpath(resolve(resourceRoot));
   const history = await readInterviewSourceHistory(root,historyPath);
   const historyRecords = Object.values(history?.records ?? {});
+  let unverifiedHistoricalFingerprint=false;
+  for(const record of historyRecords.filter(r=>r.normalizedBodySha256)) {
+    try { await verifiedHistoricalFingerprint(root,record); }
+    catch { unverifiedHistoricalFingerprint=true; }
+  }
   const malformed = [];
   const inputs = [];
   for (const requestedPath of await walkMeta(join(root, '_inbox', 'nowcoder'))) {
@@ -148,7 +153,7 @@ export async function inspectBatch(resourceRoot, batch, {historyPath}={}) {
       malformed.push({ path: display, reason: '缺少 original.md' });
       continue;
     }
-    const body = original.replace(/^\uFEFF?---\r?\n[\s\S]*?\r?\n---(?:\r?\n|$)/u,'').normalize('NFKC').replace(/\s/gu,'');
+    const body = normalizedSourceBody(original);
     if (!body) { malformed.push({path:display,reason:'原始正文为空'}); continue; }
     const normalizedBodySha256 = createHash('sha256').update(body).digest('hex');
     // Actual frozen body wins over caller-editable clusterId/contentHash.
@@ -173,6 +178,9 @@ export async function inspectBatch(resourceRoot, batch, {historyPath}={}) {
   const previouslyProcessed = [];
 
   for (const cluster of clusters) {
+    if(unverifiedHistoricalFingerprint) {
+      blocked.push({clusterId:cluster.clusterId,reason:'历史原文指纹缺少可复算的仓外冻结证据，停止去重推断',paths:cluster.members.map(item=>item.path)});continue;
+    }
     if (cluster.members.some(member=>historyRecords.some(record=>record.url===member.url && !record.normalizedBodySha256))) {
       blocked.push({clusterId:cluster.clusterId,reason:'既有来源缺实际原文指纹，须审核回填；不使用可编辑元数据推断未变化',paths:cluster.members.map(item=>item.path)}); continue;
     }

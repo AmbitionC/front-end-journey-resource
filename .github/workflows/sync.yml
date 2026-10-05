@@ -8,7 +8,17 @@ on:
       - '_inbox/**'
   pull_request:
     paths:
+      - 'interview/**'
+      - 'knowledge/**'
+      - 'images/**'
+      - 'class/**'
       - '.codex/image-resync.txt'
+      - 'scripts/**'
+      - 'test/**'
+      - '.codex/skills/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/**'
   workflow_dispatch:
     inputs:
       before_sha:
@@ -25,7 +35,27 @@ permissions:
   statuses: write
 
 jobs:
+  validate-pr:
+    if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install test dependencies without install scripts
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Validate public resource structure
+        run: npm run validate:tree
+      - name: Test publication boundaries with isolated fixtures
+        run: npm test
+
   sync:
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Publish pending content sync status

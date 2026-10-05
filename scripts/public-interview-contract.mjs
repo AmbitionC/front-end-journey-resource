@@ -36,6 +36,15 @@ function nodeText(node) {
   return (node.childNodes ?? []).map(nodeText).join('');
 }
 
+function unprovenVisibility(node) {
+  const uncertain=n=>(n.attrs??[]).some(a=>['style','class','hidden','inert','color'].includes(a.name)
+    || a.name==='aria-hidden' && a.value==='true');
+  function subtree(n) { return uncertain(n) || (n.childNodes??[]).some(subtree); }
+  if(subtree(node)) return true;
+  for(let ancestor=node.parentNode;ancestor;ancestor=ancestor.parentNode) if(uncertain(ancestor)) return true;
+  return false;
+}
+
 export function questionStructure(contents) {
   const { nodes, errors, activeStyleNodes } = renderedDocument(contents);
   const questions = nodes.filter(n => n.node.tagName === 'details').map(({ node, attrs }) => {
@@ -51,7 +60,7 @@ export function questionStructure(contents) {
       summary: nodeText(children[0] ?? {}), answer: nodeText(answer ?? {}),
       valid: children[0]?.tagName === 'summary'
         && children.filter(n => n.tagName === 'summary').length === 1
-        && !nested && !!nodeText(children[0]).trim()
+        && !nested && !unprovenVisibility(node) && !unprovenVisibility(answer??{}) && !!nodeText(children[0]).trim()
         && answer?.tagName === 'p' && !!nodeText(answer).trim() };
   });
   return { questions, duplicateAttributes: errors.length, activeStyles: activeStyleNodes.length };
@@ -62,8 +71,11 @@ export function inlineKnowledgeBindings(contents) {
 }
 
 export function visibleLinkTargets(contents, from) {
+  const document=renderedDocument(contents);
+  if(document.activeStyleNodes.length) throw new Error('知识正文注入样式，无法证明反链可见');
   const targets = new Set();
-  for (const {attrs} of renderedDocument(contents).nodes.filter(n=>n.node.tagName==='a')) {
+  for (const {node,attrs} of document.nodes.filter(n=>n.node.tagName==='a')) {
+    if(!nodeText(node).trim() || unprovenVisibility(node)) continue;
     const target=relativeLinkTarget(from,attrs.href);
     if(target) targets.add(target);
   }
@@ -101,12 +113,9 @@ export async function validatePublicKnowledgeRelations(resourceRoot, interviewLe
       let knowledgeBody, knowledgeFile;
       try { knowledgeFile = leafPath('knowledge', knowledgeLeaf); knowledgeBody = (await readBounded(resourceRoot, knowledgeFile, 'knowledge')).toString(); }
       catch { errors.push(`知识点正文不存在：${binding.key}`); continue; }
-      const links = renderedDocument(knowledgeBody).nodes.filter(n => n.node.tagName === 'a');
       let linked = false;
-      for (const {attrs} of links) {
-        try { if (relativeLinkTarget(knowledgeFile, attrs.href) === interviewFile) { await readBounded(resourceRoot, interviewFile, 'interview'); linked = true; } }
-        catch { errors.push(`知识点 ${binding.key} 含越界或无效反链`); }
-      }
+      try { linked=visibleLinkTargets(knowledgeBody,knowledgeFile).has(interviewFile); }
+      catch { errors.push(`知识点 ${binding.key} 含越界、无效或不可证明可见的反链`); }
       if (!linked) {
         errors.push(`知识点 ${binding.key} 缺少面经反链：${leaf.key}`);
       }

@@ -21,6 +21,8 @@ export async function freezeFixtureReview(f) {
 }
 
 export async function reviewFixture(run) {
+  const originalActions=process.env.GITHUB_ACTIONS,originalSha=process.env.GITHUB_SHA;
+  delete process.env.GITHUB_ACTIONS;delete process.env.GITHUB_SHA;
   const folder=await mkdtemp(join(tmpdir(),'release-review-')),root=join(folder,'public');
   try {
     for (const p of ['interview/company','knowledge/topic','images']) await mkdir(join(root,p),{recursive:true});
@@ -49,5 +51,9 @@ export async function reviewFixture(run) {
     const reviewPath=join(folder,'review.json');await writeFile(reviewPath,JSON.stringify(review));
     const options={reviewPath,reviewSha256:sha256(await readFile(reviewPath))};
     await run({root,folder,history,historyPath,ledger,ledgerPath,review,reviewPath,options,sourcePath,interview,knowledge,baseCommit,pin});
-  } finally {await rm(folder,{recursive:true,force:true});}
+  } finally {
+    await rm(folder,{recursive:true,force:true});
+    if(originalActions===undefined)delete process.env.GITHUB_ACTIONS;else process.env.GITHUB_ACTIONS=originalActions;
+    if(originalSha===undefined)delete process.env.GITHUB_SHA;else process.env.GITHUB_SHA=originalSha;
+  }
 }

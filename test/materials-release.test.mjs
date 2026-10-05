@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { spawnSync } from 'node:child_process';
 import { join } from 'node:path';
-import { buildHtml, localReviewedImagePath } from '../scripts/build-materials.mjs';
+import { buildHtml, localReviewedImagePath, validatePdfHtml } from '../scripts/build-materials.mjs';
 import { validateSyncResult } from '../scripts/validate-sync-result.mjs';
 
 test('PDF HTML keeps published leaf order, escapes labels and reads actual supplied Markdown',()=>{
@@ -30,4 +30,10 @@ test('direct PDF CLI fails before browser launch or upload when genuine final pr
   const result=spawnSync(process.execPath,[join(import.meta.dirname,'../scripts/build-materials.mjs')],{encoding:'utf8',timeout:20000,env:{...process.env,RELEASE_AFTER_SHA:'0'.repeat(40)}});
   assert.equal(result.status,1);assert.match(result.stderr,/正式 PDF 生成\/上传失败/u);
   assert.doesNotMatch(result.stdout,/built |已上传 OSS/u);
+});
+
+test('unsupported iframe or active media cannot silently vanish from approved PDF',()=>{
+  for(const tag of ['iframe','object','embed','video','audio','canvas']) assert.throws(()=>validatePdfHtml(`<${tag}></${tag}>`),/禁止静默丢失图解/u);
+  assert.throws(()=>buildHtml({label:'章节',isLeaf:true},'类别',()=>'<iframe src="https://example.invalid/chart.html"></iframe>'),/静态回退/u);
+  assert.doesNotThrow(()=>validatePdfHtml('<p>正文</p><img src="reviewed-image.png">'));
 });

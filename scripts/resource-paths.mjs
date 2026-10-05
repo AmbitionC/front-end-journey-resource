@@ -25,6 +25,12 @@ export function leafPath(module, leaf) {
   return `${module}/${leaf.filePath}/${leaf.key}.md`;
 }
 
+export function safeKey(value) {
+  safeRelativePath(value);
+  if (value.includes('/')) throw new Error('key 必须是单个安全路径组件');
+  return value;
+}
+
 export async function boundedPath(root, requested, module) {
   safeRelativePath(requested);
   if (module && !requested.startsWith(`${module}/`)) throw new Error('资源模块边界不符');

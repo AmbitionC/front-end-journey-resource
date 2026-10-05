@@ -6,12 +6,13 @@ import { readFileSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { spawnSync } from 'node:child_process';
-import { isDirectExecution, leafPath, readBounded, safeRelativePath } from './resource-paths.mjs';
+import { isDirectExecution, leafPath, readBounded, safeRelativePath, safeKey } from './resource-paths.mjs';
 import { requireReviewedRelease } from './validate-release.mjs';
 import { publicInventory, sha256 } from './content-review.mjs';
 import MarkdownIt from 'markdown-it';
 import puppeteer from 'puppeteer';
 import OSS from 'ali-oss';
+import parse5 from 'parse5';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const KNOWLEDGE = join(ROOT, 'knowledge');
@@ -84,7 +85,16 @@ export function buildHtml(sub, parentLabel, readArticle=readLeafMd) {
     body += `<article><h3>${esc(leaf.label)}</h3>${md.render(mdText)}</article>`;
   }
   const html = `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><style>${CSS}</style></head><body>${body}</body></html>`;
+  validatePdfHtml(html);
   return { html, count: out.length };
+}
+
+export function validatePdfHtml(html) {
+  function visit(node) {
+    if(['iframe','object','embed','video','audio','canvas'].includes(node.tagName)) throw new Error('PDF 含无已核验静态回退的媒体；禁止静默丢失图解');
+    for(const child of node.childNodes??[])visit(child);
+  }
+  visit(parse5.parse(html));
 }
 
 export function localReviewedImagePath(value) {
@@ -130,9 +140,11 @@ async function main() {
 
   // 按「一级分类 → 二级分类」拆分：每个二级分类一册 PDF（控制单册体积）
   for (const cat of tree) {
+    safeKey(cat.key);
     const subs = Array.isArray(cat.children) ? cat.children : [];
     const items = [];
     for (const sub of subs) {
+      safeKey(sub.key);
       // 二级节点本身可能直接是叶子（无更深分层）——也按一册处理
       const built = buildHtml(sub, cat.label);
       if (!built) {
