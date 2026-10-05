@@ -3,10 +3,18 @@ import test from 'node:test';
 import {writeFile,mkdir,readFile} from 'node:fs/promises';
 import {join} from 'node:path';
 import {reviewFixture,git} from './release-review-fixture.mjs';
-import {buildSyncBatches,runSyncBatches,recoveryBaseline,BATCH_LIMIT} from '../scripts/sync-content-batches.mjs';
+import {buildSyncBatches,runSyncBatches,recoveryBaseline,BATCH_LIMIT,readSyncResponse} from '../scripts/sync-content-batches.mjs';
 import {publicInventory} from '../scripts/content-review.mjs';
 
 const result=batch=>({success:true,data:{...batch.expected.counts,errors:[],sourceCommit:batch.expected.afterSha,readMode:'commit_pinned',sourceInputs:structuredClone(batch.expected.inputs)}});
+
+test('malformed response JSON never becomes response text in public failure logs',async()=>{
+  for(const text of ['TEST_ONLY_SENSITIVE_RESPONSE','{"unfinished":"TEST_ONLY_SENSITIVE_RESPONSE']){
+    await assert.rejects(readSyncResponse(new Response(text,{status:200})),e=>e.message==='同步服务返回无效JSON'&&!e.message.includes('TEST_ONLY'));
+  }
+  await assert.rejects(readSyncResponse(new Response('TEST_ONLY_SENSITIVE_RESPONSE',{status:502})),e=>e.message==='同步服务 HTTP 502');
+  assert.deepEqual(await readSyncResponse(new Response('{"success":true}',{status:200})),{success:true});
+});
 
 test('real Git input set is partitioned into bounded requests with navigation last and complete receipts',()=>reviewFixture(async f=>{
   await mkdir(join(f.root,'knowledge/topic'),{recursive:true});

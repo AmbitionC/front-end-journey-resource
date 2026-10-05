@@ -86,6 +86,12 @@ export async function runSyncBatches(plan,transport,onBatch=()=>{}) {
   return result;
 }
 
+export async function readSyncResponse(response){
+  if(!response.ok)throw new Error('同步服务 HTTP '+response.status);
+  try{return await response.json();}
+  catch{throw new Error('同步服务返回无效JSON');}
+}
+
 if(isDirectExecution(import.meta.url)){
   try{
     const root=resolve(import.meta.dirname,'..'),before=process.argv[2],after=process.argv[3];
@@ -97,8 +103,7 @@ if(isDirectExecution(import.meta.url)){
     console.log(JSON.stringify({sourceCommit:after,actualPushBefore:before,syncBaseline:baseline,batchLimit:BATCH_LIMIT,batches:plan.batches.length,expectedInputs:plan.expected.inputs.length,expectedCounts:plan.expected.counts}));
     await runSyncBatches(plan,async body=>{
       const response=await fetch(url,{method:'POST',redirect:'error',headers:{'x-sync-secret':process.env.FAAS_SYNC_SECRET,'Content-Type':'application/json'},body:JSON.stringify(body),signal:AbortSignal.timeout(95000)});
-      if(!response.ok)throw new Error('同步服务 HTTP '+response.status);
-      return response.json();
+      return readSyncResponse(response);
     },receipt=>console.log(JSON.stringify(receipt)));
     console.log(JSON.stringify({sourceCommit:after,readMode:'commit_pinned',verifiedInputCount:plan.expected.inputs.length,counts:plan.expected.counts,batches:plan.batches.length}));
   }catch(e){console.error(e instanceof Error?e.message:'内容批次同步失败');process.exitCode=1;}
