@@ -1,5 +1,5 @@
 import { spawnSync } from 'node:child_process';
-import { gitPublicationFiles, publicInventory, sha256, validateContentReview } from './content-review.mjs';
+import { gitPublicationFiles, publicInventory, sha256, validateContentReview, readPrivatePinned } from './content-review.mjs';
 
 const REPOSITORY = 'AmbitionC/front-end-journey-resource';
 const SHA = /^[a-f0-9]{40}$/u;
@@ -92,7 +92,10 @@ export async function validateGithubPrivateReview(root, historyPath, reviewPath,
   if(!SHA.test(head)) throw new Error('最终已审 PR head 不可读');
   const snapshot=await publicInventory(root);
   if(JSON.stringify(snapshot.files)!==JSON.stringify(gitPublicationFiles(root,head))) throw new Error('最终私有审核工作区尚未冻结到提交');
+  const privateReview=JSON.parse((await readPrivatePinned(root,{path:reviewPath,sha256:receiptSha256})).bytes);
   const pr=await read(`pulls/${prNumber}`);
+  if(!SHA.test(pr.base?.sha??'') || privateReview.baseCommit!==pr.base.sha
+      || spawnSync('git',['merge-base','--is-ancestor',pr.base.sha,head],{cwd:root}).status!==0) throw new Error('私有审核基线不是实际 PR base，禁止选择更早基线隐藏既有公开页');
   if(pr.head?.sha!==head || pr.base?.ref!=='master' || pr.base?.repo?.full_name!==REPOSITORY
       || pr.head?.repo?.full_name!==REPOSITORY) throw new Error('私有最终审核未对应实际仓库 PR head');
   const reviews=await allPages(`pulls/${prNumber}/reviews`,read);

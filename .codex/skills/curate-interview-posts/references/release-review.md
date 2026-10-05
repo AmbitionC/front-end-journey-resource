@@ -19,9 +19,9 @@ npm run validate:release -- /absolute/private/history.json /absolute/private/rev
 仓外 `review.json` 为 `schemaVersion: 1`、`kind: resource-content-review`、`decision: approved`，包含：
 
 - `history`、`independentReview`、`questionLedger`：绝对 `path` 与完整 `sha256`。
-- `baseCommit`：实际资源基线的完整 commit SHA；`coveredPaths` 必须等于基线与最终资源的真实差异。
+- `baseCommit`：实际 PR base 的完整 commit SHA；最终 --private-pr 与 GitHub 实际 base.sha 精确比对并检查它是 head 祖先，不能自行选更早基线；`coveredPaths` 必须等于基线与最终资源的真实差异。
 - `publicFiles`、`publicationDigest`：按路径排序的全部 `interview/`、`knowledge/`、`images/`、可选 `class/` 及 `.codex/image-resync.txt` 文件指纹；摘要为该数组 JSON 的 SHA-256。
-- `articleKeys`：本批变化面经范围，不得把新增正文从原文审核范围排除。删除/孤儿正文必须由 `deletedPublicPaths` 解释。
+- `articleKeys`：本批变化面经范围，不得把新增正文从原文审核范围排除。`deletedPublicPaths` 只接受实际基线中存在且最终快照真正删除的文件，不能用仍存在的孤儿正文冒充删除说明。
 - `sourceEvidence`：冻结原文的 `path/sha256/sourceId/canonicalUrl/articleKey/processUnitId`；采集 JSON 使用 `documentJson: true`，其 `document.canonicalUrl/url` 和 `text` 必须与来源及正文对应。
 - `questionLedger`：每页逐题 `sourceId/sourceSpan/sourceLiteral/publicQuestion/knowledgeKey/teachingAnswer/bindingStatus`。原文坐标是 Unicode codepoint 的半开区间；公开题、短答和绑定与实际可见结构逐项比对。原帖缺关键词时只能明确标记 `pending_missing_keyword`，保留未绑定问题，不猜题、不增加热度。私账 knowledgeKeys 必须逐来源等于本批逐题映射中 bindingStatus=bound 的知识 key 集合，不能用旧字段让 pending 组计热。
 - `distinctRoundPairs`：仅用于已经独立审核确认的同流程不同轮次；不能用它为补充材料重复建页。
@@ -56,7 +56,7 @@ OWNER/作者的 COMMENTED review 与“已核验私有独立审核”的自述�
 
 同步先检查真实终态 `success === true`、`data.errors` 为空及计数字段合法；这仍不证明 FaaS 固定读取 afterSha。资源、FaaS 和线上阅读端都完成对应版本核验后才能记为发布成功。
 
-PDF Action 与直接 `build-materials.mjs` 入口都要求最终 commit 的可信审查，且同一 SHA 的最新 sync.yml run 已完成并成功。构建仅使用冻结知识正文和本地已审图片；浏览器脚本禁用，外部可变请求不参与正式 PDF。所有分组与叶子 key 都必须是安全单个组件。PDF 只支持明确列出的静态 HTML 元素、构建器自有 CSS 及经过字节绑定和加载核验的 img。iframe、内联 SVG/MathML、picture/srcset、作者 CSS、非 img 图片入口和导航元数据会阻断。阅读端会将 Mermaid fence 转图，当前 PDF 没有经审核的转换机制，所以该输入也阻断，不把图解静默降成代码。上述未支持输入会阻断 PDF，不能依同名图片猜测等价或静默移除图解。保留既有 PDF keys、manifest version 2、私有 ACL 与下载协议。
+PDF Action 与直接 `build-materials.mjs` 入口都要求最终 commit 的可信审查，且同一 SHA 的最新 sync.yml run 已完成并成功。构建仅使用冻结知识正文和本地已审图片；浏览器脚本禁用，外部可变请求不参与正式 PDF。所有分组与叶子 key 都必须是安全单个组件。PDF 只支持明确列出的静态 HTML 元素、构建器自有 CSS 及经过字节绑定和加载核验的 PNG/JPEG/WebP img。所有册的 HTML 和图片在浏览器启动与 OSS client 使用之前预检。每张图先核对规范 OSS 地址、本地边界、已审 SHA 与真实格式字节头；请求拦截再次核对并给出准确 MIME。SVG 即使 outer SHA 固定也不能证明内部媒体已加载，所以作为图片引用也先阻断，待独立核验静态产物。iframe、内联 SVG/MathML、picture/srcset、作者 CSS、非 img 图片入口和导航元数据会阻断。阅读端会将 Mermaid fence 转图，当前 PDF 没有经审核的转换机制，所以该输入也阻断，不把图解静默降成代码。上述未支持输入会阻断 PDF，不能依同名图片猜测等价或静默移除图解。保留既有 PDF keys、manifest version 2、私有 ACL 与下载协议。
 
 ## 当前基础设施边界
 

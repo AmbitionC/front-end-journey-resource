@@ -34,7 +34,7 @@ async function githubFixture(f) {
   const reviewedHead=git(f.root,'rev-parse','HEAD');
   git(f.root,'commit','--allow-empty','-qm','merged publication');
   const after=git(f.root,'rev-parse','HEAD');
-  const finalPr={...structuredClone(pr),merged:true,merge_commit_sha:after,head:{sha:reviewedHead,repo:{full_name:repo}}};
+  const finalPr={...structuredClone(pr),base:{...structuredClone(pr.base),sha:f.baseCommit},merged:true,merge_commit_sha:after,head:{sha:reviewedHead,repo:{full_name:repo}}};
   const review={...approved(),commit_id:reviewedHead,body:`content-release:v2 head=${reviewedHead} digest=${f.review.publicationDigest} receipt=${f.options.reviewSha256}`};
   const read=async path=>{
     if(path==='') return {default_branch:'master'};
@@ -121,3 +121,13 @@ test('missing, malformed, ambiguous or mismatched authenticated receipt pins are
   assert.equal(matchingReview(pr,[approved()],digest,'e'.repeat(64)),undefined);
   assert.equal(matchingReview(pr,[approved()],digest,receipt).id,1);
 });
+
+
+test('authenticated private review cannot use a caller-selected earlier baseline than actual PR base',()=>reviewFixture(async f=>{
+  const g=await githubFixture(f);git(f.root,'checkout','--detach',g.finalPr.head.sha);
+  assert.equal((await validateGithubPrivateReview(f.root,f.historyPath,f.reviewPath,f.options.reviewSha256,12,{read:g.read})).privateInputsVerified,true);
+  g.finalPr.base.sha=g.finalPr.head.sha;
+  await assert.rejects(validateGithubPrivateReview(f.root,f.historyPath,f.reviewPath,f.options.reviewSha256,12,{read:g.read}),/实际 PR base/u);
+  delete g.finalPr.base.sha;
+  await assert.rejects(validateGithubPrivateReview(f.root,f.historyPath,f.reviewPath,f.options.reviewSha256,12,{read:g.read}),/实际 PR base/u);
+}));

@@ -70,7 +70,14 @@ export async function validateContentReview(root, historyPath, reviewPath, revie
     const history = JSON.parse(checkedHistory.bytes);
     const snapshot = await publicInventory(root);
     if (review.publicationDigest !== snapshot.digest || JSON.stringify(review.publicFiles) !== JSON.stringify(snapshot.files)) throw new Error('面经、知识、速读目录或图片与最终审核版本不一致');
-    const changed = changedPublicationPaths(gitPublicationFiles(root,review.baseCommit),snapshot.files);
+    const baselineFiles=gitPublicationFiles(root,review.baseCommit);
+    const changed = changedPublicationPaths(baselineFiles,snapshot.files);
+    if(review.deletedPublicPaths!==undefined && (!Array.isArray(review.deletedPublicPaths)
+        || new Set(review.deletedPublicPaths).size!==review.deletedPublicPaths.length)) throw new Error('审核删除范围无效');
+    for(const path of review.deletedPublicPaths??[]) {
+      safeRelativePath(path);
+      if(snapshot.files.some(file=>file.path===path) || !baselineFiles.some(file=>file.path===path)) throw new Error('删除说明必须对应真正删除的基线文件，不能把保留正文伪装为删除或孤儿');
+    }
     if (JSON.stringify(review.coveredPaths) !== JSON.stringify(changed)) throw new Error('独立审核未覆盖真实内容增量范围');
     const independent = JSON.parse((await readPrivatePinned(root, review.independentReview)).bytes);
     if (independent.decision !== 'approved' && !/^PASS_BOUNDED_LOCAL_CONTENT_WITH_/u.test(independent.status ?? '')) throw new Error('独立审查未通过');

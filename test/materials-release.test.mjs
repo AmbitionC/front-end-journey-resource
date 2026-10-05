@@ -2,7 +2,10 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { spawnSync } from 'node:child_process';
 import { join } from 'node:path';
-import { buildHtml, localReviewedImagePath, validatePdfHtml } from '../scripts/build-materials.mjs';
+import {writeFile} from 'node:fs/promises';
+import {reviewFixture} from './release-review-fixture.mjs';
+import {sha256} from '../scripts/content-review.mjs';
+import { buildHtml, localReviewedImagePath, validatePdfHtml, reviewedRasterImageType, preflightPdfImages } from '../scripts/build-materials.mjs';
 import { validateSyncResult } from '../scripts/validate-sync-result.mjs';
 
 test('PDF HTML keeps published leaf order, escapes labels and reads actual supplied Markdown',()=>{
@@ -66,3 +69,31 @@ test('reader Mermaid diagrams require reviewed static PDF conversion instead of 
   assert.throws(()=>buildHtml({label:'流程',isLeaf:true},'类别',()=>diagram),/Mermaid 静态图解/u);
   assert.doesNotThrow(()=>buildHtml({label:'代码示例',isLeaf:true},'类别',()=> '````markdown\n'+diagram+'\n````'));
 });
+
+
+test('PDF preflight rejects compound SVG and disguised bytes despite a matching outer file hash',()=>reviewFixture(async f=>{
+  const origin='https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/';
+  for(const body of [
+    '<svg xmlns="http://www.w3.org/2000/svg"><image href="https://example.invalid/chart.png"/></svg>',
+    '<svg xmlns="http://www.w3.org/2000/svg"><style>@import url(https://example.invalid/style.css);</style></svg>',
+    '<svg xmlns="http://www.w3.org/2000/svg"><script>externalCall()</script></svg>',
+    '<svg xmlns="http://www.w3.org/2000/svg"><foreignObject><div>other content</div></foreignObject></svg>',
+  ]) {
+    for(const name of ['compound.svg','disguised.png']) {
+      const path='images/'+name,bytes=Buffer.from(body);
+      await writeFile(join(f.root,path),bytes);
+      const html=buildHtml({label:'图解',isLeaf:true},'类别',()=>`![图解](${origin}${name})`).html;
+      await assert.rejects(preflightPdfImages(f.root,html,new Map([[path,sha256(bytes)]])),/图片格式或字节头不受支持/u);
+    }
+  }
+}));
+
+test('PDF preflight requires canonical local bytes with the exact approved hash and explicit MIME',()=>reviewFixture(async f=>{
+  const bytes=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jR7cAAAAASUVORK5CYII=','base64');
+  const path='images/image.png';await writeFile(join(f.root,path),bytes);
+  const html=buildHtml({label:'图片',isLeaf:true},'类别',()=>`![图解](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/${path})`).html;
+  assert.equal(await preflightPdfImages(f.root,html,new Map([[path,sha256(bytes)]])),1);
+  assert.equal(reviewedRasterImageType(path,bytes),'image/png');
+  await assert.rejects(preflightPdfImages(f.root,html,new Map([[path,'0'.repeat(64)]])),/已审版本不一致/u);
+  await assert.rejects(preflightPdfImages(f.root,html.replace('/images/image.png','/other/image.png'),new Map([[path,sha256(bytes)]])),/固定的资源输入范围/u);
+}));

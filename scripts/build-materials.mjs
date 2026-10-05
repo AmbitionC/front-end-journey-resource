@@ -116,6 +116,37 @@ export function localReviewedImagePath(value) {
   return safeRelativePath(decodeURIComponent(url.pathname.slice(1)));
 }
 
+// Compound formats can hide dependencies behind an outer image that reports
+// complete. Only explicit raster formats are supported, with real magic bytes.
+export function reviewedRasterImageType(path, bytes) {
+  const ext=path.slice(path.lastIndexOf('.')).toLowerCase();
+  const png=Buffer.from([137,80,78,71,13,10,26,10]);
+  if(ext==='.png' && bytes.subarray(0,8).equals(png)) return 'image/png';
+  if(['.jpg','.jpeg'].includes(ext) && bytes.length>=3 && bytes[0]===255 && bytes[1]===216 && bytes[2]===255) return 'image/jpeg';
+  if(ext==='.webp' && bytes.length>=12 && bytes.subarray(0,4).toString()==='RIFF'
+      && bytes.subarray(8,12).toString()==='WEBP') return 'image/webp';
+  throw new Error('PDF 图片格式或字节头不受支持；SVG 等复合图解须有独立核验的静态产物');
+}
+
+export async function preflightPdfImages(root, html, approved) {
+  validatePdfHtml(html);
+  const sources=[];
+  function visit(node) {
+    if(node.tagName==='img') sources.push(Object.fromEntries((node.attrs??[]).map(a=>[a.name,a.value])).src);
+    for(const child of node.childNodes??[])visit(child);
+  }
+  visit(parse5.parse(html));
+  for(const src of sources) {
+    let path;
+    try { path=localReviewedImagePath(src); } catch { path=null; }
+    if(!path) throw new Error('PDF 图片不在已固定的资源输入范围');
+    const bytes=await readBounded(root,path,'images');
+    if(sha256(bytes)!==approved.get(path)) throw new Error('PDF 图片与已审版本不一致');
+    reviewedRasterImageType(path,bytes);
+  }
+  return sources.length;
+}
+
 async function main() {
   const head = spawnSync('git',['rev-parse','HEAD'],{cwd:ROOT,encoding:'utf8'}).stdout.trim();
   const before = process.env.RELEASE_BEFORE_SHA || spawnSync('git',['rev-parse','HEAD^1'],{cwd:ROOT,encoding:'utf8'}).stdout.trim();
@@ -126,6 +157,18 @@ async function main() {
   const treeBytes = await readBounded(ROOT,'knowledge/_tree.json','knowledge');
   if (sha256(treeBytes)!==approvedFiles.get('knowledge/_tree.json')) throw new Error('PDF 目录与已审版本不一致');
   const tree = JSON.parse(treeBytes);
+  // Freeze and inspect every book before browser startup or OSS client use.
+  const preparedBooks=new Map();
+  for(const cat of tree) {
+    safeKey(cat.key);
+    for(const sub of cat.children??[]) {
+      safeKey(sub.key);
+      const built=buildHtml(sub,cat.label);
+      if(!built) continue;
+      await preflightPdfImages(ROOT,built.html,approvedFiles);
+      preparedBooks.set(sub.key,built);
+    }
+  }
   mkdirSync(DIST,{recursive:true});
   const browser = await puppeteer.launch({
     headless: 'new',
@@ -158,7 +201,7 @@ async function main() {
     for (const sub of subs) {
       safeKey(sub.key);
       // 二级节点本身可能直接是叶子（无更深分层）——也按一册处理
-      const built = buildHtml(sub, cat.label);
+      const built = preparedBooks.get(sub.key);
       if (!built) {
         console.log(`skip ${cat.key}/${sub.key}: 无已发布文章`);
         continue;
@@ -172,7 +215,8 @@ async function main() {
           if (!path || request.resourceType()!=='image') { await request.abort(); return; }
           const bytes = await readBounded(ROOT,path,'images');
           if (sha256(bytes)!==approvedFiles.get(path)) throw new Error('PDF 图片与已审版本不一致');
-          await request.respond({status:200,body:bytes});
+          const contentType=reviewedRasterImageType(path,bytes);
+          await request.respond({status:200,body:bytes,contentType});
         } catch { await request.abort(); }
       });
       await page.setContent(built.html, { waitUntil: 'networkidle0', timeout: 120000 });

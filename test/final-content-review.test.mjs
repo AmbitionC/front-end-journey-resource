@@ -165,3 +165,15 @@ for(const removeRecord of [false,true]) test(`removing a baseline directory leaf
   await writeFile(f.historyPath,JSON.stringify(f.history));await freezeFixtureReview(f);
   assert.match((await check(f)).join(),/留下孤儿绕过去重/u);
 }));
+
+
+test('retained public body cannot be declared deleted to conceal a real earlier directory entry',()=>reviewFixture(async f=>{
+  const earlierBase=f.baseCommit;
+  await historicalBaseline(f,'问题😀','forged-older-process');
+  await writeFile(join(f.root,'interview/_tree.json'),JSON.stringify([f.interview]));
+  delete f.history.records.bbbbbbbbbbbb;
+  f.baseCommit=earlierBase;f.review.baseCommit=earlierBase;
+  f.review.deletedPublicPaths=['interview/company/prior-page.md'];
+  await writeFile(f.historyPath,JSON.stringify(f.history));await freezeFixtureReview(f);
+  assert.match((await check(f)).join(),/真正删除的基线文件/u);
+}));
