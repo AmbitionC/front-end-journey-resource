@@ -38,6 +38,9 @@ export function matchingReview(pr, reviews, digest, expectedReceiptSha256) {
   const latest = new Map();
   for (const review of reviews) {
     if (!review.submitted_at || !review.user?.login) continue;
+    // A conversational COMMENTED/PENDING submission cannot resolve an
+    // outstanding changes request. Only GitHub's substantive review states do.
+    if(!['APPROVED','CHANGES_REQUESTED','DISMISSED'].includes(review.state)) continue;
     const id = review.user.login.toLowerCase(), before = latest.get(id);
     if (!before || Date.parse(review.submitted_at)>Date.parse(before.submitted_at)
         || review.submitted_at===before.submitted_at && review.id>before.id) latest.set(id,review);
@@ -57,7 +60,7 @@ export function matchingOwnerAuthorization(repository, pr, comments, digest, exp
   if(repository.owner?.type!=='User' || !owner) return null;
   const candidates=comments.filter(comment=>comment.author_association==='OWNER'
     && comment.user?.type==='User' && comment.user.login?.toLowerCase()===owner.toLowerCase()
-    && (comment.body??'').split(/\r?\n/u).some(line=>line.trim().startsWith('content-release:v3')))
+    && (comment.body??'').split(/\r?\n/u).some(line=>line.trim().startsWith('content-release:')))
     .sort((a,b)=>Date.parse(b.created_at)-Date.parse(a.created_at) || b.id-a.id);
   const comment=candidates[0];
   if(!comment || !Number.isSafeInteger(comment.id) || comment.id<=0

@@ -32,6 +32,9 @@ test('single owner intent is distinct from an independent GitHub approval and bi
 test('newest withdrawal or malformed owner intent invalidates earlier authority',()=>{
   const later={...authorization(),id:2,created_at:'2026-10-05T01:01:00Z',updated_at:'2026-10-05T01:01:00Z',body:'content-release:v3 decision=withdraw'};
   assert.equal(matchingOwnerAuthorization(repository,pr,[authorization(),later],digest),null);
+  for(const body of ['content-release:v4 decision=withdraw','content-release: decision=withdraw','content-release:v2 malformed']) {
+    assert.equal(matchingOwnerAuthorization(repository,pr,[authorization(),{...later,body}],digest),null);
+  }
 });
 
 test('real merge actor and pre-merge authorization time must be the personal owner',()=>{
@@ -89,6 +92,10 @@ test('publication still requires actual same-repo owner merge, current head, gen
   g.run.head_sha=g.reviewedHead;
   g.reviews.push({id:8,user:{login:'reviewer'},author_association:'COLLABORATOR',state:'CHANGES_REQUESTED',commit_id:g.reviewedHead,submitted_at:'2026-10-05T01:01:00Z'});
   await assert.rejects(validateGithubRelease(f.root,f.baseCommit,g.after,{read:g.read}),/可信 GitHub/u);
+  g.reviews.push({...g.reviews[0],id:9,state:'COMMENTED',submitted_at:'2026-10-05T01:01:30Z'});
+  await assert.rejects(validateGithubRelease(f.root,f.baseCommit,g.after,{read:g.read}),/可信 GitHub/u);
+  g.reviews.push({...g.reviews[0],id:10,state:'DISMISSED',submitted_at:'2026-10-05T01:01:40Z'});
+  assert.equal((await validateGithubRelease(f.root,f.baseCommit,g.after,{read:g.read})).formalGithubIndependentApproval,false);
   g.reviews.length=0;
   g.comment.body=g.comment.body.replace(g.reviewedHead,'f'.repeat(40));
   await assert.rejects(validateGithubRelease(f.root,f.baseCommit,g.after,{read:g.read}),/可信 GitHub/u);
