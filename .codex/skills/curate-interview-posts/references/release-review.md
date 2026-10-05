@@ -14,7 +14,7 @@ npm run validate:tree
 npm run validate:release -- /absolute/private/history.json /absolute/private/review.json <review-sha256>
 ```
 
-审核方单独交付 `review-sha256`。调用者能自行修改回执并重新计算哈希，因此本地绑定不是审核身份认证；发布身份由下述 GitHub 真实审查承担。不要把可编辑私账中的 approved/prepared/published 当作独立回执。
+审核方单独交付 `review-sha256`。调用者能自行修改回执并重新计算哈希，因此本地绑定不是审核身份认证；发布意图由下述 GitHub 受信操作者和真实事件证明，独立审核仍由仓外实际审查报告承担。不要把可编辑私账中的 approved/prepared/published 当作独立回执。
 
 仓外 `review.json` 为 `schemaVersion: 1`、`kind: resource-content-review`、`decision: approved`，包含：
 
@@ -25,6 +25,7 @@ npm run validate:release -- /absolute/private/history.json /absolute/private/rev
 - `sourceEvidence`：冻结原文的 `path/sha256/sourceId/canonicalUrl/articleKey/processUnitId`；采集 JSON 使用 `documentJson: true`，其 `document.canonicalUrl/url` 和 `text` 必须与来源及正文对应。
 - `questionLedger`：每页逐题 `sourceId/sourceSpan/sourceLiteral/publicQuestion/knowledgeKey/teachingAnswer/bindingStatus`。原文坐标是 Unicode codepoint 的半开区间；公开题、短答和绑定与实际可见结构逐项比对。原帖缺关键词时只能明确标记 `pending_missing_keyword`，保留未绑定问题，不猜题、不增加热度。私账 knowledgeKeys 必须逐来源等于本批逐题映射中 bindingStatus=bound 的知识 key 集合，不能用旧字段让 pending 组计热。
 - `distinctRoundPairs`：仅用于已经独立审核确认的同流程不同轮次；不能用它为补充材料重复建页。
+- `B-partial` 保留受限状态，不能改称 A/B 或完整图文。只有实际独审另行提供仓外 `partialSourceReview`（kind=`independent-partial-source-permissions`、decision=`approved_limited_source_use`、当前 publicationDigest）才允许使用已见文字范围；其 permits 必须逐条绑定 sourceId/articleKey/grade、原件 sourceSha256、公开稿 articleSha256 与非空实际 limitations。缺题条件、未核验图片或遮蔽关键词须公开明示并保留待确认，不复原。未知 partial、C 或正文截断不能借此自动放行。
 
 实际原文先去掉采集器 frontmatter，再以 NFKC 去空白后计算完整 SHA-256；私账的 `normalizedBodySha256` 必须与它一致。跨 URL 同正文不得重复公开建页或增加独立过程频次。历史已存的完整正文指纹必须由仓外冻结 `originalBodyEvidenceFile/originalBodySha256` 重新读取核对（采集 JSON 标 `originalBodyDocumentJson: true`）；缺证据时不得将该指纹用于去重。缺 normalizedBodySha256 时仍从冻结原文复算，不跳过历史记录；既有公开叶子删除整条历史记录也会阻断。基线目录移除旧叶子不能使未变的旧正文退出历史去重；目录/正文删除须在独立审核中明确，去重仍读取已知基线来源证据。旧未回填来源不能当作完整历史覆盖证明，自动去重所涉及的既有公开来源须先补充原文证据。这是来源校验，不能借此重写全库文章。对照最新已发布目录与私账复用稳定 key，不能仅凭本地旧分支证明线上不存在重复页。
 
@@ -38,21 +39,27 @@ npm run validate:release -- /absolute/private/history.json /absolute/private/rev
 
 ## GitHub 发布审查与同步/PDF
 
-PR job 只运行公开结构和隔离负向测试，不调用外部同步，也不要求尚未发生的 merged 状态。合入 master 的正式同步才运行以下门槛；实际 required checks 必须只读核对，不能让合并前依赖合并后 content-sync。正式入口读取 GitHub 实际 PR 与 review API，要求合入 `master` 的 PR 与当前最终 commit 对应、审查的 PR head 和最终公开资源快照一致，且最终 SHA 仍为实际默认 master 的当前 head；旧 Action 重跑不能重放已被新提交取代的内容。可信 OWNER/COLLABORATOR 的最终 APPROVED review 须来自 PR 作者之外，正文包含精确一行：
+PR job 只运行公开结构和隔离测试，不调用外部同步，也不要求尚未发生的 merged 状态。正式入口读取 GitHub 实际仓库、PR、评论、审查与 Action API，要求 PR 合入当前默认 master 的最终 commit，已审 PR head 与最终资源摘要一致；旧 Action 不能重放已被新提交取代的内容。
+
+单 owner 个人仓库不要求另一个 GitHub 人类账号。先取得真实独立内容审核和本次发布校验代码独审；仓外回执增加 `reviewedHeadSha` 与 `technicalReview.path/sha256`。技术独审的 `decision` 必须是 `PASS_BOUNDED_LOCAL_SINGLE_OWNER_GATE`，且 `candidateCommit/publicationDigest` 精确匹配最终 head/资源。此字段表示本次独立技术审核，不能由执行者用自己的声明替代。
+
+在最终 head 的真实 PR CI 成功后，用户已授权的个人仓库 owner 通过现有 GitHub 连接提交发布意图评论，含精确一行：
 
 ```text
-content-release:v2 head=<完整已审PR-head-SHA> digest=<完整publicationDigest> receipt=<完整仓外review.json-SHA256>
+content-release:v3 decision=authorize head=<完整PR-head-SHA> digest=<publicationDigest> receipt=<仓外review.json-SHA256> independent=<独立内容报告SHA256> technical=<独立技术报告SHA256>
 ```
 
-实际独立审查者先核验整个仓外回执及它引用的冻结原文、历史、逐题映射、独立审查报告、公开快照，再提交上述 APPROVED review。执行者在最终提交上读取真实 PR/review，并运行：
+这是生产发布授权及已完成私有校验的受信证明，不是第二位 GitHub 用户的 APPROVED review。校验要求仓库 owner 为个人 User、评论来自同一个 OWNER User、评论属于该 PR、未经编辑；同一 owner 最新发布标记撤回、格式错误或版本变化均阻断。合并后还必须由同一 owner 实际合并，评论先于合并，最终 head 的最新真实资源 PR CI 成功。真实受信 changes requested 审查也阻断，不能用 owner 发布意图覆盖。不得为了满足协议添加账号、凭据、权限或服务。
+
+评论后、合并前执行：
 
 ```bash
 npm run validate:release -- --private-pr <PR-number> /absolute/private/history.json /absolute/private/review.json <review-sha256>
 ```
 
-该发布前步骤读取并验证全部私有 pin，且与认证 review 的 receipt 摘要精确比对；原文替换或回执摘要变化均阻断。保留其结果于仓外证据，不发布来源/URL/私账。通过后至合并期间不可更改任何冻结输入；更改须重审。CI 无法读取这些仓外文件，只认证审查者签署的已审版本指针，并检查最终公开提交；CI 返回 privateEvidenceMode=authenticated-reviewed-receipt-pointer，不能把它称为 CI 自动核验原文。发布协调者须同时持有真实认证私有最终步骤和同 SHA 同步证据。
+该步骤读取并验证全部仓外原文、历史、逐题映射、独立内容报告及独立技术报告，并与评论的所有摘要、实际 PR base/head 精确比对。原文或回执替换、代码 head 或资源变化均失效，必须重审。保留结果于仓外，不公开原始内容、URL、私账和本机路径。CI 无法读取私有文件，只认证 owner 确认的已审指针和最终提交；返回 `privateEvidenceMode=authenticated-owner-release-intent-with-independent-private-receipt`、`formalGithubIndependentApproval=false`。不能声称 CI 自动核验原文或独立审核者有另一 GitHub 身份。
 
-OWNER/作者的 COMMENTED review 与“已核验私有独立审核”的自述不能替代上述独立 APPROVED review。没有现有受信任的独立审查者时明确报告阻断；不为完成发布添加账号权限或凭据。最新 dismissed/changes requested、其他 head、不同摘要、未合并 PR 或不可信账号均不放行。不得以调用者提供的 API JSON、私账字段或本地测试 fixture 替代真实 GitHub 证据。现有公开只读 API 不需新权限或令牌；读取失败就阻断。
+已有真实非 PR 作者 OWNER/COLLABORATOR 的 APPROVED review 仍可沿用 v2 协议：`content-release:v2 head=<SHA> digest=<digest> receipt=<receipt-SHA256>`。作者 COMMENTED、自述或 self APPROVED 不充当独立 v2 review。两种路径都读取真实 GitHub API，缺证明、修改请求、错误 head/摘要、未合并或不可信操作者均 fail closed；调用者 API JSON、私账状态和本地 fixture 不能替代生产 GitHub 证据。
 
 同步先检查真实终态 `success === true`、`data.errors` 为空及计数字段合法；这仍不证明 FaaS 固定读取 afterSha。资源、FaaS 和线上阅读端都完成对应版本核验后才能记为发布成功。
 

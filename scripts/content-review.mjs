@@ -57,9 +57,9 @@ export async function readPrivatePinned(root, descriptor) {
 }
 
 // The pin is supplied by the reviewer outside the editable ledger. Local
-// hashes establish binding, not reviewer identity; CI additionally requires
-// an authenticated independent OWNER/COLLABORATOR review tied to this
-// publication digest and the immutable private receipt pointer.
+// hashes establish binding, not GitHub reviewer identity. The final release
+// gate separately verifies authenticated publication intent. A personal owner
+// attests the pinned independent private reviews; it is not a second reviewer.
 export async function validateContentReview(root, historyPath, reviewPath, reviewSha256) {
   const errors = [];
   try {
@@ -81,6 +81,10 @@ export async function validateContentReview(root, historyPath, reviewPath, revie
     if (JSON.stringify(review.coveredPaths) !== JSON.stringify(changed)) throw new Error('独立审核未覆盖真实内容增量范围');
     const independent = JSON.parse((await readPrivatePinned(root, review.independentReview)).bytes);
     if (independent.decision !== 'approved' && !/^PASS_BOUNDED_LOCAL_CONTENT_WITH_/u.test(independent.status ?? '')) throw new Error('独立审查未通过');
+    const partial=review.partialSourceReview ? JSON.parse((await readPrivatePinned(root,review.partialSourceReview)).bytes) : null;
+    if(partial && (partial.kind!=='independent-partial-source-permissions' || partial.decision!=='approved_limited_source_use'
+        || partial.publicationDigest!==snapshot.digest || !Array.isArray(partial.permits)
+        || new Set(partial.permits.map(p=>p.sourceId)).size!==partial.permits.length)) throw new Error('受限来源许可未绑定独立审核及当前资源摘要');
     if (!Array.isArray(review.articleKeys) || new Set(review.articleKeys).size !== review.articleKeys.length || !Array.isArray(review.sourceEvidence)) throw new Error('审核批次范围不完整');
     const tree = leaves(JSON.parse((await readBounded(root, 'interview/_tree.json', 'interview')).toString()));
     const byKey = new Map(tree.map(n=>[n.key,n]));
@@ -143,7 +147,14 @@ export async function validateContentReview(root, historyPath, reviewPath, revie
         const source = [...evidenceBySource.values()].find(s=>s.articleKey===key && s.canonicalUrl===record.url);
         if (!source || source.processUnitId !== record.processUnitId) throw new Error('来源/过程与独立审核证据不一致');
         if (record.normalizedBodySha256 !== source.fingerprint) throw new Error('私账指纹必须来自实际冻结原文，不接受可编辑摘要代替');
-        if (!['A','B'].includes(record.evidenceGrade)) throw new Error('本批来源未达到 A/B 审核门槛');
+        if (!['A','B'].includes(record.evidenceGrade)) {
+          const permit=partial?.permits.find(p=>p.sourceId===source.sourceId && p.articleKey===key);
+          const articleSha=snapshot.files.find(file=>file.path===leafPath('interview',byKey.get(key)))?.sha256;
+          if(record.evidenceGrade!=='B-partial' || !permit || permit.grade!=='B-partial'
+              || permit.decision!=='approved_limited_source_use' || permit.sourceSha256!==source.sha256
+              || permit.articleSha256!==articleSha || !Array.isArray(permit.limitations)
+              || !permit.limitations.length || permit.limitations.some(limit=>typeof limit!=='string' || !limit.trim())) throw new Error('本批来源未达到 A/B 门槛或缺精确受限来源许可');
+        }
       }
     }
     // A final review must carry the exact question/category ledger. It records

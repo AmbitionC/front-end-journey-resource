@@ -49,6 +49,49 @@ export function matchingReview(pr, reviews, digest, expectedReceiptSha256) {
     && r.state==='APPROVED' && r.user.login.toLowerCase()!==pr.user.login.toLowerCase());
 }
 
+// Independent private review and permission to publish are separate facts.
+// A personal repository owner may authorize their own PR after the private
+// check. This is release intent, never an independent GitHub APPROVED review.
+export function matchingOwnerAuthorization(repository, pr, comments, digest, expected={}) {
+  const owner=repository.owner?.login;
+  if(repository.owner?.type!=='User' || !owner) return null;
+  const candidates=comments.filter(comment=>comment.author_association==='OWNER'
+    && comment.user?.type==='User' && comment.user.login?.toLowerCase()===owner.toLowerCase()
+    && (comment.body??'').split(/\r?\n/u).some(line=>line.trim().startsWith('content-release:v3')))
+    .sort((a,b)=>Date.parse(b.created_at)-Date.parse(a.created_at) || b.id-a.id);
+  const comment=candidates[0];
+  if(!comment || !Number.isSafeInteger(comment.id) || comment.id<=0
+      || !Number.isFinite(Date.parse(comment.created_at)) || comment.updated_at!==comment.created_at
+      || comment.issue_url!==`https://api.github.com/repos/${REPOSITORY}/issues/${pr.number}`) return null;
+  const lines=comment.body.split(/\r?\n/u).map(line=>line.trim()).filter(line=>line.startsWith('content-release:'));
+  const match=lines.length===1 && /^content-release:v3 decision=authorize head=([a-f0-9]{40}) digest=([a-f0-9]{64}) receipt=([a-f0-9]{64}) independent=([a-f0-9]{64}) technical=([a-f0-9]{64})$/u.exec(lines[0]);
+  if(!match || match[1]!==pr.head.sha || match[2]!==digest
+      || [match[3],match[4],match[5]].some(pin=>/^0+$/u.test(pin))) return null;
+  const pins={receipt:match[3],independent:match[4],technical:match[5]};
+  if(Object.entries(expected).some(([key,value])=>pins[key]!==value)) return null;
+  if(pr.merged && (pr.merged_by?.type!=='User' || pr.merged_by.login?.toLowerCase()!==owner.toLowerCase()
+      || !Number.isFinite(Date.parse(pr.merged_at)) || Date.parse(comment.created_at)>Date.parse(pr.merged_at))) return null;
+  return {comment,...pins,ownerLogin:owner};
+}
+
+async function requireNativePrCheck(pr,read) {
+  const result=await read(`actions/runs?head_sha=${pr.head.sha}&per_page=100`);
+  const runs=result.workflow_runs?.filter(run=>run.head_sha===pr.head.sha
+    && run.path==='.github/workflows/sync.yml' && run.event==='pull_request'
+    && run.head_repository?.full_name===REPOSITORY).sort((a,b)=>b.id-a.id);
+  if(!runs?.length || runs[0].status!=='completed' || runs[0].conclusion!=='success') throw new Error('最终 PR head 的真实资源 CI 未通过');
+  return runs[0].id;
+}
+
+function ownerAuthorizationProof(authorization,pr,digest,prCheckRunId) {
+  return {reviewedHeadSha:pr.head.sha,publicationDigest:digest,
+    privateReviewReceiptSha256:authorization.receipt,independentReviewSha256:authorization.independent,
+    technicalReviewSha256:authorization.technical,authorizationActorLogin:authorization.ownerLogin,
+    authorizationCommentId:authorization.comment.id,prNumber:pr.number,prCheckRunId,
+    formalGithubIndependentApproval:false,
+    privateEvidenceMode:'authenticated-owner-release-intent-with-independent-private-receipt'};
+}
+
 export async function validateGithubRelease(root, before, after, {read=githubRead}={}) {
   if (!SHA.test(before ?? '') || !SHA.test(after ?? '')) throw new Error('发布范围必须是完整 commit SHA');
   const head = spawnSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'});
@@ -77,6 +120,10 @@ export async function validateGithubRelease(root, before, after, {read=githubRea
     const reviews = await allPages(`pulls/${pr.number}/reviews`,read);
     const review = matchingReview(pr,reviews,snapshot.digest);
     if (review) return {afterSha:after,reviewedHeadSha:pr.head.sha,publicationDigest:snapshot.digest,privateReviewReceiptSha256:reviewReceiptSha256(review,pr.head.sha,snapshot.digest),reviewerLogin:review.user.login,prNumber:pr.number,reviewId:review.id,privateEvidenceMode:'authenticated-reviewed-receipt-pointer'};
+    if(review===null) continue; // A real changes-requested review also blocks owner intent.
+    const comments=await allPages(`issues/${pr.number}/comments`,read);
+    const authorization=matchingOwnerAuthorization(repository,pr,comments,snapshot.digest);
+    if(authorization) return {afterSha:after,...ownerAuthorizationProof(authorization,pr,snapshot.digest,await requireNativePrCheck(pr,read))};
   }
   throw new Error('缺最终提交及实际资源快照绑定的可信 GitHub 审核回执');
 }
@@ -100,9 +147,19 @@ export async function validateGithubPrivateReview(root, historyPath, reviewPath,
       || pr.head?.repo?.full_name!==REPOSITORY) throw new Error('私有最终审核未对应实际仓库 PR head');
   const reviews=await allPages(`pulls/${prNumber}/reviews`,read);
   const review=matchingReview(pr,reviews,snapshot.digest,receiptSha256);
-  if(!review) throw new Error('私有审核回执与实际独立 APPROVED 审查摘要不一致');
-  return {reviewedHeadSha:head,publicationDigest:snapshot.digest,privateReviewReceiptSha256:receiptSha256,
+  if(review) return {reviewedHeadSha:head,publicationDigest:snapshot.digest,privateReviewReceiptSha256:receiptSha256,
     reviewerLogin:review.user.login,reviewId:review.id,prNumber,privateInputsVerified:true};
+  if(review===null) throw new Error('可信 GitHub 审查要求修改，禁止使用 owner 发布意图覆盖');
+  if(privateReview.reviewedHeadSha!==head) throw new Error('私有独立回执未绑定最终 PR head');
+  const technical=JSON.parse((await readPrivatePinned(root,privateReview.technicalReview)).bytes);
+  if(technical.decision!=='PASS_BOUNDED_LOCAL_SINGLE_OWNER_GATE' || technical.candidateCommit!==head
+      || technical.publicationDigest!==snapshot.digest) throw new Error('缺最终 head 和内容摘要绑定的独立发布校验技术审核');
+  const repository=await read(''),comments=await allPages(`issues/${prNumber}/comments`,read);
+  const authorization=matchingOwnerAuthorization(repository,pr,comments,snapshot.digest,{
+    receipt:receiptSha256,independent:privateReview.independentReview.sha256,technical:privateReview.technicalReview.sha256,
+  });
+  if(!authorization) throw new Error('私有审核回执与实际 GitHub owner 发布意图摘要不一致');
+  return {...ownerAuthorizationProof(authorization,pr,snapshot.digest,await requireNativePrCheck(pr,read)),privateInputsVerified:true};
 }
 
 export async function requireSuccessfulSync(after, {read=githubRead}={}) {

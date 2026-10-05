@@ -46,7 +46,7 @@ if (isDirectExecution(import.meta.url)) {
         reviewPath:process.argv[3],reviewSha256:process.argv[4],
       })];
       if (errors.length) throw new Error(`本地最终版本审核失败：${errors.length} 项；原因只在私有工作区查看`);
-      console.log('本地冻结绑定通过；正式同步/PDF仍须最终提交的可信 GitHub 审查。');
+      console.log('本地冻结绑定通过；正式同步/PDF仍须最终提交的受信 GitHub 发布证明。');
     }
   } catch(error) { console.error(error.message); process.exitCode=1; }
 }

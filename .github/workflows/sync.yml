@@ -97,7 +97,7 @@ jobs:
             -H "Content-Type: application/json" \
             -d "{\"beforeSha\":\"$BEFORE\",\"afterSha\":\"$AFTER\"}" \
             -o /tmp/resp.json
-          node scripts/validate-sync-result.mjs /tmp/resp.json
+          node scripts/validate-sync-result.mjs /tmp/resp.json "$BEFORE" "$AFTER"
 
       - name: Publish content sync status
         if: always()

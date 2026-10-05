@@ -42,6 +42,7 @@ async function githubFixture(f) {
     if(path.startsWith(`commits/${after}/pulls?`)) return [{number:12}];
     if(path==='pulls/12') return finalPr;
     if(path.startsWith('pulls/12/reviews?')) return [review];
+    if(path.startsWith('issues/12/comments?')) return [];
     throw new Error('unexpected fixture API path');
   };
   return {after,finalPr,review,read};
@@ -99,7 +100,7 @@ test('authenticated final private check binds actual external originals to the r
   assert.equal(proof.privateInputsVerified,true);
   assert.equal(proof.privateReviewReceiptSha256,f.options.reviewSha256);
   g.review.body=g.review.body.replace(f.options.reviewSha256,'c'.repeat(64));
-  await assert.rejects(validateGithubPrivateReview(f.root,f.historyPath,f.reviewPath,f.options.reviewSha256,12,{read:g.read}),/摘要不一致/u);
+  await assert.rejects(validateGithubPrivateReview(f.root,f.historyPath,f.reviewPath,f.options.reviewSha256,12,{read:g.read}),/最终 PR head|摘要不一致/u);
   g.review.body=g.review.body.replace('c'.repeat(64),f.options.reviewSha256);
   await writeFile(f.sourcePath,'replaced original after authentic review');
   await assert.rejects(validateGithubPrivateReview(f.root,f.historyPath,f.reviewPath,f.options.reviewSha256,12,{read:g.read}),/私有最终版本校验失败/u);
