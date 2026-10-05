@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
-  "updatedAt": "2026-10-04",
+  "updatedAt": "2026-10-05",
   "records": [
     {
       "key": "transformer-arch",
@@ -15,10 +15,13 @@
       "key": "llm-token-context",
       "label": "Token、Context Window 与 KV Cache",
       "filePath": "llm/basics",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "llm-model-compare",
@@ -141,10 +144,13 @@
       "key": "llm-sse-streaming",
       "label": "SSE 流式响应与增量渲染",
       "filePath": "llm/dev",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "function-calling",
@@ -294,10 +300,13 @@
       "key": "llm-training-overview",
       "label": "大模型训练全流程概览",
       "filePath": "llm/basics",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-03",
-      "batch": "interview-content-local-20261003"
+      "batch": "interview-content-local-20261003",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "llm-pretraining",
@@ -366,10 +375,13 @@
       "key": "llm-open-source-deployment",
       "label": "开源模型选型、推理与本地部署",
       "filePath": "llm/basics",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "prompt-testing-debugging",
@@ -528,10 +540,13 @@
       "key": "llm-vision-app",
       "label": "视觉理解与图像生成应用",
       "filePath": "llm/dev",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "llm-audio-realtime",
@@ -922,10 +937,13 @@
       "key": "agent-subagents",
       "label": "Subagent 子智能体设计",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "agent-supervisor",
@@ -958,10 +976,13 @@
       "key": "agent-memory-architecture",
       "label": "Agent 记忆系统架构设计",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-03",
-      "batch": "interview-content-local-20261003"
+      "batch": "interview-content-local-20261003",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "agent-memory-summarization",
@@ -1341,10 +1362,13 @@
       "key": "agent-concurrency",
       "label": "并发控制、资源隔离与公平调度",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "agent-timeout-budget",
@@ -1422,7 +1446,7 @@
       "key": "async-job-queue",
       "label": "消息队列、异步任务与后台 Job",
       "filePath": "backend/api",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-04",
       "batch": "next-twenty-source-increments-20261004",
@@ -1441,16 +1465,22 @@
         "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
         "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
         "syncConclusion": "success"
-      }
+      },
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "grpc-basics",
       "label": "gRPC、Protobuf 与服务通信",
       "filePath": "backend/api",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "webhook-design",
@@ -1663,10 +1693,13 @@
       "key": "algorithm-complexity",
       "label": "时间复杂度、空间复杂度与性能估算",
       "filePath": "cs/algorithm",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "algorithm-stack-queue",
@@ -1681,19 +1714,25 @@
       "key": "algorithm-heap",
       "label": "堆、优先队列与 Top-K",
       "filePath": "cs/algorithm",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "algorithm-linked-list",
       "label": "链表、指针与 LRU",
       "filePath": "cs/algorithm",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "algorithm-trie",
@@ -1708,19 +1747,25 @@
       "key": "algorithm-sorting",
       "label": "排序算法、稳定性与外部排序",
       "filePath": "cs/algorithm",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "algorithm-graph",
       "label": "BFS、DFS、最短路与拓扑排序",
       "filePath": "cs/algorithm",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-03",
-      "batch": "interview-content-local-20261003"
+      "batch": "interview-content-local-20261003",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "algorithm-backtracking",
@@ -1744,10 +1789,13 @@
       "key": "probability-statistics-ai",
       "label": "概率、分布、采样与统计估计",
       "filePath": "cs/algorithm",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-03",
-      "batch": "interview-content-local-20261003"
+      "batch": "interview-content-local-20261003",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "web-semantic-accessibility",
@@ -1762,10 +1810,13 @@
       "key": "vite-testing",
       "label": "Vite、前端构建与测试基础",
       "filePath": "frontend/engineering",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-03",
-      "batch": "interview-content-local-20261003"
+      "batch": "interview-content-local-20261003",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "agent-chat-ui",
@@ -1879,10 +1930,13 @@
       "key": "promise",
       "label": "Promise、async/await 与异步控制流",
       "filePath": "js-es6-ts/es6",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-03",
-      "batch": "interview-content-local-20261003"
+      "batch": "interview-content-local-20261003",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "responsive-layout",
@@ -1924,10 +1978,13 @@
       "key": "design-components",
       "label": "可复用组件、状态与通信设计",
       "filePath": "fe/design",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "node-knowledge",
@@ -1987,10 +2044,13 @@
       "key": "build-agent-framework",
       "label": "从零构建 Agent 运行时",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "mcp-protocol",
@@ -2084,7 +2144,7 @@
       "key": "agent-eval-framework",
       "label": "Agent 评测原理：任务、轨迹与环境结果",
       "filePath": "llm/production",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-03",
       "batch": "interview-content-local-20261003",
@@ -2103,7 +2163,10 @@
         "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
         "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
         "syncConclusion": "success"
-      }
+      },
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "node-event-loop-deep",
@@ -2226,7 +2289,7 @@
       "key": "mysql-index",
       "label": "数据库索引原理与查询优化",
       "filePath": "backend/database",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-04",
       "batch": "next-twenty-source-increments-20261004",
@@ -2245,16 +2308,22 @@
         "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
         "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
         "syncConclusion": "success"
-      }
+      },
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "db-transaction-lock",
       "label": "事务、隔离级别与锁",
       "filePath": "backend/database",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "redis-cache",
@@ -2294,10 +2363,13 @@
       "key": "redis-data-structure",
       "label": "Redis 数据结构与使用场景",
       "filePath": "backend/database",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "db-sharding",
@@ -2312,10 +2384,13 @@
       "key": "jwt-auth",
       "label": "JWT 认证机制",
       "filePath": "backend/auth",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-03",
-      "batch": "interview-content-local-20261003"
+      "batch": "interview-content-local-20261003",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "oauth2",
@@ -2652,10 +2727,13 @@
       "key": "http-message",
       "label": "HTTP 请求、响应与报文结构",
       "filePath": "network/http",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "os-ipc",
@@ -2670,10 +2748,13 @@
       "key": "os-thread-sync",
       "label": "锁、信号量与并发同步",
       "filePath": "cs/os",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "os-deadlock",
@@ -2688,10 +2769,13 @@
       "key": "tcp-handshake",
       "label": "TCP 建连、断开与连接状态",
       "filePath": "network/tcpIp",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "tcp-udp",
@@ -2706,46 +2790,61 @@
       "key": "algorithm-array",
       "label": "数组、字符串与双指针",
       "filePath": "data-structure/algorithm",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-03",
-      "batch": "interview-content-local-20261003"
+      "batch": "interview-content-local-20261003",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "algorithm-hash",
       "label": "哈希表、缓存与去重",
       "filePath": "data-structure/algorithm",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-03",
-      "batch": "interview-content-local-20261003"
+      "batch": "interview-content-local-20261003",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "algorithm-tree",
       "label": "树、图与遍历",
       "filePath": "data-structure/algorithm",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "algorithm-loop",
       "label": "递归、分治与搜索",
       "filePath": "data-structure/algorithm",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "algorithm-string",
       "label": "字符串、匹配与文本处理",
       "filePath": "data-structure/algorithm",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "event-loop",
@@ -2778,10 +2877,13 @@
       "key": "type-system",
       "label": "TypeScript 类型系统与类型建模",
       "filePath": "js-es6-ts/ts",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "react-hooks",
@@ -2796,10 +2898,13 @@
       "key": "design-state",
       "label": "前端状态管理与服务端状态",
       "filePath": "fe/design",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "agent-role-landscape",
@@ -2886,10 +2991,13 @@
       "key": "agent-skill-design",
       "label": "Agent Skill：渐进式披露、热插拔与版本治理",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-03",
-      "batch": "interview-content-local-20261003"
+      "batch": "interview-content-local-20261003",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "agent-intent-clarification",
@@ -2913,137 +3021,203 @@
       "key": "algorithm-interval-scheduling",
       "label": "区间调度、会议室与扫描线",
       "filePath": "cs/algorithm",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-03",
-      "batch": "interview-content-local-20261003"
+      "batch": "interview-content-local-20261003",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "frontend-performance-diagnostics",
       "label": "前端卡顿定位与性能诊断",
       "filePath": "frontend/engineering",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "sgx-multitenant-compute",
       "label": "SGX 多租户计算：EPC、分页保护与吞吐边界",
       "filePath": "backend/auth",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-10-02",
       "batch": "nowcoder-original-six-completion-20261002",
-      "reason": "原批阿里云具体 SGX 原题缺失知识文章；已研究一手资料并独立审核，网站完成状态等待本批合并同步。"
+      "reason": "Previously published by PR34 and its successful resource sync; this record backfills that verified delivery.",
+      "publishedAt": "2026-10-02T08:01:51Z",
+      "publishedByCommit": "f67f80c0adf0c78327df38055c1e5029d85af207",
+      "publishedBySyncRun": 36981334710
     },
     {
       "key": "database-models",
       "label": "数据库数据模型：查询、约束与选择",
       "filePath": "backend/db",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-10-03",
-      "batch": "interview-content-local-20261003"
+      "batch": "interview-content-local-20261003",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "server-rendering-hydration",
       "label": "服务端渲染与 hydration：HTML 和交互",
       "filePath": "fe/browser",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-10-03",
-      "batch": "interview-content-local-20261003"
+      "batch": "interview-content-local-20261003",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "garbage-collection",
       "label": "垃圾回收：可达性、标记与生命周期",
       "filePath": "cs/os",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-10-03",
-      "batch": "interview-content-local-20261003"
+      "batch": "interview-content-local-20261003",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "browser-navigation-rendering",
       "label": "浏览器导航与渲染：从 URL 到像素",
       "filePath": "fe/browser",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-10-03",
-      "batch": "interview-content-local-20261003"
+      "batch": "interview-content-local-20261003",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "java-thread-pool",
       "label": "Java线程池：容量、排队与拒绝",
       "filePath": "backend/java",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-10-03",
-      "batch": "interview-content-local-20261003"
+      "batch": "interview-content-local-20261003",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "java-value-semantics",
       "label": "Java值语义：参数、字符串与返回",
       "filePath": "backend/java",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "browser-worker-tasks",
       "label": "浏览器Worker：分片、取消与结果归属",
       "filePath": "fe/browser",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-10-03",
-      "batch": "interview-content-local-20261003"
+      "batch": "interview-content-local-20261003",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "java-thread-local",
       "label": "ThreadLocal：线程绑定、清理与传播",
       "filePath": "backend/java",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "java-runtime-memory",
       "label": "JVM 内存、类加载与 OOM 定位",
       "filePath": "backend/java",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "spring-container",
       "label": "Spring 容器：BeanFactory 与 ApplicationContext",
       "filePath": "backend/java",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "spring-external-config",
       "label": "Spring 外部配置：优先级、刷新与版本对账",
       "filePath": "backend/java",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     },
     {
       "key": "java-nio-reactor",
       "label": "Java NIO 与 Reactor：就绪、缓冲与背压",
       "filePath": "backend/java",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004"
+      "batch": "next-twenty-source-increments-20261004",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "publishedBySyncRun": 37289136872
     }
-  ]
+  ],
+  "deliveryEvidence": {
+    "b01cdfdda648a8915cfc4b7444f972852391e3c9": {
+      "resourcePr": 35,
+      "deliveryRepairPr": 36,
+      "resourceCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+      "syncRunId": 37289136872,
+      "syncUrl": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/37289136872",
+      "syncAttempt": 2,
+      "syncConclusion": "success",
+      "publishedAt": "2026-10-05T09:27:13Z",
+      "publicationDigest": "c7246b3ce3635e4bc1b444767d5d53131772db5c505111aa66e3f0c124ec423a",
+      "verifiedInputCount": 190
+    },
+    "f67f80c0adf0c78327df38055c1e5029d85af207": {
+      "resourcePr": 34,
+      "resourceCommit": "f67f80c0adf0c78327df38055c1e5029d85af207",
+      "syncRunId": 36981334710,
+      "syncUrl": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36981334710",
+      "syncConclusion": "success"
+    }
+  }
 }
