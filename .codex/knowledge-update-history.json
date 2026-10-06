@@ -3146,7 +3146,7 @@
       "action": "updated",
       "recordedAt": "2026-10-06",
       "batch": "archify-java-five-20261006",
-      "reason": "Bind existing reviewed Archify diagram to same-source desktop HTML/mobile SVG; preserve unrelated prose. Draft only; reader assets and resource binding require coordinated release.",
+      "reason": "Local five-page migration passed official Archify checks and actual mobile/desktop component pixel review. Same-source HTML/SVG and PDF PNG; all diagram semantics and unrelated prose preserved. Pending coordinated reader/resource release; no new publication evidence.",
       "previousRecord": {
         "key": "java-thread-local",
         "label": "ThreadLocal：线程绑定、清理与传播",
@@ -3168,7 +3168,7 @@
       "action": "updated",
       "recordedAt": "2026-10-06",
       "batch": "archify-java-five-20261006",
-      "reason": "Bind existing reviewed Archify diagram to same-source desktop HTML/mobile SVG; preserve unrelated prose. Draft only; reader assets and resource binding require coordinated release.",
+      "reason": "Local five-page migration passed official Archify checks and actual mobile/desktop component pixel review. Same-source HTML/SVG and PDF PNG; all diagram semantics and unrelated prose preserved. Pending coordinated reader/resource release; no new publication evidence.",
       "previousRecord": {
         "key": "java-runtime-memory",
         "label": "JVM 内存、类加载与 OOM 定位",
@@ -3190,7 +3190,7 @@
       "action": "updated",
       "recordedAt": "2026-10-06",
       "batch": "archify-java-five-20261006",
-      "reason": "Bind existing reviewed Archify diagram to same-source desktop HTML/mobile SVG; preserve unrelated prose. Draft only; reader assets and resource binding require coordinated release.",
+      "reason": "Local five-page migration passed official Archify checks and actual mobile/desktop component pixel review. Same-source HTML/SVG and PDF PNG; all diagram semantics and unrelated prose preserved. Pending coordinated reader/resource release; no new publication evidence.",
       "previousRecord": {
         "key": "spring-container",
         "label": "Spring 容器：BeanFactory 与 ApplicationContext",
@@ -3212,7 +3212,7 @@
       "action": "updated",
       "recordedAt": "2026-10-06",
       "batch": "archify-java-five-20261006",
-      "reason": "Bind existing reviewed Archify diagram to same-source desktop HTML/mobile SVG; preserve unrelated prose. Draft only; reader assets and resource binding require coordinated release.",
+      "reason": "Local five-page migration passed official Archify checks and actual mobile/desktop component pixel review. Same-source HTML/SVG and PDF PNG; all diagram semantics and unrelated prose preserved. Pending coordinated reader/resource release; no new publication evidence.",
       "previousRecord": {
         "key": "spring-external-config",
         "label": "Spring 外部配置：优先级、刷新与版本对账",
@@ -3234,7 +3234,7 @@
       "action": "updated",
       "recordedAt": "2026-10-06",
       "batch": "archify-java-five-20261006",
-      "reason": "Bind existing reviewed Archify diagram to same-source desktop HTML/mobile SVG; preserve unrelated prose. Draft only; reader assets and resource binding require coordinated release.",
+      "reason": "Local five-page migration passed official Archify checks and actual mobile/desktop component pixel review. Same-source HTML/SVG and PDF PNG; all diagram semantics and unrelated prose preserved. Pending coordinated reader/resource release; no new publication evidence.",
       "previousRecord": {
         "key": "java-nio-reactor",
         "label": "Java NIO 与 Reactor：就绪、缓冲与背压",

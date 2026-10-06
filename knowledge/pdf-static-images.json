@@ -6832,12 +6832,12 @@
       "sourceSha256": "dbe384e33b2e82c15a3b94b7b5fde254c2d1d0b12366d4485e2aa7a5f8e1c7ff",
       "url": "/archify/java-thread-local.html",
       "specPath": "knowledge/backend/java/java-thread-local.archify.json",
-      "specSha256": "6479dfe1c5e209df8a32f1c6914d80f652d17a1f7eacd6c51da3d6ce1e057fa8",
-      "vectorSha256": "dda3a8672210d4ccb0588f8f3c04b4b32d9a578917f90b9315152b1d66827861",
-      "outputPath": "images/pdf-java-thread-local-archify-42726b7ea82f.png",
-      "outputSha256": "42726b7ea82f1b610c3a3694e0b55def7a1fc49e961a051394704ebd2336cfe8",
-      "width": 5440,
-      "height": 3040
+      "specSha256": "6aa985470bb4aee3cc6295fdc82ed6992c14113e616bef4c70b335975db83d66",
+      "vectorSha256": "a3c4713ab404df64336723879de3f9b7ac055977ac58ff3e76121cc59594b870",
+      "outputPath": "images/pdf-java-thread-local-archify-fe61abe720b5.png",
+      "outputSha256": "fe61abe720b59394bb968045818ddebe7ded65aa5e4797bdaa9dcce5848ddb37",
+      "width": 3200,
+      "height": 2000
     },
     {
       "id": "java-runtime-memory:archify:7",
@@ -6849,12 +6849,12 @@
       "sourceSha256": "7af98e7668efd835468380ab84ad46bdce83c1a01d929b321a8fcff7ec2d245f",
       "url": "/archify/java-runtime-memory.html",
       "specPath": "knowledge/backend/java/java-runtime-memory.archify.json",
-      "specSha256": "93715109c2b7f01db0352710bbb6f058dcc383d11140e8bf4a1da11654e73ff4",
-      "vectorSha256": "6b6f87280f0eb5d3b859ea1616f07459b89ac8762b1717cada1107a5ff41e6bd",
-      "outputPath": "images/pdf-java-runtime-memory-archify-8d5490be4b1b.png",
-      "outputSha256": "8d5490be4b1bcefe6b80c5e2c10f45cfa9e26ea3f63a6b28dec03c8663343107",
-      "width": 5440,
-      "height": 3040
+      "specSha256": "6dfa4241938874a5f93b2cf1d6f044a5fd74cd545ee2dfb49e5c8b6a84237175",
+      "vectorSha256": "2469c68372349d9a4ce11c118678c351038a8f923b38e502c8b3069a36889b67",
+      "outputPath": "images/pdf-java-runtime-memory-archify-441891da0391.png",
+      "outputSha256": "441891da0391f847cc7d5183e6530f257ce5f22dd82344251325c1fd9e8d6d3d",
+      "width": 3200,
+      "height": 2000
     },
     {
       "id": "spring-container:archify:7",
@@ -6866,12 +6866,12 @@
       "sourceSha256": "2d8c789a1c45f42be1a917fa0989054d2b1762cbb93b52283b6511c804b8553e",
       "url": "/archify/spring-container.html",
       "specPath": "knowledge/backend/java/spring-container.archify.json",
-      "specSha256": "110e93a3cc1da91cafd2e03625edd85192388fecb1b141411a637d779708bca6",
-      "vectorSha256": "0abfdac78c108fd5395475f389bdc0602cb3213f424f4ccf7893db96bd149872",
-      "outputPath": "images/pdf-spring-container-archify-14c19856f759.png",
-      "outputSha256": "14c19856f759c2c5c9685a52d239bcde5891671143ca07d967df6774b22c3314",
-      "width": 5440,
-      "height": 3040
+      "specSha256": "35ea5105c601d8196e3f57b4c9920ed7b6ca42b2afe3de106e81acf42965d5db",
+      "vectorSha256": "be6ee61a99db32453b89405df469b93ff8af1511cd6d98ae235c2bad5c19dd1a",
+      "outputPath": "images/pdf-spring-container-archify-f691b29bbdbc.png",
+      "outputSha256": "f691b29bbdbc9cfe788221d05ff9abf897af634320a38219042cdff38d12938a",
+      "width": 3200,
+      "height": 2000
     },
     {
       "id": "spring-external-config:archify:7",
@@ -6883,12 +6883,12 @@
       "sourceSha256": "936d7a66caa57ec68e1df6927c699949d33e672120d8e8dbef2b3ffc74d980dd",
       "url": "/archify/spring-external-config.html",
       "specPath": "knowledge/backend/java/spring-external-config.archify.json",
-      "specSha256": "5fc5c080c95ace9c7f9b084492ed30532d64719ccca651dafa2ddd59c2d9d17b",
-      "vectorSha256": "e7a072e30680d2cf2cf58bd5a0a1324c675f85f0b4bd658997ceea3013c6146d",
-      "outputPath": "images/pdf-spring-external-config-archify-748468cdfc90.png",
-      "outputSha256": "748468cdfc90a561fbacfa28e68dc78478582a9f27892516faa38f420831b66a",
-      "width": 5440,
-      "height": 3040
+      "specSha256": "26ad5bd0d2c78f2d4426c272a0324fc626ec5f42dd71228837c58de4f25b8418",
+      "vectorSha256": "b99569557d1ee20e57a1e37ce57f798971436d35ea647aeade0d3a79452f6603",
+      "outputPath": "images/pdf-spring-external-config-archify-0422e7217c1f.png",
+      "outputSha256": "0422e7217c1fecd552745c7586d212dca852400d35c92def1fe7a73c5a05b2eb",
+      "width": 3200,
+      "height": 2000
     },
     {
       "id": "java-nio-reactor:archify:7",
@@ -6900,12 +6900,12 @@
       "sourceSha256": "6a6b41ec69b2d1239c00ef6a6ab34fdeb3821b404ed1d6d697c5e13eb4dd2343",
       "url": "/archify/java-nio-reactor.html",
       "specPath": "knowledge/backend/java/java-nio-reactor.archify.json",
-      "specSha256": "fe54c8f7464de7392283d1105b9d61e2abad9897ba5bec34afa6c2b068e4de2c",
-      "vectorSha256": "90006ec22bfd81d2c776885e6b220920ff6e526067bb9f1460f1cfb4a413b159",
-      "outputPath": "images/pdf-java-nio-reactor-archify-44f49d840bc3.png",
-      "outputSha256": "44f49d840bc32565bca2d696162dda9a4453662798069b318cf7a751269045c3",
-      "width": 5440,
-      "height": 3040
+      "specSha256": "0d6993b782129c35696e6d92b487c21ea8f25844b5b7b1aea61bf9849208496a",
+      "vectorSha256": "437cba79ef90672a3fba32c169f056ce706d73a31f195df3b130f4afd377e305",
+      "outputPath": "images/pdf-java-nio-reactor-archify-625050116599.png",
+      "outputSha256": "62505011659919b027e5165338cc91fe8fb994339f767d580f05531560296ad8",
+      "width": 3360,
+      "height": 2000
     }
   ],
   "literals": [

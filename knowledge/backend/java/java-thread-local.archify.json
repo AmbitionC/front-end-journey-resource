@@ -1,23 +1,140 @@
 {
   "schema_version": 1,
   "diagram_type": "architecture",
-  "meta": {"title": "ThreadLocal：线程持有映射与值", "locale": "zh-CN", "quality_profile": "showcase", "viewBox": [1360, 760], "legend": {"mode": "hidden"}},
+  "meta": {
+    "title": "ThreadLocal：线程持有映射与值",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [
+      800,
+      500
+    ],
+    "legend": {
+      "mode": "hidden"
+    }
+  },
   "components": [
-    {"id": "threadA", "type": "backend", "label": "工作线程 A", "sublabel": "复用时继续持有 threadLocals", "pos": [80,100], "size": [280,120]},
-    {"id": "mapA", "type": "database", "label": "A 的 ThreadLocalMap", "sublabel": "Entry：弱 key、强 value", "pos": [540,100], "size": [280,120]},
-    {"id": "valueA", "type": "backend", "label": "A 对应的值", "sublabel": "请求上下文等业务对象", "pos": [1000,100], "size": [280,120]},
-    {"id": "threadB", "type": "backend", "label": "工作线程 B", "sublabel": "拥有另一份映射", "pos": [80,500], "size": [280,120]},
-    {"id": "mapB", "type": "database", "label": "B 的 ThreadLocalMap", "sublabel": "同一个 key，独立的 Entry", "pos": [540,500], "size": [280,120]},
-    {"id": "valueB", "type": "backend", "label": "B 对应的值", "sublabel": "可另建，也可误设为共享对象", "pos": [1000,500], "size": [280,120]}
+    {
+      "id": "threadA",
+      "type": "backend",
+      "label": "工作线程 A",
+      "sublabel": "复用时继续持有 threadLocals",
+      "pos": [
+        24,
+        70
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "mapA",
+      "type": "database",
+      "label": "A 的 ThreadLocalMap",
+      "sublabel": "Entry：弱 key、强 value",
+      "pos": [
+        310,
+        70
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "valueA",
+      "type": "backend",
+      "label": "A 对应的值",
+      "sublabel": "请求上下文等业务对象",
+      "pos": [
+        596,
+        70
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "threadB",
+      "type": "backend",
+      "label": "工作线程 B",
+      "sublabel": "拥有另一份映射",
+      "pos": [
+        24,
+        300
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "mapB",
+      "type": "database",
+      "label": "B 的 ThreadLocalMap",
+      "sublabel": "同一个 key，独立的 Entry",
+      "pos": [
+        310,
+        300
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "valueB",
+      "type": "backend",
+      "label": "B 对应的值",
+      "sublabel": "可另建，也可误设为共享对象",
+      "pos": [
+        596,
+        300
+      ],
+      "size": [
+        180,
+        110
+      ]
+    }
   ],
   "connections": [
-    {"from": "threadA", "to": "mapA", "label": "持有映射"},
-    {"from": "mapA", "to": "valueA", "label": "Entry 强引用"},
-    {"from": "threadB", "to": "mapB", "label": "持有映射"},
-    {"from": "mapB", "to": "valueB", "label": "Entry 强引用"}
+    {
+      "from": "threadA",
+      "to": "mapA",
+      "label": "持有映射"
+    },
+    {
+      "from": "mapA",
+      "to": "valueA",
+      "label": "Entry 强引用"
+    },
+    {
+      "from": "threadB",
+      "to": "mapB",
+      "label": "持有映射"
+    },
+    {
+      "from": "mapB",
+      "to": "valueB",
+      "label": "Entry 强引用"
+    }
   ],
   "cards": [
-    {"dot": "cyan", "title": "隔离的是每线程的绑定", "items": ["把同一可变对象 set 到两线程，仍须处理共享对象的并发访问。"]},
-    {"dot": "amber", "title": "请求结束显式 remove", "items": ["key 回收不会立即清空 value；线程池复用可能保留旧上下文。"]}
+    {
+      "dot": "cyan",
+      "title": "隔离的是每线程的绑定",
+      "items": [
+        "把同一可变对象 set 到两线程，仍须处理共享对象的并发访问。"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "请求结束显式 remove",
+      "items": [
+        "key 回收不会立即清空 value；线程池复用可能保留旧上下文。"
+      ]
+    }
   ]
 }
