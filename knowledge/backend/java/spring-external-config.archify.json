@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "动态配置：验证、应用与版本对账",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1360,
+      760
+    ],
+    "legend": {
+      "mode": "hidden"
+    }
+  },
+  "components": [
+    {
+      "id": "remote",
+      "type": "external",
+      "label": "配置中心",
+      "sublabel": "发布带版本的完整配置",
+      "pos": [
+        80,
+        100
+      ],
+      "size": [
+        280,
+        120
+      ]
+    },
+    {
+      "id": "validate",
+      "type": "security",
+      "label": "解析与业务校验",
+      "sublabel": "拒绝无效或失序版本",
+      "pos": [
+        540,
+        100
+      ],
+      "size": [
+        280,
+        120
+      ]
+    },
+    {
+      "id": "snapshot",
+      "type": "database",
+      "label": "已验证配置快照",
+      "sublabel": "协调属性源与业务对象",
+      "pos": [
+        1000,
+        100
+      ],
+      "size": [
+        280,
+        120
+      ]
+    },
+    {
+      "id": "reconcile",
+      "type": "backend",
+      "label": "监听与周期对账",
+      "sublabel": "缺口时重新取得快照",
+      "pos": [
+        80,
+        500
+      ],
+      "size": [
+        280,
+        120
+      ]
+    },
+    {
+      "id": "fallback",
+      "type": "database",
+      "label": "最后有效配置",
+      "sublabel": "失败时保留并记录滞后",
+      "pos": [
+        540,
+        500
+      ],
+      "size": [
+        280,
+        120
+      ]
+    },
+    {
+      "id": "business",
+      "type": "backend",
+      "label": "单次业务读取",
+      "sublabel": "捕获同一配置版本",
+      "pos": [
+        1000,
+        500
+      ],
+      "size": [
+        280,
+        120
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "from": "remote",
+      "to": "validate",
+      "label": "候选更新"
+    },
+    {
+      "from": "validate",
+      "to": "snapshot",
+      "label": "验证后替换"
+    },
+    {
+      "from": "snapshot",
+      "to": "business",
+      "label": "一致读取",
+      "labelAt": [
+        1140,
+        360
+      ]
+    },
+    {
+      "from": "reconcile",
+      "to": "validate",
+      "label": "补齐漏事件"
+    },
+    {
+      "from": "validate",
+      "to": "fallback",
+      "label": "失败时保留",
+      "labelAt": [
+        680,
+        360
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "优先级与动态刷新是两件事",
+      "items": [
+        "加入 PropertySource 不会自动重注入已有 @Value 字段。"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "不是所有配置都能热更",
+      "items": [
+        "重建资源、启动配置和安全配置须分别定义生效与故障策略。"
+      ]
+    }
+  ]
+}

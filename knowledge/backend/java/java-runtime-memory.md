@@ -4,7 +4,10 @@
 
 对象生命周期、方法执行与类加载使用不同结构。JVMS 21 定义共享的堆、方法区，以及线程私有的 PC 和 JVM 栈等逻辑区域，具体布局由实现决定。[JVMS §2.5](https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-2.html#jvms-2.5)没有规定所有实现必须采用同一种物理分区。
 
-![对象分配由共享堆承载，类加载与执行需要类结构和线程栈；本地资源另有边界，异常应按区域定位](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/java-runtime-memory-archify-v1.png)
+<iframe
+  src="/archify/java-runtime-memory.html"
+  title="对象分配由共享堆承载，类加载与执行需要类结构和线程栈；本地资源另有边界，异常应按区域定位"
+></iframe>
 
 | 区域或资源 | 主要用途 | 定位起点 |
 |---|---|---|

@@ -4,7 +4,10 @@ ThreadLocal 解决的是“同一个变量在不同线程上绑定不同的值�
 
 请求处理中，日志关联 ID 等信息可能被多层同步调用使用。把它作为参数显式传递最清晰；确需隐式读取时，可在请求线程上绑定上下文。这里的范围是线程，不是用户、会话或异步任务。换到另一线程执行后，普通 ThreadLocal 不会自动传播原值。[Java 21 ThreadLocal API](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ThreadLocal.html)定义的是每个线程各自访问变量副本的合同。
 
-![两个工作线程分别持有自己的 ThreadLocalMap，同一个弱引用 key 在各自 Entry 中绑定强引用 value；请求结束显式 remove](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/java-thread-local-archify-v1.png)
+<iframe
+  src="/archify/java-thread-local.html"
+  title="两个工作线程分别持有自己的 ThreadLocalMap，同一个弱引用 key 在各自 Entry 中绑定强引用 value；请求结束显式 remove"
+></iframe>
 
 ## 先区分 API 与实现
 

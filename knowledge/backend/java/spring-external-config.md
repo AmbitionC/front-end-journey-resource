@@ -4,7 +4,10 @@
 
 Spring Boot 支持文件、环境变量、系统属性和命令行等来源。Boot 3.5 文档按可覆盖顺序列出来源，后列出的来源通常覆盖前面的同名值；实际应用还可通过扩展插入属性源。[Externalized Configuration](https://docs.spring.io/spring-boot/3.5/reference/features/external-config.html)是此处默认顺序的依据。
 
-![配置中心发布带版本快照，应用验证后替换配置，业务读取一致快照；监听漏事件由版本对账补齐，失败时保留最后有效值](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/spring-external-config-archify-v1.png)
+<iframe
+  src="/archify/spring-external-config.html"
+  title="配置中心发布带版本快照，应用验证后替换配置，业务读取一致快照；监听漏事件由版本对账补齐，失败时保留最后有效值"
+></iframe>
 
 ## 自建属性源怎样获得优先级
 

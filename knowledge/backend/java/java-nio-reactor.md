@@ -4,7 +4,10 @@ Java NIO 的 Selector 通知的是“某个连接可以尝试 I/O”，不是“
 
 很多连接大部分时间等网络数据，逐连接阻塞线程会增加栈与调度成本。Selector 让一个线程等待多个已注册 Channel 的就绪状态；Java API 并未要求所有平台使用同一种底层系统调用。[Java 21 Selector](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/channels/Selector.html)定义了注册、键集合和 selection 操作。
 
-![连接注册到 Selector，就绪后由事件循环非阻塞读写并维护连接状态；耗时业务交工作线程，结果通过队列交回原事件循环](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/java-nio-reactor-archify-v1.png)
+<iframe
+  src="/archify/java-nio-reactor.html"
+  title="连接注册到 Selector，就绪后由事件循环非阻塞读写并维护连接状态；耗时业务交工作线程，结果通过队列交回原事件循环"
+></iframe>
 
 ## 一次循环做什么
 
