@@ -103,7 +103,10 @@ Token 决定序列如何表示和计量；Context Window 规定一次请求的�
 
 自回归模型的 Prefill 对输入序列建立计算结果及 KV Cache；Decode 在既有 KV 上逐步生成并扩展缓存。两阶段的计算形态、批处理和资源需求不同，但具体瓶颈由模型、长度、并发与硬件决定，不能把“一个必然算力受限、另一个必然带宽受限”当无条件规则。
 
-![PD 分离与 KV 交接](https://fe-static-oss.ai-fe-nexus.com/images/prefill-decode-split-archify-v1.png)
+<iframe
+  src="/archify/prefill-decode-split.html"
+  title="PD 分离与 KV 交接"
+></iframe>
 
 [Mooncake 原始论文](https://arxiv.org/abs/2407.00079)提出以 KV Cache 为中心的分离式服务设计，把 Prefill 与 Decode 集群解耦并利用 CPU DRAM、SSD 等资源。这里依据论文解释架构，不将论文中的实验成绩搬成任何项目的收益，也不把论文架构等同于当前仓库所有版本接口。
 

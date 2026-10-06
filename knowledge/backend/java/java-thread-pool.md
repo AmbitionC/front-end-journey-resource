@@ -12,7 +12,10 @@ corePoolSize 是核心线程数，maximumPoolSize 是最大线程数；keepAlive
 
 下图把提交、工作线程、等待队列和拒绝分开。注意 CallerRuns 最后的执行位置仍是提交线程，并没有凭空多出一个工作线程。
 
-![任务提交到线程池后按核心线程、队列与最大线程数接纳；无法接纳时进入拒绝处理器，CallerRuns在未关闭时占用提交线程](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/java-thread-pool-archify-v1.png)
+<iframe
+  src="/archify/java-thread-pool.html"
+  title="任务提交到线程池后按核心线程、队列与最大线程数接纳；无法接纳时进入拒绝处理器，CallerRuns在未关闭时占用提交线程"
+></iframe>
 *图：达到核心数后优先排队；队列饱和才尝试扩容。拒绝策略是失败协议的一部分。*
 
 教学推演：设 core=1、max=2、队列容量=1，并假设此前接纳的任务一直阻塞、没有线程退出。依次提交 A、B、C、D，A 启动核心线程，B 排队，C 因队列满而由第二个线程执行，D 才触发拒绝。这个条件化例子说明为什么 max=2 不代表前两项必然同时执行；真实完成顺序仍由任务与调度决定。

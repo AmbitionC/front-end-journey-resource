@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "PD 分离：计算阶段与 KV 交接",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [
+      800,
+      400
+    ],
+    "legend": {
+      "mode": "hidden"
+    }
+  },
+  "components": [
+    {
+      "id": "prefill",
+      "type": "backend",
+      "label": "Prefill 集群",
+      "sublabel": "处理输入并生成 KV",
+      "pos": [
+        20,
+        80
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "transfer",
+      "type": "backend",
+      "label": "KV 调度与传输",
+      "sublabel": "定位缓存、容量与版本",
+      "pos": [
+        310,
+        80
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "decode",
+      "type": "backend",
+      "label": "Decode 集群",
+      "sublabel": "逐 token 生成并扩展 KV",
+      "pos": [
+        600,
+        80
+      ],
+      "size": [
+        180,
+        110
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "from": "prefill",
+      "to": "transfer",
+      "label": "交付输入 KV"
+    },
+    {
+      "from": "transfer",
+      "to": "decode",
+      "label": "取得生成所需 KV"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "两种计算负载可独立配置",
+      "items": [
+        "Prefill 并行处理输入，Decode 逐步生成；收益受长度、并发与设备影响。"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "缓存外置带来容量也带来开销",
+      "items": [
+        "Mooncake 论文讨论 CPU DRAM、SSD 等资源；传输、命中与回收必须一起测量。"
+      ]
+    }
+  ]
+}

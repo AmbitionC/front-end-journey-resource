@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "可达性决定对象是否可回收",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [
+      800,
+      500
+    ],
+    "legend": {
+      "mode": "hidden"
+    }
+  },
+  "components": [
+    {
+      "id": "roots",
+      "type": "external",
+      "label": "根集合",
+      "sublabel": "栈、全局与运行时持有引用",
+      "pos": [
+        20,
+        60
+      ],
+      "size": [
+        180,
+        100
+      ]
+    },
+    {
+      "id": "objectA",
+      "type": "backend",
+      "label": "对象 A",
+      "sublabel": "从根可达",
+      "pos": [
+        310,
+        60
+      ],
+      "size": [
+        180,
+        100
+      ]
+    },
+    {
+      "id": "objectB",
+      "type": "backend",
+      "label": "对象 B",
+      "sublabel": "通过 A 可达",
+      "pos": [
+        600,
+        60
+      ],
+      "size": [
+        180,
+        100
+      ]
+    },
+    {
+      "id": "objectC",
+      "type": "backend",
+      "label": "对象 C",
+      "sublabel": "与 D 互相引用",
+      "pos": [
+        250,
+        300
+      ],
+      "size": [
+        180,
+        100
+      ]
+    },
+    {
+      "id": "objectD",
+      "type": "backend",
+      "label": "对象 D",
+      "sublabel": "从根不可达",
+      "pos": [
+        540,
+        300
+      ],
+      "size": [
+        180,
+        100
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "edge-0",
+      "from": "roots",
+      "to": "objectA",
+      "label": "持有引用"
+    },
+    {
+      "id": "edge-1",
+      "from": "objectA",
+      "to": "objectB",
+      "label": "持有引用"
+    },
+    {
+      "id": "edge-2",
+      "from": "objectC",
+      "to": "objectD",
+      "label": "引用 D"
+    },
+    {
+      "id": "edge-3",
+      "from": "objectD",
+      "to": "objectC",
+      "label": "引用 C",
+      "via": [
+        [
+          540,
+          430
+        ],
+        [
+          430,
+          430
+        ]
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "保留可达对象",
+      "items": [
+        "标记从根沿引用遍历到的对象；对象仍被引用不等于业务仍需要。"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "循环不等于存活",
+      "items": [
+        "C 与 D 没有从根出发的引用路径，追踪式回收可将它们识别为垃圾。"
+      ]
+    }
+  ]
+}

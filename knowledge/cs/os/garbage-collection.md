@@ -1,7 +1,10 @@
 垃圾回收（GC）自动识别可回收对象并复用其内存。它不能直接读懂业务“以后还想不想用”，而是依据运行时能够追踪的关系作判断。理解可达性、回收方式和资源生命周期，才能解释循环引用、内存泄漏和暂停之间的区别。
 
 
-![根集合指向 A，A 指向 B；另一个 C 与 D 的循环没有连接到根。](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/garbage-collection-archify-v1.png)
+<iframe
+  src="/archify/garbage-collection.html"
+  title="根集合指向 A，A 指向 B；另一个 C 与 D 的循环没有连接到根。"
+></iframe>
 *图：使用 Archify v2.16.0 绘制。可达性依据从根出发的引用路径。C 与 D 虽然互相引用，仍可被追踪式回收识别为不可达；对象框表示引用关系，不对应服务器部署。*
 
 ## 从分配、使用到释放

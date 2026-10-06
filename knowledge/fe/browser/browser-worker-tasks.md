@@ -8,7 +8,10 @@ Web Worker 把计算移到另一个执行环境，让页面主线程有机会处
 
 下图中的 ID 决定“结果属于谁”，分片决定“取消消息何时能被处理”；二者互不替代。
 
-![主线程递增taskId并发送消息，Worker分片计算并返回带ID的结果，主线程只提交仍对应最新ID的结果](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/browser-worker-tasks-archify-v1.png)
+<iframe
+  src="/archify/browser-worker-tasks.html"
+  title="主线程递增taskId并发送消息，Worker分片计算并返回带ID的结果，主线程只提交仍对应最新ID的结果"
+></iframe>
 *图：旧结果可被忽略，但旧计算是否停止仍取决于协作取消和事件循环。*
 
 ## 最新结果不能靠完成顺序

@@ -1,0 +1,152 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "服务端 HTML 与客户端交互",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [
+      800,
+      500
+    ],
+    "legend": {
+      "mode": "hidden"
+    }
+  },
+  "components": [
+    {
+      "id": "server",
+      "type": "backend",
+      "label": "服务端渲染",
+      "sublabel": "组件 + 初始数据",
+      "pos": [
+        20,
+        60
+      ],
+      "size": [
+        180,
+        100
+      ]
+    },
+    {
+      "id": "html",
+      "type": "external",
+      "label": "HTML 响应",
+      "sublabel": "可流式传输",
+      "pos": [
+        310,
+        60
+      ],
+      "size": [
+        180,
+        100
+      ]
+    },
+    {
+      "id": "dom",
+      "type": "frontend",
+      "label": "浏览器 DOM",
+      "sublabel": "先展示初始内容",
+      "pos": [
+        600,
+        60
+      ],
+      "size": [
+        180,
+        100
+      ]
+    },
+    {
+      "id": "code",
+      "type": "external",
+      "label": "客户端代码与数据",
+      "sublabel": "初始输出需与服务端一致",
+      "pos": [
+        20,
+        300
+      ],
+      "size": [
+        180,
+        100
+      ]
+    },
+    {
+      "id": "hydrate",
+      "type": "frontend",
+      "label": "Hydration",
+      "sublabel": "关联已有 DOM 与组件逻辑",
+      "pos": [
+        310,
+        300
+      ],
+      "size": [
+        180,
+        100
+      ]
+    },
+    {
+      "id": "ui",
+      "type": "frontend",
+      "label": "可交互组件",
+      "sublabel": "事件处理与后续更新",
+      "pos": [
+        600,
+        300
+      ],
+      "size": [
+        180,
+        100
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "edge-0",
+      "from": "server",
+      "to": "html",
+      "label": "生成"
+    },
+    {
+      "id": "edge-1",
+      "from": "html",
+      "to": "dom",
+      "label": "解析"
+    },
+    {
+      "id": "edge-2",
+      "from": "dom",
+      "to": "hydrate",
+      "label": "提供已有结构"
+    },
+    {
+      "id": "edge-3",
+      "from": "code",
+      "to": "hydrate",
+      "label": "执行"
+    },
+    {
+      "id": "edge-4",
+      "from": "hydrate",
+      "to": "ui",
+      "label": "接管组件交互",
+      "labelDx": 0,
+      "labelDy": 30
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "展示与交互分开理解",
+      "items": [
+        "HTML 可先展示；组件事件处理还依赖客户端逻辑。"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "一致性是前提",
+      "items": [
+        "Hydration 的首次输出应与服务端 HTML 一致。"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "子代理委派：上下文隔离与结果归并",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [
+      800,
+      400
+    ],
+    "legend": {
+      "mode": "hidden"
+    }
+  },
+  "components": [
+    {
+      "id": "owner",
+      "type": "backend",
+      "label": "主代理与任务所有者",
+      "sublabel": "保留任务目标与授权边界",
+      "pos": [
+        20,
+        80
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "child",
+      "type": "backend",
+      "label": "隔离的子代理任务",
+      "sublabel": "获得必要上下文与工具",
+      "pos": [
+        310,
+        80
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "merge",
+      "type": "backend",
+      "label": "主代理核验与归并",
+      "sublabel": "检查产物、冲突与失败",
+      "pos": [
+        600,
+        80
+      ],
+      "size": [
+        180,
+        110
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "from": "owner",
+      "to": "child",
+      "label": "提交限定子任务"
+    },
+    {
+      "from": "child",
+      "to": "merge",
+      "label": "返回产物与状态"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "文件上下文不是隐式共享记忆",
+      "items": [
+        "定义可读写路径、版本和产物引用；子代理上下文不自动包含全量历史。"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "规划与权限分别控制",
+      "items": [
+        "Deep Agents 的规划能力依版本配置；子代理不能扩展宿主授权与预算。"
+      ]
+    }
+  ]
+}
