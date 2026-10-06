@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "线程池的排队、扩容与拒绝",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [
+      800,
+      500
+    ],
+    "legend": {
+      "mode": "hidden"
+    }
+  },
+  "components": [
+    {
+      "id": "submit",
+      "type": "external",
+      "label": "提交方",
+      "sublabel": "调用 execute 的线程",
+      "pos": [
+        20,
+        60
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "admit",
+      "type": "backend",
+      "label": "ThreadPoolExecutor",
+      "sublabel": "核心 → 队列 → 最大线程数",
+      "pos": [
+        310,
+        60
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "workers",
+      "type": "backend",
+      "label": "工作线程",
+      "sublabel": "运行新任务或领取队列任务",
+      "pos": [
+        600,
+        60
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "caller",
+      "type": "external",
+      "label": "提交线程运行任务",
+      "sublabel": "CallerRunsPolicy，未关闭时",
+      "pos": [
+        20,
+        300
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "reject",
+      "type": "security",
+      "label": "拒绝处理器",
+      "sublabel": "饱和或关闭后执行策略",
+      "pos": [
+        310,
+        300
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "queue",
+      "type": "messagebus",
+      "label": "任务队列",
+      "sublabel": "暂存尚未执行的任务",
+      "pos": [
+        600,
+        300
+      ],
+      "size": [
+        180,
+        110
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "edge0",
+      "from": "submit",
+      "to": "admit",
+      "label": "提交任务"
+    },
+    {
+      "id": "edge1",
+      "from": "admit",
+      "to": "workers",
+      "label": "可创建线程时"
+    },
+    {
+      "id": "edge2",
+      "from": "admit",
+      "to": "queue",
+      "label": "优先尝试排队"
+    },
+    {
+      "id": "edge3",
+      "from": "queue",
+      "to": "workers",
+      "label": "工作线程领取"
+    },
+    {
+      "id": "edge4",
+      "from": "admit",
+      "to": "reject",
+      "label": "无法接纳或已关闭",
+      "labelDy": 24
+    },
+    {
+      "id": "edge5",
+      "from": "reject",
+      "to": "caller",
+      "label": "采用 CallerRuns 时"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "队列与线程上限共同决定容量",
+      "items": [
+        "达到核心数后优先排队，队列满才尝试扩大线程数。"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "拒绝不代表自动完成",
+      "items": [
+        "CallerRuns 占用提交线程；已关闭时丢弃，其他策略另定义失败。"
+      ]
+    }
+  ]
+}

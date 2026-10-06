@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Worker 计算与最新结果提交",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [
+      800,
+      500
+    ],
+    "legend": {
+      "mode": "hidden"
+    }
+  },
+  "components": [
+    {
+      "id": "latest",
+      "type": "frontend",
+      "label": "主线程：最新任务 ID",
+      "sublabel": "每次提交递增并使旧结果失效",
+      "pos": [
+        20,
+        60
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "request",
+      "type": "messagebus",
+      "label": "请求消息",
+      "sublabel": "postMessage 携带 taskId",
+      "pos": [
+        310,
+        60
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "worker",
+      "type": "backend",
+      "label": "Worker 接收任务",
+      "sublabel": "独立执行环境，不能访问 DOM",
+      "pos": [
+        600,
+        60
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "commit",
+      "type": "frontend",
+      "label": "主线程：提交检查",
+      "sublabel": "只将最新 taskId 的结果用于 UI",
+      "pos": [
+        20,
+        300
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "result",
+      "type": "messagebus",
+      "label": "结果消息",
+      "sublabel": "携带原任务 ID 与结果",
+      "pos": [
+        310,
+        300
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "compute",
+      "type": "backend",
+      "label": "分片计算",
+      "sublabel": "让出 task 后检查是否取消",
+      "pos": [
+        600,
+        300
+      ],
+      "size": [
+        180,
+        110
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "edge0",
+      "from": "latest",
+      "to": "request",
+      "label": "发送请求"
+    },
+    {
+      "id": "edge1",
+      "from": "request",
+      "to": "worker",
+      "label": "进入消息 task"
+    },
+    {
+      "id": "edge2",
+      "from": "worker",
+      "to": "compute",
+      "label": "计算当前任务",
+      "labelDy": 24
+    },
+    {
+      "id": "edge3",
+      "from": "compute",
+      "to": "result",
+      "label": "仍有效且完成时返回"
+    },
+    {
+      "id": "edge4",
+      "from": "result",
+      "to": "commit",
+      "label": "比较最新 taskId"
+    },
+    {
+      "id": "edge5",
+      "from": "latest",
+      "to": "commit",
+      "label": "提供最新 ID",
+      "labelDy": 24
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "ID 控制结果归属",
+      "items": [
+        "迟到的旧结果不写入 UI，取消与忽略结果是两件事。"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "分片才让取消消息有机会生效",
+      "items": [
+        "Promise 微任务不能替代 task 让出；传输和排队也有成本。"
+      ]
+    }
+  ]
+}

@@ -1,7 +1,10 @@
 浏览器把一次导航转成页面显示，需要解决三个不同问题：怎样取得资源、怎样把资源解析成页面结构、怎样把结构转换成像素。可以用这条责任链组织回答，但不能背成每次都发生、严格串行的一张固定时间表。
 
 
-![导航与缓存判断，经资源获取、解析、样式计算、布局和绘制，到合成与呈现。](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/browser-navigation-rendering-archify-v1.png)
+<iframe
+  src="/archify/browser-navigation-rendering.html"
+  title="导航与缓存判断，经资源获取、解析、样式计算、布局和绘制，到合成与呈现。"
+></iframe>
 *图：使用 Archify v2.16.0 绘制。这是初始渲染主要依赖的简图；实际资源加载、解析和脚本执行会交错，后续更新也可只触发部分阶段。*
 
 ## 导航、资源和页面状态

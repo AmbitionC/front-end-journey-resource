@@ -1,0 +1,169 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "浏览器导航与渲染的主要阶段",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1180,
+      550
+    ]
+  },
+  "components": [
+    {
+      "id": "navigation",
+      "type": "frontend",
+      "label": "导航与缓存判断",
+      "sublabel": "新文档导航可能触发网络",
+      "pos": [
+        20,
+        50
+      ],
+      "size": [
+        180,
+        90
+      ]
+    },
+    {
+      "id": "network",
+      "type": "external",
+      "label": "获取文档与资源",
+      "sublabel": "缓存 / 复用连接 / 新建连接",
+      "pos": [
+        470,
+        50
+      ],
+      "size": [
+        180,
+        90
+      ]
+    },
+    {
+      "id": "parse",
+      "type": "frontend",
+      "label": "解析 HTML 与 CSS",
+      "sublabel": "DOM 与样式规则逐步形成",
+      "pos": [
+        920,
+        50
+      ],
+      "size": [
+        180,
+        90
+      ]
+    },
+    {
+      "id": "style",
+      "type": "frontend",
+      "label": "样式计算",
+      "sublabel": "确定元素样式",
+      "pos": [
+        920,
+        220
+      ],
+      "size": [
+        180,
+        90
+      ]
+    },
+    {
+      "id": "layout",
+      "type": "frontend",
+      "label": "布局",
+      "sublabel": "计算位置与尺寸",
+      "pos": [
+        470,
+        220
+      ],
+      "size": [
+        180,
+        90
+      ]
+    },
+    {
+      "id": "paint",
+      "type": "frontend",
+      "label": "绘制",
+      "sublabel": "生成绘制记录",
+      "pos": [
+        20,
+        220
+      ],
+      "size": [
+        180,
+        90
+      ]
+    },
+    {
+      "id": "composite",
+      "type": "frontend",
+      "label": "合成与呈现",
+      "sublabel": "组合图层得到像素",
+      "pos": [
+        20,
+        390
+      ],
+      "size": [
+        180,
+        90
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "edge-0",
+      "from": "navigation",
+      "to": "network",
+      "label": "需要获取时"
+    },
+    {
+      "id": "edge-1",
+      "from": "network",
+      "to": "parse",
+      "label": "返回内容"
+    },
+    {
+      "id": "edge-2",
+      "from": "parse",
+      "to": "style",
+      "label": "样式输入就绪",
+      "labelDy": 24
+    },
+    {
+      "id": "edge-3",
+      "from": "style",
+      "to": "layout",
+      "label": "样式参与几何计算"
+    },
+    {
+      "id": "edge-4",
+      "from": "layout",
+      "to": "paint",
+      "label": "提供几何信息"
+    },
+    {
+      "id": "edge-5",
+      "from": "paint",
+      "to": "composite",
+      "label": "提交绘制结果",
+      "labelDy": 24
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "流程会交错",
+      "items": [
+        "流式解析、资源加载与脚本执行可以交错；并非全部资源完成后才开始。"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "按实际变化更新",
+      "items": [
+        "后续变化可重新触发部分阶段；并非每次都从导航重跑。"
+      ]
+    }
+  ]
+}

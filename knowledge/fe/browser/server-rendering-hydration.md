@@ -1,7 +1,10 @@
 服务端渲染（SSR）先在服务器生成页面 HTML；hydration 则让客户端组件逻辑接管已有 HTML，使页面具备应用定义的交互。前者回答首批内容怎样送到浏览器，后者回答这些内容怎样与状态、事件和后续更新结合。看到文字与能够完成交互，是两个不同的检查点。
 
 
-![服务端先生成 HTML，浏览器解析已有 DOM，客户端代码与一致初始数据通过 hydration 关联组件逻辑。](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/server-rendering-hydration-archify-v1.png)
+<iframe
+  src="/archify/server-rendering-hydration.html"
+  title="服务端先生成 HTML，浏览器解析已有 DOM，客户端代码与一致初始数据通过 hydration 关联组件逻辑。"
+></iframe>
 *图：使用 Archify v2.16.0 绘制。HTML 展示与组件交互的接管是不同阶段，箭头表示依赖关系，不要求全部 HTML 传输完成后才执行客户端脚本。*
 
 ## HTML、DOM 与组件逻辑的分工
