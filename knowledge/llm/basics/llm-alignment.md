@@ -80,6 +80,7 @@ SFT 使用“输入—理想输出”示范继续训练模型。它适合教授�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [蚂蚁智能体与大模型应用一面：幻觉、Skill 与 RAG（2026 年 5 月）](../../../interview/antfin/ai/antfin-ai-5.md)（cluster-452705dd533f）
 <!-- interview-source-history:end -->
 
 ## 参考资料

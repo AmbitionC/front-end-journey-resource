@@ -62,16 +62,14 @@ HTTPS 是在 TLS 保护下使用 HTTP；TCP 建连通常三次握手、关闭常
 
 2xx 表示成功，3xx 重定向，4xx 请求侧问题，5xx 服务侧问题；常见有 200、201、204、301/302、304、400、401、403、404、429、500、503。需结合响应体和可重试性处理，而非见错误就重试。
 
-<details data-binding-status="pending_semantic_verification">
+<details data-knowledge-key="rate-limit-circuit">
 <summary>（11）了解微服务吗，两个服务通信存在网络波动，怎么解决</summary>
-<p>关联知识点待核实。</p>
 </details>
 
 设置端到端超时、有限重试与退避，并对有副作用的请求使用幂等键。结合熔断、降级和监控，网络超时不代表对方没有完成操作。
 
-<details data-binding-status="pending_semantic_verification">
+<details data-knowledge-key="database-models">
 <summary>（12）如果让你设计微信朋友圈，用什么数据结构</summary>
-<p>关联知识点待核实。</p>
 </details>
 
 把用户、关系、帖子与互动建模为实体，时间线按查询需求选择拉取、推送或混合索引。数据库表、缓存有序集合和对象存储可分工，不能只用一种容器解释完整朋友圈。

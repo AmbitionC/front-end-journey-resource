@@ -38,9 +38,8 @@
 
 提示明确任务、可用证据、缺证时的回答规则和输出格式，并配合样例测试。仅写“不要编造”不能可靠限制事实错误，还要做检索与结果核验。
 
-<details data-binding-status="pending_semantic_verification">
+<details data-knowledge-key="prompt-testing-debugging">
 <summary>（7）还有其他提示词吗？</summary>
-<p>关联知识点待核实。</p>
 </details>
 
 围绕失败类型补约束或示例，检查是否改善原问题以及是否引入退化。不要为了显得全面而堆提示词；版本变化要能回放固定测试集。

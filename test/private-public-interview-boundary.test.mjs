@@ -71,6 +71,25 @@ test('audited short-qa-v2 preserves an unbound question and answer with an expli
   }
 }));
 
+test('bound keys reject pending states and notices even with a valid article and backlink',()=>reviewFixture(async f=>{
+  f.interview.contentFormat='short-qa-v2';
+  for(const content of [
+    question.replace('data-knowledge-key="real-key"','data-knowledge-key="real-key" data-binding-status="pending_semantic_verification"').replace('</details>','<p>关联知识点待核实。</p></details>'),
+    question.replace('data-knowledge-key="real-key"','data-knowledge-key="real-key" data-binding-status="pending_missing_keyword"'),
+    question.replace('</details>','<p>关联知识点待核实。</p></details>'),
+    question.replace('data-knowledge-key="real-key"','data-knowledge-key="real-key" data-binding-status="unknown"'),
+  ]) {
+    await writeFile(join(f.root,'interview/company/article.md'),content);
+    assert.match((await relations(f)).join(),/待核实状态或说明不得与知识 key 并存/u);
+  }
+  await writeFile(join(f.root,'interview/company/article.md'),question.replace('data-knowledge-key="real-key"','data-binding-status="bound"'));
+  assert.match((await relations(f)).join(),/bound 状态必须有知识 key/u);
+  for(const content of [question,question.replace('data-knowledge-key="real-key"','data-knowledge-key="real-key" data-binding-status="bound"')]) {
+    await writeFile(join(f.root,'interview/company/article.md'),content);
+    assert.deepEqual(await relations(f),[]);
+  }
+}));
+
 test('paths reject traversal, absolute locations, slash keys and outside symlink targets before reading',()=>reviewFixture(async f=>{
   for(const path of ['../private.json','/tmp/private.json','interview/../../secret','interview\\secret','interview//article.md']) assert.throws(()=>safeRelativePath(path));
   await assert.rejects(readBounded(f.root,'../history.json','interview'));

@@ -114,6 +114,13 @@ export async function validatePublicKnowledgeRelations(resourceRoot, interviewLe
     if (shortQA && bindings.length === 0) errors.push(`面经 ${leaf.key} 的短问答正文没有问题 details`);
     for (const binding of bindings) {
       if (!binding.valid) errors.push(`面经 ${leaf.key} 问题必须有真实首个 summary 和相邻独立短答`);
+      if (binding.key !== null && (binding.bindingStatus !== null && binding.bindingStatus !== 'bound'
+          || binding.pendingNotice || binding.missingKeywordNotice)) {
+        errors.push(`面经 ${leaf.key} 的待核实状态或说明不得与知识 key 并存`);
+      }
+      if (binding.key === null && binding.bindingStatus === 'bound') {
+        errors.push(`面经 ${leaf.key} 的 bound 状态必须有知识 key`);
+      }
       if (binding.key === null) {
         const explicitPending = leaf.contentFormat === 'short-qa-v2' && !binding.hasBinding
           && (binding.bindingStatus === 'pending_semantic_verification' && binding.pendingNotice

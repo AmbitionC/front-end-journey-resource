@@ -122,6 +122,7 @@ function observeFCP(onMetric) {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [OPPO AI 全栈一面：Prompt 到 UI、RAG 与前端性能（2026 年 8 月）](../../../interview/oppo/ai/oppo-ai-2.md)
 - [字节剪映 AI 前端一面：Agent 运行时、MCP 与性能](../../../interview/bytedance/base/bytedance-base-30.md)
 - [字节前端全栈实习一面：渲染、Worker与认证](../../../interview/bytedance/base/bytedance-base-38.md)
 - [字节全栈：多智能体导购、客户端与系统评测](../../../interview/bytedance/base/bytedance-base-43.md)

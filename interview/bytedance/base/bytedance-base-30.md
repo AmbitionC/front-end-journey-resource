@@ -78,9 +78,8 @@ MCP 规范能力发现与调用接口，Skill 提供任务步骤、材料和可�
 
 真实用户监测按设备、网络和版本采样关键体验及阶段耗时，用运行标识关联异常；实验室测量用于稳定复现和对比。两者条件不同，不能把单次 Lighthouse 得分当作全部用户表现，也不能在埋点中泄露用户内容。
 
-<details data-binding-status="pending_semantic_verification">
+<details data-knowledge-key="event-loop">
 <summary>（14）怎样发现掉帧？</summary>
-<p>关联知识点待核实。</p>
 </details>
 
 在 Performance 轨迹中检查长任务、渲染阶段与动画帧；requestAnimationFrame 的时间间隔可辅助观察，但受后台节流和设备刷新率影响。INP 衡量交互响应，不等于 FPS；应把检测信号回到具体阻塞和绘制工作。 [MDN：requestAnimationFrame 的刷新率与后台行为](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame)。
@@ -97,9 +96,8 @@ MCP 规范能力发现与调用接口，Skill 提供任务步骤、材料和可�
 
 服务器先生成 HTML，让浏览器能够显示初始内容；需要交互时，客户端再运行脚本并接管已有结构，React 中这一过程称为 hydration。SSR 不自动保证响应更快，仍受服务器成本、缓存与客户端脚本影响，客户端与服务器输出还要一致。 [React：接管服务器生成的 HTML](https://react.dev/reference/react-dom/client/hydrateRoot)。
 
-<details data-binding-status="pending_semantic_verification">
+<details data-knowledge-key="vite-testing">
 <summary>（17）怎样防止性能随迭代退化？</summary>
-<p>关联知识点待核实。</p>
 </details>
 
 把代表性页面、设备和网络条件固定为回归场景，为体验、资源体积及关键阶段设置可解释的预算，并在 CI 与线上分别观测。超限要定位变更原因，噪声需重复或统计处理；通过一次构建或单次跑分不能证明长期没有退化。

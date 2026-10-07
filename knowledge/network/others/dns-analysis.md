@@ -66,6 +66,7 @@ DNS 的可靠性来自委派正确、缓存可预测、多个权威真实独立�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节 Agent 开发一面：Skill、MCP 与后端基础（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-15.md)
 - [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
 <!-- interview-source-history:end -->
 

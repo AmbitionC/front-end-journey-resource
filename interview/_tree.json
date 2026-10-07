@@ -108,7 +108,6 @@
             "key": "bytedance-base-45",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "contentFormat": "short-qa-v2",
             "department": "中国交易与广告",
             "roleCategory": "Agent 与后端工程",
             "role": "AI应用开发"
@@ -118,7 +117,6 @@
             "key": "bytedance-base-53",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "contentFormat": "short-qa-v2",
             "department": "中国交易与广告",
             "roleCategory": "Agent 与后端工程"
           }
@@ -195,7 +193,6 @@
             "key": "bytedance-base-56",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "contentFormat": "short-qa-v2",
             "department": "TikTok",
             "roleCategory": "Agent 与后端工程"
           }
@@ -218,7 +215,7 @@
               "LRU"
             ],
             "updatedAt": "2026-10-03",
-            "contentFormat": "short-qa-v2",
+            "contentFormat": "short-qa-v1",
             "department": "剪映",
             "roleCategory": "Agent 与后端工程",
             "role": "前端"
@@ -261,7 +258,7 @@
               "算法"
             ],
             "updatedAt": "2026-10-03",
-            "contentFormat": "short-qa-v2",
+            "contentFormat": "short-qa-v1",
             "department": "财经保险",
             "roleCategory": "Agent 与后端工程",
             "role": "AI/全栈"
@@ -294,7 +291,6 @@
             "key": "bytedance-base-48",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "contentFormat": "short-qa-v2",
             "department": "抖音",
             "roleCategory": "Agent 与后端工程",
             "role": "AI全栈开发"
@@ -704,7 +700,7 @@
               "实习"
             ],
             "updatedAt": "2026-10-03",
-            "contentFormat": "short-qa-v2",
+            "contentFormat": "short-qa-v1",
             "department": "其他",
             "roleCategory": "Agent 与后端工程",
             "role": "前端"
@@ -720,7 +716,7 @@
               "算法"
             ],
             "updatedAt": "2026-10-03",
-            "contentFormat": "short-qa-v2",
+            "contentFormat": "short-qa-v1",
             "department": "其他",
             "roleCategory": "Agent 与后端工程",
             "role": "agent"
@@ -730,7 +726,6 @@
             "key": "bytedance-base-41",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "contentFormat": "short-qa-v2",
             "department": "其他",
             "roleCategory": "Agent 与后端工程",
             "role": "agent开发"
@@ -748,7 +743,6 @@
             "key": "bytedance-base-47",
             "isLeaf": true,
             "filePath": "bytedance/base",
-            "contentFormat": "short-qa-v2",
             "department": "其他",
             "roleCategory": "Agent 与后端工程",
             "role": "AI应用开发"

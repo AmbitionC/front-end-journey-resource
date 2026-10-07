@@ -61,9 +61,8 @@
 
 用双指针比较当前元素，相等时记录并推进，不等时推进较小一侧，每个元素最多扫描一次，时间为 O(n+m)。先确认是否保留重复次数以及输出空间是否计入；已排序条件是这条线性路径的前提。
 
-<details data-binding-status="pending_semantic_verification">
+<details data-knowledge-key="algorithm-hash">
 <summary>（11）无限且无法整体排序的序列怎样求交集？Bitmap 的边界是什么？</summary>
-<p>关联知识点待核实。</p>
 </details>
 
 先确认元素范围、是否有序、能否保留历史和是否有结束条件。无序且无界时，精确去重或交集可能需要无界存储；可用外部存储或明确窗口处理。Bitmap 空间随值域增长，值域巨大时未必合适；分批本身不能消除跨批匹配和正确性问题。

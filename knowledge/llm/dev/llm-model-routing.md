@@ -134,6 +134,7 @@ expected_cost = first_call
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [哔哩哔哩 AI 应用岗一面：端到端 AI Coding 与生产治理（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-2.md)（cluster-1c24a80acde8）
 <!-- interview-source-history:end -->
 
 ## 参考资料

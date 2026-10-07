@@ -181,7 +181,11 @@ export async function validateContentReview(root, historyPath, reviewPath, revie
         if (expected.knowledgeKey === null && !['pending_missing_keyword','pending_semantic_verification'].includes(expected.bindingStatus)) throw new Error('未绑定问题缺少明确待补原因');
         if (expected.bindingStatus === 'pending_semantic_verification' && (leaf.contentFormat !== 'short-qa-v2'
             || actual[i].bindingStatus !== expected.bindingStatus || !actual[i].pendingNotice)) throw new Error('待核实知识绑定必须有可见说明且没有知识 key');
-        if (expected.knowledgeKey !== null && expected.bindingStatus !== 'bound') throw new Error('已绑定问题缺少明确绑定状态');
+        if (expected.knowledgeKey !== null && (expected.bindingStatus !== 'bound'
+            || actual[i].bindingStatus !== null && actual[i].bindingStatus !== 'bound'
+            || actual[i].pendingNotice || actual[i].missingKeywordNotice)) throw new Error('已绑定问题不得带待核实状态或说明');
+        if (expected.knowledgeKey === null && actual[i].bindingStatus !== null
+            && actual[i].bindingStatus !== expected.bindingStatus) throw new Error('实际待核实状态与审核映射不一致');
       }
       for (const [sourceId, record] of Object.entries(history.records ?? {}).filter(([,record])=>record.articleKey===key
           && ['prepared','published','merged'].includes(record.status))) {

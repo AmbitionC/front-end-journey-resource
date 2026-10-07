@@ -56,9 +56,8 @@
 
 检索可能为生成提供事实或素材，但需明确查询来源、索引范围和权限。相关片段还要排序、去重并保留来源，不能只说“智能检索”就省略输入输出。
 
-<details data-binding-status="pending_semantic_verification">
+<details data-knowledge-key="rag-citation-grounding">
 <summary>（10）检索之后是作为输入放到这个链路里的，对吧？</summary>
-<p>关联知识点待核实。</p>
 </details>
 
 通常将相关片段而非整库放入生成上下文，并携带来源和时间。模型只据证据回答；证据不足或互相矛盾时明确说明，不把检索分数当作事实正确率。
@@ -161,9 +160,8 @@
 
 先问清输入、输出、时限和允许操作，再拆成可验证步骤；把确定性操作交给程序，把不确定决策交给受控模型。原题未给完整任务，不能编造专属实现。
 
-<details data-binding-status="pending_semantic_verification">
+<details data-knowledge-key="agent-sandbox">
 <summary>（27）那你觉得像这种定制要用CLI的方式，大模型是稳定的吗？</summary>
-<p>关联知识点待核实。</p>
 </details>
 
 让模型生成结构化参数，由宿主调用固定程序，避免直接拼接 shell 字符串。允许的命令、目录与时限由运行环境约束，模型输出正确率不能代替执行安全。
@@ -186,9 +184,8 @@
 
 只授予任务需要的目录读取权限，写入与网络操作分别授权，并防止路径穿越与越界链接。读取整个服务目录会扩大暴露范围，工具描述不是权限控制。
 
-<details data-binding-status="pending_semantic_verification">
+<details data-knowledge-key="agent-sandbox">
 <summary>（31）你的那个了解里有没有什么解法？</summary>
-<p>关联知识点待核实。</p>
 </details>
 
 用隔离工作目录、文件白名单、资源限制和明确输出契约封装执行环境。根据任务决定是否需要人工确认；不能通过扩大凭证或权限来弥补模型规划不稳定。
@@ -217,9 +214,8 @@ RAG 可以分别使用检索改写模型、Embedding 模型和回答模型，也
 
 按可独立检索的事实拆分，并标出依赖顺序，例如先确定型号，再查询规格。结果汇总时核对来源一致性，不能把不同年份与车型的数据拼成一个答案。
 
-<details data-binding-status="pending_semantic_verification">
+<details data-knowledge-key="rag-citation-grounding">
 <summary>（36）方程豹这辆车能跑多少公里？（举例说明）</summary>
-<p>关联知识点待核实。</p>
 </details>
 
 续航要区分具体车型、年份、动力版本与测试口径；先确认条件，再查可靠规格。不能仅凭品牌名称给固定公里数，也要区分标称与实际使用。
@@ -249,9 +245,8 @@ RAG 可以分别使用检索改写模型、Embedding 模型和回答模型，也
 
 用一项真实工程实践说明需求、实现、测试和故障处理，分清个人完成与协作部分。没有实际实践时可讲学习实验，但不能冒充线上项目。
 
-<details data-binding-status="pending_semantic_verification">
+<details data-knowledge-key="agent-role-landscape">
 <summary>（41）就是传统的后端工程项目是吧？</summary>
-<p>关联知识点待核实。</p>
 </details>
 
 传统后端与模型应用可以共享鉴权、状态、队列和可观测性等基础能力。回答应说明模型特有的不确定输出、成本和评测问题，而非仅换一个项目标签。

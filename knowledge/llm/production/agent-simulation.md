@@ -118,6 +118,7 @@ assert:
 
 <!-- interview-source-history:start -->
 - [阿里国际 Accio Agent 算法一面：数据合成、任务环境与模型后训练（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-3.md)（cluster-10359bdec433）
+- [淘天 Agent 算法一面：任务构造、轨迹验证与后训练（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-4.md)（cluster-787120ee1249）
 <!-- interview-source-history:end -->
 
 ## 参考资料

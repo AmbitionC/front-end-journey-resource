@@ -49,9 +49,8 @@
 
 可先考察 (b,a)，利用 b 等值限定后在 a 上做范围扫描，再用数据分布、其他查询和执行计划比较备选。原题只给条件，没有表规模和现有索引，不能保证这一顺序始终最优；覆盖索引与回表成本也会影响选择。 [MySQL：多列索引与最左前缀](https://dev.mysql.com/doc/refman/8.4/en/multiple-column-indexes.html)。
 
-<details data-binding-status="pending_semantic_verification">
+<details data-knowledge-key="algorithm-array">
 <summary>（9）回文串匹配题应该怎样开始？</summary>
-<p>关联知识点待核实。</p>
 </details>
 
 先确认要求是判断整串、找子串还是其他匹配，并确定字符及大小写规则。若是判断整串，可用首尾双指针逐步向中间比较，时间 O(n)、额外空间 O(1)，但这个方案不能直接回答最长回文子串；题面未披露的细节不补造。

@@ -104,9 +104,8 @@ PE 在此语境通常指 Prompt Engineering，目的是把任务、输入与输�
 
 长期记忆可保存结构化事实和检索索引，按用户隔离并支持删除、更新与过期。向量库只是检索设施，不能代替权威事实和生命周期管理。
 
-<details data-binding-status="pending_semantic_verification">
+<details data-knowledge-key="rag-hybrid-search">
 <summary>（18）你的召回是怎么做的？</summary>
-<p>关联知识点待核实。</p>
 </details>
 
 查询先标准化并带权限条件，再按关键词或向量召回、合并去重、必要时 rerank，最后组装证据。需要用测试集判断召回是否改善，不能只展示返回片段。
@@ -147,9 +146,8 @@ PE 在此语境通常指 Prompt Engineering，目的是把任务、输入与输�
 
 重复追问可进一步讲卡片的字段、证据引用、去重和修订流程，并展示失败样例。抽取是生成候选事实，必须校验再进入可检索知识。
 
-<details data-binding-status="pending_semantic_verification">
+<details data-knowledge-key="rag-hybrid-search">
 <summary>（25）怎样设计公开群聊搜索，决定哪些群排在前面？</summary>
-<p>关联知识点待核实。</p>
 </details>
 
 群聊搜索先按可见权限召回，再根据查询相关性、活跃度与质量特征排序，并用离线和线上指标验证。用户个性化应有数据边界，不能只按群规模排序。

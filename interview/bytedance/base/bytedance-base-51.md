@@ -39,9 +39,8 @@ Function Calling 是模型提出结构化工具调用的一种接口能力；Age
 
 可比较 vLLM、TensorRT-LLM、llama.cpp 等推理引擎，先核对版本和硬件。选择看模型支持、硬件、批处理与并行能力；指标包括首 token 时延、每 token 时延、吞吐、并发和错误率。比较需固定工作负载，不能只看单条回答速度。
 
-<details data-binding-status="pending_semantic_verification">
+<details data-knowledge-key="llm-token-context">
 <summary>（7）为什么要用PD分离？业界方案是怎么样的？mooncake的KV Cache是否有外挂？</summary>
-<p>关联知识点待核实。</p>
 </details>
 
 Prefill 与 Decode 的资源需求不同，分离可独立调度但带来 KV 传输开销。Mooncake 是围绕分离式推理与 KV Cache 的方案；是否外部存储、介质和拓扑须看具体版本，不能笼统承诺外挂即提速。

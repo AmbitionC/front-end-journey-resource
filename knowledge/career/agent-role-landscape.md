@@ -98,10 +98,12 @@ Infra 工程师关心的是：**Agent 在大规模生产环境下能不能跑起
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [vivo Agent 秋招线下面：Harness 与工程诊断（2026 年 9 月发帖）](../../interview/vivo/ai/vivo-ai-1.md)
 - [字节 Agent 一面：会话记忆、并发更新与算法](../../interview/bytedance/base/bytedance-base-29.md)
 - [字节剪映 AI 前端一面：Agent 运行时、MCP 与性能](../../interview/bytedance/base/bytedance-base-30.md)
 - [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../interview/bytedance/base/bytedance-base-36.md)
 - [字节全栈一面：RAG、Java与线程池](../../interview/bytedance/base/bytedance-base-37.md)
+- [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../interview/bytedance/base/bytedance-base-42.md)
 - [字节全栈：多智能体导购、客户端与系统评测](../../interview/bytedance/base/bytedance-base-43.md)
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../interview/bytedance/base/bytedance-base-48.md)
 - [字节 Agent 实习：推理、微调与工具编排](../../interview/bytedance/base/bytedance-base-51.md)

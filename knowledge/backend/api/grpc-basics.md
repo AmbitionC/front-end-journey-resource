@@ -93,6 +93,7 @@ RPC 是调用远端服务的方法与契约抽象，HTTP 是可承载通信的�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

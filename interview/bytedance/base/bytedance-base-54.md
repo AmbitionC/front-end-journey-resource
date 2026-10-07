@@ -57,9 +57,8 @@ HTTPS 用 TLS 保护传输机密性与完整性并认证服务器，仍需校验
 
 OAuth 2.0 是委托授权框架，访问令牌用于获准访问资源；用户登录通常还需对应身份协议。限定受众、scope 与期限，并按实际流程验证，不能把 OAuth 直接当用户密码传输。
 
-<details data-binding-status="pending_semantic_verification">
+<details data-knowledge-key="agent-supply-chain">
 <summary>（10）了解新技术吗比如open claw</summary>
-<p>关联知识点待核实。</p>
 </details>
 
 先确认 OpenClaw 的实际仓库、版本和部署方式，再阅读能力、工具权限与依赖。原帖只给名称，不能断言其具体插件或默认安全设置；试用前以文档和隔离实验验证。

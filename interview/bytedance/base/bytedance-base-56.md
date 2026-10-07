@@ -26,9 +26,8 @@ String 不可变；StringBuilder 可变且不保证并发安全，StringBuffer �
 
 分代收集器把不同存活周期对象分区管理，晋升通常与年龄、空间和收集策略有关。不是所有收集器都采用同一新老年代结构，也不能固定说对象存活几次就一定晋升。
 
-<details data-binding-status="pending_semantic_verification">
+<details data-knowledge-key="os-thread-sync">
 <summary>（5）线程有几种状态？</summary>
-<p>关联知识点待核实。</p>
 </details>
 
 Java Thread.State 有 NEW、RUNNABLE、BLOCKED、WAITING、TIMED_WAITING、TERMINATED；RUNNABLE 不等于操作系统当前正在 CPU 上运行。结合锁等待、条件等待与线程栈理解状态。
@@ -45,9 +44,8 @@ Java Thread.State 有 NEW、RUNNABLE、BLOCKED、WAITING、TIMED_WAITING、TERMI
 
 GET 与 POST 没有固定性能高低，取决于缓存、负载和业务；GET 适合安全读取，复杂查询也可按接口合同用 POST。不能认为“查询一般用 POST”是通用规范。
 
-<details data-binding-status="pending_semantic_verification">
+<details data-knowledge-key="grpc-basics">
 <summary>（8）java里怎么调用http的？http vs rpc</summary>
-<p>关联知识点待核实。</p>
 </details>
 
 Java 可用 HttpClient 等库发 HTTP；RPC 是调用远端服务的抽象，可承载于 HTTP 等协议之上。比较应看契约、序列化、超时和演进，HTTP 与 RPC 不是同一层的互斥分类。

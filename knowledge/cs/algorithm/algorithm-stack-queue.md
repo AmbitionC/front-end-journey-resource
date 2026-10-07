@@ -67,6 +67,7 @@ dequeue():
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [阿里云 Agent Infra 一面：SGX、吞吐与日志写入（2026 年 9 月发帖）](../../../interview/alibaba/ai/alibaba-ai-8.md)（cluster-21f88c2e7c88）
 <!-- interview-source-history:end -->
 
 ## 参考资料

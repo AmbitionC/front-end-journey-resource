@@ -130,16 +130,14 @@ Cookie 是客户端状态机制，Session 是一种服务端会话设计，常�
 
 用具体文件或功能区分自己写、修改和审核的代码，解释一段关键实现。不能以背出 AI 输出代替对程序行为和故障边界的理解。
 
-<details data-binding-status="pending_semantic_verification">
+<details data-knowledge-key="design-state">
 <summary>（22）路由怎么实现</summary>
-<p>关联知识点待核实。</p>
 </details>
 
 客户端路由把 URL 映射到页面状态，可用 History API 或 hash。History 模式直接访问深路径需服务端支持入口回退，hash 片段不发给服务端；路由守卫不能代替接口授权。
 
-<details data-binding-status="pending_semantic_verification">
+<details data-knowledge-key="design-state">
 <summary>（23）路由具体用了哪些方法</summary>
-<p>关联知识点待核实。</p>
 </details>
 
 History 模式常用 pushState/replaceState 更新记录、popstate 响应导航；hash 模式监听 hashchange。框架可封装这些方法，需说明实际使用的方案。

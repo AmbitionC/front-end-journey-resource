@@ -12,9 +12,8 @@
 
 从用户痛点、现有办法和限制定义目标，再把功能写成输入、输出与验收条件。先验证一条核心使用路径，区分必须能力和后续扩展；不能只用觉得有趣解释技术投入，也不能为技术选择反推需求。
 
-<details data-binding-status="pending_semantic_verification">
+<details data-knowledge-key="design-state">
 <summary>（3）整体模块怎样划分，本地数据怎样存？</summary>
-<p>关联知识点待核实。</p>
 </details>
 
 按数据所有权与变化路径区分导入、校验、存储和展示，说明哪些操作留在设备、哪些依赖外部服务。统一状态来源并定义更新通知和冲突处理；local-first 不等于完全离线，网络依赖与故障行为仍需明确。
@@ -31,9 +30,8 @@
 
 不同解析器先转成同一草稿 Schema，统一课程、时间、地点、来源与校验错误，再让用户确认后写入。Schema 约束字段和类型，业务规则另做检查；保留原始来源以便修复，不让展示层承担格式清洗。
 
-<details data-binding-status="pending_semantic_verification">
+<details data-knowledge-key="vite-testing">
 <summary>（6）怎样判断网站是不是纯静态？</summary>
-<p>关联知识点待核实。</p>
 </details>
 
 看请求是否直接返回构建好的 HTML、脚本和资源，运行时是否需要服务器渲染或业务 API。静态部署的页面仍可请求动态数据，所以应分别说明部署产物和业务依赖，不能只凭使用某种前端框架判断。 [Vite：构建产物与资源路径](https://vite.dev/guide/build.html)。
@@ -44,16 +42,14 @@
 
 浏览器结合缓存和网络完成地址解析、连接与 HTTP 请求，接收资源后解析 HTML 和样式，执行脚本并进行布局、绘制与合成。脚本、样式和网络可能影响关键路径；具体请求不一定每次都重做 DNS 和 TCP，缓存、复用及协议都会改变过程。
 
-<details data-binding-status="pending_semantic_verification">
+<details data-knowledge-key="vite-testing">
 <summary>（8）前端产物是什么，直接从本地打开为什么会缺内容？</summary>
-<p>关联知识点待核实。</p>
 </details>
 
 常见构建生成 HTML、脚本、样式及静态资产，部署需要正确的资源路径和服务配置。直接用 file URL 打开可能遇到模块、安全来源、相对路径或 API 配置问题；应使用受控本地服务复现，并根据实际网络错误定位。 [Vite：构建产物与资源路径](https://vite.dev/guide/build.html)。
 
-<details data-binding-status="pending_semantic_verification">
+<details data-knowledge-key="event-loop">
 <summary>（9）页面动画怎样实现，底层效果如何解释？</summary>
-<p>关联知识点待核实。</p>
 </details>
 
 先说实际使用的 CSS、Web Animations、Canvas 或渲染库，再说明时间推进和每帧状态怎样转成画面。区分自己实现与复用库，基于 Performance 观察脚本、布局和绘制成本；不能只回答由 AI 写出，也不能把 requestAnimationFrame 视为固定帧率保证。 [MDN：requestAnimationFrame 的刷新率与后台行为](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame)。

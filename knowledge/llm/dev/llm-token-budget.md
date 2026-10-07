@@ -110,6 +110,7 @@ Token 预算是一套上下文资源调度机制：先保护规则、当前意�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [哔哩哔哩 AI 应用岗一面：端到端 AI Coding 与生产治理（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-2.md)
 - [大疆创新 AI Agent 开发面经：容错、Token 与后端基础（2026 年 8 月）](../../../interview/dji/ai/dji-ai-1.md)
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
 <!-- interview-source-history:end -->

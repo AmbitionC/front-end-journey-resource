@@ -133,6 +133,8 @@ type QueryEvidence = {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [OPPO IT 开发一面：ReAct、MCP 与智能问数（2026 年 8 月）](../../../interview/oppo/ai/oppo-ai-3.md)（cluster-388e361cba4f）
+- [字节飞书 AI 应用一面：Runtime、评测与后端基础（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-24.md)（cluster-78d45fa26bfd）
 <!-- interview-source-history:end -->
 
 ## 参考资料
