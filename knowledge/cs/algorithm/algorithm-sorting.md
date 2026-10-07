@@ -70,11 +70,37 @@ function maxSortedChunks(values) {
 
 例如包含重复值时，相等边界可以分开；降序数组只能合成一块。可用穷举所有切分、逐块排序并与整体排序比较的小输入校验，避免只测排列样例。
 
+## 最短无序连续子数组：从全排序基线到线性边界
+
+[LeetCode 581](https://leetcode.com/problems/shortest-unsorted-continuous-subarray/description/)要找一个连续区间，只排序它就使整个数组非降序；允许重复值。若现场要求严格递增，需先澄清重复值条件。
+
+基线是复制数组并排序，与原数组比较首尾不一致的位置，时间 O(n log n)、额外空间 O(n)。要做到 O(n)，可以不实际排序：从左到右维护已见最大值，凡当前值小于它，当前位置必处在需要修复的右边界内；从右到左维护已见最小值，凡当前值大于它，当前位置应纳入左边界。这是由逆序必须被覆盖推导出的边界方法。
+
+```javascript
+function shortestUnsorted(values) {
+  let right = -1, maximum = -Infinity;
+  for (let i = 0; i < values.length; i++) {
+    if (values[i] < maximum) right = i;
+    maximum = Math.max(maximum, values[i]);
+  }
+  if (right === -1) return 0;
+  let left = values.length, minimum = Infinity;
+  for (let i = values.length - 1; i >= 0; i--) {
+    if (values[i] > minimum) left = i;
+    minimum = Math.min(minimum, values[i]);
+  }
+  return right - left + 1;
+}
+```
+
+代码约定输入是有限数值数组，空数组返回 0。两次扫描时间 O(n)、额外空间 O(1)，严格比较保留相等值的正确边界。检查已排序、全相等、逆序、重复值跨边界和负数，并用小数组枚举对照全排序基线，避免只用一个典型样例。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
 - [字节 Agent 开发一面：推理缓存、网络与存储基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-18.md)
 - [字节 Agent 实习：生成质量、多智能体与缓存](../../../interview/bytedance/base/bytedance-base-52.md)
+- [字节抖音电商 Agent 秋招三轮：AI Coding、数据与事实校验](../../../interview/bytedance/base/bytedance-base-57.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

@@ -53,7 +53,7 @@ DECR stock:item:42         # 库存扣减
 SET lock:payment:order_123 "worker_id_abc" NX EX 30
 ```
 
-对于 AI Agent 后端，计数器常用于限流（Rate Limiting）：单位时间内对某个 API Key 的调用次数，用 `INCR` + `EXPIRE` 可以极低成本实现滑动窗口计数。
+对于 AI Agent 后端，计数器常用于限流（Rate Limiting）：单位时间内对某个 API Key 的调用次数，固定窗口可用计数与 TTL 实现，但两条命令之间有失败窗口；需原子设置过期。精确滑动窗口需要时间事件或等价窗口状态，不能仅靠这两个命令的名称证明。
 
 ---
 
@@ -381,6 +381,28 @@ ZSet score 编码优先级 + 时间戳（`priority * 1e13 + timestamp`），`ZPO
 
 字典 rehash 是不同层次的问题。[Redis 7.2 dict.c 源码](https://github.com/redis/redis/blob/7.2/src/dict.c)中的实现保留旧、新哈希表与迁移进度，按步迁移桶；普通访问可推进迁移，查找在需要时考虑两表，完成后释放旧表。迁移一个桶仍可能遇到较长链，渐进不表示每次操作绝对常数或无停顿。具体行为随版本与暂停条件变化，也不能把 List、Stream 等所有类型都当成这个字典实现。
 
+## 单命令原子性、事务、Pipeline 与 Lua
+
+两个客户端各自读到计数 0，再分别 `SET 1`，最后仍为 1。Redis 将普通命令串行执行，并没有把两个客户端的“读—计算—写”合成一个原子操作。计数可优先用 [INCR](https://redis.io/docs/latest/commands/incr/)；条件判断与更新则需要符合业务边界的脚本或乐观校验。
+
+| 机制 | 提供什么 | 不能推出什么 |
+| --- | --- | --- |
+| 单条 INCR 等命令 | 该命令的不可交错操作 | 后续另一个命令也在同一原子边界 |
+| MULTI / EXEC | 一批已排队命令在 EXEC 时连续执行 | 任一运行期错误都会回滚整批 |
+| WATCH + EXEC | 被监视 key 改变时放弃本次执行 | 无限重试没有成本、读取总是新鲜 |
+| Pipeline | 批量发送，减少网络往返 | 一批命令不被其他客户端交错 |
+| Lua | 服务端脚本执行期间不与其他命令交错 | 出错自动撤销已写入数据、脚本可无限运行 |
+
+[Redis 事务文档](https://redis.io/docs/latest/develop/using-commands/transactions/)区分排队错误和执行期错误；后者不会自动撤销其他已执行命令。[Pipeline 文档](https://redis.io/docs/latest/develop/using-commands/pipelining/)讨论的是往返成本。[Lua 执行文档](https://redis.io/docs/latest/develop/programmability/eval-intro/)说明隔离执行会阻塞其他活动，因此脚本需要短小、有界，先检查参数再写入。Redis Cluster 的多 key 操作还受 hash slot 约束，不能把单实例例子直接当跨分片事务。
+
+对于 `INCR` 后设置过期的限流计数，进程若在两步之间崩溃，会留下没有 TTL 的 key。固定窗口计数可把首次计数与过期放到一段短脚本中；它仍是固定窗口，不能因为用了 EXPIRE 就称为精确滑动窗口。
+
+## Redis 6 的 I/O 线程与应用索引职责
+
+本节针对原题明确的 **Redis 6.0**：[官方 redis.conf](https://github.com/redis/redis/blob/6.0/redis.conf)将 I/O 线程用于网络读写处理，读取线程还需显式配置。普通命令执行并未因此变成多个线程随意并行改同一个 key。也不能说整个 Redis 进程只有一个线程：后台任务与版本差异需分别说明。
+
+基础 KV 类型没有 MySQL 那种自动维护的 SQL 二级索引。应用可用 [Set](https://redis.io/docs/latest/develop/data-types/sets/)保存满足某属性的对象 ID，用 [Sorted Set](https://redis.io/docs/latest/develop/data-types/sorted-sets/)保存按分值排序的 ID。这样的派生索引需要应用协调对象更新、成员增删、删除与过期；使用提供查询索引的组件又有另一套合同。这是基于数据类型操作语义的设计方式，不是 Redis 自动保证跨 key 一致性的承诺。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
@@ -393,6 +415,8 @@ ZSet score 编码优先级 + 时间戳（`priority * 1e13 + timestamp`），`ZPO
 - [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../../interview/bytedance/base/bytedance-base-47.md)
 - [字节 Agent 实习：生成质量、多智能体与缓存](../../../interview/bytedance/base/bytedance-base-52.md)
 - [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
+- [字节抖音电商 Agent 秋招三轮：AI Coding、数据与事实校验](../../../interview/bytedance/base/bytedance-base-57.md)
+- [字节 Agent 后端实习一面：任务恢复、事务与链表](../../../interview/bytedance/base/bytedance-base-59.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

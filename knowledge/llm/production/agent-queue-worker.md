@@ -78,6 +78,7 @@ Worker 取到消息后用条件更新获取租约：只有 queued、retrying 或
 
 <!-- interview-source-history:start -->
 - [腾讯微信支付 AI 软件工程一面（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-5.md)（cluster-ab43c892c4ed）
+- [字节 Agent 后端实习一面：任务恢复、事务与链表](../../../interview/bytedance/base/bytedance-base-59.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

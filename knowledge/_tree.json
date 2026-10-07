@@ -1124,7 +1124,10 @@
             "contentStatus": "published",
             "heat": 6,
             "currRank": 4,
-            "updatedAt": "2026-07-16"
+            "updatedAt": "2026-07-16",
+            "quickRead": {
+              "text": "上下文压缩在授权后选择相关片段、去重和分配 token，保留出处、限定词与反证。摘要是有损变换，需检查忠实度；大结果可层次汇总与按需取回原证据，不能把压缩后的流畅文字当作新增事实。"
+            }
           },
           {
             "label": "文档去重、近重复检测与规范化",
@@ -1255,7 +1258,7 @@
             "contentStatus": "published",
             "heat": 17,
             "currRank": 5,
-            "updatedAt": "2026-07-18",
+            "updatedAt": "2026-10-07",
             "interviewClusters": [
               "cluster-16e49722e8d7",
               "cluster-1b2940d40f2e",
@@ -1269,7 +1272,10 @@
               "cluster-9d9f0031dcd6",
               "cluster-c5c44d791f6e"
             ],
-            "interviewBaseHeat": 6
+            "interviewBaseHeat": 6,
+            "quickRead": {
+              "text": "记忆分当前工作上下文与跨会话长期信息，写入、检索和删除都需要主体、来源、版本及保留规则。mem0 等实现可帮助抽取和组织记忆，但召回或模型自评不证明事实，宿主仍负责授权、冲突更新和证据核验。"
+            }
           },
           {
             "label": "工具结果校验、解析与反馈",
@@ -1966,7 +1972,10 @@
             "interviewClusters": [
               "cluster-456378924c83",
               "cluster-de2ee20bc890"
-            ]
+            ],
+            "quickRead": {
+              "text": "AI 限流分别约束请求速率、token 预算、并发槽位和有界队列；准入估算与完成后的实际用量结算配合。多实例限流可用短 Lua 原子更新 Redis 状态，但仍需明确时钟、键作用域、过期、下游配额和拒绝策略。"
+            }
           },
           {
             "label": "Agent 威胁建模与安全测试",
@@ -2009,7 +2018,10 @@
             "interviewBaseHeat": 6,
             "interviewClusters": [
               "cluster-ab43c892c4ed"
-            ]
+            ],
+            "quickRead": {
+              "text": "Agent 长任务先保存 job 与通知，再由 Worker 取得有限租约执行；检查点和终态持久化后才确认消息。重投、租约过期、取消与未知副作用需要幂等和恢复合同，消息送达不等于业务恰好一次。"
+            }
           },
           {
             "label": "灰度、Canary 与模型版本发布",
@@ -2112,7 +2124,10 @@
             "contentStatus": "published",
             "heat": 6,
             "currRank": 4,
-            "updatedAt": "2026-07-16"
+            "updatedAt": "2026-07-16",
+            "quickRead": {
+              "text": "幂等把稳定业务意图、请求摘要和持久操作账本绑定在一起，让重复请求复用状态或结果。同 key 不同参数应拒绝；本地账本不能自动覆盖外部副作用，超时后的未知结果仍需下游幂等、查询或补偿。"
+            }
           },
           {
             "label": "Agent 结构化日志与上下文关联",
@@ -2541,7 +2556,10 @@
             "contentStatus": "published",
             "heat": 6,
             "currRank": 4,
-            "updatedAt": "2026-07-17"
+            "updatedAt": "2026-07-17",
+            "quickRead": {
+              "text": "游标分页先固定过滤与稳定全序，再用最后记录的完整排序元组作为下一页边界；唯一 tie-breaker 避免并列值歧义。游标绑定查询和授权，不能自动提供跨页快照，动态排序还需版本或一致性合同。"
+            }
           },
           {
             "label": "消息队列、异步任务与后台 Job",
@@ -2551,7 +2569,7 @@
             "contentStatus": "published",
             "heat": 9,
             "currRank": 5,
-            "updatedAt": "2026-10-02",
+            "updatedAt": "2026-10-07",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "队列用于可靠通知与缓冲，数据库保存任务真相，完成业务后再确认并用幂等处理重投。延时消息触发一次，TTL 与死信有时机限制；周期更新另需持久 schedule、周期身份和漏跑策略。"
@@ -2566,7 +2584,7 @@
             "contentStatus": "published",
             "heat": 5,
             "currRank": 4,
-            "updatedAt": "2026-07-18",
+            "updatedAt": "2026-10-07",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "SSE 在 HTTP 响应中以 text/event-stream 连续发送文本事件，空行结束事件，EventSource 增量接收并按规则重连。事件 ID 可帮助恢复位置，但服务端必须保留可重放数据；代理缓冲、心跳、鉴权和连接清理都影响可用性，重连本身不保证无丢失或无重复。"
@@ -2672,7 +2690,7 @@
             "contentStatus": "published",
             "heat": 23,
             "currRank": 5,
-            "updatedAt": "2026-10-02",
+            "updatedAt": "2026-10-07",
             "interviewBaseHeat": 10,
             "quickRead": {
               "text": "Cache-aside 以数据库为权威，读缓存未命中后回填，写数据库后失效缓存。TTL、失效通知和并发请求合并分别约束旧值、传播与负载，却不能保证跨层强一致或阻止旧请求回填；关键决策仍须在权威数据上校验，并设计失效失败的恢复路径。"
@@ -2741,7 +2759,7 @@
             "contentStatus": "published",
             "heat": 10,
             "currRank": 5,
-            "updatedAt": "2026-08-29",
+            "updatedAt": "2026-10-07",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "事务与隔离控制并发可见性和冲突，锁的范围取决于引擎、索引、语句与隔离级别。undo、redo、binlog 各服务不同层；不能用“开事务”概括所有持久、复制或跨库保证。"
@@ -2795,7 +2813,7 @@
             "contentStatus": "published",
             "heat": 10,
             "currRank": 5,
-            "updatedAt": "2026-07-18",
+            "updatedAt": "2026-10-07",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "Redis 数据类型按操作语义选择：String 存值与计数，Hash 组织字段，List 保留序列，Set 去重，Sorted Set 按分值排序。原子命令只保证各自操作，跨命令流程仍需并发控制；内存和延迟取决于数据规模、编码与命令复杂度，不能只按类型名称判断。Streams 的 PEL 保存未确认分派，XACK/接管配合幂等恢复；字典渐进 rehash 与这些业务语义属于不同层。"
@@ -2810,7 +2828,7 @@
             "contentStatus": "published",
             "heat": 3,
             "currRank": 3,
-            "updatedAt": "2026-07-18",
+            "updatedAt": "2026-10-07",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "按访问模式选分片键，以范围、哈希或租户分散数据和热点。分片引入跨片查询、事务、迁移和路由成本，先评估索引、归档和现有容量，不因表大就立即拆分。"
@@ -3244,7 +3262,10 @@
             "contentStatus": "published",
             "heat": 6,
             "currRank": 4,
-            "updatedAt": "2026-07-17"
+            "updatedAt": "2026-07-17",
+            "quickRead": {
+              "text": "向量库按固定 embedding 版本与距离检索，精确搜索是基线，HNSW/IVF 等近似索引以召回损失换速度。过滤、更新可见性和向量元数据一致性属于查询合同；高相似度不等于事实成立或已获授权。"
+            }
           },
           {
             "label": "索引、执行计划与查询优化",
@@ -3587,7 +3608,7 @@
             "contentStatus": "published",
             "heat": 11,
             "currRank": 5,
-            "updatedAt": "2026-07-18",
+            "updatedAt": "2026-10-07",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "进程承载地址空间与资源，线程是进程内的执行单元并共享内存，协程可由运行时挂起和恢复以复用线程。共享状态需要同步，协程遇到阻塞调用或长计算仍可能占住所在线程；并发等待不等于多核并行，协程的调度方式也取决于运行时。"
@@ -3693,7 +3714,7 @@
             "contentStatus": "published",
             "heat": 15,
             "currRank": 5,
-            "updatedAt": "2026-10-03",
+            "updatedAt": "2026-10-07",
             "interviewBaseHeat": 10,
             "quickRead": {
               "text": "哈希表按哈希定位并处理碰撞，复杂度依分布与扩容；交集还要明确唯一或重复计数，Bitmap 依赖有界值域。Java HashMap 遍历删除应遵守迭代器契约，fail-fast 只尽力检测错误，不能替代并发同步；无界流的精确历史也不能凭分批获得固定内存。"
@@ -3753,7 +3774,7 @@
             "contentStatus": "published",
             "heat": 8,
             "currRank": 5,
-            "updatedAt": "2026-07-17",
+            "updatedAt": "2026-10-07",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "排序比较稳定性、复杂度、内存和数据访问方式；分块排序还需证明跨块顺序。LC768 允许重复值，可用单调栈合并逆序块，不能套排列版的前缀最大值条件。"

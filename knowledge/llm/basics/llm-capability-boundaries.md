@@ -80,6 +80,7 @@ $$
 - [哔哩哔哩 AI 应用岗 Agent 开发一面（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-1.md)
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
 - [字节 Agent 实习：生成质量、多智能体与缓存](../../../interview/bytedance/base/bytedance-base-52.md)
+- [字节抖音电商 Agent 秋招三轮：AI Coding、数据与事实校验](../../../interview/bytedance/base/bytedance-base-57.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

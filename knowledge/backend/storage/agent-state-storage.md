@@ -137,6 +137,7 @@ Agent 状态存储通过明确边界获得可恢复性：Thread 组织上下文�
 - [字节抖音电商 Agent 一面：分层、上下文与 GRPO（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-21.md)
 - [字节全栈：多智能体导购、客户端与系统评测](../../../interview/bytedance/base/bytedance-base-43.md)
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../../interview/bytedance/base/bytedance-base-48.md)
+- [字节抖音电商 Agent 秋招三轮：AI Coding、数据与事实校验](../../../interview/bytedance/base/bytedance-base-57.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

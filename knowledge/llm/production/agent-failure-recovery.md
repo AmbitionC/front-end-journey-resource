@@ -80,6 +80,7 @@ Trace 记录 operation ID、attempt、错误类别、sideEffectState、backoff�
 - [快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-3.md)
 - [淘宝闪购 Agent 算法一面：框架选型、人工接管与线上安全（2026 年 4 月）](../../../interview/alibaba/ai/alibaba-ai-6.md)
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
+- [字节 Agent 后端实习一面：任务恢复、事务与链表](../../../interview/bytedance/base/bytedance-base-59.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

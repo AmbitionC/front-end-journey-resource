@@ -265,6 +265,14 @@ memory_tool.execute("forget", strategy="capacity_based", threshold=policy.capaci
 
 ---
 
+## mem0 在记忆链路中承担哪一段
+
+mem0 是记忆管理方案的一种实现；[Add Memory 文档](https://docs.mem0.ai/core-concepts/memory-operations/add)描述从输入消息提取、处理和保存记忆的路径。它不等于把整段聊天历史原样追加给下一次模型调用，也不自动给任意生成事实盖章。
+
+使用时先定义属于哪个主体、允许记什么、事实依据是什么，再决定抽取、更新和检索。框架接收的 user/session 标识必须由宿主认证与授权，不可相信模型自报“这是另一个用户的记忆”。同一个事实的新旧版本、冲突、过期、删除与备份保留仍需业务规则；索引召回和模型评分是候选信号，不能替代来源核验。
+
+可用一组固定对话检查：同一偏好更新后是否仍召回旧值、两个用户能否互见、无依据断言是否被持久化、删除是否同步到派生索引。这里给的是宿主验收方法，没有声称已经部署或压测 mem0，也没有把原帖作者的项目当作实现证据。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
@@ -279,6 +287,7 @@ memory_tool.execute("forget", strategy="capacity_based", threshold=policy.capaci
 - [字节飞书 AI 应用一面：Runtime、评测与后端基础（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-24.md)（cluster-78d45fa26bfd）
 - [阿里 Agent 开发暑期实习一面（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-2.md)（cluster-9d9f0031dcd6）
 - [哔哩哔哩 AI 应用岗 Agent 开发一面（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-1.md)（cluster-c5c44d791f6e）
+- [字节 Agent 后端实习一面：任务恢复、事务与链表](../../../interview/bytedance/base/bytedance-base-59.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

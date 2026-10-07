@@ -347,6 +347,37 @@ SELECT * FROM performance_schema.data_locks;
 
 MySQL redo 与 binlog 的内部协调涉及特定引擎实现，不等于完整外部 XA 的所有角色；也不能把 prepare/commit 两词直接套在所有消息发送流程上。回答前先澄清讨论的是数据库内部提交，还是跨多个资源的全局事务，再展开该范围的故障过程。
 
+### 2PC 与 TCC：准备的到底是什么
+
+![两条并排流程分别展示 XA 资源 Prepare、保存决策、通知重试与最终提交，以及 TCC 业务 Try、Confirm 或 Cancel 决策、幂等重试与确认或释放](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/db-transaction-tcc-recovery-v1.png)
+
+*图：两者都需要可恢复的第二阶段；上路准备的是事务资源，下路预留的是业务资源。超时不证明某一步没有发生。*
+
+2PC 是原子提交协议；XA 是资源管理器与事务管理器交互的一种接口体系。TCC 把类似两阶段协作落在业务接口上，参与方实现 Try、Confirm、Cancel，而不是让数据库自动回滚所有跨服务动作。[Seata v2.6 TCC 文档](https://seata.apache.org/docs/user/mode/tcc/)说明这种服务层实现及其侵入性。它们也不自动保证所有读者在同一时刻看到全局变化。
+
+| 问题 | 资源层 2PC / XA | 业务 TCC |
+| --- | --- | --- |
+| 第一阶段 | 分支保存 prepared 状态并报告可否提交 | Try 检查并持久预留资源 |
+| 第二阶段 | 依据协调器决策 commit / rollback | Confirm 确认使用；Cancel 释放预留 |
+| 资源代价 | prepared 分支可能继续持锁 | 业务可通过预留记录限制资源使用 |
+| 恢复责任 | 持久决议、分支查询与结束待决事务 | 幂等、空回滚、晚到 Try、预留清理与对账 |
+
+例如跨两个服务预留设备和场地：Try 在各自的本地事务中扣减可用容量并记录 `(globalId, branchId)` 的预留。全体预留成功后协调器保存 Confirm 决策，各分支把预留变成正式占用；任一 Try 失败则决定 Cancel，各分支释放已有预留。Try 已成功但响应丢失时，查询分支状态，不能因为客户端超时就再扣一次容量。这是教学设计案例，不代表某个面试项目或 Seata 默认实现。
+
+TCC 的三个恢复坑是：
+
+- **重复 Confirm / Cancel**：同一分支的终态与资源变更在同一本地事务保存；重试返回已确认结果，不能再占用或释放一次。
+- **空回滚**：Cancel 到达但 Try 尚未成功，不能凭空增加可用容量；保存取消屏障，表示这个分支不得再预留。
+- **悬挂**：晚到 Try 在 Cancel 之后到达。它必须检查持久屏障并拒绝，避免资源永久预留；检查和预留需要同一本地并发控制边界。
+
+[Seata 的 TCC fence 文章](https://seata.apache.org/blog/seata-tcc-fence/)用分支记录演示这三类问题，文章对应 1.5.1，不应照抄其中默认开关当今天所有版本的行为。本文说明的是恢复不变量，具体框架配置必须按部署版本核对。
+
+对于 2PC，协调器或网络失联后，已 prepared 的参与方可能等待最终决策；[PostgreSQL 17 PREPARE TRANSACTION](https://www.postgresql.org/docs/17/sql-prepare-transaction.html)明确提示 prepared 事务继续持锁。监控待决年龄、保存唯一决策并安排恢复，不能靠一个请求超时就断言全局回滚。
+
+Agent 发起多个跨系统工具调用时，先确认对方是否实际支持 XA 或业务 TCC。不能给任意 HTTP 接口包装三个函数就宣称原子事务。邮件等不可撤销效果可能需要 Saga 式补偿、人工复核或重新定义业务成功合同；持久状态和幂等是配套机制，不等于补上了协议能力。
+
+教学验证可以模拟：Try 成功但应答丢失、重复 Confirm、Cancel 先到、晚到 Try、协调器保存决策后崩溃。检查容量守恒、一个分支只有一个终态、取消后不再预留。这里没有运行多服务数据库故障实验，不把设计断言记成生产验证。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
@@ -359,6 +390,8 @@ MySQL redo 与 binlog 的内部协调涉及特定引擎实现，不等于完整�
 - [蚂蚁 Agent 实习一面：缓存、消息与 RAG（2026 年 6 月发帖）](../../../interview/antfin/ai/antfin-ai-6.md)
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
 - [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
+- [字节抖音电商 Agent 秋招三轮：AI Coding、数据与事实校验](../../../interview/bytedance/base/bytedance-base-57.md)
+- [字节 Agent 后端实习一面：任务恢复、事务与链表](../../../interview/bytedance/base/bytedance-base-59.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

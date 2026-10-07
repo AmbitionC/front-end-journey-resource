@@ -296,8 +296,9 @@ async streamWithResume(@Req() req: Request, @Res() res: Response) {
 
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache');
-  res.setHeader('retry', '3000'); // 建议重连间隔 3 秒
   res.flushHeaders();
+
+  res.write('retry: 3000\n\n'); // SSE 正文字段，不是 HTTP retry 响应头
 
   // 从 startFromId 处开始补发历史消息（适用于通知/日志场景）
   const missedEvents = await this.eventStore.getFrom(startFromId);
@@ -309,9 +310,13 @@ async streamWithResume(@Req() req: Request, @Res() res: Response) {
 }
 ```
 
-> LLM 流式输出通常**不需要断点续传**——用户重连后重新发起请求即可；断点续传更适合通知系统、日志流等有持久化存储的场景。
+> 重建连接和重做任务分开设计。纯展示型生成可按产品合同重发；涉及下单、工具副作用或长任务时，先按 taskId 查询持久状态并恢复事件，不能因为 SSE 断流就重新执行动作。Last-Event-ID 只传游标，服务端仍需保留并授权回放事件；游标过旧时返回快照后接续。
 
 ---
+
+### 心跳、慢消费者与清理
+
+心跳可发送 `: heartbeat\n\n` 这样的注释帧，频率按代理与产品超时配置确定；它不代表任务完成，也不替代应用级结果校验。写入遭遇背压时限制待发队列，监听连接关闭并清理订阅与心跳，避免慢客户端积压无限事件。断开是否取消任务须由任务合同决定，不能把关闭响应对象直接当作取消成功。
 
 ## Nginx 反向代理配置
 
@@ -354,7 +359,7 @@ server {
 
 在 AI Agent 服务中，SSE 不只是"打字机效果"的实现手段，它直接影响用户对 Agent 智能程度的感知：
 
-- **思考过程可视化**：通过 `event: thought` 实时推送 Agent 的规划步骤，让用户知道 Agent 在"想什么"，降低焦虑感
+- **安全的阶段进度**：推送任务阶段、已完成单位和经过处理的行动摘要，不把模型内部思维链作为业务事件或审计合同
 - **工具调用实时反馈**：`event: tool_call` 和 `event: tool_result` 让用户看到 Agent 正在调用哪些工具、获得了什么结果，提升透明度
 - **长任务进度汇报**：对于需要多步骤执行的 Agent 任务（如代码生成、数据分析），SSE 可以实时汇报每个阶段的完成情况，而不是让用户盯着转圈圈等待
 - **错误提前感知**：若某个工具调用失败，可立即通过 `event: error` 推送，前端及时展示局部错误，无需等待整个任务结束
@@ -434,6 +439,7 @@ HTTP/2 原生支持多路复用，多个 SSE 流可以在同一个 TCP 连接上
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-26.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信（2026 年 3 月发帖）](../../../interview/tencent/ai/tencent-ai-10.md)
 - [字节剪映 AI 前端一面：Agent 运行时、MCP 与性能](../../../interview/bytedance/base/bytedance-base-30.md)
+- [字节 Agent 开发一面：权限、SSE 与 Python 字典](../../../interview/bytedance/base/bytedance-base-58.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

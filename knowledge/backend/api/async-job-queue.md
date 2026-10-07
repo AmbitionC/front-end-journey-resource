@@ -110,6 +110,20 @@ RabbitMQ 的 TTL 限制消息存活期，死信交换机路由过期、拒收等
 
 若需求是“每 30 天更新”，先确定固定时长还是按日历周期，再保存 scheduleId、nextRunAt 和已生成周期。持久调度器查到期任务，生成带 periodId 的幂等 Job；成功或按约定失败策略推进下一期。漏跑如何补、重复扫描如何去重、远端故障如何恢复，都属于周期合同。仅一条 30 天延时消息没有表达下一周期和恢复规则。
 
+## Kafka：吞吐优化与三段可靠性
+
+Kafka 的吞吐来自追加日志、分区并行、批量请求与批量压缩等组合，代价包括等待批次和资源开销。[Kafka 4.1 设计文档](https://kafka.apache.org/41/design/design/)还解释了 page cache 和 sendfile 路径；启用 SSL 时不能照搬这一零拷贝路径。吞吐最终取决于消息大小、分区分布、复制、磁盘、网络和消费处理速度，不能只背“顺序写所以快”。
+
+把异步回调交给 Kafka 时，分别检查三段责任：
+
+1. **业务到生产者**：先在业务本地事务写 outbox，发布器可恢复地发送；只在内存里调用 send 后进程退出，消息可能尚未到 Broker。
+2. **生产者到 Broker**：按故障模型选择确认与副本。例如复制因子 3、`min.insync.replicas=2`、`acks=all` 是一种明确的耐故障配置组合，不能保证所有副本同时丢失后仍恢复。`acks=all` 等待的是当时 ISR，不是永远等全部配置副本；开启 producer idempotence 可约束同一生产者重试造成的重复写入。
+3. **消费者到业务结果**：同一数据库事务保存事件 ID 去重账本和业务变更，再提交该分区的下一消费 offset。提交后、offset 提交前崩溃会重放，账本吸收重复；先提交 offset 再落业务结果会产生丢失窗口。
+
+确认与幂等条件见[Producer 配置](https://kafka.apache.org/41/configuration/producer-configs/#acks)和[Topic 的 ISR 配置](https://kafka.apache.org/41/configuration/topic-configs/#min.insync.replicas)。[Consumer 配置](https://kafka.apache.org/41/configuration/consumer-configs/#enable.auto.commit)说明自动提交消费位置；异步处理不能让自动提交越过尚未完成的消息。一个分区内并行执行时，只推进**连续已完成**位置，不能用“最大已完成 offset”跳过中间失败事件。
+
+外部 HTTP 副作用不在消费账本的本地事务中，要另用下游幂等、查询或补偿。Kafka 内的事务与 producer idempotence 都不能自动把任意外部系统纳入同一原子提交。回调事件流用于通知，持久任务结果仍是客户端查询的事实。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
@@ -121,6 +135,9 @@ RabbitMQ 的 TTL 限制消息存活期，死信交换机路由过期、拒收等
 - [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
 - [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
 - [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../../interview/bytedance/base/bytedance-base-47.md)
+- [字节抖音电商 Agent 秋招三轮：AI Coding、数据与事实校验](../../../interview/bytedance/base/bytedance-base-57.md)
+- [字节 Agent 开发一面：权限、SSE 与 Python 字典](../../../interview/bytedance/base/bytedance-base-58.md)
+- [字节 Agent 后端实习一面：任务恢复、事务与链表](../../../interview/bytedance/base/bytedance-base-59.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

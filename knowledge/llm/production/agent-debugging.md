@@ -142,4 +142,5 @@ Agent 调试是一门复现实验：定义失败、冻结快照、还原因果�
 
 <!-- interview-source-history:start -->
 - [字节剪映 AI 前端一面：Agent 运行时、MCP 与性能](../../../interview/bytedance/base/bytedance-base-30.md)
+- [字节抖音电商 Agent 秋招三轮：AI Coding、数据与事实校验](../../../interview/bytedance/base/bytedance-base-57.md)
 <!-- interview-source-history:end -->

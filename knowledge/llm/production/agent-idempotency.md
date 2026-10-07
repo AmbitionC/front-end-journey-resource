@@ -76,6 +76,12 @@ Key 唯一范围至少包含 principal/tenant 和 operation，防止不同用户
 
 幂等性是一份服务端契约：调用方用稳定 key 表达同一意图，服务以原子账本接管一次执行，重复请求读取进行中或语义结果，相同 key 的不同意图明确拒绝。跨服务时把 operation ID 贯穿下游并对账，才能让 Agent 的重试和恢复不制造第二次副作用。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 开发一面：权限、SSE 与 Python 字典](../../../interview/bytedance/base/bytedance-base-58.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [RFC 9110 — Idempotent Methods](https://www.rfc-editor.org/rfc/rfc9110.html#section-9.2.2)

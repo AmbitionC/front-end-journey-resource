@@ -564,6 +564,24 @@
             "key": "bytedance-base-56",
             "isLeaf": true,
             "filePath": "bytedance/base"
+          },
+          {
+            "label": "字节抖音电商 Agent 秋招三轮：AI Coding、数据与事实校验",
+            "key": "bytedance-base-57",
+            "isLeaf": true,
+            "filePath": "bytedance/base"
+          },
+          {
+            "label": "字节 Agent 开发一面：权限、SSE 与 Python 字典",
+            "key": "bytedance-base-58",
+            "isLeaf": true,
+            "filePath": "bytedance/base"
+          },
+          {
+            "label": "字节 Agent 后端实习一面：任务恢复、事务与链表",
+            "key": "bytedance-base-59",
+            "isLeaf": true,
+            "filePath": "bytedance/base"
           }
         ]
       }
