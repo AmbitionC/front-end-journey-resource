@@ -100,7 +100,6 @@ RAG 权限是一项端到端不变量：可信身份产生服务端策略，策�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 Agent 二面：RAG 分块、查询改写与随机采样](../../../interview/bytedance/base/bytedance-base-28.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

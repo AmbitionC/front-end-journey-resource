@@ -42,7 +42,7 @@
 
 关键词与向量各自召回候选，先按稳定文档或块 ID 去重，再融合排名，最后用重排器细化相关性。不同检索器的原始分数不能默认相加；重排无法补回候选池中不存在的证据，要分别评测召回、排序、答案及延迟。 [Elasticsearch：融合不同检索器的排名](https://www.elastic.co/docs/reference/elasticsearch/rest-apis/reciprocal-rank-fusion)。
 
-<details data-knowledge-key="rag-access-control">
+<details data-knowledge-key="rag-pipeline">
 <summary>（8）企业级 RAG 与学习 Demo 有什么区别？</summary>
 </details>
 

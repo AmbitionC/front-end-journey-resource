@@ -1013,14 +1013,14 @@
             "isLeaf": true,
             "filePath": "llm/rag",
             "contentStatus": "published",
-            "heat": 7,
+            "heat": 6,
             "currRank": 4,
             "updatedAt": "2026-07-15",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "RAG 权限要沿文档、分块、索引、缓存和上下文的派生链保持一致。服务端依据当前主体与策略限制检索范围，撤权和删除也须传播到派生数据；模型承诺保密、客户端租户参数或最终答案过滤都不能代替检索前授权。"
             },
-            "interviewCount": 1,
+            "interviewCount": 0,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1501,7 +1501,10 @@
             "updatedAt": "2026-07-16",
             "interviewBaseHeat": 6,
             "interviewCount": 3,
-            "interviewCountBasis": "verified-public-posts"
+            "interviewCountBasis": "verified-public-posts",
+            "quickRead": {
+              "text": "Agent 状态机用状态、事件、Guard 与 Action 说明行为边界。Guard 保持纯且可重放，状态实例隔离，迁移按版本提交；副作用通过 Outbox 与幂等键执行，迟到结果、重复事件和恢复都要有明确策略。"
+            }
           },
           {
             "label": "工具超时、取消与重试",

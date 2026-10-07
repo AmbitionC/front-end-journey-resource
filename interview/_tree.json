@@ -1655,7 +1655,7 @@
             "role": "Agent开发"
           },
           {
-            "label": "小红书 Agent 开发一面：LangGraph 子图、Skill 进化与工程校验（2026 年 8 月）",
+            "label": "小红书与百度 Agent 面试合并记录：LangGraph 子图、Skill 与工程校验（2026 年 8 月发帖）",
             "key": "redbook-ai-2",
             "isLeaf": true,
             "filePath": "redbook/ai",
@@ -1663,12 +1663,18 @@
               "Agent",
               "LangGraph",
               "Skill",
-              "工程校验"
+              "工程校验",
+              "百度"
             ],
             "updatedAt": "2026-08-26",
             "department": "其他",
             "roleCategory": "Agent 与 AI 应用",
-            "role": "Agent 开发"
+            "role": "Agent 开发",
+            "companies": [
+              "小红书",
+              "百度"
+            ],
+            "contentFormat": "short-qa-v2"
           }
         ]
       }
