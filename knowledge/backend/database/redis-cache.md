@@ -299,6 +299,19 @@ flowchart LR
 - **L1 的通知连接断开，但缓存还没过期，继续返回吗？** 按一致性合同清理或降级，不能假设断线期间没有变更。
 - **开启 AOF everysec，能把 Redis 当付款事实源吗？** 要看丢失窗口、故障切换、事务和对账要求；配置名称本身不给零丢失或跨 DB 一致保证。
 
+## 内存淘汰与过期分别回答
+
+TTL 定义 key 的过期时刻，内存淘汰在 maxmemory 压力下选择对象；两者不是同一个机制。[Redis Key eviction](https://redis.io/docs/latest/develop/reference/eviction/)列出策略及近似 LRU/LFU 的边界。
+
+| 策略族 | 候选范围或动作 | 选择时问什么 |
+| --- | --- | --- |
+| noeviction | 超限时拒绝需要额外内存的写入 | 是否能接受写失败、怎样降级 |
+| allkeys-lru / allkeys-lfu / allkeys-random | 全部 key 中按所选策略淘汰 | 数据是否可重建、热点如何变化 |
+| volatile-lru / volatile-lfu / volatile-random | 仅设置了过期的 key | 没有可淘汰候选时如何处理 |
+| volatile-ttl | 带过期的 key 中偏向较短剩余 TTL | 剩余时间是否反映业务价值 |
+
+LRU 看最近访问，LFU 看频率并衰减；Redis 使用采样与近似信息，不维护教科书里每次访问都更新的全量双向链表。FIFO 是另一种通用替换算法，不能因此说 Redis 配置里有对应的 FIFO 淘汰开关。策略没有通用最优解，要比较真实命中率、回源压力和热点迁移；幂等账本、授权事实等不可随意淘汰的数据不应只依赖可逐出缓存保存。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
@@ -315,6 +328,8 @@ flowchart LR
 - [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../../interview/bytedance/base/bytedance-base-47.md)
 - [字节 Agent 实习：生成质量、多智能体与缓存](../../../interview/bytedance/base/bytedance-base-52.md)
 - [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
+- [字节抖音电商 Agent 秋招三轮：AI Coding、数据与事实校验](../../../interview/bytedance/base/bytedance-base-57.md)
+- [字节 Agent 开发一面：权限、SSE 与 Python 字典](../../../interview/bytedance/base/bytedance-base-58.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

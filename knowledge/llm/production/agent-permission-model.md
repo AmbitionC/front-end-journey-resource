@@ -81,6 +81,7 @@ Agent 权限来自受信任策略，而不是提示词。把每次动作建模�
 - [淘宝闪购 Agent 算法一面：框架选型、人工接管与线上安全（2026 年 4 月）](../../../interview/alibaba/ai/alibaba-ai-6.md)
 - [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
 - [字节全栈实习：Session、权限与前端基础](../../../interview/bytedance/base/bytedance-base-46.md)
+- [字节 Agent 开发一面：权限、SSE 与 Python 字典](../../../interview/bytedance/base/bytedance-base-58.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

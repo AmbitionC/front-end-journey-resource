@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
-  "updatedAt": "2026-10-05",
+  "updatedAt": "2026-10-07",
   "records": [
     {
       "key": "transformer-arch",
@@ -1446,29 +1446,39 @@
       "key": "async-job-queue",
       "label": "消息队列、异步任务与后台 Job",
       "filePath": "backend/api",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004",
+      "recordedAt": "2026-10-07",
+      "batch": "strict-agent-three-20261007",
+      "reason": "补充本批真实原题涉及的机制与版本边界；隔离待审，未发布。",
       "previousRecord": {
         "key": "async-job-queue",
         "label": "消息队列、异步任务与后台 Job",
         "filePath": "backend/api",
         "status": "published",
-        "action": "created",
-        "recordedAt": "2026-07-17",
-        "batch": "agent-platform-backend-next-20-2026-07-17"
-      },
-      "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
-      "publication": {
-        "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
-        "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
-        "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
-        "syncConclusion": "success"
-      },
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+        "action": "updated",
+        "recordedAt": "2026-10-04",
+        "batch": "next-twenty-source-increments-20261004",
+        "previousRecord": {
+          "key": "async-job-queue",
+          "label": "消息队列、异步任务与后台 Job",
+          "filePath": "backend/api",
+          "status": "published",
+          "action": "created",
+          "recordedAt": "2026-07-17",
+          "batch": "agent-platform-backend-next-20-2026-07-17"
+        },
+        "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
+        "publication": {
+          "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
+          "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
+          "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
+          "syncConclusion": "success"
+        },
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     },
     {
       "key": "grpc-basics",
@@ -1747,13 +1757,23 @@
       "key": "algorithm-sorting",
       "label": "排序算法、稳定性与外部排序",
       "filePath": "cs/algorithm",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004",
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+      "recordedAt": "2026-10-07",
+      "batch": "strict-agent-three-20261007",
+      "reason": "补充本批真实原题涉及的机制与版本边界；隔离待审，未发布。",
+      "previousRecord": {
+        "key": "algorithm-sorting",
+        "label": "排序算法、稳定性与外部排序",
+        "filePath": "cs/algorithm",
+        "status": "published",
+        "action": "updated",
+        "recordedAt": "2026-10-04",
+        "batch": "next-twenty-source-increments-20261004",
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     },
     {
       "key": "algorithm-graph",
@@ -2037,8 +2057,18 @@
       "filePath": "llm/agent",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-10-07",
+      "batch": "strict-agent-three-20261007",
+      "reason": "补充本批真实原题涉及的机制与版本边界；隔离待审，未发布。",
+      "previousRecord": {
+        "key": "agent-memory",
+        "label": "短期记忆、长期记忆与检索",
+        "filePath": "llm/agent",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-07-18",
+        "batch": "complete-remaining-91-2026-07-18"
+      }
     },
     {
       "key": "build-agent-framework",
@@ -2282,8 +2312,18 @@
       "filePath": "backend/api",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-10-07",
+      "batch": "strict-agent-three-20261007",
+      "reason": "补充本批真实原题涉及的机制与版本边界；隔离待审，未发布。",
+      "previousRecord": {
+        "key": "sse-server",
+        "label": "SSE 服务端推送与连接管理",
+        "filePath": "backend/api",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-07-18",
+        "batch": "complete-remaining-91-2026-07-18"
+      }
     },
     {
       "key": "mysql-index",
@@ -2317,37 +2357,57 @@
       "key": "db-transaction-lock",
       "label": "事务、隔离级别与锁",
       "filePath": "backend/database",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004",
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+      "recordedAt": "2026-10-07",
+      "batch": "strict-agent-three-20261007",
+      "reason": "补充本批真实原题涉及的机制与版本边界；隔离待审，未发布。",
+      "previousRecord": {
+        "key": "db-transaction-lock",
+        "label": "事务、隔离级别与锁",
+        "filePath": "backend/database",
+        "status": "published",
+        "action": "updated",
+        "recordedAt": "2026-10-04",
+        "batch": "next-twenty-source-increments-20261004",
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     },
     {
       "key": "redis-cache",
       "label": "Redis 缓存策略与一致性",
       "filePath": "backend/database",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-02",
-      "batch": "nowcoder-byte-campus-pilot-10-20261002",
+      "recordedAt": "2026-10-07",
+      "batch": "strict-agent-three-20261007",
+      "reason": "补充本批真实原题涉及的机制与版本边界；隔离待审，未发布。",
       "previousRecord": {
         "key": "redis-cache",
         "label": "Redis 缓存策略与一致性",
         "filePath": "backend/database",
-        "status": "pending",
+        "status": "published",
         "action": "updated",
-        "recordedAt": "2026-07-18",
-        "batch": "complete-remaining-91-2026-07-18"
-      },
-      "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
-      "publication": {
-        "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
-        "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
-        "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
-        "syncConclusion": "success"
+        "recordedAt": "2026-10-02",
+        "batch": "nowcoder-byte-campus-pilot-10-20261002",
+        "previousRecord": {
+          "key": "redis-cache",
+          "label": "Redis 缓存策略与一致性",
+          "filePath": "backend/database",
+          "status": "pending",
+          "action": "updated",
+          "recordedAt": "2026-07-18",
+          "batch": "complete-remaining-91-2026-07-18"
+        },
+        "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
+        "publication": {
+          "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
+          "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
+          "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
+          "syncConclusion": "success"
+        }
       }
     },
     {
@@ -2363,13 +2423,23 @@
       "key": "redis-data-structure",
       "label": "Redis 数据结构与使用场景",
       "filePath": "backend/database",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004",
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+      "recordedAt": "2026-10-07",
+      "batch": "strict-agent-three-20261007",
+      "reason": "补充本批真实原题涉及的机制与版本边界；隔离待审，未发布。",
+      "previousRecord": {
+        "key": "redis-data-structure",
+        "label": "Redis 数据结构与使用场景",
+        "filePath": "backend/database",
+        "status": "published",
+        "action": "updated",
+        "recordedAt": "2026-10-04",
+        "batch": "next-twenty-source-increments-20261004",
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     },
     {
       "key": "db-sharding",
@@ -2377,8 +2447,18 @@
       "filePath": "backend/database",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-10-07",
+      "batch": "strict-agent-three-20261007",
+      "reason": "补充本批真实原题涉及的机制与版本边界；隔离待审，未发布。",
+      "previousRecord": {
+        "key": "db-sharding",
+        "label": "分库分表、读写分离与扩展",
+        "filePath": "backend/database",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-07-18",
+        "batch": "complete-remaining-91-2026-07-18"
+      }
     },
     {
       "key": "jwt-auth",
@@ -2711,8 +2791,18 @@
       "filePath": "cs/os",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-10-07",
+      "batch": "strict-agent-three-20261007",
+      "reason": "补充本批真实原题涉及的机制与版本边界；隔离待审，未发布。",
+      "previousRecord": {
+        "key": "os-process-thread",
+        "label": "进程、线程与协程",
+        "filePath": "cs/os",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-07-18",
+        "batch": "complete-remaining-91-2026-07-18"
+      }
     },
     {
       "key": "os-virtual-memory",
@@ -2802,13 +2892,23 @@
       "key": "algorithm-hash",
       "label": "哈希表、缓存与去重",
       "filePath": "data-structure/algorithm",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-03",
-      "batch": "interview-content-local-20261003",
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+      "recordedAt": "2026-10-07",
+      "batch": "strict-agent-three-20261007",
+      "reason": "补充本批真实原题涉及的机制与版本边界；隔离待审，未发布。",
+      "previousRecord": {
+        "key": "algorithm-hash",
+        "label": "哈希表、缓存与去重",
+        "filePath": "data-structure/algorithm",
+        "status": "published",
+        "action": "updated",
+        "recordedAt": "2026-10-03",
+        "batch": "interview-content-local-20261003",
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     },
     {
       "key": "algorithm-tree",

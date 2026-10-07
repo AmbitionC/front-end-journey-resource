@@ -130,6 +130,7 @@ function trapRainGrid(grid) {
 <!-- interview-source-history:start -->
 - [淘天 AI 应用研发一面：RAG、限流 Top-K 与优惠策略设计（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-5.md)
 - [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
+- [字节 Agent 开发一面：权限、SSE 与 Python 字典](../../../interview/bytedance/base/bytedance-base-58.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

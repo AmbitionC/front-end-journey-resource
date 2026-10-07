@@ -122,6 +122,9 @@ function reverseKGroup(head, k) {
 - [字节Agent全栈一面：工具、评测与编码](../../../interview/bytedance/base/bytedance-base-40.md)
 - [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../../interview/bytedance/base/bytedance-base-47.md)
 - [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
+- [字节抖音电商 Agent 秋招三轮：AI Coding、数据与事实校验](../../../interview/bytedance/base/bytedance-base-57.md)
+- [字节 Agent 开发一面：权限、SSE 与 Python 字典](../../../interview/bytedance/base/bytedance-base-58.md)
+- [字节 Agent 后端实习一面：任务恢复、事务与链表](../../../interview/bytedance/base/bytedance-base-59.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

@@ -58,7 +58,7 @@ evtSource.addEventListener('message', (e: MessageEvent) => {
   appendToUI(payload.text);
 });
 
-// 监听自定义 event 类型（如 Agent 思考步骤）
+// 监听自定义 event 类型（如经过处理的 Agent 阶段摘要）
 evtSource.addEventListener('thought', (e: MessageEvent) => {
   const thought = JSON.parse(e.data) as { step: string; content: string };
   renderThoughtBubble(thought);
@@ -71,14 +71,16 @@ evtSource.addEventListener('done', () => {
 });
 
 evtSource.addEventListener('error', (e: Event) => {
-  if (evtSource.readyState === EventSource.CLOSED) {
-    console.warn('连接已关闭，浏览器将按 retry 间隔自动重连');
+  if (evtSource.readyState === EventSource.CONNECTING) {
+    console.warn('连接暂时中断，浏览器正在按重连规则尝试恢复');
+  } else if (evtSource.readyState === EventSource.CLOSED) {
+    console.warn('连接已终止，浏览器不再自动重连');
   }
 });
 ```
 
 `EventSource` 的关键特性：
-- **自动重连**：连接断开后浏览器自动重连，默认间隔约 3 秒，可由 `retry:` 字段覆盖
+- **状态与重连**：`CONNECTING` 表示首次连接或正在重连；`CLOSED` 表示不再尝试重连（如主动 `close()` 或终止性失败）。初始重连间隔由浏览器实现定义，合法的 `retry:` 字段可修改它；不能把所有断开都当成会重连。参见 [WHATWG EventSource 状态定义](https://html.spec.whatwg.org/multipage/server-sent-events.html#the-eventsource-interface)。
 - **Last-Event-ID 续传**：重连请求自动携带 `Last-Event-ID` 请求头，服务端可据此从断点处续发
 - **仅支持 GET**：原生 API 不支持 POST 请求体；需要传参时，可改用 `fetch` + `ReadableStream` 手动解析
 
@@ -143,6 +145,7 @@ import { Request, Response } from 'express';
 export class EventsController {
   @Get('stream')
   async streamEvents(@Res() res: Response, @Req() req: Request) {
+    if (res.destroyed || res.writableEnded) return;
     // 必须的响应头三件套
     res.setHeader('Content-Type', 'text/event-stream');
     res.setHeader('Cache-Control', 'no-cache');
@@ -165,9 +168,8 @@ export class EventsController {
     }, 15_000);
 
     // 客户端断开时必须清理，否则 setInterval 持续泄漏
-    req.on('close', () => {
+    res.once('close', () => {
       clearInterval(heartbeat);
-      res.end();
     });
   }
 }
@@ -195,34 +197,59 @@ export class ChatController {
     @Res() res: Response,
     @Req() req: Request,
   ) {
-    res.setHeader('Content-Type', 'text/event-stream');
-    res.setHeader('Cache-Control', 'no-cache');
-    res.setHeader('Connection', 'keep-alive');
-    res.setHeader('X-Accel-Buffering', 'no');
-    res.flushHeaders();
+    const controller = new AbortController();
+    let completed = false;
+    const onClose = () => {
+      if (!completed) controller.abort();
+    };
+    res.once('close', onClose); // 必须先于 SDK 建流与消费
 
-    const stream = await this.anthropic.messages.stream({
-      model: 'claude-opus-4-5',
-      max_tokens: 1024,
-      messages: [{ role: 'user', content: body.prompt }],
-    });
-
-    for await (const event of stream) {
-      // 文本 delta 事件
-      if (
-        event.type === 'content_block_delta' &&
-        event.delta.type === 'text_delta'
-      ) {
-        res.write(`event: token\n`);
-        res.write(`data: ${JSON.stringify({ text: event.delta.text })}\n\n`);
+    try {
+      if (res.destroyed || res.writableEnded) {
+        controller.abort();
+        return;
       }
+      res.setHeader('Content-Type', 'text/event-stream');
+      res.setHeader('Cache-Control', 'no-cache');
+      res.setHeader('Connection', 'keep-alive');
+      res.setHeader('X-Accel-Buffering', 'no');
+      res.flushHeaders();
+
+      const stream = await this.anthropic.messages.stream({
+        model: 'claude-opus-4-5',
+        max_tokens: 1024,
+        messages: [{ role: 'user', content: body.prompt }],
+      }, { signal: controller.signal });
+
+      if (controller.signal.aborted || res.destroyed || res.writableEnded) {
+        controller.abort();
+        return;
+      }
+      for await (const event of stream) {
+        if (controller.signal.aborted || res.destroyed || res.writableEnded) {
+          controller.abort();
+          break;
+        }
+        if (
+          event.type === 'content_block_delta' &&
+          event.delta.type === 'text_delta'
+        ) {
+          res.write(`event: token\ndata: ${JSON.stringify({ text: event.delta.text })}\n\n`);
+        }
+      }
+      if (!controller.signal.aborted && !res.destroyed && !res.writableEnded) {
+        completed = true; // 正常 end 引发的 close 不应再取消
+        res.end('event: done\ndata: {}\n\n');
+      }
+    } catch (error) {
+      if (!controller.signal.aborted) {
+        controller.abort();
+        res.destroy(); // 响应头已发送，不再拼接伪 done 或错误 JSON
+        throw error; // 交由框架处理；日志脱敏由应用负责
+      }
+    } finally {
+      res.off('close', onClose);
     }
-
-    res.write('event: done\ndata: {}\n\n');
-    res.end();
-
-    // 客户端提前断开时取消上游请求，避免浪费 LLM token
-    req.on('close', () => stream.abort());
   }
 
   // ---- OpenAI 流式示例 ----
@@ -232,40 +259,71 @@ export class ChatController {
     @Res() res: Response,
     @Req() req: Request,
   ) {
-    res.setHeader('Content-Type', 'text/event-stream');
-    res.setHeader('Cache-Control', 'no-cache');
-    res.setHeader('Connection', 'keep-alive');
-    res.setHeader('X-Accel-Buffering', 'no');
-    res.flushHeaders();
+    const controller = new AbortController();
+    let completed = false;
+    const onClose = () => {
+      if (!completed) controller.abort();
+    };
+    res.once('close', onClose);
 
-    const stream = await this.openai.chat.completions.create({
-      model: 'gpt-4o',
-      messages: [{ role: 'user', content: body.prompt }],
-      stream: true,
-    });
-
-    for await (const chunk of stream) {
-      const delta = chunk.choices[0]?.delta?.content ?? '';
-      if (delta) {
-        res.write(`event: token\n`);
-        res.write(`data: ${JSON.stringify({ text: delta })}\n\n`);
+    try {
+      if (res.destroyed || res.writableEnded) {
+        controller.abort();
+        return;
       }
+      res.setHeader('Content-Type', 'text/event-stream');
+      res.setHeader('Cache-Control', 'no-cache');
+      res.setHeader('Connection', 'keep-alive');
+      res.setHeader('X-Accel-Buffering', 'no');
+      res.flushHeaders();
+
+      const stream = await this.openai.chat.completions.create({
+        model: 'gpt-4o',
+        messages: [{ role: 'user', content: body.prompt }],
+        stream: true,
+      }, { signal: controller.signal });
+
+      if (controller.signal.aborted || res.destroyed || res.writableEnded) {
+        controller.abort();
+        return;
+      }
+      for await (const chunk of stream) {
+        if (controller.signal.aborted || res.destroyed || res.writableEnded) {
+          controller.abort();
+          break;
+        }
+        const delta = chunk.choices[0]?.delta?.content ?? '';
+        if (delta) {
+          res.write(`event: token\ndata: ${JSON.stringify({ text: delta })}\n\n`);
+        }
+      }
+      if (!controller.signal.aborted && !res.destroyed && !res.writableEnded) {
+        completed = true;
+        res.end('event: done\ndata: {}\n\n');
+      }
+    } catch (error) {
+      if (!controller.signal.aborted) {
+        controller.abort();
+        res.destroy();
+        throw error;
+      }
+    } finally {
+      res.off('close', onClose);
     }
-
-    res.write('event: done\ndata: {}\n\n');
-    res.end();
-
-    req.on('close', () => stream.controller.abort());
   }
 }
 ```
 
+这里监听的是响应 `res` 的 `close`，不是把请求 `req` 的 `close` 当成断网：[Node 22 HTTP 文档](https://github.com/nodejs/node/blob/v22.22.3/doc/api/http.md)说明请求 close 也会在请求消息完成时出现。响应 close 同样包含正常结束，所以示例另记 `completed`。两种 SDK 都在第二参数接收取消 `signal`，它覆盖等待上游建流及消费期间的断开；`finally` 移除响应监听，真实上游失败则关闭响应并交给框架处理，日志脱敏仍由应用负责。
+
+取消支持见 [Anthropic MessageStream 的 signal 处理](https://github.com/anthropics/anthropic-sdk-typescript/blob/main/src/lib/MessageStream.ts)与[OpenAI RequestOptions](https://github.com/openai/openai-node/blob/master/src/internal/request-options.ts)。这是连接承载的展示型生成示例，取消是协作请求，不保证模型立即停止或已产生费用归零。持久 Agent 任务是否取消由任务合同决定；不能把断流作为下单或工具副作用的撤销。生产仍需按下文管理背压和错误观测。
+
 **Agent 扩展**：在 Agent 场景中，除了 `token` 事件，还可以自定义事件类型：
 
 ```typescript
-// Agent 思考步骤实时推送
+// 经过处理的阶段进度；thought 是自定义事件名，不传内部思维链
 res.write(`event: thought\n`);
-res.write(`data: ${JSON.stringify({ step: 'planning', content: '分析用户意图…' })}\n\n`);
+res.write(`data: ${JSON.stringify({ step: 'planning', content: '正在整理任务输入' })}\n\n`);
 
 // 工具调用开始
 res.write(`event: tool_call\n`);
@@ -276,7 +334,7 @@ res.write(`event: tool_result\n`);
 res.write(`data: ${JSON.stringify({ tool: 'web_search', output: '…搜索结果…' })}\n\n`);
 ```
 
-前端监听对应 `event` 类型，即可实现 Agent 思考链（Chain-of-Thought）的实时可视化，显著改善用户等待体验。
+前端监听对应事件，展示任务阶段、工具动作及经过处理的结果摘要；`thought` 只是本例事件名，不代表应公开模型内部思维链。工具参数和结果也须按用户权限脱敏后展示。
 
 ---
 
@@ -285,7 +343,7 @@ res.write(`data: ${JSON.stringify({ tool: 'web_search', output: '…搜索结果
 [HTML Server-sent Events 标准](https://html.spec.whatwg.org/multipage/server-sent-events.html) 定义 EventSource 状态、事件流解析、`retry`、自动重连和 `Last-Event-ID`；连接可能因网络或服务端结束而关闭，并非“永不关闭”。
 
 
-浏览器在 SSE 断线后自动重连，重连请求会携带 `Last-Event-ID` 请求头：
+浏览器在需要重建连接时进入 `CONNECTING`，已有非空事件 ID 时重连请求携带 `Last-Event-ID`；主动 close 或终止性失败进入 `CLOSED` 后不再自动重连：
 
 ```typescript
 @Get('stream')
@@ -296,8 +354,9 @@ async streamWithResume(@Req() req: Request, @Res() res: Response) {
 
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache');
-  res.setHeader('retry', '3000'); // 建议重连间隔 3 秒
   res.flushHeaders();
+
+  res.write('retry: 3000\n\n'); // SSE 正文字段，不是 HTTP retry 响应头
 
   // 从 startFromId 处开始补发历史消息（适用于通知/日志场景）
   const missedEvents = await this.eventStore.getFrom(startFromId);
@@ -309,9 +368,13 @@ async streamWithResume(@Req() req: Request, @Res() res: Response) {
 }
 ```
 
-> LLM 流式输出通常**不需要断点续传**——用户重连后重新发起请求即可；断点续传更适合通知系统、日志流等有持久化存储的场景。
+> 重建连接和重做任务分开设计。纯展示型生成可按产品合同重发；涉及下单、工具副作用或长任务时，先按 taskId 查询持久状态并恢复事件，不能因为 SSE 断流就重新执行动作。Last-Event-ID 只传游标，服务端仍需保留并授权回放事件；游标过旧时返回快照后接续。
 
 ---
+
+### 心跳、慢消费者与清理
+
+心跳可发送 `: heartbeat\n\n` 这样的注释帧，频率按代理与产品超时配置确定；它不代表任务完成，也不替代应用级结果校验。写入遭遇背压时限制待发队列，监听连接关闭并清理订阅与心跳，避免慢客户端积压无限事件。断开是否取消任务须由任务合同决定，不能把关闭响应对象直接当作取消成功。
 
 ## Nginx 反向代理配置
 
@@ -354,7 +417,7 @@ server {
 
 在 AI Agent 服务中，SSE 不只是"打字机效果"的实现手段，它直接影响用户对 Agent 智能程度的感知：
 
-- **思考过程可视化**：通过 `event: thought` 实时推送 Agent 的规划步骤，让用户知道 Agent 在"想什么"，降低焦虑感
+- **安全的阶段进度**：推送任务阶段、已完成单位和经过处理的行动摘要，不把模型内部思维链作为业务事件或审计合同
 - **工具调用实时反馈**：`event: tool_call` 和 `event: tool_result` 让用户看到 Agent 正在调用哪些工具、获得了什么结果，提升透明度
 - **长任务进度汇报**：对于需要多步骤执行的 Agent 任务（如代码生成、数据分析），SSE 可以实时汇报每个阶段的完成情况，而不是让用户盯着转圈圈等待
 - **错误提前感知**：若某个工具调用失败，可立即通过 `event: error` 推送，前端及时展示局部错误，无需等待整个任务结束
@@ -434,6 +497,7 @@ HTTP/2 原生支持多路复用，多个 SSE 流可以在同一个 TCP 连接上
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-26.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信（2026 年 3 月发帖）](../../../interview/tencent/ai/tencent-ai-10.md)
 - [字节剪映 AI 前端一面：Agent 运行时、MCP 与性能](../../../interview/bytedance/base/bytedance-base-30.md)
+- [字节 Agent 开发一面：权限、SSE 与 Python 字典](../../../interview/bytedance/base/bytedance-base-58.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

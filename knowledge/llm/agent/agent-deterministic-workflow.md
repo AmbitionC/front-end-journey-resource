@@ -118,6 +118,7 @@ trace 将 workflow/run、decision、activity、approval 和 operation ID 关联�
 - [字节 Agent 后端实习一面：LangGraph、评测集与混合检索（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-22.md)
 - [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
 - [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)
+- [字节抖音电商 Agent 秋招三轮：AI Coding、数据与事实校验](../../../interview/bytedance/base/bytedance-base-57.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

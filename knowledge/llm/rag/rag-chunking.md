@@ -250,6 +250,7 @@ function chunkDocument(nodes: Node[], limits: ChunkLimits) {
 - [字节 Agent 二面：RAG 分块、查询改写与随机采样](../../../interview/bytedance/base/bytedance-base-28.md)
 - [字节 AI 平台一面：Agent 评测、框架与数据结构](../../../interview/bytedance/base/bytedance-base-33.md)
 - [字节全栈一面：RAG、Java与线程池](../../../interview/bytedance/base/bytedance-base-37.md)
+- [字节抖音电商 Agent 秋招三轮：AI Coding、数据与事实校验](../../../interview/bytedance/base/bytedance-base-57.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

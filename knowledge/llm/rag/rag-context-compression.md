@@ -98,6 +98,12 @@ total budget
 
 检索上下文压缩是证据选择器，不是授权器也不是事实生成器。它在已授权、已重排候选中抽取 span、去重和分配 token，任何抽象摘要都绑定原始支持。用 evidence recall、引用有效性和答案忠实度约束压缩率，才能真正减少噪声而不删除事实。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节抖音电商 Agent 秋招三轮：AI Coding、数据与事实校验](../../../interview/bytedance/base/bytedance-base-57.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Xu, Shi, Choi — RECOMP](https://arxiv.org/abs/2310.04408)

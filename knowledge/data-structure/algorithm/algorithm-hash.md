@@ -119,6 +119,39 @@ while iterator.hasNext():
 
 一次 next 后最多删除该项一次，先 remove 或重复 remove 不符合迭代器状态。增强 for 隐含使用迭代器，但循环内直接 map.remove 并不是这个迭代器的 remove。多线程共享 HashMap 还需外部同步或采用具有合适契约的并发集合；“没抛异常”不是线程安全证据。
 
+## Python dict：语言契约与 CPython 实现分开
+
+Python 的 `dict` 承诺按插入顺序迭代；具体哈希表布局属于解释器实现。下面以 **CPython v3.14.0 源码、常规 combined table** 为例，不能推广成所有 Python 实现都如此。[Python 3.14 映射契约](https://docs.python.org/3.14/library/stdtypes.html#mapping-types-dict)与[固定版本 dictobject.c](https://github.com/python/cpython/blob/v3.14.0/Objects/dictobject.c)分别说明这两层。
+
+紧凑表将探测索引 `dk_indices` 与条目 `dk_entries` 分开：先算 key 的 hash，按表大小取初始槽，再根据 hash 和 key 相等性判断是不是同一个键。冲突使用带 perturb 的开放寻址，继续探测，而不是给每个桶挂一条链表。普通 combined table 的条目还保存 value；split table 的 value 布局不同。
+
+删除不能简单把曾占用的索引改成从未使用的 `EMPTY`。假设 A、B 的探测经过同一个槽：删除 A 后，若查 B 在这个槽就停止，会把仍存在的 B 判成不存在。`DUMMY` 表示曾被占用，查询继续探测；遇 `EMPTY` 才能证明该探测链上没有目标。
+
+| 槽状态 | 查找动作 | 为什么 |
+| --- | --- | --- |
+| 活跃条目 | 比较 hash 与 key，相等则命中 | 哈希相等不代表 key 相等 |
+| DUMMY | 继续探测 | 保留删除前形成的冲突路径 |
+| EMPTY | 结束未命中 | 该探测路径尚未占用的终点 |
+
+以下是验证**可见映射行为**的例子，不用于窥探槽的实际编号：
+
+```python
+class Key:
+    def __init__(self, value): self.value = value
+    def __hash__(self): return 7
+    def __eq__(self, other):
+        return isinstance(other, Key) and self.value == other.value
+
+a, b = Key('a'), Key('b')
+d = {a: 1, b: 2}
+del d[a]
+assert d[b] == 2          # 冲突键删除后，另一个键仍可查询
+d[a] = 3
+assert [k.value for k in d] == ['b', 'a']  # 重新插入放到顺序末尾
+```
+
+在 hash 与相等比较成本有界、分布正常的假设下，查询平均 O(1)；大量碰撞时最坏 O(n)。插入还可能触发重建，不能说每一次都严格常数时间。删除不保证立即缩小内存。free-threaded 构建为了并发查找，对 dummy 复用的处理也不同；讨论内部步骤时必须同时说明版本、构建方式和表类型。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
@@ -128,6 +161,7 @@ while iterator.hasNext():
 - [字节 AML / 火山方舟 AI Infra 一面：Agent Runtime、OS 与网络（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-17.md)
 - [字节 Agent 一面：会话记忆、并发更新与算法](../../../interview/bytedance/base/bytedance-base-29.md)
 - [字节全栈一面：RAG、Java与线程池](../../../interview/bytedance/base/bytedance-base-37.md)
+- [字节 Agent 开发一面：权限、SSE 与 Python 字典](../../../interview/bytedance/base/bytedance-base-58.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

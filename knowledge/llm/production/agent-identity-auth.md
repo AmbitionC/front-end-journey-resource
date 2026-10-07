@@ -111,6 +111,7 @@ Supervisor 委派子 Agent 时，不把原 token 原样转发。为子任务交�
 
 <!-- interview-source-history:start -->
 - [字节 Agent 实习：模型选择与可信通信](../../../interview/bytedance/base/bytedance-base-54.md)
+- [字节 Agent 开发一面：权限、SSE 与 Python 字典](../../../interview/bytedance/base/bytedance-base-58.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

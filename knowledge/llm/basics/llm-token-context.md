@@ -118,6 +118,7 @@ Token 决定序列如何表示和计量；Context Window 规定一次请求的�
 - [字节 Agent 暑期实习一面：摘要、工具预算与链表（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-27.md)
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../../interview/bytedance/base/bytedance-base-48.md)
 - [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)
+- [字节抖音电商 Agent 秋招三轮：AI Coding、数据与事实校验](../../../interview/bytedance/base/bytedance-base-57.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

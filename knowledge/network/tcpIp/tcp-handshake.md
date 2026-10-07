@@ -90,6 +90,7 @@ TCP 只能根据收到的报文和本地定时器更新状态。若对端突然�
 - [字节 AML / 火山方舟 AI Infra 一面：Agent Runtime、OS 与网络（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-17.md)
 - [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../../interview/bytedance/base/bytedance-base-47.md)
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
+- [字节 Agent 后端实习一面：任务恢复、事务与链表](../../../interview/bytedance/base/bytedance-base-59.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

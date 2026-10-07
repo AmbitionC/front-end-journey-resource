@@ -45,6 +45,12 @@ IVFFlat 通常需要已有代表性数据训练。数据分布漂移或批量更
 
 演练索引重建、模型升级回滚、节点故障、数据漂移和大租户热点。一个成熟系统能说清：距离为何适合任务、ANN 损失多少、过滤在哪执行、写入何时可见，以及索引坏了怎样回到精确搜索或上一版本。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [字节 Agent 后端实习一面：任务恢复、事务与链表](../../../interview/bytedance/base/bytedance-base-59.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [HNSW 论文](https://arxiv.org/abs/1603.09320)
