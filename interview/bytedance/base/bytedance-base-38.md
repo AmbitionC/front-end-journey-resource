@@ -54,8 +54,9 @@ Worker 在独立执行环境计算，能减少长计算对页面主线程的阻�
 
 分别说明需求来源、独立承担的范围和是否真实使用，以可核验反馈支持后续改动。原帖只记录这些问题，没有给用户规模；不得把演示、课程练习或朋友试用扩写成稳定线上业务。
 
-<details data-knowledge-key="vite-testing">
+<details data-binding-status="pending_semantic_verification">
 <summary>（10）Monorepo 的范围是什么？</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 先列出仓库实际有哪些应用与共享包，以及依赖、构建和测试的边界；单仓库不等于一个部署单元。Workspace 管包间引用，任务图决定哪些包受变更影响；共享代码也需要 API 和版本边界，不能只因为文件在一起就任意互相导入。

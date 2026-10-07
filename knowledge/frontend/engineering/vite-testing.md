@@ -70,7 +70,4 @@ Monorepo 指把多个应用或包放在一个版本库管理，并不表示它�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节剪映 AI 前端一面：Agent 运行时、MCP 与性能](../../../interview/bytedance/base/bytedance-base-30.md)
-- [字节财经保险 AI 全栈实习一面：项目设计、AI Coding 与 Diff](../../../interview/bytedance/base/bytedance-base-34.md)
-- [字节前端全栈实习一面：渲染、Worker与认证](../../../interview/bytedance/base/bytedance-base-38.md)
 <!-- interview-source-history:end -->

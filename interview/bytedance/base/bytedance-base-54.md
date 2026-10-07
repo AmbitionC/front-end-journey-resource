@@ -8,8 +8,9 @@
 
 Transformer 的注意力便于建模位置之间关系，训练可并行处理序列；LSTM 按序递归且有不同计算与归纳偏置。选型需比较数据量、长度、时延和基线，不能认为 Transformer 必然更好。
 
-<details data-knowledge-key="data-quality">
+<details data-binding-status="pending_semantic_verification">
 <summary>（2）怎么分析流量</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 先明确流量单位、时间窗口、采样与来源，再看分布、峰值、异常和特征变化。模型分析要防数据泄漏并用时间切分验证，原帖未给具体数据，不能编造业务指标。
@@ -56,8 +57,9 @@ HTTPS 用 TLS 保护传输机密性与完整性并认证服务器，仍需校验
 
 OAuth 2.0 是委托授权框架，访问令牌用于获准访问资源；用户登录通常还需对应身份协议。限定受众、scope 与期限，并按实际流程验证，不能把 OAuth 直接当用户密码传输。
 
-<details data-knowledge-key="agent-supply-chain">
+<details data-binding-status="pending_semantic_verification">
 <summary>（10）了解新技术吗比如open claw</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 先确认 OpenClaw 的实际仓库、版本和部署方式，再阅读能力、工具权限与依赖。原帖只给名称，不能断言其具体插件或默认安全设置；试用前以文档和隔离实验验证。

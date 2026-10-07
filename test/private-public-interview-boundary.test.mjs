@@ -58,6 +58,19 @@ test('public relation validation blocks nonexistent keys, files, backlinks, miss
   assert.match((await relations(f)).join(),/知识点正文不存在/u);
 }));
 
+test('audited short-qa-v2 preserves an unbound question and answer with an explicit pending notice',()=>reviewFixture(async f=>{
+  f.interview.contentFormat='short-qa-v2';
+  const pending=question.replace('data-knowledge-key="real-key"','data-binding-status="pending_semantic_verification"')
+    .replace('</details>','<p>关联知识点待核实。</p></details>');
+  await writeFile(join(f.root,'interview/company/article.md'),pending);
+  assert.deepEqual(await relations(f),[]);
+  assert.equal(questionStructure(pending).questions[0].key,null);
+  for(const invalid of [pending.replace('关联知识点待核实。',''),pending.replace(' data-binding-status="pending_semantic_verification"','')]) {
+    await writeFile(join(f.root,'interview/company/article.md'),invalid);
+    assert.match((await relations(f)).join(),/明确待核实说明/u);
+  }
+}));
+
 test('paths reject traversal, absolute locations, slash keys and outside symlink targets before reading',()=>reviewFixture(async f=>{
   for(const path of ['../private.json','/tmp/private.json','interview/../../secret','interview\\secret','interview//article.md']) assert.throws(()=>safeRelativePath(path));
   await assert.rejects(readBounded(f.root,'../history.json','interview'));

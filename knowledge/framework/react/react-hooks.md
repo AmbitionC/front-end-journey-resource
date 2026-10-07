@@ -87,7 +87,6 @@ Effect 适合连接 WebSocket、订阅浏览器 API、控制非 React widget、�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

@@ -50,7 +50,6 @@ append(order-42, expected=7) -> version 8
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-23.md)（cluster-3f37b9b18f24）
 <!-- interview-source-history:end -->
 
 ## 参考资料

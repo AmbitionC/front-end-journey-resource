@@ -65,6 +65,9 @@ export function questionStructure(contents) {
       && e.startOffset < node.sourceCodeLocation?.startTag.endOffset);
     const key = duplicate ? null : attrs['data-knowledge-key'] ?? null;
     return { key, hasBinding: 'data-knowledge-key' in attrs, duplicate,
+      bindingStatus: attrs['data-binding-status'] ?? null,
+      pendingNotice: nodeText(node).includes('关联知识点待核实。'),
+      missingKeywordNotice: /\*{2,}/u.test(nodeText(children[0] ?? {})) && nodeText(answer ?? {}).includes('关键字被遮蔽'),
       summary: nodeText(children[0] ?? {}), answer: nodeText(answer ?? {}),
       valid: children[0]?.tagName === 'summary'
         && children.filter(n => n.tagName === 'summary').length === 1
@@ -107,11 +110,15 @@ export async function validatePublicKnowledgeRelations(resourceRoot, interviewLe
     const structure = questionStructure(contents), bindings = structure.questions;
     if (structure.activeStyles) errors.push(`面经 ${leaf.key} 不得注入改变可见结构的样式`);
     if (structure.duplicateAttributes) errors.push(`面经 ${leaf.key} 含重复 HTML 属性`);
-    if (leaf.contentFormat === 'short-qa-v1' && bindings.length === 0) errors.push(`面经 ${leaf.key} 的短问答正文没有问题 details`);
+    const shortQA = ['short-qa-v1', 'short-qa-v2'].includes(leaf.contentFormat);
+    if (shortQA && bindings.length === 0) errors.push(`面经 ${leaf.key} 的短问答正文没有问题 details`);
     for (const binding of bindings) {
       if (!binding.valid) errors.push(`面经 ${leaf.key} 问题必须有真实首个 summary 和相邻独立短答`);
       if (binding.key === null) {
-        if (leaf.contentFormat === 'short-qa-v1') errors.push(`面经 ${leaf.key} 的短问答缺少唯一知识 key`);
+        const explicitPending = leaf.contentFormat === 'short-qa-v2' && !binding.hasBinding
+          && (binding.bindingStatus === 'pending_semantic_verification' && binding.pendingNotice
+            || binding.bindingStatus === 'pending_missing_keyword' && binding.missingKeywordNotice);
+        if (shortQA && !explicitPending) errors.push(`面经 ${leaf.key} 的短问答缺少唯一知识 key 或明确待核实说明`);
         continue;
       }
       const knowledgeLeaf = knowledgeByKey.get(binding.key);

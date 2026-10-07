@@ -61,9 +61,6 @@ Canary 让少量合格用户真实使用，限制工具和预算，设置自动�
 
 <!-- interview-source-history:start -->
 - [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../interview/bytedance/base/bytedance-base-23.md)
-- [小红书 Agent 开发一面：多智能体、Memory 与广告投放优化（2026 年 8 月）](../../interview/redbook/ai/redbook-ai-1.md)
-- [字节 Agent 后端实习一面：LangGraph、评测集与混合检索（2026 年 9 月）](../../interview/bytedance/base/bytedance-base-22.md)
-- [快手 AI 应用开发秋招一面：线程池、OOM 与项目深挖（2026 年 8 月）](../../interview/kuaishou/ai/kuaishou-ai-2.md)
 - [字节全栈二、三面：幂等、索引与字符串匹配](../../interview/bytedance/base/bytedance-base-32.md)
 - [字节 AI 平台一面：Agent 评测、框架与数据结构](../../interview/bytedance/base/bytedance-base-33.md)
 - [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../interview/bytedance/base/bytedance-base-36.md)

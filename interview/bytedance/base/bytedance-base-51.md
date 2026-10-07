@@ -26,8 +26,9 @@ Function Calling 是模型提出结构化工具调用的一种接口能力；Age
 
 可用 LangChain 集成模型与工具，用 LangGraph 表达有状态编排，选择取决于任务复杂度。真实感受要对应实现与故障案例，没有用过时应明确只了解机制。
 
-<details data-knowledge-key="agent-deployment">
+<details data-binding-status="pending_semantic_verification">
 <summary>（5）对云熟不熟？有哪些产品？相关的实践有哪些？</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 按实际经验说明计算、存储、网络和托管服务如何分工，并交代版本、访问边界与可观测性。云产品清单不等于部署实践，不能补造上线结果。
@@ -38,8 +39,9 @@ Function Calling 是模型提出结构化工具调用的一种接口能力；Age
 
 可比较 vLLM、TensorRT-LLM、llama.cpp 等推理引擎，先核对版本和硬件。选择看模型支持、硬件、批处理与并行能力；指标包括首 token 时延、每 token 时延、吞吐、并发和错误率。比较需固定工作负载，不能只看单条回答速度。
 
-<details data-knowledge-key="llm-token-context">
+<details data-binding-status="pending_semantic_verification">
 <summary>（7）为什么要用PD分离？业界方案是怎么样的？mooncake的KV Cache是否有外挂？</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 Prefill 与 Decode 的资源需求不同，分离可独立调度但带来 KV 传输开销。Mooncake 是围绕分离式推理与 KV Cache 的方案；是否外部存储、介质和拓扑须看具体版本，不能笼统承诺外挂即提速。

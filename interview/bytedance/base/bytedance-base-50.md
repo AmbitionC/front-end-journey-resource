@@ -38,8 +38,9 @@
 
 提示明确任务、可用证据、缺证时的回答规则和输出格式，并配合样例测试。仅写“不要编造”不能可靠限制事实错误，还要做检索与结果核验。
 
-<details data-knowledge-key="prompt-testing-debugging">
+<details data-binding-status="pending_semantic_verification">
 <summary>（7）还有其他提示词吗？</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 围绕失败类型补约束或示例，检查是否改善原问题以及是否引入退化。不要为了显得全面而堆提示词；版本变化要能回放固定测试集。
@@ -110,13 +111,14 @@ undo 支持回滚与 MVCC 旧版本读取，redo 支持 InnoDB 崩溃恢复，bi
 
 两个线程按相反顺序持有 A、B 锁并等待另一把可形成循环等待。可用固定锁序、减少嵌套或有期限尝试打破条件；演示死锁时需隔离运行并能终止。
 
-<details data-knowledge-key="java-value-semantics">
+<details data-binding-status="pending_semantic_verification">
 <summary>（19）随便写一个单例模式</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 可用静态持有者或枚举表达某些单例需求；若使用双重检查锁，要保证实例发布符合内存模型。类加载器、序列化和测试需求会影响边界，单例也不等于共享状态线程安全。
 
-<details>
+<details data-binding-status="pending_missing_keyword">
 <summary>（20）为什么要*********关键字？</summary>
 </details>
 

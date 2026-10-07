@@ -396,7 +396,6 @@ SELECT * FROM ranked WHERE rnk <= 3;
 
 <!-- interview-source-history:start -->
 - [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)
-- [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

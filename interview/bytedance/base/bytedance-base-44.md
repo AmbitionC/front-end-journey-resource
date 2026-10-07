@@ -26,8 +26,9 @@
 
 预请求把可预测的数据等待提前，以减少关键交互时延。代价是浪费带宽与资源，应测命中率、节省时延和取消比例，避免大范围盲目请求。
 
-<details data-knowledge-key="api-schema-validation">
+<details data-binding-status="pending_semantic_verification">
 <summary>（5）预请求的参数哪是哪些</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 参数应包含可确定的查询条件和缓存匹配依据，登录态由正规鉴权机制处理。缺失条件不能猜填，敏感字段也不应为预请求提前暴露。
@@ -44,8 +45,9 @@
 
 正式请求通常由明确用户操作或页面需求触发，再确认最新查询条件。即便命中预请求缓存，提交、支付等写操作仍需独立校验和明确执行。
 
-<details data-knowledge-key="api-schema-validation">
+<details data-binding-status="pending_semantic_verification">
 <summary>（8）返回数据有啥差别</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 复用结果须比较查询条件、数据版本和新鲜度；不匹配则重新请求。返回结构差异应通过契约定义，不能仅凭“预/正式”标签认定数据相同。

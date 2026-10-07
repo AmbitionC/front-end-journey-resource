@@ -86,14 +86,16 @@ Cookie 是客户端状态机制，Session 是一种服务端会话设计，常�
 
 用提交、代码入口或测试说明个人完成和修改的部分，清楚区分生成、审查与手写工作。评价贡献要看问题解决和质量，不能编造百分比。
 
-<details data-knowledge-key="design-components">
+<details data-binding-status="pending_semantic_verification">
 <summary>（15）为什么这么设计？</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 先陈述设计要满足的需求与约束，再解释组件职责和接口。用真实对照或测试说明取舍，缺失项目细节时只给答题方法。
 
-<details data-knowledge-key="agent-interview-system-design">
+<details data-binding-status="pending_semantic_verification">
 <summary>（16）为什么不用另外一种方案？</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 比较备选方案在复杂度、维护、性能和安全上的代价，说明为什么当前约束下选择这一种。不要把未采用的方案笼统说成“不好”。
@@ -128,14 +130,16 @@ Cookie 是客户端状态机制，Session 是一种服务端会话设计，常�
 
 用具体文件或功能区分自己写、修改和审核的代码，解释一段关键实现。不能以背出 AI 输出代替对程序行为和故障边界的理解。
 
-<details data-knowledge-key="design-state">
+<details data-binding-status="pending_semantic_verification">
 <summary>（22）路由怎么实现</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 客户端路由把 URL 映射到页面状态，可用 History API 或 hash。History 模式直接访问深路径需服务端支持入口回退，hash 片段不发给服务端；路由守卫不能代替接口授权。
 
-<details data-knowledge-key="design-state">
+<details data-binding-status="pending_semantic_verification">
 <summary>（23）路由具体用了哪些方法</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 History 模式常用 pushState/replaceState 更新记录、popstate 响应导航；hash 模式监听 hashchange。框架可封装这些方法，需说明实际使用的方案。
@@ -152,8 +156,9 @@ History 模式常用 pushState/replaceState 更新记录、popstate 响应导航
 
 路径适合标识资源，query 适合筛选等可分享条件，请求体适合复杂输入。编码与校验在接收端统一处理，不把 URL 参数视为可信身份。
 
-<details data-knowledge-key="api-schema-validation">
+<details data-binding-status="pending_semantic_verification">
 <summary>（26）后端怎么接收参数</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 后端从路由、query 或 body 解析后按 Schema 校验类型与范围，再进行鉴权和业务处理。重复字段、默认值和非法输入都应有明确规则。

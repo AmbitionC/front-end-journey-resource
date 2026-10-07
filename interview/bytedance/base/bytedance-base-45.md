@@ -8,8 +8,9 @@
 
 介绍与岗位最相关的项目、自己的职责和一项能复现的改进。作者履历没有独立核实，短答仅给表达方法，不提供虚构经历。
 
-<details data-knowledge-key="react-hooks">
+<details data-binding-status="pending_semantic_verification">
 <summary>（2）讲一下对React的理解。</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 先澄清原帖的 React 是 UI 库还是 Agent 语境中的 ReAct。前者用组件与状态描述界面，后者交替行动和观察；两个名称接近，机制完全不同。
@@ -164,8 +165,9 @@ Reactor 用事件循环处理 I/O 就绪，必要时把耗时业务交给工作�
 
 启动可使用事先定义的可信缓存或默认配置，运行中保留最后有效版本并重试。关键安全配置可选择拒绝启动或停止相关业务，不能笼统承诺所有故障都继续运行。
 
-<details data-knowledge-key="sql-window-function">
+<details data-binding-status="pending_semantic_verification">
 <summary>（28）SQL：两张表：Employee(employee_number, department_number)、Salary(employee_number, salary)。查询每个部门工资最高的员工，返回 department_number、employee_number、salary；并列最高的员工也要全部返回。</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 先关联员工与薪资，再用 DENSE_RANK() OVER(PARTITION BY department_number ORDER BY salary DESC) 排名并筛 rank=1，保留并列最高。明确薪资表是否一人一行，以及 NULL 与多期工资的处理口径。

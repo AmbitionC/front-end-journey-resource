@@ -24,8 +24,9 @@
 
 模型或确定规则先产生结构化调用请求，运行时校验名称、输入、身份和预算，再执行工具并把带状态的结果交回下一步。业务成功还需检查外部结果，不能把模型输出 JSON 或自然语言“完成了”当作执行证据。
 
-<details data-knowledge-key="agent-architecture">
+<details data-binding-status="pending_semantic_verification">
 <summary>（5）Agent 还有哪些工具调用方式？</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 可直接调用本地适配器，通过 MCP 接服务器，或由确定工作流触发 API、检索和受控脚本。模型 function calling 负责表达请求，传输或适配层负责执行；选型取决于能力发现、部署、权限与可观测性，而不是仅看调用名称。

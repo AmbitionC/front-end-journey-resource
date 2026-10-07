@@ -56,8 +56,9 @@ Deep Agents 官方设计包含文件上下文和子代理，计划与技能可�
 
 先如实交代模型、设备和是否训练：SFT 学示范，强化学习按奖励优化策略。显存需容纳权重、激活、优化器或 KV；量化、批处理及并行有不同代价，分布式训练还要协调梯度通信，不能给未测吞吐或编造 GPU 配置。
 
-<details data-knowledge-key="algorithm-complexity">
+<details data-binding-status="pending_semantic_verification">
 <summary>（10）找出小于n的最大数</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 原帖仅写“找出小于 n 的最大数”，未给输入类型、合法数字、位数与重复限制，也未说明目标数的约束。需取得完整题意和样例；目前无法给确定解法或复杂度，不补隐藏前提。

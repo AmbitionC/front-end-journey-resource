@@ -24,8 +24,9 @@
 
 按所用版本说明压缩触发、保留信息、摘要怎样进入后续输入以及原始记录如何恢复。应区分实际观察与产品文档，不能把工作摘要当成无损全文或永久记忆。评价压缩看关键约束与任务结果是否保留，不能只比较长度。 [Claude Code：上下文与自动压缩](https://code.claude.com/docs/en/how-claude-code-works)。
 
-<details data-knowledge-key="agent-sandbox">
+<details data-binding-status="pending_semantic_verification">
 <summary>（5）Computer Use 怎样操作本地或云端电脑？</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 运行环境提供截图或界面状态，模型提出点击、输入等动作，执行层按权限实施后再观察。区别主要在会话、文件和网络位于本地还是远端；都需隔离凭据、约束可操作范围、检查动作结果，并处理界面变化、超时与取消。
@@ -60,8 +61,9 @@
 
 用双指针比较当前元素，相等时记录并推进，不等时推进较小一侧，每个元素最多扫描一次，时间为 O(n+m)。先确认是否保留重复次数以及输出空间是否计入；已排序条件是这条线性路径的前提。
 
-<details data-knowledge-key="algorithm-hash">
+<details data-binding-status="pending_semantic_verification">
 <summary>（11）无限且无法整体排序的序列怎样求交集？Bitmap 的边界是什么？</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 先确认元素范围、是否有序、能否保留历史和是否有结束条件。无序且无界时，精确去重或交集可能需要无界存储；可用外部存储或明确窗口处理。Bitmap 空间随值域增长，值域巨大时未必合适；分批本身不能消除跨批匹配和正确性问题。

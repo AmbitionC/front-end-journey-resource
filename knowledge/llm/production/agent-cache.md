@@ -74,7 +74,6 @@ Agent 缓存的核心是身份与新鲜度，而不是序列化速度。分别�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [腾讯 TEG 后端一面：RAG 多智能体与分布式 LRU（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-6.md)（cluster-27070393eae6）
 <!-- interview-source-history:end -->
 
 ## 参考资料

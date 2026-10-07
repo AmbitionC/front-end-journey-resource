@@ -186,8 +186,9 @@ Tool Calling 是结构化请求工具能力，MCP 是宿主与工具服务交互
 
 基础链路包括文档解析、分块、Embedding 和索引，在线召回、必要重排、证据组装与生成。保留来源和权限，评测应能定位是召回、排序还是回答失败。
 
-<details data-knowledge-key="rag-hybrid-search">
+<details data-binding-status="pending_semantic_verification">
 <summary>（31）你刚刚提到检索，一般检索策略会怎么做？</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 可结合关键词、向量与元数据过滤，按任务合并候选并去重。检索策略需要真实测试集比较，不能假设混合召回一定比单路好。
@@ -288,20 +289,23 @@ HTTP/2 流可独立交错，但底层 TCP 字节流丢包时需要补齐缺失�
 
 QUIC 在 UDP 上实现可靠传输、确认、丢失恢复、流量与拥塞控制及加密握手。不同流通常不因另一流缺失数据而等待交付，但仍共享拥塞预算等资源。
 
-<details data-knowledge-key="tcp-handshake">
+<details data-binding-status="pending_semantic_verification">
 <summary>（48）然后继续聊 TCP 吧，TCP 的拥塞控制怎么做的？</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 TCP 拥塞控制以拥塞窗口限制在途数据，经典过程含慢启动、拥塞避免和丢失后的调整。具体增长与恢复取决于算法，不能认为始终翻倍。
 
-<details data-knowledge-key="tcp-handshake">
+<details data-binding-status="pending_semantic_verification">
 <summary>（49）那如果遇见错误了呢？就比如像你刚才说的，它一直翻倍对吧？翻倍完成之后，如果碰见错误了，或者是到达一个实际的拥塞了，之后会怎么样？</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 检测丢失后降低发送强度，超时与重复确认可能走不同恢复路径；慢启动阈值与窗口按算法更新。网络错误也有多种原因，不是每次错误都完全重置同一数值。
 
-<details data-knowledge-key="tcp-handshake">
+<details data-binding-status="pending_semantic_verification">
 <summary>（50）在这个流程里面，快重传和快恢复是什么？</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 经典快速重传利用重复确认较早重发疑似丢失段，快速恢复避免某些情况下退回最初慢启动。现代实现有不同恢复与拥塞算法，说明 RFC5681 基础机制即可，别当成唯一实现。

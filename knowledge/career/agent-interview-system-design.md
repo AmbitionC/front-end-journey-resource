@@ -66,7 +66,6 @@ Trace 按 run 关联 model/retrieval/tool，metrics 看 SLO、队列、成本和
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节全栈实习：Session、权限与前端基础](../../interview/bytedance/base/bytedance-base-46.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

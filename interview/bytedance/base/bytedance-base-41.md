@@ -32,8 +32,9 @@
 
 可用 SSE 把进度和文本增量送到前端，先解析完整事件再更新 UI。网络 chunk 不等于事件，重连还须携带游标并避免重复执行有副作用的请求。
 
-<details data-knowledge-key="jwt-auth">
+<details data-binding-status="pending_semantic_verification">
 <summary>（6）身份认证是怎么做的？</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 区分认证身份和授权操作：后端验证 Session 或令牌后，再检查用户能否访问具体资源。前端隐藏按钮不能代替鉴权，Cookie 模式还需考虑 CSRF 与安全属性。
