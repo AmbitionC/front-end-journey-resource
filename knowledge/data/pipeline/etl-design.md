@@ -452,8 +452,13 @@ ETL pipeline 是 AI 系统的数据基础设施层：
 
 <!-- interview-source-history:start -->
 - [阿里云 Agent Infra 一面：SGX、吞吐与日志写入（2026 年 9 月发帖）](../../../interview/alibaba/ai/alibaba-ai-8.md)（cluster-21f88c2e7c88）
-- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-23.md)（cluster-3f37b9b18f24）
 <!-- interview-source-history:end -->
+
+## 学习阅读（不计专题频次）
+
+本区提供阅读导航；链接不表示原帖问过整个专题，也不计入本专题面经频次。
+
+- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-23.md)：数据漏斗、存储和筛选过滤原问的ETL/ELT学习扩展；原文未明问ETL/ELT取舍。
 
 ## 参考资料
 

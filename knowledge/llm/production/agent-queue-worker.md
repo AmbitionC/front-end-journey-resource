@@ -77,8 +77,13 @@ Worker 取到消息后用条件更新获取租约：只有 queued、retrying 或
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [腾讯微信支付 AI 软件工程一面（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-5.md)（cluster-ab43c892c4ed）
 <!-- interview-source-history:end -->
+
+## 相关机制阅读（不计专题频次）
+
+本区提供阅读导航；链接不表示原帖问过整个专题，也不计入本专题面经频次。
+
+- [腾讯微信支付 AI 软件工程一面（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-5.md)：24小时可靠运行的一种持久任务、租约心跳、检查点、重投/扫描方案；未明问MQ/ACK/Worker且不承诺完全无人干预。
 
 ## 参考资料
 

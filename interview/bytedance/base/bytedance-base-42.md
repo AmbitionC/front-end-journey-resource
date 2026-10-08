@@ -251,11 +251,12 @@ RAG 可以分别使用检索改写模型、Embedding 模型和回答模型，也
 
 传统后端与模型应用可以共享鉴权、状态、队列和可观测性等基础能力。回答应说明模型特有的不确定输出、成本和评测问题，而非仅换一个项目标签。
 
-<details data-knowledge-key="agent-architecture">
+<details data-binding-status="pending_semantic_verification">
 <summary>（42）如果现在让你设计的话，你会怎么去设计呢？</summary>
+<p>关联知识点待核实。</p>
 </details>
 
-先确定任务和权限，再设计输入、检索、模型、工具执行、状态与评测的最小闭环。可先做确定性工作流，只有需要动态决策时再增加 Agent 循环。
+原文未记录设计对象和约束，需先澄清。以下只是假设设计 Agent 时的通用教学示例，不代表原题对象：先确定任务和权限，再设计输入、检索、模型、工具执行、状态与评测的最小闭环。可先做确定性工作流，只有需要动态决策时再增加 Agent 循环。
 
 <details data-knowledge-key="rag-cache">
 <summary>（43）那假设这个生成的内容过期了呢？</summary>

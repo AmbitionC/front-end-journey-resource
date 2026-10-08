@@ -55,7 +55,8 @@
             "updatedAt": "2026-10-02",
             "department": "抖音电商",
             "roleCategory": "Agent 与后端工程",
-            "role": "Agent 开发"
+            "role": "Agent 开发",
+            "contentFormat": "short-qa-v2"
           }
         ]
       },
@@ -78,7 +79,8 @@
             "updatedAt": "2026-10-02",
             "department": "火山引擎方舟",
             "roleCategory": "Agent 与后端工程",
-            "role": "Agent"
+            "role": "Agent",
+            "contentFormat": "short-qa-v2"
           }
         ]
       },
@@ -101,7 +103,8 @@
             "updatedAt": "2026-10-02",
             "department": "中国交易与广告",
             "roleCategory": "Agent 与后端工程",
-            "role": "AI全栈开发"
+            "role": "AI全栈开发",
+            "contentFormat": "short-qa-v2"
           },
           {
             "label": "字节 Agent：任务取消、Spring 配置与并发执行",
@@ -574,7 +577,8 @@
             "updatedAt": "2026-10-02",
             "department": "其他",
             "roleCategory": "Agent 与后端工程",
-            "role": "agent开发"
+            "role": "agent开发",
+            "contentFormat": "short-qa-v2"
           },
           {
             "label": "字节 Agent 开发二面（2026 年 7 月）",
@@ -860,7 +864,8 @@
             "updatedAt": "2026-08-25",
             "department": "WXG",
             "roleCategory": "Agent 与 AI 应用",
-            "role": "后台开发"
+            "role": "后台开发",
+            "contentFormat": "short-qa-v2"
           }
         ]
       },
@@ -906,7 +911,8 @@
             "updatedAt": "2026-10-02",
             "department": "其他",
             "roleCategory": "Agent 与 AI 应用",
-            "role": "agent开发"
+            "role": "agent开发",
+            "contentFormat": "short-qa-v2"
           },
           {
             "label": "腾讯大模型算法岗一二面：Agentic RL、PPO/GRPO 与 DeepSeek V4（2026 年 8 月）",
@@ -983,7 +989,8 @@
             "updatedAt": "2026-08-23",
             "department": "其他",
             "roleCategory": "Agent 与 AI 应用",
-            "role": "AI应用开发"
+            "role": "AI应用开发",
+            "contentFormat": "short-qa-v2"
           }
         ]
       }
@@ -1029,7 +1036,8 @@
             "updatedAt": "2026-08-30",
             "department": "阿里云",
             "roleCategory": "Agent 与 AI 应用",
-            "role": "ai agent"
+            "role": "ai agent",
+            "contentFormat": "short-qa-v2"
           },
           {
             "label": "阿里云 Agent 开发秋招一面（2026 年 8 月）",
@@ -1153,7 +1161,8 @@
             "updatedAt": "2026-08-25",
             "department": "其他",
             "roleCategory": "Agent 与 AI 应用",
-            "role": "Agent开发"
+            "role": "Agent开发",
+            "contentFormat": "short-qa-v2"
           }
         ]
       }
@@ -1439,7 +1448,8 @@
             ],
             "updatedAt": "2026-10-02",
             "department": "其他",
-            "roleCategory": "Agent 与 AI 应用"
+            "roleCategory": "Agent 与 AI 应用",
+            "contentFormat": "short-qa-v2"
           },
           {
             "label": "蚂蚁智能体与大模型应用一面：幻觉、Skill 与 RAG（2026 年 5 月）",
