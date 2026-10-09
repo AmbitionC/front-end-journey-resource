@@ -58,7 +58,6 @@ CI 应保存真实历史 fixture，至少覆盖 old writer → new reader、new 
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [阿里云 Agent Infra 一面：SGX、吞吐与日志写入（2026 年 9 月发帖）](../../../interview/alibaba/ai/alibaba-ai-8.md)（cluster-21f88c2e7c88）
 - [字节飞书 AI 应用一面：Runtime、评测与后端基础（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-24.md)（cluster-78d45fa26bfd）
 <!-- interview-source-history:end -->
 

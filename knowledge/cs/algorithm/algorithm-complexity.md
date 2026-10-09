@@ -56,9 +56,6 @@ Big-O 给出渐近上界，Big-Ω 给出下界，Big-Θ 表示上下界同阶。
 <!-- interview-source-history:start -->
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-26.md)
 - [字节飞书 AI 应用一面：Runtime、评测与后端基础（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-24.md)
-- [阿里云可观测存储 AI Agent 工程岗一面：存储性能与查询优化（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-7.md)
-- [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
-- [字节 Agent：AI Coding、技能设计与模型工程](../../../interview/bytedance/base/bytedance-base-49.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

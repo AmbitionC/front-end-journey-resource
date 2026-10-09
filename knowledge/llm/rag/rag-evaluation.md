@@ -188,8 +188,6 @@ RAG 评估是一套诊断系统，而不是排行榜。先用检索指标判断�
 
 <!-- interview-source-history:start -->
 - [拼多多 AI Agent 岗两轮技术面：RAG、多 Agent 与系统能力（2026 年 8 月）](../../../interview/pinduoduo/ai/pinduoduo-ai-1.md)
-- [字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)
-- [淘天 AI 应用研发一面：RAG、限流 Top-K 与优惠策略设计（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-5.md)
 - [字节 Agent 暑期实习一面：摘要、工具预算与链表（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-27.md)
 - [腾讯 Agent 项目二面：记忆、RAG 与 MCP（2026 年 5 月）](../../../interview/tencent/ai/tencent-ai-2.md)
 - [字节 Agent 后端实习一面：LangGraph、评测集与混合检索（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-22.md)

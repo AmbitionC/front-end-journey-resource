@@ -78,7 +78,7 @@ schema 演进遵循向后兼容：新增可选字段，旧消费者忽略未知�
 
 <!-- interview-source-history:start -->
 - [字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)
-- [小红书 Agent 开发一面：LangGraph 子图、Skill 进化与工程校验（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-2.md)
+- [小红书部分（小红书与百度合并记录）：LangGraph、Skill 与工程校验（2026 年 8 月发帖）](../../../interview/redbook/ai/redbook-ai-2.md)
 - [字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-20.md)
 - [快手商业化效果营销一面：多 Agent 协作、Netty 与限流（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-4.md)
 - [腾讯 CSIG 后台开发一面：Agent Memory、SkillRouter 与多 Agent Code Review（2026 年 7 月）](../../../interview/tencent/ai/tencent-ai-9.md)

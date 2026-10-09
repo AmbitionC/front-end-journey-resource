@@ -154,7 +154,6 @@ sequenceDiagram
 - [蚂蚁 Agent 实习一面：缓存、消息与 RAG（2026 年 6 月发帖）](../../../interview/antfin/ai/antfin-ai-6.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信（2026 年 3 月发帖）](../../../interview/tencent/ai/tencent-ai-10.md)
 - [字节 Agent 后端一面：进程线程、Transformer 与训练](../../../interview/bytedance/base/bytedance-base-31.md)
-- [字节全栈二、三面：幂等、索引与字符串匹配](../../../interview/bytedance/base/bytedance-base-32.md)
 - [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../../interview/bytedance/base/bytedance-base-47.md)
 - [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
 <!-- interview-source-history:end -->

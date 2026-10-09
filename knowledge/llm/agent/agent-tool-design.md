@@ -119,7 +119,6 @@ MCP 解决发现与调用协议，不替代工具本身的生产契约。把一�
 - [字节 Agent Infra 校招：运行时、MySQL 与 LRU（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-25.md)
 - [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)
 - [字节 AI 应用开发一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-12.md)
-- [字节抖音电商 Agent 一面：分层、上下文与 GRPO（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-21.md)
 - [快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-3.md)
 - [快手大模型应用 Java 实习一面：Agent、SkillHub 与 Vibe Coding（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-1.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信（2026 年 3 月发帖）](../../../interview/tencent/ai/tencent-ai-10.md)

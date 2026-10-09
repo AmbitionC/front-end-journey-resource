@@ -195,7 +195,6 @@ AIMA 常用以下类型帮助理解能力递进：
 - [字节全栈二、三面：幂等、索引与字符串匹配](../../../interview/bytedance/base/bytedance-base-32.md)
 - [字节抖音Agent一面：Skill、MCP与记忆](../../../interview/bytedance/base/bytedance-base-39.md)
 - [字节Agent全栈一面：工具、评测与编码](../../../interview/bytedance/base/bytedance-base-40.md)
-- [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
 - [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
 <!-- interview-source-history:end -->

@@ -386,7 +386,6 @@ ZSet score 编码优先级 + 时间戳（`priority * 1e13 + timestamp`），`ZPO
 <!-- interview-source-history:start -->
 - [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-23.md)
 - [小红书 Agent 开发一面：多智能体、Memory 与广告投放优化（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-1.md)
-- [蚂蚁 Agent 实习一面：缓存、消息与 RAG（2026 年 6 月发帖）](../../../interview/antfin/ai/antfin-ai-6.md)
 - [字节全栈二、三面：幂等、索引与字符串匹配](../../../interview/bytedance/base/bytedance-base-32.md)
 - [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
 - [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)

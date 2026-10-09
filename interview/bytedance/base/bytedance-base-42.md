@@ -74,8 +74,9 @@
 
 给模板和参数配置版本号，记录哪个版本产生了哪份结果，用固定样例回归并保留回滚入口。编辑提示词后要重新评估，不能把“集中存文件”当作完整治理。
 
-<details data-knowledge-key="rag-access-control">
+<details data-binding-status="pending_semantic_verification">
 <summary>（13）文本生成的问题，对吧？会拿懂车帝的数据吗？</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 数据来源、获取方式和可使用范围必须明确，不能因问题提及某平台就认定实际接入。生成时只使用获准且可追溯的材料，避免把未核实营销描述当产品事实。
@@ -116,8 +117,9 @@
 
 列清外部依赖的用途、输入输出、认证、超时与配额，并为失败设计重试或降级。调用次数和成本要可观测，外部 API 返回也需校验。
 
-<details data-knowledge-key="llm-provider-abstraction">
+<details data-binding-status="pending_semantic_verification">
 <summary>（20）是类似于DeepSeek这种大模型的API吗？</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 若外部依赖是模型 API，可把供应商差异收敛到适配层，但保留能力、错误码和流式事件的差异。具体是否接入某模型不能从面试官的举例反推。
@@ -230,8 +232,9 @@ RAG 可以分别使用检索改写模型、Embedding 模型和回答模型，也
 
 若问题指“使用协议”，SSE 可用于推送问答增量，底层仍是 HTTP。API 请求、模型调用与前端订阅可能使用不同协议，要按各段链路分别说明。
 
-<details data-knowledge-key="llm-cost-optimize">
+<details data-binding-status="pending_semantic_verification">
 <summary>（39）你说的轻量化具体是指什么方面？可以讲一些例子吗？</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 轻量化可以指更小模型、减少检索候选、缩短上下文或精简部署依赖，须给具体指标。必须同时测质量与时延，不能只看 token 数下降。
@@ -248,11 +251,12 @@ RAG 可以分别使用检索改写模型、Embedding 模型和回答模型，也
 
 传统后端与模型应用可以共享鉴权、状态、队列和可观测性等基础能力。回答应说明模型特有的不确定输出、成本和评测问题，而非仅换一个项目标签。
 
-<details data-knowledge-key="agent-architecture">
+<details data-binding-status="pending_semantic_verification">
 <summary>（42）如果现在让你设计的话，你会怎么去设计呢？</summary>
+<p>关联知识点待核实。</p>
 </details>
 
-先确定任务和权限，再设计输入、检索、模型、工具执行、状态与评测的最小闭环。可先做确定性工作流，只有需要动态决策时再增加 Agent 循环。
+原文未记录设计对象和约束，需先澄清。以下只是假设设计 Agent 时的通用教学示例，不代表原题对象：先确定任务和权限，再设计输入、检索、模型、工具执行、状态与评测的最小闭环。可先做确定性工作流，只有需要动态决策时再增加 Agent 循环。
 
 <details data-knowledge-key="rag-cache">
 <summary>（43）那假设这个生成的内容过期了呢？</summary>
@@ -260,8 +264,9 @@ RAG 可以分别使用检索改写模型、Embedding 模型和回答模型，也
 
 给证据、索引和答案缓存记录版本及有效期，源数据更新时失效或重新生成。过期内容不能靠模型猜测修正；关键事实需重新检索并展示新来源。
 
-<details data-knowledge-key="algorithm-complexity">
+<details data-binding-status="pending_semantic_verification">
 <summary>（44）连续一</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 原帖算法仅写“连续一”，未给数组、允许操作或目标定义，无法确定是哪一道题。需取得完整题意与样例，目前无法给确定解法或复杂度；不补隐藏前提。

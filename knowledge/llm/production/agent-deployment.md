@@ -74,9 +74,13 @@ Agent 发布以版本包为原子单位，把代码、模型、prompt、工具�
 
 <!-- interview-source-history:start -->
 - [小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-3.md)
-- [腾讯 AI 应用开发面试：跨会话记忆与多 Agent（2026 年 4 月）](../../../interview/tencent/ai/tencent-ai-4.md)
-- [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)
 <!-- interview-source-history:end -->
+
+## 学习阅读（不计专题频次）
+
+本区提供阅读导航；链接不表示原帖问过整个专题，也不计入本专题面经频次。
+
+- [腾讯 AI 应用开发面试：跨会话记忆与多 Agent（2026 年 4 月）](../../../interview/tencent/ai/tencent-ai-4.md)：本地运行/配置位置原问的生产部署学习扩展；版本、Kubernetes、探针与灰度不是该原问具体答案。
 
 ## 参考资料
 

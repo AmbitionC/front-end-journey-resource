@@ -86,6 +86,20 @@ test('question spans use Unicode codepoints and reject overshooting or mismatche
   assert.match((await check(f)).join(),/短答或知识关联/u);
 }));
 
+test('private bound ledger rejects actual pending states or notices after all hashes are refreshed',()=>reviewFixture(async f=>{
+  const file=join(f.root,'interview/company/article.md'),original=await readFile(file,'utf8');
+  for(const content of [
+    original.replace('data-knowledge-key="real-key"','data-knowledge-key="real-key" data-binding-status="pending_semantic_verification"').replace('</details>','<p>关联知识点待核实。</p></details>'),
+    original.replace('data-knowledge-key="real-key"','data-knowledge-key="real-key" data-binding-status="pending_missing_keyword"'),
+    original.replace('</details>','<p>关联知识点待核实。</p></details>'),
+  ]) {
+    await writeFile(file,content);await freezeFixtureReview(f);
+    assert.match((await check(f)).join(),/已绑定问题不得带待核实状态或说明/u);
+  }
+  await writeFile(file,original.replace('data-knowledge-key="real-key"','data-knowledge-key="real-key" data-binding-status="bound"'));
+  await freezeFixtureReview(f);assert.deepEqual(await check(f),[]);
+}));
+
 test('missing-keyword questions require an explicit frozen pending reason',()=>reviewFixture(async f=>{
   delete f.interview.contentFormat;
   await writeFile(join(f.root,'interview/_tree.json'),JSON.stringify([f.interview]));

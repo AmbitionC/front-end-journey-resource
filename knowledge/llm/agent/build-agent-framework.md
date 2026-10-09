@@ -401,8 +401,6 @@ Context Window 有限，不做裁剪会导致调用失败。滑动窗口、摘�
 - [字节飞书 AI 应用一面：Runtime、评测与后端基础（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-24.md)
 - [vivo Agent 秋招线下面：Harness 与工程诊断（2026 年 9 月发帖）](../../../interview/vivo/ai/vivo-ai-1.md)
 - [字节 Agent 开发实习一面：自进化与评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-8.md)
-- [字节 AML / 火山方舟 AI Infra 一面：Agent Runtime、OS 与网络（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-17.md)
-- [蚂蚁 Agent 实习一面：缓存、消息与 RAG（2026 年 6 月发帖）](../../../interview/antfin/ai/antfin-ai-6.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信（2026 年 3 月发帖）](../../../interview/tencent/ai/tencent-ai-10.md)
 - [字节 Agent 一面：会话记忆、并发更新与算法](../../../interview/bytedance/base/bytedance-base-29.md)
 - [字节剪映 AI 前端一面：Agent 运行时、MCP 与性能](../../../interview/bytedance/base/bytedance-base-30.md)
@@ -412,6 +410,10 @@ Context Window 有限，不做裁剪会导致调用失败。滑动窗口、摘�
 - [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
 <!-- interview-source-history:end -->
+
+## 学习阅读（不计专题频次）
+
+- [蚂蚁 Agent 实习一面：缓存、消息与 RAG（2026 年 6 月发帖）](../../../interview/antfin/ai/antfin-ai-6.md)（原题是框架与语言选型；自行搭建 Python 最小框架仅作背景学习。不是完整专题被考察的证据，不计专题频次。）
 
 ## 参考资料
 

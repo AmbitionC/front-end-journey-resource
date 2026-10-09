@@ -1,0 +1,945 @@
+[
+  {
+    "key": "bytedance-base-28",
+    "filePath": "bytedance/base",
+    "label": "字节 Agent 二面：RAG 分块、查询改写与随机采样",
+    "tags": [
+      "Agent",
+      "RAG",
+      "Chunking",
+      "随机采样"
+    ]
+  },
+  {
+    "key": "bytedance-base-33",
+    "filePath": "bytedance/base",
+    "label": "字节 AI 平台一面：Agent 评测、框架与数据结构",
+    "tags": [
+      "Agent",
+      "评测",
+      "RAG",
+      "Trie"
+    ]
+  },
+  {
+    "key": "bytedance-base-36",
+    "filePath": "bytedance/base",
+    "label": "字节 AI 应用一、二面：MySQL、Redis 与编程基础",
+    "tags": [
+      "AI Coding",
+      "MySQL",
+      "Redis",
+      "链表"
+    ]
+  },
+  {
+    "key": "bytedance-base-24",
+    "filePath": "bytedance/base",
+    "label": "字节飞书 AI 应用一面：Runtime、评测与后端基础（2026 年 9 月发帖）",
+    "tags": [
+      "Agent Runtime",
+      "Memory",
+      "数据库",
+      "Go"
+    ]
+  },
+  {
+    "key": "bytedance-base-21",
+    "filePath": "bytedance/base",
+    "label": "字节抖音电商 Agent 一面：分层、上下文与 GRPO（2026 年 9 月发帖）",
+    "tags": [
+      "Multi-Agent",
+      "Context",
+      "GRPO",
+      "JSON"
+    ]
+  },
+  {
+    "key": "bytedance-base-27",
+    "filePath": "bytedance/base",
+    "label": "字节 Agent 暑期实习一面：摘要、工具预算与链表（2026 年 7 月）",
+    "tags": [
+      "Memory",
+      "Token",
+      "RAG",
+      "链表"
+    ]
+  },
+  {
+    "key": "bytedance-base-26",
+    "filePath": "bytedance/base",
+    "label": "字节 Managed Agent 校招一面：评测、运行链路与后端基础（2026 年 8 月）",
+    "tags": [
+      "Agent Loop",
+      "评测",
+      "Skill",
+      "认证"
+    ]
+  },
+  {
+    "key": "bytedance-base-25",
+    "filePath": "bytedance/base",
+    "label": "字节 Agent Infra 校招：运行时、MySQL 与 LRU（2026 年 9 月）",
+    "tags": [
+      "Agent Runtime",
+      "MySQL",
+      "LRU"
+    ]
+  },
+  {
+    "key": "bytedance-base-23",
+    "filePath": "bytedance/base",
+    "label": "字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）",
+    "tags": [
+      "AI Pipeline",
+      "Doris",
+      "MQ",
+      "缓存一致性"
+    ]
+  },
+  {
+    "key": "bytedance-base-22",
+    "filePath": "bytedance/base",
+    "label": "字节 Agent 后端实习一面：LangGraph、评测集与混合检索（2026 年 9 月）",
+    "tags": [
+      "LangGraph",
+      "RAG",
+      "RRF",
+      "评测"
+    ]
+  },
+  {
+    "key": "bytedance-base-20",
+    "filePath": "bytedance/base",
+    "label": "字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "状态管理",
+      "容错",
+      "评测"
+    ]
+  },
+  {
+    "key": "bytedance-base-18",
+    "filePath": "bytedance/base",
+    "label": "字节 Agent 开发一面：推理缓存、网络与存储基础（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "KV Cache",
+      "网络",
+      "存储"
+    ]
+  },
+  {
+    "key": "bytedance-base-19",
+    "filePath": "bytedance/base",
+    "label": "字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "上下文",
+      "Skill",
+      "编程基础"
+    ]
+  },
+  {
+    "key": "bytedance-base-17",
+    "filePath": "bytedance/base",
+    "label": "字节 AML / 火山方舟 AI Infra 一面：Agent Runtime、OS 与网络（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "AI Infra",
+      "操作系统",
+      "网络"
+    ]
+  },
+  {
+    "key": "bytedance-base-14",
+    "filePath": "bytedance/base",
+    "label": "字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "RAG",
+      "AI Coding",
+      "高并发"
+    ]
+  },
+  {
+    "key": "bytedance-base-15",
+    "filePath": "bytedance/base",
+    "label": "字节 Agent 开发一面：Skill、MCP 与后端基础（2026 年 7 月）",
+    "tags": [
+      "Agent",
+      "Skill",
+      "MCP",
+      "后端"
+    ]
+  },
+  {
+    "key": "bytedance-base-16",
+    "filePath": "bytedance/base",
+    "label": "字节大模型应用开发一面：Agent、RAG 与可靠性（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "沙箱",
+      "多 Agent",
+      "RAG"
+    ]
+  },
+  {
+    "key": "bytedance-base-10",
+    "filePath": "bytedance/base",
+    "label": "字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "Coding Agent",
+      "MCP",
+      "评测"
+    ]
+  },
+  {
+    "key": "bytedance-base-11",
+    "filePath": "bytedance/base",
+    "label": "字节 TikTok Agent 开发秋招一面（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "RAG",
+      "多 Agent",
+      "算法"
+    ]
+  },
+  {
+    "key": "bytedance-base-12",
+    "filePath": "bytedance/base",
+    "label": "字节 AI 应用开发一面（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "Tool",
+      "Memory",
+      "可观测性"
+    ]
+  },
+  {
+    "key": "bytedance-base-13",
+    "filePath": "bytedance/base",
+    "label": "字节 AI 全栈开发一面（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "RAG",
+      "SSE",
+      "算法"
+    ]
+  },
+  {
+    "key": "bytedance-base-9",
+    "filePath": "bytedance/base",
+    "label": "字节后端与 Code Review Agent 秋招一面（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "Code Agent",
+      "Redis",
+      "评测"
+    ]
+  },
+  {
+    "key": "bytedance-base-8",
+    "filePath": "bytedance/base",
+    "label": "字节 Agent 开发实习一面：自进化与评测（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "评测",
+      "沙箱",
+      "Go"
+    ]
+  },
+  {
+    "key": "bytedance-base-7",
+    "filePath": "bytedance/base",
+    "label": "字节 Agent 开发二面（2026 年 7 月）",
+    "tags": [
+      "Agent",
+      "Planning",
+      "记忆",
+      "MCP"
+    ]
+  },
+  {
+    "key": "bytedance-base-6",
+    "filePath": "bytedance/base",
+    "label": "字节后端开发秋招二面（2026 年 8 月）",
+    "tags": [
+      "Redis",
+      "分布式锁",
+      "Agent",
+      "系统设计"
+    ]
+  },
+  {
+    "key": "bytedance-base-5",
+    "filePath": "bytedance/base",
+    "label": "字节 Agent 开发日常实习一面（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "LangGraph",
+      "Java",
+      "算法"
+    ]
+  },
+  {
+    "key": "bytedance-base-29",
+    "filePath": "bytedance/base",
+    "label": "字节 Agent 一面：会话记忆、并发更新与算法",
+    "tags": [
+      "Agent",
+      "Memory",
+      "幂等",
+      "算法"
+    ]
+  },
+  {
+    "key": "bytedance-base-30",
+    "filePath": "bytedance/base",
+    "label": "字节剪映 AI 前端一面：Agent 运行时、MCP 与性能",
+    "tags": [
+      "Agent Runtime",
+      "MCP",
+      "前端性能",
+      "LRU"
+    ]
+  },
+  {
+    "key": "bytedance-base-31",
+    "filePath": "bytedance/base",
+    "label": "字节 Agent 后端一面：进程线程、Transformer 与训练",
+    "tags": [
+      "Agent",
+      "操作系统",
+      "Transformer",
+      "训练"
+    ]
+  },
+  {
+    "key": "bytedance-base-32",
+    "filePath": "bytedance/base",
+    "label": "字节全栈二、三面：幂等、索引与字符串匹配",
+    "tags": [
+      "全栈",
+      "幂等",
+      "MySQL",
+      "算法"
+    ]
+  },
+  {
+    "key": "bytedance-base-34",
+    "filePath": "bytedance/base",
+    "label": "字节财经保险 AI 全栈实习一面：项目设计、AI Coding 与 Diff",
+    "tags": [
+      "全栈",
+      "AI Coding",
+      "OCR",
+      "算法"
+    ]
+  },
+  {
+    "key": "bytedance-base-37",
+    "filePath": "bytedance/base",
+    "label": "字节全栈一面：RAG、Java与线程池",
+    "tags": [
+      "全栈",
+      "RAG",
+      "Java"
+    ]
+  },
+  {
+    "key": "bytedance-base-38",
+    "filePath": "bytedance/base",
+    "label": "字节前端全栈实习一面：渲染、Worker与认证",
+    "tags": [
+      "前端",
+      "全栈",
+      "实习"
+    ]
+  },
+  {
+    "key": "bytedance-base-39",
+    "filePath": "bytedance/base",
+    "label": "字节抖音Agent一面：Skill、MCP与记忆",
+    "tags": [
+      "Agent",
+      "Skill",
+      "MCP"
+    ]
+  },
+  {
+    "key": "bytedance-base-40",
+    "filePath": "bytedance/base",
+    "label": "字节Agent全栈一面：工具、评测与编码",
+    "tags": [
+      "Agent",
+      "全栈",
+      "算法"
+    ]
+  },
+  {
+    "key": "bytedance-base-41",
+    "filePath": "bytedance/base",
+    "label": "字节 Agent 实习：异步消息、上下文与容器隔离"
+  },
+  {
+    "key": "bytedance-base-42",
+    "filePath": "bytedance/base",
+    "label": "字节 Agent 与全栈：视频工作流、工具权限与 RAG"
+  },
+  {
+    "key": "bytedance-base-43",
+    "filePath": "bytedance/base",
+    "label": "字节全栈：多智能体导购、客户端与系统评测"
+  },
+  {
+    "key": "bytedance-base-44",
+    "filePath": "bytedance/base",
+    "label": "字节全栈：预请求、列表复用与 ThreadLocal"
+  },
+  {
+    "key": "bytedance-base-45",
+    "filePath": "bytedance/base",
+    "label": "字节 Agent：任务取消、Spring 配置与并发执行"
+  },
+  {
+    "key": "bytedance-base-46",
+    "filePath": "bytedance/base",
+    "label": "字节全栈实习：Session、权限与前端基础"
+  },
+  {
+    "key": "bytedance-base-47",
+    "filePath": "bytedance/base",
+    "label": "字节 Agent 实习：缓存一致性、定时任务与后端基础"
+  },
+  {
+    "key": "bytedance-base-48",
+    "filePath": "bytedance/base",
+    "label": "字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding"
+  },
+  {
+    "key": "bytedance-base-49",
+    "filePath": "bytedance/base",
+    "label": "字节 Agent：AI Coding、技能设计与模型工程"
+  },
+  {
+    "key": "bytedance-base-50",
+    "filePath": "bytedance/base",
+    "label": "字节 Agent：幻觉、任务恢复与 Java 基础"
+  },
+  {
+    "key": "bytedance-base-51",
+    "filePath": "bytedance/base",
+    "label": "字节 Agent 实习：推理、微调与工具编排"
+  },
+  {
+    "key": "bytedance-base-52",
+    "filePath": "bytedance/base",
+    "label": "字节 Agent 实习：生成质量、多智能体与缓存"
+  },
+  {
+    "key": "bytedance-base-53",
+    "filePath": "bytedance/base",
+    "label": "字节全栈一二面：调度器、流式恢复与浏览器网络"
+  },
+  {
+    "key": "bytedance-base-54",
+    "filePath": "bytedance/base",
+    "label": "字节 Agent 实习：模型选择与可信通信"
+  },
+  {
+    "key": "bytedance-base-55",
+    "filePath": "bytedance/base",
+    "label": "字节后端与 Agent：运行链路、数据库与网络"
+  },
+  {
+    "key": "bytedance-base-56",
+    "filePath": "bytedance/base",
+    "label": "字节全栈与测试：JVM、并发与 SQL 排查"
+  },
+  {
+    "key": "tencent-ai-10",
+    "filePath": "tencent/ai",
+    "label": "腾讯 Agent 实习一面：RAG、工具与通信（2026 年 3 月发帖）",
+    "tags": [
+      "RAG",
+      "ReAct",
+      "MCP",
+      "SSE"
+    ]
+  },
+  {
+    "key": "tencent-ai-9",
+    "filePath": "tencent/ai",
+    "label": "腾讯 CSIG 后台开发一面：Agent Memory、SkillRouter 与多 Agent Code Review（2026 年 7 月）",
+    "tags": [
+      "Agent",
+      "Memory",
+      "SkillRouter",
+      "Code Review"
+    ]
+  },
+  {
+    "key": "tencent-ai-8",
+    "filePath": "tencent/ai",
+    "label": "腾讯 AI 开发一面：Coding Agent 记忆、评测与可靠运行（2026 年 8 月）",
+    "tags": [
+      "Coding Agent",
+      "记忆",
+      "评测",
+      "状态恢复"
+    ]
+  },
+  {
+    "key": "tencent-ai-7",
+    "filePath": "tencent/ai",
+    "label": "腾讯大模型算法岗一二面：Agentic RL、PPO/GRPO 与 DeepSeek V4（2026 年 8 月）",
+    "tags": [
+      "Agentic RL",
+      "PPO/GRPO",
+      "DeepSeek V4",
+      "算法"
+    ]
+  },
+  {
+    "key": "tencent-ai-5",
+    "filePath": "tencent/ai",
+    "label": "腾讯微信支付 AI 软件工程一面（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "Coding Agent",
+      "软件工程",
+      "RAG"
+    ]
+  },
+  {
+    "key": "tencent-ai-6",
+    "filePath": "tencent/ai",
+    "label": "腾讯 TEG 后端一面：RAG 多智能体与分布式 LRU（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "RAG",
+      "上下文",
+      "成本"
+    ]
+  },
+  {
+    "key": "tencent-ai-1",
+    "filePath": "tencent/ai",
+    "label": "腾讯 Agent 开发一面：RAG、安全与后端工程（2026 年 5 月）",
+    "tags": [
+      "Agent",
+      "RAG",
+      "安全",
+      "后端"
+    ]
+  },
+  {
+    "key": "tencent-ai-2",
+    "filePath": "tencent/ai",
+    "label": "腾讯 Agent 项目二面：记忆、RAG 与 MCP（2026 年 5 月）",
+    "tags": [
+      "Agent",
+      "记忆",
+      "RAG",
+      "MCP"
+    ]
+  },
+  {
+    "key": "tencent-ai-3",
+    "filePath": "tencent/ai",
+    "label": "腾讯后端 AI 开发实习面试（2026 年 4 月）",
+    "tags": [
+      "Agent",
+      "RAG",
+      "后端",
+      "算法"
+    ]
+  },
+  {
+    "key": "tencent-ai-4",
+    "filePath": "tencent/ai",
+    "label": "腾讯 AI 应用开发面试：跨会话记忆与多 Agent（2026 年 4 月）",
+    "tags": [
+      "Agent",
+      "记忆",
+      "多 Agent",
+      "Skill"
+    ]
+  },
+  {
+    "key": "alibaba-ai-8",
+    "filePath": "alibaba/ai",
+    "label": "阿里云 Agent Infra 一面：SGX、吞吐与日志写入（2026 年 9 月发帖）",
+    "tags": [
+      "Agent Infra",
+      "SGX",
+      "数据管道",
+      "系统设计"
+    ]
+  },
+  {
+    "key": "alibaba-ai-3",
+    "filePath": "alibaba/ai",
+    "label": "阿里国际 Accio Agent 算法一面：数据合成、任务环境与模型后训练（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "数据合成",
+      "模型后训练",
+      "GUI Agent"
+    ]
+  },
+  {
+    "key": "alibaba-ai-4",
+    "filePath": "alibaba/ai",
+    "label": "淘天 Agent 算法一面：任务构造、轨迹验证与后训练（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "任务构造",
+      "轨迹评测",
+      "模型训练"
+    ]
+  },
+  {
+    "key": "alibaba-ai-5",
+    "filePath": "alibaba/ai",
+    "label": "淘天 AI 应用研发一面：RAG、限流 Top-K 与优惠策略设计（2026 年 8 月）",
+    "tags": [
+      "RAG",
+      "限流",
+      "Top-K",
+      "AI Coding"
+    ]
+  },
+  {
+    "key": "alibaba-ai-6",
+    "filePath": "alibaba/ai",
+    "label": "淘宝闪购 Agent 算法一面：框架选型、人工接管与线上安全（2026 年 4 月）",
+    "tags": [
+      "Agent",
+      "Human-in-the-loop",
+      "安全",
+      "评测"
+    ]
+  },
+  {
+    "key": "alibaba-ai-7",
+    "filePath": "alibaba/ai",
+    "label": "阿里云可观测存储 AI Agent 工程岗一面：存储性能与查询优化（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "存储",
+      "性能优化",
+      "算法"
+    ]
+  },
+  {
+    "key": "alibaba-ai-1",
+    "filePath": "alibaba/ai",
+    "label": "阿里云 Agent 开发秋招一面（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "Coding Agent",
+      "Skill",
+      "工具调用"
+    ]
+  },
+  {
+    "key": "alibaba-ai-2",
+    "filePath": "alibaba/ai",
+    "label": "阿里 Agent 开发暑期实习一面（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "RAG",
+      "LangGraph",
+      "Memory"
+    ]
+  },
+  {
+    "key": "baidu-ai-3",
+    "filePath": "baidu/ai",
+    "label": "百度后端开发一面：Agent 安全、混合检索与 Redis（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "安全",
+      "混合检索",
+      "Redis"
+    ]
+  },
+  {
+    "key": "baidu-ai-1",
+    "filePath": "baidu/ai",
+    "label": "百度大模型研发一面：Context、Harness 与 RAG（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "上下文工程",
+      "Harness",
+      "RAG"
+    ]
+  },
+  {
+    "key": "baidu-ai-2",
+    "filePath": "baidu/ai",
+    "label": "百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "状态恢复",
+      "记忆",
+      "系统设计"
+    ]
+  },
+  {
+    "key": "kuaishou-ai-4",
+    "filePath": "kuaishou/ai",
+    "label": "快手商业化效果营销一面：多 Agent 协作、Netty 与限流（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "多 Agent",
+      "Netty",
+      "限流"
+    ]
+  },
+  {
+    "key": "kuaishou-ai-5",
+    "filePath": "kuaishou/ai",
+    "label": "快手主站 SRE 一二三面：Agent Skill、性能排障与数据链路（2026 年 4 月）",
+    "tags": [
+      "Agent",
+      "SRE",
+      "Skill",
+      "性能排障"
+    ]
+  },
+  {
+    "key": "kuaishou-ai-3",
+    "filePath": "kuaishou/ai",
+    "label": "快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "意图澄清",
+      "评测",
+      "MCP"
+    ]
+  },
+  {
+    "key": "kuaishou-ai-2",
+    "filePath": "kuaishou/ai",
+    "label": "快手 AI 应用开发秋招一面：线程池、OOM 与项目深挖（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "线程池",
+      "并发",
+      "工程风险"
+    ]
+  },
+  {
+    "key": "kuaishou-ai-1",
+    "filePath": "kuaishou/ai",
+    "label": "快手大模型应用 Java 实习一面：Agent、SkillHub 与 Vibe Coding（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "Skill",
+      "Kafka",
+      "浏览器插件"
+    ]
+  },
+  {
+    "key": "oppo-ai-3",
+    "filePath": "oppo/ai",
+    "label": "OPPO IT 开发一面：ReAct、MCP 与智能问数（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "ReAct",
+      "MCP",
+      "Text-to-SQL"
+    ]
+  },
+  {
+    "key": "oppo-ai-2",
+    "filePath": "oppo/ai",
+    "label": "OPPO AI 全栈一面：Prompt 到 UI、RAG 与前端性能（2026 年 8 月）",
+    "tags": [
+      "AI 全栈",
+      "RAG",
+      "多 Agent",
+      "前端性能"
+    ]
+  },
+  {
+    "key": "oppo-ai-1",
+    "filePath": "oppo/ai",
+    "label": "OPPO AI 全栈一面：AI Coding、Skill 与数据结构（2026 年 8 月）",
+    "tags": [
+      "AI Coding",
+      "Skill",
+      "协作",
+      "算法"
+    ]
+  },
+  {
+    "key": "antfin-ai-6",
+    "filePath": "antfin/ai",
+    "label": "蚂蚁 Agent 实习一面：缓存、消息与 RAG（2026 年 6 月发帖）",
+    "tags": [
+      "Redis",
+      "MQ",
+      "RAG",
+      "Spring AI"
+    ]
+  },
+  {
+    "key": "antfin-ai-5",
+    "filePath": "antfin/ai",
+    "label": "蚂蚁智能体与大模型应用一面：幻觉、Skill 与 RAG（2026 年 5 月）",
+    "tags": [
+      "Agent",
+      "Skill",
+      "RAG",
+      "后端基础"
+    ]
+  },
+  {
+    "key": "antfin-ai-4",
+    "filePath": "antfin/ai",
+    "label": "蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "多 Agent",
+      "质量门禁",
+      "后端"
+    ]
+  },
+  {
+    "key": "antfin-ai-1",
+    "filePath": "antfin/ai",
+    "label": "蚂蚁 Agent 开发一面：多 Agent 并发与质量保障（2026 年 4 月）",
+    "tags": [
+      "Agent",
+      "多 Agent",
+      "并发",
+      "RAG"
+    ]
+  },
+  {
+    "key": "antfin-ai-2",
+    "filePath": "antfin/ai",
+    "label": "蚂蚁 Code Agent 与 Agent 应用两轮面试（2026 年 4 月）",
+    "tags": [
+      "Code Agent",
+      "质量门禁",
+      "上下文工程",
+      "Skill"
+    ]
+  },
+  {
+    "key": "antfin-ai-3",
+    "filePath": "antfin/ai",
+    "label": "蚂蚁后端 AI 开发一面：Agent、Redis 与短链系统（2026 年 4 月）",
+    "tags": [
+      "Agent",
+      "Redis",
+      "分布式锁",
+      "系统设计"
+    ]
+  },
+  {
+    "key": "pinduoduo-ai-1",
+    "filePath": "pinduoduo/ai",
+    "label": "拼多多 AI Agent 岗两轮技术面：RAG、多 Agent 与系统能力（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "RAG",
+      "会议助手",
+      "系统基础"
+    ]
+  },
+  {
+    "key": "bilibili-ai-2",
+    "filePath": "bilibili/ai",
+    "label": "哔哩哔哩 AI 应用岗一面：端到端 AI Coding 与生产治理（2026 年 8 月）",
+    "tags": [
+      "AI Coding",
+      "MCP",
+      "可观测性",
+      "灰度发布"
+    ]
+  },
+  {
+    "key": "bilibili-ai-1",
+    "filePath": "bilibili/ai",
+    "label": "哔哩哔哩 AI 应用岗 Agent 开发一面（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "RAG",
+      "工具调用",
+      "Memory"
+    ]
+  },
+  {
+    "key": "sangfor-ai-1",
+    "filePath": "sangfor/ai",
+    "label": "深信服 Agent 开发一面：MCP、多 Agent、安全与网络（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "MCP",
+      "Skill",
+      "系统迁移"
+    ]
+  },
+  {
+    "key": "redbook-ai-3",
+    "filePath": "redbook/ai",
+    "label": "小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "评测",
+      "安全",
+      "混合部署"
+    ]
+  },
+  {
+    "key": "redbook-ai-1",
+    "filePath": "redbook/ai",
+    "label": "小红书 Agent 开发一面：多智能体、Memory 与广告投放优化（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "多 Agent",
+      "Memory",
+      "系统设计"
+    ]
+  },
+  {
+    "key": "redbook-ai-2",
+    "filePath": "redbook/ai",
+    "label": "小红书 Agent 开发一面：LangGraph 子图、Skill 进化与工程校验（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "LangGraph",
+      "Skill",
+      "工程校验"
+    ]
+  },
+  {
+    "key": "dji-ai-1",
+    "filePath": "dji/ai",
+    "label": "大疆创新 AI Agent 开发面经：容错、Token 与后端基础（2026 年 8 月）",
+    "tags": [
+      "Agent",
+      "容错",
+      "Token",
+      "后端"
+    ]
+  },
+  {
+    "key": "vivo-ai-1",
+    "filePath": "vivo/ai",
+    "label": "vivo Agent 秋招线下面：Harness 与工程诊断（2026 年 9 月发帖）",
+    "tags": [
+      "Harness",
+      "Agent",
+      "AI Pipeline"
+    ]
+  }
+]

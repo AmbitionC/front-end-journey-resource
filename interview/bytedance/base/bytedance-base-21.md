@@ -33,6 +33,83 @@
 | 多 Agent 上下文和状态怎样隔离 | 会话范围与业务授权 |
 | GRPO/PPO 的奖励归因与 critic 有何区别 | 优势估计与终态信用分配 |
 
+## 原题与复习入口
+
+同一原问涉及多个既有专题时，下方分列复习入口；它们不代表新增独立题目或面试流程。题后的回答均为整理教学，不是候选人现场作答。
+
+<details data-knowledge-key="multi-agent">
+<summary>（1）三级 Agent 是否必要，编排层为何也要用 Agent</summary>
+</details>
+
+我不会先承诺三级；先找需要独立决策的分支，再用同任务消融验证层级贡献。固定流程交给代码，拆层收益要覆盖协调成本。
+
+<details data-knowledge-key="agent-architecture">
+<summary>（2）同一原问的复习入口（智能体定义、类型、PEAS 与 Agent Loop）：三级 Agent 是否必要，编排层为何也要用 Agent</summary>
+</details>
+
+我不会先承诺三级；先找需要独立决策的分支，再用同任务消融验证层级贡献。固定流程交给代码，拆层收益要覆盖协调成本。
+
+<details data-knowledge-key="agent-memory-summarization">
+<summary>（3）主子上下文怎样交接，摘要丢字段怎么办</summary>
+</details>
+
+关键字段在权威状态，摘要只提供工作视图；缺字段就阻断并回源，避免上游压缩错误变成下游执行依据。
+
+<details data-knowledge-key="context-engineering">
+<summary>（4）超长上下文、长 query 怎样压缩</summary>
+</details>
+
+先裁无关信息和外置大结果，再压缩旧对话；实体、否定和时间有结构化保留合同，压缩后仍要验证任务结果。
+
+<details data-knowledge-key="rag-parent-child">
+<summary>（5）RAG 召回怎样提升，父子索引解决什么</summary>
+</details>
+
+父子索引把定位粒度与回答上下文分开；先小块召回再取合法父块补条件，适合上下文碎裂，不能解决缺数据或权限错误。
+
+<details data-knowledge-key="rag-evaluation">
+<summary>（6）同一原问的复习入口（RAG 评估与优化）：RAG 召回怎样提升，父子索引解决什么</summary>
+</details>
+
+父子索引把定位粒度与回答上下文分开；先小块召回再取合法父块补条件，适合上下文碎裂，不能解决缺数据或权限错误。
+
+<details data-knowledge-key="algorithm-loop">
+<summary>（7）两个多层 JSON 深度合并，异类型冲突怎样处理</summary>
+</details>
+
+先约定双对象递归、其他右侧替换；用有限子树下降证明终止，并深复制保输入边界。数组合并和 null 删除都不是默认标准答案。
+
+<details data-knowledge-key="agent-eval-framework">
+<summary>（8）怎样搭 Agent benchmark</summary>
+</details>
+
+先定义约束内的合法终态，再分开评分环境结果与轨迹；冻结版本、分切片重复比较，人工校准语言裁判。
+
+<details data-knowledge-key="agent-benchmark">
+<summary>（9）同一原问的复习入口（Agent Benchmark 的设计与解读）：怎样搭 Agent benchmark</summary>
+</details>
+
+先定义约束内的合法终态，再分开评分环境结果与轨迹；冻结版本、分切片重复比较，人工校准语言裁判。
+
+<details data-knowledge-key="agent-state-storage">
+<summary>（10）多 Agent 上下文和状态怎样隔离</summary>
+</details>
+
+session 只划会话，授权必须贯穿存储、缓存和工具；租户由服务端绑定，每次读写校验范围，并发恢复也不能漏。
+
+<details data-knowledge-key="agentic-rl">
+<summary>（11）GRPO/PPO 的奖励归因与 critic 有何区别</summary>
+</details>
+
+常见 actor-critic 式 PPO 用价值基线与 GAE，原始 GRPO 用同题组奖励形成相对优势，从而不用价值 critic。终态 GRPO 没有分辨单次工具的贡献，奖励质量、零方差和长轨迹归因仍要处理。
+
+<details data-binding-status="pending_semantic_verification">
+<summary>（12）背景学习入口（RLHF、RLAIF 与 DPO，不计专题频次）：原问为 GRPO/PPO 的奖励归因与 critic，偏好优化只作背景复习</summary>
+<p>关联知识点待核实。原问的 GRPO/PPO 奖励归因与 critic 已保留在上一入口；RLHF、RLAIF 与 DPO 仅作背景学习，不是本题已确认考点，不计专题频次。</p>
+</details>
+
+常见 actor-critic 式 PPO 用价值基线与 GAE，原始 GRPO 用同题组奖励形成相对优势，从而不用价值 critic。终态 GRPO 没有分辨单次工具的贡献，奖励质量、零方差和长轨迹归因仍要处理。
+
 ## 架构：三级 Agent 的每一层在决定什么
 
 原题没有规定必须采用三级。先把案例中的依赖画出来：流量与风险查询可以独立进行，但原因报告必须等证据回来。一个 Agent 可以提出并行工具调用，普通程序也能并发执行查询；“能并行”不足以证明中间层还要再放一个模型。
@@ -125,7 +202,7 @@ merge(left, right):
 
 **口述回答：**先约定双对象递归、其他右侧替换；用有限子树下降证明终止，并深复制保输入边界。数组合并和 null 删除都不是默认标准答案。
 
-知识导航：[递归、分治与搜索](../../../knowledge/data-structure/algorithm/algorithm-loop.md)、[JSON / CSV / Parquet 数据格式](../../../knowledge/data/processing/data-formats.md)。
+知识导航：[递归、分治与搜索](../../../knowledge/data-structure/algorithm/algorithm-loop.md)。
 
 ## 评测与隔离：判分对象是任务完成，范围标识不是授权
 
@@ -141,7 +218,9 @@ benchmark 的最小单位是“输入＋初始环境＋允许动作＋合法终�
 
 **隔离题口述：**session 只划会话，授权必须贯穿存储、缓存和工具；租户由服务端绑定，每次读写校验范围，并发恢复也不能漏。
 
-知识导航：[生产级 Agent 评估系统设计](../../../knowledge/llm/production/agent-eval-framework.md)、[Agent Benchmark 的设计与解读](../../../knowledge/llm/production/agent-benchmark.md)、[Agent 会话、检查点与任务状态存储](../../../knowledge/backend/storage/agent-state-storage.md)、[工作流状态、检查点与断点续跑](../../../knowledge/llm/agent/agent-workflow-state.md)、[RAG 数据权限与多租户隔离](../../../knowledge/llm/rag/rag-access-control.md)。
+知识导航：[生产级 Agent 评估系统设计](../../../knowledge/llm/production/agent-eval-framework.md)、[Agent Benchmark 的设计与解读](../../../knowledge/llm/production/agent-benchmark.md)、[Agent 会话、检查点与任务状态存储](../../../knowledge/backend/storage/agent-state-storage.md)、[RAG 数据权限与多租户隔离](../../../knowledge/llm/rag/rag-access-control.md)。
+
+相关机制阅读（不计专题频次）：[工作流状态、检查点与断点续跑](../../../knowledge/llm/agent/agent-workflow-state.md)。仅参考 thread 寻址与业务 State、运行配置的区分；这些标识本身不提供租户授权，也不是多 Agent 隔离的完整答案。
 
 ## 强化学习：优势估计不等于找出哪次工具调用立功
 
@@ -171,7 +250,8 @@ GRPO 省掉的是价值函数近似与训练，评分仍需要奖励模型或规
 
 **口述回答：**常见 actor-critic 式 PPO 用价值基线与 GAE，原始 GRPO 用同题组奖励形成相对优势，从而不用价值 critic。终态 GRPO 没有分辨单次工具的贡献，奖励质量、零方差和长轨迹归因仍要处理。
 
-知识导航：[Agentic RL：长时序信用分配与策略优化](../../../knowledge/llm/agent/agentic-rl.md)、[RLHF、RLAIF 与 DPO 的差异](../../../knowledge/llm/basics/llm-rlhf-dpo.md)。
+知识导航：[Agentic RL：长时序信用分配与策略优化](../../../knowledge/llm/agent/agentic-rl.md)。
+学习阅读（不计专题频次）：[RLHF、RLAIF 与 DPO 背景学习（不是 GRPO/critic 原题绑定）](../../../knowledge/llm/basics/llm-rlhf-dpo.md)。
 
 ## 教学补充／模拟追问
 

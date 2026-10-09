@@ -529,7 +529,6 @@ WATCH/MULTI/EXEC 是乐观锁，高并发下频繁发生冲突时需要客户端
 
 <!-- interview-source-history:start -->
 - [淘天 AI 应用研发一面：RAG、限流 Top-K 与优惠策略设计（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-5.md)（cluster-456378924c83）
-- [蚂蚁 Agent 实习一面：缓存、消息与 RAG（2026 年 6 月发帖）](../../../interview/antfin/ai/antfin-ai-6.md)（cluster-de2ee20bc890）
 <!-- interview-source-history:end -->
 
 ## 参考资料

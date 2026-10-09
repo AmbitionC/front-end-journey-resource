@@ -96,15 +96,11 @@ async function acceptResult(raw: unknown, ctx: ValidationContext) {
 
 <!-- interview-source-history:start -->
 - [拼多多 AI Agent 岗两轮技术面：RAG、多 Agent 与系统能力（2026 年 8 月）](../../../interview/pinduoduo/ai/pinduoduo-ai-1.md)
-- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-23.md)
-- [小红书 Agent 开发一面：LangGraph 子图、Skill 进化与工程校验（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-2.md)
-- [字节 Managed Agent 校招一面：评测、运行链路与后端基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-26.md)
+- [百度部分（小红书与百度合并记录）：LangGraph、Skill 与工程校验（2026 年 8 月发帖）](../../../interview/redbook/ai/redbook-ai-2.md)
 - [字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-20.md)
-- [vivo Agent 秋招线下面：Harness 与工程诊断（2026 年 9 月发帖）](../../../interview/vivo/ai/vivo-ai-1.md)
 - [百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测（2026 年 8 月）](../../../interview/baidu/ai/baidu-ai-2.md)
 - [阿里 Agent 开发暑期实习一面（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-2.md)
 - [蚂蚁 Agent 开发一面：多 Agent 并发与质量保障（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-1.md)
-- [淘宝闪购 Agent 算法一面：框架选型、人工接管与线上安全（2026 年 4 月）](../../../interview/alibaba/ai/alibaba-ai-6.md)
 - [字节剪映 AI 前端一面：Agent 运行时、MCP 与性能](../../../interview/bytedance/base/bytedance-base-30.md)
 - [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
 <!-- interview-source-history:end -->

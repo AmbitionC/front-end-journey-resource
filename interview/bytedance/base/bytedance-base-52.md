@@ -8,8 +8,9 @@
 
 用真实职责和一项可验证改进说明实习能力，分清团队协作与个人产出。问题只记了类别，不补造具体业务追问。
 
-<details data-knowledge-key="agent-eval-framework">
+<details data-binding-status="pending_semantic_verification">
 <summary>（2）如何提升AI生成质量？</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 先定义质量标准和测试样例，再分类修复证据、提示、工具与输出问题。用同一基线比较正确率和任务成功率，不能只靠更换模型或主观体感。

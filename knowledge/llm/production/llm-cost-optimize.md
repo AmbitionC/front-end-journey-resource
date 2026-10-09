@@ -434,7 +434,6 @@ Batch API 的完成时限和模型支持范围由提供商决定。在任务量�
 
 <!-- interview-source-history:start -->
 - [字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-20.md)
-- [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

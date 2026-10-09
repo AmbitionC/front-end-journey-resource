@@ -241,7 +241,6 @@ graph LR
 
 <!-- interview-source-history:start -->
 - [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)
-- [快手 AI 应用开发秋招一面：线程池、OOM 与项目深挖（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-2.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信（2026 年 3 月发帖）](../../../interview/tencent/ai/tencent-ai-10.md)
 - [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../../interview/bytedance/base/bytedance-base-36.md)
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)

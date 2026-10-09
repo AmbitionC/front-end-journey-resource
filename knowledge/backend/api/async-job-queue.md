@@ -115,7 +115,6 @@ RabbitMQ 的 TTL 限制消息存活期，死信交换机路由过期、拒收等
 <!-- interview-source-history:start -->
 - [阿里云 Agent Infra 一面：SGX、吞吐与日志写入（2026 年 9 月发帖）](../../../interview/alibaba/ai/alibaba-ai-8.md)
 - [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-23.md)
-- [字节 Managed Agent 校招一面：评测、运行链路与后端基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-26.md)
 - [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)
 - [蚂蚁 Agent 实习一面：缓存、消息与 RAG（2026 年 6 月发帖）](../../../interview/antfin/ai/antfin-ai-6.md)
 - [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)

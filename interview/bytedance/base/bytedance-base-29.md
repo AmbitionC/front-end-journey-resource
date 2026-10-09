@@ -24,8 +24,9 @@
 
 按所用版本说明压缩触发、保留信息、摘要怎样进入后续输入以及原始记录如何恢复。应区分实际观察与产品文档，不能把工作摘要当成无损全文或永久记忆。评价压缩看关键约束与任务结果是否保留，不能只比较长度。 [Claude Code：上下文与自动压缩](https://code.claude.com/docs/en/how-claude-code-works)。
 
-<details data-knowledge-key="agent-sandbox">
+<details data-binding-status="pending_semantic_verification">
 <summary>（5）Computer Use 怎样操作本地或云端电脑？</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 运行环境提供截图或界面状态，模型提出点击、输入等动作，执行层按权限实施后再观察。区别主要在会话、文件和网络位于本地还是远端；都需隔离凭据、约束可操作范围、检查动作结果，并处理界面变化、超时与取消。

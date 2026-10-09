@@ -24,8 +24,9 @@
 
 保存正文及其文档、块位置、版本和权限信息，向量或关键词索引用于定位候选。查询先限制可访问范围，再召回、融合和重排，取可引用的上下文供生成；索引命中不等于事实可靠，也不能省略更新和删除传播。
 
-<details data-knowledge-key="os-process-thread">
+<details data-binding-status="pending_semantic_verification">
 <summary>（5）栈与堆怎样区分？</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 常见运行时用栈组织函数调用和局部执行状态，用堆承载动态分配对象；线程有独立执行栈，同进程可以共享堆数据。实际对象布局与生命周期取决于语言和优化，不能仅凭变量写在哪就断言物理存储位置。

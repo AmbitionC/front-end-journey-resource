@@ -8,8 +8,9 @@
 
 Transformer 的注意力便于建模位置之间关系，训练可并行处理序列；LSTM 按序递归且有不同计算与归纳偏置。选型需比较数据量、长度、时延和基线，不能认为 Transformer 必然更好。
 
-<details data-knowledge-key="data-quality">
+<details data-binding-status="pending_semantic_verification">
 <summary>（2）怎么分析流量</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 先明确流量单位、时间窗口、采样与来源，再看分布、峰值、异常和特征变化。模型分析要防数据泄漏并用时间切分验证，原帖未给具体数据，不能编造业务指标。

@@ -319,7 +319,6 @@ docker compose config
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [蚂蚁 Agent 实习一面：缓存、消息与 RAG（2026 年 6 月发帖）](../../../interview/antfin/ai/antfin-ai-6.md)（cluster-de2ee20bc890）
 <!-- interview-source-history:end -->
 
 ## 参考资料

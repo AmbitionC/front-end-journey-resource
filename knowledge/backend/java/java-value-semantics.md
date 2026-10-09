@@ -60,7 +60,6 @@ String 不可变；StringBuilder 可变且不保证并发安全，StringBuffer �
 <!-- interview-source-history:start -->
 - [字节全栈一面：RAG、Java与线程池](../../../interview/bytedance/base/bytedance-base-37.md)
 - [字节全栈实习：Session、权限与前端基础](../../../interview/bytedance/base/bytedance-base-46.md)
-- [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
 <!-- interview-source-history:end -->
 

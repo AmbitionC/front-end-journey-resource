@@ -12,7 +12,19 @@ SSE 可以持续传递检索进度与文本增量，前端看到半句话时，r
 
 ## 原始提问归纳与答题思路
 
+同一原问涉及多个既有专题时，下方分列复习入口；它们不代表新增独立题目或面试流程。题后的回答均为整理教学，不是候选人现场作答。
+
 #### （1）实习和项目怎样介绍，检索是否基于向量，完整 RAG 系统有哪些组成？（原题 1–3）
+
+<details data-knowledge-key="rag-pipeline">
+<summary>（1）实习和项目怎样介绍，检索是否基于向量，完整 RAG 系统有哪些组成？（原题 1–3）</summary>
+</details>
+
+从业务目标和自己的贡献进入，沿 d3 说明两条链：导入链把原始资料变成有来源与版本的索引；问答链将用户问题变成候选片段，再组织上下文生成答案。Spring AI 的 ETL 官方章节将读取、变换、写入分开，可用来理解导入职责，但不能据此认定原项目采用了 Spring AI。[Spring AI ETL Pipeline](https://docs.spring.io/spring-ai/reference/api/etl-pipeline.html)
+
+<details data-knowledge-key="agent-resume-interview">
+<summary>（2）同一原问的复习入口（AI / Agent 岗位简历与面试）：实习和项目怎样介绍，检索是否基于向量，完整 RAG 系统有哪些组成？（原题 1–3）</summary>
+</details>
 
 从业务目标和自己的贡献进入，沿 d3 说明两条链：导入链把原始资料变成有来源与版本的索引；问答链将用户问题变成候选片段，再组织上下文生成答案。Spring AI 的 ETL 官方章节将读取、变换、写入分开，可用来理解导入职责，但不能据此认定原项目采用了 Spring AI。[Spring AI ETL Pipeline](https://docs.spring.io/spring-ai/reference/api/etl-pipeline.html)
 
@@ -24,6 +36,22 @@ SSE 可以持续传递检索进度与文本增量，前端看到半句话时，r
 
 #### （2）文档上传和分块怎样实现，为什么每个用户只能上传一个文件？（原题 4、15）
 
+<details data-knowledge-key="rag-production-ingestion">
+<summary>（3）文档上传和分块怎样实现，为什么每个用户只能上传一个文件？（原题 4、15）</summary>
+</details>
+
+上传入口先检查授权、文件类型与大小，保存原文件并创建可查询的导入任务；后续解析、切块和索引写入记录任务与资料版本。以 d3 为例，章节标题和来源页码应随片段保留，否则生成引用时无法说明证据来自哪里。新版本未准备好时继续读取旧的完整版本，是本例避免半成品暴露的设计选择。
+
+<details data-knowledge-key="rag-chunking">
+<summary>（4）同一原问的复习入口（文本分块策略（Chunking））：文档上传和分块怎样实现，为什么每个用户只能上传一个文件？（原题 4、15）</summary>
+</details>
+
+上传入口先检查授权、文件类型与大小，保存原文件并创建可查询的导入任务；后续解析、切块和索引写入记录任务与资料版本。以 d3 为例，章节标题和来源页码应随片段保留，否则生成引用时无法说明证据来自哪里。新版本未准备好时继续读取旧的完整版本，是本例避免半成品暴露的设计选择。
+
+<details data-knowledge-key="file-upload-service">
+<summary>（5）同一原问的复习入口（文件上传、分片与对象存储）：文档上传和分块怎样实现，为什么每个用户只能上传一个文件？（原题 4、15）</summary>
+</details>
+
 上传入口先检查授权、文件类型与大小，保存原文件并创建可查询的导入任务；后续解析、切块和索引写入记录任务与资料版本。以 d3 为例，章节标题和来源页码应随片段保留，否则生成引用时无法说明证据来自哪里。新版本未准备好时继续读取旧的完整版本，是本例避免半成品暴露的设计选择。
 
 分块要结合文档结构与检索任务，查看一个片段是否能完整解释退款条件、多个条件是否被无意义拆开，再用标注查询验证效果。大小和重叠不是脱离语料的通用常数。单文件限制可能来自界面、配额或实现范围，原帖没有披露原因，不能替作者填一个理由。应给自己真实限制、用户影响和扩展验收条件；多文件还需要去重、版本与访问范围管理。
@@ -33,6 +61,22 @@ SSE 可以持续传递检索进度与文本增量，前端看到半句话时，r
 知识导航：[生产级文档解析、索引与增量更新](../../../knowledge/llm/rag/rag-production-ingestion.md)、[文本分块策略（Chunking）](../../../knowledge/llm/rag/rag-chunking.md)、[文件上传、分片与对象存储](../../../knowledge/backend/api/file-upload-service.md)。
 
 #### （3）单次向量召回耗时、Rerank 与匹配度评测怎样说明？（原题 5–6）
+
+<details data-knowledge-key="rag-reranking">
+<summary>（6）单次向量召回耗时、Rerank 与匹配度评测怎样说明？（原题 5–6）</summary>
+</details>
+
+先给测量口径：一次请求从哪里开始、在哪里结束，语料量、候选数、并发、缓存情况与延迟分位是什么。拆开 embedding、检索、重排与生成的耗时，避免把整次问答延迟叫向量检索耗时。Rerank 对已经召回的候选重新排序；若有关片段根本没进入候选集，重排不能从集合外找回它。因此是否使用重排，要比较同一候选与查询下的排序质量和额外成本。[Elasticsearch Text similarity reranker](https://www.elastic.co/docs/reference/elasticsearch/rest-apis/retrievers/text-similarity-reranker-retriever)
+
+<details data-knowledge-key="rag-evaluation">
+<summary>（7）同一原问的复习入口（RAG 评估与优化）：单次向量召回耗时、Rerank 与匹配度评测怎样说明？（原题 5–6）</summary>
+</details>
+
+先给测量口径：一次请求从哪里开始、在哪里结束，语料量、候选数、并发、缓存情况与延迟分位是什么。拆开 embedding、检索、重排与生成的耗时，避免把整次问答延迟叫向量检索耗时。Rerank 对已经召回的候选重新排序；若有关片段根本没进入候选集，重排不能从集合外找回它。因此是否使用重排，要比较同一候选与查询下的排序质量和额外成本。[Elasticsearch Text similarity reranker](https://www.elastic.co/docs/reference/elasticsearch/rest-apis/retrievers/text-similarity-reranker-retriever)
+
+<details data-knowledge-key="rag-latency-cost">
+<summary>（8）同一原问的复习入口（RAG 延迟、吞吐与成本优化）：单次向量召回耗时、Rerank 与匹配度评测怎样说明？（原题 5–6）</summary>
+</details>
 
 先给测量口径：一次请求从哪里开始、在哪里结束，语料量、候选数、并发、缓存情况与延迟分位是什么。拆开 embedding、检索、重排与生成的耗时，避免把整次问答延迟叫向量检索耗时。Rerank 对已经召回的候选重新排序；若有关片段根本没进入候选集，重排不能从集合外找回它。因此是否使用重排，要比较同一候选与查询下的排序质量和额外成本。[Elasticsearch Text similarity reranker](https://www.elastic.co/docs/reference/elasticsearch/rest-apis/retrievers/text-similarity-reranker-retriever)
 
@@ -46,6 +90,16 @@ SSE 可以持续传递检索进度与文本增量，前端看到半句话时，r
 
 #### （4）怎样理解 Agent 的核心模块与 ReAct 范式？（原题 7–8）
 
+<details data-knowledge-key="agent-architecture">
+<summary>（9）怎样理解 Agent 的核心模块与 ReAct 范式？（原题 7–8）</summary>
+</details>
+
+先从行为定义：运行时保存目标和当前状态，调用模型决定下一步，执行被授权的工具，将观察结果带入后续决策，并判断是否停止。本例中检索返回“条件只适用于线上订单”，下一步才决定是否补查线下规则；如果第一轮证据已经完整，就直接生成答案而不是为了循环而循环。
+
+<details data-knowledge-key="agent-react">
+<summary>（10）同一原问的复习入口（ReAct：推理与行动框架）：怎样理解 Agent 的核心模块与 ReAct 范式？（原题 7–8）</summary>
+</details>
+
 先从行为定义：运行时保存目标和当前状态，调用模型决定下一步，执行被授权的工具，将观察结果带入后续决策，并判断是否停止。本例中检索返回“条件只适用于线上订单”，下一步才决定是否补查线下规则；如果第一轮证据已经完整，就直接生成答案而不是为了循环而循环。
 
 ReAct 原论文研究将推理与行动交替，让行动带来的观察帮助修正后续步骤。工程介绍应说明可审计的工具输入、结果和状态变化，无需公开模型完整内部思维过程；确定性链路与模型自主决策也应分清。[ReAct 原论文（2022）](https://arxiv.org/abs/2210.03629)
@@ -56,6 +110,16 @@ ReAct 原论文研究将推理与行动交替，让行动带来的观察帮助�
 
 #### （5）一般几步完成，达到最大步数仍未完成怎么办，是否设置 Plan？（原题 9、13）
 
+<details data-knowledge-key="agent-run-loop">
+<summary>（11）一般几步完成，达到最大步数仍未完成怎么办，是否设置 Plan？（原题 9、13）</summary>
+</details>
+
+只报告自己任务分布中的真实轨迹，并定义“步”是一次模型调用还是一次工具动作；没有通用最优步数。r1 同时限制轮次、时间、token 和工具调用预算，工具返回后更新剩余预算，决定继续、完成或停止。达到上限但证据不足时，保存已取得的资料、停止原因和可恢复位置，明确告知未完成，再按策略澄清或交给人工处理。
+
+<details data-knowledge-key="agent-planning">
+<summary>（12）同一原问的复习入口（任务规划、分解与动态重规划）：一般几步完成，达到最大步数仍未完成怎么办，是否设置 Plan？（原题 9、13）</summary>
+</details>
+
 只报告自己任务分布中的真实轨迹，并定义“步”是一次模型调用还是一次工具动作；没有通用最优步数。r1 同时限制轮次、时间、token 和工具调用预算，工具返回后更新剩余预算，决定继续、完成或停止。达到上限但证据不足时，保存已取得的资料、停止原因和可恢复位置，明确告知未完成，再按策略澄清或交给人工处理。
 
 Plan 可把依赖复杂的任务拆成步骤，但工具观察可能否定计划，重规划也要消耗预算。固定的“检索→生成”本例未必需要独立 Plan 调用；若改成跨多份资料核对冲突，显式计划可以帮助追踪还有哪些证据没取到。检查点是应用持久状态，需要明确保存哪些输入与结果，不能从使用某个框架推定断点续跑已完成。
@@ -65,6 +129,16 @@ Plan 可把依赖复杂的任务拆成步骤，但工具观察可能否定计划
 知识导航：[Agent Run Loop、轮次与终止条件](../../../knowledge/llm/agent/agent-run-loop.md)、[任务规划、分解与动态重规划](../../../knowledge/llm/agent/agent-planning.md)、[工作流状态、检查点与断点续跑](../../../knowledge/llm/agent/agent-workflow-state.md)。
 
 #### （6）接入了哪些工具，怎样约定并约束模型调用？（原题 10–11）
+
+<details data-knowledge-key="agent-tool-design">
+<summary>（13）接入了哪些工具，怎样约定并约束模型调用？（原题 10–11）</summary>
+</details>
+
+逐个说实际工具的用途、输入 Schema、权限、超时、错误和副作用。本例只读工具接受资料 ID 与检索词，租户和用户身份由受信任的服务端上下文取得，不能由模型传入另一个租户就获得访问。模型提议 get_passage(d3)，运行时先校验参数和调用者授权，再执行查询，外部服务返回结果后才交回模型。
+
+<details data-knowledge-key="agent-tool-selection">
+<summary>（14）同一原问的复习入口（工具发现、选择与路由）：接入了哪些工具，怎样约定并约束模型调用？（原题 10–11）</summary>
+</details>
 
 逐个说实际工具的用途、输入 Schema、权限、超时、错误和副作用。本例只读工具接受资料 ID 与检索词，租户和用户身份由受信任的服务端上下文取得，不能由模型传入另一个租户就获得访问。模型提议 get_passage(d3)，运行时先校验参数和调用者授权，再执行查询，外部服务返回结果后才交回模型。
 
@@ -78,6 +152,16 @@ Plan 可把依赖复杂的任务拆成步骤，但工具观察可能否定计划
 
 #### （7）项目推流是否用 SSE，SSE、WebSocket 与 HTTP 怎样关联？（原题 12、14）
 
+<details data-knowledge-key="sse-server">
+<summary>（15）项目推流是否用 SSE，SSE、WebSocket 与 HTTP 怎样关联？（原题 12、14）</summary>
+</details>
+
+先如实说明自己推流实现。SSE 用 HTTP 响应承载 text/event-stream 事件，适合服务器持续向客户端发消息；浏览器 EventSource 规范提供重连与 Last-Event-ID，但服务端必须自己保留并按游标补发事件。WebSocket 在 RFC 6455 描述的握手后提供双方独立发送消息的通道。SSE 并不独立于 HTTP，也不能把 HTTP 简化为只能一次返回完整内容。[WHATWG Server-sent events](https://html.spec.whatwg.org/multipage/server-sent-events.html)、[RFC 6455：双向消息通道](https://www.rfc-editor.org/rfc/rfc6455.html#section-1.2)
+
+<details data-knowledge-key="websocket">
+<summary>（16）同一原问的复习入口（WebSocket 实时通信）：项目推流是否用 SSE，SSE、WebSocket 与 HTTP 怎样关联？（原题 12、14）</summary>
+</details>
+
 先如实说明自己推流实现。SSE 用 HTTP 响应承载 text/event-stream 事件，适合服务器持续向客户端发消息；浏览器 EventSource 规范提供重连与 Last-Event-ID，但服务端必须自己保留并按游标补发事件。WebSocket 在 RFC 6455 描述的握手后提供双方独立发送消息的通道。SSE 并不独立于 HTTP，也不能把 HTTP 简化为只能一次返回完整内容。[WHATWG Server-sent events](https://html.spec.whatwg.org/multipage/server-sent-events.html)、[RFC 6455：双向消息通道](https://www.rfc-editor.org/rfc/rfc6455.html#section-1.2)
 
 在同一资料问答任务下，文本与进度主要从服务器推送，可评估 SSE；少量取消或补充输入可走独立 HTTP 请求。如果需要双方持续高频交互，再比较 WebSocket 的连接、消息路由和恢复成本。选择还受鉴权、代理超时、事件保留与慢客户端处理影响，不能仅比较协议名称。
@@ -86,9 +170,19 @@ r1 的 running、completed 或 budget_exhausted 是应用状态，文本增量�
 
 **口述结论：**SSE 是 HTTP 事件流，WebSocket 提供双向消息；本例先按交互方向选，再用持久 run 状态确认结果，因为传输结束不等于业务完成，重连也不自动获得历史事件。
 
-知识导航：[SSE 服务端推送与连接管理](../../../knowledge/backend/api/sse-server.md)、[WebSocket 实时通信](../../../knowledge/backend/api/websocket.md)、[HTTP 请求、响应与报文结构](../../../knowledge/network/http/http-message.md)。
+知识导航：[SSE 服务端推送与连接管理](../../../knowledge/backend/api/sse-server.md)、[WebSocket 实时通信](../../../knowledge/backend/api/websocket.md)。
 
 #### （8）图像识别为什么选传统模型而非多模态大模型，项目用了哪些 LLM？（原题 16–17）
+
+<details data-knowledge-key="rag-image-retrieval">
+<summary>（17）图像识别为什么选传统模型而非多模态大模型，项目用了哪些 LLM？（原题 16–17）</summary>
+</details>
+
+把比较放在同一输入和验收条件下：任务是固定标签识别、OCR，还是开放的图文解释？看领域精度、延迟、成本、数据治理与维护条件。若专用方案已满足固定标签目标，就需要说明升级多模态方案能解决什么未满足的问题；若任务需要开放语义描述，再用同一数据集比较。这里是选型判断方法，没有断言哪类模型普遍更好。
+
+<details data-knowledge-key="llm-model-selection">
+<summary>（18）同一原问的复习入口（仅原题16：传统识别与多模态方案选择）：图像识别为什么选传统模型而非多模态大模型？</summary>
+</details>
 
 把比较放在同一输入和验收条件下：任务是固定标签识别、OCR，还是开放的图文解释？看领域精度、延迟、成本、数据治理与维护条件。若专用方案已满足固定标签目标，就需要说明升级多模态方案能解决什么未满足的问题；若任务需要开放语义描述，再用同一数据集比较。这里是选型判断方法，没有断言哪类模型普遍更好。
 
@@ -96,9 +190,15 @@ r1 的 running、completed 或 budget_exhausted 是应用状态，文本增量�
 
 **口述结论：**我按同一任务与指标比较专用模型和多模态模型，因为输入目标变了才可能改变方案；未披露的模型和效果不补写，自己的选择用实际版本和数据说明。
 
-知识导航：[图像、OCR 与多模态检索](../../../knowledge/llm/rag/rag-image-retrieval.md)、[模型能力评估与选型](../../../knowledge/llm/basics/llm-model-selection.md)。
+知识导航：[图像、OCR 与多模态检索](../../../knowledge/llm/rag/rag-image-retrieval.md)。
+
+原题对应阅读（仅原题 16 的传统识别与多模态方案选择）：[模型能力评估与选型](../../../knowledge/llm/basics/llm-model-selection.md)。原题 17 所用模型名单不作为此关联依据；本文不声称原项目已完成这些对照实验。
 
 #### （9）Go 并发与其他语言怎样比较，goroutine 的核心原理是什么？（原题 18–19）
+
+<details data-knowledge-key="os-process-thread">
+<summary>（19）Go 并发与其他语言怎样比较，goroutine 的核心原理是什么？（原题 18–19）</summary>
+</details>
 
 并发表示多个任务推进，CPU 并行表示同一时刻实际执行多个计算任务，两者不能混用。Go 官方 FAQ 将 goroutine 描述为由运行时复用到线程上的执行单元；runtime 的调度说明中，G 是 goroutine，M 是 OS 线程，P 是执行 Go 代码所需的调度资源，P 的数量由 GOMAXPROCS 决定。这是当前实现模型，不能把 P 直接等同于物理 CPU 核。[Go FAQ：Why goroutines](https://go.dev/doc/faq#goroutines)、[Go runtime：Gs, Ms, Ps](https://go.dev/src/runtime/HACKING)
 
@@ -110,6 +210,16 @@ r1 的 running、completed 或 budget_exhausted 是应用状态，文本增量�
 
 #### （10）锁解决什么问题，日常常用什么锁，多机多进程如何选择？（原题 20–22）
 
+<details data-knowledge-key="os-thread-sync">
+<summary>（20）锁解决什么问题，日常常用什么锁，多机多进程如何选择？（原题 20–22）</summary>
+</details>
+
+锁协调对共享状态的访问，例如并发更新 r1 的预算与状态时，不能让两个执行者各自看到旧余额后都放行。进程内可用互斥锁保护短临界区，读写锁允许多个读者或一个写者；是否有收益还要看实际竞争、持锁时间与读写负载。网络调用不应仅为图省事放进长时间持锁区。日常使用哪种锁只报告真实经验。[Go sync：Mutex 与 RWMutex](https://pkg.go.dev/sync)
+
+<details data-knowledge-key="redis-distributed-lock">
+<summary>（21）同一原问的复习入口（Redis 分布式锁：租约、续期与故障边界）：锁解决什么问题，日常常用什么锁，多机多进程如何选择？（原题 20–22）</summary>
+</details>
+
 锁协调对共享状态的访问，例如并发更新 r1 的预算与状态时，不能让两个执行者各自看到旧余额后都放行。进程内可用互斥锁保护短临界区，读写锁允许多个读者或一个写者；是否有收益还要看实际竞争、持锁时间与读写负载。网络调用不应仅为图省事放进长时间持锁区。日常使用哪种锁只报告真实经验。[Go sync：Mutex 与 RWMutex](https://pkg.go.dev/sync)
 
 进程内锁不能协调另一台机器。多实例共同修改数据库状态时，可用数据库事务和条件版本更新落实不变量；确实需要独占任务时再讨论协调服务或分布式租约。租约过期后，暂停的旧持有者可能恢复并继续写，续期也不能证明它一直拥有有效权限。关键写可由下游验证单调的 fencing token 或业务版本，拒绝旧持有者的写入；令牌必须由可信的协调机制产生，且下游真正检查才有作用。[Redis 分布式锁：租约与 fencing 建议](https://redis.io/docs/latest/develop/clients/patterns/distributed-locks/)
@@ -119,6 +229,16 @@ r1 的 running、completed 或 budget_exhausted 是应用状态，文本增量�
 知识导航：[锁、信号量与并发同步](../../../knowledge/cs/os/os-thread-sync.md)、[Redis 分布式锁：租约、续期与故障边界](../../../knowledge/backend/database/redis-distributed-lock.md)。
 
 #### （11）MCP、Function Call 与 A2A 怎样区分，接入和手写 MCP 服务如何说明？（原题 23–24）
+
+<details data-knowledge-key="mcp-protocol">
+<summary>（22）MCP、Function Call 与 A2A 怎样区分，接入和手写 MCP 服务如何说明？（原题 23–24）</summary>
+</details>
+
+先区分三个层次。Function Call/Tool Use 是模型接口表达结构化调用意图的能力；对于应用自定义工具，运行时执行后把结果返回给模型。MCP 是应用与能力服务交换工具、资源等的协议；A2A 是独立 Agent 系统发现能力、交换消息、跟踪任务和结果的协作协议。它们可以组合，不应仅用“谁能处理长任务”区分。[Anthropic 自定义工具执行流程](https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview)、[A2A 1.0.0：Introduction 与 Relationship to MCP](https://a2a-protocol.org/v1.0.0/specification/)
+
+<details data-knowledge-key="agent-tool-design">
+<summary>（23）同一原问的复习入口（Agent 工具契约、Schema 与错误语义）：MCP、Function Call 与 A2A 怎样区分，接入和手写 MCP 服务如何说明？（原题 23–24）</summary>
+</details>
 
 先区分三个层次。Function Call/Tool Use 是模型接口表达结构化调用意图的能力；对于应用自定义工具，运行时执行后把结果返回给模型。MCP 是应用与能力服务交换工具、资源等的协议；A2A 是独立 Agent 系统发现能力、交换消息、跟踪任务和结果的协作协议。它们可以组合，不应仅用“谁能处理长任务”区分。[Anthropic 自定义工具执行流程](https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview)、[A2A 1.0.0：Introduction 与 Relationship to MCP](https://a2a-protocol.org/v1.0.0/specification/)
 
@@ -135,6 +255,22 @@ r1 的 running、completed 或 budget_exhausted 是应用状态，文本增量�
 知识导航：[MCP / A2A 智能体通信协议](../../../knowledge/llm/agent/mcp-protocol.md)、[Agent 工具契约、Schema 与错误语义](../../../knowledge/llm/agent/agent-tool-design.md)。
 
 #### （12）日常 AI 工具与 command/skill 经验，Claude Code 和 OpenClaw 原理怎样讲？（原题 25–28）
+
+<details data-knowledge-key="agent-coding">
+<summary>（24）日常 AI 工具与 command/skill 经验，Claude Code 和 OpenClaw 原理怎样讲？（原题 25–28）</summary>
+</details>
+
+先给自己实际用过的产品、版本、任务与一次可复查结果，不把“听过工具名”说成使用经验。command/skill 可以封装重复的指令和流程，但权限、执行与验收仍由运行时及使用者的约束决定。当前 Claude Code 文档说明自定义 commands 已合并到 skills，已有命令文件继续工作；SKILL.md 提供指令，可按相关性加载或用命令调用。这是滚动产品文档的现状，不回填作者当时的配置。[Claude Code Skills](https://code.claude.com/docs/en/skills)
+
+<details data-knowledge-key="agent-skill-design">
+<summary>（25）同一原问的复习入口（Agent Skill：渐进式披露、热插拔与版本治理）：日常 AI 工具与 command/skill 经验，Claude Code 和 OpenClaw 原理怎样讲？（原题 25–28）</summary>
+</details>
+
+先给自己实际用过的产品、版本、任务与一次可复查结果，不把“听过工具名”说成使用经验。command/skill 可以封装重复的指令和流程，但权限、执行与验收仍由运行时及使用者的约束决定。当前 Claude Code 文档说明自定义 commands 已合并到 skills，已有命令文件继续工作；SKILL.md 提供指令，可按相关性加载或用命令调用。这是滚动产品文档的现状，不回填作者当时的配置。[Claude Code Skills](https://code.claude.com/docs/en/skills)
+
+<details data-knowledge-key="build-agent-framework">
+<summary>（26）同一原问的复习入口（从零构建 Agent 运行时）：日常 AI 工具与 command/skill 经验，Claude Code 和 OpenClaw 原理怎样讲？（原题 25–28）</summary>
+</details>
 
 先给自己实际用过的产品、版本、任务与一次可复查结果，不把“听过工具名”说成使用经验。command/skill 可以封装重复的指令和流程，但权限、执行与验收仍由运行时及使用者的约束决定。当前 Claude Code 文档说明自定义 commands 已合并到 skills，已有命令文件继续工作；SKILL.md 提供指令，可按相关性加载或用命令调用。这是滚动产品文档的现状，不回填作者当时的配置。[Claude Code Skills](https://code.claude.com/docs/en/skills)
 

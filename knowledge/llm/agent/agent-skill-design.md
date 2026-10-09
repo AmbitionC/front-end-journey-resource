@@ -100,7 +100,7 @@ MCP 组织宿主与服务器的能力发现和调用，Skill 组织按需加载�
 - [蚂蚁 Code Agent 与 Agent 应用两轮面试（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-2.md)
 - [腾讯 AI 应用开发面试：跨会话记忆与多 Agent（2026 年 4 月）](../../../interview/tencent/ai/tencent-ai-4.md)
 - [OPPO IT 开发一面：ReAct、MCP 与智能问数（2026 年 8 月）](../../../interview/oppo/ai/oppo-ai-3.md)
-- [小红书 Agent 开发一面：LangGraph 子图、Skill 进化与工程校验（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-2.md)
+- [小红书部分（小红书与百度合并记录）：LangGraph、Skill 与工程校验（2026 年 8 月发帖）](../../../interview/redbook/ai/redbook-ai-2.md)
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-26.md)
 - [蚂蚁智能体与大模型应用一面：幻觉、Skill 与 RAG（2026 年 5 月）](../../../interview/antfin/ai/antfin-ai-5.md)
 - [大疆创新 AI Agent 开发面经：容错、Token 与后端基础（2026 年 8 月）](../../../interview/dji/ai/dji-ai-1.md)

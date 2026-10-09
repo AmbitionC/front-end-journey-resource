@@ -48,9 +48,12 @@ exactly-once 描述的是特定边界和协议，不代表所有外部副作用�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-23.md)
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../../interview/bytedance/base/bytedance-base-48.md)
 <!-- interview-source-history:end -->
+
+## 学习阅读（不计专题频次）
+
+- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-23.md)（仅学习相关；该原文片段未问批流机制、窗口、水位线或 Lambda/Kappa。不是完整专题被考察的证据，不计专题频次。）
 
 ## 参考资料
 

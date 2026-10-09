@@ -134,7 +134,6 @@ interface ProviderAdapter {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

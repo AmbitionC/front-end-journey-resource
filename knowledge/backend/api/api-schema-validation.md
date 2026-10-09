@@ -90,8 +90,6 @@ API Schema 治理是一条闭环：固定规范版本，设计时 lint 与兼容
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节全栈：预请求、列表复用与 ThreadLocal](../../../interview/bytedance/base/bytedance-base-44.md)
-- [字节全栈实习：Session、权限与前端基础](../../../interview/bytedance/base/bytedance-base-46.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

@@ -10,7 +10,13 @@
 
 ## 原始提问归纳与答题思路
 
+同一原问涉及多个既有专题时，下方分列复习入口；它们不代表新增独立题目或面试流程。题后的回答均为整理教学，不是候选人现场作答。
+
 #### （1）自我介绍与项目追问怎样展开？（原题 1–2）
+
+<details data-knowledge-key="agent-resume-interview">
+<summary>（1）自我介绍与项目追问怎样展开？（原题 1–2）</summary>
+</details>
 
 先给业务目标、自己的职责和实际实现，再用一条请求说明输入、状态、动作与结果。例如真实项目若有订单助手，就从查询 o7 进入：鉴权后读取订单，按权限检索规则，模型组织解释；缓存降低读取成本，订单状态仍由数据库决定。再说明曾处理的一个失败场景和验证方法。这个例子是表达模板，不能把它写成作者或自己的真实经历。
 
@@ -19,6 +25,10 @@
 知识导航：[AI / Agent 岗位简历与面试](../../../knowledge/career/agent-resume-interview.md)。
 
 #### （2）本地缓存和 Redis 两级缓存用在哪些链路，什么规模值得引入？（原题 3、6）
+
+<details data-knowledge-key="redis-cache">
+<summary>（2）本地缓存和 Redis 两级缓存用在哪些链路，什么规模值得引入？（原题 3、6）</summary>
+</details>
 
 先测单 key 热度、更新频率、Redis 网络往返与进程数量，再看业务允许的陈旧时间。L1 命中可以省掉网络访问，但每个进程都多一份副本，也多一份失效责任。经常查询且很少更新的规则文本适合评估 L1；o7 的付款状态和权限变更则需要更谨慎的读取策略。用户总数不能直接推出是否需要两层缓存。Redis 官方也把高频访问、合理更新频率、容量限制与失效处理列为客户端缓存的关键条件。[Redis 客户端缓存：What to cache 与失效处理](https://redis.io/docs/latest/develop/reference/client-side-caching/)
 
@@ -29,6 +39,10 @@
 知识导航：[Redis 缓存策略与一致性](../../../knowledge/backend/database/redis-cache.md)。
 
 #### （3）缓存怎样更新，本地过期时间怎样确定？（原题 4–5）
+
+<details data-knowledge-key="redis-cache">
+<summary>（3）缓存怎样更新，本地过期时间怎样确定？（原题 4–5）</summary>
+</details>
 
 先推演朴素的“提交数据库后删除缓存”：一个读取请求提前取到 v7，却在 v8 的失效之后才返回并回填，旧值就重新出现。Redis 官方客户端缓存文档也给出了“先收到失效、后收到旧读取响应”的竞态，要求避免把迟到响应放回缓存，并在失效连接断开时清空本地副本。[Redis 客户端缓存：Avoiding race conditions 与断线处理](https://redis.io/docs/latest/develop/reference/client-side-caching/)
 
@@ -42,6 +56,16 @@ TTL 限制的是一份缓存项从写入到过期的寿命。若 L1 过期后继
 
 #### （4）MQ 异步订单怎样在本机测试，能否保证消息只接收一次，哪些动作只处理一次？（原题 7–9）
 
+<details data-knowledge-key="async-job-queue">
+<summary>（4）MQ 异步订单怎样在本机测试，能否保证消息只接收一次，哪些动作只处理一次？（原题 7–9）</summary>
+</details>
+
+本机可启动实际使用的 broker、数据库与消费者，使用隔离的测试数据重现 o7 的履约流程。需要观察数据库最终状态，而不仅是消费日志：事务提交前崩溃应能重试；提交后、确认前崩溃应重新交付而不重复履约；同时消费、重复发布、乱序和重启也应覆盖。RabbitMQ 文档明确区分发布确认与消费确认，手动确认模式下连接或通道关闭时，未确认消息会重新入队，因此“只收到一次”不能直接承诺。[RabbitMQ 消费确认与自动重新入队](https://www.rabbitmq.com/docs/confirms)
+
+<details data-knowledge-key="api-idempotency">
+<summary>（5）同一原问的复习入口（API 幂等键与重复请求处理）：MQ 异步订单怎样在本机测试，能否保证消息只接收一次，哪些动作只处理一次？（原题 7–9）</summary>
+</details>
+
 本机可启动实际使用的 broker、数据库与消费者，使用隔离的测试数据重现 o7 的履约流程。需要观察数据库最终状态，而不仅是消费日志：事务提交前崩溃应能重试；提交后、确认前崩溃应重新交付而不重复履约；同时消费、重复发布、乱序和重启也应覆盖。RabbitMQ 文档明确区分发布确认与消费确认，手动确认模式下连接或通道关闭时，未确认消息会重新入队，因此“只收到一次”不能直接承诺。[RabbitMQ 消费确认与自动重新入队](https://www.rabbitmq.com/docs/confirms)
 
 本例让非空的（租户、订单、业务动作）组合受唯一约束保护。在同一数据库事务中，先取得该动作的唯一去重记录，再写履约副作用；冲突时不重复执行，失败时一起回滚，提交后才 ack。这把“允许消息重交付”与“同一数据库目标副作用最多提交一次”分开。唯一约束解决并发重复，事务避免“已经判重但业务没完成”两份状态分裂。[PostgreSQL 18 唯一约束](https://www.postgresql.org/docs/18/ddl-constraints.html#DDL-CONSTRAINTS-UNIQUE-CONSTRAINTS)、[事务原子性](https://www.postgresql.org/docs/18/tutorial-transactions.html)
@@ -53,6 +77,10 @@ TTL 限制的是一份缓存项从写入到过期的寿命。若 L1 过期后继
 知识导航：[消息队列、异步任务与后台 Job](../../../knowledge/backend/api/async-job-queue.md)、[API 幂等键与重复请求处理](../../../knowledge/backend/api/api-idempotency.md)、[Docker Compose 多服务开发环境](../../../knowledge/backend/devops/docker-compose.md)。
 
 #### （5）秒杀 Redis set 的有效期与删除时崩溃怎样处理？（原题 10–11）
+
+<details data-knowledge-key="async-job-queue">
+<summary>（6）秒杀 Redis set 的有效期与删除时崩溃怎样处理？（原题 10–11）</summary>
+</details>
 
 先说清集合的含义：活动资格、库存、请求去重是不同状态。若集合只表示本轮活动已请求用户，可以用包含租户和活动版本的 key，使过期旧任务不会删除下一轮活动的数据。若它还承担防重复业务提交的责任，则其过期不能替代数据库的长期业务约束。
 
@@ -66,6 +94,16 @@ TTL 限制的是一份缓存项从写入到过期的寿命。若 L1 过期后继
 
 #### （6）个人订单存 DB 还是 Redis；Redis 持久化能否承担业务真相？（原题 12–14）
 
+<details data-knowledge-key="redis-cache">
+<summary>（7）个人订单存 DB 还是 Redis；Redis 持久化能否承担业务真相？（原题 12–14）</summary>
+</details>
+
+Redis 有 RDB 快照与 AOF 日志，不能笼统说它不能持久化。需要回答的是故障后允许丢多少、多久恢复、怎样校验业务约束：RDB 保存时间点快照；AOF 的落盘策略影响故障恢复可保留的写入。开启 AOF 不能等同于零丢失。[Redis 持久化：RDB、AOF 与 fsync](https://redis.io/docs/latest/operate/oss_and_stack/management/persistence/)
+
+<details data-knowledge-key="db-transaction-lock">
+<summary>（8）同一原问的复习入口（事务、隔离级别与锁）：个人订单存 DB 还是 Redis；Redis 持久化能否承担业务真相？（原题 12–14）</summary>
+</details>
+
 Redis 有 RDB 快照与 AOF 日志，不能笼统说它不能持久化。需要回答的是故障后允许丢多少、多久恢复、怎样校验业务约束：RDB 保存时间点快照；AOF 的落盘策略影响故障恢复可保留的写入。开启 AOF 不能等同于零丢失。[Redis 持久化：RDB、AOF 与 fsync](https://redis.io/docs/latest/operate/oss_and_stack/management/persistence/)
 
 持久化与复制是两件事。Redis 的异步复制存在尚未传到副本的写入，故障切换可能丢失已确认写入；落盘策略也不能独自消除这个边界。[Redis 复制：异步复制与丢失窗口](https://redis.io/docs/latest/operate/oss_and_stack/management/replication/)
@@ -78,15 +116,38 @@ Redis 有 RDB 快照与 AOF 日志，不能笼统说它不能持久化。需要�
 
 #### （7）为什么选 Spring AI 而非 Python 框架，Java 的优势与实现复杂度怎样比较？（原题 15–17）
 
+<details data-binding-status="pending_semantic_verification">
+<summary>（9）为什么选 Spring AI 而非 Python 框架，Java 的优势与实现复杂度怎样比较？（原题 15–17）</summary>
+<p>关联知识点待核实。本题实际比较 Spring AI 与 Python 框架，以及 Java 的优势和实现复杂度。自建 Python 最小框架仅作背景学习，不作为本题知识绑定，不计专题频次。</p>
+</details>
+
 在同一个“鉴权后查询订单并解释规则”的模块下比较：团队已有语言、认证与事务接入、所需模型和工具支持、超时恢复、观测与部署成本。若订单后端已经使用 Spring，复用已有服务边界与工程能力可以成为选型理由；若依赖特定 Python 数据处理库，也会改变选择。不能从语言名称或 demo 长短推出生产复杂度高低。
 
 当前 Spring AI 参考文档提供 ChatClient 的同步调用选择 call()，以及 stream().content() 返回 Flux<String> 的流式方式。它们是 API 使用方式，不自动证明状态恢复或业务可靠性。本次按滚动文档核验于 2026-10-02；原帖未披露 Spring AI 或 JDK 版本，面试表达应给自己实际使用版本。[Spring AI ChatClient：同步与流式返回](https://docs.spring.io/spring-ai/reference/api/chatclient.html)
 
 **口述结论：**我会用同一业务模块比较集成与维护成本；已有 Spring 能力可减少重复工程，但框架接口方便不等于业务状态和恢复策略已经设计完成。
 
-知识导航：[从零构建 Agent 运行时](../../../knowledge/llm/agent/build-agent-framework.md)、[工作流状态、检查点与断点续跑](../../../knowledge/llm/agent/agent-workflow-state.md)。
+知识导航：[工作流状态、检查点与断点续跑](../../../knowledge/llm/agent/agent-workflow-state.md)。
+学习阅读（不计专题频次）：[自建 Agent 最小框架背景学习（不是 Spring AI/Java 选型原题绑定）](../../../knowledge/llm/agent/build-agent-framework.md)。
 
 #### （8）RAG 怎样设计，BM25 是什么，知识库导入是否另有入口？（原题 18–20）
+
+<details data-knowledge-key="rag-pipeline">
+<summary>（10）RAG 怎样设计，BM25 是什么，知识库导入是否另有入口？（原题 18–20）</summary>
+</details>
+
+把原始资料变成可检索索引的是导入链：解析、切块、携带租户与来源元数据、向量化、写索引。问答链收到问题后，先按授权与已发布版本检索，再组织上下文生成带来源的答案。Spring AI 的 ETL 文档把 reader、transformer、writer 分开，说明“导入数据”和“问答取数据”承担不同职责。[Spring AI ETL Pipeline](https://docs.spring.io/spring-ai/reference/api/etl-pipeline.html)
+
+<details data-knowledge-key="rag-hybrid-search">
+<summary>（11）同一原问的复习入口（Hybrid Search 混合检索）：RAG 怎样设计，BM25 是什么，知识库导入是否另有入口？（原题 18–20）</summary>
+</details>
+
+把原始资料变成可检索索引的是导入链：解析、切块、携带租户与来源元数据、向量化、写索引。问答链收到问题后，先按授权与已发布版本检索，再组织上下文生成带来源的答案。Spring AI 的 ETL 文档把 reader、transformer、writer 分开，说明“导入数据”和“问答取数据”承担不同职责。[Spring AI ETL Pipeline](https://docs.spring.io/spring-ai/reference/api/etl-pipeline.html)
+
+<details data-binding-status="pending_semantic_verification">
+<summary>（12）机制复习入口（知识库导入，不计专题频次）：原问仅问如何导入数据、是否另有入口</summary>
+<p>关联知识点待核实。原文交集仅为知识库的数据导入与入口。增量删除、版本、幂等重放及影子发布属于扩展教学，不是已记录追问；完整生产摄取专题不作原题绑定，不计专题频次。</p>
+</details>
 
 把原始资料变成可检索索引的是导入链：解析、切块、携带租户与来源元数据、向量化、写索引。问答链收到问题后，先按授权与已发布版本检索，再组织上下文生成带来源的答案。Spring AI 的 ETL 文档把 reader、transformer、writer 分开，说明“导入数据”和“问答取数据”承担不同职责。[Spring AI ETL Pipeline](https://docs.spring.io/spring-ai/reference/api/etl-pipeline.html)
 
@@ -96,9 +157,21 @@ BM25 是词法相关性评分，考虑词项频率、区分度与长度归一化
 
 **口述结论：**我分开导入任务与在线问答，因为索引构建的耗时和失败不能直接变成用户读到的半成品；BM25 补词项匹配，是否混合仍由业务查询验证。
 
-知识导航：[RAG 完整流程实战](../../../knowledge/llm/rag/rag-pipeline.md)、[Hybrid Search 混合检索](../../../knowledge/llm/rag/rag-hybrid-search.md)、[生产级文档解析、索引与增量更新](../../../knowledge/llm/rag/rag-production-ingestion.md)。
+知识导航：[RAG 完整流程实战](../../../knowledge/llm/rag/rag-pipeline.md)、[Hybrid Search 混合检索](../../../knowledge/llm/rag/rag-hybrid-search.md)。
+相关机制阅读（不计专题频次）：[知识库基础导入与生产摄取扩展（扩展不是已记录追问）](../../../knowledge/llm/rag/rag-production-ingestion.md)。
 
 #### （9）多轮对话用哪个循环框架，Java 怎样提高 CPU 利用，Spring AI 有什么优势？（原题 21–22）
+
+<details data-binding-status="pending_semantic_verification">
+<summary>（13）多轮对话用哪个循环框架，Java 怎样提高 CPU 利用，Spring AI 有什么优势？（原题 21–22）</summary>
+<p>关联知识点待核实。原文只问实际用了哪个多轮循环框架，框架名称未披露。预算、终态与进展检测属于机制复习，不是已记录追问；完整 Run Loop 专题不作原题绑定，不计专题频次。</p>
+</details>
+
+先给自己实际的循环实现与版本：谁保存会话、何时调用模型、如何执行工具、错误怎样进入下一轮、何时结束。o7 查询需要的订单工具、规则检索和生成步骤由运行时编排，工具结果回来才进入下一步；预算耗尽不能继续无界重试。原帖没披露框架，不替作者填入某个运行时。
+
+<details data-knowledge-key="os-process-thread">
+<summary>（14）同一原问的复习入口（进程、线程与协程）：多轮对话用哪个循环框架，Java 怎样提高 CPU 利用，Spring AI 有什么优势？（原题 21–22）</summary>
+</details>
 
 先给自己实际的循环实现与版本：谁保存会话、何时调用模型、如何执行工具、错误怎样进入下一轮、何时结束。o7 查询需要的订单工具、规则检索和生成步骤由运行时编排，工具结果回来才进入下一步；预算耗尽不能继续无界重试。原帖没披露框架，不替作者填入某个运行时。
 
@@ -106,9 +179,15 @@ BM25 是词法相关性评分，考虑词项频率、区分度与长度归一化
 
 **口述结论：**我先用观测区分 I/O 等待与 CPU 计算，再选择有界并发或计算优化；Spring AI 提供模型调用接口，不能替我消除资源上限或保证 CPU 利用率提高。
 
-知识导航：[Agent Run Loop、轮次与终止条件](../../../knowledge/llm/agent/agent-run-loop.md)、[进程、线程与协程](../../../knowledge/cs/os/os-process-thread.md)、[AI 应用限流、配额与背压](../../../knowledge/llm/production/ai-rate-limiting.md)。
+知识导航：[进程、线程与协程](../../../knowledge/cs/os/os-process-thread.md)、[AI 应用限流、配额与背压](../../../knowledge/llm/production/ai-rate-limiting.md)。
+相关机制阅读（不计专题频次）：[运行循环机制复习（原文框架名称未知，预算与终态是扩展）](../../../knowledge/llm/agent/agent-run-loop.md)。
 
 #### （10）项目用了什么模型，国内厂商和模型怎样介绍？（原题 23–24）
+
+<details data-binding-status="pending_semantic_verification">
+<summary>（15）项目用了什么模型，国内厂商和模型怎样介绍？（原题 23–24）</summary>
+<p>关联知识点待核实。</p>
+</details>
 
 只报告自己实际使用的供应商、模型 ID、部署或 API 版本与调用时间，再解释任务质量、成本、延迟和数据治理约束。例如订单规则解释要看引用是否支持结论、工具参数是否正确，不能只列品牌。介绍厂商时还要区分公司、模型系列与具体可调用版本。
 
@@ -116,9 +195,12 @@ BM25 是词法相关性评分，考虑词项频率、区分度与长度归一化
 
 **口述结论：**我会给出可复查的实际模型版本与任务依据，因为同一系列不同服务版本也可能不同；未使用、未核验的能力不纳入项目成绩。
 
-知识导航：[模型能力评估与选型](../../../knowledge/llm/basics/llm-model-selection.md)。
 
 #### （11）SDD 哪些步骤需要人工参与？（反问阶段的提问）
+
+<details data-knowledge-key="agent-human-in-loop">
+<summary>（16）SDD 哪些步骤需要人工参与？（反问阶段的提问）</summary>
+</details>
 
 原帖未解释 SDD 缩写，也未说明采用的工具，所以先确认讨论的具体方法。若指以规格驱动开发，就按需求确认、设计取舍、实现和验收检查责任边界：AI 可以协助起草与重复实现，但目标冲突、权限、业务不变量与最终验收需要明确责任人。
 
