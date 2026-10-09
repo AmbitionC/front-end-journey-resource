@@ -1,0 +1,192 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "JVM：按资源区域选择排查证据",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [
+      800,
+      500
+    ],
+    "legend": {
+      "mode": "hidden"
+    }
+  },
+  "components": [
+    {
+      "id": "allocate",
+      "type": "backend",
+      "label": "实例与数组分配",
+      "sublabel": "请求空间与对象生命周期",
+      "pos": [
+        24,
+        50
+      ],
+      "size": [
+        180,
+        100
+      ]
+    },
+    {
+      "id": "heap",
+      "type": "backend",
+      "label": "共享堆",
+      "sublabel": "GC 管理存活对象",
+      "pos": [
+        310,
+        50
+      ],
+      "size": [
+        180,
+        100
+      ]
+    },
+    {
+      "id": "heapEvidence",
+      "type": "backend",
+      "label": "堆证据",
+      "sublabel": "GC 趋势、保留引用链",
+      "pos": [
+        596,
+        50
+      ],
+      "size": [
+        180,
+        100
+      ]
+    },
+    {
+      "id": "load",
+      "type": "backend",
+      "label": "类加载与链接",
+      "sublabel": "定义类、验证和准备等",
+      "pos": [
+        24,
+        200
+      ],
+      "size": [
+        180,
+        100
+      ]
+    },
+    {
+      "id": "metadata",
+      "type": "backend",
+      "label": "方法区与类结构",
+      "sublabel": "实现布局由 JVM 决定",
+      "pos": [
+        310,
+        200
+      ],
+      "size": [
+        180,
+        100
+      ]
+    },
+    {
+      "id": "classEvidence",
+      "type": "backend",
+      "label": "类与加载器证据",
+      "sublabel": "类数量、加载器生命周期",
+      "pos": [
+        596,
+        200
+      ],
+      "size": [
+        180,
+        100
+      ]
+    },
+    {
+      "id": "call",
+      "type": "backend",
+      "label": "线程方法执行",
+      "sublabel": "每线程的调用与返回",
+      "pos": [
+        24,
+        350
+      ],
+      "size": [
+        180,
+        100
+      ]
+    },
+    {
+      "id": "stacks",
+      "type": "backend",
+      "label": "线程私有栈",
+      "sublabel": "帧、局部变量与操作数",
+      "pos": [
+        310,
+        350
+      ],
+      "size": [
+        180,
+        100
+      ]
+    },
+    {
+      "id": "stackEvidence",
+      "type": "backend",
+      "label": "栈与线程证据",
+      "sublabel": "调用深度、线程数量",
+      "pos": [
+        596,
+        350
+      ],
+      "size": [
+        180,
+        100
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "from": "allocate",
+      "to": "heap",
+      "label": "分配与回收"
+    },
+    {
+      "from": "heap",
+      "to": "heapEvidence",
+      "label": "定位持有者"
+    },
+    {
+      "from": "load",
+      "to": "metadata",
+      "label": "类的运行时结构"
+    },
+    {
+      "from": "metadata",
+      "to": "classEvidence",
+      "label": "检查持续增长"
+    },
+    {
+      "from": "call",
+      "to": "stacks",
+      "label": "保存调用帧"
+    },
+    {
+      "from": "stacks",
+      "to": "stackEvidence",
+      "label": "检查递归与线程数"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "逻辑规范与具体实现分开",
+      "items": [
+        "HotSpot 元空间是实现细节，方法区是规范概念。"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "进程内存不止 Java 堆",
+      "items": [
+        "本地资源另查；NMT 不覆盖所有应用或第三方本地分配。"
+      ]
+    }
+  ]
+}

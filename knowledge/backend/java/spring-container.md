@@ -4,7 +4,10 @@ Spring 容器把“对象如何创建、依赖如何装配、生命周期由谁�
 
 Bean 定义是创建配方，实例是运行中的对象。同一类型可以有多个定义，作用域决定定义如何对应实例。因此 Spring singleton 表示每容器、每定义的一份实例，并非进程里某个类绝对只有一个对象。[Spring 6.2 Bean Scopes](https://docs.spring.io/spring-framework/reference/6.2/core/beans/factory-scopes.html)说明 singleton 与 prototype 等作用域。
 
-![配置形成 Bean 定义，ApplicationContext 提供工厂访问与应用级服务，Bean 实例和事件监听分别按容器合同工作](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/spring-container-archify-v1.png)
+<iframe
+  src="/archify/spring-container.html"
+  title="配置形成 Bean 定义，ApplicationContext 提供工厂访问与应用级服务，Bean 实例和事件监听分别按容器合同工作"
+></iframe>
 
 ## 接口关系怎样读
 

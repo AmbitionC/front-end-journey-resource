@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
-  "updatedAt": "2026-10-05",
+  "updatedAt": "2026-10-06",
   "records": [
     {
       "key": "transformer-arch",
@@ -3142,61 +3142,111 @@
       "key": "java-thread-local",
       "label": "ThreadLocal：线程绑定、清理与传播",
       "filePath": "backend/java",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004",
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-06",
+      "batch": "archify-java-five-20261006",
+      "reason": "Local five-page migration passed official Archify checks and actual mobile/desktop component pixel review. Same-source HTML/SVG and PDF PNG; all diagram semantics and unrelated prose preserved. Pending coordinated reader/resource release; no new publication evidence.",
+      "previousRecord": {
+        "key": "java-thread-local",
+        "label": "ThreadLocal：线程绑定、清理与传播",
+        "filePath": "backend/java",
+        "status": "published",
+        "action": "created",
+        "recordedAt": "2026-10-04",
+        "batch": "next-twenty-source-increments-20261004",
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     },
     {
       "key": "java-runtime-memory",
       "label": "JVM 内存、类加载与 OOM 定位",
       "filePath": "backend/java",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004",
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-06",
+      "batch": "archify-java-five-20261006",
+      "reason": "Local five-page migration passed official Archify checks and actual mobile/desktop component pixel review. Same-source HTML/SVG and PDF PNG; all diagram semantics and unrelated prose preserved. Pending coordinated reader/resource release; no new publication evidence.",
+      "previousRecord": {
+        "key": "java-runtime-memory",
+        "label": "JVM 内存、类加载与 OOM 定位",
+        "filePath": "backend/java",
+        "status": "published",
+        "action": "created",
+        "recordedAt": "2026-10-04",
+        "batch": "next-twenty-source-increments-20261004",
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     },
     {
       "key": "spring-container",
       "label": "Spring 容器：BeanFactory 与 ApplicationContext",
       "filePath": "backend/java",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004",
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-06",
+      "batch": "archify-java-five-20261006",
+      "reason": "Local five-page migration passed official Archify checks and actual mobile/desktop component pixel review. Same-source HTML/SVG and PDF PNG; all diagram semantics and unrelated prose preserved. Pending coordinated reader/resource release; no new publication evidence.",
+      "previousRecord": {
+        "key": "spring-container",
+        "label": "Spring 容器：BeanFactory 与 ApplicationContext",
+        "filePath": "backend/java",
+        "status": "published",
+        "action": "created",
+        "recordedAt": "2026-10-04",
+        "batch": "next-twenty-source-increments-20261004",
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     },
     {
       "key": "spring-external-config",
       "label": "Spring 外部配置：优先级、刷新与版本对账",
       "filePath": "backend/java",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004",
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-06",
+      "batch": "archify-java-five-20261006",
+      "reason": "Local five-page migration passed official Archify checks and actual mobile/desktop component pixel review. Same-source HTML/SVG and PDF PNG; all diagram semantics and unrelated prose preserved. Pending coordinated reader/resource release; no new publication evidence.",
+      "previousRecord": {
+        "key": "spring-external-config",
+        "label": "Spring 外部配置：优先级、刷新与版本对账",
+        "filePath": "backend/java",
+        "status": "published",
+        "action": "created",
+        "recordedAt": "2026-10-04",
+        "batch": "next-twenty-source-increments-20261004",
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     },
     {
       "key": "java-nio-reactor",
       "label": "Java NIO 与 Reactor：就绪、缓冲与背压",
       "filePath": "backend/java",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004",
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-06",
+      "batch": "archify-java-five-20261006",
+      "reason": "Local five-page migration passed official Archify checks and actual mobile/desktop component pixel review. Same-source HTML/SVG and PDF PNG; all diagram semantics and unrelated prose preserved. Pending coordinated reader/resource release; no new publication evidence.",
+      "previousRecord": {
+        "key": "java-nio-reactor",
+        "label": "Java NIO 与 Reactor：就绪、缓冲与背压",
+        "filePath": "backend/java",
+        "status": "published",
+        "action": "created",
+        "recordedAt": "2026-10-04",
+        "batch": "next-twenty-source-increments-20261004",
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     }
   ],
   "deliveryEvidence": {

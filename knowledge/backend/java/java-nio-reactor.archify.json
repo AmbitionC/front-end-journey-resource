@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "NIO Reactor：就绪、执行与结果回投",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [
+      840,
+      500
+    ],
+    "legend": {
+      "mode": "hidden"
+    }
+  },
+  "components": [
+    {
+      "id": "connections",
+      "type": "external",
+      "label": "非阻塞连接",
+      "sublabel": "注册读写兴趣与连接身份",
+      "pos": [
+        24,
+        70
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "selector",
+      "type": "backend",
+      "label": "Selector",
+      "sublabel": "多连接 I/O 就绪通知",
+      "pos": [
+        310,
+        70
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "loop",
+      "type": "backend",
+      "label": "事件循环",
+      "sublabel": "缓冲、分帧与连接状态",
+      "pos": [
+        596,
+        70
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "commands",
+      "type": "messagebus",
+      "label": "结果命令队列",
+      "sublabel": "投递后唤醒所属循环",
+      "pos": [
+        310,
+        300
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "workers",
+      "type": "backend",
+      "label": "有界业务执行器",
+      "sublabel": "处理耗时计算或依赖调用",
+      "pos": [
+        24,
+        300
+      ],
+      "size": [
+        180,
+        110
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "from": "connections",
+      "to": "selector",
+      "label": "注册兴趣"
+    },
+    {
+      "from": "selector",
+      "to": "loop",
+      "label": "返回就绪键"
+    },
+    {
+      "from": "loop",
+      "to": "workers",
+      "label": "提交完整消息",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "from": "workers",
+      "to": "commands",
+      "label": "投递业务结果"
+    },
+    {
+      "from": "commands",
+      "to": "loop",
+      "label": "回投结果",
+      "fromSide": "right",
+      "toSide": "right",
+      "via": [
+        [
+          812,
+          355
+        ],
+        [
+          812,
+          125
+        ]
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "就绪不等于消息完成",
+      "items": [
+        "读写可能只有部分字节，连接需保留协议缓冲与解析状态。"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "背压与关闭属于生命周期",
+      "items": [
+        "队列和缓冲有界；迟到结果检查连接状态，空写队列取消写兴趣。"
+      ]
+    }
+  ]
+}

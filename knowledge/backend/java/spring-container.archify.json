@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Spring：工厂合同与应用级服务",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [
+      800,
+      500
+    ],
+    "legend": {
+      "mode": "hidden"
+    }
+  },
+  "components": [
+    {
+      "id": "config",
+      "type": "external",
+      "label": "配置与 Bean 定义",
+      "sublabel": "对象创建配方",
+      "pos": [
+        24,
+        70
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "context",
+      "type": "backend",
+      "label": "ApplicationContext",
+      "sublabel": "刷新、装配与应用入口",
+      "pos": [
+        310,
+        70
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "beans",
+      "type": "backend",
+      "label": "Bean 实例",
+      "sublabel": "作用域与业务并发另定义",
+      "pos": [
+        596,
+        70
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "resources",
+      "type": "database",
+      "label": "资源与环境入口",
+      "sublabel": "ResourceLoader / Environment",
+      "pos": [
+        24,
+        300
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "events",
+      "type": "messagebus",
+      "label": "事件发布入口",
+      "sublabel": "ApplicationEventPublisher",
+      "pos": [
+        310,
+        300
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "listeners",
+      "type": "backend",
+      "label": "注册的监听器",
+      "sublabel": "按事件合同处理",
+      "pos": [
+        596,
+        300
+      ],
+      "size": [
+        180,
+        110
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "from": "config",
+      "to": "context",
+      "label": "建立定义"
+    },
+    {
+      "from": "context",
+      "to": "beans",
+      "label": "提供工厂访问"
+    },
+    {
+      "from": "context",
+      "to": "resources",
+      "label": "提供资源服务"
+    },
+    {
+      "from": "context",
+      "to": "events",
+      "label": "提供事件服务",
+      "labelAt": [
+        400,
+        240
+      ]
+    },
+    {
+      "from": "events",
+      "to": "listeners",
+      "label": "发布事件"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "接口扩展不等于所有对象立即创建",
+      "items": [
+        "具体实现、作用域与 lazy 配置共同决定创建时机。"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "容器管理不保证业务线程安全",
+      "items": [
+        "singleton 是每容器每定义一份；共享可变状态仍需设计。"
+      ]
+    }
+  ]
+}
