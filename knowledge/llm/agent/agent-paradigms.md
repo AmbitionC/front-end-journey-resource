@@ -33,19 +33,7 @@ $$
 
 直到 $F_i$ 中出现"无需改进"或达到最大迭代次数。
 
-```mermaid
-flowchart LR
-    T[任务] --> E[初始执行\n生成初稿 O₀]
-    E --> R{Reflection\n评审员分析}
-    R -- 发现问题 --> RF[Refinement\n生成优化稿 Oᵢ₊₁]
-    RF --> R
-    R -- 无需改进 --> DONE[最终输出]
-
-    style E fill:#6366f1,color:#fff
-    style R fill:#d97706,color:#fff
-    style RF fill:#059669,color:#fff
-    style DONE fill:#dc2626,color:#fff
-```
+<iframe src="https://www.agent-journey.cn/archify/agent-paradigms-reflection-loop-archify-v2.html" width="100%" height="920" title="任务经初始执行生成初稿 O₀；Reflection 发现问题时进入 Refinement 生成优化稿 Oᵢ₊₁，再返回评审；无需改进时输出结果"></iframe>
 
 ### 三套提示词
 
@@ -412,18 +400,7 @@ Tool-Use（工具调用）是一种更通用的范式视角，可以看作是 Re
 
 现代 LLM 的 Function Calling / Tool Use 接口是 Tool-Use 范式的一类产品化实现。它通过结构化 schema 定义工具，并让模型输出结构化调用，可减少应用层正则解析；整体可靠性仍取决于目标模型对 schema 的遵循、API 契约、参数校验与错误恢复，必须在真实任务集上验证。
 
-```mermaid
-flowchart LR
-    U[用户请求] --> LLM[LLM\n分析意图]
-    LLM -- "决定调用工具" --> TC[Tool Call\n结构化 JSON]
-    TC --> TE[Tool Executor\n实际执行]
-    TE -- "返回结果" --> LLM2[LLM\n整合结果，继续推理]
-    LLM2 -- "完成任务" --> RESP[最终响应]
-    LLM2 -- "需要更多工具" --> TC
-
-    style TC fill:#059669,color:#fff
-    style TE fill:#d97706,color:#fff
-```
+<iframe src="https://www.agent-journey.cn/archify/agent-paradigms-tool-use-loop-archify-v2.html" width="100%" height="920" title="用户请求经 LLM 分析意图，输出结构化 Tool Call；工具执行器实际执行并返回结果，LLM 整合后继续调用工具或完成最终响应"></iframe>
 
 ### 工具定义：三要素
 
@@ -602,23 +579,7 @@ result = run_with_tools("2025 年华为最新旗舰手机的定价是多少元�
 
 ### 场景选择决策树
 
-```mermaid
-flowchart TD
-    START[新任务] --> Q1{需要外部工具吗？}
-    Q1 -- 否 --> PLAIN[纯 LLM 或 CoT]
-    Q1 -- 是 --> Q2{步骤能提前规划吗？}
-    Q2 -- 能 --> Q3{对结果质量要求极高？}
-    Q3 -- 是 --> RFL[Plan-and-Execute\n+ Reflection]
-    Q3 -- 否 --> PE[Plan-and-Execute]
-    Q2 -- 不能（依赖运行时） --> Q4{对结果质量要求极高？}
-    Q4 -- 是 --> REFL2[ReAct + Reflection]
-    Q4 -- 否 --> REACT[ReAct]
-
-    style REACT fill:#6366f1,color:#fff
-    style PE fill:#059669,color:#fff
-    style RFL fill:#d97706,color:#fff
-    style REFL2 fill:#dc2626,color:#fff
-```
+<iframe src="https://www.agent-journey.cn/archify/agent-paradigms-selection-tree-archify-v2.html" width="100%" height="920" title="从外部工具需求、步骤能否提前规划、结果质量要求三层条件选择纯 LLM 或 CoT、Plan-and-Execute、ReAct，质量要求极高时叠加 Reflection"></iframe>
 
 ## 混合范式：组合使用
 

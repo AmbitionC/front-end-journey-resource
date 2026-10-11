@@ -1,0 +1,260 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "选择范式：工具需求、规划能力与质量要求",
+    "locale": "zh-CN",
+    "quality_profile": "showcase"
+  },
+  "lanes": [
+    {
+      "id": "plain",
+      "label": "无需外部工具"
+    },
+    {
+      "id": "planned",
+      "label": "可提前规划"
+    },
+    {
+      "id": "planned-review",
+      "label": "可规划且要求极高质量"
+    },
+    {
+      "id": "runtime",
+      "label": "步骤依赖运行时"
+    },
+    {
+      "id": "runtime-review",
+      "label": "动态执行且要求极高质量"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "task",
+      "lane": "planned",
+      "col": 0,
+      "type": "external",
+      "label": "新任务",
+      "width": 190
+    },
+    {
+      "id": "needs-tool",
+      "lane": "planned",
+      "col": 1,
+      "type": "security",
+      "label": "需要外部工具吗？",
+      "width": 190
+    },
+    {
+      "id": "plain",
+      "lane": "plain",
+      "col": 2,
+      "type": "backend",
+      "label": "纯 LLM 或 CoT",
+      "width": 190
+    },
+    {
+      "id": "can-plan",
+      "lane": "planned",
+      "col": 2,
+      "type": "security",
+      "label": "步骤能提前规划吗？",
+      "width": 190
+    },
+    {
+      "id": "quality-plan",
+      "lane": "planned",
+      "col": 3,
+      "type": "security",
+      "label": "结果质量要求极高？",
+      "width": 190
+    },
+    {
+      "id": "plan-execute",
+      "lane": "planned",
+      "col": 4,
+      "type": "backend",
+      "label": "Plan-and-Execute",
+      "width": 190
+    },
+    {
+      "id": "plan-reflect",
+      "lane": "planned-review",
+      "col": 4,
+      "type": "backend",
+      "label": "Plan-and-Execute",
+      "width": 190,
+      "sublabel": "+ Reflection"
+    },
+    {
+      "id": "quality-runtime",
+      "lane": "runtime",
+      "col": 3,
+      "type": "security",
+      "label": "结果质量要求极高？",
+      "width": 190
+    },
+    {
+      "id": "react",
+      "lane": "runtime",
+      "col": 4,
+      "type": "backend",
+      "label": "ReAct",
+      "width": 190
+    },
+    {
+      "id": "react-reflect",
+      "lane": "runtime-review",
+      "col": 4,
+      "type": "backend",
+      "label": "ReAct + Reflection",
+      "width": 190
+    }
+  ],
+  "edges": [
+    {
+      "id": "task-tools",
+      "from": "task",
+      "to": "needs-tool",
+      "role": "main",
+      "variant": "default"
+    },
+    {
+      "id": "tools-plain",
+      "from": "needs-tool",
+      "to": "plain",
+      "role": "branch",
+      "variant": "default",
+      "label": "否"
+    },
+    {
+      "id": "tools-plan",
+      "from": "needs-tool",
+      "to": "can-plan",
+      "role": "main",
+      "variant": "default",
+      "label": "是"
+    },
+    {
+      "id": "plan-quality",
+      "from": "can-plan",
+      "to": "quality-plan",
+      "role": "main",
+      "variant": "default",
+      "label": "能"
+    },
+    {
+      "id": "quality-planned-no",
+      "from": "quality-plan",
+      "to": "plan-execute",
+      "role": "main",
+      "variant": "default",
+      "label": "否"
+    },
+    {
+      "id": "quality-planned-yes",
+      "from": "quality-plan",
+      "to": "plan-reflect",
+      "role": "branch",
+      "variant": "emphasis",
+      "label": "是"
+    },
+    {
+      "id": "runtime-quality",
+      "from": "can-plan",
+      "to": "quality-runtime",
+      "role": "branch",
+      "variant": "default",
+      "label": "不能：依赖运行时"
+    },
+    {
+      "id": "quality-runtime-no",
+      "from": "quality-runtime",
+      "to": "react",
+      "role": "branch",
+      "variant": "default",
+      "label": "否"
+    },
+    {
+      "id": "quality-runtime-yes",
+      "from": "quality-runtime",
+      "to": "react-reflect",
+      "role": "branch",
+      "variant": "emphasis",
+      "label": "是"
+    }
+  ],
+  "mainPath": [
+    "task",
+    "needs-tool",
+    "can-plan",
+    "quality-plan",
+    "plan-execute"
+  ],
+  "semanticChecks": {
+    "allowedRoots": [
+      "task"
+    ],
+    "allowedTerminals": [
+      "plain",
+      "plan-execute",
+      "plan-reflect",
+      "react",
+      "react-reflect"
+    ],
+    "requiredEdges": [
+      {
+        "from": "task",
+        "to": "needs-tool"
+      },
+      {
+        "from": "needs-tool",
+        "to": "plain"
+      },
+      {
+        "from": "needs-tool",
+        "to": "can-plan"
+      },
+      {
+        "from": "can-plan",
+        "to": "quality-plan"
+      },
+      {
+        "from": "quality-plan",
+        "to": "plan-execute"
+      },
+      {
+        "from": "quality-plan",
+        "to": "plan-reflect"
+      },
+      {
+        "from": "can-plan",
+        "to": "quality-runtime"
+      },
+      {
+        "from": "quality-runtime",
+        "to": "react"
+      },
+      {
+        "from": "quality-runtime",
+        "to": "react-reflect"
+      }
+    ]
+  },
+  "cards": [
+    {
+      "dot": "violet",
+      "title": "先判断控制方式",
+      "items": [
+        "步骤可提前分解：Plan-and-Execute；依赖运行时反馈：ReAct。"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "再判断是否加反思",
+      "items": [
+        "对结果质量要求极高时，在执行范式上叠加 Reflection。"
+      ]
+    }
+  ]
+}

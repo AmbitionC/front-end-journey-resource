@@ -1,0 +1,183 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Tool-Use：模型决策与工具执行闭环",
+    "locale": "zh-CN",
+    "quality_profile": "showcase"
+  },
+  "lanes": [
+    {
+      "id": "model",
+      "label": "请求理解与工具选择"
+    },
+    {
+      "id": "tool",
+      "label": "结构化调用与实际执行"
+    },
+    {
+      "id": "response",
+      "label": "结果整合与最终回复"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "request",
+      "lane": "model",
+      "col": 0,
+      "type": "external",
+      "label": "用户请求",
+      "width": 190
+    },
+    {
+      "id": "intent",
+      "lane": "model",
+      "col": 1,
+      "type": "backend",
+      "label": "LLM",
+      "width": 190,
+      "sublabel": "分析意图"
+    },
+    {
+      "id": "call",
+      "lane": "tool",
+      "col": 2,
+      "type": "messagebus",
+      "label": "Tool Call",
+      "width": 190,
+      "sublabel": "结构化 JSON"
+    },
+    {
+      "id": "executor",
+      "lane": "tool",
+      "col": 3,
+      "type": "backend",
+      "label": "Tool Executor",
+      "width": 190,
+      "sublabel": "实际执行"
+    },
+    {
+      "id": "reason",
+      "lane": "response",
+      "col": 4,
+      "type": "backend",
+      "label": "LLM",
+      "width": 190,
+      "sublabel": "整合结果，继续推理"
+    },
+    {
+      "id": "response",
+      "lane": "response",
+      "col": 5,
+      "type": "frontend",
+      "label": "最终响应",
+      "width": 190
+    }
+  ],
+  "edges": [
+    {
+      "id": "request-intent",
+      "from": "request",
+      "to": "intent",
+      "role": "main",
+      "variant": "default"
+    },
+    {
+      "id": "intent-call",
+      "from": "intent",
+      "to": "call",
+      "role": "main",
+      "variant": "default",
+      "label": "决定调用工具"
+    },
+    {
+      "id": "call-executor",
+      "from": "call",
+      "to": "executor",
+      "role": "main",
+      "variant": "default"
+    },
+    {
+      "id": "executor-reason",
+      "from": "executor",
+      "to": "reason",
+      "role": "return",
+      "variant": "default",
+      "label": "返回结果"
+    },
+    {
+      "id": "reason-response",
+      "from": "reason",
+      "to": "response",
+      "role": "main",
+      "variant": "default",
+      "label": "完成任务"
+    },
+    {
+      "id": "reason-call",
+      "from": "reason",
+      "to": "call",
+      "role": "return",
+      "variant": "dashed",
+      "label": "需要更多工具"
+    }
+  ],
+  "mainPath": [
+    "request",
+    "intent",
+    "call",
+    "executor",
+    "reason",
+    "response"
+  ],
+  "semanticChecks": {
+    "allowedRoots": [
+      "request"
+    ],
+    "allowedTerminals": [
+      "response"
+    ],
+    "requiredEdges": [
+      {
+        "from": "request",
+        "to": "intent"
+      },
+      {
+        "from": "intent",
+        "to": "call"
+      },
+      {
+        "from": "call",
+        "to": "executor"
+      },
+      {
+        "from": "executor",
+        "to": "reason"
+      },
+      {
+        "from": "reason",
+        "to": "response"
+      },
+      {
+        "from": "reason",
+        "to": "call"
+      }
+    ]
+  },
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "工具契约",
+      "items": [
+        "Tool Call 表达工具名与参数；应用负责实际执行。"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "重复调用",
+      "items": [
+        "模型整合返回结果后，可继续调用工具或完成任务。"
+      ]
+    }
+  ]
+}

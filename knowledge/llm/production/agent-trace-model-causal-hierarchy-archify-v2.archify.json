@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Run、Trace、Span 与点事件",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1260,
+      585
+    ]
+  },
+  "components": [
+    {
+      "id": "run_trace",
+      "type": "external",
+      "label": "Run / 主 Trace",
+      "sublabel": "产品执行边界 · 同一 trace_id",
+      "pos": [
+        20,
+        70
+      ],
+      "size": [
+        220,
+        88
+      ]
+    },
+    {
+      "id": "root_span",
+      "type": "backend",
+      "label": "根 Span",
+      "sublabel": "独立 span_id · 覆盖执行周期",
+      "pos": [
+        330,
+        70
+      ],
+      "size": [
+        230,
+        88
+      ]
+    },
+    {
+      "id": "model_span",
+      "type": "backend",
+      "label": "模型调用 Span",
+      "sublabel": "独立 span_id · 有开始与结束",
+      "pos": [
+        720,
+        70
+      ],
+      "size": [
+        230,
+        88
+      ]
+    },
+    {
+      "id": "retrieval_span",
+      "type": "database",
+      "label": "检索 Span",
+      "sublabel": "独立 span_id · 有开始与结束",
+      "pos": [
+        720,
+        250
+      ],
+      "size": [
+        230,
+        88
+      ]
+    },
+    {
+      "id": "tool_span",
+      "type": "messagebus",
+      "label": "工具调用 Span",
+      "sublabel": "独立 span_id · 有开始与结束",
+      "pos": [
+        720,
+        430
+      ],
+      "size": [
+        230,
+        88
+      ]
+    },
+    {
+      "id": "tool_event",
+      "type": "security",
+      "label": "工具内的 Event",
+      "sublabel": "时间戳事实 · 不另起工作区间",
+      "pos": [
+        1020,
+        430
+      ],
+      "size": [
+        220,
+        88
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "run_owns_root",
+      "from": "run_trace",
+      "to": "root_span"
+    },
+    {
+      "id": "root_model",
+      "from": "root_span",
+      "to": "model_span"
+    },
+    {
+      "id": "root_retrieval",
+      "from": "root_span",
+      "to": "retrieval_span"
+    },
+    {
+      "id": "root_tool",
+      "from": "root_span",
+      "to": "tool_span"
+    },
+    {
+      "id": "event_inside_tool",
+      "from": "tool_span",
+      "to": "tool_event",
+      "label": "点状事实",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "三层边界",
+      "items": [
+        "Run 聚合一次产品执行；一条主 Trace 表达因果链。",
+        "同一 Trace 的所有 Span 共享 trace_id，各自拥有 span_id。"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "时间语义",
+      "items": [
+        "Span 是有持续时间的一段工作；并行 Span 可以重叠。",
+        "Event 是 Span 内某一时刻的事实，不是假装成瞬时 Span。"
+      ]
+    }
+  ]
+}

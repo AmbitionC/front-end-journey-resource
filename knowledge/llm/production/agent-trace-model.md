@@ -2,7 +2,7 @@ Agent 的一次回答并不是一个不可分割的“模型调用”，而是�
 
 [OpenTelemetry 对信号的定义](https://opentelemetry.io/docs/concepts/signals/)把 Trace 描述为请求穿过系统的路径，把 Span 描述为其中一段有开始和结束的工作。Agent 工程可以沿用这套稳定心智模型，但还要额外表达 Run、模型轮次、工具副作用和人工审批等业务语义。
 
-![Agent Run 中 Trace、Span 与点事件的因果层级](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-trace-model-trace-waterfall-v1.webp)
+<iframe src="https://www.agent-journey.cn/archify/agent-trace-model-causal-hierarchy-archify-v2.html" width="100%" height="920" title="Agent Run 中 Trace、Span 与点事件的因果层级"></iframe>
 
 图中最重要的不是瀑布图外观，而是三条约束：同一条 Trace 共享 Trace ID；每个 Span 有自己的 Span ID；Event 只是 Span 内某一时刻发生的事实，不是假装成瞬时 Span 的另一段工作。
 

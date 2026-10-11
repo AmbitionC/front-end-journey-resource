@@ -1,4 +1,4 @@
-![从左到右展示上下文工程闭环：Gather 收集候选信息，Select 按相关性与可信度筛选，Compress 压缩并保留出处，Verify 在模型调用前后校验；同时画出固定 context budget 与被丢弃的噪声](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/context-engineering-gather-select-compress-verify-v1.webp)
+<iframe src="https://www.agent-journey.cn/archify/context-engineering-overview-archify-v2.html" width="100%" height="920" title="从左到右展示上下文工程闭环：Gather 收集候选信息，Select 按相关性与可信度筛选，Compress 压缩并保留出处，Verify 在模型调用前后校验；同时画出固定 context budget 与被丢弃的噪声"></iframe>
 *图：沿图中的节点与箭头阅读，重点是收集、筛选、压缩、验证串成可执行机制。*
 
 ---
@@ -42,17 +42,7 @@
 
 在"有限注意力预算"约束下，优质的上下文工程目标是：**用尽可能少、但高信号密度的 tokens，最大化获得预期结果的概率**。主要围绕以下组件：
 
-```mermaid
-graph TD
-    A[有效上下文] --> B[系统提示 System Prompt]
-    A --> C[工具定义 Tools]
-    A --> D[少样本示例 Few-shot]
-    A --> E[对话历史 History]
-    A --> F[外部知识 RAG / Memory]
-    B --> B1[角色定位 + 行为规范\n分区组织 XML/Markdown]
-    C --> C1[职责单一 + 接口清晰\n最小可行工具集 MVTS]
-    D --> D1[多样且典型\n直接画像期望行为]
-```
+<iframe src="https://www.agent-journey.cn/archify/context-engineering-composition-archify-v2.html" width="100%" height="920" title="有效上下文的五个组成部分"></iframe>
 
 **系统提示**：语言清晰直白，避免两个极端——过度硬编码复杂逻辑（脆弱、难维护）与过于空泛（缺少具体信号）。建议使用分区标签（如 `[Role]`、`[Instructions]`、`[Output]`）组织，追求"能完整勾勒期望行为的最小必要信息集"。
 
@@ -208,17 +198,7 @@ assistant: 不错的选择！接下来可以考虑数据清洗...
 
 当对话接近上下文上限时，调用模型将整个对话压缩成高保真摘要，用摘要"重启"一个新的上下文窗口：
 
-```mermaid
-sequenceDiagram
-    participant C as 对话历史
-    participant L as LLM（压缩）
-    participant N as 新上下文窗口
-
-    C->>L: 接近上限，触发压缩
-    L->>N: 生成摘要 + 保留近期少量工件
-    Note over N: 架构决策 + 未解决问题 + 实现细节
-    Note over C: 丢弃：重复工具输出 + 噪声
-```
+<iframe src="https://www.agent-journey.cn/archify/context-engineering-compaction-archify-v2.html" width="100%" height="920" title="压缩整合：用摘要接续长对话"></iframe>
 
 调参建议：先优化**召回**（不遗漏关键信息），再优化**精确度**（剔除冗余）。一种"轻触式"压缩是只对"深历史中的工具调用与结果"做清理，保留所有决策性文本。
 

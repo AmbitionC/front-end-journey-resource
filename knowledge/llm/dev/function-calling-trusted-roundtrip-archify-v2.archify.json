@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "Function Calling：可信执行往返时序",
+    "subtitle": "模型提出工具调用，应用完成校验、确认与执行，再按 call_id 回传结果",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "animation": "none",
+    "column_fit": "spread",
+    "viewBox": [
+      1200,
+      580
+    ]
+  },
+  "participants": [
+    {
+      "id": "requesting_user",
+      "type": "external",
+      "label": "用户·请求/风险确认"
+    },
+    {
+      "id": "trusted_application",
+      "type": "security",
+      "label": "应用·可信执行边界"
+    },
+    {
+      "id": "proposing_model",
+      "type": "backend",
+      "label": "模型·回答/续调·预算受限"
+    },
+    {
+      "id": "application_validator",
+      "type": "security",
+      "label": "应用校验器·strict只保证结构"
+    },
+    {
+      "id": "controlled_tool",
+      "type": "backend",
+      "label": "真实工具·受控执行"
+    }
+  ],
+  "messages": [
+    {
+      "id": "request_message",
+      "from": "requesting_user",
+      "to": "trusted_application",
+      "y": 160,
+      "label": "用户请求"
+    },
+    {
+      "id": "messages_and_tools",
+      "from": "trusted_application",
+      "to": "proposing_model",
+      "y": 190,
+      "label": "用户消息 + 工具定义 / Schema"
+    },
+    {
+      "id": "model_call_proposal",
+      "from": "proposing_model",
+      "to": "trusted_application",
+      "y": 220,
+      "label": "tool_call：工具名 / JSON 参数 / call_id",
+      "variant": "return"
+    },
+    {
+      "id": "check_call_policy",
+      "from": "trusted_application",
+      "to": "application_validator",
+      "y": 250,
+      "label": "Schema / 权限 / 参数白名单校验",
+      "variant": "security"
+    },
+    {
+      "id": "policy_accepted",
+      "from": "application_validator",
+      "to": "trusted_application",
+      "y": 280,
+      "label": "校验通过后才能执行",
+      "variant": "return"
+    },
+    {
+      "id": "confirm_side_effect",
+      "from": "trusted_application",
+      "to": "requesting_user",
+      "y": 310,
+      "label": "有副作用：请求用户确认最终参数",
+      "variant": "security"
+    },
+    {
+      "id": "confirmation_received",
+      "from": "requesting_user",
+      "to": "trusted_application",
+      "y": 340,
+      "label": "用户确认（只读调用跳过确认）",
+      "variant": "return"
+    },
+    {
+      "id": "execute_real_function",
+      "from": "trusted_application",
+      "to": "controlled_tool",
+      "y": 370,
+      "label": "应用执行工具：超时 / 幂等 / 并发限制",
+      "variant": "emphasis"
+    },
+    {
+      "id": "controlled_tool_result",
+      "from": "controlled_tool",
+      "to": "trusted_application",
+      "y": 400,
+      "label": "受控结果 / 错误；工具输出仍不可信",
+      "variant": "return"
+    },
+    {
+      "id": "return_call_id_result",
+      "from": "trusted_application",
+      "to": "proposing_model",
+      "y": 430,
+      "label": "tool_result，绑定原 call_id"
+    },
+    {
+      "id": "next_call_or_answer",
+      "from": "proposing_model",
+      "to": "trusted_application",
+      "y": 460,
+      "label": "最终回答 / 下一次 tool_call + call_id",
+      "variant": "return"
+    },
+    {
+      "id": "answer_to_user",
+      "from": "trusted_application",
+      "to": "requesting_user",
+      "y": 490,
+      "label": "无新调用：返回最终回答",
+      "variant": "return"
+    }
+  ]
+}

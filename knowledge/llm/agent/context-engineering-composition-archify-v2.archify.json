@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "有效上下文的五个组成部分",
+    "subtitle": "系统提示、工具、示例、历史与外部知识共同占用有限的上下文窗口",
+    "viewBox": [
+      1100,
+      560
+    ],
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "animation": "none"
+  },
+  "components": [
+    {
+      "id": "effective_context",
+      "type": "frontend",
+      "label": "有效上下文",
+      "sublabel": "一次模型调用的输入集合",
+      "pos": [
+        420,
+        240
+      ],
+      "size": [
+        260,
+        82
+      ]
+    },
+    {
+      "id": "system_prompt",
+      "type": "security",
+      "label": "系统提示",
+      "sublabel": "角色定位 + 行为规范；XML/Markdown 分区",
+      "pos": [
+        40,
+        30
+      ],
+      "size": [
+        260,
+        100
+      ]
+    },
+    {
+      "id": "tool_definitions",
+      "type": "backend",
+      "label": "工具定义",
+      "sublabel": "职责单一 + 接口清晰；最小可行工具集 MVTS",
+      "pos": [
+        420,
+        30
+      ],
+      "size": [
+        260,
+        100
+      ]
+    },
+    {
+      "id": "few_shot_examples",
+      "type": "frontend",
+      "label": "少样本示例",
+      "sublabel": "多样且典型；直接描绘期望行为",
+      "pos": [
+        800,
+        30
+      ],
+      "size": [
+        260,
+        100
+      ]
+    },
+    {
+      "id": "conversation_history",
+      "type": "messagebus",
+      "label": "对话历史",
+      "sublabel": "History",
+      "pos": [
+        40,
+        420
+      ],
+      "size": [
+        260,
+        100
+      ]
+    },
+    {
+      "id": "external_knowledge",
+      "type": "database",
+      "label": "外部知识",
+      "sublabel": "RAG / Memory",
+      "pos": [
+        800,
+        420
+      ],
+      "size": [
+        260,
+        100
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "from": "effective_context",
+      "to": "system_prompt"
+    },
+    {
+      "from": "effective_context",
+      "to": "tool_definitions"
+    },
+    {
+      "from": "effective_context",
+      "to": "few_shot_examples"
+    },
+    {
+      "from": "effective_context",
+      "to": "conversation_history"
+    },
+    {
+      "from": "effective_context",
+      "to": "external_knowledge"
+    }
+  ]
+}

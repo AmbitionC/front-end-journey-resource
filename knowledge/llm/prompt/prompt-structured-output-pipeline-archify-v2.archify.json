@@ -1,0 +1,167 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "结构化输出：格式与事实分别校验",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "animation": "none"
+  },
+  "lanes": [
+    {
+      "id": "output",
+      "label": "结构化输出链路"
+    },
+    {
+      "id": "fallback",
+      "label": "失败与受控处理",
+      "variant": "exception"
+    }
+  ],
+  "mainPath": [
+    "contract",
+    "decode",
+    "json",
+    "schema",
+    "business",
+    "trusted"
+  ],
+  "nodes": [
+    {
+      "id": "contract",
+      "lane": "output",
+      "col": 0,
+      "type": "frontend",
+      "label": "Prompt + Schema",
+      "sublabel": "additionalProperties",
+      "width": 126
+    },
+    {
+      "id": "decode",
+      "lane": "output",
+      "col": 1,
+      "type": "backend",
+      "label": "约束解码",
+      "sublabel": "原生结构化能力"
+    },
+    {
+      "id": "json",
+      "lane": "output",
+      "col": 2,
+      "type": "database",
+      "label": "JSON 解析",
+      "sublabel": "得到可解析对象"
+    },
+    {
+      "id": "schema",
+      "lane": "output",
+      "col": 3,
+      "type": "security",
+      "label": "Schema 校验",
+      "sublabel": "type · required · enum",
+      "width": 126
+    },
+    {
+      "id": "business",
+      "lane": "output",
+      "col": 4,
+      "type": "security",
+      "label": "语义与业务校验",
+      "sublabel": "事实 · 权限 · 规则",
+      "width": 126
+    },
+    {
+      "id": "trusted",
+      "lane": "output",
+      "col": 5,
+      "type": "backend",
+      "label": "可信对象",
+      "sublabel": "交给业务消费者"
+    },
+    {
+      "id": "retry",
+      "lane": "fallback",
+      "col": 3,
+      "type": "messagebus",
+      "label": "重试 / 降级",
+      "sublabel": "受控次数 + 错误信息",
+      "width": 126
+    },
+    {
+      "id": "human",
+      "lane": "fallback",
+      "col": 4,
+      "type": "external",
+      "label": "人工 / 修正规则",
+      "sublabel": "高风险语义错误",
+      "width": 126
+    }
+  ],
+  "edges": [
+    {
+      "from": "contract",
+      "to": "decode",
+      "label": "约束生成"
+    },
+    {
+      "from": "decode",
+      "to": "json",
+      "label": "模型响应"
+    },
+    {
+      "from": "json",
+      "to": "schema",
+      "label": "解析成功"
+    },
+    {
+      "from": "schema",
+      "to": "business",
+      "label": "结构合法"
+    },
+    {
+      "from": "business",
+      "to": "trusted",
+      "label": "业务通过"
+    },
+    {
+      "from": "schema",
+      "to": "retry",
+      "label": "校验失败",
+      "role": "error",
+      "variant": "security"
+    },
+    {
+      "from": "business",
+      "to": "human",
+      "label": "语义失败",
+      "role": "error",
+      "variant": "security"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Schema 合同",
+      "items": [
+        "type · required · enum",
+        "additionalProperties 控制额外字段"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "格式正确 ≠ 事实正确",
+      "items": [
+        "订单号与引用要存在并有依据",
+        "模型 confidence 不能作为权限依据"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "受控失败",
+      "items": [
+        "拒答、截断、解析失败同样需处理",
+        "错误不能静默进入数据库"
+      ]
+    }
+  ]
+}
