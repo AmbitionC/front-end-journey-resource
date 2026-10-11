@@ -2,7 +2,7 @@
 
 演示项目只需要在浏览器里发出请求；可上线的产品还要处理密钥、身份、配额、流式状态、内容安全、工具权限、上下文和可观测性。最稳妥的基本架构是：**浏览器只访问自己的 BFF，BFF 再访问模型与工具服务**。
 
-![大模型前端应用的 BFF 与流式架构](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/aigc-application-bff-stream-v3.webp)
+<iframe src="https://www.agent-journey.cn/archify/aigc-application-bff-stream-archify-v2.html" width="100%" height="920" title="大模型前端应用的 BFF 与流式架构"></iframe>
 
 ## 一、为什么必须有自己的服务端
 

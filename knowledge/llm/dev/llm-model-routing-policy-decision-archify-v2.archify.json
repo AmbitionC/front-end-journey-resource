@@ -1,0 +1,253 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "模型路由：硬过滤、评分与守约束备选",
+    "locale": "zh-CN",
+    "animation": "none",
+    "quality_profile": "showcase",
+    "viewBox": [
+      900,
+      500
+    ],
+    "legend": {
+      "mode": "auto",
+      "entries": {
+        "frontend": {
+          "label": "请求"
+        },
+        "security": {
+          "label": "政策与安全"
+        },
+        "backend": {
+          "label": "路由决策"
+        },
+        "cloud": {
+          "label": "模型候选"
+        },
+        "database": {
+          "label": "观测反馈"
+        }
+      }
+    }
+  },
+  "components": [
+    {
+      "id": "request",
+      "type": "frontend",
+      "label": "请求 / 任务画像",
+      "sublabel": "模态 · SLA · 预算",
+      "pos": [
+        40,
+        214
+      ],
+      "size": [
+        140,
+        70
+      ]
+    },
+    {
+      "id": "hard_inputs",
+      "type": "security",
+      "label": "能力 · 隐私",
+      "sublabel": "工具 · 地域 · 租户许可",
+      "pos": [
+        212,
+        96
+      ],
+      "size": [
+        140,
+        70
+      ]
+    },
+    {
+      "id": "soft_inputs",
+      "type": "backend",
+      "label": "延迟 · 质量",
+      "sublabel": "成本 · 健康",
+      "pos": [
+        384,
+        96
+      ],
+      "size": [
+        140,
+        70
+      ]
+    },
+    {
+      "id": "hard_filter",
+      "type": "security",
+      "label": "硬约束过滤",
+      "sublabel": "能力 · 治理 · 最低质量",
+      "pos": [
+        212,
+        214
+      ],
+      "size": [
+        140,
+        70
+      ]
+    },
+    {
+      "id": "score",
+      "type": "backend",
+      "label": "合格候选评分",
+      "sublabel": "质量−延迟−成本+健康",
+      "pos": [
+        384,
+        214
+      ],
+      "size": [
+        140,
+        70
+      ]
+    },
+    {
+      "id": "guarded_route",
+      "type": "security",
+      "label": "守约束路由 / 备选",
+      "sublabel": "失败再决策 · 保留硬约束",
+      "pos": [
+        556,
+        214
+      ],
+      "size": [
+        140,
+        70
+      ]
+    },
+    {
+      "id": "model_a",
+      "type": "cloud",
+      "label": "合格模型 A",
+      "sublabel": "契约与评测验证",
+      "pos": [
+        728,
+        96
+      ],
+      "size": [
+        140,
+        70
+      ]
+    },
+    {
+      "id": "model_b",
+      "type": "cloud",
+      "label": "合格模型 B",
+      "sublabel": "契约与评测验证",
+      "pos": [
+        728,
+        214
+      ],
+      "size": [
+        140,
+        70
+      ]
+    },
+    {
+      "id": "model_c",
+      "type": "cloud",
+      "label": "合格模型 C",
+      "sublabel": "契约与评测验证",
+      "pos": [
+        728,
+        332
+      ],
+      "size": [
+        140,
+        70
+      ]
+    },
+    {
+      "id": "safe_failure",
+      "type": "security",
+      "label": "无合格备选",
+      "sublabel": "安全失败 / 人工处理",
+      "pos": [
+        212,
+        332
+      ],
+      "size": [
+        140,
+        70
+      ]
+    },
+    {
+      "id": "observability",
+      "type": "database",
+      "label": "可观测轨迹",
+      "sublabel": "预测 · 实际 · 反馈",
+      "pos": [
+        556,
+        332
+      ],
+      "size": [
+        140,
+        70
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "request-policy",
+      "from": "request",
+      "to": "hard_filter"
+    },
+    {
+      "id": "eligibility-inputs",
+      "from": "hard_inputs",
+      "to": "hard_filter",
+      "variant": "dashed"
+    },
+    {
+      "id": "ranking-inputs",
+      "from": "soft_inputs",
+      "to": "score",
+      "variant": "dashed"
+    },
+    {
+      "id": "filter-then-score",
+      "from": "hard_filter",
+      "to": "score"
+    },
+    {
+      "id": "ranked-route",
+      "from": "score",
+      "to": "guarded_route"
+    },
+    {
+      "id": "choose-a",
+      "from": "guarded_route",
+      "to": "model_a"
+    },
+    {
+      "id": "choose-b",
+      "from": "guarded_route",
+      "to": "model_b"
+    },
+    {
+      "id": "choose-c",
+      "from": "guarded_route",
+      "to": "model_c"
+    },
+    {
+      "id": "guarded-fallback",
+      "from": "guarded_route",
+      "to": "hard_filter",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "bottom"
+    },
+    {
+      "id": "no-eligible-candidate",
+      "from": "hard_filter",
+      "to": "safe_failure"
+    },
+    {
+      "id": "routing-trace",
+      "from": "guarded_route",
+      "to": "observability",
+      "variant": "dashed"
+    }
+  ]
+}

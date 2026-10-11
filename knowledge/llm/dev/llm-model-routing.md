@@ -9,7 +9,7 @@
 - **服务目标**：首 token、总延迟、最低质量、可用性和单位成本上限；
 - **运行状态**：模型健康、限流、队列深度、近期质量、剩余预算和熔断状态。
 
-![请求由能力、隐私、延迟、质量、成本和健康状态共同决定路由，并留下可观测轨迹](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-model-routing-policy-decision-v1.webp)
+<iframe src="https://www.agent-journey.cn/archify/llm-model-routing-policy-decision-archify-v2.html" width="100%" height="920" title="请求由能力、隐私、延迟、质量、成本和健康状态共同决定路由，并留下可观测轨迹"></iframe>
 *图：先通过硬约束门禁，再对合格模型评分；路由决定、实际执行和反馈必须可追踪。*
 
 业务方应提交任务画像，而不是任意模型名：

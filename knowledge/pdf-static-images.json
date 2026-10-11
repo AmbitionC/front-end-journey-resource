@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "complete": true,
-  "expectedCount": 123,
+  "expectedCount": 129,
   "entries": [
     {
       "id": "context-engineering:mermaid:45",
@@ -6821,6 +6821,258 @@
       "width": 1252,
       "height": 2076,
       "renderedVectorSha256": "51dc39594160293744b88cfc7097f19bfb8c85d5093b004857d291e943ffcccf"
+    },
+    {
+      "id": "llm-sse-streaming:archify:7",
+      "kind": "archify",
+      "articlePath": "knowledge/llm/dev/llm-sse-streaming.md",
+      "articleSha256": "ed879ce2e38b155d13d444e53cf654c4ae6361c2a0366da7332e23ec06cb062c",
+      "line": 7,
+      "sourceText": "<iframe src=\"https://www.agent-journey.cn/archify/llm-sse-streaming-boundaries-archify-v2.html\" width=\"100%\" height=\"920\" title=\"SSE 中网络分块与事件边界的区别\"></iframe>",
+      "sourceSha256": "a0f3d94c801c216028c209e74c2f77096806fa0c717c0a7611e58f2abf626553",
+      "url": "https://www.agent-journey.cn/archify/llm-sse-streaming-boundaries-archify-v2.html",
+      "specPath": "knowledge/llm/dev/llm-sse-streaming-boundaries-archify-v2.archify.json",
+      "specSha256": "101c78f38a98d6f8444d33d8d3569e85dda2fedb8e54460e54f17f140d3412cf",
+      "vectorSha256": "622c03b35e665b3f17771fd3e747ce52eb442e7b61488237be5a1b69e36f8ccc",
+      "renderedVectorSha256": "622c03b35e665b3f17771fd3e747ce52eb442e7b61488237be5a1b69e36f8ccc",
+      "cacheKey": "aee3e848ce47d85396251a64899361aaa4aefcb7984e7b30080d1103a99132a2",
+      "renderer": {
+        "archify": "2.16.0",
+        "archifyRevision": "199360cc6687a7857b54dd188d4922b09e466a4b",
+        "export": "official Archify.exportMenu.run",
+        "htmlSha256": "4cf033c3418c44f418ef4813a5433a7ab7ee06cd14e2e1d0b2ab1258d672c5fb",
+        "officialPngSha256": "08000e9d864a084dccb6662b827788492e2d6e983bf21f32e34f4fc83cb3d0f8",
+        "source": "fixed199360 official Archify.exportMenu.run with real browser downloads",
+        "pngSvgProjection": {
+          "svgViewBox": [
+            0.0,
+            0.0,
+            920.0,
+            590.0
+          ],
+          "officialPngSize": [
+            3680,
+            2360
+          ],
+          "ratioX": 4.0,
+          "ratioY": 4.0,
+          "cropUsesExactOfficialPixels": true
+        }
+      },
+      "outputPath": "images/pdf-llm-sse-streaming-boundaries-archify-v2.png",
+      "outputSha256": "08000e9d864a084dccb6662b827788492e2d6e983bf21f32e34f4fc83cb3d0f8",
+      "width": 3680,
+      "height": 2360
+    },
+    {
+      "id": "llm-api-basics:archify:13",
+      "kind": "archify",
+      "articlePath": "knowledge/llm/dev/llm-api-basics.md",
+      "articleSha256": "2eea41b575b643c8cf4d23e4daf49c8c56ed0f4f5ba247c6aa794b7644adc979",
+      "line": 13,
+      "sourceText": "<iframe src=\"https://www.agent-journey.cn/archify/llm-api-basics-request-lifecycle-archify-v2.html\" width=\"100%\" height=\"920\" title=\"从应用请求、消息与内容部件进入模型，再分解为结果、工具、用量与追踪信息\"></iframe>",
+      "sourceSha256": "096ee78e26369475c5f032113cc4e195c41596f07b2f8ded83d86c4581076f10",
+      "url": "https://www.agent-journey.cn/archify/llm-api-basics-request-lifecycle-archify-v2.html",
+      "specPath": "knowledge/llm/dev/llm-api-basics-request-lifecycle-archify-v2.archify.json",
+      "specSha256": "b497a9f34b4b1cb9db416acfc0aa7e23bca5eafa15e4934057e3ca542fe9eb32",
+      "vectorSha256": "60c59785586462443be9c204777393908e25b251ca67f2970c3979de0cba0318",
+      "renderedVectorSha256": "60c59785586462443be9c204777393908e25b251ca67f2970c3979de0cba0318",
+      "cacheKey": "eb6bbf7ed8bbea784d384400893af34640b5ca80cf77dece572734e88019f970",
+      "renderer": {
+        "archify": "2.16.0",
+        "archifyRevision": "199360cc6687a7857b54dd188d4922b09e466a4b",
+        "export": "official Archify.exportMenu.run",
+        "htmlSha256": "bdb11ae2d93f1b62d7a1cc89b217bf8cc8f8c439a5d3640f1ee07cced78469a7",
+        "officialPngSha256": "c846607f420696de607bd522319f33228b6d096472e1fadcc1bbfd7b0b52f13f",
+        "source": "fixed199360 official Archify.exportMenu.run with real browser downloads",
+        "pngSvgProjection": {
+          "svgViewBox": [
+            0.0,
+            0.0,
+            920.0,
+            590.0
+          ],
+          "officialPngSize": [
+            3680,
+            2360
+          ],
+          "ratioX": 4.0,
+          "ratioY": 4.0,
+          "cropUsesExactOfficialPixels": true
+        }
+      },
+      "outputPath": "images/pdf-llm-api-basics-request-lifecycle-archify-v2.png",
+      "outputSha256": "c846607f420696de607bd522319f33228b6d096472e1fadcc1bbfd7b0b52f13f",
+      "width": 3680,
+      "height": 2360
+    },
+    {
+      "id": "openai-sdk:archify:42",
+      "kind": "archify",
+      "articlePath": "knowledge/llm/dev/openai-sdk.md",
+      "articleSha256": "8a96123e08cc915433b67bc8a6abeee2b18d4a1a8db87d1f855c15f96e571a33",
+      "line": 42,
+      "sourceText": "<iframe src=\"https://www.agent-journey.cn/archify/openai-sdk-responses-lifecycle-archify-v2.html\" width=\"100%\" height=\"920\" title=\"服务端通过 OpenAI SDK 调用 Responses API，处理模型输出或工具调用，并通过事件流接收增量结果\"></iframe>",
+      "sourceSha256": "95925aa183b0cbd0123f37139a3fe440dcc4fb35fe0eb3509e70d999ddcf9958",
+      "url": "https://www.agent-journey.cn/archify/openai-sdk-responses-lifecycle-archify-v2.html",
+      "specPath": "knowledge/llm/dev/openai-sdk-responses-lifecycle-archify-v2.archify.json",
+      "specSha256": "469489c0a03af5b668c48f61a2d8b330507121a7bb56328eb76af9c0985f151a",
+      "vectorSha256": "0055366637db4c0b45f2127ad5c8832586acda940dcbfb29fb3e0c7eda776e56",
+      "renderedVectorSha256": "0055366637db4c0b45f2127ad5c8832586acda940dcbfb29fb3e0c7eda776e56",
+      "cacheKey": "ba85045acc18f590a1c132edc25c2864f9bd82699acdad37de0afb2efe8ab887",
+      "renderer": {
+        "archify": "2.16.0",
+        "archifyRevision": "199360cc6687a7857b54dd188d4922b09e466a4b",
+        "export": "official Archify.exportMenu.run",
+        "htmlSha256": "ef792a3b97fb2ecbda2a45ad7312539d9af7984277f60aa8bc286377c82bdeca",
+        "officialPngSha256": "f205b328d847c1bf1c57df19fc482921eb97391cbb954d10201bac939c4c7acb",
+        "source": "fixed199360 official Archify.exportMenu.run with real browser downloads",
+        "pngSvgProjection": {
+          "svgViewBox": [
+            0.0,
+            0.0,
+            920.0,
+            590.0
+          ],
+          "officialPngSize": [
+            3680,
+            2360
+          ],
+          "ratioX": 4.0,
+          "ratioY": 4.0,
+          "cropUsesExactOfficialPixels": true
+        }
+      },
+      "outputPath": "images/pdf-openai-sdk-responses-lifecycle-archify-v2.png",
+      "outputSha256": "f205b328d847c1bf1c57df19fc482921eb97391cbb954d10201bac939c4c7acb",
+      "width": 3680,
+      "height": 2360
+    },
+    {
+      "id": "aigc-application:archify:5",
+      "kind": "archify",
+      "articlePath": "knowledge/llm/dev/aigc-application.md",
+      "articleSha256": "1d3735317c67b169f018ca8f1fe131c61e7170acd6fedb482fc052a1b09a586b",
+      "line": 5,
+      "sourceText": "<iframe src=\"https://www.agent-journey.cn/archify/aigc-application-bff-stream-archify-v2.html\" width=\"100%\" height=\"920\" title=\"大模型前端应用的 BFF 与流式架构\"></iframe>",
+      "sourceSha256": "da56def2d79ec16fc6145caeb81ccb289243c16cc9d68083eb15f359b525a7ac",
+      "url": "https://www.agent-journey.cn/archify/aigc-application-bff-stream-archify-v2.html",
+      "specPath": "knowledge/llm/dev/aigc-application-bff-stream-archify-v2.archify.json",
+      "specSha256": "99f06eb5ed29fb4a2d10d7568f45248e3f0c503a0b9469ed3ea7f2c888b88f7b",
+      "vectorSha256": "2f566a9af5d4e98a82c9e8f695dbd410845415f0b9ea8aaf098861d4f322eb4d",
+      "renderedVectorSha256": "2f566a9af5d4e98a82c9e8f695dbd410845415f0b9ea8aaf098861d4f322eb4d",
+      "cacheKey": "f907777943eb2441a5e731b0580aa8e8526b283e7d510913805da86ee65adfba",
+      "renderer": {
+        "archify": "2.16.0",
+        "archifyRevision": "199360cc6687a7857b54dd188d4922b09e466a4b",
+        "export": "official Archify.exportMenu.run",
+        "htmlSha256": "90396489f357d705723e55b6150a69bdd7a8818b194ed0d58e42b928181c293d",
+        "officialPngSha256": "e8571f0e6160c3d864884460526eb3a55976801aa5c96e89a7244aa343bd1732",
+        "source": "fixed199360 official Archify.exportMenu.run with real browser downloads",
+        "pngSvgProjection": {
+          "svgViewBox": [
+            0.0,
+            0.0,
+            920.0,
+            500.0
+          ],
+          "officialPngSize": [
+            3680,
+            2000
+          ],
+          "ratioX": 4.0,
+          "ratioY": 4.0,
+          "cropUsesExactOfficialPixels": true
+        }
+      },
+      "outputPath": "images/pdf-aigc-application-bff-stream-archify-v2.png",
+      "outputSha256": "e8571f0e6160c3d864884460526eb3a55976801aa5c96e89a7244aa343bd1732",
+      "width": 3680,
+      "height": 2000
+    },
+    {
+      "id": "llm-stream-cancel-resume:archify:23",
+      "kind": "archify",
+      "articlePath": "knowledge/llm/dev/llm-stream-cancel-resume.md",
+      "articleSha256": "f02e251e795338da9d276066d450bd82149cc2ff8cf01066704d1401992e1a5f",
+      "line": 23,
+      "sourceText": "<iframe src=\"https://www.agent-journey.cn/archify/llm-stream-cancel-resume-event-log-archify-v2.html\" width=\"100%\" height=\"920\" title=\"客户端取消流后服务端工作可能继续；已确认事件进入日志和快照，新请求从应用状态恢复\"></iframe>",
+      "sourceSha256": "d4242d151dd94397c93a5e2765478d83f88b091985f7b53b06e450a9dad9053b",
+      "url": "https://www.agent-journey.cn/archify/llm-stream-cancel-resume-event-log-archify-v2.html",
+      "specPath": "knowledge/llm/dev/llm-stream-cancel-resume-event-log-archify-v2.archify.json",
+      "specSha256": "7fc5d4fe2573001cb733fd311cb211beaa6dc5a201d5aa596529397fd1662fd5",
+      "vectorSha256": "a3520c8495c7780f9f819c58e59227079f427ee1ccb43272cab77f2bda045fc0",
+      "renderedVectorSha256": "a3520c8495c7780f9f819c58e59227079f427ee1ccb43272cab77f2bda045fc0",
+      "cacheKey": "63ffb8eff6b69f015b90ac48510ccadee7eeabf1fd37b7cb3d7250b44c546f63",
+      "renderer": {
+        "archify": "2.16.0",
+        "archifyRevision": "199360cc6687a7857b54dd188d4922b09e466a4b",
+        "export": "official Archify.exportMenu.run",
+        "htmlSha256": "609ce9ea23738b025016d6e2110ecf02a08b5795d61957a7ca129f9bc3be9e66",
+        "officialPngSha256": "be23b3ff6ac51495b869394bbfd92f0d286b45b6c4b29a70ea5551d1167a1956",
+        "source": "fixed199360 official Archify.exportMenu.run with real browser downloads",
+        "pngSvgProjection": {
+          "svgViewBox": [
+            0.0,
+            0.0,
+            920.0,
+            590.0
+          ],
+          "officialPngSize": [
+            3680,
+            2360
+          ],
+          "ratioX": 4.0,
+          "ratioY": 4.0,
+          "cropUsesExactOfficialPixels": true
+        }
+      },
+      "outputPath": "images/pdf-llm-stream-cancel-resume-event-log-archify-v2.png",
+      "outputSha256": "be23b3ff6ac51495b869394bbfd92f0d286b45b6c4b29a70ea5551d1167a1956",
+      "width": 3680,
+      "height": 2360
+    },
+    {
+      "id": "llm-model-routing:archify:12",
+      "kind": "archify",
+      "articlePath": "knowledge/llm/dev/llm-model-routing.md",
+      "articleSha256": "61ca2c725a91d7ee06b37cb5858964e3debb2a5fd65829b126442df562afd63d",
+      "line": 12,
+      "sourceText": "<iframe src=\"https://www.agent-journey.cn/archify/llm-model-routing-policy-decision-archify-v2.html\" width=\"100%\" height=\"920\" title=\"请求由能力、隐私、延迟、质量、成本和健康状态共同决定路由，并留下可观测轨迹\"></iframe>",
+      "sourceSha256": "851969a0461a9d8891b0c90b9ab24e122ab9c73a3123c967a073845dc9ef10d9",
+      "url": "https://www.agent-journey.cn/archify/llm-model-routing-policy-decision-archify-v2.html",
+      "specPath": "knowledge/llm/dev/llm-model-routing-policy-decision-archify-v2.archify.json",
+      "specSha256": "00cff41283a82eef43ce244163e10ace098e7c86a37225c460bfe9bbc2fe72e1",
+      "vectorSha256": "6d0f4a229e79fbf9c787b0d8e549e816c359b971269d6a85631a11b36b9ee607",
+      "renderedVectorSha256": "6d0f4a229e79fbf9c787b0d8e549e816c359b971269d6a85631a11b36b9ee607",
+      "cacheKey": "1c5a7f3cc32f8634fcaf65e3c945ee54d0d37425ebc07c33987e35a3c559a27c",
+      "renderer": {
+        "archify": "2.16.0",
+        "archifyRevision": "199360cc6687a7857b54dd188d4922b09e466a4b",
+        "export": "official Archify.exportMenu.run",
+        "htmlSha256": "4af4b32c3f2ccbb289c7b8df5db35717aeb8390098004512d706b7dc2b5b24c1",
+        "officialPngSha256": "f18d9b442fb865eb8d63c5665bcbffcc8b8a4d56d4b085671db67b010ffc86cd",
+        "source": "fixed199360 official Archify.exportMenu.run with real browser downloads",
+        "pngSvgProjection": {
+          "svgViewBox": [
+            0.0,
+            0.0,
+            900.0,
+            500.0
+          ],
+          "officialPngSize": [
+            3600,
+            2000
+          ],
+          "ratioX": 4.0,
+          "ratioY": 4.0,
+          "cropUsesExactOfficialPixels": true
+        }
+      },
+      "outputPath": "images/pdf-llm-model-routing-policy-decision-archify-v2.png",
+      "outputSha256": "f18d9b442fb865eb8d63c5665bcbffcc8b8a4d56d4b085671db67b010ffc86cd",
+      "width": 3600,
+      "height": 2000
     }
   ],
   "literals": [
