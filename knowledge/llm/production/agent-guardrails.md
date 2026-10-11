@@ -6,7 +6,7 @@ Guardrail 判断内容或行为是否满足规则；permission model 决定主�
 
 [OpenAI Guardrails 与 approvals 文档](https://developers.openai.com/api/docs/guides/agents/guardrails-approvals)把 guardrail 放在 input、output 和 tool 等边界，并区分 blocking 与 parallel 模式。Blocking 检查先通过才继续；parallel 可以降低感知延迟，但工作可能在检查完成前已经开始，不能用于不可逆副作用。
 
-![用户输入、Agent、工具调用、不可信工具结果和最终输出依次经过输入验证、注入检测、schema/权限/审批/沙箱、结果验证、输出策略和 PII 脱敏，观测与评估覆盖全链路](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-guardrails-layered-controls-v1.webp)
+<iframe src="https://www.agent-journey.cn/archify/agent-guardrails-layered-controls-archify-v2.html" width="100%" height="920" title="用户输入、Agent、工具调用、不可信工具结果和最终输出依次经过输入验证、注入检测、schema/权限/审批/沙箱、结果验证、输出策略和 PII 脱敏，观测与评估覆盖全链路"></iframe>
 *图：Block 在副作用前阻断；Alert 负责发现和响应，不能代替预防控制。*
 
 ## 输入边界

@@ -2,7 +2,7 @@ Agent Benchmark 不是一列排行榜分数，而是一份完整实验合同：�
 
 [NIST AI TEVV](https://www.nist.gov/ai-test-evaluation-validation-and-verification-tevv)把 AI 评估描述为任务、挑战问题、测试床、软件工具、数据集和测量方法的系统工作，并强调不同可信特征与使用情境。Benchmark 正是这些元素的可重复组合，而不是把现成题库扔给模型。
 
-![Agent Benchmark 的任务数据执行评分矩阵与结果解读卡](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-benchmark-evaluation-matrix-v1.webp)
+<iframe src="https://www.agent-journey.cn/archify/agent-benchmark-evaluation-matrix-archify-v2.html" width="100%" height="920" title="Agent Benchmark 的任务数据执行评分矩阵与结果解读卡"></iframe>
 
 左侧矩阵定义“怎么测”，右侧报告定义“怎么看”。污染和聚合是两类常见陷阱：测试样本被开发或训练过程看过，会高估泛化；把不同难度和风险的任务压成平均数，会隐藏严重失败。
 

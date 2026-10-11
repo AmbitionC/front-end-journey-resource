@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Agent Benchmark：评估矩阵与可复现报告",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "animation": "none",
+    "legend": { "mode": "hidden" },
+    "viewBox": [1200, 630]
+  },
+  "components": [
+    {
+      "id": "matrix_four_dimensions",
+      "type": "external",
+      "label": "CAPABILITY 能力 · RELIABILITY 可靠性 · SAFETY 安全 · COST 成本",
+      "sublabel": "每一行均覆盖四维度；四组件不是四步流程",
+      "pos": [40, 48], "size": [710, 68]
+    },
+    {
+      "id": "matrix_task_set",
+      "type": "backend",
+      "label": "TASK SET · 任务集",
+      "sublabel": "能力：目标/成功条件｜可靠：重复任务｜安全：权限/停止｜成本：预算",
+      "pos": [40, 150], "size": [710, 70]
+    },
+    {
+      "id": "matrix_dataset",
+      "type": "database",
+      "label": "DATASET · 数据集",
+      "sublabel": "能力：任务数据｜可靠：去重/划分｜安全：许可/脱敏｜成本：数据生命周期",
+      "pos": [40, 240], "size": [710, 70]
+    },
+    {
+      "id": "matrix_harness",
+      "type": "cloud",
+      "label": "HARNESS · 执行器",
+      "sublabel": "能力：夹具/工具｜可靠：同条件/重试｜安全：隔离/权限｜成本：时延/调用预算",
+      "pos": [40, 330], "size": [710, 70]
+    },
+    {
+      "id": "matrix_scorer",
+      "type": "security",
+      "label": "SCORER · 评分器",
+      "sublabel": "能力：终态/质量｜可靠：校准/一致性｜安全：独立门禁｜成本：固定价格版本",
+      "pos": [40, 420], "size": [710, 70]
+    },
+    {
+      "id": "report_distribution",
+      "type": "database",
+      "label": "DISTRIBUTION · 分布",
+      "sublabel": "均值、分位数与失败频率",
+      "pos": [800, 60], "size": [350, 88]
+    },
+    {
+      "id": "report_confidence_interval",
+      "type": "backend",
+      "label": "CONFIDENCE INTERVAL",
+      "sublabel": "置信范围；报告样本量与统计假设",
+      "pos": [800, 178], "size": [350, 88]
+    },
+    {
+      "id": "report_failure_slices",
+      "type": "messagebus",
+      "label": "FAILURE SLICES · 失败切片",
+      "sublabel": "任务类型、风险、最差组与失败样本",
+      "pos": [800, 296], "size": [350, 88]
+    },
+    {
+      "id": "report_version_contract",
+      "type": "external",
+      "label": "VERSION · 版本合同",
+      "sublabel": "固定Agent与任务/数据/执行器/评分器",
+      "pos": [800, 414], "size": [350, 88]
+    },
+    {
+      "id": "warning_contamination",
+      "type": "security",
+      "label": "CONTAMINATION · 污染陷阱",
+      "sublabel": "开发/训练看过测试会高估泛化；开发与保留集分离",
+      "pos": [40, 530], "size": [540, 60]
+    },
+    {
+      "id": "warning_aggregation",
+      "type": "security",
+      "label": "AGGREGATION · 聚合陷阱",
+      "sublabel": "总体分数不能隐藏失败切片；安全不可被平均分抵消",
+      "pos": [620, 530], "size": [530, 60]
+    }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "评估矩阵：四组件 × 四维度（各行顺序均为能力、可靠、安全、成本）", "wraps": ["matrix_four_dimensions", "matrix_task_set", "matrix_dataset", "matrix_harness", "matrix_scorer"], "pad": 14 },
+    { "kind": "region", "label": "REPORT · 报告必须回溯逐任务 Run / Trace", "wraps": ["report_distribution", "report_confidence_interval", "report_failure_slices", "report_version_contract"], "pad": 14 }
+  ],
+  "connections": []
+}

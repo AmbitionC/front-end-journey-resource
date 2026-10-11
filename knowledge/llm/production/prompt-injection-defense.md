@@ -1,4 +1,4 @@
-![分层防御图：不可信网页/文件进入内容隔离与标记，策略层做指令/数据分离，工具层做最小权限与参数校验，高风险动作进入人工审批，输出层做泄露检测；展示攻击路径被逐层截断](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/prompt-injection-defense-layers-v1.webp)
+<iframe src="https://www.agent-journey.cn/archify/prompt-injection-defense-layers-archify-v2.html" width="100%" height="920" title="分层防御图：不可信网页/文件进入内容隔离与标记，策略层做指令/数据分离，工具层做最小权限与参数校验，高风险动作进入人工审批，输出层做泄露检测；展示攻击路径被逐层截断"></iframe>
 *图：从不可信网页/文件向右读取攻击路径，观察内容隔离、指令/数据分离、参数校验、最小权限、人工审批与泄露检测如何逐层截断风险。*
 
 ---
@@ -57,51 +57,7 @@ SQL Injection 有明确的技术修复方案（参数化查询），而 Prompt I
 [NIST AI 100-2](https://csrc.nist.gov/pubs/ai/100/2/e2025/final) 按攻击者能力、攻击阶段和影响分类生成式 AI 风险；防御设计应先写清资产、信任边界和可执行动作，再选择具体缓解措施。
 
 
-```mermaid
-flowchart TB
-    subgraph 攻击向量["攻击向量 Attack Vectors"]
-        A1[直接注入\nDirect Injection]
-        A2[间接注入\nIndirect Injection]
-        A3[越狱\nJailbreak]
-    end
-
-    subgraph 数据入口["数据入口 Data Entry Points"]
-        D1[用户消息\nUser Message]
-        D2[外部网页 / 文件\nWeb / File Content]
-        D3[工具返回值\nTool Results]
-        D4[第三方 API 响应\n3rd-party API]
-    end
-
-    subgraph 防御层["防御层 Defense Layers"]
-        L1["① 输入隔离\nInput Isolation"]
-        L2["② 输入校验与清洗\nInput Validation"]
-        L3["③ 最小权限\nLeast Privilege"]
-        L4["④ 输出过滤\nOutput Filtering"]
-        L5["⑤ 双重 LLM 校验\nDual-LLM Pattern"]
-        L6["⑥ 人工确认\nHuman-in-the-Loop"]
-    end
-
-    subgraph 资产["被保护资产 Protected Assets"]
-        R1[用户数据]
-        R2[系统操作权限]
-        R3[模型行为意图]
-    end
-
-    A1 --> D1
-    A2 --> D2 & D3 & D4
-    A3 --> D1
-
-    D1 --> L1 --> L2
-    D2 & D3 & D4 --> L1 --> L2
-
-    L2 --> L3 --> L4 --> L5 --> L6
-
-    L6 --> R1 & R2 & R3
-
-    style 攻击向量 fill:#fee2e2,stroke:#ef4444
-    style 防御层 fill:#dcfce7,stroke:#22c55e
-    style 资产 fill:#dbeafe,stroke:#3b82f6
-```
+<iframe src="https://www.agent-journey.cn/archify/prompt-injection-defense-pipeline-archify-v2.html" width="100%" height="920" title="提示注入：攻击入口、防御层与保护资产"></iframe>
 
 ## 防御策略
 

@@ -1,0 +1,308 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "提示注入的六层防御与攻击截断",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "animation": "none",
+    "legend": {
+      "mode": "hidden"
+    },
+    "viewBox": [
+      1200,
+      630
+    ]
+  },
+  "components": [
+    {
+      "id": "untrusted",
+      "type": "external",
+      "label": "不可信网页 / 文件",
+      "sublabel": "UNTRUSTED WEB / FILES · 攻击者可植入恶意指令",
+      "pos": [
+        40,
+        40
+      ],
+      "size": [
+        240,
+        96
+      ]
+    },
+    {
+      "id": "isolation",
+      "type": "security",
+      "label": "① 内容隔离 / CONTENT ISOLATION",
+      "sublabel": "不可信内容隔离并标记为数据",
+      "pos": [
+        360,
+        40
+      ],
+      "size": [
+        330,
+        64
+      ]
+    },
+    {
+      "id": "separation",
+      "type": "security",
+      "label": "② 指令 ≠ 数据 / INSTRUCTIONS ≠ DATA",
+      "sublabel": "外部内容不能改写高权限指令",
+      "pos": [
+        360,
+        128
+      ],
+      "size": [
+        330,
+        64
+      ]
+    },
+    {
+      "id": "privilege",
+      "type": "security",
+      "label": "③ 最小权限 / LEAST PRIVILEGE",
+      "sublabel": "限制可调用工具与可访问资源",
+      "pos": [
+        360,
+        216
+      ],
+      "size": [
+        330,
+        64
+      ]
+    },
+    {
+      "id": "parameters",
+      "type": "security",
+      "label": "④ 参数校验 / PARAMETER VALIDATION",
+      "sublabel": "工具执行层独立检查参数",
+      "pos": [
+        360,
+        304
+      ],
+      "size": [
+        330,
+        64
+      ]
+    },
+    {
+      "id": "approval",
+      "type": "security",
+      "label": "⑤ 人工审批 / HUMAN APPROVAL",
+      "sublabel": "高风险动作绑定精确参数确认",
+      "pos": [
+        360,
+        392
+      ],
+      "size": [
+        330,
+        64
+      ]
+    },
+    {
+      "id": "leakage",
+      "type": "security",
+      "label": "⑥ 泄露检测 / LEAKAGE DETECTION",
+      "sublabel": "输出前检测秘密与敏感数据",
+      "pos": [
+        360,
+        480
+      ],
+      "size": [
+        330,
+        64
+      ]
+    },
+    {
+      "id": "verified_output",
+      "type": "external",
+      "label": "受验证的输出 / VERIFIED OUTPUT",
+      "sublabel": "通过检查后再交给用户或下游",
+      "pos": [
+        40,
+        480
+      ],
+      "size": [
+        240,
+        64
+      ]
+    },
+    {
+      "id": "defense_limit",
+      "type": "external",
+      "label": "纵深防御：没有单层能保证安全",
+      "sublabel": "各层独立降低风险；不能依赖一个安全提示词",
+      "pos": [
+        40,
+        240
+      ],
+      "size": [
+        240,
+        104
+      ]
+    },
+    {
+      "id": "stop_isolation",
+      "type": "security",
+      "label": "ATTACK STOPPED / 攻击截断",
+      "sublabel": "① 内容隔离边界阻断恶意尝试",
+      "pos": [
+        910,
+        40
+      ],
+      "size": [
+        250,
+        64
+      ]
+    },
+    {
+      "id": "stop_separation",
+      "type": "security",
+      "label": "ATTACK STOPPED / 攻击截断",
+      "sublabel": "② 指令 ≠ 数据边界阻断恶意尝试",
+      "pos": [
+        910,
+        128
+      ],
+      "size": [
+        250,
+        64
+      ]
+    },
+    {
+      "id": "stop_privilege",
+      "type": "security",
+      "label": "ATTACK STOPPED / 攻击截断",
+      "sublabel": "③ 最小权限边界阻断恶意尝试",
+      "pos": [
+        910,
+        216
+      ],
+      "size": [
+        250,
+        64
+      ]
+    },
+    {
+      "id": "stop_parameters",
+      "type": "security",
+      "label": "ATTACK STOPPED / 攻击截断",
+      "sublabel": "④ 参数校验边界阻断恶意尝试",
+      "pos": [
+        910,
+        304
+      ],
+      "size": [
+        250,
+        64
+      ]
+    },
+    {
+      "id": "stop_approval",
+      "type": "security",
+      "label": "ATTACK STOPPED / 攻击截断",
+      "sublabel": "⑤ 人工审批边界阻断恶意尝试",
+      "pos": [
+        910,
+        392
+      ],
+      "size": [
+        250,
+        64
+      ]
+    },
+    {
+      "id": "stop_leakage",
+      "type": "security",
+      "label": "ATTACK STOPPED / 攻击截断",
+      "sublabel": "⑥ 泄露检测边界阻断恶意尝试",
+      "pos": [
+        910,
+        480
+      ],
+      "size": [
+        250,
+        64
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "advance_1",
+      "from": "untrusted",
+      "to": "isolation"
+    },
+    {
+      "id": "advance_2",
+      "from": "isolation",
+      "to": "separation"
+    },
+    {
+      "id": "advance_3",
+      "from": "separation",
+      "to": "privilege"
+    },
+    {
+      "id": "advance_4",
+      "from": "privilege",
+      "to": "parameters"
+    },
+    {
+      "id": "advance_5",
+      "from": "parameters",
+      "to": "approval"
+    },
+    {
+      "id": "advance_6",
+      "from": "approval",
+      "to": "leakage"
+    },
+    {
+      "id": "advance_7",
+      "from": "leakage",
+      "to": "verified_output"
+    },
+    {
+      "id": "reject_isolation",
+      "from": "isolation",
+      "to": "stop_isolation",
+      "label": "恶意尝试被截断",
+      "variant": "security"
+    },
+    {
+      "id": "reject_separation",
+      "from": "separation",
+      "to": "stop_separation",
+      "label": "恶意尝试被截断",
+      "variant": "security"
+    },
+    {
+      "id": "reject_privilege",
+      "from": "privilege",
+      "to": "stop_privilege",
+      "label": "恶意尝试被截断",
+      "variant": "security"
+    },
+    {
+      "id": "reject_parameters",
+      "from": "parameters",
+      "to": "stop_parameters",
+      "label": "恶意尝试被截断",
+      "variant": "security"
+    },
+    {
+      "id": "reject_approval",
+      "from": "approval",
+      "to": "stop_approval",
+      "label": "恶意尝试被截断",
+      "variant": "security"
+    },
+    {
+      "id": "reject_leakage",
+      "from": "leakage",
+      "to": "stop_leakage",
+      "label": "恶意尝试被截断",
+      "variant": "security"
+    }
+  ]
+}

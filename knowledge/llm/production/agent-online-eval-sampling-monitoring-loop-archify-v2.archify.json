@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "在线评估：采样、复核与受治理反馈",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "animation": "none",
+    "legend": { "mode": "hidden" },
+    "viewBox": [1200, 630]
+  },
+  "components": [
+    {
+      "id": "production_live_runs",
+      "type": "cloud",
+      "label": "生产运行 LIVE RUNS",
+      "sublabel": "Run / Trace 关联版本与证据",
+      "pos": [40, 55], "size": [230, 70]
+    },
+    {
+      "id": "privacy_before_sampling",
+      "type": "security",
+      "label": "隐私过滤",
+      "sublabel": "Privacy Filter · 最小化/脱敏",
+      "pos": [40, 215], "size": [230, 70]
+    },
+    {
+      "id": "sampler_random_risk_triggered",
+      "type": "messagebus",
+      "label": "SAMPLER · 随机 / 风险 / 触发采样",
+      "sublabel": "Random / Risk-based / Triggered · 去重，保留概率/权重与入选原因",
+      "pos": [350, 55], "size": [480, 82]
+    },
+    {
+      "id": "automatic_evaluation",
+      "type": "backend",
+      "label": "自动评估 AUTO EVAL",
+      "sublabel": "规则优先；Judge 固定与校准",
+      "pos": [330, 175], "size": [230, 82]
+    },
+    {
+      "id": "necessary_human_review",
+      "type": "external",
+      "label": "人工复核 HUMAN REVIEW",
+      "sublabel": "低置信、高风险、分歧需复核",
+      "pos": [650, 310], "size": [230, 82]
+    },
+    {
+      "id": "quality_signals",
+      "type": "database",
+      "label": "质量信号",
+      "sublabel": "Quality Signals · 切片/不确定性",
+      "pos": [650, 175], "size": [230, 82]
+    },
+    {
+      "id": "drift_alerts",
+      "type": "messagebus",
+      "label": "漂移告警",
+      "sublabel": "Drift Alert · 窗口/样本/Trace",
+      "pos": [950, 310], "size": [210, 82]
+    },
+    {
+      "id": "critical_incidents",
+      "type": "security",
+      "label": "事故 INCIDENT",
+      "sublabel": "关键安全问题立即升级",
+      "pos": [330, 310], "size": [230, 82]
+    },
+    {
+      "id": "governed_feedback_set",
+      "type": "database",
+      "label": "反馈集 FEEDBACK SET",
+      "sublabel": "复核入选；去重/许可/版本化",
+      "pos": [650, 470], "size": [230, 70]
+    },
+    {
+      "id": "offline_test_set",
+      "type": "database",
+      "label": "离线测试集",
+      "sublabel": "Offline Test Set · 发布门禁",
+      "pos": [950, 470], "size": [210, 70]
+    },
+    {
+      "id": "no_direct_production_change",
+      "type": "security",
+      "label": "复核证据只回到评估集，绝不直接修改生产",
+      "sublabel": "Reviewed evidence returns to evaluation only; never directly changes production.",
+      "pos": [40, 490], "size": [520, 92]
+    }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "采样前的隐私边界", "wraps": ["production_live_runs", "privacy_before_sampling"], "pad": 14 }
+  ],
+  "connections": [
+    { "id": "runs_to_privacy", "from": "production_live_runs", "to": "privacy_before_sampling", "variant": "security" },
+    { "id": "privacy_to_sampler", "from": "privacy_before_sampling", "to": "sampler_random_risk_triggered", "variant": "security" },
+    { "id": "all_sample_queues_to_auto_eval", "from": "sampler_random_risk_triggered", "to": "automatic_evaluation", "variant": "emphasis", "fromSide": "bottom", "toSide": "top" },
+    { "id": "auto_to_necessary_human", "from": "automatic_evaluation", "to": "necessary_human_review", "variant": "emphasis" },
+    { "id": "review_to_quality", "from": "necessary_human_review", "to": "quality_signals" },
+    { "id": "review_to_drift", "from": "necessary_human_review", "to": "drift_alerts" },
+    { "id": "review_to_incident", "from": "necessary_human_review", "to": "critical_incidents", "variant": "security" },
+    { "id": "review_output_to_feedback", "from": "necessary_human_review", "to": "governed_feedback_set" },
+    { "id": "reviewed_selection_to_feedback", "from": "necessary_human_review", "to": "governed_feedback_set", "variant": "dashed" },
+    { "id": "feedback_to_offline_only", "from": "governed_feedback_set", "to": "offline_test_set", "variant": "emphasis" }
+  ]
+}

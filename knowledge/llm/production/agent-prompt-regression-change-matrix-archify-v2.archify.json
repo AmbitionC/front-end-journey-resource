@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Prompt 回归：固定版本、同台比较、单轴归因",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "animation": "none",
+    "legend": { "mode": "hidden" },
+    "viewBox": [1200, 730]
+  },
+  "components": [
+    { "id": "prompt_pin", "type": "messagebus", "label": "PROMPT", "sublabel": "版本固定", "pos": [40, 86], "size": [124, 80] },
+    { "id": "model_pin", "type": "cloud", "label": "MODEL", "sublabel": "版本固定", "pos": [174, 86], "size": [124, 80] },
+    { "id": "tool_schema_pin", "type": "backend", "label": "TOOL SCHEMA", "sublabel": "版本固定", "pos": [308, 86], "size": [124, 80] },
+    { "id": "policy_pin", "type": "security", "label": "POLICY", "sublabel": "版本固定", "pos": [442, 86], "size": [124, 80] },
+    { "id": "data_pin", "type": "database", "label": "DATA", "sublabel": "版本固定", "pos": [576, 86], "size": [124, 80] },
+    { "id": "baseline_cases", "type": "backend", "label": "BASELINE CASES / 基线案例", "sublabel": "○ PROMPT · ○ MODEL · ○ TOOL SCHEMA · ○ POLICY · ○ DATA", "pos": [40, 230], "size": [660, 70] },
+    { "id": "edge_cases", "type": "backend", "label": "EDGE CASES / 边界案例", "sublabel": "○ PROMPT · ○ MODEL · ○ TOOL SCHEMA · ○ POLICY · ○ DATA", "pos": [40, 330], "size": [660, 70] },
+    { "id": "safety_cases", "type": "security", "label": "SAFETY CASES / 安全案例", "sublabel": "○ PROMPT · ○ MODEL · ○ TOOL SCHEMA · ○ POLICY · ○ DATA", "pos": [40, 430], "size": [660, 70] },
+    { "id": "tool_cases", "type": "backend", "label": "TOOL CASES / 工具案例", "sublabel": "○ PROMPT · ○ MODEL · ○ TOOL SCHEMA · ○ POLICY · ○ DATA", "pos": [40, 530], "size": [660, 70] },
+    { "id": "baseline", "type": "external", "label": "BASELINE / 基线", "pos": [780, 90], "size": [162, 70] },
+    { "id": "candidate", "type": "external", "label": "CANDIDATE / 候选", "pos": [978, 90], "size": [162, 70] },
+    { "id": "same_harness", "type": "backend", "label": "SAME HARNESS / 同一评测设置", "sublabel": "相同任务、评分、工具配置与预算", "pos": [780, 270], "size": [360, 80] },
+    { "id": "delta_report", "type": "database", "label": "DELTA REPORT / 差异报告", "sublabel": "QUALITY · LATENCY · COST · SAFETY · FAILURE SLICES", "pos": [780, 450], "size": [360, 100] },
+    { "id": "change_one_axis", "type": "external", "label": "CHANGE ONE AXIS / 一次只改一个轴", "sublabel": "其余轴固定，比较这次变更的独立影响", "pos": [780, 625], "size": [360, 65] }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "VERSION PINS / 五个变化轴分别固定版本", "wraps": ["prompt_pin", "model_pin", "tool_schema_pin", "policy_pin", "data_pin"], "pad": 12 },
+    { "kind": "region", "label": "4 × 5 覆盖矩阵：○ 是覆盖位置，不代表成功或失败", "wraps": ["baseline_cases", "edge_cases", "safety_cases", "tool_cases"], "pad": 18 }
+  ],
+  "connections": [
+    { "id": "baseline_same_harness", "from": "baseline", "to": "same_harness", "variant": "default", "fromSide": "bottom", "toSide": "top" },
+    { "id": "candidate_same_harness", "from": "candidate", "to": "same_harness", "variant": "default", "fromSide": "bottom", "toSide": "top" },
+    { "id": "harness_delta_report", "from": "same_harness", "to": "delta_report", "variant": "emphasis" }
+  ]
+}

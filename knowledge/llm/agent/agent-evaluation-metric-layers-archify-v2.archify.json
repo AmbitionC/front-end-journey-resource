@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Agent 评估：三层粒度与贯穿维度",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "animation": "none",
+    "legend": { "mode": "hidden" },
+    "viewBox": [1200, 630]
+  },
+  "components": [
+    {
+      "id": "end_to_end_success",
+      "type": "backend",
+      "label": "END-TO-END · 端到端任务成功",
+      "sublabel": "检查环境终态与用户输出，不只相信完成声明",
+      "pos": [40, 62], "size": [440, 86]
+    },
+    {
+      "id": "trace_trajectory_recovery",
+      "type": "messagebus",
+      "label": "TRACE-LEVEL · 完整轨迹与恢复",
+      "sublabel": "记录工具、参数、返回、重试与副作用",
+      "pos": [40, 198], "size": [440, 86]
+    },
+    {
+      "id": "step_tools_format",
+      "type": "security",
+      "label": "STEP-LEVEL · 工具调用与格式",
+      "sublabel": "校验工具契约、函数参数与输出格式",
+      "pos": [40, 334], "size": [440, 86]
+    },
+    {
+      "id": "offline_trace_replay",
+      "type": "database",
+      "label": "离线回放",
+      "sublabel": "Offline Replay · 轨迹重放",
+      "pos": [40, 498], "size": [212, 70]
+    },
+    {
+      "id": "online_trace_monitoring",
+      "type": "cloud",
+      "label": "线上监控",
+      "sublabel": "Online Monitoring · 生产轨迹",
+      "pos": [270, 498], "size": [210, 70]
+    },
+    {
+      "id": "cross_cut_latency",
+      "type": "backend",
+      "label": "LATENCY · 延迟",
+      "sublabel": "端到端延迟；推理步骤与工具调用次数",
+      "pos": [560, 66], "size": [580, 78]
+    },
+    {
+      "id": "cross_cut_token_cost",
+      "type": "database",
+      "label": "TOKEN COST · Token 成本",
+      "sublabel": "输入＋输出 token；比较时固定价格快照与运行配置",
+      "pos": [560, 186], "size": [580, 78]
+    },
+    {
+      "id": "cross_cut_safety",
+      "type": "security",
+      "label": "SAFETY · 安全",
+      "sublabel": "权限与关键副作用独立门禁，不能被平均质量抵消",
+      "pos": [560, 306], "size": [580, 78]
+    },
+    {
+      "id": "cross_cut_human_review",
+      "type": "external",
+      "label": "HUMAN REVIEW · 人工复核",
+      "sublabel": "高风险或分歧样本需人审；Judge 使用人工集校准",
+      "pos": [560, 426], "size": [580, 78]
+    }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "三层评估粒度：上层任务、中层轨迹、底层单步（不是因果链）", "wraps": ["end_to_end_success", "trace_trajectory_recovery", "step_tools_format"], "pad": 14 },
+    { "kind": "region", "label": "评估方式：均关联轨迹层", "wraps": ["offline_trace_replay", "online_trace_monitoring"], "pad": 14 },
+    { "kind": "region", "label": "贯穿各层的并列维度", "wraps": ["cross_cut_latency", "cross_cut_token_cost", "cross_cut_safety", "cross_cut_human_review"], "pad": 14 }
+  ],
+  "connections": []
+}
