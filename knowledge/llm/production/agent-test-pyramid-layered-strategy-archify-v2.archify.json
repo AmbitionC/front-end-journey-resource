@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Agent 测试金字塔：分层与取舍",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "animation": "none",
+    "legend": { "mode": "hidden" },
+    "viewBox": [1100, 680]
+  },
+  "components": [
+    { "id": "end_to_end", "type": "frontend", "label": "END TO END / 端到端", "sublabel": "少量关键流程；跨完整应用栈", "pos": [420, 90], "size": [260, 72] },
+    { "id": "scenario_tests", "type": "messagebus", "label": "SCENARIO TESTS / 场景测试", "sublabel": "完整 Agent；验证任务结果与轨迹", "pos": [370, 190], "size": [360, 72] },
+    { "id": "tool_integration", "type": "backend", "label": "TOOL INTEGRATION / 工具集成", "sublabel": "真实协议；验证接口、超时与副作用", "pos": [310, 290], "size": [480, 72] },
+    { "id": "unit_contracts", "type": "security", "label": "UNIT CONTRACTS / 单元契约", "sublabel": "确定性逻辑；无需模型与外网", "pos": [250, 390], "size": [600, 72] },
+    { "id": "realism_up", "type": "external", "label": "↑ REALISM / 现实性", "sublabel": "向上更贴近真实环境", "pos": [25, 80], "size": [180, 72] },
+    { "id": "speed_down", "type": "external", "label": "↓ SPEED / 速度", "sublabel": "向下运行更快", "pos": [25, 410], "size": [180, 72] },
+    { "id": "cost_up", "type": "external", "label": "↑ COST / 成本", "sublabel": "向上成本更高", "pos": [895, 80], "size": [180, 72] },
+    { "id": "isolation_down", "type": "external", "label": "↓ ISOLATION / 隔离性", "sublabel": "向下隔离性更强", "pos": [895, 410], "size": [180, 72] },
+    { "id": "parser", "type": "backend", "label": "PARSER / 解析器", "pos": [25, 210], "size": [180, 60] },
+    { "id": "policy", "type": "security", "label": "POLICY / 策略", "pos": [25, 310], "size": [180, 60] },
+    { "id": "mock_api", "type": "external", "label": "MOCK API / 模拟接口", "pos": [895, 210], "size": [180, 60] },
+    { "id": "sandbox", "type": "cloud", "label": "SANDBOX / 沙箱", "pos": [895, 310], "size": [180, 60] },
+    { "id": "user_journey", "type": "frontend", "label": "USER JOURNEY / 用户全流程", "sublabel": "侧项仅展示测试关注点，不绑定某个层级", "pos": [350, 560], "size": [400, 72] }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "测试层级：上层更真实，下层更隔离", "wraps": ["end_to_end", "scenario_tests", "tool_integration", "unit_contracts"], "pad": 18 }
+  ]
+}

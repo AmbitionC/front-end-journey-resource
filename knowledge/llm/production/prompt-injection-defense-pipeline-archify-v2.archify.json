@@ -1,0 +1,373 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "提示注入：攻击入口、防御层与保护资产",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "animation": "none",
+    "legend": {
+      "mode": "hidden"
+    },
+    "viewBox": [
+      1320,
+      630
+    ]
+  },
+  "components": [
+    {
+      "id": "A1",
+      "type": "external",
+      "label": "直接注入",
+      "sublabel": "Direct Injection",
+      "pos": [
+        40,
+        40
+      ],
+      "size": [
+        220,
+        64
+      ]
+    },
+    {
+      "id": "A3",
+      "type": "external",
+      "label": "越狱",
+      "sublabel": "Jailbreak",
+      "pos": [
+        40,
+        150
+      ],
+      "size": [
+        220,
+        64
+      ]
+    },
+    {
+      "id": "A2",
+      "type": "external",
+      "label": "间接注入",
+      "sublabel": "Indirect Injection",
+      "pos": [
+        40,
+        310
+      ],
+      "size": [
+        220,
+        64
+      ]
+    },
+    {
+      "id": "D1",
+      "type": "external",
+      "label": "用户消息",
+      "sublabel": "User Message",
+      "pos": [
+        380,
+        95
+      ],
+      "size": [
+        220,
+        64
+      ]
+    },
+    {
+      "id": "D2",
+      "type": "external",
+      "label": "外部网页 / 文件",
+      "sublabel": "Web / File Content",
+      "pos": [
+        380,
+        280
+      ],
+      "size": [
+        220,
+        64
+      ]
+    },
+    {
+      "id": "D3",
+      "type": "messagebus",
+      "label": "工具返回值",
+      "sublabel": "Tool Results",
+      "pos": [
+        380,
+        390
+      ],
+      "size": [
+        220,
+        64
+      ]
+    },
+    {
+      "id": "D4",
+      "type": "cloud",
+      "label": "第三方 API 响应",
+      "sublabel": "3rd-party API",
+      "pos": [
+        380,
+        500
+      ],
+      "size": [
+        220,
+        64
+      ]
+    },
+    {
+      "id": "L1",
+      "type": "security",
+      "label": "① 输入隔离",
+      "sublabel": "Input Isolation",
+      "pos": [
+        720,
+        40
+      ],
+      "size": [
+        220,
+        64
+      ]
+    },
+    {
+      "id": "L2",
+      "type": "security",
+      "label": "② 输入校验与清洗",
+      "sublabel": "Input Validation",
+      "pos": [
+        720,
+        128
+      ],
+      "size": [
+        220,
+        64
+      ]
+    },
+    {
+      "id": "L3",
+      "type": "security",
+      "label": "③ 最小权限",
+      "sublabel": "Least Privilege",
+      "pos": [
+        720,
+        216
+      ],
+      "size": [
+        220,
+        64
+      ]
+    },
+    {
+      "id": "L4",
+      "type": "security",
+      "label": "④ 输出过滤",
+      "sublabel": "Output Filtering",
+      "pos": [
+        720,
+        304
+      ],
+      "size": [
+        220,
+        64
+      ]
+    },
+    {
+      "id": "L5",
+      "type": "security",
+      "label": "⑤ 双重 LLM 校验",
+      "sublabel": "Dual-LLM Pattern",
+      "pos": [
+        720,
+        392
+      ],
+      "size": [
+        220,
+        64
+      ]
+    },
+    {
+      "id": "L6",
+      "type": "security",
+      "label": "⑥ 人工确认",
+      "sublabel": "Human-in-the-Loop",
+      "pos": [
+        720,
+        480
+      ],
+      "size": [
+        220,
+        64
+      ]
+    },
+    {
+      "id": "R1",
+      "type": "database",
+      "label": "用户数据",
+      "pos": [
+        1060,
+        300
+      ],
+      "size": [
+        220,
+        58
+      ]
+    },
+    {
+      "id": "R2",
+      "type": "security",
+      "label": "系统操作权限",
+      "pos": [
+        1060,
+        410
+      ],
+      "size": [
+        220,
+        58
+      ]
+    },
+    {
+      "id": "R3",
+      "type": "backend",
+      "label": "模型行为意图",
+      "pos": [
+        1060,
+        520
+      ],
+      "size": [
+        220,
+        58
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "攻击向量 / Attack Vectors",
+      "wraps": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "pad": 12
+    },
+    {
+      "kind": "region",
+      "label": "数据入口 / Data Entry Points",
+      "wraps": [
+        "D1",
+        "D2",
+        "D3",
+        "D4"
+      ],
+      "pad": 12
+    },
+    {
+      "kind": "security-group",
+      "label": "防御层 / Defense Layers",
+      "wraps": [
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5",
+        "L6"
+      ],
+      "pad": 12
+    },
+    {
+      "kind": "region",
+      "label": "被保护资产 / Protected Assets",
+      "wraps": [
+        "R1",
+        "R2",
+        "R3"
+      ],
+      "pad": 12
+    }
+  ],
+  "connections": [
+    {
+      "id": "A1_D1",
+      "from": "A1",
+      "to": "D1"
+    },
+    {
+      "id": "A2_D2",
+      "from": "A2",
+      "to": "D2"
+    },
+    {
+      "id": "A2_D3",
+      "from": "A2",
+      "to": "D3"
+    },
+    {
+      "id": "A2_D4",
+      "from": "A2",
+      "to": "D4"
+    },
+    {
+      "id": "A3_D1",
+      "from": "A3",
+      "to": "D1"
+    },
+    {
+      "id": "D1_L1",
+      "from": "D1",
+      "to": "L1"
+    },
+    {
+      "id": "D2_L1",
+      "from": "D2",
+      "to": "L1"
+    },
+    {
+      "id": "D3_L1",
+      "from": "D3",
+      "to": "L1"
+    },
+    {
+      "id": "D4_L1",
+      "from": "D4",
+      "to": "L1"
+    },
+    {
+      "id": "L1_L2",
+      "from": "L1",
+      "to": "L2"
+    },
+    {
+      "id": "L2_L3",
+      "from": "L2",
+      "to": "L3"
+    },
+    {
+      "id": "L3_L4",
+      "from": "L3",
+      "to": "L4"
+    },
+    {
+      "id": "L4_L5",
+      "from": "L4",
+      "to": "L5"
+    },
+    {
+      "id": "L5_L6",
+      "from": "L5",
+      "to": "L6"
+    },
+    {
+      "id": "L6_R1",
+      "from": "L6",
+      "to": "R1"
+    },
+    {
+      "id": "L6_R2",
+      "from": "L6",
+      "to": "R2"
+    },
+    {
+      "id": "L6_R3",
+      "from": "L6",
+      "to": "R3"
+    }
+  ]
+}

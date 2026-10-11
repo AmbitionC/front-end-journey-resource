@@ -1,0 +1,277 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "发布质量门禁：证据阶梯",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "animation": "none",
+    "legend": {
+      "mode": "hidden"
+    },
+    "viewBox": [
+      1200,
+      630
+    ]
+  },
+  "components": [
+    {
+      "id": "candidate_changeset",
+      "type": "external",
+      "label": "CHANGESET / 候选变更",
+      "sublabel": "每层可衡量证据；全部门禁通过才可达生产",
+      "pos": [
+        40,
+        40
+      ],
+      "size": [
+        360,
+        58
+      ]
+    },
+    {
+      "id": "static_checks",
+      "type": "security",
+      "label": "STATIC CHECKS / 静态检查",
+      "sublabel": "确定性失败直接 BLOCK，不靠人工豁免",
+      "pos": [
+        40,
+        122
+      ],
+      "size": [
+        360,
+        58
+      ]
+    },
+    {
+      "id": "unit_contracts",
+      "type": "backend",
+      "label": "UNIT CONTRACTS / 单元契约",
+      "sublabel": "契约与确定性控制",
+      "pos": [
+        40,
+        204
+      ],
+      "size": [
+        360,
+        58
+      ]
+    },
+    {
+      "id": "offline_evaluation",
+      "type": "database",
+      "label": "OFFLINE EVAL / 离线评估",
+      "sublabel": "同一任务集比较基线与候选",
+      "pos": [
+        40,
+        286
+      ],
+      "size": [
+        360,
+        58
+      ]
+    },
+    {
+      "id": "safety_evaluation",
+      "type": "security",
+      "label": "SAFETY EVAL / 安全评估",
+      "sublabel": "安全不变量失败直接 BLOCK",
+      "pos": [
+        40,
+        368
+      ],
+      "size": [
+        360,
+        58
+      ]
+    },
+    {
+      "id": "canary_release",
+      "type": "backend",
+      "label": "CANARY / 灰度",
+      "sublabel": "贴近真实环境；出现问题可回滚",
+      "pos": [
+        40,
+        450
+      ],
+      "size": [
+        360,
+        58
+      ]
+    },
+    {
+      "id": "production_release",
+      "type": "cloud",
+      "label": "PRODUCTION / 生产",
+      "sublabel": "越近生产，证据更真实、成本更高；问题可回滚",
+      "pos": [
+        40,
+        532
+      ],
+      "size": [
+        360,
+        58
+      ]
+    },
+    {
+      "id": "policy_metric_threshold",
+      "type": "database",
+      "label": "METRIC / 指标 · THRESHOLD / 阈值",
+      "sublabel": "每层门禁均记录可衡量证据与阈值",
+      "pos": [
+        470,
+        60
+      ],
+      "size": [
+        650,
+        64
+      ]
+    },
+    {
+      "id": "policy_sample_owner",
+      "type": "external",
+      "label": "SAMPLE / 样本 · OWNER / 责任人",
+      "sublabel": "每层门禁均指定样本与责任人",
+      "pos": [
+        470,
+        150
+      ],
+      "size": [
+        650,
+        64
+      ]
+    },
+    {
+      "id": "policy_expiry_exception",
+      "type": "messagebus",
+      "label": "EXPIRY / 到期 · EXCEPTION LOG / 例外日志",
+      "sublabel": "每层门禁均保留到期与例外记录",
+      "pos": [
+        470,
+        240
+      ],
+      "size": [
+        650,
+        64
+      ]
+    },
+    {
+      "id": "gate_actions",
+      "type": "security",
+      "label": "每层按策略判定（箭头为示例）；前层失败不可被后层抵消",
+      "sublabel": "PASS 达标自动前进；REVIEW 人工审证/补证后放行；BLOCK 未达标阻断，修复后重评估",
+      "pos": [
+        470,
+        350
+      ],
+      "size": [
+        650,
+        78
+      ]
+    },
+    {
+      "id": "previous_stable_release",
+      "type": "backend",
+      "label": "ROLLBACK / 上一稳定版本",
+      "sublabel": "Canary 或 Production 出现问题时回退上一稳定版本",
+      "pos": [
+        600,
+        488
+      ],
+      "size": [
+        520,
+        92
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "证据阶梯 / EVIDENCE LADDER",
+      "wraps": [
+        "candidate_changeset",
+        "static_checks",
+        "unit_contracts",
+        "offline_evaluation",
+        "safety_evaluation",
+        "canary_release",
+        "production_release"
+      ],
+      "pad": 12
+    },
+    {
+      "kind": "region",
+      "label": "每层门禁的策略卡 / POLICY CARD",
+      "wraps": [
+        "policy_metric_threshold",
+        "policy_sample_owner",
+        "policy_expiry_exception"
+      ],
+      "pad": 14
+    }
+  ],
+  "connections": [
+    {
+      "id": "advance_1",
+      "from": "candidate_changeset",
+      "to": "static_checks",
+      "label": "PASS（示例）",
+      "variant": "emphasis",
+      "labelDy": 24
+    },
+    {
+      "id": "advance_2",
+      "from": "static_checks",
+      "to": "unit_contracts",
+      "label": "REVIEW（示例）",
+      "variant": "default",
+      "labelDy": 24
+    },
+    {
+      "id": "advance_3",
+      "from": "unit_contracts",
+      "to": "offline_evaluation",
+      "label": "PASS（示例）",
+      "variant": "emphasis",
+      "labelDy": 24
+    },
+    {
+      "id": "advance_4",
+      "from": "offline_evaluation",
+      "to": "safety_evaluation",
+      "label": "REVIEW（示例）",
+      "variant": "default",
+      "labelDy": 24
+    },
+    {
+      "id": "advance_5",
+      "from": "safety_evaluation",
+      "to": "canary_release",
+      "label": "PASS（示例）",
+      "variant": "emphasis",
+      "labelDy": 24
+    },
+    {
+      "id": "advance_6",
+      "from": "canary_release",
+      "to": "production_release",
+      "label": "PASS（示例）",
+      "variant": "emphasis",
+      "labelDy": 24
+    },
+    {
+      "id": "rollback_canary",
+      "from": "canary_release",
+      "to": "previous_stable_release",
+      "label": "ROLLBACK",
+      "variant": "security"
+    },
+    {
+      "id": "rollback_production",
+      "from": "production_release",
+      "to": "previous_stable_release",
+      "label": "ROLLBACK",
+      "variant": "security"
+    }
+  ]
+}

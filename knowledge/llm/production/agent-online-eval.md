@@ -2,7 +2,7 @@
 
 [OpenTelemetry 对 Trace、Metric 和 Log 等信号的说明](https://opentelemetry.io/docs/concepts/signals/)提供了连接聚合与单次 Run 的基础：指标发现趋势，Trace 还原路径，日志保存结构化事实。在线评估必须保留这些关联，否则一个质量低分无法定位到模型、工具、策略和数据版本。
 
-![生产 Run 经隐私过滤、分层采样、自动与人工评审进入反馈集](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-online-eval-sampling-monitoring-loop-v1.webp)
+<iframe src="https://www.agent-journey.cn/archify/agent-online-eval-sampling-monitoring-loop-archify-v2.html" width="100%" height="920" title="生产 Run 经隐私过滤、分层采样、自动与人工评审进入反馈集"></iframe>
 
 图中 Feedback Set 只进入 Offline Test Set，不直接回流生产。评审样本需要去重、标注、复核和版本控制，再通过正常发布门禁成为改进证据；自动把用户反馈写进 Prompt 或记忆，会形成投毒通道。
 

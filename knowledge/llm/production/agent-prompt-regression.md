@@ -2,7 +2,7 @@ Agent 升级很少只改 Prompt：模型、工具描述与 Schema、权限策略
 
 [NIST AI TEVV](https://www.nist.gov/ai-test-evaluation-validation-and-verification-tevv)强调明确任务、测试床、数据集和测量方法，并理解不同情境下指标的局限。回归矩阵把这些条件版本化，使每次升级都能回答“在相同证据上发生了什么变化”。
 
-![Prompt、模型、工具、策略与数据变化轴的回归矩阵](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-prompt-regression-change-matrix-v1.webp)
+<iframe src="https://www.agent-journey.cn/archify/agent-prompt-regression-change-matrix-archify-v2.html" width="100%" height="920" title="Prompt、模型、工具、策略与数据变化轴的回归矩阵"></iframe>
 
 图右侧的 Baseline 与 Candidate 进入 Same Harness，得到 Delta Report。若两侧的执行器、评分器、缓存或工具权限不同，差异报告就不是候选效应。
 

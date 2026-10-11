@@ -1,4 +1,4 @@
-![评估金字塔：底层单步工具与格式校验，中层完整轨迹与恢复能力，上层端到端任务成功，侧边贯穿延迟、token 成本、安全与人工复核；标出离线回放和线上监控](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-evaluation-metric-layers-v1.webp)
+<iframe src="https://www.agent-journey.cn/archify/agent-evaluation-metric-layers-archify-v2.html" width="100%" height="920" title="评估金字塔：底层单步工具与格式校验，中层完整轨迹与恢复能力，上层端到端任务成功，侧边贯穿延迟、token 成本、安全与人工复核；标出离线回放和线上监控"></iframe>
 *图：沿图中的节点与箭头阅读，重点是任务成功、轨迹质量、工具正确性、成本与安全拆成可复现指标。*
 
 ---
@@ -154,15 +154,7 @@ Win Rate 适合直接比较两个版本，但不天然更稳定。应交换答�
 
 一个可复现的业务评估流程如下：
 
-```mermaid
-flowchart LR
-    A[冻结任务集与环境版本] --> B[运行 Agent\n记录输出与轨迹]
-    B --> C[规则判定环境终态]
-    C --> D[必要时运行校准后的 Judge]
-    D --> E[按场景与风险切片]
-    E --> F[比较质量、成本与延迟]
-    F --> G[保存运行配置与失败样本]
-```
+<iframe src="https://www.agent-journey.cn/archify/agent-evaluation-evidence-pipeline-archify-v2.html" width="100%" height="920" title="Agent 评估：可复现证据流程"></iframe>
 
 ```python
 async def evaluate(agent, cases, check_result):

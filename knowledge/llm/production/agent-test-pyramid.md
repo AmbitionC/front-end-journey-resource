@@ -2,7 +2,7 @@ Agent 测试的难点在于：同一个“答案错误”，可能来自纯函�
 
 [NIST 的 AI TEVV 说明](https://www.nist.gov/ai-test-evaluation-validation-and-verification-tevv)区分并研究测试、评估、验证和确认，强调任务、测试床、数据集、测量方法与使用情境。Agent 的金字塔不是某个标准规定的固定形状，而是把这些活动按隔离性和现实性组织起来的工程方法。
 
-![Agent 单元契约、工具集成、场景与端到端测试金字塔](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-test-pyramid-layered-strategy-v1.webp)
+<iframe src="https://www.agent-journey.cn/archify/agent-test-pyramid-layered-strategy-archify-v2.html" width="100%" height="920" title="Agent 单元契约、工具集成、场景与端到端测试金字塔"></iframe>
 
 越往上，环境越真实、成本越高、失败归因越难；越往下，执行越快、隔离越强、覆盖越广。健康的策略不是“尽量少做上层”，而是让每层只承担它能回答的问题。
 

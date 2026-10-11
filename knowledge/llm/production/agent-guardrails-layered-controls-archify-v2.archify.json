@@ -1,0 +1,342 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Agent Guardrails：全链路控制与观测",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "animation": "none",
+    "legend": {
+      "mode": "hidden"
+    },
+    "viewBox": [
+      1250,
+      740
+    ]
+  },
+  "components": [
+    {
+      "id": "input",
+      "type": "external",
+      "label": "USER INPUT / 用户输入",
+      "sublabel": "来源、主体与数据进入输入边界",
+      "pos": [
+        40,
+        40
+      ],
+      "size": [
+        250,
+        80
+      ]
+    },
+    {
+      "id": "input_validation",
+      "type": "security",
+      "label": "INPUT VALIDATION / 输入验证",
+      "sublabel": "长度、编码、类型与 schema",
+      "pos": [
+        340,
+        40
+      ],
+      "size": [
+        250,
+        80
+      ]
+    },
+    {
+      "id": "injection",
+      "type": "security",
+      "label": "PROMPT INJECTION / 注入检测",
+      "sublabel": "不可信内容不能变成高权限指令",
+      "pos": [
+        640,
+        40
+      ],
+      "size": [
+        250,
+        80
+      ]
+    },
+    {
+      "id": "agent",
+      "type": "backend",
+      "label": "AGENT / 行动提议",
+      "sublabel": "模型只提议，不授予底层权限",
+      "pos": [
+        940,
+        40
+      ],
+      "size": [
+        250,
+        80
+      ]
+    },
+    {
+      "id": "tool",
+      "type": "messagebus",
+      "label": "TOOL CALL / 工具调用",
+      "sublabel": "工具名、参数、风险与预期结果",
+      "pos": [
+        940,
+        230
+      ],
+      "size": [
+        250,
+        80
+      ]
+    },
+    {
+      "id": "schema",
+      "type": "security",
+      "label": "SCHEMA CHECK / 契约校验",
+      "sublabel": "执行层验证工具 allowlist 与参数",
+      "pos": [
+        640,
+        230
+      ],
+      "size": [
+        250,
+        80
+      ]
+    },
+    {
+      "id": "permission",
+      "type": "security",
+      "label": "PERMISSION CHECK / 权限校验",
+      "sublabel": "独立校验主体、资源与操作",
+      "pos": [
+        340,
+        230
+      ],
+      "size": [
+        250,
+        80
+      ]
+    },
+    {
+      "id": "approval",
+      "type": "security",
+      "label": "APPROVAL / 风险审批",
+      "sublabel": "高影响动作交由人确认",
+      "pos": [
+        40,
+        230
+      ],
+      "size": [
+        250,
+        80
+      ]
+    },
+    {
+      "id": "sandbox",
+      "type": "security",
+      "label": "SANDBOX / 隔离执行",
+      "sublabel": "检查通过后，仅在沙箱内执行",
+      "pos": [
+        40,
+        420
+      ],
+      "size": [
+        250,
+        80
+      ]
+    },
+    {
+      "id": "result",
+      "type": "database",
+      "label": "UNTRUSTED RESULT / 不可信结果",
+      "sublabel": "RESULT VALIDATION / 结果验证",
+      "pos": [
+        340,
+        420
+      ],
+      "size": [
+        250,
+        80
+      ]
+    },
+    {
+      "id": "output",
+      "type": "security",
+      "label": "OUTPUT POLICY / 输出策略",
+      "sublabel": "泄露、秘密、危险指令与证据",
+      "pos": [
+        640,
+        420
+      ],
+      "size": [
+        250,
+        80
+      ]
+    },
+    {
+      "id": "pii",
+      "type": "security",
+      "label": "PII REDACTION / 个人信息脱敏",
+      "sublabel": "脱敏后再交给用户或下游",
+      "pos": [
+        940,
+        420
+      ],
+      "size": [
+        250,
+        80
+      ]
+    },
+    {
+      "id": "block",
+      "type": "security",
+      "label": "BLOCK / 副作用前阻断",
+      "sublabel": "输入失败或注入命中；不能执行副作用",
+      "pos": [
+        340,
+        150
+      ],
+      "size": [
+        250,
+        60
+      ]
+    },
+    {
+      "id": "alert",
+      "type": "messagebus",
+      "label": "ALERT / 发现与响应",
+      "sublabel": "结果异常发出告警；不替代预防控制",
+      "pos": [
+        340,
+        330
+      ],
+      "size": [
+        250,
+        60
+      ]
+    },
+    {
+      "id": "observation",
+      "type": "backend",
+      "label": "OBSERVABILITY + EVALS / 观测与评估",
+      "sublabel": "覆盖输入验证、注入检测、Agent/Tool、schema/权限/审批/沙箱、结果验证、输出策略与 PII 脱敏；记录版本、结论、延迟与后续事件",
+      "pos": [
+        40,
+        610
+      ],
+      "size": [
+        1150,
+        80
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "全链路观测与评估覆盖",
+      "wraps": [
+        "input",
+        "input_validation",
+        "injection",
+        "agent",
+        "tool",
+        "schema",
+        "permission",
+        "approval",
+        "sandbox",
+        "result",
+        "output",
+        "pii",
+        "observation"
+      ],
+      "pad": 12
+    },
+    {
+      "kind": "security-group",
+      "label": "受控 Agent 与工具提议",
+      "wraps": [
+        "agent",
+        "tool"
+      ],
+      "pad": 12
+    }
+  ],
+  "connections": [
+    {
+      "id": "advance_1",
+      "from": "input",
+      "to": "input_validation"
+    },
+    {
+      "id": "advance_2",
+      "from": "input_validation",
+      "to": "injection",
+      "variant": "emphasis"
+    },
+    {
+      "id": "advance_3",
+      "from": "injection",
+      "to": "agent",
+      "variant": "emphasis"
+    },
+    {
+      "id": "advance_4",
+      "from": "agent",
+      "to": "tool"
+    },
+    {
+      "id": "advance_5",
+      "from": "tool",
+      "to": "schema"
+    },
+    {
+      "id": "advance_6",
+      "from": "schema",
+      "to": "permission",
+      "variant": "emphasis"
+    },
+    {
+      "id": "advance_7",
+      "from": "permission",
+      "to": "approval",
+      "variant": "emphasis"
+    },
+    {
+      "id": "advance_8",
+      "from": "approval",
+      "to": "sandbox",
+      "variant": "emphasis"
+    },
+    {
+      "id": "advance_9",
+      "from": "sandbox",
+      "to": "result"
+    },
+    {
+      "id": "advance_10",
+      "from": "result",
+      "to": "output",
+      "variant": "emphasis"
+    },
+    {
+      "id": "advance_11",
+      "from": "output",
+      "to": "pii",
+      "variant": "emphasis"
+    },
+    {
+      "id": "input_block",
+      "from": "input_validation",
+      "to": "block",
+      "variant": "security"
+    },
+    {
+      "id": "injection_block",
+      "from": "injection",
+      "to": "block",
+      "variant": "security"
+    },
+    {
+      "id": "result_alert",
+      "from": "result",
+      "to": "alert",
+      "variant": "dashed"
+    }
+  ]
+}

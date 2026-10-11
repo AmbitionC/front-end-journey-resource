@@ -2,7 +2,7 @@
 
 [NIST AI TEVV](https://www.nist.gov/ai-test-evaluation-validation-and-verification-tevv)指出，可信 AI 依赖可靠的测量与评估，并需要任务、测试床、数据集和方法说明。门禁必须引用这些可追溯证据，而不是把“跑过一个评分脚本”当成质量证明。
 
-![Agent 变更从静态检查、离线评估到灰度生产的发布证据阶梯](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-quality-gates-release-ladder-v1.webp)
+<iframe src="https://www.agent-journey.cn/archify/agent-quality-gates-release-ladder-archify-v2.html" width="100%" height="920" title="Agent 变更从静态检查、离线评估到灰度生产的发布证据阶梯"></iframe>
 
 图中的阶梯表达两个原则：越接近生产，证据越贴近真实环境、成本越高；前层失败不能被后层好成绩抵消。Canary 与 Production 还必须保留 Rollback 路径，因为上线后证据可能推翻发布前判断。
 
