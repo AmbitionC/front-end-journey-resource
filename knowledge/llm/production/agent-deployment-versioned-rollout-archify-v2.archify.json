@@ -1,0 +1,420 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Agent 部署：原子版本、逐级门控与回滚",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "animation": "none",
+    "legend": {
+      "mode": "hidden"
+    },
+    "viewBox": [
+      1200,
+      630
+    ]
+  },
+  "components": [
+    {
+      "id": "dep_bundle",
+      "type": "external",
+      "label": "VERSIONED BUNDLE",
+      "sublabel": "MODEL · PROMPT · TOOL SCHEMA · POLICY · EVAL SET",
+      "pos": [
+        40,
+        90
+      ],
+      "size": [
+        300,
+        70
+      ]
+    },
+    {
+      "id": "dep_bundle_fields",
+      "type": "external",
+      "label": "CODE · INDEX · RUNTIME",
+      "sublabel": "Trace 与结果携带 Bundle ID",
+      "pos": [
+        40,
+        170
+      ],
+      "size": [
+        300,
+        70
+      ]
+    },
+    {
+      "id": "dep_old_runs",
+      "type": "external",
+      "label": "已运行 Run 保持原 Bundle",
+      "sublabel": "执行中不热换 Prompt / 工具策略",
+      "pos": [
+        40,
+        270
+      ],
+      "size": [
+        300,
+        70
+      ]
+    },
+    {
+      "id": "dep_build",
+      "type": "backend",
+      "label": "BUILD",
+      "sublabel": "固定依赖 / digest / SBOM",
+      "pos": [
+        400,
+        90
+      ],
+      "size": [
+        190,
+        70
+      ]
+    },
+    {
+      "id": "dep_eval",
+      "type": "backend",
+      "label": "OFFLINE EVAL",
+      "sublabel": "任务 / 安全 / 工具兼容性",
+      "pos": [
+        660,
+        90
+      ],
+      "size": [
+        190,
+        70
+      ]
+    },
+    {
+      "id": "dep_shadow",
+      "type": "backend",
+      "label": "SHADOW",
+      "sublabel": "dry-run；不提交副作用",
+      "pos": [
+        920,
+        90
+      ],
+      "size": [
+        190,
+        70
+      ]
+    },
+    {
+      "id": "dep_canary",
+      "type": "cloud",
+      "label": "CANARY 5%",
+      "sublabel": "会话粘性；高风险写审批",
+      "pos": [
+        920,
+        240
+      ],
+      "size": [
+        190,
+        70
+      ]
+    },
+    {
+      "id": "dep_ramp",
+      "type": "cloud",
+      "label": "RAMP 25%",
+      "sublabel": "达标观察窗口后继续扩量",
+      "pos": [
+        660,
+        240
+      ],
+      "size": [
+        190,
+        70
+      ]
+    },
+    {
+      "id": "dep_full",
+      "type": "cloud",
+      "label": "FULL RELEASE",
+      "sublabel": "新流量使用获批完整包",
+      "pos": [
+        400,
+        240
+      ],
+      "size": [
+        190,
+        70
+      ]
+    },
+    {
+      "id": "dep_pause",
+      "type": "security",
+      "label": "PAUSE",
+      "sublabel": "停止扩量；先判断风险",
+      "pos": [
+        400,
+        380
+      ],
+      "size": [
+        190,
+        70
+      ]
+    },
+    {
+      "id": "dep_rollback",
+      "type": "security",
+      "label": "ROLLBACK",
+      "sublabel": "恢复完整旧包；检查状态兼容",
+      "pos": [
+        660,
+        380
+      ],
+      "size": [
+        190,
+        70
+      ]
+    },
+    {
+      "id": "dep_previous",
+      "type": "database",
+      "label": "PREVIOUS VERSION",
+      "sublabel": "上一稳定 Bundle；接新流量",
+      "pos": [
+        920,
+        380
+      ],
+      "size": [
+        190,
+        70
+      ]
+    },
+    {
+      "id": "dep_compensate",
+      "type": "external",
+      "label": "已有外部写入不能靠回滚撤销",
+      "sublabel": "兼容 / 补偿 / Forward Fix",
+      "pos": [
+        40,
+        380
+      ],
+      "size": [
+        300,
+        70
+      ]
+    },
+    {
+      "id": "dep_signals",
+      "type": "messagebus",
+      "label": "QUEUE DEPTH · CONCURRENCY",
+      "sublabel": "并发上限 / Backpressure",
+      "pos": [
+        40,
+        500
+      ],
+      "size": [
+        300,
+        70
+      ]
+    },
+    {
+      "id": "dep_autoscale",
+      "type": "cloud",
+      "label": "AUTOSCALE",
+      "sublabel": "依据队列与下游配额扩缩容",
+      "pos": [
+        400,
+        500
+      ],
+      "size": [
+        190,
+        70
+      ]
+    },
+    {
+      "id": "dep_workers",
+      "type": "backend",
+      "label": "WORKER 副本 × N",
+      "sublabel": "扩缩实例；长任务排空",
+      "pos": [
+        660,
+        500
+      ],
+      "size": [
+        190,
+        70
+      ]
+    },
+    {
+      "id": "dep_probe_scope",
+      "type": "external",
+      "label": "探针只判断运行健康",
+      "sublabel": "启动 / 接流量 / 不可恢复重启",
+      "pos": [
+        920,
+        500
+      ],
+      "size": [
+        200,
+        70
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "原子发布包",
+      "wraps": [
+        "dep_bundle",
+        "dep_bundle_fields"
+      ],
+      "pad": 8
+    },
+    {
+      "kind": "security-group",
+      "label": "QUALITY · SAFETY · LATENCY · COST · ERROR RATE / 各阶段连续窗口门禁",
+      "wraps": [
+        "dep_build",
+        "dep_eval",
+        "dep_shadow",
+        "dep_canary",
+        "dep_ramp",
+        "dep_full"
+      ],
+      "pad": 20
+    },
+    {
+      "kind": "region",
+      "label": "STARTUP · READINESS · LIVENESS / 运行探针",
+      "wraps": [
+        "dep_build",
+        "dep_eval",
+        "dep_shadow"
+      ],
+      "pad": 8
+    }
+  ],
+  "connections": [
+    {
+      "id": "dep_progress_0",
+      "from": "dep_bundle",
+      "to": "dep_build",
+      "label": "",
+      "variant": "emphasis",
+      "route": "auto"
+    },
+    {
+      "id": "dep_progress_1",
+      "from": "dep_build",
+      "to": "dep_eval",
+      "label": "",
+      "variant": "emphasis",
+      "route": "auto"
+    },
+    {
+      "id": "dep_progress_2",
+      "from": "dep_eval",
+      "to": "dep_shadow",
+      "label": "",
+      "variant": "emphasis",
+      "route": "auto"
+    },
+    {
+      "id": "dep_progress_3",
+      "from": "dep_shadow",
+      "to": "dep_canary",
+      "label": "",
+      "variant": "emphasis",
+      "route": "auto"
+    },
+    {
+      "id": "dep_progress_4",
+      "from": "dep_canary",
+      "to": "dep_ramp",
+      "label": "",
+      "variant": "emphasis",
+      "route": "auto"
+    },
+    {
+      "id": "dep_progress_5",
+      "from": "dep_ramp",
+      "to": "dep_full",
+      "label": "",
+      "variant": "emphasis",
+      "route": "auto"
+    },
+    {
+      "id": "dep_canary_fault",
+      "from": "dep_canary",
+      "to": "dep_pause",
+      "label": "越阈值",
+      "variant": "security",
+      "route": "auto",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "dep_full_fault",
+      "from": "dep_full",
+      "to": "dep_pause",
+      "label": "越阈值",
+      "variant": "security",
+      "route": "auto",
+      "labelDy": 24
+    },
+    {
+      "id": "dep_pause_rollback",
+      "from": "dep_pause",
+      "to": "dep_rollback",
+      "label": "",
+      "variant": "security",
+      "route": "auto"
+    },
+    {
+      "id": "dep_restore_stable",
+      "from": "dep_rollback",
+      "to": "dep_previous",
+      "label": "",
+      "variant": "security",
+      "route": "auto"
+    },
+    {
+      "id": "dep_revise_candidate",
+      "from": "dep_pause",
+      "to": "dep_bundle",
+      "label": "复审候选",
+      "variant": "dashed",
+      "route": "auto"
+    },
+    {
+      "id": "dep_scaling_input",
+      "from": "dep_signals",
+      "to": "dep_autoscale",
+      "label": "",
+      "variant": "default",
+      "route": "auto"
+    },
+    {
+      "id": "dep_scale_workers",
+      "from": "dep_autoscale",
+      "to": "dep_workers",
+      "label": "",
+      "variant": "default",
+      "route": "auto"
+    },
+    {
+      "id": "dep_queue_feedback",
+      "from": "dep_workers",
+      "to": "dep_signals",
+      "label": "队列反馈",
+      "variant": "dashed",
+      "route": "auto",
+      "fromSide": "bottom",
+      "toSide": "bottom",
+      "via": [
+        [
+          755,
+          600
+        ],
+        [
+          190,
+          600
+        ]
+      ]
+    }
+  ]
+}

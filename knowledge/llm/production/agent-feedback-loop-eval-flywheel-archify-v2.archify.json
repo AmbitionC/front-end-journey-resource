@@ -1,0 +1,285 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "线上反馈、评估集与持续改进闭环",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1200,
+      630
+    ]
+  },
+  "components": [
+    {
+      "id": "feedback_signals",
+      "type": "external",
+      "label": "生产 Trace 与用户反馈",
+      "sublabel": "USER FEEDBACK → PRODUCTION TRACES",
+      "pos": [
+        50,
+        100
+      ],
+      "size": [
+        230,
+        80
+      ]
+    },
+    {
+      "id": "feedback_triage",
+      "type": "backend",
+      "label": "TRIAGE / 分诊",
+      "sublabel": "去重、外部故障与合法保留",
+      "pos": [
+        350,
+        100
+      ],
+      "size": [
+        160,
+        80
+      ]
+    },
+    {
+      "id": "failure_taxonomy",
+      "type": "backend",
+      "label": "FAILURE TAXONOMY",
+      "sublabel": "失败阶段与原因分类",
+      "pos": [
+        610,
+        100
+      ],
+      "size": [
+        180,
+        80
+      ]
+    },
+    {
+      "id": "replay_case",
+      "type": "backend",
+      "label": "REPLAYABLE CASE / 可重放案例",
+      "sublabel": "INPUT · EXPECTED PROPERTIES · VERSION · SLICE",
+      "pos": [
+        850,
+        100
+      ],
+      "size": [
+        300,
+        80
+      ]
+    },
+    {
+      "id": "curated_evals",
+      "type": "database",
+      "label": "CURATED EVAL SET",
+      "sublabel": "版本化、可治理的评估集",
+      "pos": [
+        950,
+        270
+      ],
+      "size": [
+        200,
+        64
+      ]
+    },
+    {
+      "id": "change_candidate",
+      "type": "backend",
+      "label": "CHANGE CANDIDATE",
+      "sublabel": "可归因组件与完整版本包",
+      "pos": [
+        950,
+        465
+      ],
+      "size": [
+        200,
+        64
+      ]
+    },
+    {
+      "id": "offline_eval",
+      "type": "backend",
+      "label": "OFFLINE EVAL / 离线",
+      "sublabel": "全回归、安全与非退化阈值",
+      "pos": [
+        700,
+        465
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "human_calibration",
+      "type": "external",
+      "label": "HUMAN CALIBRATION",
+      "sublabel": "人工校准 rubric 与分歧",
+      "pos": [
+        440,
+        465
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "safety_gate",
+      "type": "security",
+      "label": "SAFETY GATE / 安全门",
+      "sublabel": "安全与副作用不可退化",
+      "pos": [
+        200,
+        465
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "canary_release",
+      "type": "cloud",
+      "label": "CANARY RELEASE",
+      "sublabel": "受控发布与真实线上观察",
+      "pos": [
+        50,
+        270
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "release_metrics",
+      "type": "backend",
+      "label": "METRICS / 六维分别评分",
+      "sublabel": "TOOL CORRECTNESS · SAFETY · LATENCY · COST · ABSTENTION · EDGE CASES",
+      "pos": [
+        400,
+        370
+      ],
+      "size": [
+        480,
+        64
+      ]
+    },
+    {
+      "id": "regression_response",
+      "type": "security",
+      "label": "REGRESSION / 回归响应",
+      "sublabel": "REGRESSION → ROLLBACK；REGRESSION → NEW CASE",
+      "pos": [
+        350,
+        240
+      ],
+      "size": [
+        580,
+        64
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "signals_triage",
+      "from": "feedback_signals",
+      "to": "feedback_triage",
+      "variant": "emphasis"
+    },
+    {
+      "id": "triage_taxonomy",
+      "from": "feedback_triage",
+      "to": "failure_taxonomy",
+      "variant": "emphasis"
+    },
+    {
+      "id": "taxonomy_replay",
+      "from": "failure_taxonomy",
+      "to": "replay_case",
+      "variant": "emphasis"
+    },
+    {
+      "id": "case_eval_set",
+      "from": "replay_case",
+      "to": "curated_evals",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "eval_set_candidate",
+      "from": "curated_evals",
+      "to": "change_candidate",
+      "variant": "emphasis"
+    },
+    {
+      "id": "candidate_offline",
+      "from": "change_candidate",
+      "to": "offline_eval",
+      "variant": "emphasis"
+    },
+    {
+      "id": "offline_human",
+      "from": "offline_eval",
+      "to": "human_calibration",
+      "variant": "emphasis"
+    },
+    {
+      "id": "human_safety",
+      "from": "human_calibration",
+      "to": "safety_gate",
+      "variant": "emphasis"
+    },
+    {
+      "id": "safety_canary",
+      "from": "safety_gate",
+      "to": "canary_release",
+      "variant": "emphasis",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "canary_metrics",
+      "from": "canary_release",
+      "to": "release_metrics",
+      "variant": "emphasis"
+    },
+    {
+      "id": "metrics_feedback",
+      "from": "release_metrics",
+      "to": "feedback_signals",
+      "variant": "emphasis",
+      "fromSide": "left",
+      "toSide": "right",
+      "via": [
+        [
+          320,
+          402
+        ],
+        [
+          320,
+          140
+        ]
+      ]
+    },
+    {
+      "id": "metrics_regression",
+      "from": "release_metrics",
+      "to": "regression_response",
+      "label": "REGRESSION / 回归",
+      "variant": "security",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "new_case_triage",
+      "from": "regression_response",
+      "to": "feedback_triage",
+      "label": "NEW CASE / 新案例",
+      "variant": "dashed",
+      "fromSide": "top",
+      "toSide": "bottom"
+    }
+  ]
+}

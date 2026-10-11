@@ -17,7 +17,7 @@
 
 把 bundle ID 注入每个 trace 和结果。只记录“模型名”不足以复现：provider routing、temperature、system prompt、工具描述和政策变化都会改变行为。[NIST Generative AI Profile](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf)强调对生成式 AI 风险进行治理、映射、测量与管理，版本证据是闭环基础。
 
-![模型、Prompt、工具 Schema、策略与评估集组成版本包，经构建、离线评估、影子、5% 金丝雀、25% 放量到全量；质量、安全、延迟、成本和错误率门控，异常暂停并回滚](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-deployment-versioned-rollout-v1.webp)
+<iframe src="https://www.agent-journey.cn/archify/agent-deployment-versioned-rollout-archify-v2.html" width="100%" height="920" title="模型、Prompt、工具 Schema、策略与评估集组成版本包，经构建、离线评估、影子、5% 金丝雀、25% 放量到全量；质量、安全、延迟、成本和错误率门控，异常暂停并回滚"></iframe>
 *图：Startup、Readiness、Liveness 分别处理启动、接流量和重启；队列与并发驱动扩缩容。*
 
 ## 构建与离线门

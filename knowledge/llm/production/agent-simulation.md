@@ -2,7 +2,7 @@ Agent 场景测试若只准备一句用户输入和几个 Mock 返回值，通�
 
 [NIST 的 AI TEVV 工作](https://www.nist.gov/ai-test-evaluation-validation-and-verification-tevv)强调使用任务、挑战问题、测试床和有意义的数据集，并说明测量方法的局限。模拟器正是一类测试床：它能扩大覆盖和控制故障，但它产生的是“在模型化环境中的证据”，不是现实世界的自动替代品。
 
-![用户模拟器与环境模拟器围绕被测 Agent 独立运行](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-simulation-dual-loop-v1.webp)
+<iframe src="https://www.agent-journey.cn/archify/agent-simulation-dual-loop-archify-v2.html" width="100%" height="920" title="用户模拟器与环境模拟器围绕被测 Agent 独立运行"></iframe>
 
 图中两条循环必须分开。用户模拟器拥有目标、角色、观察、决策与消息；环境模拟器拥有世界状态、规则、工具效果、时钟与失败。若把两者合成一个“全知模拟 LLM”，它可能偷偷读取 Agent 内部状态、替工具修正错误，最终让测试结果过度乐观。
 
