@@ -84,21 +84,7 @@ sequenceDiagram
     T-->>U: 返回最终回答
 ```
 
-```mermaid
-graph TD
-    TR["🔷 Trace: agent-run<br/>duration | computed cost"]
-    S1["Span: intent-classify<br/>duration"]
-    G1["Generation: llm-plan<br/>model/version | token usage"]
-    S2["Span: rag-retrieval<br/>duration | configured top-k"]
-    S3["Span: tool-search<br/>duration"]
-    G2["Generation: llm-answer<br/>model/version | token usage"]
-
-    TR --> S1
-    TR --> G1
-    TR --> S2
-    TR --> S3
-    TR --> G2
-```
+<iframe src="https://www.agent-journey.cn/archify/ai-observability-observation-tree-archify-v2.html" width="100%" height="920" title="agent-run Trace 下的 intent-classify、llm-plan、rag-retrieval、tool-search 与 llm-answer 子操作及其 duration、cost、model/version、token usage 和 top-k 字段"></iframe>
 
 ## LangSmith：LangChain 官方可观测平台
 
@@ -323,16 +309,7 @@ void main().finally(() => sdk.shutdown());
 
 可观测性的最终价值不是看仪表盘，而是驱动持续改进。生产级评估闭环分为四个阶段：
 
-```mermaid
-flowchart LR
-    A["线上采样\nOnline Sampling"] --> B["数据集构建\nDataset Building"]
-    B --> C["离线评估\nOffline Evaluation"]
-    C --> D["回归对比\nRegression Analysis"]
-    D -->|"发现退步"| E["Prompt / 模型修复"]
-    E --> A
-    D -->|"确认改进"| F["发布新版本"]
-    F --> A
-```
+<iframe src="https://www.agent-journey.cn/archify/ai-observability-evaluation-loop-archify-v2.html" width="100%" height="920" title="线上采样、数据集构建、离线评估与回归对比的闭环；发现退步修复 Prompt 或模型，确认改进发布新版本，随后返回线上采样"></iframe>
 
 **第一阶段：线上采样**。高成本语义评估通常需要抽样，但采样比例不是通用常量：
 - 按目标误差、事件发生率、分层数量和评估预算计算随机样本量

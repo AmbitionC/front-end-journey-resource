@@ -4,7 +4,7 @@
 
 它让模型从“只会说话”扩展到查询订单、搜索知识库、调用计算器或生成工单，但并没有自动解决权限、安全和业务正确性。
 
-![Function Calling 的可信执行闭环](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/function-calling-execution-loop-v3.webp)
+<iframe src="https://www.agent-journey.cn/archify/function-calling-trusted-roundtrip-archify-v2.html" width="100%" height="920" title="Function Calling 的可信执行闭环"></iframe>
 
 ## 一、完整闭环，而不是一次函数调用
 

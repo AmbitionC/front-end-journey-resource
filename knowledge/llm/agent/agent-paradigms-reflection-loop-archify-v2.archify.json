@@ -1,0 +1,149 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Reflection：执行、反思、优化",
+    "locale": "zh-CN",
+    "quality_profile": "showcase"
+  },
+  "lanes": [
+    {
+      "id": "work",
+      "label": "生成与评审"
+    },
+    {
+      "id": "refine",
+      "label": "反馈驱动的优化"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "task",
+      "lane": "work",
+      "col": 0,
+      "type": "external",
+      "label": "任务",
+      "width": 180
+    },
+    {
+      "id": "draft",
+      "lane": "work",
+      "col": 1,
+      "type": "backend",
+      "label": "初始执行",
+      "width": 180,
+      "sublabel": "生成初稿 O₀"
+    },
+    {
+      "id": "review",
+      "lane": "work",
+      "col": 2,
+      "type": "security",
+      "label": "Reflection",
+      "width": 180,
+      "sublabel": "评审员分析"
+    },
+    {
+      "id": "output",
+      "lane": "work",
+      "col": 4,
+      "type": "frontend",
+      "label": "最终输出",
+      "width": 180,
+      "sublabel": "无需改进时收敛"
+    },
+    {
+      "id": "improve",
+      "lane": "refine",
+      "col": 3,
+      "type": "backend",
+      "label": "Refinement",
+      "width": 180,
+      "sublabel": "生成优化稿 Oᵢ₊₁"
+    }
+  ],
+  "edges": [
+    {
+      "id": "task-draft",
+      "from": "task",
+      "to": "draft",
+      "role": "main",
+      "variant": "default"
+    },
+    {
+      "id": "draft-review",
+      "from": "draft",
+      "to": "review",
+      "role": "main",
+      "variant": "default"
+    },
+    {
+      "id": "review-output",
+      "from": "review",
+      "to": "output",
+      "role": "main",
+      "variant": "default",
+      "label": "无需改进"
+    },
+    {
+      "id": "review-improve",
+      "from": "review",
+      "to": "improve",
+      "role": "branch",
+      "variant": "security",
+      "label": "发现问题"
+    },
+    {
+      "id": "improve-review",
+      "from": "improve",
+      "to": "review",
+      "role": "return",
+      "variant": "dashed",
+      "label": "再次评审"
+    }
+  ],
+  "mainPath": [
+    "task",
+    "draft",
+    "review",
+    "output"
+  ],
+  "semanticChecks": {
+    "allowedRoots": [
+      "task"
+    ],
+    "allowedTerminals": [
+      "output"
+    ],
+    "requiredEdges": [
+      {
+        "from": "review",
+        "to": "improve"
+      },
+      {
+        "from": "improve",
+        "to": "review"
+      },
+      {
+        "from": "review",
+        "to": "output"
+      }
+    ]
+  },
+  "cards": [
+    {
+      "dot": "amber",
+      "title": "退出条件",
+      "items": [
+        "评审反馈为“无需改进”，或达到最大迭代次数。"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "迭代语义",
+      "items": [
+        "每次优化使用任务、旧版输出与反馈；新稿返回评审。"
+      ]
+    }
+  ]
+}

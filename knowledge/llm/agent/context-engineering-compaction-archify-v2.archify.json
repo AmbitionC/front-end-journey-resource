@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "压缩整合：用摘要接续长对话",
+    "subtitle": "接近上限时用高保真摘要重启窗口：先确保关键召回，再剔除冗余",
+    "viewBox": [
+      1040,
+      480
+    ],
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "animation": "none",
+    "column_fit": "spread"
+  },
+  "participants": [
+    {
+      "id": "conversation_history",
+      "type": "messagebus",
+      "label": "对话历史·已有任务状态"
+    },
+    {
+      "id": "compaction_llm",
+      "type": "backend",
+      "label": "LLM（压缩）·高保真摘要"
+    },
+    {
+      "id": "new_context_window",
+      "type": "frontend",
+      "label": "新上下文窗口·接续任务"
+    }
+  ],
+  "messages": [
+    {
+      "id": "trigger_compaction",
+      "from": "conversation_history",
+      "to": "compaction_llm",
+      "y": 210,
+      "label": "接近上限触发压缩；丢弃重复工具输出与噪声"
+    },
+    {
+      "id": "restart_context",
+      "from": "compaction_llm",
+      "to": "new_context_window",
+      "y": 340,
+      "label": "摘要 + 近期工件；保留架构决策 / 未解决问题 / 实现细节",
+      "variant": "emphasis"
+    }
+  ],
+  "activations": [
+    {
+      "participant": "compaction_llm",
+      "from": 200,
+      "to": 355,
+      "type": "backend"
+    }
+  ]
+}

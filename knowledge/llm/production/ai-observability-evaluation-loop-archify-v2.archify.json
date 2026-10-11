@@ -1,0 +1,155 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "从线上采样到版本改进",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1220,
+      560
+    ]
+  },
+  "lanes": [
+    {
+      "id": "evidence",
+      "label": "追踪证据与评估"
+    },
+    {
+      "id": "change",
+      "label": "修复或发布"
+    }
+  ],
+  "mainPath": [
+    "sampling",
+    "dataset",
+    "evaluation",
+    "regression",
+    "release"
+  ],
+  "nodes": [
+    {
+      "id": "sampling",
+      "lane": "evidence",
+      "col": 0,
+      "type": "messagebus",
+      "label": "线上采样",
+      "width": 200,
+      "height": 130,
+      "sublabel": "Online Sampling"
+    },
+    {
+      "id": "dataset",
+      "lane": "evidence",
+      "col": 1,
+      "type": "database",
+      "label": "数据集构建",
+      "width": 200,
+      "height": 130,
+      "sublabel": "Dataset Building"
+    },
+    {
+      "id": "evaluation",
+      "lane": "evidence",
+      "col": 2,
+      "type": "backend",
+      "label": "离线评估",
+      "width": 200,
+      "height": 130,
+      "sublabel": "Offline Evaluation"
+    },
+    {
+      "id": "regression",
+      "lane": "evidence",
+      "col": 3,
+      "type": "backend",
+      "label": "回归对比",
+      "width": 200,
+      "height": 130,
+      "sublabel": "Regression Analysis"
+    },
+    {
+      "id": "repair",
+      "lane": "change",
+      "col": 2,
+      "type": "security",
+      "label": "Prompt / 模型修复",
+      "width": 220,
+      "height": 130,
+      "sublabel": "修复退步的版本"
+    },
+    {
+      "id": "release",
+      "lane": "change",
+      "col": 3,
+      "type": "cloud",
+      "label": "发布新版本",
+      "width": 200,
+      "height": 130,
+      "sublabel": "确认改进后发布"
+    }
+  ],
+  "edges": [
+    {
+      "id": "sample_to_dataset",
+      "from": "sampling",
+      "to": "dataset"
+    },
+    {
+      "id": "dataset_to_evaluation",
+      "from": "dataset",
+      "to": "evaluation"
+    },
+    {
+      "id": "evaluation_to_regression",
+      "from": "evaluation",
+      "to": "regression"
+    },
+    {
+      "id": "regression_repair",
+      "from": "regression",
+      "to": "repair",
+      "label": "发现退步",
+      "variant": "security",
+      "role": "branch"
+    },
+    {
+      "id": "regression_release",
+      "from": "regression",
+      "to": "release",
+      "label": "确认改进",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "repair_resample",
+      "from": "repair",
+      "to": "sampling",
+      "role": "return",
+      "variant": "dashed"
+    },
+    {
+      "id": "release_resample",
+      "from": "release",
+      "to": "sampling",
+      "role": "return",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "证据进入评估",
+      "items": [
+        "线上 Trace 采样后构建数据集，再对变更做离线评估。"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "持续闭环",
+      "items": [
+        "退步进入修复，改进进入发布；两条路径都回到线上采样。"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Trace 下的 Span 与 Generation",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1280,
+      520
+    ]
+  },
+  "components": [
+    {
+      "id": "agent_run",
+      "type": "external",
+      "label": "Trace: agent-run",
+      "sublabel": "duration · computed cost",
+      "pos": [
+        10,
+        60
+      ],
+      "size": [
+        240,
+        88
+      ]
+    },
+    {
+      "id": "intent",
+      "type": "backend",
+      "label": "Span: intent-classify",
+      "sublabel": "duration",
+      "pos": [
+        40,
+        300
+      ],
+      "size": [
+        220,
+        88
+      ]
+    },
+    {
+      "id": "plan",
+      "type": "backend",
+      "label": "Generation: llm-plan",
+      "sublabel": "model/version · token usage",
+      "pos": [
+        285,
+        300
+      ],
+      "size": [
+        220,
+        88
+      ]
+    },
+    {
+      "id": "retrieval",
+      "type": "database",
+      "label": "Span: rag-retrieval",
+      "sublabel": "duration · configured top-k",
+      "pos": [
+        530,
+        300
+      ],
+      "size": [
+        220,
+        88
+      ]
+    },
+    {
+      "id": "tool_search",
+      "type": "messagebus",
+      "label": "Span: tool-search",
+      "sublabel": "duration",
+      "pos": [
+        775,
+        300
+      ],
+      "size": [
+        220,
+        88
+      ]
+    },
+    {
+      "id": "llm_answer",
+      "type": "backend",
+      "label": "Generation: llm-answer",
+      "sublabel": "model/version · token usage",
+      "pos": [
+        1020,
+        300
+      ],
+      "size": [
+        220,
+        88
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "run_intent",
+      "from": "agent_run",
+      "to": "intent",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "run_plan",
+      "from": "agent_run",
+      "to": "plan",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "run_retrieval",
+      "from": "agent_run",
+      "to": "retrieval",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "run_tool",
+      "from": "agent_run",
+      "to": "tool_search",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "run_answer",
+      "from": "agent_run",
+      "to": "llm_answer",
+      "fromSide": "bottom",
+      "toSide": "top"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Span 与 Generation",
+      "items": [
+        "各子操作通过父子关系归属于 agent-run Trace。",
+        "Generation 为模型调用补充 model/version 与 token usage。"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "可比较结果",
+      "items": [
+        "Trace 汇总总耗时和计算成本。",
+        "检索 Span 记录 configured top-k，其他 Span 记录 duration。"
+      ]
+    }
+  ]
+}

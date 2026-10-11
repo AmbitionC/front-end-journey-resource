@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "上下文工程：收集、组织、压缩与验证",
+    "subtitle": "固定 Context Budget 内保留高信号证据，由模型与工具的观测形成反馈闭环",
+    "viewBox": [
+      1080,
+      470
+    ],
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "animation": "none"
+  },
+  "components": [
+    {
+      "id": "gather",
+      "type": "external",
+      "label": "Gather：收集",
+      "sublabel": "多源候选信息",
+      "pos": [
+        40,
+        30
+      ],
+      "size": [
+        240,
+        82
+      ]
+    },
+    {
+      "id": "select",
+      "type": "security",
+      "label": "Select：筛选",
+      "sublabel": "相关性 + 可信度",
+      "pos": [
+        420,
+        30
+      ],
+      "size": [
+        240,
+        82
+      ]
+    },
+    {
+      "id": "structure",
+      "type": "backend",
+      "label": "Structure：组织",
+      "sublabel": "Role / Task / Evidence / Tool",
+      "pos": [
+        800,
+        30
+      ],
+      "size": [
+        240,
+        82
+      ]
+    },
+    {
+      "id": "observations",
+      "type": "messagebus",
+      "label": "模型 / 工具观测",
+      "sublabel": "Model / Tool Observations",
+      "pos": [
+        40,
+        350
+      ],
+      "size": [
+        240,
+        82
+      ]
+    },
+    {
+      "id": "verify",
+      "type": "security",
+      "label": "Verify：验证·调用前后校验",
+      "sublabel": "事实 / 出处 / 输出约束",
+      "pos": [
+        420,
+        350
+      ],
+      "size": [
+        240,
+        82
+      ]
+    },
+    {
+      "id": "compress",
+      "type": "backend",
+      "label": "Compress：压缩",
+      "sublabel": "保留结构与出处 · Context Budget",
+      "pos": [
+        800,
+        350
+      ],
+      "size": [
+        240,
+        82
+      ]
+    },
+    {
+      "id": "discarded_noise",
+      "type": "external",
+      "label": "丢弃噪声",
+      "sublabel": "低相关 / 重复 / 过时内容",
+      "pos": [
+        420,
+        190
+      ],
+      "size": [
+        240,
+        82
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "from": "gather",
+      "to": "select",
+      "label": "候选信息"
+    },
+    {
+      "from": "select",
+      "to": "structure",
+      "label": "高信号内容"
+    },
+    {
+      "from": "structure",
+      "to": "compress",
+      "label": "分区信息",
+      "labelDy": 72
+    },
+    {
+      "from": "compress",
+      "to": "verify",
+      "label": "预算内上下文"
+    },
+    {
+      "from": "observations",
+      "to": "verify",
+      "label": "动作后输出校验",
+      "variant": "dashed"
+    },
+    {
+      "from": "observations",
+      "to": "gather",
+      "label": "反馈到下一轮",
+      "variant": "dashed"
+    },
+    {
+      "from": "select",
+      "to": "discarded_noise",
+      "label": "筛除",
+      "variant": "dashed",
+      "labelDy": 72
+    }
+  ]
+}
