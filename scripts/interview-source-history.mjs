@@ -254,7 +254,7 @@ export function topicFrequencies(history) {
   // before counting topics so a repost with conflicting metadata counts once.
   const groups = [], aliases = new Map();
   for (const [id, record] of Object.entries(history.records)) {
-    if (!isObject(record)) continue;
+    if (!isObject(record) || !['published', 'merged'].includes(record.status)) continue;
     const identities = [`cluster:${record.clusterId ?? id}`];
     if (typeof record.url === 'string') {
       try { identities.push(`url:${normalizedNowcoderUrl(record.url)}`); } catch {}

@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
 import { syncInterviewTopicWeights } from '../scripts/sync-interview-topic-weights.mjs';
-import { reviewFixture, freezeFixtureReview } from './release-review-fixture.mjs';
+import { reviewFixture, freezeFixtureReview, git } from './release-review-fixture.mjs';
 
 test('adds one heat per new source cluster and stays idempotent', async () => {
   const root = await mkdtemp(join(tmpdir(), 'interview-topic-weights-'));
@@ -146,6 +146,47 @@ test('retracting a bound question clears its private count and managed backlink'
   await syncInterviewTopicWeights(f.root, { ...f.options, privacyMode: true, historyPath: f.historyPath, keys: ['real-key'] });
   const [leaf] = JSON.parse(await readFile(join(f.root, 'knowledge/_tree.json'), 'utf8'));
   assert.equal(leaf.heat, 0); assert.equal(leaf.interviewCount, 0);
+  const article = await readFile(join(f.root, 'knowledge/topic/real-key.md'), 'utf8');
+  const managed = article.split('<!-- interview-source-history:start -->')[1].split('<!-- interview-source-history:end -->')[0];
+  assert.doesNotMatch(managed, /article\.md/u);
+}));
+
+async function legacyCountOnly(f) {
+  delete f.knowledge.interviewBaseHeat;
+  Object.assign(f.knowledge, { heat: 7, currRank: 4, interviewCount: 1 });
+  await writeFile(join(f.root, 'knowledge/_tree.json'), JSON.stringify([f.knowledge]));
+  const path = join(f.root, 'knowledge/topic/real-key.md');
+  await writeFile(path, `${await readFile(path, 'utf8')}\n## 出现于（热度来源）\n\n<!-- interview-source-history:start -->\n- [旧面经](../../interview/company/article.md)\n<!-- interview-source-history:end -->\n`);
+  git(f.root, 'add', '.'); git(f.root, 'commit', '-qm', 'existing count-only legacy knowledge');
+  f.baseCommit = git(f.root, 'rev-parse', 'HEAD'); f.review.baseCommit = f.baseCommit;
+  await freezeFixtureReview(f);
+}
+
+test('legacy count-only leaves retain their baseline instead of adding a source twice', () => reviewFixture(async f => {
+  await legacyCountOnly(f);
+  await syncInterviewTopicWeights(f.root, { ...f.options, privacyMode: true, historyPath: f.historyPath, keys: ['real-key'] });
+  const [leaf] = JSON.parse(await readFile(join(f.root, 'knowledge/_tree.json'), 'utf8'));
+  assert.equal(leaf.heat, 7); assert.equal(leaf.interviewBaseHeat, 6); assert.equal(leaf.interviewCount, 1);
+  await freezeFixtureReview(f);
+  const before = await readFile(join(f.root, 'knowledge/_tree.json'));
+  const rerun = await syncInterviewTopicWeights(f.root, { ...f.options, privacyMode: true, historyPath: f.historyPath, keys: ['real-key'] });
+  assert.deepEqual(rerun, { updatedTopics: 0, addedClusters: 0, removedClusters: 0, updatedArticles: 0, treeOrderChanged: false });
+  assert.deepEqual(await readFile(join(f.root, 'knowledge/_tree.json')), before);
+}));
+
+test('retracting the last source recalculates legacy count-only leaves', () => reviewFixture(async f => {
+  await legacyCountOnly(f);
+  f.history.records.aaaaaaaaaaaa.knowledgeKeys = [];
+  const question = f.ledger.rows[0].questions[0];
+  question.knowledgeKey = null; question.bindingStatus = 'pending_missing_keyword';
+  delete f.interview.contentFormat;
+  await writeFile(join(f.root, 'interview/_tree.json'), JSON.stringify([f.interview]));
+  await writeFile(join(f.root, 'interview/company/article.md'), '<details><summary>（1）问题😀</summary></details>\n\n教学短答。\n');
+  await writeFile(f.historyPath, JSON.stringify(f.history));
+  await freezeFixtureReview(f);
+  await syncInterviewTopicWeights(f.root, { ...f.options, privacyMode: true, historyPath: f.historyPath, keys: ['real-key'] });
+  const [leaf] = JSON.parse(await readFile(join(f.root, 'knowledge/_tree.json'), 'utf8'));
+  assert.equal(leaf.heat, 6); assert.equal(leaf.interviewBaseHeat, 6); assert.equal(leaf.interviewCount, 0);
   const article = await readFile(join(f.root, 'knowledge/topic/real-key.md'), 'utf8');
   const managed = article.split('<!-- interview-source-history:start -->')[1].split('<!-- interview-source-history:end -->')[0];
   assert.doesNotMatch(managed, /article\.md/u);

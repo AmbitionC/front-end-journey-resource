@@ -33,10 +33,10 @@
 
 **Interfaces:** `topicFrequencies(history)` retains `{key,count,clusters,companies,lastSeenAt}`. Cluster count is independent of `processUnitId`; aliases are canonical URL and full `normalizedBodySha256` (validated from frozen originals at the private boundary).
 
-- [ ] Add literal regression cases: same cluster/different processes => 1; two clusters/same process => 2; same canonical URL or full body => 1; retired representative plus merged duplicate => 0.
-- [ ] Run `node --test test/interview-source-history.test.mjs test/private-public-interview-boundary.test.mjs` and observe the intended count failures.
-- [ ] Implement evidence alias grouping and exclude inactive/retracted source groups.
-- [ ] Run the same tests and verify green.
+- [x] Add literal regression cases: same cluster/different processes => 1; two clusters/same process => 2; same canonical URL or full body => 1; retired representative plus merged duplicate => 0.
+- [x] Run `node --test test/interview-source-history.test.mjs test/private-public-interview-boundary.test.mjs` and observe the intended count failures.
+- [x] Implement evidence alias grouping and exclude inactive/retracted source groups.
+- [x] Run the same tests and verify green.
 
 ### Task 2: Scoped heat and stable ordering
 
@@ -44,10 +44,10 @@
 
 **Interfaces:** `syncInterviewTopicWeights(root, options)` uses pinned review `sourceEvidence` pairs plus `articleKeys` to activate prepared sources. Returns existing counters plus `treeOrderChanged`.
 
-- [ ] Test unrelated prepared exclusion, explicit zero baseline, preserved legacy baseline, removal/retraction, byte-identical rerun, ties, stale order with unchanged numbers, and mixed siblings.
-- [ ] Run targeted tests and observe failures for batch scope and stale ordering.
-- [ ] Pin review/history reads, project only exact reviewed source pairs, sort leaf slots independently from numeric changes, and write only changed bytes.
-- [ ] Run targeted tests and verify green.
+- [x] Test unrelated prepared exclusion, explicit zero baseline, preserved legacy baseline, removal/retraction, byte-identical rerun, ties, stale order with unchanged numbers, and mixed siblings.
+- [x] Run targeted tests and observe failures for batch scope and stale ordering.
+- [x] Pin review/history reads, project only exact reviewed source pairs, sort leaf slots independently from numeric changes, and write only changed bytes.
+- [x] Run targeted tests and verify green.
 
 ### Task 3: Processing and publication evidence contract
 
@@ -55,11 +55,11 @@
 
 **Interfaces:** A read-only processing-plan command returns the real skill path, instructions hash, semantic inventory and `status: needs_execution`. Each bound ledger question adds `knowledgeAssociation` with `action`, nonempty `rationale`, actual searched `candidates` and a pinned private `skillExecution` descriptor. The completed runner report binds stage `processing`, skill name/path/instructions SHA, sourceId/articleKey/knowledgeKey, action, frozen output path/SHA, and a nonempty execution trace. The independent content report adds a digest-bound `knowledgeQuality` section with an approved row for each bound question and explicit accuracy/pedagogy/sources/semanticReuse checks. All such evidence is private, byte-pinned, and independently reviewed; local hashes do not authenticate a runner or reviewer.
 
-- [ ] Write tests that missing association, missing/pending/wrong-stage/stale skill evidence, absent/rejected/stale quality and unsupported create decisions block final review.
-- [ ] Run targeted tests and observe the missing gate failures.
-- [ ] Implement read-only preparation (never a completed invocation), validate pinned actual run evidence and per-question quality, and enforce zero baseline for genuinely new leaves.
-- [ ] Update synthetic test fixtures explicitly as test-only runner/reviewer evidence, and document the processing workflow and CLI.
-- [ ] Run targeted tests, `npm test`, `npm run validate:tree`, and `git diff --check` under Node 22. Commit the validated branch and report its head to the parent for review.
+- [x] Write tests that missing association, missing/pending/wrong-stage/stale skill evidence, absent/rejected/stale quality and unsupported create decisions block final review.
+- [x] Run targeted tests and observe the missing gate failures.
+- [x] Implement read-only preparation (never a completed invocation), validate pinned actual run evidence and per-question quality, and enforce zero baseline for genuinely new leaves.
+- [x] Update synthetic test fixtures explicitly as test-only runner/reviewer evidence, and document the processing workflow and CLI.
+- [x] Run targeted tests, `npm test`, `npm run validate:tree`, and `git diff --check` under Node 22. Commit the validated branch and report its head to the parent for review.
 
 ## Execution record
 
@@ -73,3 +73,7 @@ Ruling: Evidence cluster identity supersedes the old same-process frequency rule
 - Full suite first run 126/127 passed: an existing test's nonrecursive `.codex` mkdir conflicted with the new real skill fixture. Fixed both existing fixture setup sites to recursive mkdir. Final `npm test`: 127/127 passed, zero skipped.
 - `npm run validate:tree`: zero errors, two existing warnings, 95 interviews and 322 knowledge leaves. `git diff --check`: clean.
 - No public articles, trees, images, raw sources, original checkouts, or network publication changed. Skill execution and reviewer authority used in tests are explicitly synthetic; real processing must obtain actual run and independent quality evidence.
+
+Final independent review: two Important findings, no Critical/Minor findings, declined-to-judge empty. Inactive source alias bridging and count-only legacy baseline/retraction were reproduced with six assertion failures (14/20 passed), fixed in one pass, and verified GREEN 20/20 including migration rerun and backlink cleanup. Final complete suite: 133/133 passed, zero skipped; tree zero errors/two existing orphan warnings; diff check clean. Logs: /tmp/resource-knowledge-review-fixes-{red,green}.log and /tmp/resource-knowledge-full-suite-final.log.
+
+Read-only preparation on the actual 322-leaf repository for agent-memory returned the actual generate-knowledge-docs fingerprint and needs_execution. Public interview/knowledge/image contents and package-lock.json have zero diff from the base. Keep this feature branch and isolated clone for parent delivery; no push or PR performed.

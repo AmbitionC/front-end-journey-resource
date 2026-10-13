@@ -104,7 +104,7 @@ export async function syncInterviewTopicWeights(resourceRoot, options = {}) {
   const keys = new Set([
     ...frequencyByKey.keys(),
     ...[...byKey.values()]
-      .filter(leaf => Array.isArray(leaf.interviewClusters) || Number.isInteger(leaf.interviewBaseHeat))
+      .filter(leaf => Array.isArray(leaf.interviewClusters) || Number.isInteger(leaf.interviewBaseHeat) || Number.isInteger(leaf.interviewCount))
       .map(leaf => leaf.key),
   ]);
 
@@ -124,7 +124,8 @@ export async function syncInterviewTopicWeights(resourceRoot, options = {}) {
     }
     const baseHeat = Number.isInteger(leaf.interviewBaseHeat)
       ? leaf.interviewBaseHeat
-      : Math.max(0, (Number.isInteger(leaf.heat) ? leaf.heat : 0) - previous.length);
+      : Math.max(0, (Number.isInteger(leaf.heat) ? leaf.heat : 0)
+        - (Number.isInteger(leaf.interviewCount) ? leaf.interviewCount : previous.length));
     const nextCount = frequencyByKey.get(key)?.count ?? 0;
     if (options.privacyMode) {
       const previousCount = leaf.interviewCount ?? previous.length;

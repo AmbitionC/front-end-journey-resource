@@ -209,3 +209,10 @@ test('retracting the published representative removes merged repost heat', () =>
   const repost = published({ status: 'merged', url: 'https://www.nowcoder.com/discuss/repost' });
   assert.deepEqual(topicFrequencies({ records: { first, repost } }), []);
 });
+
+for (const status of ['prepared', 'skipped', 'needs_review', 'retired']) test(`inactive ${status} evidence cannot bridge distinct published clusters`, () => {
+  const first = published({ clusterId: 'cluster-a', normalizedBodySha256: 'a'.repeat(64) });
+  const second = published({ clusterId: 'cluster-b', url: 'https://www.nowcoder.com/discuss/b', normalizedBodySha256: 'b'.repeat(64) });
+  const unrelated = published({ status, clusterId: 'cluster-a', url: 'https://www.nowcoder.com/discuss/unrelated', normalizedBodySha256: 'b'.repeat(64), knowledgeKeys: [] });
+  assert.equal(topicFrequencies({ records: { first, second, unrelated } })[0].count, 2);
+});
