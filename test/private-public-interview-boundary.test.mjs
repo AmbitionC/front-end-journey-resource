@@ -125,10 +125,10 @@ test('private history rejects repository-contained ledgers and does not use edit
   assert.match((await validatePrivateInterviewHistory(f.root,internal,f.options)).join(),/公开仓库外/u);
 }));
 
-test('distinct rounds in one interview process count once per topic while retaining both source links',()=>{
+test('distinct evidence clusters in one interview process count separately while retaining both source links',()=>{
   const record={status:'published',knowledgeKeys:['topic'],processUnitId:'one-process'};
   const [topic]=topicFrequencies({records:{first:{...record,clusterId:'round-one'},second:{...record,clusterId:'round-two'},third:{...record,clusterId:'different',processUnitId:'another-process'}}});
-  assert.equal(topic.count,2);assert.deepEqual(topic.clusters,['different','round-one','round-two']);
+  assert.equal(topic.count,3);assert.deepEqual(topic.clusters,['different','round-one','round-two']);
 });
 
 test('private weight draft generation requires scope and final pin, emits aggregate counts and invalidates its old review',()=>reviewFixture(async f=>{
@@ -142,7 +142,7 @@ test('private weight draft generation requires scope and final pin, emits aggreg
   await assert.rejects(syncInterviewTopicWeights(f.root,options),/私有来源审核未通过/u);
   await freezeFixtureReview(f);
   const second=await syncInterviewTopicWeights(f.root,{...options,...f.options});
-  assert.deepEqual(second,{updatedTopics:0,addedClusters:0,removedClusters:0,updatedArticles:0});
+  assert.deepEqual(second,{updatedTopics:0,addedClusters:0,removedClusters:0,updatedArticles:0,treeOrderChanged:false});
 }));
 
 test('opacity and author CSS cannot satisfy visible questions, independent short answers or backlinks',()=>reviewFixture(async f=>{

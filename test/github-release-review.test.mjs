@@ -70,7 +70,7 @@ test('old approved commits cannot be replayed after the actual default branch ad
 test('formal entry rejects legacy public private ledger and cross-SHA Action replay',()=>reviewFixture(async f=>{
   const g=await githubFixture(f);
   assert.equal((await requireReviewedRelease(f.root,f.baseCommit,g.after,{read:g.read})).afterSha,g.after);
-  await mkdir(join(f.root,'.codex'));await writeFile(join(f.root,'.codex/interview-source-history.json'),'private legacy ledger');
+  await mkdir(join(f.root,'.codex'),{recursive:true});await writeFile(join(f.root,'.codex/interview-source-history.json'),'private legacy ledger');
   await assert.rejects(requireReviewedRelease(f.root,f.baseCommit,g.after,{read:g.read}),/旧私有采集账本/u);
   const oldActions=process.env.GITHUB_ACTIONS,oldSha=process.env.GITHUB_SHA;
   try {

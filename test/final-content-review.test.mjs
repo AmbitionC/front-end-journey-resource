@@ -120,7 +120,7 @@ test('missing-keyword questions require an explicit frozen pending reason',()=>r
 }));
 
 test('image resync input is covered by both snapshot and final version binding',()=>reviewFixture(async f=>{
-  await mkdir(join(f.root,'.codex'));
+  await mkdir(join(f.root,'.codex'),{recursive:true});
   await writeFile(join(f.root,'.codex/image-resync.txt'),'images/image.png\n');
   await freezeFixtureReview(f); assert.deepEqual(await check(f),[]);
   await writeFile(join(f.root,'.codex/image-resync.txt'),'images/unreviewed.png\n');

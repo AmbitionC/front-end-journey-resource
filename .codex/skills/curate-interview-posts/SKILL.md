@@ -32,9 +32,10 @@ description: Turn raw collected interview experiences (牛客/nowcoder 面经) f
    - 保留公司、岗位、轮次、面试月份等必要背景，以及面经贴与知识点之间的导航链接；公开正文不得出现 `## 来源` 模块，也不得包含 `nowcoder.com` 原始链接。
    - 在 `interview/_tree.json` 对应分组下 upsert 叶子 `{ label, key, isLeaf: true, filePath, tags }`（`filePath` 为目录，`key` 为文件名去掉 `.md`，全库唯一；`tags` 用考点如 `JavaScript`/`React`/`手写题`/`系统设计`/`Agent`；`updatedAt` 设为当天日期，驱动站点「NEW」标记）。
 5. **提炼知识点（去重 + 热度加权）** → `knowledge/<子路径>/<key>.md`：**严格按 [references/dedup-and-heat.md](references/dedup-and-heat.md) 执行**，核心是「同一考点只留一条、越高频越靠前」：
+   - 加工开始时实际加载并执行 [`generate-knowledge-docs`](../generate-knowledge-docs/SKILL.md)，覆盖复用审查、实质更新与新建；按 [加工证据契约](references/interview-knowledge-processing.md) 留存逐题关联理由、实际运行回执/转录及独立知识质量结论。采集阶段不执行本步骤；缺技能执行或质量证据不发布。
    - 对每个知识点候选，先用站内检索 / embedding + 读 `knowledge/_tree.json` 找**语义相近**的既有知识点（不只看标题）。
-   - **命中近似**（表述不同但内容相近）→ **绝不新建**：把该面经登记进既有知识点的「## 出现于（热度来源）」（按面经 key/contentHash 去重），`heat = 去重来源数`，据分档表重算 `currRank`；有新角度就补进正文（内容加权）。
-   - **全新** → 调 [`generate-knowledge-docs`](../generate-knowledge-docs/SKILL.md) 生成，`heat: 1`，来源=该面经。
+   - **命中近似**（表述不同但内容相近）→ **绝不新建**：把该面经登记进既有知识点的「## 出现于（热度来源）」（按真实证据 cluster/规范 URL/完整原文指纹去重），`heat = interviewBaseHeat + interviewCount`，据分档表重算 `currRank`；有新角度就补进正文（内容加权）。
+   - **全新** → 按实际执行的 [`generate-knowledge-docs`](../generate-knowledge-docs/SKILL.md) 生成，显式 `interviewBaseHeat: 0`，首次去重来源同步后 `interviewCount: 1`、`heat: 1`。
    - 每次改动后把受影响父节点下 `knowledge/_tree.json` 兄弟叶子**按 `heat` 降序稳定重排**，使目录树热点→冷门（网站索引默认已按热度排序、无需改前端）。
    - 面经贴↔知识点互链。
 6. **记录与出队**：来源、原文和逐题映射只保存在仓库外的私有历史与审核证据中；规范 URL、A/B 证据、实际正文 `normalizedBodySha256`、独立过程 `processUnitId`、公开 key 和知识 key 均需与冻结原文对应。独立审核冻结所有公开正文、目录、速读、图片及图片补同步清单，审核回执的 SHA-256 由审核方在私账外交付。执行 `npm run validate:release -- /absolute/private/history.json /absolute/private/review.json <review-sha256>`，不得从账本中的 approved 字段推断通过。详情见 [最终版本发布审核](references/release-review.md)。变更任何冻结输入都须重新审核；热度草稿写入后也必须重新冻结。未证实关键词的原题组保持明确待补，不猜题、不计热度。同过程不同轮次的独立页面例外须有已审证据；补充既有流程优先复用稳定 key。只有 PR 合并、该最终 SHA 同步与发布端核验成功后才把私有状态记为 `published` 并清理本批成功消费的本地候选，失败与待补项保留。

@@ -21,10 +21,10 @@
 2. **判定并处理**：
    - **命中近似**（表述不同但内容相近，如「事件循环」vs「Event Loop 宏任务微任务」）→ **绝不新建**：
      - 把当前面经登记进该知识点正文末尾的「## 出现于（热度来源）」列表（以永久历史里的 `clusterId` 去重，**同一证据 cluster 只计一次**）。
-     - `heat = 去重后来源数`；据分档表重算 `currRank`。
+     - 保留既有 `interviewBaseHeat`，用 `heat = interviewBaseHeat + interviewCount` 复算；`interviewCount` 按证据 cluster 计数，规范 URL/实际完整正文指纹为去重别名，同 cluster 不因 processUnitId 冲突重复计数，不同真实 cluster 不因同流程而漏计。只有当前固定审核的 sourceId/articleKey 对应 prepared 项可进入草稿计数。
      - 若新面经带来**新角度/新例子/新考法**，补进知识点正文（**内容加权，而非丢弃**）；无新意则只加权、不改正文。
-   - **全新考点** → 用 [`generate-knowledge-docs`](../../generate-knowledge-docs/SKILL.md) 新建知识点，`heat: 1`，来源=该面经。
-3. **重排目录树**：把受影响父节点下 `knowledge/_tree.json` 的兄弟叶子按 `heat` **降序**（稳定排序，热度相同保持原序）重排，使目录树从热点→冷门。
+   - **全新考点** → 用 [`generate-knowledge-docs`](../../generate-knowledge-docs/SKILL.md) 新建知识点，显式 `interviewBaseHeat: 0`，首次去重同步后 `interviewCount: 1`、`heat: 1`，来源=该面经。复用也实际执行该 skill 的审查步骤；证据按 [加工契约](interview-knowledge-processing.md) 留存。
+3. **重排目录树**：把受影响父节点下 `knowledge/_tree.json` 的兄弟叶子按 `heat` **降序**（稳定排序，热度相同保持原序，分类节点保留槽位）重排，使目录树从热点→冷门。独立检测 `treeOrderChanged`，数值未变时也纠正陈旧顺序。
 4. **面经↔知识点互链**：面经贴里链接到对应知识点；知识点「## 出现于」反链回面经。
 
 ## 三、`heat` → `currRank` 分档
