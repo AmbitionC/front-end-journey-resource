@@ -2029,8 +2029,18 @@
       "filePath": "llm/agent",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-09-01",
-      "batch": "nowcoder-partial-archive-2026-09-01"
+      "recordedAt": "2026-10-14",
+      "batch": "title-verified6-quality-20261014",
+      "reason": "限定单工具ReAct教学循环与运行时可并发独立工具调用的适用边界。",
+      "previousRecord": {
+        "key": "agent-react",
+        "label": "ReAct：推理与行动框架",
+        "filePath": "llm/agent",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-09-01",
+        "batch": "nowcoder-partial-archive-2026-09-01"
+      }
     },
     {
       "key": "agent-paradigms",

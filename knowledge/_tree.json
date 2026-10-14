@@ -1269,7 +1269,7 @@
             "contentStatus": "published",
             "heat": 19,
             "currRank": 5,
-            "updatedAt": "2026-09-01",
+            "updatedAt": "2026-10-14",
             "interviewBaseHeat": 10,
             "quickRead": {
               "text": "ReAct 交替选择行动、执行工具与观察结果，直到满足终止条件。它与 React UI 库不同；模型决定动作后仍由宿主校验权限、预算和结果，循环不能无限继续。"
