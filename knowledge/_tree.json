@@ -79,7 +79,7 @@
             "contentStatus": "published",
             "heat": 10,
             "currRank": 5,
-            "updatedAt": "2026-10-03",
+            "updatedAt": "2026-10-14",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "训练从数据治理、预训练走向 SFT、偏好优化、独立评估和上线监控。训练集更新参数，验证集辅助选择，测试集检查泛化；训练 loss 改善不能独自证明业务能力提升。欠拟合和过拟合需要结合未见数据、指标及泄漏排查，不能只凭模型大小或训练轮次判断。"
@@ -511,14 +511,14 @@
             "isLeaf": true,
             "filePath": "llm/dev",
             "contentStatus": "published",
-            "heat": 10,
+            "heat": 9,
             "currRank": 5,
             "updatedAt": "2026-07-14",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "模型提出结构化工具请求，宿主负责参数校验、授权、执行与结果回送。调用能力只是 Agent 的一个环节，仍需状态、次数、超时与终止合同，格式正确也不等于动作安全。"
             },
-            "interviewCount": 4,
+            "interviewCount": 3,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -535,6 +535,22 @@
               "text": "把指令、当前任务、历史、检索与输出分配到明确 token 预算，按价值裁剪而非固定留几轮。观测每段消耗和循环调用，压缩后保留关键事实与来源，防止省成本却损坏任务。"
             },
             "interviewCount": 3,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
+            "label": "大模型 API 通用模型：消息、响应与计费",
+            "key": "llm-api-basics",
+            "isLeaf": true,
+            "filePath": "llm/dev",
+            "contentStatus": "published",
+            "heat": 8,
+            "currRank": 5,
+            "updatedAt": "2026-07-15",
+            "quickRead": {
+              "text": "模型 API 通常接收消息、模型与生成参数，返回文本、工具请求或增量事件。供应商的角色、完成信号和错误语义有差异，适配层要保留这些边界，调用成功不等于业务完成。"
+            },
+            "interviewBaseHeat": 6,
+            "interviewCount": 2,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -564,19 +580,51 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
-            "label": "大模型 API 通用模型：消息、响应与计费",
-            "key": "llm-api-basics",
+            "label": "超时、重试、Fallback 与错误处理",
+            "key": "llm-error-retry-fallback",
             "isLeaf": true,
             "filePath": "llm/dev",
             "contentStatus": "published",
-            "heat": 8,
-            "currRank": 5,
+            "heat": 7,
+            "currRank": 4,
             "updatedAt": "2026-07-15",
             "quickRead": {
-              "text": "模型 API 通常接收消息、模型与生成参数，返回文本、工具请求或增量事件。供应商的角色、完成信号和错误语义有差异，适配层要保留这些边界，调用成功不等于业务完成。"
+              "text": "按瞬态、永久与结果未知分类错误，传播 deadline，有限退避重试并记录失败。Fallback 需满足能力和权限合同；写操作超时不能证明未执行，先用幂等或结果查询处理。"
             },
             "interviewBaseHeat": 6,
-            "interviewCount": 2,
+            "interviewCount": 1,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
+            "label": "流式请求取消、续传与状态恢复",
+            "key": "llm-stream-cancel-resume",
+            "isLeaf": true,
+            "filePath": "llm/dev",
+            "contentStatus": "published",
+            "heat": 7,
+            "currRank": 4,
+            "updatedAt": "2026-07-15",
+            "quickRead": {
+              "text": "取消信号要贯穿客户端、服务端和上游，停止等待不等于撤销副作用。续传绑定原任务与事件游标，保留可重放日志并去重；日志过期时回到权威快照，避免重发请求重复执行。"
+            },
+            "interviewBaseHeat": 6,
+            "interviewCount": 1,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
+            "label": "视觉理解与图像生成应用",
+            "key": "llm-vision-app",
+            "isLeaf": true,
+            "filePath": "llm/dev",
+            "contentStatus": "published",
+            "heat": 7,
+            "currRank": 4,
+            "updatedAt": "2026-07-15",
+            "quickRead": {
+              "text": "图像能力要约定素材、输入格式、输出和审核；视频另有时长、帧连续性与异步任务边界。保存任务身份和终态，文件存在不等于可交付，不从未经核实产品名推断具体接口。"
+            },
+            "interviewBaseHeat": 6,
+            "interviewCount": 1,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -610,22 +658,6 @@
             "updatedAt": "2026-07-15"
           },
           {
-            "label": "超时、重试、Fallback 与错误处理",
-            "key": "llm-error-retry-fallback",
-            "isLeaf": true,
-            "filePath": "llm/dev",
-            "contentStatus": "published",
-            "heat": 7,
-            "currRank": 4,
-            "updatedAt": "2026-07-15",
-            "quickRead": {
-              "text": "按瞬态、永久与结果未知分类错误，传播 deadline，有限退避重试并记录失败。Fallback 需满足能力和权限合同；写操作超时不能证明未执行，先用幂等或结果查询处理。"
-            },
-            "interviewBaseHeat": 6,
-            "interviewCount": 1,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
             "label": "Responses、Chat 与统一生成接口模式",
             "key": "llm-response-api-patterns",
             "isLeaf": true,
@@ -634,22 +666,6 @@
             "heat": 6,
             "currRank": 4,
             "updatedAt": "2026-07-15"
-          },
-          {
-            "label": "流式请求取消、续传与状态恢复",
-            "key": "llm-stream-cancel-resume",
-            "isLeaf": true,
-            "filePath": "llm/dev",
-            "contentStatus": "published",
-            "heat": 7,
-            "currRank": 4,
-            "updatedAt": "2026-07-15",
-            "quickRead": {
-              "text": "取消信号要贯穿客户端、服务端和上游，停止等待不等于撤销副作用。续传绑定原任务与事件游标，保留可重放日志并去重；日志过期时回到权威快照，避免重发请求重复执行。"
-            },
-            "interviewBaseHeat": 6,
-            "interviewCount": 1,
-            "interviewCountBasis": "verified-public-posts"
           },
           {
             "label": "Batch 批处理与离线任务",
@@ -670,22 +686,6 @@
             "heat": 6,
             "currRank": 4,
             "updatedAt": "2026-07-15"
-          },
-          {
-            "label": "视觉理解与图像生成应用",
-            "key": "llm-vision-app",
-            "isLeaf": true,
-            "filePath": "llm/dev",
-            "contentStatus": "published",
-            "heat": 7,
-            "currRank": 4,
-            "updatedAt": "2026-07-15",
-            "quickRead": {
-              "text": "图像能力要约定素材、输入格式、输出和审核；视频另有时长、帧连续性与异步任务边界。保存任务身份和终态，文件存在不等于可交付，不从未经核实产品名推断具体接口。"
-            },
-            "interviewBaseHeat": 6,
-            "interviewCount": 1,
-            "interviewCountBasis": "verified-public-posts"
           },
           {
             "label": "语音、音频与 Realtime 应用",
@@ -1171,14 +1171,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 32,
+            "heat": 33,
             "currRank": 5,
-            "updatedAt": "2026-08-29",
+            "updatedAt": "2026-10-14",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Coding Agent 把需求转为检查仓库、规划、修改和验证的循环。运行时应固定代码基线、保护已有修改，并用任务状态与工具证据判断进展；测试和差异审查检验结果，独立任务才适合并行。模型宣称完成不能代替实际验证。"
             },
-            "interviewCount": 26,
+            "interviewCount": 27,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1189,7 +1189,7 @@
             "contentStatus": "published",
             "heat": 28,
             "currRank": 5,
-            "updatedAt": "2026-10-03",
+            "updatedAt": "2026-10-14",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "Skill按需组织任务说明、资源和版本，工具执行仍由运行时校验。MCP解决能力接入，Skill可使用本地或MCP工具，两者可组合；自定义YAML注册表要区分官方格式，发现不等于执行，路径、输入和权限边界也不能被配置绕过。"
@@ -1219,14 +1219,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 26,
+            "heat": 27,
             "currRank": 5,
             "updatedAt": "2026-10-02",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "多Agent让执行者分别持有上下文、工具与证据，由协调者合并。是否值得分工要用同一任务、数据、权限和预算与单Agent或普通代码比较；角色增多不保证正确，通信、共享状态和合并失败都需要验证。"
             },
-            "interviewCount": 20,
+            "interviewCount": 21,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1262,6 +1262,22 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
+            "label": "从零构建 Agent 运行时",
+            "key": "build-agent-framework",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published",
+            "heat": 20,
+            "currRank": 5,
+            "updatedAt": "2026-10-14",
+            "interviewBaseHeat": 6,
+            "quickRead": {
+              "text": "Agent 运行时连接模型、记忆、规划、工具注册和执行循环：模型提出下一步，运行时调用工具，把观察写回状态后继续决策。最大步数、错误处理、权限边界和执行轨迹使流程可控制与排查；最小教学循环并不自动具备生产级可靠性。LangGraph 用状态、节点、边与 reducer 表达更新和分支，检查点支持恢复但不代替外部副作用幂等。"
+            },
+            "interviewCount": 14,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
             "label": "ReAct：推理与行动框架",
             "key": "agent-react",
             "isLeaf": true,
@@ -1275,22 +1291,6 @@
               "text": "ReAct 交替选择行动、执行工具与观察结果，直到满足终止条件。它与 React UI 库不同；模型决定动作后仍由宿主校验权限、预算和结果，循环不能无限继续。"
             },
             "interviewCount": 9,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "从零构建 Agent 运行时",
-            "key": "build-agent-framework",
-            "isLeaf": true,
-            "filePath": "llm/agent",
-            "contentStatus": "published",
-            "heat": 19,
-            "currRank": 5,
-            "updatedAt": "2026-10-14",
-            "interviewBaseHeat": 6,
-            "quickRead": {
-              "text": "Agent 运行时连接模型、记忆、规划、工具注册和执行循环：模型提出下一步，运行时调用工具，把观察写回状态后继续决策。最大步数、错误处理、权限边界和执行轨迹使流程可控制与排查；最小教学循环并不自动具备生产级可靠性。LangGraph 用状态、节点、边与 reducer 表达更新和分支，检查点支持恢复但不代替外部副作用幂等。"
-            },
-            "interviewCount": 13,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1493,10 +1493,13 @@
             "contentStatus": "published",
             "heat": 11,
             "currRank": 5,
-            "updatedAt": "2026-07-18",
+            "updatedAt": "2026-10-14",
             "interviewBaseHeat": 6,
             "interviewCount": 5,
-            "interviewCountBasis": "verified-public-posts"
+            "interviewCountBasis": "verified-public-posts",
+            "quickRead": {
+              "text": "Agent 评测同时检查任务完成、工具与轨迹约束，以及成本、延迟和鲁棒性。优先用环境终态或可执行测试判断结果，开放质量使用经人工样本校准的 Judge。冻结任务、环境与模型配置，按场景切片并保留失败证据，单个准确率不能代替整体可靠性。"
+            }
           },
           {
             "label": "工具超时、取消与重试",
@@ -1593,10 +1596,13 @@
             "contentStatus": "published",
             "heat": 7,
             "currRank": 4,
-            "updatedAt": "2026-07-16",
+            "updatedAt": "2026-10-14",
             "interviewBaseHeat": 6,
             "interviewCount": 1,
-            "interviewCountBasis": "verified-public-posts"
+            "interviewCountBasis": "verified-public-posts",
+            "quickRead": {
+              "text": "Computer-use Agent 依据截图操作鼠标与键盘，每次动作前确认窗口、焦点与坐标，动作后重新观察并核验实际结果。可用语义接口时优先使用；界面内容作为不可信数据处理。隔离环境、操作授权、预算与检查点限制风险，状态未知时先查证再重试。"
+            }
           },
           {
             "label": "Browser-use 网页操作智能体",
@@ -1950,10 +1956,13 @@
             "contentStatus": "published",
             "heat": 8,
             "currRank": 5,
-            "updatedAt": "2026-07-17",
+            "updatedAt": "2026-10-14",
             "interviewBaseHeat": 6,
             "interviewCount": 2,
-            "interviewCountBasis": "verified-public-posts"
+            "interviewCountBasis": "verified-public-posts",
+            "quickRead": {
+              "text": "用户模拟器描述目标与可见行为，环境模拟器管理世界状态和工具效果；被测 Agent 只通过正式观察与动作接口交互。初始状态、随机种子、版本、故障注入与停止条件让测试可重放，目标完成需核验环境终态；模拟成功不能直接代表现实表现。"
+            }
           },
           {
             "label": "模型、工具、MCP 与依赖供应链安全",
@@ -4328,67 +4337,19 @@
         "key": "career-agent-core",
         "children": [
           {
-            "label": "用业务指标证明 Agent 项目价值",
-            "key": "agent-project-evaluation",
-            "isLeaf": true,
-            "filePath": "career",
-            "contentStatus": "published",
-            "heat": 15,
-            "currRank": 5,
-            "updatedAt": "2026-07-17",
-            "interviewBaseHeat": 6,
-            "quickRead": {
-              "text": "Agent 项目价值要连接任务结果与业务收益：用相同任务和标准比较基线，离线评测后再观察真实流量与长期表现。质量、安全、延迟、成本和人工返工共同决定净收益；工具返回成功或生成了答案，都不等于业务任务完成。"
-            },
-            "interviewCount": 9,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
             "label": "AI / Agent 岗位简历与面试",
             "key": "agent-resume-interview",
             "isLeaf": true,
             "filePath": "career",
             "contentStatus": "published",
-            "heat": 29,
+            "heat": 31,
             "currRank": 5,
-            "updatedAt": "2026-07-18",
+            "updatedAt": "2026-10-14",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "简历围绕问题、个人决策和可核验结果叙述项目，区分个人与团队成果。面试需解释系统边界、选型、评测和失败处理；示例指标不能写成自己的经历，未做过的技术与真实用户情况应如实说明。"
             },
-            "interviewCount": 23,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "Agent 工程师的职责与岗位方向",
-            "key": "agent-role-landscape",
-            "isLeaf": true,
-            "filePath": "career",
-            "contentStatus": "published",
-            "heat": 15,
-            "currRank": 5,
-            "updatedAt": "2026-07-18",
-            "interviewBaseHeat": 6,
-            "quickRead": {
-              "text": "Agent相关岗位覆盖应用、平台、评测、安全与研究工程，名称并不统一。按团队实际产出和工作任务判断方向，工程基础、状态工具与质量验证常有交集；岗位热度不能代替自身能力证据和团队要求。"
-            },
-            "interviewCount": 9,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "从零到 Agent 工程师的学习路线",
-            "key": "agent-learning-roadmap",
-            "isLeaf": true,
-            "filePath": "career",
-            "contentStatus": "published",
-            "heat": 10,
-            "currRank": 5,
-            "updatedAt": "2026-07-18",
-            "interviewBaseHeat": 6,
-            "quickRead": {
-              "text": "按目标任务找能力缺口，选择官方资料、小实验与可验证项目形成学习闭环。先补必需基础，再扩展框架和工程化，不用技术名词数量代替能独立解决问题的证据。"
-            },
-            "interviewCount": 4,
+            "interviewCount": 25,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -4408,19 +4369,35 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
-            "label": "Agent 工程师技能图谱",
-            "key": "agent-skill-map",
+            "label": "用业务指标证明 Agent 项目价值",
+            "key": "agent-project-evaluation",
             "isLeaf": true,
             "filePath": "career",
             "contentStatus": "published",
-            "heat": 11,
+            "heat": 15,
+            "currRank": 5,
+            "updatedAt": "2026-07-17",
+            "interviewBaseHeat": 6,
+            "quickRead": {
+              "text": "Agent 项目价值要连接任务结果与业务收益：用相同任务和标准比较基线，离线评测后再观察真实流量与长期表现。质量、安全、延迟、成本和人工返工共同决定净收益；工具返回成功或生成了答案，都不等于业务任务完成。"
+            },
+            "interviewCount": 9,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
+            "label": "Agent 工程师的职责与岗位方向",
+            "key": "agent-role-landscape",
+            "isLeaf": true,
+            "filePath": "career",
+            "contentStatus": "published",
+            "heat": 15,
             "currRank": 5,
             "updatedAt": "2026-07-18",
-            "quickRead": {
-              "text": "Agent 工程能力由模型基础、上下文、检索、工具与运行时、评测和工程交付相互支撑。学习应沿能力依赖补齐薄弱环节，用可观察的任务产出判断掌握程度；熟悉框架品牌或术语数量不能证明能处理失败、权限与上线约束。"
-            },
             "interviewBaseHeat": 6,
-            "interviewCount": 5,
+            "quickRead": {
+              "text": "Agent相关岗位覆盖应用、平台、评测、安全与研究工程，名称并不统一。按团队实际产出和工作任务判断方向，工程基础、状态工具与质量验证常有交集；岗位热度不能代替自身能力证据和团队要求。"
+            },
+            "interviewCount": 9,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -4437,6 +4414,38 @@
             },
             "interviewBaseHeat": 6,
             "interviewCount": 8,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
+            "label": "Agent 工程师技能图谱",
+            "key": "agent-skill-map",
+            "isLeaf": true,
+            "filePath": "career",
+            "contentStatus": "published",
+            "heat": 11,
+            "currRank": 5,
+            "updatedAt": "2026-07-18",
+            "quickRead": {
+              "text": "Agent 工程能力由模型基础、上下文、检索、工具与运行时、评测和工程交付相互支撑。学习应沿能力依赖补齐薄弱环节，用可观察的任务产出判断掌握程度；熟悉框架品牌或术语数量不能证明能处理失败、权限与上线约束。"
+            },
+            "interviewBaseHeat": 6,
+            "interviewCount": 5,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
+            "label": "从零到 Agent 工程师的学习路线",
+            "key": "agent-learning-roadmap",
+            "isLeaf": true,
+            "filePath": "career",
+            "contentStatus": "published",
+            "heat": 10,
+            "currRank": 5,
+            "updatedAt": "2026-07-18",
+            "interviewBaseHeat": 6,
+            "quickRead": {
+              "text": "按目标任务找能力缺口，选择官方资料、小实验与可验证项目形成学习闭环。先补必需基础，再扩展框架和工程化，不用技术名词数量代替能独立解决问题的证据。"
+            },
+            "interviewCount": 4,
             "interviewCountBasis": "verified-public-posts"
           },
           {

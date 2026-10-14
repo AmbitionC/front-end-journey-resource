@@ -18,7 +18,7 @@ type CodingTask = {
 ```
 
 ![Coding Agent 从 issue 与验收标准出发，检查仓库状态后在隔离 worktree 中计划、建立检查点、打补丁，依次格式化、类型检查、测试和 diff 审查，失败则修复重测](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-coding-repo-loop-v1.webp)
-*图：测试通过后仍要 Diff Review；Handoff 携带实际变更与验证证据。*
+*图：测试通过后仍要 Diff Review；Handoff 携带实际变更与验证证据。返回 Patch 的回路仅表示验收后仍需修改的分支；满足验收条件后，交付即结束。*
 
 ## Inspect—Plan—Patch—Verify
 
@@ -117,6 +117,7 @@ Trace 记录搜索、读取、编辑、命令、退出码、diff 统计和验证
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../../interview/bytedance/base/bytedance-base-48.md)
 - [字节 Agent：AI Coding、技能设计与模型工程](../../../interview/bytedance/base/bytedance-base-49.md)
 - [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)
+- [阿里云 Agent 开发秋招一面](../../../interview/alibaba/ai/alibaba-ai-1.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

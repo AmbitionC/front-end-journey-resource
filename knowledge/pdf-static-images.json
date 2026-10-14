@@ -842,7 +842,7 @@
       "id": "agent-tool-selection:archify:26",
       "kind": "archify",
       "articlePath": "knowledge/llm/agent/agent-tool-selection.md",
-      "articleSha256": "f63c625c8bc3bcfcbb4a5c04ec7ab49be9d504575528116106369f77712e96ba",
+      "articleSha256": "205f8ead0f2f6935bdd748600039499fc6001c39d2773f2ea1479786e3e621a6",
       "line": 26,
       "sourceText": "<iframe\n  src=\"/archify/agent-tool-selection.html\"\n  title=\"Agent 工具选择与授权漏斗交互架构图\"\n></iframe>",
       "sourceSha256": "24143b756970f63a70713dee7fe4208be8f96359b13d4e0724788787c0a41db5",
@@ -915,7 +915,7 @@
       "id": "build-agent-framework:archify:27",
       "kind": "archify",
       "articlePath": "knowledge/llm/agent/build-agent-framework.md",
-      "articleSha256": "aa87225dc335320a2f5e99a89e2f1cde922445de960c6389e41131398ea2df68",
+      "articleSha256": "143cfe156acad371c9be341759df832a410f333d015b959ba5debbe2612b528e",
       "line": 27,
       "sourceText": "<iframe\n  src=\"/archify/build-agent-framework.html\"\n  title=\"最小 Agent 运行时交互架构图\"\n></iframe>",
       "sourceSha256": "6447d0e5e861f910b7288aa2a39e9c72d8f3dd50af6f67970407e911d61ab4d5",
@@ -1134,7 +1134,7 @@
       "id": "agent-run-loop:archify:34",
       "kind": "archify",
       "articlePath": "knowledge/llm/agent/agent-run-loop.md",
-      "articleSha256": "42806bb985ce0dbaea5070dc2b93d289a746472cbdaaddbc404c336b6079ca93",
+      "articleSha256": "7300778c8007c4d2e701ddaabff063a5469631c4ae622f23c42ee281afd77a46",
       "line": 34,
       "sourceText": "<iframe\n  src=\"/archify/agent-run-loop.html\"\n  title=\"Agent Run Loop 单轮执行与终止交互架构图\"\n></iframe>",
       "sourceSha256": "a2caa2ea6d85b82bcb99eff07049d00199dca1a468adae77cb00d4b702143bec",
@@ -1207,7 +1207,7 @@
       "id": "agent-evaluation:mermaid:157",
       "kind": "mermaid",
       "articlePath": "knowledge/llm/agent/agent-evaluation.md",
-      "articleSha256": "4ee964994c211295a555584e69009fd32d784fac2c482e70f7ea8673df32523d",
+      "articleSha256": "91b1e3e846598d332e281c45646ade05562a283caf19fa31f69d2b847cd72545",
       "line": 157,
       "sourceText": "flowchart LR\n    A[冻结任务集与环境版本] --> B[运行 Agent\\n记录输出与轨迹]\n    B --> C[规则判定环境终态]\n    C --> D[必要时运行校准后的 Judge]\n    D --> E[按场景与风险切片]\n    E --> F[比较质量、成本与延迟]\n    F --> G[保存运行配置与失败样本]\n",
       "sourceSha256": "025b70f2881d6e39ddac2ee1abed5e9636924d99532da31fa39b5355f404c780",
@@ -6826,7 +6826,7 @@
   "literals": [
     {
       "articlePath": "knowledge/llm/agent/agent-skill-design.md",
-      "articleSha256": "f15a111010a9542581c4d1bc023322444d076d1f8732daca15824a606c0f4af0",
+      "articleSha256": "d3f310cf2c27e74f02ed733f8a2d09a2eec65451b9d8c7b528b9a8adc3446438",
       "sourceText": ".agents/skills/<id>/"
     }
   ]

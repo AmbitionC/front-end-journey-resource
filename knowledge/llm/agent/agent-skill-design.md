@@ -62,7 +62,7 @@ Skill 是把「某类任务该怎么做」固化下来、供 Agent 按需加载�
 
 ## 什么样的 Skill 算高质量
 
-- **描述具判别性**：一句话说清「什么时候用、什么时候不用」。这是路由准确率最大的杠杆——多数选不对的问题，根因都在描述写得不够可区分。
+- **描述具判别性**：一句话说清「什么时候用、什么时候不用」。描述会影响是否加载，应配合候选召回、权限约束与真实任务评测检查路由质量。
 - **单一职责**：一个 Skill 只解决一类任务；大而全既难路由又难维护。
 - **步骤可执行**：给出明确流程与判断标准，而不是笼统建议。
 - **边界清晰**：写明前置条件、不适用场景、失败时的处理。
@@ -96,7 +96,7 @@ MCP 组织宿主与服务器的能力发现和调用，Skill 组织按需加载�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [阿里云 Agent 开发秋招一面（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-1.md)
+- [阿里云 Agent 开发秋招一面](../../../interview/alibaba/ai/alibaba-ai-1.md)
 - [蚂蚁 Code Agent 与 Agent 应用两轮面试（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-2.md)
 - [腾讯 AI 应用开发面试：跨会话记忆与多 Agent](../../../interview/tencent/ai/tencent-ai-4.md)
 - [OPPO IT 开发一面：ReAct、MCP 与智能问数（2026 年 8 月）](../../../interview/oppo/ai/oppo-ai-3.md)

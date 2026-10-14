@@ -2,7 +2,7 @@ Agent 场景测试若只准备一句用户输入和几个 Mock 返回值，通�
 
 [NIST 的 AI TEVV 工作](https://www.nist.gov/ai-test-evaluation-validation-and-verification-tevv)强调使用任务、挑战问题、测试床和有意义的数据集，并说明测量方法的局限。模拟器正是一类测试床：它能扩大覆盖和控制故障，但它产生的是“在模型化环境中的证据”，不是现实世界的自动替代品。
 
-![用户模拟器与环境模拟器围绕被测 Agent 独立运行](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-simulation-dual-loop-v1.webp)
+![用户模拟器与环境模拟器围绕被测 Agent 独立运行](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-simulation-dual-loop-actions-observations-temporary-v2.png)
 
 图中两条循环必须分开。用户模拟器拥有目标、角色、观察、决策与消息；环境模拟器拥有世界状态、规则、工具效果、时钟与失败。若把两者合成一个“全知模拟 LLM”，它可能偷偷读取 Agent 内部状态、替工具修正错误，最终让测试结果过度乐观。
 
@@ -117,7 +117,7 @@ assert:
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [阿里国际 Accio Agent 算法一面：数据合成、任务环境与模型后训练（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-3.md)（cluster-10359bdec433）
+- [阿里国际 Accio Agent 算法一面：数据合成、任务环境与 GUI Agent](../../../interview/alibaba/ai/alibaba-ai-3.md)（cluster-10359bdec433）
 - [淘天 Agent 算法一面：任务构造、轨迹验证与后训练（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-4.md)（cluster-787120ee1249）
 <!-- interview-source-history:end -->
 

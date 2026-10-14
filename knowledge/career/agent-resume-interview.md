@@ -18,6 +18,8 @@ AI 项目描述最常见的错误，是写成工具清单："使用 LangChain + 
 
 学长推荐一个简版结构：**遇到了什么问题 → 选择了什么方案 → 关键指标是什么 → 做了什么优化**。来看一个对比：
 
+下表为虚构的写法示例，百分比和延迟只用于展示表达结构，不能当作真实项目结果。写自己的经历时，应补充指标定义、评测范围与基线，并只使用可核验数据。
+
 | 写法 | 示例 |
 |------|------|
 | 流水账（差） | 使用 LangChain 搭建了内部知识库问答系统，接入了公司文档 |
@@ -105,6 +107,8 @@ AI/Agent 岗位面试通常覆盖以下几个方向。学长不列具体题目�
 - [字节 Agent 实习：生成质量、多智能体与缓存](../../interview/bytedance/base/bytedance-base-52.md)
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../interview/bytedance/base/bytedance-base-53.md)
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../interview/bytedance/base/bytedance-base-56.md)
+- [阿里云 Agent 开发秋招一面](../../interview/alibaba/ai/alibaba-ai-1.md)
+- [阿里国际 Accio Agent 算法一面：数据合成、任务环境与 GUI Agent](../../interview/alibaba/ai/alibaba-ai-3.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
