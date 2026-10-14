@@ -29,8 +29,9 @@ test('company → department → post has unique keys and preserves historical l
     const leaf=leaves.find(l=>l.key===old.key);
     assert.ok(leaf,`lost historical post ${old.key}`);
     assert.equal(leaf.filePath,old.filePath);
+    assert.equal(leaf.originalLabel,old.originalLabel,`original title must persist for ${old.key}`);
     if(old.key==='redbook-ai-2') {
-      assert.equal(leaf.label,'小红书与百度 Agent 面试合并记录：LangGraph 子图、Skill 与工程校验（2026 年 8 月发帖）');
+      assert.equal(leaf.label,'小红书与百度 Agent 面试合并记录：LangGraph 子图、Skill 与工程校验');
       assert.deepEqual(leaf.tags,[...old.tags,'百度']);
       assert.deepEqual(leaf.companies,['小红书','百度']);
     } else {

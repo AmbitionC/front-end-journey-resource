@@ -18,11 +18,11 @@
 | 维度 | 提示工程（Prompt Engineering） | 上下文工程（Context Engineering） | Harness Engineering |
 |------|-------------------------------|----------------------------------|---------------------|
 | 关注点 | 如何写出有效的系统提示和指令 | 如何管理整个上下文窗口的信息状态 | 如何让任务从开始到终态可控地运行 |
-| 时机 | 主要在开发阶段 | 贯穿每一次模型调用 | 贯穿整个任务生命周期 |
+| 时机 | 开发时设计，也可在运行时动态组装 | 贯穿每一次模型调用 | 贯穿整个任务生命周期 |
 | 范围 | 系统提示的措辞与结构 | 提示 + 工具 + 历史 + 外部数据 | 运行循环、工具、状态、预算、权限与验证器 |
 | 典型问题 | "怎么写才能让模型理解我的意图" | "这次调用应该放什么信息" | "任务怎样暂停、恢复、验收并安全结束" |
 
-提示工程是上下文工程的子集。一个精良的系统提示只是优质上下文的一部分；上下文工程还要管理对话历史的截断与压缩、工具定义的精简、外部知识的按需检索等。Harness 则位于更外层：它不决定某个 token 是否进入上下文，而是负责运行循环、状态持久化、工具执行、预算、权限、终止条件和独立验收。三者可以概括为“写好单次指令—准备好每次输入—治理好完整任务”。
+提示工程是上下文工程的子集。一个精良的系统提示只是优质上下文的一部分；上下文工程还要管理对话历史的截断与压缩、工具定义的精简、外部知识的按需检索等。Harness 则位于更外层：它调用上下文策略，并负责运行循环、状态持久化、工具执行、预算、权限、终止条件和独立验收。三者可以概括为“写好单次指令—准备好每次输入—治理好完整任务”。
 
 在早期的 LLM 应用中（单轮分类、文本生成），精调提示词已足够。但当 Agent 需要在多轮对话、多次工具调用中持续运作时，管理**整体上下文状态**的重要性就远超单句 Prompt 的措辞。
 
@@ -32,11 +32,11 @@
 
 ### 上下文腐蚀（Context Rot）
 
-研究发现，随着上下文窗口中 token 数量增加，LLM 从其中准确回忆信息的能力会下降——这被称为"上下文腐蚀"（Context Rot）。这不是"悬崖式"崩溃，而是**性能梯度**：模型在长上下文下依然强大，但在信息检索和长程推理上的精度有所下降。
+长上下文并不保证有效利用全部信息。[Lost in the Middle](https://arxiv.org/abs/2307.03172)在其所研究的问答、检索任务与模型条件下观察到位置敏感性；Anthropic 的[上下文工程文章](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)也讨论了 Context Rot。退化幅度取决于模型、任务、内容和位置，不能把它写成所有模型随 token 增长必然等幅下降。
 
-根本原因在于 Transformer 架构：每个 token 要与上下文中所有 token 建立关联，两两注意力关系随序列长度以 n² 增长；上下文越长，注意力被"拉薄"，精度自然下降。此外，训练数据中短序列比长序列更常见，模型对长上下文的"经验"更少。
+标准稠密自注意力具有随长度平方增长的成对关系，这是计算结构；它不能单独证明回答精度必然下降。Anthropic 将注意力预算与训练分布作为工程解释，原始论文则给出特定实验中的行为证据。实践应固定模型与任务，分别检查位置、噪声、证据缺失和压缩造成的影响。
 
-结论：**上下文必须被视作有限资源，且具有边际收益递减**。每新增一个 token，都在消耗有限的注意力预算，因此需要谨慎筛选哪些 token 值得放入。
+工程上把上下文视作有限资源：新增内容既可能补齐必要证据，也可能增加噪声与成本。保留任务所需事实、约束和来源，再通过评测决定哪些内容值得进入窗口；“越短越好”和“越全越好”都不能替代这个判据。
 
 ### 有效上下文的组成
 
@@ -135,33 +135,34 @@ class ContextPacket:
 
 ### Select：相关性筛选
 
-核心评分公式综合相关性与时间近因性：
+下面只是可配置评分示意，不是文档给出的通用最优公式。先做权限、有效期和事实状态过滤，再用标注任务集校准相关性与时间特征：
 
 ```python
 combined_score = relevance_weight * relevance_score + recency_weight * recency_score
-# 默认：relevance_weight=0.7, recency_weight=0.3
+# 权重由业务评测选择；长期稳定事实未必需要时间近因性
 ```
 
-相关性分数可以用简单的词汇重叠（Jaccard 相似度）快速计算，生产环境中可替换为向量相似度。时间近因性采用指数衰减：
+词汇重叠可作为词法特征，向量相似度可作为语义候选信号，两者都不是事实正确概率。时间只在任务需要时参与排序；保留期限与授权是硬过滤，不能靠一个指数分数替代。以下函数把时间策略交给业务配置：
 
 ```python
-import math
-
-def calculate_recency(timestamp: datetime) -> float:
-    age_hours = (datetime.now() - timestamp).total_seconds() / 3600
-    return max(0.1, math.exp(-0.1 * age_hours / 24))
+def calculate_recency(timestamp: datetime, now: datetime, policy) -> float:
+    # policy 在标注查询集上决定是否需要时间特征及其计算方式。
+    # timestamp 与 now 必须使用同一明确时区；有效期检查在排序前执行。
+    return policy.recency_feature(timestamp, now)
 ```
 
-筛选策略为贪心算法：按分数从高到低填充，直到 token 预算耗尽：
+对可选候选可用按分数填充的简单启发式，它不保证全局最优。固定指令超过预算时先阻断；某个候选放不下时跳过它，继续检查更小候选。不可丢失的约束与来源需要另做保真验收：
 
 ```python
+if system_tokens > budget:
+    raise ValueError("固定指令超过上下文预算")
 selected, current_tokens = system_packets.copy(), system_tokens
 for score, packet in sorted_packets:               # 按分数降序
     if current_tokens + packet.token_count <= budget:
         selected.append(packet)
         current_tokens += packet.token_count
     else:
-        break                                      # 预算耗尽
+        continue                                   # 当前候选放不下，仍可考虑后续小候选
 ```
 
 ### Structure：结构化输出
@@ -193,7 +194,7 @@ assistant: 不错的选择！接下来可以考虑数据清洗...
 
 ### Compress：兜底压缩
 
-当汇集的信息超出 token 预算时，触发压缩：保持结构完整性，对各分区按优先级截断，并在截断处标注 `[... 内容已压缩 ...]`。生产环境中可升级为 LLM 摘要压缩，而非简单截断。
+当候选超预算时，先删冗余、再抽取或摘要，保留决定、否定约束、日期、版本与来源映射；压缩后检查事实和任务表现，失败则回读原文或阻断。标注 `[... 内容已压缩 ...]` 只能说明发生了变换，不能证明保真，按字符截断也可能切断代码、引用或关键条件。
 
 ---
 
@@ -281,6 +282,8 @@ created_at: 2025-01-19T15:30:00
 
 ### 配置参数设计
 
+以下数值只是一组教学配置，不是生产默认；保护信息预算、筛选阈值和权重都需用目标任务验证。
+
 ```python
 @dataclass
 class ContextConfig:
@@ -354,7 +357,7 @@ def calculate_relevance(content: str, query: str) -> float:
 - [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)
 - [字节飞书 AI 应用一面：Runtime、评测与后端基础（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-24.md)
 - [百度大模型研发一面：Context、Harness 与 RAG（2026 年 8 月）](../../../interview/baidu/ai/baidu-ai-1.md)
-- [阿里 Agent 开发暑期实习一面（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-2.md)
+- [阿里 Agent 开发暑期实习一面](../../../interview/alibaba/ai/alibaba-ai-2.md)
 - [字节抖音电商 Agent 一面：分层、上下文与 GRPO（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-21.md)
 - [深信服 Agent 开发一面：MCP、多 Agent、安全与网络（2026 年 8 月）](../../../interview/sangfor/ai/sangfor-ai-1.md)
 - [蚂蚁 Agent 开发一面：多 Agent 并发与质量保障（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-1.md)
@@ -366,3 +369,5 @@ def calculate_relevance(content: str, query: str) -> float:
 
 - [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)
 - [MemGPT: Towards LLMs as Operating Systems](https://arxiv.org/abs/2310.08560)
+- [Lost in the Middle: How Language Models Use Long Contexts](https://arxiv.org/abs/2307.03172)（原始研究，结论限定其模型和任务条件；本次核验于 2026-10-14）。
+- [Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents)（Agent Harness 与 Evaluation Harness 的分工；本次核验于 2026-10-14）。

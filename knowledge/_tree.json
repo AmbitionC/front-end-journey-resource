@@ -277,7 +277,7 @@
             "contentStatus": "published",
             "heat": 17,
             "currRank": 5,
-            "updatedAt": "2026-07-18",
+            "updatedAt": "2026-10-14",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "上下文工程决定模型此刻能看到哪些指令、工具、历史、记忆和检索证据。按任务与预算选择内容，保留来源与权限，压缩后做回归；提供更多文本并不自动让回答更可靠。"
@@ -1269,7 +1269,7 @@
             "contentStatus": "published",
             "heat": 19,
             "currRank": 5,
-            "updatedAt": "2026-09-01",
+            "updatedAt": "2026-10-14",
             "interviewBaseHeat": 10,
             "quickRead": {
               "text": "ReAct 交替选择行动、执行工具与观察结果，直到满足终止条件。它与 React UI 库不同；模型决定动作后仍由宿主校验权限、预算和结果，循环不能无限继续。"
@@ -1285,7 +1285,7 @@
             "contentStatus": "published",
             "heat": 19,
             "currRank": 5,
-            "updatedAt": "2026-07-18",
+            "updatedAt": "2026-10-14",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Agent 运行时连接模型、记忆、规划、工具注册和执行循环：模型提出下一步，运行时调用工具，把观察写回状态后继续决策。最大步数、错误处理、权限边界和执行轨迹使流程可控制与排查；最小教学循环并不自动具备生产级可靠性。LangGraph 用状态、节点、边与 reducer 表达更新和分支，检查点支持恢复但不代替外部副作用幂等。"
@@ -2773,7 +2773,7 @@
             "contentStatus": "published",
             "heat": 10,
             "currRank": 5,
-            "updatedAt": "2026-08-29",
+            "updatedAt": "2026-10-14",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "事务与隔离控制并发可见性和冲突，锁的范围取决于引擎、索引、语句与隔离级别。undo、redo、binlog 各服务不同层；不能用“开事务”概括所有持久、复制或跨库保证。"

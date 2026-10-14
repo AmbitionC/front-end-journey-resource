@@ -303,9 +303,9 @@ ReAct 把工具或环境返回的 Observation 引入下一步决策，使错误�
 3. **工具协同**：LLM 负责推理，工具负责精确执行（搜索、计算、API 调用），各司其职。
 4. **实现简洁**：核心逻辑百行以内，没有复杂状态机。
 
-### 固有局限
+### 教学示例与工程限制
 
-1. **串行效率低**：Thought → Action → Observation 是严格顺序的，无法并发执行多个工具调用，对于需要大量工具调用的任务延迟较高。
+1. **本例工具串行**：本文单动作循环每轮等待一个 Observation，需要前一步结果的轮次会产生串行延迟。同一轮模型提出的相互独立工具调用可以由运行时并发执行；应用仍须定义结果聚合、预算和失败语义。参见 [Function calling：并行函数调用](https://developers.openai.com/api/docs/guides/function-calling#parallel-function-calling)。
 2. **高度依赖底层 LLM**：格式遵循能力差的模型会频繁输出无法解析的响应，导致整个循环中断。
 3. **提示词脆弱性**：工具描述稍有歧义，或提示词格式稍微变化，都可能引发模型行为大幅变动。
 4. **缺乏全局规划**：步进式决策容易陷入局部最优，对需要提前规划十步以上的复杂任务力不从心。
@@ -351,7 +351,7 @@ ReAct 适合探索性任务，每步行动取决于上一步结果，无法提�
 
 <!-- interview-source-history:start -->
 - [字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)
-- [腾讯 AI 应用开发面试：跨会话记忆与多 Agent（2026 年 4 月）](../../../interview/tencent/ai/tencent-ai-4.md)
+- [腾讯 AI 应用开发面试：跨会话记忆与多 Agent](../../../interview/tencent/ai/tencent-ai-4.md)
 - [OPPO IT 开发一面：ReAct、MCP 与智能问数（2026 年 8 月）](../../../interview/oppo/ai/oppo-ai-3.md)
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-26.md)
 - [字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-20.md)
@@ -365,3 +365,4 @@ ReAct 适合探索性任务，每步行动取决于上一步结果，无法提�
 
 - [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)
 - [ALFWorld: Aligning Text and Embodied Environments for Interactive Learning](https://arxiv.org/abs/2010.03768)
+- [OpenAI：Function calling，Parallel function calling](https://developers.openai.com/api/docs/guides/function-calling#parallel-function-calling)

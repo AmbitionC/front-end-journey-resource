@@ -101,7 +101,7 @@ flowchart TD
 
 ### 行锁的三种形式
 
-InnoDB 的行锁基于**索引**实现，不走索引会退化为表锁：
+InnoDB 记录锁基于**索引项**实现。没有适合的查询索引时可能扫描并锁住大量记录，不能说它自动升级成表级锁；锁范围还受访问路径与隔离级别影响。[MySQL 8.4：不同语句设置的锁](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/innodb-locks-set.html)。
 
 **记录锁（Record Lock）** 锁定索引上的**单个记录**，精确锁一行。
 
@@ -132,15 +132,19 @@ InnoDB 提供两种处理机制：
 
 | 机制 | 原理 | 配置参数 | 适用场景 |
 |---|---|---|---|
-| 超时回滚 | 等待锁超时后，主动回滚当前事务 | `innodb_lock_wait_timeout`（默认 50s） | 简单场景，延迟高 |
-| 主动检测 | 维护等待图（Wait-for Graph），发现环路立即回滚代价小的事务 | `innodb_deadlock_detect=ON`（默认开启） | 高并发首选，延迟低 |
+| 锁等待超时 | 默认回滚等待锁的当前语句；启用 `innodb_rollback_on_timeout` 才回滚整事务 | `innodb_lock_wait_timeout`（默认 50s） | 应用明确决定语句或整事务的恢复策略 |
+| 主动检测 | 检测循环等待并选择受害事务回滚 | `innodb_deadlock_detect=ON`（默认开启） | 默认启用；检测开销与高竞争负载仍需实测 |
+
+[MySQL 8.4 错误处理](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/innodb-error-handling.html)区分死锁导致整事务回滚与默认锁等待超时只回滚语句；应用不能在未知事务状态下盲目重试。
 
 **预防死锁的实践原则：**
 1. 多个事务访问多行时，始终按**相同顺序**加锁（如按主键升序）。
 2. 缩短事务，减少持有锁的时间窗口。
-3. 查询走索引，避免范围扫描升级为表锁。
+3. 用合适索引减少扫描与锁定记录数；范围锁仍需按隔离级别与实际条件分析。
 
 ## TypeORM 事务代码示例
+
+以下示例说明事务生命周期，假设两账户均存在、金额合法且为正。实际业务必须校验两账户和金额、按一致顺序锁定相关记录，并检查每次写入的受影响行数；零行更新不能算作入账成功。账户余额约束、并发行为和异常路径还需在实际 ORM 与数据库版本中做集成验证。
 
 ```typescript
 import { DataSource, QueryRunner } from 'typeorm';
@@ -199,19 +203,23 @@ export class Product {
   @Column()
   stock: number;
 
-  @VersionColumn()          // 自动管理版本号，UPDATE 时加 WHERE version = ?
+  @VersionColumn()          // save/upsert 时维护版本；不等于自动追加旧版本条件
   version: number;
 }
 
-// 使用：直接 save，version 不匹配时抛出 OptimisticLockVersionMismatchError
-try {
-  await productRepository.save(product);
-} catch (e) {
-  if (e instanceof OptimisticLockVersionMismatchError) {
-    // 重新读取最新版本，合并后重试
-  }
+// 显式 compare-and-set：旧版本条件与数据修改在同一条 UPDATE 中
+async function updateStock(productId: number, expectedVersion: number, nextStock: number) {
+  const result = await productRepository.createQueryBuilder()
+    .update(Product)
+    .set({ stock: nextStock, version: expectedVersion + 1 })
+    .where("id = :id", { id: productId })
+    .andWhere("version = :version", { version: expectedVersion })
+    .execute();
+  if (result.affected !== 1) throw new Error("VERSION_CONFLICT_OR_MISSING");
 }
 ```
+
+[TypeORM VersionColumn 文档](https://typeorm.io/docs/help/decorator-reference/#versioncolumn)说明自动递增；核对[0.3.27 的 save 更新实现](https://raw.githubusercontent.com/typeorm/typeorm/0.3.27/src/persistence/SubjectExecutor.ts)，不能由此推断 save 会自动校验旧版本。上面的显式条件更新采用[官方 Update QueryBuilder](https://typeorm.io/docs/query-builder/update-query-builder/)形式；其保证来自同一条 UPDATE 中的旧版本条件与受影响行数检查，需在实际 ORM、驱动和数据库版本中做集成验证。
 
 ## 乐观锁 vs 悲观锁
 
@@ -224,7 +232,7 @@ try {
 | 适用场景 | 读多写少、冲突概率低 | 写多、竞争激烈、重试代价高 |
 | 典型例子 | 商品详情编辑、配置更新 | 库存扣减、账户余额操作 |
 
-选择原则：**重试成本低 → 乐观锁；重试成本高或冲突率超过 20% → 悲观锁**。
+选择取决于临界区长度、真实冲突率、锁等待、重试成本与一致性要求。没有通用的 20% 分界；在相同负载下比较吞吐、延迟分位数、失败与资源消耗。
 
 ## Agent 后端的意义：幂等性设计
 
@@ -293,7 +301,7 @@ await dataSource.transaction(async (manager) => {
 // ❌ 没有退避的暴力重试，高并发下加剧冲突
 while (true) {
   try {
-    await productRepository.save(product);
+    await updateStock(product.id, product.version, desiredStock);
     break;
   } catch (e) { /* 立刻重试 */ }
 }
@@ -301,12 +309,13 @@ while (true) {
 // ✅ 指数退避 + 最大重试次数
 for (let i = 0; i < 3; i++) {
   try {
-    await productRepository.save(product);
+    await updateStock(product.id, product.version, desiredStock);
     break;
   } catch (e) {
-    if (!(e instanceof OptimisticLockVersionMismatchError) || i === 2) throw e;
+    if (!(e instanceof Error) || e.message !== "VERSION_CONFLICT_OR_MISSING" || i === 2) throw e;
     await sleep(50 * 2 ** i);   // 50ms → 100ms → 200ms
     product = await productRepository.findOneByOrFail({ id: product.id });
+    desiredStock = recomputeStockFromBusinessIntent(product); // 重新检查业务约束
   }
 }
 ```
@@ -323,7 +332,7 @@ for (let i = 0; i < 3; i++) {
 锁住的是索引记录之间的**开区间**，如索引值 (10, 20) 代表 id 在 11 到 19 之间不允许插入。Next-Key Lock 则是 (10, 20]，包含右边界记录本身。
 
 **Q：为什么 InnoDB 行锁基于索引？**
-InnoDB 的行锁锁定的是**索引项**，不走索引时无法定位具体索引项，退化为全表扫描并对所有扫描到的索引记录加锁，效果近似表锁。
+InnoDB 锁定**索引项**，没有可用查询索引时仍可扫描聚簇索引并锁住大量记录；这是记录/范围锁覆盖面扩大，不是自动转换为表级锁。是否锁间隙还取决于隔离级别和条件。
 
 **Q：乐观锁和悲观锁如何选型？**
 库存扣减、账户余额等冲突概率高、重试代价大 → 悲观锁（FOR UPDATE）；配置项修改、文档协作编辑等冲突概率低 → 乐观锁（version 字段）。Agent 场景中的工具幂等性优先用唯一键约束兜底，状态更新可用乐观锁。
@@ -350,7 +359,7 @@ MySQL redo 与 binlog 的内部协调涉及特定引擎实现，不等于完整�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [小红书部分（小红书与百度合并记录）：LangGraph、Skill 与工程校验（2026 年 8 月发帖）](../../../interview/redbook/ai/redbook-ai-2.md)
+- [小红书部分（小红书与百度合并记录）：LangGraph、Skill 与工程校验](../../../interview/redbook/ai/redbook-ai-2.md)
 - [字节 Agent Infra 校招：运行时、MySQL 与 LRU（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-25.md)
 - [字节飞书 AI 应用一面：Runtime、评测与后端基础（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-24.md)
 - [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)
@@ -368,3 +377,7 @@ MySQL redo 与 binlog 的内部协调涉及特定引擎实现，不等于完整�
 - [MySQL 8.4 Reference — Redo Log](https://dev.mysql.com/doc/refman/8.4/en/innodb-redo-log.html)
 - [MySQL 8.4 Reference — Undo Logs](https://dev.mysql.com/doc/refman/8.4/en/innodb-undo-logs.html)
 - [MySQL 8.4 Reference — Binary Log](https://dev.mysql.com/doc/refman/8.4/en/binary-log.html)
+- [MySQL 8.4：Locks Set by Different SQL Statements](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/innodb-locks-set.html)（本次核验于 2026-10-14）。
+- [MySQL 8.4：InnoDB Error Handling](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/innodb-error-handling.html)（语句与事务回滚，本次核验于 2026-10-14）。
+- [TypeORM：VersionColumn](https://typeorm.io/docs/help/decorator-reference/#versioncolumn)与[0.3.27 更新实现](https://raw.githubusercontent.com/typeorm/typeorm/0.3.27/src/persistence/SubjectExecutor.ts)（本次实际读取；不是跨版本保证）。
+- [TypeORM：Update QueryBuilder](https://typeorm.io/docs/query-builder/update-query-builder/)（显式条件写入形式，本次核验于 2026-10-14）。

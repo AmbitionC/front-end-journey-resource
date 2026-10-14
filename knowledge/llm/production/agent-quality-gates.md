@@ -161,7 +161,7 @@ Review 队列有 SLA、所需角色和决策模板。人工批准记录理由、
 本区提供阅读导航；链接不表示原帖问过整个专题，也不计入本专题面经频次。
 
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-26.md)：仅离线评估：同条件比较基线/候选 Skill 输出；不声称问过生产发布门禁、SLSA或灰度。
-- [字节 Agent 开发实习一面：自进化与评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-8.md)：仅质量指标、失败切片和样本不足处理；不声称发布放行/例外审批。
+- [字节 Agent 开发实习一面：自进化与评测](../../../interview/bytedance/base/bytedance-base-8.md)：仅质量指标、失败切片和样本不足处理；不声称发布放行/例外审批。
 
 ## 参考资料
 

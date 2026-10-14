@@ -277,7 +277,7 @@ memory_tool.execute("forget", strategy="capacity_based", threshold=policy.capaci
 - [小红书 Agent 开发一面：多智能体、Memory 与广告投放优化（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-1.md)（cluster-7372c3e7fb1e）
 - [字节 Agent Infra 校招：运行时、MySQL 与 LRU（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-25.md)（cluster-74e92db1eff9）
 - [字节飞书 AI 应用一面：Runtime、评测与后端基础（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-24.md)（cluster-78d45fa26bfd）
-- [阿里 Agent 开发暑期实习一面（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-2.md)（cluster-9d9f0031dcd6）
+- [阿里 Agent 开发暑期实习一面](../../../interview/alibaba/ai/alibaba-ai-2.md)（cluster-9d9f0031dcd6）
 - [哔哩哔哩 AI 应用岗 Agent 开发一面（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-1.md)（cluster-c5c44d791f6e）
 <!-- interview-source-history:end -->
 

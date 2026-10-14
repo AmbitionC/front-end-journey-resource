@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
-  "updatedAt": "2026-10-05",
+  "updatedAt": "2026-10-14",
   "records": [
     {
       "key": "transformer-arch",
@@ -2010,8 +2010,18 @@
       "filePath": "llm/agent",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-08-30",
-      "batch": "e2dba44a-025f-4188-b6da-efdf085842e1"
+      "recordedAt": "2026-10-14",
+      "batch": "title-verified6-quality-20261014",
+      "reason": "对本批面经已绑定知识的技术错误做有一手来源支持的限定修正。",
+      "previousRecord": {
+        "key": "context-engineering",
+        "label": "上下文工程（Context Engineering）",
+        "filePath": "llm/agent",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-08-30",
+        "batch": "e2dba44a-025f-4188-b6da-efdf085842e1"
+      }
     },
     {
       "key": "agent-react",
@@ -2019,8 +2029,18 @@
       "filePath": "llm/agent",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-09-01",
-      "batch": "nowcoder-partial-archive-2026-09-01"
+      "recordedAt": "2026-10-14",
+      "batch": "title-verified6-quality-20261014",
+      "reason": "限定单工具ReAct教学循环与运行时可并发独立工具调用的适用边界。",
+      "previousRecord": {
+        "key": "agent-react",
+        "label": "ReAct：推理与行动框架",
+        "filePath": "llm/agent",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-09-01",
+        "batch": "nowcoder-partial-archive-2026-09-01"
+      }
     },
     {
       "key": "agent-paradigms",
@@ -2044,13 +2064,23 @@
       "key": "build-agent-framework",
       "label": "从零构建 Agent 运行时",
       "filePath": "llm/agent",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004",
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+      "recordedAt": "2026-10-14",
+      "batch": "title-verified6-quality-20261014",
+      "reason": "对本批面经已绑定知识的技术错误做有一手来源支持的限定修正。",
+      "previousRecord": {
+        "key": "build-agent-framework",
+        "label": "从零构建 Agent 运行时",
+        "filePath": "llm/agent",
+        "status": "published",
+        "action": "updated",
+        "recordedAt": "2026-10-04",
+        "batch": "next-twenty-source-increments-20261004",
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     },
     {
       "key": "mcp-protocol",
@@ -2317,13 +2347,23 @@
       "key": "db-transaction-lock",
       "label": "事务、隔离级别与锁",
       "filePath": "backend/database",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004",
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+      "recordedAt": "2026-10-14",
+      "batch": "title-verified6-quality-20261014",
+      "reason": "对本批面经已绑定知识的技术错误做有一手来源支持的限定修正。",
+      "previousRecord": {
+        "key": "db-transaction-lock",
+        "label": "事务、隔离级别与锁",
+        "filePath": "backend/database",
+        "status": "published",
+        "action": "updated",
+        "recordedAt": "2026-10-04",
+        "batch": "next-twenty-source-increments-20261004",
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     },
     {
       "key": "redis-cache",

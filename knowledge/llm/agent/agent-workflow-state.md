@@ -106,7 +106,7 @@ Agent 工作流可靠性来自事件驱动状态和副作用协议：run/step ID
 
 本区提供阅读导航；链接不表示原帖问过整个专题，也不计入本专题面经频次。
 
-- [阿里 Agent 开发暑期实习一面（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-2.md)：原题8/10/11的框架状态、thread/checkpoint、跨thread Store；不声称持久工作流 replay/Saga专项。
+- [阿里 Agent 开发暑期实习一面](../../../interview/alibaba/ai/alibaba-ai-2.md)：原题8/10/11的框架状态、thread/checkpoint、跨thread Store；不声称持久工作流 replay/Saga专项。
 - [字节抖音电商 Agent 一面：分层、上下文与 GRPO（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-21.md)：thread寻址及业务State/运行配置区分；标识不等于租户授权或完整多Agent隔离。
 
 ## 参考资料
