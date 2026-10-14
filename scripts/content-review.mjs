@@ -160,6 +160,8 @@ export async function validateContentReview(root, historyPath, reviewPath, revie
     // A final review must carry the exact question/category ledger. It records
     // intentional unbound groups, never guesses masked words or missing specs.
     const ledger = JSON.parse((await readPrivatePinned(root, review.questionLedger)).bytes);
+    const knowledgeLeaves = leaves(JSON.parse((await readBounded(root, 'knowledge/_tree.json', 'knowledge')).toString()));
+    const { requireKnowledgeAssociation } = await import('./interview-knowledge-processing.mjs');
     const { questionStructure } = await import('./public-interview-contract.mjs');
     for (const key of review.articleKeys) {
       const row = ledger.rows?.find(r=>r.articleKey===key);
@@ -186,6 +188,10 @@ export async function validateContentReview(root, historyPath, reviewPath, revie
             || actual[i].pendingNotice || actual[i].missingKeywordNotice)) throw new Error('已绑定问题不得带待核实状态或说明');
         if (expected.knowledgeKey === null && actual[i].bindingStatus !== null
             && actual[i].bindingStatus !== expected.bindingStatus) throw new Error('实际待核实状态与审核映射不一致');
+        if (expected.knowledgeKey !== null) await requireKnowledgeAssociation(root, {
+          question: expected, articleKey: key, questionIndex: i, snapshot, baselineFiles, baseCommit: review.baseCommit, knowledgeLeaves,
+          quality: independent.knowledgeQuality,
+        });
       }
       for (const [sourceId, record] of Object.entries(history.records ?? {}).filter(([,record])=>record.articleKey===key
           && ['prepared','published','merged'].includes(record.status))) {
@@ -193,6 +199,16 @@ export async function validateContentReview(root, historyPath, reviewPath, revie
           && typeof q.knowledgeKey==='string').map(q=>q.knowledgeKey))].sort();
         if (JSON.stringify([...(record.knowledgeKeys ?? [])].sort())!==JSON.stringify(boundKeys)) throw new Error('计热知识 key 必须与已审逐题绑定一致；待补题不得计热');
       }
+    }
+    if (review.articleKeys.length && (independent.knowledgeQuality?.publicationDigest !== snapshot.digest
+        || independent.knowledgeQuality?.questionLedgerSha256 !== review.questionLedger.sha256
+        || !Array.isArray(independent.knowledgeQuality?.questions))) throw new Error('独立知识质量审核必须绑定当前资源和逐题映射');
+    if (review.articleKeys.length) {
+      const identity = item => JSON.stringify([item.articleKey, item.sourceId, item.questionIndex, item.knowledgeKey]);
+      const required = ledger.rows.filter(row => review.articleKeys.includes(row.articleKey)).flatMap(row => row.questions
+        .flatMap((question, questionIndex) => question.bindingStatus === 'bound' ? [identity({ ...question, articleKey: row.articleKey, questionIndex })] : []));
+      const actual = independent.knowledgeQuality.questions.map(identity);
+      if (new Set(actual).size !== actual.length || JSON.stringify(actual.sort()) !== JSON.stringify(required.sort())) throw new Error('知识质量审核范围必须逐题精确且唯一');
     }
     errors.push(...(await validateTree(root)).errors);
   } catch (error) { errors.push(error.message); }

@@ -1,9 +1,10 @@
-import { readFile, writeFile } from 'node:fs/promises';
+import { writeFile } from 'node:fs/promises';
 import { dirname, relative, resolve, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { readInterviewSourceHistory, topicFrequencies } from './interview-source-history.mjs';
 import { validatePrivateInterviewHistory } from './validate-private-interview-history.mjs';
 import { isDirectExecution, leafPath, readBounded } from './resource-paths.mjs';
+import { readPrivatePinned } from './content-review.mjs';
 
 const MANAGED_START = '<!-- interview-source-history:start -->';
 const MANAGED_END = '<!-- interview-source-history:end -->';
@@ -65,13 +66,20 @@ export async function syncInterviewTopicWeights(resourceRoot, options = {}) {
   const interviewTreePath = resolve(resourceRoot, 'interview', '_tree.json');
   const tree = JSON.parse((await readBounded(resourceRoot,'knowledge/_tree.json','knowledge')).toString());
   const interviewTree = JSON.parse((await readBounded(resourceRoot,'interview/_tree.json','interview')).toString());
+  const review = options.privacyMode
+    ? JSON.parse((await readPrivatePinned(resourceRoot, { path: options.reviewPath, sha256: options.reviewSha256 })).bytes)
+    : null;
   const originalHistory = options.privacyMode
-    ? JSON.parse(await readFile(options.historyPath, 'utf8'))
+    ? JSON.parse((await readPrivatePinned(resourceRoot, review.history)).bytes)
     : await readInterviewSourceHistory(resourceRoot, options.historyPath);
+  const reviewedSources = new Set((review?.sourceEvidence ?? [])
+    .filter(source => review.articleKeys.includes(source.articleKey))
+    .map(source => `${source.sourceId}\0${source.articleKey}`));
   const history = options.privacyMode ? {
     ...originalHistory,
     records: Object.fromEntries(Object.entries(originalHistory.records).map(([id, record]) => [
-      id, record.status === 'prepared' ? { ...record, status: 'published' } : record,
+      id, record.status === 'prepared' && reviewedSources.has(`${id}\0${record.articleKey}`)
+        ? { ...record, status: 'published' } : record,
     ])),
   } : originalHistory;
   const frequencies = topicFrequencies(history);
@@ -91,11 +99,12 @@ export async function syncInterviewTopicWeights(resourceRoot, options = {}) {
   let addedClusters = 0;
   let removedClusters = 0;
   let updatedArticles = 0;
+  let treeOrderChanged = false;
   const affectedParents = new Set();
   const keys = new Set([
     ...frequencyByKey.keys(),
     ...[...byKey.values()]
-      .filter(leaf => Array.isArray(leaf.interviewClusters) || Number.isInteger(leaf.interviewBaseHeat))
+      .filter(leaf => Array.isArray(leaf.interviewClusters) || Number.isInteger(leaf.interviewBaseHeat) || Number.isInteger(leaf.interviewCount))
       .map(leaf => leaf.key),
   ]);
 
@@ -103,6 +112,8 @@ export async function syncInterviewTopicWeights(resourceRoot, options = {}) {
     if (options.privacyMode && !options.keys.includes(key)) continue;
     const leaf = byKey.get(key);
     if (!leaf) throw new Error(`知识点不存在于 knowledge/_tree.json：${key}`);
+    affectedParents.add(parentByKey.get(key));
+    const priorCount = leaf.interviewCount ?? (leaf.interviewClusters?.length ?? 0);
     const previous = [...new Set(Array.isArray(leaf.interviewClusters) ? leaf.interviewClusters : [])].sort();
     const desired = [...(frequencyByKey.get(key)?.clusters ?? [])].sort();
     const previousSet = new Set(previous);
@@ -113,7 +124,8 @@ export async function syncInterviewTopicWeights(resourceRoot, options = {}) {
     }
     const baseHeat = Number.isInteger(leaf.interviewBaseHeat)
       ? leaf.interviewBaseHeat
-      : Math.max(0, (Number.isInteger(leaf.heat) ? leaf.heat : 0) - previous.length);
+      : Math.max(0, (Number.isInteger(leaf.heat) ? leaf.heat : 0)
+        - (Number.isInteger(leaf.interviewCount) ? leaf.interviewCount : previous.length));
     const nextCount = frequencyByKey.get(key)?.count ?? 0;
     if (options.privacyMode) {
       const previousCount = leaf.interviewCount ?? previous.length;
@@ -134,10 +146,9 @@ export async function syncInterviewTopicWeights(resourceRoot, options = {}) {
       leaf.heat = nextHeat;
       leaf.currRank = rankForHeat(nextHeat);
       updatedTopics += 1;
-      affectedParents.add(parentByKey.get(key));
     }
 
-    if (desired.length === 0 && previous.length === 0) continue;
+    if (desired.length === 0 && previous.length === 0 && priorCount === 0) continue;
     const knowledgeFile = resolve(resourceRoot, leafPath('knowledge',leaf));
     const entries = desired.map(cluster => {
       const record = publishedByCluster.get(cluster);
@@ -160,14 +171,22 @@ export async function syncInterviewTopicWeights(resourceRoot, options = {}) {
     }
   }
 
-  if (updatedTopics > 0) {
-    for (const children of affectedParents) {
-      if (!children?.every(child => child?.isLeaf)) continue;
-      children.sort((left, right) => (right.heat ?? 0) - (left.heat ?? 0));
+  for (const children of affectedParents) {
+    if (!children) continue;
+    // Stable sorting only leaf slots keeps categories in their original place.
+    const sorted = children.filter(child => child?.isLeaf)
+      .sort((left, right) => (right.heat ?? 0) - (left.heat ?? 0));
+    let index = 0;
+    for (let slot = 0; slot < children.length; slot += 1) {
+      if (!children[slot]?.isLeaf) continue;
+      if (children[slot] !== sorted[index]) treeOrderChanged = true;
+      children[slot] = sorted[index++];
     }
+  }
+  if (updatedTopics > 0 || treeOrderChanged) {
     await writeFile(treePath, `${JSON.stringify(tree, null, 2)}\n`, 'utf8');
   }
-  return { updatedTopics, addedClusters, removedClusters, updatedArticles };
+  return { updatedTopics, addedClusters, removedClusters, updatedArticles, treeOrderChanged };
 }
 
 const isMain = isDirectExecution(import.meta.url);

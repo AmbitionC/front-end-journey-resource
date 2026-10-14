@@ -187,3 +187,32 @@ test('aggregates topic frequency by unique cluster instead of source URL', () =>
     },
   ]);
 });
+
+for (const [name, overrides, count] of [
+  ['same cluster with conflicting processes', { processUnitId: 'another-process' }, 1],
+  ['distinct clusters in the same process', { clusterId: 'another-cluster', processUnitId: 'process-a' }, 2],
+  ['same canonical URL with conflicting clusters', { clusterId: 'another-cluster', processUnitId: 'other', url: 'https://nowcoder.com/feed/main/detail/source-a/?share=1' }, 1],
+  ['reposted full body with conflicting clusters', { clusterId: 'another-cluster', processUnitId: 'other', normalizedBodySha256: 'a'.repeat(64) }, 1],
+]) {
+  test(`topic evidence deduplicates ${name}`, () => {
+    const first = published({ processUnitId: 'process-a', normalizedBodySha256: 'a'.repeat(64) });
+    const second = published({
+      url: 'https://www.nowcoder.com/discuss/another', clusterId: first.clusterId,
+      processUnitId: 'process-a', normalizedBodySha256: 'b'.repeat(64), ...overrides,
+    });
+    assert.equal(topicFrequencies({ records: { first, second } })[0].count, count);
+  });
+}
+
+test('retracting the published representative removes merged repost heat', () => {
+  const first = published({ status: 'retired' });
+  const repost = published({ status: 'merged', url: 'https://www.nowcoder.com/discuss/repost' });
+  assert.deepEqual(topicFrequencies({ records: { first, repost } }), []);
+});
+
+for (const status of ['prepared', 'skipped', 'needs_review', 'retired']) test(`inactive ${status} evidence cannot bridge distinct published clusters`, () => {
+  const first = published({ clusterId: 'cluster-a', normalizedBodySha256: 'a'.repeat(64) });
+  const second = published({ clusterId: 'cluster-b', url: 'https://www.nowcoder.com/discuss/b', normalizedBodySha256: 'b'.repeat(64) });
+  const unrelated = published({ status, clusterId: 'cluster-a', url: 'https://www.nowcoder.com/discuss/unrelated', normalizedBodySha256: 'b'.repeat(64), knowledgeKeys: [] });
+  assert.equal(topicFrequencies({ records: { first, second, unrelated } })[0].count, 2);
+});

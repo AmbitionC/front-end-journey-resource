@@ -58,7 +58,8 @@ Data Collector 固定计划必须以 `sourceMetadata.deliveryBatchId`（旧数�
 - 面经：有可识别的问题/过程，完成脱敏，答案可被核验。
 - 知识：确有新考点或对既有内容有新证据/新角度；先语义去重。
 - `qualityScore` 不是自动发布开关。证据不足、聚类冲突或内容主要为推广时转人工复核/跳过。
-- 同一 cluster 同时更新面经和知识是允许的，但知识热度按独立过程 processUnitId 去重，原文指纹保留在私账，避免多来源重复计数。
+- 同一 cluster 同时更新面经和知识是允许的；知识热度按去重证据 cluster 计数，规范 URL/完整原文指纹为去重别名，processUnitId 用于公开页复用。原文指纹保留在私账，转载不能重复计数。
+- 每个已绑定问题必须按 [知识加工证据契约](../../curate-interview-posts/references/interview-knowledge-processing.md) 留存语义关联、实际 generate-knowledge-docs 执行及独立知识质量结论；缺任一证据即阻断发布。
 
 ## 常见错误
 

@@ -24,6 +24,7 @@ npm run validate:release -- /absolute/private/history.json /absolute/private/rev
 - `articleKeys`：本批变化面经范围，不得把新增正文从原文审核范围排除。`deletedPublicPaths` 只接受实际基线中存在且最终快照真正删除的文件，不能用仍存在的孤儿正文冒充删除说明。
 - `sourceEvidence`：冻结原文的 `path/sha256/sourceId/canonicalUrl/articleKey/processUnitId`；采集 JSON 使用 `documentJson: true`，其 `document.canonicalUrl/url` 和 `text` 必须与来源及正文对应。
 - `questionLedger`：每页逐题 `sourceId/sourceSpan/sourceLiteral/publicQuestion/knowledgeKey/teachingAnswer/bindingStatus`。原文坐标是 Unicode codepoint 的半开区间；公开题、短答和绑定与实际可见结构逐项比对。原帖缺关键词时只能明确标记 `pending_missing_keyword`，保留未绑定问题，不猜题、不增加热度。私账 knowledgeKeys 必须逐来源等于本批逐题映射中 bindingStatus=bound 的知识 key 集合，不能用旧字段让 pending 组计热。
+- 每个已绑定问题还需 `knowledgeAssociation`（检索语义、基线候选正文指纹、复用/更新/创建理由、仓外固定 `skillExecution`）；实际技能运行须绑定本题、加工阶段、当前 generate-knowledge-docs 指纹、最终知识正文和非空运行转录。独立内容报告的 `knowledgeQuality` 必须绑定当前资源及逐题映射，对每题明确通过准确性、教学性、来源与语义复用审查。字段和只读准备命令见 [知识加工证据契约](interview-knowledge-processing.md)。缺实际 skill 执行或质量结论不得发布；本地工具不生成通过记录。
 - `distinctRoundPairs`：仅用于已经独立审核确认的同流程不同轮次；不能用它为补充材料重复建页。
 - `B-partial` 保留受限状态，不能改称 A/B 或完整图文。只有实际独审另行提供仓外 `partialSourceReview`（kind=`independent-partial-source-permissions`、decision=`approved_limited_source_use`、当前 publicationDigest）才允许使用已见文字范围；其 permits 必须逐条绑定 sourceId/articleKey/grade、原件 sourceSha256、公开稿 articleSha256 与非空实际 limitations。缺题条件、未核验图片或遮蔽关键词须公开明示并保留待确认，不复原。未知 partial、C 或正文截断不能借此自动放行。
 
