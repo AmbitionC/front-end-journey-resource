@@ -1,0 +1,200 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "LLM API：从统一请求到五类响应",
+    "locale": "zh-CN",
+    "animation": "none",
+    "quality_profile": "showcase",
+    "viewBox": [
+      920,
+      590
+    ]
+  },
+  "components": [
+    {
+      "id": "api_business_intent",
+      "type": "frontend",
+      "label": "应用业务意图",
+      "sublabel": "总结·提取·回答；不耦合厂商字段",
+      "pos": [
+        40,
+        50
+      ],
+      "size": [
+        210,
+        100
+      ]
+    },
+    {
+      "id": "api_uniform_request",
+      "type": "messagebus",
+      "label": "统一请求",
+      "sublabel": "消息·内容部件·工具·输出契约·预算",
+      "pos": [
+        40,
+        220
+      ],
+      "size": [
+        210,
+        100
+      ]
+    },
+    {
+      "id": "api_server_adapter",
+      "type": "security",
+      "label": "服务端校验与适配",
+      "sublabel": "权限·模型路由·能力差异；服务端密钥",
+      "pos": [
+        40,
+        390
+      ],
+      "size": [
+        210,
+        110
+      ]
+    },
+    {
+      "id": "api_model_execution",
+      "type": "cloud",
+      "label": "模型调用",
+      "sublabel": "文本／工具调用／拒绝／截断",
+      "pos": [
+        340,
+        220
+      ],
+      "size": [
+        200,
+        120
+      ]
+    },
+    {
+      "id": "api_result_output",
+      "type": "frontend",
+      "label": "结果 RESULT",
+      "sublabel": "文本或结构化结果；仍需应用校验",
+      "pos": [
+        660,
+        30
+      ],
+      "size": [
+        220,
+        80
+      ]
+    },
+    {
+      "id": "api_tool_output",
+      "type": "backend",
+      "label": "工具 TOOL CALLS",
+      "sublabel": "校验参数与授权后执行；回传tool_result",
+      "pos": [
+        660,
+        135
+      ],
+      "size": [
+        220,
+        80
+      ]
+    },
+    {
+      "id": "api_usage_output",
+      "type": "database",
+      "label": "用量 USAGE",
+      "sublabel": "input／output／cache；价格与费用另算",
+      "pos": [
+        660,
+        240
+      ],
+      "size": [
+        220,
+        80
+      ]
+    },
+    {
+      "id": "api_finish_output",
+      "type": "external",
+      "label": "结束状态 FINISH",
+      "sublabel": "completed／needs_tool／refused／incomplete",
+      "pos": [
+        660,
+        345
+      ],
+      "size": [
+        220,
+        80
+      ]
+    },
+    {
+      "id": "api_trace_output",
+      "type": "database",
+      "label": "追踪 TRACE",
+      "sublabel": "logicalRequestId／attemptId／providerRequestId",
+      "pos": [
+        660,
+        450
+      ],
+      "size": [
+        250,
+        80
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "api_intent_to_request",
+      "from": "api_business_intent",
+      "to": "api_uniform_request",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "api_request_to_adapter",
+      "from": "api_uniform_request",
+      "to": "api_server_adapter",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "api_adapter_to_model",
+      "from": "api_server_adapter",
+      "to": "api_model_execution",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "api_model_to_api_result_output",
+      "from": "api_model_execution",
+      "to": "api_result_output",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "api_model_to_api_tool_output",
+      "from": "api_model_execution",
+      "to": "api_tool_output",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "api_model_to_api_usage_output",
+      "from": "api_model_execution",
+      "to": "api_usage_output",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "api_model_to_api_finish_output",
+      "from": "api_model_execution",
+      "to": "api_finish_output",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "api_model_to_api_trace_output",
+      "from": "api_model_execution",
+      "to": "api_trace_output",
+      "fromSide": "right",
+      "toSide": "left"
+    }
+  ]
+}

@@ -20,7 +20,7 @@ function reduce(state: StreamState, event: GenerationEvent): StreamState {
 
 纯字符串拼接会丢失 item 边界、工具调用、拒绝和终态。网络 EOF 也不能当成功：只有收到供应商定义的完成事件，且所有必需 item 通过校验，结果才可提交。
 
-![客户端取消流后服务端工作可能继续；已确认事件进入日志和快照，新请求从应用状态恢复](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-stream-cancel-resume-event-log-v1.webp)
+<iframe src="https://www.agent-journey.cn/archify/llm-stream-cancel-resume-event-log-archify-v2.html" width="100%" height="920" title="客户端取消流后服务端工作可能继续；已确认事件进入日志和快照，新请求从应用状态恢复"></iframe>
 *图：传输取消与服务端取消是两件事；恢复依赖持久应用状态，而不是随意接回半个字节流。*
 
 ## 浏览器与服务端的背压

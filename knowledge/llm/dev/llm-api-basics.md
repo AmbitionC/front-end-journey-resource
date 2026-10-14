@@ -10,7 +10,7 @@
 4. **模型执行**可能生成文本、调用工具、拒绝、截断或在流中失败；
 5. **统一响应**保留结果、结束原因、usage、请求 ID 和原始供应商元数据。
 
-![从应用请求、消息与内容部件进入模型，再分解为结果、工具、用量与追踪信息](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-api-basics-request-lifecycle-v1.webp)
+<iframe src="https://www.agent-journey.cn/archify/llm-api-basics-request-lifecycle-archify-v2.html" width="100%" height="920" title="从应用请求、消息与内容部件进入模型，再分解为结果、工具、用量与追踪信息"></iframe>
 *图：一次逻辑调用不只产生文本，还要携带可执行结果、用量和可追踪证据。*
 
 分层的价值是把变化隔离在边缘：业务逻辑不应到处读取某一家 SDK 的字段，供应商升级也不应改变“结构化提取必须通过 Schema 校验”这样的业务规则。

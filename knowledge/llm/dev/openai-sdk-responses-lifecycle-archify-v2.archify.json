@@ -1,0 +1,235 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "OpenAI SDK：Responses与受控工具闭环",
+    "locale": "zh-CN",
+    "animation": "none",
+    "quality_profile": "showcase",
+    "viewBox": [
+      920,
+      590
+    ]
+  },
+  "components": [
+    {
+      "id": "sdk_business_service",
+      "type": "backend",
+      "label": "业务服务／服务端密钥",
+      "sublabel": "API Key仅服务端，不进入浏览器包",
+      "pos": [
+        40,
+        50
+      ],
+      "size": [
+        200,
+        100
+      ]
+    },
+    {
+      "id": "sdk_typed_client",
+      "type": "backend",
+      "label": "OpenAI JS/TS SDK",
+      "sublabel": "服务端类型化封装；超时与有限重试",
+      "pos": [
+        270,
+        50
+      ],
+      "size": [
+        200,
+        100
+      ]
+    },
+    {
+      "id": "sdk_responses_api",
+      "type": "cloud",
+      "label": "Responses API",
+      "sublabel": "responses.create；stream:true",
+      "pos": [
+        500,
+        50
+      ],
+      "size": [
+        180,
+        100
+      ]
+    },
+    {
+      "id": "sdk_model_tool_call",
+      "type": "external",
+      "label": "模型提出工具调用",
+      "sublabel": "function_call：名称／参数／call_id",
+      "pos": [
+        730,
+        50
+      ],
+      "size": [
+        180,
+        100
+      ]
+    },
+    {
+      "id": "sdk_model_output",
+      "type": "frontend",
+      "label": "模型输出",
+      "sublabel": "output[]条目；output_text文本",
+      "pos": [
+        500,
+        220
+      ],
+      "size": [
+        180,
+        100
+      ]
+    },
+    {
+      "id": "sdk_authorized_execution",
+      "type": "security",
+      "label": "业务服务校验并执行",
+      "sublabel": "参数／当前用户权限；幂等／确认",
+      "pos": [
+        730,
+        220
+      ],
+      "size": [
+        180,
+        100
+      ]
+    },
+    {
+      "id": "sdk_matching_tool_result",
+      "type": "messagebus",
+      "label": "工具结果回传",
+      "sublabel": "call_id对应function_call_output",
+      "pos": [
+        730,
+        390
+      ],
+      "size": [
+        180,
+        100
+      ]
+    },
+    {
+      "id": "sdk_typed_event_stream",
+      "type": "messagebus",
+      "label": "事件流返回业务服务",
+      "sublabel": "按type处理增量；完成事件再提交",
+      "pos": [
+        270,
+        220
+      ],
+      "size": [
+        200,
+        100
+      ]
+    },
+    {
+      "id": "sdk_request_observation",
+      "type": "database",
+      "label": "请求 ID",
+      "sublabel": "_request_id／错误request_id",
+      "pos": [
+        40,
+        390
+      ],
+      "size": [
+        200,
+        100
+      ]
+    },
+    {
+      "id": "sdk_usage_observation",
+      "type": "database",
+      "label": "用量与追踪",
+      "sublabel": "response.usage；模型／版本／延迟",
+      "pos": [
+        270,
+        390
+      ],
+      "size": [
+        200,
+        100
+      ]
+    },
+    {
+      "id": "sdk_error_observation",
+      "type": "security",
+      "label": "错误与非成功路径",
+      "sublabel": "拒绝·截断·失败；超时·有限重试",
+      "pos": [
+        500,
+        390
+      ],
+      "size": [
+        180,
+        100
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "sdk_business_service_to_typed_client",
+      "from": "sdk_business_service",
+      "to": "sdk_typed_client",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "sdk_typed_client_to_responses_api",
+      "from": "sdk_typed_client",
+      "to": "sdk_responses_api",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "sdk_responses_api_to_model_tool_call",
+      "from": "sdk_responses_api",
+      "to": "sdk_model_tool_call",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "sdk_model_tool_call_to_authorized_execution",
+      "from": "sdk_model_tool_call",
+      "to": "sdk_authorized_execution",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "sdk_authorized_execution_to_matching_tool_result",
+      "from": "sdk_authorized_execution",
+      "to": "sdk_matching_tool_result",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "sdk_matching_tool_result_to_responses_api",
+      "from": "sdk_matching_tool_result",
+      "to": "sdk_responses_api",
+      "fromSide": "left",
+      "toSide": "right"
+    },
+    {
+      "id": "sdk_responses_api_to_model_output",
+      "from": "sdk_responses_api",
+      "to": "sdk_model_output",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "sdk_responses_api_to_typed_event_stream",
+      "from": "sdk_responses_api",
+      "to": "sdk_typed_event_stream",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "sdk_typed_event_stream_to_business_service",
+      "from": "sdk_typed_event_stream",
+      "to": "sdk_business_service",
+      "fromSide": "left",
+      "toSide": "bottom"
+    }
+  ]
+}

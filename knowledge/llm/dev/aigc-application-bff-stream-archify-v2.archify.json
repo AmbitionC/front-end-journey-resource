@@ -1,0 +1,247 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "大模型前端集成：浏览器不持有模型密钥",
+    "locale": "zh-CN",
+    "animation": "none",
+    "quality_profile": "showcase",
+    "viewBox": [
+      920,
+      500
+    ]
+  },
+  "components": [
+    {
+      "id": "bff_ui",
+      "type": "frontend",
+      "label": "聊天 UI / 状态机",
+      "sublabel": "提交 / 流式 / 完成 / 错误 / 取消",
+      "pos": [
+        28,
+        84
+      ],
+      "size": [
+        212,
+        64
+      ]
+    },
+    {
+      "id": "bff_abort",
+      "type": "frontend",
+      "label": "AbortController",
+      "sublabel": "取消信号传给上游",
+      "pos": [
+        28,
+        260
+      ],
+      "size": [
+        212,
+        64
+      ]
+    },
+    {
+      "id": "bff_markdown",
+      "type": "frontend",
+      "label": "Markdown 安全渲染",
+      "sublabel": "不可信输出 / 禁用原始 HTML",
+      "pos": [
+        28,
+        348
+      ],
+      "size": [
+        212,
+        64
+      ]
+    },
+    {
+      "id": "bff_api",
+      "type": "backend",
+      "label": "自有 BFF / API",
+      "sublabel": "登录鉴权 / 限流与配额",
+      "pos": [
+        354,
+        84
+      ],
+      "size": [
+        212,
+        64
+      ]
+    },
+    {
+      "id": "bff_context",
+      "type": "backend",
+      "label": "Prompt / 上下文",
+      "sublabel": "可信历史 / 检索 / token 预算",
+      "pos": [
+        354,
+        172
+      ],
+      "size": [
+        212,
+        64
+      ]
+    },
+    {
+      "id": "bff_tool_auth",
+      "type": "security",
+      "label": "工具授权",
+      "sublabel": "服务端验证 / 副作用确认",
+      "pos": [
+        354,
+        260
+      ],
+      "size": [
+        212,
+        64
+      ]
+    },
+    {
+      "id": "bff_logs_key",
+      "type": "backend",
+      "label": "日志与 request_id / Provider Key",
+      "sublabel": "脱敏追踪 / 密钥仅保存在 BFF",
+      "pos": [
+        354,
+        348
+      ],
+      "size": [
+        212,
+        64
+      ]
+    },
+    {
+      "id": "bff_model",
+      "type": "cloud",
+      "label": "模型 API",
+      "sublabel": "密钥与模型配置由 BFF 管理",
+      "pos": [
+        680,
+        84
+      ],
+      "size": [
+        212,
+        64
+      ]
+    },
+    {
+      "id": "bff_tool",
+      "type": "external",
+      "label": "工具服务",
+      "sublabel": "受权限与确认保护",
+      "pos": [
+        680,
+        260
+      ],
+      "size": [
+        212,
+        64
+      ]
+    },
+    {
+      "id": "bff_storage",
+      "type": "database",
+      "label": "数据库 / 对象存储",
+      "sublabel": "会话历史 / 附件引用",
+      "pos": [
+        680,
+        348
+      ],
+      "size": [
+        212,
+        64
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "security-group",
+      "label": "浏览器：禁止下发模型密钥",
+      "wraps": [
+        "bff_ui",
+        "bff_abort",
+        "bff_markdown"
+      ],
+      "pad": 14
+    },
+    {
+      "kind": "region",
+      "label": "自有服务端",
+      "wraps": [
+        "bff_api",
+        "bff_context",
+        "bff_tool_auth",
+        "bff_logs_key"
+      ],
+      "pad": 14
+    },
+    {
+      "kind": "region",
+      "label": "外部能力",
+      "wraps": [
+        "bff_model",
+        "bff_tool",
+        "bff_storage"
+      ],
+      "pad": 14
+    }
+  ],
+  "connections": [
+    {
+      "id": "bff_browser_request",
+      "from": "bff_ui",
+      "to": "bff_api",
+      "variant": "default",
+      "label": "请求"
+    },
+    {
+      "id": "bff_model_request",
+      "from": "bff_api",
+      "to": "bff_model",
+      "variant": "default",
+      "label": "请求"
+    },
+    {
+      "id": "bff_model_stream",
+      "from": "bff_model",
+      "to": "bff_api",
+      "variant": "emphasis",
+      "label": "SSE / 流式事件",
+      "fromSide": "top",
+      "toSide": "top",
+      "via": [
+        [
+          786,
+          20
+        ],
+        [
+          460,
+          20
+        ]
+      ],
+      "labelAt": [
+        623,
+        32
+      ]
+    },
+    {
+      "id": "bff_browser_stream",
+      "from": "bff_api",
+      "to": "bff_abort",
+      "variant": "emphasis",
+      "label": "SSE / 流式事件"
+    },
+    {
+      "id": "bff_tool_request",
+      "from": "bff_api",
+      "to": "bff_tool",
+      "variant": "default"
+    },
+    {
+      "id": "bff_storage_request",
+      "from": "bff_api",
+      "to": "bff_storage",
+      "variant": "default"
+    }
+  ]
+}

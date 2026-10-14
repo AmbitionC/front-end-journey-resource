@@ -1,0 +1,256 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "流式取消与恢复：从确认点发起新请求",
+    "locale": "zh-CN",
+    "animation": "none",
+    "quality_profile": "showcase",
+    "viewBox": [
+      920,
+      590
+    ]
+  },
+  "components": [
+    {
+      "id": "resume_original_request",
+      "type": "frontend",
+      "label": "原请求",
+      "sublabel": "一次用户操作／统一取消信号",
+      "pos": [
+        40,
+        50
+      ],
+      "size": [
+        200,
+        100
+      ]
+    },
+    {
+      "id": "resume_remote_work",
+      "type": "cloud",
+      "label": "上游模型任务",
+      "sublabel": "客户端停收后可能继续计算与计费",
+      "pos": [
+        270,
+        50
+      ],
+      "size": [
+        200,
+        100
+      ]
+    },
+    {
+      "id": "resume_typed_events",
+      "type": "messagebus",
+      "label": "有类型的事件流",
+      "sublabel": "文本·工具参数·item完成·usage·终态",
+      "pos": [
+        500,
+        50
+      ],
+      "size": [
+        200,
+        100
+      ]
+    },
+    {
+      "id": "resume_client_reader",
+      "type": "frontend",
+      "label": "客户端读取与渲染",
+      "sublabel": "解析帧与UTF-8；不把chunk当事件",
+      "pos": [
+        730,
+        50
+      ],
+      "size": [
+        180,
+        100
+      ]
+    },
+    {
+      "id": "resume_client_abort",
+      "type": "security",
+      "label": "前端取消 ≠ 上游取消",
+      "sublabel": "Abort停收；清理reader、监听器、锁",
+      "pos": [
+        730,
+        220
+      ],
+      "size": [
+        180,
+        100
+      ]
+    },
+    {
+      "id": "resume_durable_log",
+      "type": "database",
+      "label": "持久事件日志",
+      "sublabel": "已完成item·工具确认/结果·整体完成",
+      "pos": [
+        500,
+        220
+      ],
+      "size": [
+        200,
+        100
+      ]
+    },
+    {
+      "id": "resume_acknowledged_point",
+      "type": "database",
+      "label": "快照与已确认点",
+      "sublabel": "确认eventId；非字节偏移／最后token",
+      "pos": [
+        270,
+        220
+      ],
+      "size": [
+        200,
+        100
+      ]
+    },
+    {
+      "id": "resume_business_facts",
+      "type": "database",
+      "label": "已确认应用状态",
+      "sublabel": "验证后持久化；幂等键防重复副作用",
+      "pos": [
+        40,
+        220
+      ],
+      "size": [
+        200,
+        100
+      ]
+    },
+    {
+      "id": "resume_new_request",
+      "type": "frontend",
+      "label": "发起新请求",
+      "sublabel": "恢复已完成事实，不随意接回半截流",
+      "pos": [
+        40,
+        390
+      ],
+      "size": [
+        200,
+        100
+      ]
+    },
+    {
+      "id": "resume_new_generation",
+      "type": "cloud",
+      "label": "新的生成",
+      "sublabel": "基于已确认业务状态继续任务",
+      "pos": [
+        270,
+        390
+      ],
+      "size": [
+        200,
+        100
+      ]
+    },
+    {
+      "id": "resume_new_client_flow",
+      "type": "frontend",
+      "label": "恢复后的事件流",
+      "sublabel": "保留item边界；校验完成事件再提交",
+      "pos": [
+        500,
+        390
+      ],
+      "size": [
+        200,
+        100
+      ]
+    },
+    {
+      "id": "resume_incomplete_draft",
+      "type": "external",
+      "label": "草稿不能作权威历史",
+      "sublabel": "incomplete草稿；EOF≠完成",
+      "pos": [
+        730,
+        390
+      ],
+      "size": [
+        180,
+        100
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "resume_original_request_to_remote_work",
+      "from": "resume_original_request",
+      "to": "resume_remote_work",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "resume_remote_work_to_typed_events",
+      "from": "resume_remote_work",
+      "to": "resume_typed_events",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "resume_typed_events_to_client_reader",
+      "from": "resume_typed_events",
+      "to": "resume_client_reader",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "resume_client_reader_to_client_abort",
+      "from": "resume_client_reader",
+      "to": "resume_client_abort",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "resume_typed_events_to_durable_log",
+      "from": "resume_typed_events",
+      "to": "resume_durable_log",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "resume_durable_log_to_acknowledged_point",
+      "from": "resume_durable_log",
+      "to": "resume_acknowledged_point",
+      "fromSide": "left",
+      "toSide": "right"
+    },
+    {
+      "id": "resume_acknowledged_point_to_business_facts",
+      "from": "resume_acknowledged_point",
+      "to": "resume_business_facts",
+      "fromSide": "left",
+      "toSide": "right"
+    },
+    {
+      "id": "resume_business_facts_to_new_request",
+      "from": "resume_business_facts",
+      "to": "resume_new_request",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "resume_new_request_to_new_generation",
+      "from": "resume_new_request",
+      "to": "resume_new_generation",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "resume_new_generation_to_new_client_flow",
+      "from": "resume_new_generation",
+      "to": "resume_new_client_flow",
+      "fromSide": "right",
+      "toSide": "left"
+    }
+  ]
+}

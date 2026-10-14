@@ -1,0 +1,257 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "SSE：网络分块不等于事件边界",
+    "locale": "zh-CN",
+    "animation": "none",
+    "quality_profile": "showcase",
+    "viewBox": [
+      920,
+      590
+    ]
+  },
+  "components": [
+    {
+      "id": "sse_provider",
+      "type": "cloud",
+      "label": "模型提供方",
+      "sublabel": "SSE字节流",
+      "pos": [
+        40,
+        50
+      ],
+      "size": [
+        180,
+        90
+      ]
+    },
+    {
+      "id": "sse_chunk_one",
+      "type": "messagebus",
+      "label": "chunk1 ·18B原图示意",
+      "sublabel": "data{id:1,t:\"He…\"} 尚未完成",
+      "pos": [
+        270,
+        50
+      ],
+      "size": [
+        180,
+        90
+      ]
+    },
+    {
+      "id": "sse_chunk_two",
+      "type": "messagebus",
+      "label": "chunk2 ·37B原图示意",
+      "sublabel": "llo\"}＋空行；data{id:2,t:\"世界…",
+      "pos": [
+        500,
+        50
+      ],
+      "size": [
+        200,
+        90
+      ]
+    },
+    {
+      "id": "sse_chunk_three",
+      "type": "messagebus",
+      "label": "chunk3 ·25B原图示意",
+      "sublabel": "\"}＋空行；done{ok:true}＋空行",
+      "pos": [
+        730,
+        50
+      ],
+      "size": [
+        180,
+        90
+      ]
+    },
+    {
+      "id": "sse_bff_normalize",
+      "type": "backend",
+      "label": "BFF规范化",
+      "sublabel": "统一响应头·透传SSE·不缓存/缓冲",
+      "pos": [
+        730,
+        220
+      ],
+      "size": [
+        180,
+        100
+      ]
+    },
+    {
+      "id": "sse_utf8_decoder",
+      "type": "backend",
+      "label": "UTF-8增量解码",
+      "sublabel": "多字节字符跨chunk不乱码",
+      "pos": [
+        500,
+        220
+      ],
+      "size": [
+        200,
+        100
+      ]
+    },
+    {
+      "id": "sse_unfinished_buffer",
+      "type": "database",
+      "label": "跨chunk缓冲区",
+      "sublabel": "拼接未完成的字节／文本",
+      "pos": [
+        270,
+        220
+      ],
+      "size": [
+        180,
+        100
+      ]
+    },
+    {
+      "id": "sse_blank_line_frame",
+      "type": "backend",
+      "label": "按空行分帧",
+      "sublabel": "\\n\\n边界；兼容LF/CRLF/CR",
+      "pos": [
+        40,
+        220
+      ],
+      "size": [
+        180,
+        100
+      ]
+    },
+    {
+      "id": "sse_field_parser",
+      "type": "backend",
+      "label": "事件解析器",
+      "sublabel": "逐行event/data/id/retry组装对象",
+      "pos": [
+        270,
+        390
+      ],
+      "size": [
+        180,
+        100
+      ]
+    },
+    {
+      "id": "sse_frontend_batch",
+      "type": "frontend",
+      "label": "前端状态机／批量渲染",
+      "sublabel": "去重·合并；AbortController取消上游",
+      "pos": [
+        40,
+        390
+      ],
+      "size": [
+        190,
+        100
+      ]
+    },
+    {
+      "id": "sse_protocol_frame",
+      "type": "external",
+      "label": "SSE协议（文本帧）",
+      "sublabel": "data；event默认message；id/retry可选",
+      "pos": [
+        500,
+        390
+      ],
+      "size": [
+        200,
+        100
+      ]
+    },
+    {
+      "id": "sse_no_chunk_parse",
+      "type": "security",
+      "label": "不要按单chunk直接拆行",
+      "sublabel": "缓冲区先拼接；空行才结束帧",
+      "pos": [
+        730,
+        390
+      ],
+      "size": [
+        180,
+        100
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "sse_provider_to_chunk_one",
+      "from": "sse_provider",
+      "to": "sse_chunk_one",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "sse_chunk_one_to_chunk_two",
+      "from": "sse_chunk_one",
+      "to": "sse_chunk_two",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "sse_chunk_two_to_chunk_three",
+      "from": "sse_chunk_two",
+      "to": "sse_chunk_three",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "sse_chunk_three_to_bff_normalize",
+      "from": "sse_chunk_three",
+      "to": "sse_bff_normalize",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "sse_bff_normalize_to_utf8_decoder",
+      "from": "sse_bff_normalize",
+      "to": "sse_utf8_decoder",
+      "fromSide": "left",
+      "toSide": "right"
+    },
+    {
+      "id": "sse_utf8_decoder_to_unfinished_buffer",
+      "from": "sse_utf8_decoder",
+      "to": "sse_unfinished_buffer",
+      "fromSide": "left",
+      "toSide": "right"
+    },
+    {
+      "id": "sse_unfinished_buffer_to_blank_line_frame",
+      "from": "sse_unfinished_buffer",
+      "to": "sse_blank_line_frame",
+      "fromSide": "left",
+      "toSide": "right"
+    },
+    {
+      "id": "sse_blank_line_frame_to_field_parser",
+      "from": "sse_blank_line_frame",
+      "to": "sse_field_parser",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "sse_field_parser_to_frontend_batch",
+      "from": "sse_field_parser",
+      "to": "sse_frontend_batch",
+      "fromSide": "left",
+      "toSide": "right"
+    },
+    {
+      "id": "sse_frontend_batch_to_provider",
+      "from": "sse_frontend_batch",
+      "to": "sse_provider",
+      "fromSide": "left",
+      "toSide": "left",
+      "variant": "security"
+    }
+  ]
+}
