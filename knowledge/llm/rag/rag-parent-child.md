@@ -106,7 +106,7 @@ Parent-Child Retrieval 通过职责分离化解分块矛盾：child 为召回优
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节抖音电商 Agent 一面：分层、上下文与 GRPO（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-21.md)（cluster-b34d62449917）
+- [字节抖音电商 Agent 一面：分层、上下文与 GRPO](../../../interview/bytedance/base/bytedance-base-21.md)（cluster-b34d62449917）
 <!-- interview-source-history:end -->
 
 ## 参考资料

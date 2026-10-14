@@ -53,7 +53,7 @@ exactly-once 描述的是特定边界和协议，不代表所有外部副作用�
 
 ## 学习阅读（不计专题频次）
 
-- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-23.md)（仅学习相关；该原文片段未问批流机制、窗口、水位线或 Lambda/Kappa。不是完整专题被考察的证据，不计专题频次。）
+- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)（仅学习相关；该原文片段未问批流机制、窗口、水位线或 Lambda/Kappa。不是完整专题被考察的证据，不计专题频次。）
 
 ## 参考资料
 

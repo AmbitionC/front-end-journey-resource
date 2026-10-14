@@ -435,7 +435,7 @@ WHERE manager_id IS NULL
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-23.md)
+- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
 <!-- interview-source-history:end -->
 

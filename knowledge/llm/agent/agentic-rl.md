@@ -113,7 +113,7 @@ Agentic RL 的核心挑战是长轨迹上的信用分配与分布控制。PPO �
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节抖音电商 Agent 一面：分层、上下文与 GRPO（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-21.md)（cluster-b34d62449917）
+- [字节抖音电商 Agent 一面：分层、上下文与 GRPO](../../../interview/bytedance/base/bytedance-base-21.md)（cluster-b34d62449917）
 - [腾讯大模型算法岗一二面：Agentic RL、PPO/GRPO 与 DeepSeek V4（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-7.md)（cluster-daad361f34b4）
 <!-- interview-source-history:end -->
 

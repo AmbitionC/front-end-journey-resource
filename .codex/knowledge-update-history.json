@@ -2008,7 +2008,7 @@
       "key": "context-engineering",
       "label": "上下文工程（Context Engineering）",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-14",
       "batch": "title-verified6-quality-20261014",
@@ -2021,13 +2021,17 @@
         "action": "updated",
         "recordedAt": "2026-08-30",
         "batch": "e2dba44a-025f-4188-b6da-efdf085842e1"
-      }
+      },
+      "publishedAt": "2026-10-14T18:28:19Z",
+      "publishedByCommit": "afbce3dd82d0e693b14d20e2b3dd02a96c6731b3",
+      "publishedBySyncRun": 38614482119,
+      "publishedByPdfRun": 38614481957
     },
     {
       "key": "agent-react",
       "label": "ReAct：推理与行动框架",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-14",
       "batch": "title-verified6-quality-20261014",
@@ -2040,7 +2044,11 @@
         "action": "updated",
         "recordedAt": "2026-09-01",
         "batch": "nowcoder-partial-archive-2026-09-01"
-      }
+      },
+      "publishedAt": "2026-10-14T18:28:19Z",
+      "publishedByCommit": "afbce3dd82d0e693b14d20e2b3dd02a96c6731b3",
+      "publishedBySyncRun": 38614482119,
+      "publishedByPdfRun": 38614481957
     },
     {
       "key": "agent-paradigms",
@@ -2064,7 +2072,7 @@
       "key": "build-agent-framework",
       "label": "从零构建 Agent 运行时",
       "filePath": "llm/agent",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-14",
       "batch": "title-verified6-quality-20261014",
@@ -2080,7 +2088,11 @@
         "publishedAt": "2026-10-05T09:27:13Z",
         "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
         "publishedBySyncRun": 37289136872
-      }
+      },
+      "publishedAt": "2026-10-14T18:28:19Z",
+      "publishedByCommit": "afbce3dd82d0e693b14d20e2b3dd02a96c6731b3",
+      "publishedBySyncRun": 38614482119,
+      "publishedByPdfRun": 38614481957
     },
     {
       "key": "mcp-protocol",
@@ -2347,7 +2359,7 @@
       "key": "db-transaction-lock",
       "label": "事务、隔离级别与锁",
       "filePath": "backend/database",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-10-14",
       "batch": "title-verified6-quality-20261014",
@@ -2363,7 +2375,11 @@
         "publishedAt": "2026-10-05T09:27:13Z",
         "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
         "publishedBySyncRun": 37289136872
-      }
+      },
+      "publishedAt": "2026-10-14T18:28:19Z",
+      "publishedByCommit": "afbce3dd82d0e693b14d20e2b3dd02a96c6731b3",
+      "publishedBySyncRun": 38614482119,
+      "publishedByPdfRun": 38614481957
     },
     {
       "key": "redis-cache",
