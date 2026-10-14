@@ -56,7 +56,7 @@ L4 负载均衡按连接信息，L7 理解 HTTP 等应用协议。连接级均�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节飞书 AI 应用一面：Runtime、评测与后端基础（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-24.md)（cluster-78d45fa26bfd）
+- [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../../interview/bytedance/base/bytedance-base-24.md)（cluster-78d45fa26bfd）
 <!-- interview-source-history:end -->
 
 ## 参考资料

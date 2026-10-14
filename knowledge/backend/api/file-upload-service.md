@@ -90,7 +90,7 @@ READY 文件的下载 URL 同样短时、按主体和用途签发。敏感文件
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [腾讯 Agent 实习一面：RAG、工具与通信（2026 年 3 月发帖）](../../../interview/tencent/ai/tencent-ai-10.md)（cluster-fa3a6af4ebe6）
+- [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)（cluster-fa3a6af4ebe6）
 <!-- interview-source-history:end -->
 
 ## 参考资料

@@ -54,7 +54,7 @@ DAG 必须无环，因为循环会让完成条件不明确。业务上的迭代�
 
 本区提供阅读导航；链接不表示原帖问过整个专题，也不计入本专题面经频次。
 
-- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-23.md)：自动出数的DAG控制、依赖、调度和重跑；不声称Airflow/backfill专项。
+- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)：自动出数的DAG控制、依赖、调度和重跑；不声称Airflow/backfill专项。
 
 ## 参考资料
 

@@ -373,7 +373,7 @@ Z-score 假设正态分布，且对极端离群点本身敏感（极端值会拉
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 Agent 后端实习一面：LangGraph、评测集与混合检索（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-22.md)
+- [字节 Agent 后端实习一面：LangGraph、评测集与混合检索](../../../interview/bytedance/base/bytedance-base-22.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

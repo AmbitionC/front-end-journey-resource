@@ -101,7 +101,7 @@ ACL 在任何检索和图遍历前执行。一个可见文件引用不可见实�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节抖音Agent一面：Skill、MCP与记忆](../../../interview/bytedance/base/bytedance-base-39.md)
+- [字节抖音 Agent 一面：Skill、MCP 与记忆](../../../interview/bytedance/base/bytedance-base-39.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

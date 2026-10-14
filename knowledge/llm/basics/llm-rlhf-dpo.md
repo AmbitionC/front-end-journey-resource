@@ -77,7 +77,7 @@ RLHF、RLAIF 与 DPO 是三种把偏好变成模型行为的路径。RLHF 用奖
 
 ## 学习阅读（不计专题频次）
 
-- [字节抖音电商 Agent 一面：分层、上下文与 GRPO（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-21.md)（cluster-b34d62449917）（GRPO/PPO 原题另由 agentic-rl 承接；偏好优化路径只有背景学习相关性。不是完整专题被考察的证据，不计专题频次。）
+- [字节抖音电商 Agent 一面：分层、上下文与 GRPO](../../../interview/bytedance/base/bytedance-base-21.md)（cluster-b34d62449917）（GRPO/PPO 原题另由 agentic-rl 承接；偏好优化路径只有背景学习相关性。不是完整专题被考察的证据，不计专题频次。）
 
 ## 参考资料
 

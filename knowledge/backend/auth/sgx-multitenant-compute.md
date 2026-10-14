@@ -65,7 +65,7 @@ SGX 也不保证主机始终提供 CPU、内存或 I/O：任务要靠主机调�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [阿里云 Agent Infra 一面：SGX、吞吐与日志写入（2026 年 9 月发帖）](../../../interview/alibaba/ai/alibaba-ai-8.md)（cluster-21f88c2e7c88）
+- [阿里云 Agent Infra 一面：SGX、吞吐与日志写入](../../../interview/alibaba/ai/alibaba-ai-8.md)（cluster-21f88c2e7c88）
 <!-- interview-source-history:end -->
 
 ## 参考资料与核验范围

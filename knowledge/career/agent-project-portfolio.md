@@ -146,9 +146,9 @@ Orchestrator 解析 PR diff，分发给各专项 Agent，收集结果后合并�
 
 <!-- interview-source-history:start -->
 - [字节 AI 平台一面：Agent 评测、框架与数据结构](../../interview/bytedance/base/bytedance-base-33.md)
-- [字节全栈一面：RAG、Java与线程池](../../interview/bytedance/base/bytedance-base-37.md)
-- [字节前端全栈实习一面：渲染、Worker与认证](../../interview/bytedance/base/bytedance-base-38.md)
-- [字节抖音Agent一面：Skill、MCP与记忆](../../interview/bytedance/base/bytedance-base-39.md)
+- [字节全栈一面：RAG、Java 与线程池](../../interview/bytedance/base/bytedance-base-37.md)
+- [字节前端全栈实习一面：渲染、Worker 与认证](../../interview/bytedance/base/bytedance-base-38.md)
+- [字节抖音 Agent 一面：Skill、MCP 与记忆](../../interview/bytedance/base/bytedance-base-39.md)
 - [字节 Agent 实习：异步消息、上下文与容器隔离](../../interview/bytedance/base/bytedance-base-41.md)
 - [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../interview/bytedance/base/bytedance-base-42.md)
 - [字节全栈：多智能体导购、客户端与系统评测](../../interview/bytedance/base/bytedance-base-43.md)
