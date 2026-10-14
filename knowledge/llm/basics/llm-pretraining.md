@@ -83,8 +83,11 @@ $$
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [淘天 Agent 算法一面：任务构造、轨迹验证与后训练（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-4.md)（cluster-787120ee1249）
 <!-- interview-source-history:end -->
+
+## 学习阅读（不计专题频次）
+
+- [阿里淘天 Agent 算法一面：任务构造、轨迹与训练路线](../../../interview/alibaba/ai/alibaba-ai-4.md)（cluster-787120ee1249）（本页原有延伸阅读；该来源本次逐题主绑定为其他专题，不计本专题频次。）
 
 ## 参考资料
 

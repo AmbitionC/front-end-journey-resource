@@ -1,7 +1,7 @@
 参与 Agent 开源项目的核心不是尽快提交一段代码，而是理解项目的目标、治理、贡献者契约和维护成本，然后用小而完整的改动建立信任。文档、复现、测试、设计讨论和 issue 整理都可能比贸然重写核心模块更有价值。
 
 ![从选择健康项目、理解贡献规范、讨论范围、实现测试到评审协作的开源贡献闭环](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-open-source-contribution-contribution-loop-v1.webp)
-*图：先验证需求与维护者方向，再提交可审查的小改动；review 与后续维护是贡献的一部分。*
+*图：先验证需求与维护者方向，再提交可审查的小改动；review与后续维护是贡献的一部分。图中Merge是可能的流程结果，是否合并由项目维护者决定。*
 
 ## 选择值得投入的项目
 
@@ -56,6 +56,12 @@ Agent 项目测试避免真实付费 API 和随机模型作为默认 CI。使用
 PR 合并后关注回归、回复后续问题并参与 release。逐步从小修复到模块 ownership、issue triage 和设计 review。社区信任来自持续可预测：范围诚实、测试可靠、沟通尊重、愿意维护。
 
 贡献记录可用于作品集，但重点讲问题、约束、评审与影响，不只列 PR 数。一个被社区使用并长期稳定的小改动，比几十个无上下文 typo 更能体现工程能力。
+
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [蚂蚁 Agent 一二面：Code Agent 与应用开发](../../interview/antfin/ai/antfin-ai-2.md)
+<!-- interview-source-history:end -->
 
 ## 参考资料
 

@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "complete": true,
-  "expectedCount": 123,
+  "expectedCount": 124,
   "entries": [
     {
       "id": "context-engineering:mermaid:45",
       "kind": "mermaid",
       "articlePath": "knowledge/llm/agent/context-engineering.md",
-      "articleSha256": "46a41d55c6b2ef1d4f628a96602856aeecd20ff0a942b7a0fdf1d9c2ceaffdc4",
+      "articleSha256": "f70c3b83084e67fac0cc4808ba6cde0cd5ffa57e0345fdbf165aec2497883817",
       "line": 45,
       "sourceText": "graph TD\n    A[有效上下文] --> B[系统提示 System Prompt]\n    A --> C[工具定义 Tools]\n    A --> D[少样本示例 Few-shot]\n    A --> E[对话历史 History]\n    A --> F[外部知识 RAG / Memory]\n    B --> B1[角色定位 + 行为规范\\n分区组织 XML/Markdown]\n    C --> C1[职责单一 + 接口清晰\\n最小可行工具集 MVTS]\n    D --> D1[多样且典型\\n直接画像期望行为]\n",
       "sourceSha256": "0b5c73dfb7e9ad2d5cb79f93acc1aa104de349bc27a90ce5f71168145ef30adb",
@@ -77,7 +77,7 @@
       "id": "context-engineering:mermaid:105",
       "kind": "mermaid",
       "articlePath": "knowledge/llm/agent/context-engineering.md",
-      "articleSha256": "46a41d55c6b2ef1d4f628a96602856aeecd20ff0a942b7a0fdf1d9c2ceaffdc4",
+      "articleSha256": "f70c3b83084e67fac0cc4808ba6cde0cd5ffa57e0345fdbf165aec2497883817",
       "line": 105,
       "sourceText": "flowchart LR\n    A[多源信息] -->|Gather| B[候选信息包]\n    B -->|Select| C[评分筛选]\n    C -->|Structure| D[结构化模板]\n    D -->|Compress| E[最终上下文]\n\n    style A fill:#f5f5f5\n    style E fill:#e8f5e9\n",
       "sourceSha256": "793697de664a57dd03ff1503dbe26d6a3d2154cf3e6ad23d7362aec8e7919925",
@@ -147,7 +147,7 @@
       "id": "context-engineering:mermaid:211",
       "kind": "mermaid",
       "articlePath": "knowledge/llm/agent/context-engineering.md",
-      "articleSha256": "46a41d55c6b2ef1d4f628a96602856aeecd20ff0a942b7a0fdf1d9c2ceaffdc4",
+      "articleSha256": "f70c3b83084e67fac0cc4808ba6cde0cd5ffa57e0345fdbf165aec2497883817",
       "line": 212,
       "sourceText": "sequenceDiagram\n    participant C as 对话历史\n    participant L as LLM（压缩）\n    participant N as 新上下文窗口\n\n    C->>L: 接近上限，触发压缩\n    L->>N: 生成摘要 + 保留近期少量工件\n    Note over N: 架构决策 + 未解决问题 + 实现细节\n    Note over C: 丢弃：重复工具输出 + 噪声\n",
       "sourceSha256": "624b060ab1ae68f9951ec8534081194dbf8ae5184ab1886944bff9d20040f79b",
@@ -477,7 +477,7 @@
       "id": "agent-memory-architecture:svg:14",
       "kind": "svg",
       "articlePath": "knowledge/llm/agent/agent-memory-architecture.md",
-      "articleSha256": "55ef413bd78bf6910a524fd6dbf76ccf53f8f98e05e3f21ed92b73fd67acff77",
+      "articleSha256": "57bced39510e7b9a171d956495b1b2ad0e9554064e113eb4474ae78828913e65",
       "line": 14,
       "sourceText": "https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-memory-write-recall-policy-v1.svg",
       "sourceSha256": "6e6cc76fadd4e64b6547b2064d1c0ff398989b18fe87a509bbb4e4308708df9f",
@@ -696,7 +696,7 @@
       "id": "agent-tool-result-validation:archify:17",
       "kind": "archify",
       "articlePath": "knowledge/llm/agent/agent-tool-result-validation.md",
-      "articleSha256": "cc3f395f02057abfd1706cad3471bf3f98f05625fc6de93dfa45bc6da626455d",
+      "articleSha256": "dad65b057b43dfb0f9325bfaec1fb2a091519ca132c0bfc54069ac72af22ad88",
       "line": 17,
       "sourceText": "<iframe\n  src=\"/archify/agent-tool-result-validation.html\"\n  title=\"工具结果信任验证管线交互架构图\"\n></iframe>",
       "sourceSha256": "e37ad47a1502c8c61d0d66bbd489789288772161d2cd9c25207e37f724ce4f22",
@@ -769,7 +769,7 @@
       "id": "agent-architecture:archify:49",
       "kind": "archify",
       "articlePath": "knowledge/llm/agent/agent-architecture.md",
-      "articleSha256": "01916a3ff5c2a40d371c4c8d8abff784165b8bdb84e16177f23fd77712ea8bb4",
+      "articleSha256": "28cc4acc8bf53f8e1aadc7273b662c0af9c760f8cc2fce73f872bcc74b940f86",
       "line": 49,
       "sourceText": "<iframe\n  src=\"/archify/agent-architecture.html\"\n  title=\"PEAS 与 Agent 环境闭环交互架构图\"\n></iframe>",
       "sourceSha256": "ce094b71909006ab2edb39e713d6b1fce194b35ac5a441ce6e13b9db3e6e66a6",
@@ -915,7 +915,7 @@
       "id": "build-agent-framework:archify:27",
       "kind": "archify",
       "articlePath": "knowledge/llm/agent/build-agent-framework.md",
-      "articleSha256": "143cfe156acad371c9be341759df832a410f333d015b959ba5debbe2612b528e",
+      "articleSha256": "1cdabd2f4e0e8611260c5b3ed4bf58969d3bb01b9ef62f6a63293c85119c515e",
       "line": 27,
       "sourceText": "<iframe\n  src=\"/archify/build-agent-framework.html\"\n  title=\"最小 Agent 运行时交互架构图\"\n></iframe>",
       "sourceSha256": "6447d0e5e861f910b7288aa2a39e9c72d8f3dd50af6f67970407e911d61ab4d5",
@@ -1207,7 +1207,7 @@
       "id": "agent-evaluation:mermaid:157",
       "kind": "mermaid",
       "articlePath": "knowledge/llm/agent/agent-evaluation.md",
-      "articleSha256": "91b1e3e846598d332e281c45646ade05562a283caf19fa31f69d2b847cd72545",
+      "articleSha256": "9e302bc2f427e6612e0971469f37407adef1986a5c00c8fd28f77df1d5b4aee3",
       "line": 157,
       "sourceText": "flowchart LR\n    A[冻结任务集与环境版本] --> B[运行 Agent\\n记录输出与轨迹]\n    B --> C[规则判定环境终态]\n    C --> D[必要时运行校准后的 Judge]\n    D --> E[按场景与风险切片]\n    E --> F[比较质量、成本与延迟]\n    F --> G[保存运行配置与失败样本]\n",
       "sourceSha256": "025b70f2881d6e39ddac2ee1abed5e9636924d99532da31fa39b5355f404c780",
@@ -1350,7 +1350,7 @@
       "id": "agent-human-in-loop:archify:32",
       "kind": "archify",
       "articlePath": "knowledge/llm/agent/agent-human-in-loop.md",
-      "articleSha256": "70b05bdd87a5586ea095b69b993e3ca9a233768a062191b4aa512f1c85536368",
+      "articleSha256": "8ffd1e2fd4f0bd1b33ffb97e6c2c23aee0a69f9b8805b429be1b48b75808763f",
       "line": 32,
       "sourceText": "<iframe\n  src=\"/archify/agent-human-in-loop.html\"\n  title=\"Human-in-the-loop 持久审批协议交互架构图\"\n></iframe>",
       "sourceSha256": "16e118c0f611fc1e53aa84395a78b5638f528609e6975e35a4a8fb698a32dc58",
@@ -2287,7 +2287,7 @@
       "id": "ai-rate-limiting:mermaid:368",
       "kind": "mermaid",
       "articlePath": "knowledge/llm/production/ai-rate-limiting.md",
-      "articleSha256": "55499f331f02cbe21780804785cc4a4014e06d1f253bf2dc377d36915a62c7c4",
+      "articleSha256": "4d93efb8e26e4e59793b91381cce504ad848e7bfb1fa71409bbcae07c85a5eb1",
       "line": 368,
       "sourceText": "flowchart TD\n    A[用户请求] --> B{IP/全局限流}\n    B -->|超限| Z1[429 Too Many Requests]\n    B -->|通过| C{用户认证 & 配额检查}\n    C -->|未认证| Z2[401 Unauthorized]\n    C -->|Token 配额耗尽| D{降级策略}\n    C -->|配额充足| E{并发控制\\n用户信号量}\n    D -->|Fast Fail| Z3[429 + 升级套餐提示]\n    D -->|Queue| F[加入等待队列]\n    D -->|Model Fallback| G[降级模型池]\n    E -->|并发已满| F\n    E -->|获取槽位| G\n    F -->|超时| Z4[408 Request Timeout]\n    F -->|获得槽位| G\n    G -->|主模型可用| H[claude-opus-4-5]\n    G -->|主模型限流| I[claude-sonnet-4-5]\n    G -->|次模型也限流| J[claude-haiku-4-5]\n    H --> K[流式响应]\n    I --> K\n    J --> K\n    K --> L[事后精确扣减 Token 配额]\n    L --> M[返回响应 + 剩余配额 Header]\n",
       "sourceSha256": "a4aab92da62c5efc18b7381c21dc5e59b432bbd4aa3c3b9bd471f19269cb293d",
@@ -3936,7 +3936,7 @@
       "id": "rate-limit-circuit:mermaid:29",
       "kind": "mermaid",
       "articlePath": "knowledge/backend/auth/rate-limit-circuit.md",
-      "articleSha256": "0cbdc4f13bcca6e1e94d8628cb497839c8b523491515fff59ae42d041f511d71",
+      "articleSha256": "ea2e870f500bbf9ba29ab35e8d5982bc7c0ea71949ca51ae30e0c54264089518",
       "line": 29,
       "sourceText": "flowchart LR\n    Client[\"客户端 / Agent SDK\"]\n    GW[\"API Gateway\\n全局 IP 限流\"]\n    Auth[\"认证中间件\\n解析 userId / apiKey\"]\n    RL[\"限流中间件\\n用户级 / Key 级 / 模型级\"]\n    Handler[\"业务 Handler\"]\n    LLM[\"LLM Provider\\nOpenAI / Anthropic\"]\n    CB[\"熔断器\\nCircuit Breaker\"]\n\n    Client --> GW --> Auth --> RL --> Handler --> CB --> LLM\n    RL -- \"429 Too Many Requests\" --> Client\n    CB -- \"503 Service Unavailable\\n降级响应\" --> Handler\n",
       "sourceSha256": "082cda795957e6be6a0320a0577f9cd4113a5d1d2406873dc03c91cb423f03bd",
@@ -4021,8 +4021,8 @@
       "id": "rate-limit-circuit:mermaid:177",
       "kind": "mermaid",
       "articlePath": "knowledge/backend/auth/rate-limit-circuit.md",
-      "articleSha256": "0cbdc4f13bcca6e1e94d8628cb497839c8b523491515fff59ae42d041f511d71",
-      "line": 177,
+      "articleSha256": "ea2e870f500bbf9ba29ab35e8d5982bc7c0ea71949ca51ae30e0c54264089518",
+      "line": 185,
       "sourceText": "stateDiagram-v2\n    [*] --> Closed\n    Closed --> Open : 错误率超过阈值（如 50%）\n    Open --> HalfOpen : 等待 resetTimeout（如 30s）\n    HalfOpen --> Closed : 探测请求成功\n    HalfOpen --> Open : 探测请求失败\n",
       "sourceSha256": "1910a69dccffa06ae4ec72b11229ab939a982c28196aa885191a324ac3892f5f",
       "type": "stateDiagram-v2",
@@ -6597,7 +6597,7 @@
       "id": "agent-role-landscape:mermaid:32",
       "kind": "mermaid",
       "articlePath": "knowledge/career/agent-role-landscape.md",
-      "articleSha256": "58a4c0b4f0dff7f15406c281a11b364e11bdaf57739cffe7ee90e320f3fbb451",
+      "articleSha256": "85915c4c6c7b7b7e3637c504b11b984db85433ccd836213eb6b55ab60947bf94",
       "line": 32,
       "sourceText": "graph TD\n    FE[前端工程师] --> App[应用层 Agent]\n    BE[后端工程师] --> App\n    BE --> Infra[基础设施层]\n    MLEng[算法/ML工程师] --> RL[RL训练 / 微调]\n    MLEng --> Framework[框架层]\n    BE --> Framework\n    FE --> Framework\n\n    style App fill:#f0f7ff,stroke:#4a90e2\n    style Framework fill:#fff7e6,stroke:#f5a623\n    style RL fill:#f0fff4,stroke:#27ae60\n    style Infra fill:#fff0f0,stroke:#e74c3c\n",
       "sourceSha256": "5e3799cd0c9a0b9e110af52f8450d51788010c62f9f7daf5f64391a20eae6649",
@@ -6821,12 +6821,75 @@
       "width": 1252,
       "height": 2076,
       "renderedVectorSha256": "51dc39594160293744b88cfc7097f19bfb8c85d5093b004857d291e943ffcccf"
+    },
+    {
+      "id": "algorithm-heap-archify-minheap-operations-largest-topk",
+      "kind": "archify",
+      "articlePath": "knowledge/cs/algorithm/algorithm-heap.md",
+      "articleSha256": "bb7e57b3348890e513479a384212689e44ceadf5584619419cef661d06ce4f01",
+      "line": 3,
+      "sourceText": "<iframe\n  src=\"https://www.agent-journey.cn/archify/minheap-operations-largest-topk.html\"\n  title=\"最小堆上浮、下沉与流式最大 Top-K\"\n></iframe>",
+      "sourceSha256": "d9755f22d2f3c982d768f9423feb3ca49a6c563d0a41337d7776d819b2ce398c",
+      "specPath": "knowledge/cs/algorithm/algorithm-heap.archify.json",
+      "specSha256": "5ec4c1e91740d86c6fc2b356370db6b1c6fe4bd44b8355abde1e88fb15bc85ba",
+      "outputPath": "images/pdf-minheap-operations-largest-topk-archify-a87dcd807291.png",
+      "outputSha256": "ce9be543316f1e203c35befb4ae1423730e41c64c1d42481fbf8a0fb46f924f2",
+      "width": 4480,
+      "height": 2320,
+      "renderedVectorSha256": "a87dcd80729165dfa1375a1578925b74e90b37fef69927e3d8cbfd795c252566",
+      "panels": [
+        {
+          "row": 1,
+          "column": 1,
+          "sourceVectorSha256": "a87dcd80729165dfa1375a1578925b74e90b37fef69927e3d8cbfd795c252566",
+          "rect": [
+            0,
+            0,
+            500,
+            580
+          ],
+          "outputPath": "images/pdf-minheap-operations-largest-topk-archify-a87dcd807291-detail-1-1.png",
+          "outputSha256": "13ebbe397c3d6853e6f2249b3541acd8bcdf6be19d6c8cedee20d7d7564b7347",
+          "width": 1000,
+          "height": 1160
+        },
+        {
+          "row": 1,
+          "column": 2,
+          "sourceVectorSha256": "a87dcd80729165dfa1375a1578925b74e90b37fef69927e3d8cbfd795c252566",
+          "rect": [
+            310,
+            0,
+            500,
+            580
+          ],
+          "outputPath": "images/pdf-minheap-operations-largest-topk-archify-a87dcd807291-detail-1-2.png",
+          "outputSha256": "6957fcc39986a56914b86bb4d7e2a60faacad33ff38b0ac0297d5e75bd5a722a",
+          "width": 1000,
+          "height": 1160
+        },
+        {
+          "row": 1,
+          "column": 3,
+          "sourceVectorSha256": "a87dcd80729165dfa1375a1578925b74e90b37fef69927e3d8cbfd795c252566",
+          "rect": [
+            620,
+            0,
+            500,
+            580
+          ],
+          "outputPath": "images/pdf-minheap-operations-largest-topk-archify-a87dcd807291-detail-1-3.png",
+          "outputSha256": "3601b8891b6d448287bd1141287e9affdae28f9d25f774caf6ed8fb3d911aec8",
+          "width": 1000,
+          "height": 1160
+        }
+      ]
     }
   ],
   "literals": [
     {
       "articlePath": "knowledge/llm/agent/agent-skill-design.md",
-      "articleSha256": "d3f310cf2c27e74f02ed733f8a2d09a2eec65451b9d8c7b528b9a8adc3446438",
+      "articleSha256": "c43c70e91bf03eedfd9eb5b8490f067eb2fc95ce0c040783c52daaf5fcddf2d1",
       "sourceText": ".agents/skills/<id>/"
     }
   ]

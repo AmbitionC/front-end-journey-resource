@@ -597,7 +597,7 @@
   {
     "key": "alibaba-ai-4",
     "filePath": "alibaba/ai",
-    "label": "淘天 Agent 算法一面：任务构造、轨迹验证与后训练（2026 年 8 月）",
+    "label": "阿里淘天 Agent 算法一面：任务构造、轨迹与训练路线",
     "tags": [
       "Agent",
       "任务构造",
@@ -608,7 +608,7 @@
   {
     "key": "alibaba-ai-5",
     "filePath": "alibaba/ai",
-    "label": "淘天 AI 应用研发一面：RAG、限流 Top-K 与优惠策略设计（2026 年 8 月）",
+    "label": "阿里淘天 AI 应用研发一面：RAG、限流 Top-K 与优惠策略",
     "tags": [
       "RAG",
       "限流",
@@ -619,7 +619,7 @@
   {
     "key": "alibaba-ai-6",
     "filePath": "alibaba/ai",
-    "label": "淘宝闪购 Agent 算法一面：框架选型、人工接管与线上安全（2026 年 4 月）",
+    "label": "阿里淘宝闪购 Agent 算法实习一面：框架、记忆与线上排障",
     "tags": [
       "Agent",
       "Human-in-the-loop",
@@ -830,7 +830,7 @@
   {
     "key": "antfin-ai-2",
     "filePath": "antfin/ai",
-    "label": "蚂蚁 Code Agent 与 Agent 应用两轮面试（2026 年 4 月）",
+    "label": "蚂蚁 Agent 一二面：Code Agent 与应用开发",
     "tags": [
       "Code Agent",
       "质量门禁",

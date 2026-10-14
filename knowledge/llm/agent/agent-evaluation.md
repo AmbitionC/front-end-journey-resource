@@ -228,14 +228,20 @@ async def evaluate(agent, cases, check_result):
 - **Q：如何在有限预算下设计评估方案？**  
   先覆盖高风险业务路径和历史失败，再用分层抽样补齐常见与长尾场景；确定性判定器优先，昂贵 Judge 和人工复核用于开放或高风险样本。样本量由目标误差、方差、切片覆盖和预算共同决定。
 
+## Self-Refine：把修订策略放进评测闭环
+
+Self-Refine可以按“生成候选 → 对照任务要求给出具体反馈 → 根据反馈修订”组织一次推理流程。[Madaan等人的Self-Refine论文](https://arxiv.org/abs/2303.17651)研究使用同一语言模型产生反馈和修订，无需为这条推理循环额外更新模型权重。[Shinn等人的Reflexion](https://arxiv.org/abs/2303.11366)则强调把反馈形成可跨试验使用的文字经验；二者不能仅凭“自我反思”名称混为一个算法。
+
+在项目中应如实说明做过哪类修订：例如对Schema错误重新组织有效字段、依据失败测试修复局部代码，或重取缺失证据。修订不得编造缺失的权威字段、扩大权限，也不能把模型一句“无需改进”当验收。固定原任务与基线，分别记录首次结果和修订后结果，用独立测试、环境状态或经校准的评分验证变化，同时统计额外调用、延迟和失败率。设置最大轮次、总deadline、无进展停止及未知副作用先对账；改动越多或自评分越高都不自动证明改善。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
 - [阿里国际 Accio Agent 算法一面：数据合成、任务环境与 GUI Agent](../../../interview/alibaba/ai/alibaba-ai-3.md)（cluster-10359bdec433）
 - [字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-20.md)（cluster-418d84d3fe66）
-- [淘天 Agent 算法一面：任务构造、轨迹验证与后训练（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-4.md)（cluster-787120ee1249）
+- [阿里淘天 Agent 算法一面：任务构造、轨迹与训练路线](../../../interview/alibaba/ai/alibaba-ai-4.md)（cluster-787120ee1249）
 - [百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测（2026 年 8 月）](../../../interview/baidu/ai/baidu-ai-2.md)（cluster-9acb30c57710）
-- [淘宝闪购 Agent 算法一面：框架选型、人工接管与线上安全（2026 年 4 月）](../../../interview/alibaba/ai/alibaba-ai-6.md)（cluster-e392a4fd1f33）
+- [阿里淘宝闪购 Agent 算法实习一面：框架、记忆与线上排障](../../../interview/alibaba/ai/alibaba-ai-6.md)（cluster-e392a4fd1f33）
 <!-- interview-source-history:end -->
 
 ## 参考资料

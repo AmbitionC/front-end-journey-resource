@@ -1,7 +1,7 @@
 Feature Store 的价值是让同一特征定义在离线训练和在线推理中可发现、可复用、可回放，而不是再建一个键值数据库。它必须处理实体、事件时间、point-in-time join、物化延迟和版本；否则“共用一份定义”仍会产生训练—服务偏差和未来泄漏。
 
 ![Feature Store 从离线历史、点时正确 Join、在线物化到低延迟服务的一致性链路](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/feature-store-offline-online-consistency-v1.webp)
-*图：训练读取 entity timestamp 之前可见的历史值；在线存储提供最新已物化值，两侧共享实体和特征版本。*
+*图：训练按 entity timestamp 查找事件时间不晚于该时刻、且在 TTL 内最近的历史值；在线读取最新已物化值，两侧共享实体和特征版本。事件时间匹配不自动证明该值当时已可用。*
 
 ## 特征的身份
 
@@ -17,7 +17,7 @@ Feature Store 的价值是让同一特征定义在离线训练和在线推理中
 
 ## Point-in-time Correctness
 
-[Feast Point-in-time Joins](https://docs.feast.dev/getting-started/concepts/point-in-time-joins)针对每个 entity row 的 timestamp，查找当时已可见、且在 TTL 内最近的特征值。若训练订单是否欺诈，却 join 了订单一周后才计算的退款次数，模型看到了未来信息，离线成绩会虚高。
+[Feast Point-in-time Joins](https://docs.feast.dev/getting-started/concepts/point-in-time-joins)针对每个 entity row 的 timestamp，查找事件时间不晚于该时刻、且在 TTL 内最近的特征值；这不自动保证该值当时已可用。若训练订单是否欺诈，却 join 了订单一周后才计算的退款次数，模型看到了未来信息，离线成绩会虚高。
 
 ```text
 training row: user=42, event_time=10:00
@@ -51,10 +51,32 @@ Catalog 展示 owner、描述、实体、来源、使用模型、成本、质量
 
 测试 point-in-time fixture、晚到事件、TTL 边界、时区、重复实体、online 乱序写、物化中断和模型回滚。成熟 Feature Store 能为一次预测重建当时可见的特征值，并解释离线训练与线上服务为何一致。
 
+## 排查题：AUC从离线到线上下降，怎样跨三维定位
+
+给定题面“训练AUC 92%、测试89%、上线62%”，这些数字是待分析的场景条件，不能当作本项目的实际成绩。Feature Store只覆盖其中一部分：完整排查还要处理数据分布、标签与Serving。先固定正类、标签成熟窗口、采样和加权、分群及二元/多类聚合口径，确认三个AUC是否可比；使用分数而非仅硬分类结果计算。[scikit-learn ROC AUC接口](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.roc_auc_score.html)明确了这些输入与聚合选择。
+
+下表给出至少8个可检验候选，P0/P1/P2是“刚上线骤降、暂未发现更直接证据”时的一种检查顺序。实际排序需按发布时点、影响范围、命中证据与验证成本调整，不能当所有业务的固定根因排名。
+
+| 维度 | 候选原因 | 怎样验证 | 示例先后 |
+| --- | --- | --- | --- |
+| Serving | 部署了错误模型、特征版本或路由 | 比较制品digest、版本与实际命中日志，固定请求回放 | P0 |
+| Serving | 预处理、缺失填充、词表或特征列顺序不一致 | 同一原始请求逐项比对模型输入与得分 | P0 |
+| Serving | 在线特征缺失、过期或物化落后 | 看key miss、freshness与同实体时间的离在线值差异 | P0 |
+| Serving | 导出、量化或推理实现改变分数 | 固定模型和张量，对照离线/在线得分及排序 | P1 |
+| 标签 | 正负类方向、业务定义或归因窗口不同 | 复算同批样本，核对标签生成与评分代码 | P0 |
+| 标签 | 转化延迟，未成熟正样本被暂当负样本 | 按标签成熟度分层，等待同一窗口后再评 | P1 |
+| 标签 | 事件丢失、重复或join错位造成噪声 | 用request/entity/event ID抽样追踪并核去重与关联 | P1 |
+| 数据 | 训练/测试存在未来特征或跨集合泄漏 | 做point-in-time回放，并按用户或时间重新切分 | P1 |
+| 数据 | 离线样本选择与线上实际曝光人群不同 | 比较采样规则、渠道/人群占比及各分群AUC | P1 |
+| 数据 | 新用户、新商品、季节或行为分布变化 | 按时间与人群看特征/分数分布及分群退化 | P2 |
+| 数据 | 时间外泛化不足或调参反复利用测试集 | 保留新的时间外评测集，比较稳定基线 | P2 |
+
+[Google训练—服务偏差指南](https://developers.google.com/machine-learning/guides/rules-of-ml#training-serving_skew)建议记录线上实际使用的特征用于比较；[Feast点时Join](https://docs.feast.dev/getting-started/concepts/point-in-time-joins)帮助检查历史可见性。先用同批请求在离线重放，区分输入、模型计算与标签/统计链路，再做分群和时间外验证。不要仅因正负样本比例改变就断言ROC AUC必然下降，也不要把调阈值当成修复评分排序；修复须由证据和重新评测支持。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [淘宝闪购 Agent 算法一面：框架选型、人工接管与线上安全（2026 年 4 月）](../../../interview/alibaba/ai/alibaba-ai-6.md)
+- [阿里淘宝闪购 Agent 算法实习一面：框架、记忆与线上排障](../../../interview/alibaba/ai/alibaba-ai-6.md)
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../../interview/bytedance/base/bytedance-base-48.md)
 <!-- interview-source-history:end -->
 

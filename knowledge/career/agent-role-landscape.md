@@ -1,5 +1,5 @@
 ![岗位地图以产品交付为中心，分成 Agent application、platform/runtime、evaluation/quality、security/governance、research engineering 五条轨道；每条标出核心产出、协作对象和证据类型](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-engineer-role-landscape-v1.webp)
-*图：沿图中的节点与箭头阅读，重点是正式计算机课程框架与职业任务数据区分 Agent 应用、平台、评估、安全和研究工程岗位。*
+*图：以产品交付为中心，示意应用、平台/运行时、评估/质量、安全/治理与研究工程的产出、协作对象和证据；这些职责可以交叉，不代表统一的岗位分级或职业路径。*
 
 ---
 
@@ -22,12 +22,12 @@ Agent 工程师的日常工作，大致包括：设计 Prompt 策略和工具调
 
 听起来像"技术杂家"？没错，这个角色确实需要横跨多个知识域，但这也正是它的魅力所在。
 
-## 四个主要方向，你站哪一侧
+## 从四种工程切入点理解职责
 
 [OpenAI 的 Agent 构建指南](https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf) 将模型、工具、指令、编排、guardrails、人工介入和评估视为相互依赖的工程责任；真实岗位名称可能不同，应以这些产出判断方向。
 
 
-Agent 工程师这个大帽子下，分着四条非常不同的路。
+图中把评估与安全单列，便于看清它们对产品交付的责任。下面从应用、框架、训练和基础设施四种切入点展开；它们与图中的职责有交叉，不是唯一的岗位分类，也不表示固定的转型次序。
 
 ```mermaid
 graph TD
@@ -70,14 +70,16 @@ Infra 工程师关心的是：**Agent 在大规模生产环境下能不能跑起
 
 这是后端和基础架构工程师的主战场。有分布式系统、高并发服务经验的同学入门会很自然，推荐配合 **知识库 → 数据研发 / 后端研发** 的内容一起理解。
 
-## 四个方向的横向对比
+## 用交付物比较四种切入点
 
-| 方向 | 核心技能要求 | 入门难度 | 职业天花板 |
-|------|------------|---------|----------|
-| 应用层 | Prompt Engineering、API 集成、产品思维 | ⭐⭐ | 产品负责人 / AI 产品总监 |
-| 框架层 | 系统设计、工程架构、开源协作 | ⭐⭐⭐ | 开源项目 Maintainer / 技术专家 |
-| RL训练/微调 | 数学基础、ML 工程、评估体系 | ⭐⭐⭐⭐ | 模型负责人 / 研究员 |
-| Infra | 分布式系统、性能优化、成本工程 | ⭐⭐⭐⭐ | 大规模系统架构师 |
+| 切入点 | 主要能力 | 可核验的交付物示例 |
+|------|------------|----------|
+| 应用层 | Prompt、API 集成、产品工程 | 用户流程、可运行功能与任务评测 |
+| 框架层 | 系统设计、工程架构、开源协作 | 工具接口、状态执行与恢复机制 |
+| RL训练/微调 | 数学基础、ML 工程、评估体系 | 数据与训练配置、模型和能力回归结果 |
+| Infra | 分布式系统、性能优化、成本工程 | 服务容量、可靠性与成本观测 |
+
+具体难度与发展路径取决于业务、团队和个人经验，不能从方向名称推导统一星级或职业上限。
 
 ## 传统工程师怎么转型
 
@@ -107,6 +109,7 @@ Infra 工程师关心的是：**Agent 在大规模生产环境下能不能跑起
 - [字节全栈：多智能体导购、客户端与系统评测](../../interview/bytedance/base/bytedance-base-43.md)
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../interview/bytedance/base/bytedance-base-48.md)
 - [字节 Agent 实习：推理、微调与工具编排](../../interview/bytedance/base/bytedance-base-51.md)
+- [阿里淘天 Agent 算法一面：任务构造、轨迹与训练路线](../../interview/alibaba/ai/alibaba-ai-4.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
