@@ -22,7 +22,7 @@ Agent 框架是连接大语言模型（LLM）与真实世界任务的工程骨�
 
 ## 核心抽象：Agent 的五块积木
 
-一个最小可用的 Agent 框架，只需要五个核心组件：
+本例用五个组件演示最小文本交互运行时。计算器与文本工具循环用于说明模块协作；真实模型适配与生产运行还需权限、持久化、超时、结果校验和审计边界：
 
 <iframe
   src="/archify/build-agent-framework.html"
@@ -58,7 +58,7 @@ class HelloAgentsLLM:
         return resp.choices[0].message.content
 
     def stream_invoke(self, messages: list[dict]) -> Iterator[str]:
-        """流式调用，逐 token 返回"""
+        """流式调用，逐文本片段返回；片段不等于一个 token"""
         stream = self._client.chat.completions.create(
             model=self.model, messages=messages, stream=True
         )
@@ -68,7 +68,7 @@ class HelloAgentsLLM:
                 yield delta
 ```
 
-关键设计：所有主流 LLM 服务（OpenAI、DeepSeek、通义、本地 vLLM/Ollama）都暴露了兼容 OpenAI 的接口，因此只需改 `base_url` 和 `model` 即可切换，框架核心代码零修改。
+这个适配器只覆盖已确认兼容 Chat Completions 的文本路径。`base_url` 和 `model` 是配置入口，不是跨供应商兼容保证；鉴权、消息角色、工具协议、流式事件、错误码与能力仍需逐项适配和契约测试。[openai-python 官方示例](https://github.com/openai/openai-python)说明本 SDK 的请求方式，不证明其他服务自动兼容。
 
 ---
 
@@ -125,6 +125,9 @@ class ConversationMemory:
 ```python
 # tool.py
 from abc import ABC, abstractmethod
+import ast
+import math
+import operator
 
 class BaseTool(ABC):
     name: str        # 工具唯一名称，用于 LLM 识别
@@ -142,11 +145,32 @@ class CalculatorTool(BaseTool):
 
     def run(self, input_text: str) -> str:
         try:
-            # 安全起见只允许数字和运算符
-            allowed = set("0123456789+-*/(). ")
-            if not all(c in allowed for c in input_text):
-                return "错误：只支持基本数学运算"
-            return str(eval(input_text))
+            # 只解释受限算术 AST；不执行模型提供的 Python 代码。
+            if len(input_text) > 128:
+                raise ValueError("表达式过长")
+            tree = ast.parse(input_text, mode="eval")
+            if sum(1 for _ in ast.walk(tree)) > 64:
+                raise ValueError("表达式节点过多")
+            binary = {ast.Add: operator.add, ast.Sub: operator.sub,
+                      ast.Mult: operator.mul, ast.Div: operator.truediv}
+            unary = {ast.UAdd: operator.pos, ast.USub: operator.neg}
+
+            def evaluate(node):
+                if isinstance(node, ast.Expression):
+                    return evaluate(node.body)
+                if isinstance(node, ast.Constant) and type(node.value) in (int, float):
+                    value = node.value
+                elif isinstance(node, ast.UnaryOp) and type(node.op) in unary:
+                    value = unary[type(node.op)](evaluate(node.operand))
+                elif isinstance(node, ast.BinOp) and type(node.op) in binary:
+                    value = binary[type(node.op)](evaluate(node.left), evaluate(node.right))
+                else:
+                    raise ValueError("只支持数字与加减乘除")
+                if not math.isfinite(value) or abs(value) > 1e12:
+                    raise ValueError("数值超过本例预算")
+                return value
+
+            return str(evaluate(tree))
         except Exception as e:
             return f"计算错误：{e}"
 
@@ -171,6 +195,8 @@ class ToolRegistry:
             f"- {t.name}: {t.description}" for t in self._tools.values()
         )
 ```
+
+解析成 AST 本身不构成完整沙箱。[Python AST 文档](https://docs.python.org/3/library/ast.html)提醒复杂输入可能消耗资源；上面长度、节点数和值域是本例策略，生产仍由宿主限制 CPU、内存与墙钟时间。Python 的 [eval 文档](https://docs.python.org/3/library/functions.html#eval)也明确指出不可信输入的代码执行风险。
 
 ---
 
@@ -219,6 +245,8 @@ class Planner:
 
 ```python
 # executor.py
+import re
+from tool import ToolRegistry
 
 REACT_PROMPT = """你是一个具备推理和行动能力的 AI 助手。
 
@@ -260,7 +288,7 @@ class ReActExecutor:
             # 解析 Action
             action_match = re.search(r'Action:\s*(.+?)(?:\n|$)', response)
             if not action_match:
-                break
+                return "模型响应缺少 Action，任务未完成。"
 
             action = action_match.group(1).strip()
 
@@ -292,6 +320,9 @@ class ReActExecutor:
 ```python
 # agent.py
 from abc import ABC, abstractmethod
+from memory import ConversationMemory
+from executor import ReActExecutor
+from tool import ToolRegistry
 
 class Agent(ABC):
     def __init__(self, name: str, llm, system_prompt: str = None):
@@ -326,9 +357,12 @@ class ReActAgent(Agent):
         return self.executor.run(input_text)
 ```
 
-完整使用示例：
+以下代码按上面的 llm.py、memory.py、tool.py、executor.py、agent.py 分文件组织；openai 与 python-dotenv 是额外依赖，真实模型请求还需要配置和独立验证：
 
 ```python
+from llm import HelloAgentsLLM
+from agent import SimpleAgent, ReActAgent
+from tool import ToolRegistry, CalculatorTool
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -363,7 +397,7 @@ print(react.run("(15 * 8 + 32) / 4 等于多少？"))
 ## 常见误区与最佳实践
 
 **误区一：把 `max_steps` 设太大**
-ReAct 循环不收敛时，高上限会产生大量无效 LLM 调用。推荐默认 5-8 步，任务完不成就报错，让用户重新提问。
+ReAct 循环不收敛时，高上限会放大无效调用。按任务评测选择步数，并结合墙钟、token、费用和无进展检测；本例的 8 步仅是教学参数。预算耗尽应返回未完成状态与已验证进展，不能把固定 5–8 步当成所有任务的默认。
 
 **误区二：工具描述写得太含糊**
 `description` 直接决定 LLM 是否正确选用工具。应当写清楚"适用场景"和"入参格式"，而不是一句话带过。
@@ -400,7 +434,7 @@ Context Window 有限，不做裁剪会导致调用失败。滑动窗口、摘�
 - [字节 Agent Infra 校招：运行时、MySQL 与 LRU（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-25.md)
 - [字节飞书 AI 应用一面：Runtime、评测与后端基础（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-24.md)
 - [vivo Agent 秋招线下面：Harness 与工程诊断（2026 年 9 月发帖）](../../../interview/vivo/ai/vivo-ai-1.md)
-- [字节 Agent 开发实习一面：自进化与评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-8.md)
+- [字节 Agent 开发实习一面：自进化与评测](../../../interview/bytedance/base/bytedance-base-8.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信（2026 年 3 月发帖）](../../../interview/tencent/ai/tencent-ai-10.md)
 - [字节 Agent 一面：会话记忆、并发更新与算法](../../../interview/bytedance/base/bytedance-base-29.md)
 - [字节剪映 AI 前端一面：Agent 运行时、MCP 与性能](../../../interview/bytedance/base/bytedance-base-30.md)
@@ -419,3 +453,6 @@ Context Window 有限，不做裁剪会导致调用失败。滑动窗口、摘�
 
 - [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents)
 - [OpenAI Agents SDK documentation](https://openai.github.io/openai-agents-python/)
+- [openai-python 官方仓库](https://github.com/openai/openai-python)（适配器示例范围，本次核验于 2026-10-14）。
+- [Python：ast](https://docs.python.org/3/library/ast.html)（语法树与资源风险，本次核验于 2026-10-14）。
+- [Python：eval](https://docs.python.org/3/library/functions.html#eval)（不可信代码风险，本次核验于 2026-10-14）。

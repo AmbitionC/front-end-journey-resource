@@ -109,7 +109,7 @@ Agent 的改动可能影响工具选择、提示词、检索、上下文管理�
 - [腾讯 AI 开发一面：Coding Agent 记忆、评测与可靠运行（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-8.md)
 - [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)
 - [字节 Agent 后端实习一面：LangGraph、评测集与混合检索（2026 年 9 月）](../../../interview/bytedance/base/bytedance-base-22.md)
-- [字节 Agent 开发实习一面：自进化与评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-8.md)
+- [字节 Agent 开发实习一面：自进化与评测](../../../interview/bytedance/base/bytedance-base-8.md)
 - [字节抖音电商 Agent 一面：分层、上下文与 GRPO（2026 年 9 月发帖）](../../../interview/bytedance/base/bytedance-base-21.md)
 - [深信服 Agent 开发一面：MCP、多 Agent、安全与网络（2026 年 8 月）](../../../interview/sangfor/ai/sangfor-ai-1.md)
 - [快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-3.md)

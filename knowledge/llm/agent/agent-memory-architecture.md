@@ -128,7 +128,7 @@ InMemorySaver 适合内存内示范，不保证进程重启后恢复；持久 sa
 
 <!-- interview-source-history:start -->
 - [字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)
-- [腾讯 AI 应用开发面试：跨会话记忆与多 Agent（2026 年 4 月）](../../../interview/tencent/ai/tencent-ai-4.md)
+- [腾讯 AI 应用开发面试：跨会话记忆与多 Agent](../../../interview/tencent/ai/tencent-ai-4.md)
 - [字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-20.md)
 - [OPPO AI 全栈一面：Prompt 到 UI、RAG 与前端性能（2026 年 8 月）](../../../interview/oppo/ai/oppo-ai-2.md)
 - [字节 Agent 暑期实习一面：摘要、工具预算与链表（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-27.md)
