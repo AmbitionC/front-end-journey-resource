@@ -250,29 +250,49 @@ export async function validateInterviewSourceHistory(resourceRoot, history, opti
 
 export function topicFrequencies(history) {
   if (!isObject(history?.records)) return [];
+  // processUnitId identifies page reuse, not frequency. Join evidence aliases
+  // before counting topics so a repost with conflicting metadata counts once.
+  const groups = [], aliases = new Map();
+  for (const [id, record] of Object.entries(history.records)) {
+    if (!isObject(record) || !['published', 'merged'].includes(record.status)) continue;
+    const identities = [`cluster:${record.clusterId ?? id}`];
+    if (typeof record.url === 'string') {
+      try { identities.push(`url:${normalizedNowcoderUrl(record.url)}`); } catch {}
+    }
+    if (/^[a-f0-9]{64}$/u.test(record.normalizedBodySha256 ?? '')) {
+      identities.push(`body:${record.normalizedBodySha256}`);
+    }
+    const matches = [...new Set(identities.map(identity => aliases.get(identity)).filter(Boolean))];
+    const group = matches[0] ?? { records: [], identities: new Set() };
+    if (!matches.length) groups.push(group);
+    for (const other of matches.slice(1)) {
+      group.records.push(...other.records);
+      for (const identity of other.identities) { group.identities.add(identity); aliases.set(identity, group); }
+      groups.splice(groups.indexOf(other), 1);
+    }
+    group.records.push(record);
+    for (const identity of identities) { group.identities.add(identity); aliases.set(identity, group); }
+  }
   const topics = new Map();
-  const counted = new Set();
-  for (const record of Object.values(history.records)) {
-    if (!isObject(record) || (record.status !== 'published' && record.status !== 'merged')) continue;
-    for (const key of Array.isArray(record.knowledgeKeys) ? record.knowledgeKeys : []) {
-      const identity = `${key}\0${record.clusterId}`;
+  for (const group of groups) {
+    const published = group.records.filter(record => record.status === 'published');
+    // A merged alias cannot revive a retired/skipped representative.
+    if (!published.length) continue;
+    const active = group.records.filter(record => ['published', 'merged'].includes(record.status));
+    const keys = new Set(active.flatMap(record => Array.isArray(record.knowledgeKeys) ? record.knowledgeKeys : []));
+    for (const key of keys) {
       const current = topics.get(key) ?? {
         key,
+        count: 0,
         clusters: new Set(),
-        processes: new Set(),
         companies: new Set(),
         lastSeenAt: '',
       };
-      if (!counted.has(identity)) {
-        counted.add(identity);
-        current.clusters.add(record.clusterId);
-      }
-      current.processes.add(record.processUnitId ?? record.clusterId);
-      if (typeof record.company === 'string' && record.company.length > 0) {
-        current.companies.add(record.company);
-      }
-      if (typeof record.processedAt === 'string' && record.processedAt > current.lastSeenAt) {
-        current.lastSeenAt = record.processedAt;
+      current.count += 1;
+      for (const record of published) current.clusters.add(record.clusterId);
+      for (const record of active.filter(record => record.knowledgeKeys?.includes(key))) {
+        if (typeof record.company === 'string' && record.company.length > 0) current.companies.add(record.company);
+        if (typeof record.processedAt === 'string' && record.processedAt > current.lastSeenAt) current.lastSeenAt = record.processedAt;
       }
       topics.set(key, current);
     }
@@ -280,7 +300,7 @@ export function topicFrequencies(history) {
   return [...topics.values()]
     .map(topic => ({
       key: topic.key,
-      count: topic.processes.size,
+      count: topic.count,
       clusters: [...topic.clusters].sort(),
       companies: [...topic.companies].sort(),
       lastSeenAt: topic.lastSeenAt,
