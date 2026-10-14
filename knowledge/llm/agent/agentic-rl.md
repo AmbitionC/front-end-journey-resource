@@ -1,6 +1,6 @@
 Agentic RL 不是给普通问答换一个新名字，而是把模型放进会持续变化的环境：模型要读取观察、选择动作、调用工具，再根据新观察继续决策。轨迹可能跨几十到几百步，最终奖励却只在任务结束时出现。真正的难点因此从“怎样给一段回答打分”扩展成“怎样解释一条长轨迹为什么成功或失败”。
 
-![Agent 在长时序中反复观察、行动和调用环境，稀疏终局奖励需要跨越整条轨迹完成信用分配](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agentic-rl-long-horizon-credit-assignment-v1.png)
+<iframe src="https://www.agent-journey.cn/archify/agentic-rl-long-horizon-credit-assignment-archify-v2.html" width="100%" height="920" title="Agent 在长时序中反复观察、行动和调用环境，稀疏终局奖励需要跨越整条轨迹完成信用分配"></iframe>
 *图：轨迹越长，中间动作越多，终局奖励越难准确归因；训练还要面对环境随机性与部分可观测状态。*
 
 ## 先定义轨迹，而不是先选算法

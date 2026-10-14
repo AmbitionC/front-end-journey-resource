@@ -2,7 +2,7 @@ Agent 发布的行为单元不是一个容器镜像，而是模型、Prompt、�
 
 [Google SRE Workbook 的 Canarying Releases](https://sre.google/workbook/canarying-releases/)把 Canary 定义为在完整发布前，将变更部署到部分生产环境并评估结果。小流量本身不构成安全；必须有对照、观察窗口、门禁和可执行回滚。
 
-![完整发布 bundle 先固定版本，控制组与 5% Canary 在质量、安全、延迟和成本上比较，通过门禁后逐步扩至 25%、50% 和 100%，失败立即回滚](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-canary-release-progressive-rollout-v1.webp)
+<iframe src="https://www.agent-journey.cn/archify/agent-canary-release-progressive-rollout-archify-v2.html" width="100%" height="920" title="完整发布 bundle 先固定版本，控制组与 5% Canary 在质量、安全、延迟和成本上比较，通过门禁后逐步扩至 25%、50% 和 100%，失败立即回滚"></iframe>
 *图：每一级都有绝对 SLO 与相对差异门禁，不能只看“Canary 比昨天好”。*
 
 ## 不可变 Release Bundle

@@ -1,0 +1,259 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Agent Canary：固定版本、对照门禁与逐级扩流",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "animation": "none",
+    "legend": {
+      "mode": "hidden"
+    },
+    "viewBox": [
+      1200,
+      680
+    ]
+  },
+  "lanes": [
+    {
+      "id": "can_control_lane",
+      "label": "同时间、相近流量的稳定对照"
+    },
+    {
+      "id": "can_rollout",
+      "label": "代表性租户 / Thread 粘性分桶；每级重验门禁"
+    },
+    {
+      "id": "can_recheck",
+      "label": "完整观察窗口与持续复验"
+    },
+    {
+      "id": "can_recovery",
+      "label": "副作用安全与完整 Bundle 回退",
+      "variant": "exception"
+    }
+  ],
+  "mainPath": [
+    "can_bundle",
+    "can_candidate",
+    "can_gate",
+    "can_5",
+    "can_25",
+    "can_50",
+    "can_100"
+  ],
+  "nodes": [
+    {
+      "id": "can_bundle",
+      "lane": "can_rollout",
+      "col": 0,
+      "type": "external",
+      "label": "RELEASE BUNDLE",
+      "sublabel": "代表性流量 / REPRESENTATIVE TRAFFIC",
+      "width": 220,
+      "height": 66
+    },
+    {
+      "id": "can_control",
+      "lane": "can_control_lane",
+      "col": 1,
+      "type": "database",
+      "label": "CONTROL 95%",
+      "sublabel": "旧稳定 Bundle · VERSION PINNED",
+      "width": 200,
+      "height": 66
+    },
+    {
+      "id": "can_candidate",
+      "lane": "can_rollout",
+      "col": 1,
+      "type": "cloud",
+      "label": "CANARY 5%",
+      "sublabel": "新候选 Bundle · VERSION PINNED",
+      "width": 200,
+      "height": 66
+    },
+    {
+      "id": "can_gate",
+      "lane": "can_rollout",
+      "col": 2,
+      "type": "security",
+      "label": "VS · SLO GATE · 绝对 + 相对",
+      "sublabel": "QUALITY · SAFETY · LATENCY · COST",
+      "width": 220,
+      "height": 66
+    },
+    {
+      "id": "can_5",
+      "lane": "can_rollout",
+      "col": 3,
+      "type": "cloud",
+      "label": "5%",
+      "sublabel": "PASS 后扩流",
+      "width": 100,
+      "height": 66
+    },
+    {
+      "id": "can_25",
+      "lane": "can_rollout",
+      "col": 4,
+      "type": "cloud",
+      "label": "25%",
+      "sublabel": "重验门禁",
+      "width": 100,
+      "height": 66
+    },
+    {
+      "id": "can_50",
+      "lane": "can_rollout",
+      "col": 5,
+      "type": "cloud",
+      "label": "50%",
+      "sublabel": "重验门禁",
+      "width": 100,
+      "height": 66
+    },
+    {
+      "id": "can_100",
+      "lane": "can_recheck",
+      "col": 5,
+      "type": "cloud",
+      "label": "100%",
+      "sublabel": "全量持续监测",
+      "width": 100,
+      "height": 66
+    },
+    {
+      "id": "can_windows",
+      "lane": "can_recheck",
+      "col": 0,
+      "type": "security",
+      "label": "每级重验：样本 / 窗口",
+      "sublabel": "最小样本、完整任务窗口与 Cooldown",
+      "width": 220,
+      "height": 66
+    },
+    {
+      "id": "can_highrisk",
+      "lane": "can_recovery",
+      "col": 0,
+      "type": "security",
+      "label": "高风险写先 Shadow / Replay",
+      "sublabel": "副作用只由一组提交",
+      "width": 220,
+      "height": 66
+    },
+    {
+      "id": "can_safety",
+      "lane": "can_recovery",
+      "col": 1,
+      "type": "security",
+      "label": "严重 SAFETY 事件零容忍",
+      "sublabel": "不能由平均质量抵消",
+      "width": 200,
+      "height": 66
+    },
+    {
+      "id": "can_rollback",
+      "lane": "can_recovery",
+      "col": 2,
+      "type": "security",
+      "label": "ROLLBACK",
+      "sublabel": "新流量回兼容旧包；既有 Run 固定",
+      "width": 220,
+      "height": 66
+    }
+  ],
+  "edges": [
+    {
+      "id": "can_traffic_control",
+      "from": "can_bundle",
+      "to": "can_control",
+      "label": "同期粘性分桶",
+      "variant": "default",
+      "role": "branch",
+      "route": "auto"
+    },
+    {
+      "id": "can_traffic_candidate",
+      "from": "can_bundle",
+      "to": "can_candidate",
+      "label": "",
+      "variant": "emphasis",
+      "role": "main",
+      "route": "auto"
+    },
+    {
+      "id": "can_control_evidence",
+      "from": "can_control",
+      "to": "can_gate",
+      "label": "同期对照",
+      "variant": "dashed",
+      "role": "branch",
+      "route": "auto"
+    },
+    {
+      "id": "can_candidate_evidence",
+      "from": "can_candidate",
+      "to": "can_gate",
+      "label": "",
+      "variant": "emphasis",
+      "role": "main",
+      "route": "auto"
+    },
+    {
+      "id": "can_gate_pass",
+      "from": "can_gate",
+      "to": "can_5",
+      "label": "PASS",
+      "variant": "emphasis",
+      "role": "main",
+      "route": "auto"
+    },
+    {
+      "id": "can_expand25",
+      "from": "can_5",
+      "to": "can_25",
+      "label": "",
+      "variant": "emphasis",
+      "role": "main",
+      "route": "auto"
+    },
+    {
+      "id": "can_expand50",
+      "from": "can_25",
+      "to": "can_50",
+      "label": "",
+      "variant": "emphasis",
+      "role": "main",
+      "route": "auto"
+    },
+    {
+      "id": "can_expand100",
+      "from": "can_50",
+      "to": "can_100",
+      "label": "",
+      "variant": "emphasis",
+      "role": "main",
+      "route": "auto"
+    },
+    {
+      "id": "can_continue",
+      "from": "can_100",
+      "to": "can_5",
+      "label": "下一发布 / 持续复验",
+      "variant": "dashed",
+      "role": "return",
+      "route": "auto"
+    },
+    {
+      "id": "can_gate_fail",
+      "from": "can_gate",
+      "to": "can_rollback",
+      "label": "FAIL",
+      "variant": "security",
+      "role": "error",
+      "route": "auto"
+    }
+  ]
+}

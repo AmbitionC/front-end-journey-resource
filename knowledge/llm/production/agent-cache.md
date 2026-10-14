@@ -2,7 +2,7 @@ Agent 缓存并不是在模型调用前放一个 Redis。模型输出、工具�
 
 [RFC 9111](https://www.rfc-editor.org/rfc/rfc9111.html)给出了 HTTP 缓存最重要的两个思想：可复用对象必须有完整身份，陈旧响应只能在明确规则下使用并可通过验证器重新验证。Agent 缓存可以借用这些原则，但必须加入模型、Prompt、工具、索引和授权等领域维度。
 
-![请求经统一 Key Builder 加入租户、主体、模型、Prompt、工具、索引和策略版本后，分别进入模型、工具、检索和结果缓存，并由失效事件统一驱动](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-cache-layered-keys-v1.webp)
+<iframe src="https://www.agent-journey.cn/archify/agent-cache-layered-keys-archify-v2.html" width="100%" height="920" title="请求经统一 Key Builder 加入租户、主体、模型、Prompt、工具、索引和策略版本后，分别进入模型、工具、检索和结果缓存，并由失效事件统一驱动"></iframe>
 *图：不同缓存层有不同命中语义，不能用一个 TTL 解决所有一致性问题。*
 
 ## 先判断什么可以复用

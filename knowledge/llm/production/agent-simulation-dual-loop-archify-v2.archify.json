@@ -1,0 +1,303 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "用户模拟器与环境模拟器的独立闭环",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1200,
+      630
+    ]
+  },
+  "components": [
+    {
+      "id": "us_goal",
+      "type": "external",
+      "label": "GOAL / 目标",
+      "sublabel": "用户需要完成的任务",
+      "pos": [
+        50,
+        100
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "us_persona",
+      "type": "external",
+      "label": "PERSONA / 角色",
+      "sublabel": "知识、偏好与行为策略",
+      "pos": [
+        260,
+        100
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "us_observe",
+      "type": "external",
+      "label": "OBSERVE / 观察",
+      "sublabel": "仅接收角色允许的信息",
+      "pos": [
+        260,
+        250
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "us_decide",
+      "type": "external",
+      "label": "DECIDE / 决策",
+      "sublabel": "决定回答、继续或放弃",
+      "pos": [
+        260,
+        400
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "us_message",
+      "type": "external",
+      "label": "MESSAGE / 消息",
+      "sublabel": "生成可观察的用户行为",
+      "pos": [
+        50,
+        400
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "tested_agent",
+      "type": "backend",
+      "label": "AGENT / 被测系统",
+      "sublabel": "正式观察与动作接口",
+      "pos": [
+        540,
+        250
+      ],
+      "size": [
+        120,
+        64
+      ]
+    },
+    {
+      "id": "env_world",
+      "type": "database",
+      "label": "WORLD STATE / 状态",
+      "sublabel": "确定性世界与状态版本",
+      "pos": [
+        780,
+        100
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "env_rules",
+      "type": "backend",
+      "label": "RULES / 规则",
+      "sublabel": "权限与状态转移契约",
+      "pos": [
+        780,
+        250
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "env_tool_effect",
+      "type": "messagebus",
+      "label": "TOOL EFFECT / 效果",
+      "sublabel": "工具动作与真实副作用",
+      "pos": [
+        780,
+        400
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "env_clock",
+      "type": "backend",
+      "label": "CLOCK / 时钟",
+      "sublabel": "虚拟时间、延迟与超时",
+      "pos": [
+        990,
+        400
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "env_failure",
+      "type": "security",
+      "label": "FAILURE / 失败",
+      "sublabel": "按计划注入可重放故障",
+      "pos": [
+        990,
+        100
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "episode_controls",
+      "type": "backend",
+      "label": "RESET · SEED · STOP RULE · COVERAGE",
+      "sublabel": "重置初始状态 · 固定随机种子 · 硬停止规则 · 分层风险覆盖",
+      "pos": [
+        50,
+        550
+      ],
+      "size": [
+        1050,
+        54
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "USER SIMULATOR / 用户模拟器",
+      "wraps": [
+        "us_goal",
+        "us_persona",
+        "us_observe",
+        "us_decide",
+        "us_message"
+      ],
+      "pad": 20
+    },
+    {
+      "kind": "region",
+      "label": "ENVIRONMENT SIMULATOR / 环境模拟器",
+      "wraps": [
+        "env_world",
+        "env_rules",
+        "env_tool_effect",
+        "env_clock",
+        "env_failure"
+      ],
+      "pad": 20
+    }
+  ],
+  "connections": [
+    {
+      "id": "user_goal_persona",
+      "from": "us_goal",
+      "to": "us_persona",
+      "variant": "emphasis"
+    },
+    {
+      "id": "user_persona_observe",
+      "from": "us_persona",
+      "to": "us_observe",
+      "variant": "emphasis"
+    },
+    {
+      "id": "user_observe_decide",
+      "from": "us_observe",
+      "to": "us_decide",
+      "variant": "emphasis"
+    },
+    {
+      "id": "user_decide_message",
+      "from": "us_decide",
+      "to": "us_message",
+      "variant": "emphasis"
+    },
+    {
+      "id": "user_message_goal",
+      "from": "us_message",
+      "to": "us_goal",
+      "variant": "emphasis"
+    },
+    {
+      "id": "env_world_rules",
+      "from": "env_world",
+      "to": "env_rules",
+      "variant": "emphasis"
+    },
+    {
+      "id": "env_rules_effect",
+      "from": "env_rules",
+      "to": "env_tool_effect",
+      "variant": "emphasis"
+    },
+    {
+      "id": "env_effect_clock",
+      "from": "env_tool_effect",
+      "to": "env_clock",
+      "variant": "emphasis"
+    },
+    {
+      "id": "env_clock_failure",
+      "from": "env_clock",
+      "to": "env_failure",
+      "variant": "emphasis"
+    },
+    {
+      "id": "env_failure_world",
+      "from": "env_failure",
+      "to": "env_world",
+      "variant": "emphasis"
+    },
+    {
+      "id": "user_observations_agent",
+      "from": "us_message",
+      "to": "tested_agent",
+      "label": "OBSERVATIONS / 观察",
+      "variant": "default",
+      "fromSide": "bottom",
+      "toSide": "bottom"
+    },
+    {
+      "id": "agent_actions_user",
+      "from": "tested_agent",
+      "to": "us_observe",
+      "label": "ACTIONS / 动作",
+      "variant": "dashed"
+    },
+    {
+      "id": "agent_actions_environment",
+      "from": "tested_agent",
+      "to": "env_rules",
+      "label": "ACTIONS / 动作",
+      "variant": "default"
+    },
+    {
+      "id": "environment_observations_agent",
+      "from": "env_world",
+      "to": "tested_agent",
+      "label": "OBSERVATIONS / 观察",
+      "variant": "dashed",
+      "fromSide": "left",
+      "toSide": "top"
+    }
+  ]
+}

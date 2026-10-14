@@ -2,7 +2,7 @@ Agent 平台的并发问题不是把 Worker 数量调大。一次 Run 可能同�
 
 可靠的并发控制分为五层：准入、租户配额、调度公平、执行资源隔离和下游背压。每层解决不同问题，不能用一个 semaphore 同时代替。
 
-![多个租户请求先经过配额与准入，再由公平调度器分配到有界 Worker 池，CPU、内存和工具槽位分别隔离，过载通过背压返回入口](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-concurrency-fair-scheduler-v1.webp)
+<iframe src="https://www.agent-journey.cn/archify/agent-concurrency-fair-scheduler-archify-v2.html" width="100%" height="920" title="多个租户请求先经过配额与准入，再由公平调度器分配到有界 Worker 池，CPU、内存和工具槽位分别隔离，过载通过背压返回入口"></iframe>
 *图：公平不是每个队列轮一次这么简单，还要考虑权重、成本、等待时间和资源类型。*
 
 ## 从工作量单位开始

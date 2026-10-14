@@ -1,0 +1,285 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Agentic RL：长时序信用分配与策略更新",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1200,
+      630
+    ]
+  },
+  "components": [
+    {
+      "id": "rl_step_zero_state_action_observation",
+      "type": "backend",
+      "label": "状态 s0 · Agent策略",
+      "sublabel": "动作a0 → 工具/环境 → 观察o0 → s1",
+      "pos": [
+        40,
+        80
+      ],
+      "size": [
+        270,
+        64
+      ]
+    },
+    {
+      "id": "rl_step_one_state_action_observation",
+      "type": "backend",
+      "label": "状态 s1 · Agent策略",
+      "sublabel": "动作a1 → 工具/环境 → 观察o1 → …",
+      "pos": [
+        350,
+        80
+      ],
+      "size": [
+        270,
+        64
+      ]
+    },
+    {
+      "id": "rl_final_step_state_action_observation",
+      "type": "backend",
+      "label": "状态 sT−1 · Agent策略",
+      "sublabel": "动作aT−1 → 工具/环境 → 观察oT−1",
+      "pos": [
+        660,
+        80
+      ],
+      "size": [
+        310,
+        64
+      ]
+    },
+    {
+      "id": "rl_sparse_terminal_reward",
+      "type": "external",
+      "label": "终局奖励 RT",
+      "sublabel": "稀疏：仅终局信号",
+      "pos": [
+        1010,
+        80
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "rl_credit_assignment_over_trajectory",
+      "type": "backend",
+      "label": "信用分配：终局向早期回传",
+      "sublabel": "奖励覆盖整条轨迹，贡献需辨别",
+      "pos": [
+        700,
+        260
+      ],
+      "size": [
+        340,
+        80
+      ]
+    },
+    {
+      "id": "rl_distant_reward_uncertain_contribution",
+      "type": "security",
+      "label": "离终局远，因果链长",
+      "sublabel": "早期动作贡献不确定",
+      "pos": [
+        40,
+        230
+      ],
+      "size": [
+        270,
+        64
+      ]
+    },
+    {
+      "id": "rl_many_steps_error_accumulation",
+      "type": "security",
+      "label": "中间步骤多",
+      "sublabel": "错误易累积与放大",
+      "pos": [
+        350,
+        230
+      ],
+      "size": [
+        270,
+        64
+      ]
+    },
+    {
+      "id": "rl_stochastic_partial_observability",
+      "type": "security",
+      "label": "环境随机性与部分可观测",
+      "sublabel": "归因与估计不确定",
+      "pos": [
+        40,
+        350
+      ],
+      "size": [
+        270,
+        64
+      ]
+    },
+    {
+      "id": "rl_diluted_key_action_difference",
+      "type": "security",
+      "label": "微小差异被稀释",
+      "sublabel": "难以归因关键动作",
+      "pos": [
+        350,
+        350
+      ],
+      "size": [
+        270,
+        64
+      ]
+    },
+    {
+      "id": "rl_collect_trajectories_and_aggregate",
+      "type": "database",
+      "label": "收集多条轨迹 → 经验汇总",
+      "sublabel": "策略更新使用完整轨迹与奖励",
+      "pos": [
+        40,
+        505
+      ],
+      "size": [
+        340,
+        74
+      ]
+    },
+    {
+      "id": "rl_estimate_advantage_and_value",
+      "type": "backend",
+      "label": "估计优势 / 价值",
+      "sublabel": "把奖励转为策略优化信号",
+      "pos": [
+        430,
+        505
+      ],
+      "size": [
+        320,
+        74
+      ]
+    },
+    {
+      "id": "rl_update_policy_and_improve",
+      "type": "backend",
+      "label": "更新策略 → 更优策略",
+      "sublabel": "继续采样，开始下一轮",
+      "pos": [
+        800,
+        505
+      ],
+      "size": [
+        360,
+        74
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "长时序轨迹：状态 → 动作 → 工具/环境 → 观察反馈（重复）",
+      "wraps": [
+        "rl_step_zero_state_action_observation",
+        "rl_step_one_state_action_observation",
+        "rl_final_step_state_action_observation",
+        "rl_sparse_terminal_reward"
+      ],
+      "pad": 20
+    },
+    {
+      "kind": "region",
+      "label": "信用分配难点：轨迹越长，归因越难",
+      "wraps": [
+        "rl_credit_assignment_over_trajectory",
+        "rl_distant_reward_uncertain_contribution",
+        "rl_many_steps_error_accumulation",
+        "rl_stochastic_partial_observability",
+        "rl_diluted_key_action_difference"
+      ],
+      "pad": 20
+    },
+    {
+      "kind": "region",
+      "label": "策略更新闭环",
+      "wraps": [
+        "rl_collect_trajectories_and_aggregate",
+        "rl_estimate_advantage_and_value",
+        "rl_update_policy_and_improve"
+      ],
+      "pad": 18
+    }
+  ],
+  "connections": [
+    {
+      "id": "rl_observation_zero_to_next_state",
+      "from": "rl_step_zero_state_action_observation",
+      "to": "rl_step_one_state_action_observation",
+      "variant": "dashed",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "rl_many_intermediate_decisions",
+      "from": "rl_step_one_state_action_observation",
+      "to": "rl_final_step_state_action_observation",
+      "variant": "dashed",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "rl_final_observation_to_terminal_reward",
+      "from": "rl_final_step_state_action_observation",
+      "to": "rl_sparse_terminal_reward",
+      "variant": "dashed",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "rl_terminal_reward_into_credit_assignment",
+      "from": "rl_sparse_terminal_reward",
+      "to": "rl_credit_assignment_over_trajectory",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "right"
+    },
+    {
+      "id": "rl_credit_return_to_early_decisions",
+      "from": "rl_credit_assignment_over_trajectory",
+      "to": "rl_step_zero_state_action_observation",
+      "label": "整轨迹回传信用",
+      "variant": "emphasis",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "rl_experience_to_advantage_estimation",
+      "from": "rl_collect_trajectories_and_aggregate",
+      "to": "rl_estimate_advantage_and_value",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "rl_advantage_to_policy_optimization",
+      "from": "rl_estimate_advantage_and_value",
+      "to": "rl_update_policy_and_improve",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "rl_improved_policy_next_sampling_round",
+      "from": "rl_update_policy_and_improve",
+      "to": "rl_collect_trajectories_and_aggregate",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "bottom"
+    }
+  ]
+}

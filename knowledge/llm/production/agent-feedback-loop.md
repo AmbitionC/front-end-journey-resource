@@ -6,7 +6,7 @@
 
 生产 trace 关联输入类别、版本包、决策、工具、结果、延迟和成本，内容按隐私策略最小化。[OpenTelemetry traces](https://opentelemetry.io/docs/concepts/signals/traces/)提供跨服务 parent/child span 与事件模型，可用于重建一次 Agent 任务；敏感 prompt 使用受控引用而非普通 span attribute。
 
-![生产 Trace 与用户反馈经分诊和失败分类形成带输入、期望属性、版本和切片的可重放案例，进入评估集；候选变更经过离线评估、人工校准、安全门和金丝雀，回归则回滚并新增案例](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-feedback-loop-eval-flywheel-v1.webp)
+<iframe src="https://www.agent-journey.cn/archify/agent-feedback-loop-eval-flywheel-archify-v2.html" width="100%" height="920" title="生产 Trace 与用户反馈经分诊和失败分类形成带输入、期望属性、版本和切片的可重放案例，进入评估集；候选变更经过离线评估、人工校准、安全门和金丝雀，回归则回滚并新增案例"></iframe>
 *图：工具正确、安全、延迟、成本、拒答和边缘案例分别评分，不用单一总分掩盖退化。*
 
 ## 从事件到 Replayable Case

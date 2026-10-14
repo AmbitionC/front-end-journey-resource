@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "complete": true,
-  "expectedCount": 123,
+  "expectedCount": 130,
   "entries": [
     {
       "id": "context-engineering:mermaid:45",
@@ -6821,6 +6821,1098 @@
       "width": 1252,
       "height": 2076,
       "renderedVectorSha256": "51dc39594160293744b88cfc7097f19bfb8c85d5093b004857d291e943ffcccf"
+    },
+    {
+      "id": "agentic-rl:archify:3",
+      "kind": "archify",
+      "articlePath": "knowledge/llm/agent/agentic-rl.md",
+      "articleSha256": "a22c692d9eb27e4afd0b4046ce1873935bcb3b59709cbc6f1731d09ed0f39149",
+      "line": 3,
+      "sourceText": "<iframe src=\"https://www.agent-journey.cn/archify/agentic-rl-long-horizon-credit-assignment-archify-v2.html\" width=\"100%\" height=\"920\" title=\"Agent 在长时序中反复观察、行动和调用环境，稀疏终局奖励需要跨越整条轨迹完成信用分配\"></iframe>",
+      "sourceSha256": "85e8f569b4043f0de102f4db47894ec79fd541d5edeeea34f785558668181948",
+      "url": "https://www.agent-journey.cn/archify/agentic-rl-long-horizon-credit-assignment-archify-v2.html",
+      "specPath": "knowledge/llm/agent/agentic-rl-long-horizon-credit-assignment-archify-v2.archify.json",
+      "specSha256": "107a0381b186412bb9a4fb85c0f3e6edc289d1beb3cfebdc6b5b171e09cdde47",
+      "vectorSha256": "53b0b3393005c46ba636b6a1effa1586da99648f16895940d3690b3cc6cb9d07",
+      "renderedVectorSha256": "53b0b3393005c46ba636b6a1effa1586da99648f16895940d3690b3cc6cb9d07",
+      "cacheKey": "db44cfdd42b0ec36e8e414e96fbedf059322fb17d6b5686da5eeba0e28dd86c3",
+      "renderer": {
+        "archify": "2.16.0",
+        "archifyRevision": "199360cc6687a7857b54dd188d4922b09e466a4b",
+        "export": "official Archify.exportMenu.run",
+        "htmlSha256": "6b3bfc61a9395da3ea026fe1c5a7d22e607ad3f7a71e0851f28557d9c3726bb1",
+        "officialPngSha256": "d5b61fa27dcc9f4d74894e25a0283c17660eaac3d217a6d56308d2995d5fea63",
+        "source": "fixed199360 official Archify.exportMenu.run with real browser downloads",
+        "pngSvgProjection": {
+          "svgViewBox": [
+            0.0,
+            0.0,
+            1200.0,
+            630.0
+          ],
+          "officialPngSize": [
+            4800,
+            2520
+          ],
+          "ratioX": 4.0,
+          "ratioY": 4.0,
+          "cropUsesExactOfficialPixels": true
+        }
+      },
+      "outputPath": "images/pdf-agentic-rl-long-horizon-credit-assignment-archify-v2.png",
+      "outputSha256": "d5b61fa27dcc9f4d74894e25a0283c17660eaac3d217a6d56308d2995d5fea63",
+      "width": 4800,
+      "height": 2520,
+      "panels": [
+        {
+          "row": 1,
+          "column": 1,
+          "sourceVectorSha256": "53b0b3393005c46ba636b6a1effa1586da99648f16895940d3690b3cc6cb9d07",
+          "rect": [
+            0.0,
+            0.0,
+            1000.0,
+            580.0
+          ],
+          "outputPath": "images/pdf-agentic-rl-long-horizon-credit-assignment-archify-v2-detail-1-1.png",
+          "outputSha256": "fe2d2a9238db9654dda82c9eb16535d188b214459aeed2507260dec2e9cd460a",
+          "width": 4000,
+          "height": 2320,
+          "croppedFromOfficialPngSHA": "d5b61fa27dcc9f4d74894e25a0283c17660eaac3d217a6d56308d2995d5fea63",
+          "derivative": {
+            "kind": "lossless-official-png-crop-v1",
+            "pixelRect": [
+              0,
+              0,
+              4000,
+              2320
+            ],
+            "sourcePixelSha256": "922b16e9eba88690643793a268141856105a77fa235b0d3960a0a0d5cd7f5061",
+            "ratioX": 4.0,
+            "ratioY": 4.0
+          }
+        },
+        {
+          "row": 1,
+          "column": 2,
+          "sourceVectorSha256": "53b0b3393005c46ba636b6a1effa1586da99648f16895940d3690b3cc6cb9d07",
+          "rect": [
+            900.0,
+            0.0,
+            300.0,
+            580.0
+          ],
+          "outputPath": "images/pdf-agentic-rl-long-horizon-credit-assignment-archify-v2-detail-1-2.png",
+          "outputSha256": "135b9cf75f7c3e1ee99404bd6b5489395fcfe77dcd59d830c9470eeb437c9687",
+          "width": 1200,
+          "height": 2320,
+          "croppedFromOfficialPngSHA": "d5b61fa27dcc9f4d74894e25a0283c17660eaac3d217a6d56308d2995d5fea63",
+          "derivative": {
+            "kind": "lossless-official-png-crop-v1",
+            "pixelRect": [
+              3600,
+              0,
+              4800,
+              2320
+            ],
+            "sourcePixelSha256": "be9ebd283577ced98c536a3013df4826e38379d1c9bf2271f90e1f2836c73c6a",
+            "ratioX": 4.0,
+            "ratioY": 4.0
+          }
+        },
+        {
+          "row": 2,
+          "column": 1,
+          "sourceVectorSha256": "53b0b3393005c46ba636b6a1effa1586da99648f16895940d3690b3cc6cb9d07",
+          "rect": [
+            0.0,
+            480.0,
+            1000.0,
+            150.0
+          ],
+          "outputPath": "images/pdf-agentic-rl-long-horizon-credit-assignment-archify-v2-detail-2-1.png",
+          "outputSha256": "f1dce2ebba38484f7905a33aef801a61bc458466f3effe20813a514e3220d43c",
+          "width": 4000,
+          "height": 600,
+          "croppedFromOfficialPngSHA": "d5b61fa27dcc9f4d74894e25a0283c17660eaac3d217a6d56308d2995d5fea63",
+          "derivative": {
+            "kind": "lossless-official-png-crop-v1",
+            "pixelRect": [
+              0,
+              1920,
+              4000,
+              2520
+            ],
+            "sourcePixelSha256": "f10ad4ce1db7f0f613d612e05f26d658d978d49284da2341ae9bda14b73cb9cd",
+            "ratioX": 4.0,
+            "ratioY": 4.0
+          }
+        },
+        {
+          "row": 2,
+          "column": 2,
+          "sourceVectorSha256": "53b0b3393005c46ba636b6a1effa1586da99648f16895940d3690b3cc6cb9d07",
+          "rect": [
+            900.0,
+            480.0,
+            300.0,
+            150.0
+          ],
+          "outputPath": "images/pdf-agentic-rl-long-horizon-credit-assignment-archify-v2-detail-2-2.png",
+          "outputSha256": "fe7971743be0e0108582fc90dce373917dbf19768258d2c6b5bf56d535281b95",
+          "width": 1200,
+          "height": 600,
+          "croppedFromOfficialPngSHA": "d5b61fa27dcc9f4d74894e25a0283c17660eaac3d217a6d56308d2995d5fea63",
+          "derivative": {
+            "kind": "lossless-official-png-crop-v1",
+            "pixelRect": [
+              3600,
+              1920,
+              4800,
+              2520
+            ],
+            "sourcePixelSha256": "b0d7a06e912ae6d196cd17b098507f80ec54ed3e2c3a0cf3beb60fb8ee8751b7",
+            "ratioX": 4.0,
+            "ratioY": 4.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "agent-cache:archify:5",
+      "kind": "archify",
+      "articlePath": "knowledge/llm/production/agent-cache.md",
+      "articleSha256": "fb32c68d5985191e5f01eebdeeb0db64a2878250053ab7b1f8c09ab1e1fd4566",
+      "line": 5,
+      "sourceText": "<iframe src=\"https://www.agent-journey.cn/archify/agent-cache-layered-keys-archify-v2.html\" width=\"100%\" height=\"920\" title=\"请求经统一 Key Builder 加入租户、主体、模型、Prompt、工具、索引和策略版本后，分别进入模型、工具、检索和结果缓存，并由失效事件统一驱动\"></iframe>",
+      "sourceSha256": "71d6990be0f9f94a5ed629f41f0cf9b2ac676fbe15eb59257f910bb7a25944cb",
+      "url": "https://www.agent-journey.cn/archify/agent-cache-layered-keys-archify-v2.html",
+      "specPath": "knowledge/llm/production/agent-cache-layered-keys-archify-v2.archify.json",
+      "specSha256": "2b3c8e8546d56370132c55b15fe67d3e1f0a42772997d633f973eea4a333aeac",
+      "vectorSha256": "0e9e8dfd3842bdfc81aa7546222aa8639da01ca76033c8edd394d9bd56d6e863",
+      "renderedVectorSha256": "0e9e8dfd3842bdfc81aa7546222aa8639da01ca76033c8edd394d9bd56d6e863",
+      "cacheKey": "97f4f873d9fe9681eda597a10d0d4300229c47ae2846170eadce5b0e6d203c6c",
+      "renderer": {
+        "archify": "2.16.0",
+        "archifyRevision": "199360cc6687a7857b54dd188d4922b09e466a4b",
+        "export": "official Archify.exportMenu.run",
+        "htmlSha256": "7365541776152ea7657189b4cb68dea03f2dfb5f3a5952c6c71228fe42e90f6b",
+        "officialPngSha256": "6408d6d43bbf2c5fd21db7f13c9a99c61d32c4e46cb1a10f93bf86eea8be5c83",
+        "source": "fixed199360 official Archify.exportMenu.run with real browser downloads",
+        "pngSvgProjection": {
+          "svgViewBox": [
+            0.0,
+            0.0,
+            1200.0,
+            630.0
+          ],
+          "officialPngSize": [
+            4800,
+            2520
+          ],
+          "ratioX": 4.0,
+          "ratioY": 4.0,
+          "cropUsesExactOfficialPixels": true
+        }
+      },
+      "outputPath": "images/pdf-agent-cache-layered-keys-archify-v2.png",
+      "outputSha256": "6408d6d43bbf2c5fd21db7f13c9a99c61d32c4e46cb1a10f93bf86eea8be5c83",
+      "width": 4800,
+      "height": 2520,
+      "panels": [
+        {
+          "row": 1,
+          "column": 1,
+          "sourceVectorSha256": "0e9e8dfd3842bdfc81aa7546222aa8639da01ca76033c8edd394d9bd56d6e863",
+          "rect": [
+            0.0,
+            0.0,
+            1000.0,
+            580.0
+          ],
+          "outputPath": "images/pdf-agent-cache-layered-keys-archify-v2-detail-1-1.png",
+          "outputSha256": "22af93fc3a14097532d0724ba6d9c8a3725243bc23644cf8dd1cc981a8b06ce4",
+          "width": 4000,
+          "height": 2320,
+          "croppedFromOfficialPngSHA": "6408d6d43bbf2c5fd21db7f13c9a99c61d32c4e46cb1a10f93bf86eea8be5c83",
+          "derivative": {
+            "kind": "lossless-official-png-crop-v1",
+            "pixelRect": [
+              0,
+              0,
+              4000,
+              2320
+            ],
+            "sourcePixelSha256": "09496dd30322adf366789ceed0cacf72c36afbd6cc9db71b9c7a18c01266c0f3",
+            "ratioX": 4.0,
+            "ratioY": 4.0
+          }
+        },
+        {
+          "row": 1,
+          "column": 2,
+          "sourceVectorSha256": "0e9e8dfd3842bdfc81aa7546222aa8639da01ca76033c8edd394d9bd56d6e863",
+          "rect": [
+            900.0,
+            0.0,
+            300.0,
+            580.0
+          ],
+          "outputPath": "images/pdf-agent-cache-layered-keys-archify-v2-detail-1-2.png",
+          "outputSha256": "a36fa7ca5601f2e7be89f4225d49cdc2d5c475d8a77d1a508aed1450ad33f9b9",
+          "width": 1200,
+          "height": 2320,
+          "croppedFromOfficialPngSHA": "6408d6d43bbf2c5fd21db7f13c9a99c61d32c4e46cb1a10f93bf86eea8be5c83",
+          "derivative": {
+            "kind": "lossless-official-png-crop-v1",
+            "pixelRect": [
+              3600,
+              0,
+              4800,
+              2320
+            ],
+            "sourcePixelSha256": "1f6fcafeed66dedd3cd54675000db2550e8e437751edc1df1f60a38d9fb7ec48",
+            "ratioX": 4.0,
+            "ratioY": 4.0
+          }
+        },
+        {
+          "row": 2,
+          "column": 1,
+          "sourceVectorSha256": "0e9e8dfd3842bdfc81aa7546222aa8639da01ca76033c8edd394d9bd56d6e863",
+          "rect": [
+            0.0,
+            480.0,
+            1000.0,
+            150.0
+          ],
+          "outputPath": "images/pdf-agent-cache-layered-keys-archify-v2-detail-2-1.png",
+          "outputSha256": "9b0741329327d9490d3f83219769e9403e1fac9e41578471dee19abb277dd429",
+          "width": 4000,
+          "height": 600,
+          "croppedFromOfficialPngSHA": "6408d6d43bbf2c5fd21db7f13c9a99c61d32c4e46cb1a10f93bf86eea8be5c83",
+          "derivative": {
+            "kind": "lossless-official-png-crop-v1",
+            "pixelRect": [
+              0,
+              1920,
+              4000,
+              2520
+            ],
+            "sourcePixelSha256": "e79fd0ad5c878dceb16067216c31e8f79b4a9259f5f002e0fad71d1e7728027d",
+            "ratioX": 4.0,
+            "ratioY": 4.0
+          }
+        },
+        {
+          "row": 2,
+          "column": 2,
+          "sourceVectorSha256": "0e9e8dfd3842bdfc81aa7546222aa8639da01ca76033c8edd394d9bd56d6e863",
+          "rect": [
+            900.0,
+            480.0,
+            300.0,
+            150.0
+          ],
+          "outputPath": "images/pdf-agent-cache-layered-keys-archify-v2-detail-2-2.png",
+          "outputSha256": "fd77fe9caf9e53c7fc2772a640798b33e6352526f72eb2825b06d42029875935",
+          "width": 1200,
+          "height": 600,
+          "croppedFromOfficialPngSHA": "6408d6d43bbf2c5fd21db7f13c9a99c61d32c4e46cb1a10f93bf86eea8be5c83",
+          "derivative": {
+            "kind": "lossless-official-png-crop-v1",
+            "pixelRect": [
+              3600,
+              1920,
+              4800,
+              2520
+            ],
+            "sourcePixelSha256": "c69aa3d2216eedfee09c08c09a4d7ee3b2b9051795141a42e9b8d35304fc2811",
+            "ratioX": 4.0,
+            "ratioY": 4.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "agent-concurrency:archify:5",
+      "kind": "archify",
+      "articlePath": "knowledge/llm/production/agent-concurrency.md",
+      "articleSha256": "3c6920a9fcb66df1551217adadc4f24dd2f944d53cffcc6b2d127fff177958b8",
+      "line": 5,
+      "sourceText": "<iframe src=\"https://www.agent-journey.cn/archify/agent-concurrency-fair-scheduler-archify-v2.html\" width=\"100%\" height=\"920\" title=\"多个租户请求先经过配额与准入，再由公平调度器分配到有界 Worker 池，CPU、内存和工具槽位分别隔离，过载通过背压返回入口\"></iframe>",
+      "sourceSha256": "f33661f08f3a4bddd6670b9f9dc37732904a5e705998b785aaf38903eacd66d3",
+      "url": "https://www.agent-journey.cn/archify/agent-concurrency-fair-scheduler-archify-v2.html",
+      "specPath": "knowledge/llm/production/agent-concurrency-fair-scheduler-archify-v2.archify.json",
+      "specSha256": "bf418663eabc3c822eebedab05d36928201a9a8825f8a88fa4e76492e274aa01",
+      "vectorSha256": "8e4f880bcf1c489dcf7b45ea6d8f46d90b1f24b6e453a5cf43e15c728463f972",
+      "renderedVectorSha256": "8e4f880bcf1c489dcf7b45ea6d8f46d90b1f24b6e453a5cf43e15c728463f972",
+      "cacheKey": "28b25bec0c1dda26bcd6a4b24108bc17a3080d2e7e98e0dfa473a10106fe7a02",
+      "renderer": {
+        "archify": "2.16.0",
+        "archifyRevision": "199360cc6687a7857b54dd188d4922b09e466a4b",
+        "export": "official Archify.exportMenu.run",
+        "htmlSha256": "ceb0e825111c6983bec4f599b88cb347e95eb27e8d0212cfbdbb45d13dbae03c",
+        "officialPngSha256": "731647b8642c7b3221895b6946b1b4725e4dd92282b22eed0fc7bc3371a80411",
+        "source": "fixed199360 official Archify.exportMenu.run with real browser downloads",
+        "pngSvgProjection": {
+          "svgViewBox": [
+            0.0,
+            0.0,
+            1200.0,
+            630.0
+          ],
+          "officialPngSize": [
+            4800,
+            2520
+          ],
+          "ratioX": 4.0,
+          "ratioY": 4.0,
+          "cropUsesExactOfficialPixels": true
+        }
+      },
+      "outputPath": "images/pdf-agent-concurrency-fair-scheduler-archify-v2.png",
+      "outputSha256": "731647b8642c7b3221895b6946b1b4725e4dd92282b22eed0fc7bc3371a80411",
+      "width": 4800,
+      "height": 2520,
+      "panels": [
+        {
+          "row": 1,
+          "column": 1,
+          "sourceVectorSha256": "8e4f880bcf1c489dcf7b45ea6d8f46d90b1f24b6e453a5cf43e15c728463f972",
+          "rect": [
+            0.0,
+            0.0,
+            1000.0,
+            580.0
+          ],
+          "outputPath": "images/pdf-agent-concurrency-fair-scheduler-archify-v2-detail-1-1.png",
+          "outputSha256": "326ed31dfc6d33db99173359860ed10d2a87ec90068591314512f41f8a014d20",
+          "width": 4000,
+          "height": 2320,
+          "croppedFromOfficialPngSHA": "731647b8642c7b3221895b6946b1b4725e4dd92282b22eed0fc7bc3371a80411",
+          "derivative": {
+            "kind": "lossless-official-png-crop-v1",
+            "pixelRect": [
+              0,
+              0,
+              4000,
+              2320
+            ],
+            "sourcePixelSha256": "3fc92de186acff9c016bbdb94f2265645ede6e9f5f790487e8e28773417f30d3",
+            "ratioX": 4.0,
+            "ratioY": 4.0
+          }
+        },
+        {
+          "row": 1,
+          "column": 2,
+          "sourceVectorSha256": "8e4f880bcf1c489dcf7b45ea6d8f46d90b1f24b6e453a5cf43e15c728463f972",
+          "rect": [
+            900.0,
+            0.0,
+            300.0,
+            580.0
+          ],
+          "outputPath": "images/pdf-agent-concurrency-fair-scheduler-archify-v2-detail-1-2.png",
+          "outputSha256": "6ff14435f540debbe2429387c047abeda52d87f99a41032da08822b9b17f74be",
+          "width": 1200,
+          "height": 2320,
+          "croppedFromOfficialPngSHA": "731647b8642c7b3221895b6946b1b4725e4dd92282b22eed0fc7bc3371a80411",
+          "derivative": {
+            "kind": "lossless-official-png-crop-v1",
+            "pixelRect": [
+              3600,
+              0,
+              4800,
+              2320
+            ],
+            "sourcePixelSha256": "30ec048a70f877dd98d91a9ef57a22f3c7b6f4a063132d9211806b6665812096",
+            "ratioX": 4.0,
+            "ratioY": 4.0
+          }
+        },
+        {
+          "row": 2,
+          "column": 1,
+          "sourceVectorSha256": "8e4f880bcf1c489dcf7b45ea6d8f46d90b1f24b6e453a5cf43e15c728463f972",
+          "rect": [
+            0.0,
+            480.0,
+            1000.0,
+            150.0
+          ],
+          "outputPath": "images/pdf-agent-concurrency-fair-scheduler-archify-v2-detail-2-1.png",
+          "outputSha256": "2971ae905ea15fba60e04835fae07cd55aebc2ec1c76622d5a8957db0f3984f9",
+          "width": 4000,
+          "height": 600,
+          "croppedFromOfficialPngSHA": "731647b8642c7b3221895b6946b1b4725e4dd92282b22eed0fc7bc3371a80411",
+          "derivative": {
+            "kind": "lossless-official-png-crop-v1",
+            "pixelRect": [
+              0,
+              1920,
+              4000,
+              2520
+            ],
+            "sourcePixelSha256": "32c59d68a84765f1f29dbea6ce44f1a8bbcd215205b6ea5a3513847f289236e0",
+            "ratioX": 4.0,
+            "ratioY": 4.0
+          }
+        },
+        {
+          "row": 2,
+          "column": 2,
+          "sourceVectorSha256": "8e4f880bcf1c489dcf7b45ea6d8f46d90b1f24b6e453a5cf43e15c728463f972",
+          "rect": [
+            900.0,
+            480.0,
+            300.0,
+            150.0
+          ],
+          "outputPath": "images/pdf-agent-concurrency-fair-scheduler-archify-v2-detail-2-2.png",
+          "outputSha256": "966b1b05d0852ea8d2d24067a75c7b2905f0302f596bfa2f02277945c8df4a4a",
+          "width": 1200,
+          "height": 600,
+          "croppedFromOfficialPngSHA": "731647b8642c7b3221895b6946b1b4725e4dd92282b22eed0fc7bc3371a80411",
+          "derivative": {
+            "kind": "lossless-official-png-crop-v1",
+            "pixelRect": [
+              3600,
+              1920,
+              4800,
+              2520
+            ],
+            "sourcePixelSha256": "e7a0c6349dd0359ac6f3dc6e97188867df9d7b5b3c29a4f87e38987b2dbc7d6b",
+            "ratioX": 4.0,
+            "ratioY": 4.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "agent-feedback-loop:archify:9",
+      "kind": "archify",
+      "articlePath": "knowledge/llm/production/agent-feedback-loop.md",
+      "articleSha256": "3ec815a4208e0e22b0b71f06c1e6a4ada418046e8d37072af2b3bed073beccae",
+      "line": 9,
+      "sourceText": "<iframe src=\"https://www.agent-journey.cn/archify/agent-feedback-loop-eval-flywheel-archify-v2.html\" width=\"100%\" height=\"920\" title=\"生产 Trace 与用户反馈经分诊和失败分类形成带输入、期望属性、版本和切片的可重放案例，进入评估集；候选变更经过离线评估、人工校准、安全门和金丝雀，回归则回滚并新增案例\"></iframe>",
+      "sourceSha256": "72c781669dc80bb839e716b15a88d70f447bce65561c96782f917f5245b01119",
+      "url": "https://www.agent-journey.cn/archify/agent-feedback-loop-eval-flywheel-archify-v2.html",
+      "specPath": "knowledge/llm/production/agent-feedback-loop-eval-flywheel-archify-v2.archify.json",
+      "specSha256": "1718a3ca1b4e3a18ea8fe142afc84e84e609b468d6cbcbcc63db1698e1542f95",
+      "vectorSha256": "121b8af22d27b8cc2cdcf6951498058970da13a0f14cb312d65e3f92e4ef3079",
+      "renderedVectorSha256": "121b8af22d27b8cc2cdcf6951498058970da13a0f14cb312d65e3f92e4ef3079",
+      "cacheKey": "5baa697b5a648bd104033a3649ae3c7751ff6c625ff9b29fa161a2ed4acfa346",
+      "renderer": {
+        "archify": "2.16.0",
+        "archifyRevision": "199360cc6687a7857b54dd188d4922b09e466a4b",
+        "export": "official Archify.exportMenu.run",
+        "htmlSha256": "b85645198a027d8207f8c08fbe911bdb9dfb774906a7fcb9c2c071bd92799ea9",
+        "officialPngSha256": "1f7bb41bb42f217ce124527ccb6a483d7a96cd9237096f8ea0ef32598e165c04",
+        "source": "fixed199360 official Archify.exportMenu.run with real browser downloads",
+        "pngSvgProjection": {
+          "svgViewBox": [
+            0.0,
+            0.0,
+            1200.0,
+            630.0
+          ],
+          "officialPngSize": [
+            4800,
+            2520
+          ],
+          "ratioX": 4.0,
+          "ratioY": 4.0,
+          "cropUsesExactOfficialPixels": true
+        }
+      },
+      "outputPath": "images/pdf-agent-feedback-loop-eval-flywheel-archify-v2.png",
+      "outputSha256": "1f7bb41bb42f217ce124527ccb6a483d7a96cd9237096f8ea0ef32598e165c04",
+      "width": 4800,
+      "height": 2520,
+      "panels": [
+        {
+          "row": 1,
+          "column": 1,
+          "sourceVectorSha256": "121b8af22d27b8cc2cdcf6951498058970da13a0f14cb312d65e3f92e4ef3079",
+          "rect": [
+            0.0,
+            0.0,
+            1000.0,
+            580.0
+          ],
+          "outputPath": "images/pdf-agent-feedback-loop-eval-flywheel-archify-v2-detail-1-1.png",
+          "outputSha256": "8a03225330fdf4c60adfe5a4d531653743663f81b6fa7d774bc474a3fdbf5723",
+          "width": 4000,
+          "height": 2320,
+          "croppedFromOfficialPngSHA": "1f7bb41bb42f217ce124527ccb6a483d7a96cd9237096f8ea0ef32598e165c04",
+          "derivative": {
+            "kind": "lossless-official-png-crop-v1",
+            "pixelRect": [
+              0,
+              0,
+              4000,
+              2320
+            ],
+            "sourcePixelSha256": "f5075aa75ccb0ad5a74e6cc97c1778cb4866f3411df415a8b4b3c1d688d7a8bd",
+            "ratioX": 4.0,
+            "ratioY": 4.0
+          }
+        },
+        {
+          "row": 1,
+          "column": 2,
+          "sourceVectorSha256": "121b8af22d27b8cc2cdcf6951498058970da13a0f14cb312d65e3f92e4ef3079",
+          "rect": [
+            900.0,
+            0.0,
+            300.0,
+            580.0
+          ],
+          "outputPath": "images/pdf-agent-feedback-loop-eval-flywheel-archify-v2-detail-1-2.png",
+          "outputSha256": "a6ffe4d022ee09a5315807d3d49f40b7886ec93b014cafe1b6297d5fee789c07",
+          "width": 1200,
+          "height": 2320,
+          "croppedFromOfficialPngSHA": "1f7bb41bb42f217ce124527ccb6a483d7a96cd9237096f8ea0ef32598e165c04",
+          "derivative": {
+            "kind": "lossless-official-png-crop-v1",
+            "pixelRect": [
+              3600,
+              0,
+              4800,
+              2320
+            ],
+            "sourcePixelSha256": "6086632eea7016683f52339a4edf020a3ee0e674b0de60278686841163c3e5cf",
+            "ratioX": 4.0,
+            "ratioY": 4.0
+          }
+        },
+        {
+          "row": 2,
+          "column": 1,
+          "sourceVectorSha256": "121b8af22d27b8cc2cdcf6951498058970da13a0f14cb312d65e3f92e4ef3079",
+          "rect": [
+            0.0,
+            480.0,
+            1000.0,
+            150.0
+          ],
+          "outputPath": "images/pdf-agent-feedback-loop-eval-flywheel-archify-v2-detail-2-1.png",
+          "outputSha256": "9058b285f1bf465891e77708e7a67a456b15981da6c608b7a72134948fbb674e",
+          "width": 4000,
+          "height": 600,
+          "croppedFromOfficialPngSHA": "1f7bb41bb42f217ce124527ccb6a483d7a96cd9237096f8ea0ef32598e165c04",
+          "derivative": {
+            "kind": "lossless-official-png-crop-v1",
+            "pixelRect": [
+              0,
+              1920,
+              4000,
+              2520
+            ],
+            "sourcePixelSha256": "2a17b86e022123d0ae60288127753e8b32263f30d1db3deef97705cfd90fbfe2",
+            "ratioX": 4.0,
+            "ratioY": 4.0
+          }
+        },
+        {
+          "row": 2,
+          "column": 2,
+          "sourceVectorSha256": "121b8af22d27b8cc2cdcf6951498058970da13a0f14cb312d65e3f92e4ef3079",
+          "rect": [
+            900.0,
+            480.0,
+            300.0,
+            150.0
+          ],
+          "outputPath": "images/pdf-agent-feedback-loop-eval-flywheel-archify-v2-detail-2-2.png",
+          "outputSha256": "518da3aa38e35520806149dc65ecd5b41c9089b0c838d8cb0cf4b75762d0521d",
+          "width": 1200,
+          "height": 600,
+          "croppedFromOfficialPngSHA": "1f7bb41bb42f217ce124527ccb6a483d7a96cd9237096f8ea0ef32598e165c04",
+          "derivative": {
+            "kind": "lossless-official-png-crop-v1",
+            "pixelRect": [
+              3600,
+              1920,
+              4800,
+              2520
+            ],
+            "sourcePixelSha256": "9d330dbc1c0101f26872c7264fd76fd752dd717f7cbcc0d248cae9be15f35011",
+            "ratioX": 4.0,
+            "ratioY": 4.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "agent-simulation:archify:5",
+      "kind": "archify",
+      "articlePath": "knowledge/llm/production/agent-simulation.md",
+      "articleSha256": "ae551edb116fe65ae58e55ea2100e1001de8405c373d9fc98c7c07a2ba722556",
+      "line": 5,
+      "sourceText": "<iframe src=\"https://www.agent-journey.cn/archify/agent-simulation-dual-loop-archify-v2.html\" width=\"100%\" height=\"920\" title=\"用户模拟器与环境模拟器围绕被测 Agent 独立运行\"></iframe>",
+      "sourceSha256": "e75c8385fe6008c10bc5b6c5d8aa5934459daad61afd2e965668344b6b514cec",
+      "url": "https://www.agent-journey.cn/archify/agent-simulation-dual-loop-archify-v2.html",
+      "specPath": "knowledge/llm/production/agent-simulation-dual-loop-archify-v2.archify.json",
+      "specSha256": "ef7581a46ff2ab66c2b2eeb104dff7a18bdc0797b076349dfa74c95bd7ad5a36",
+      "vectorSha256": "ec347e602f09f7e5991c20de6175a02bbeaca0cad4122dbad2684f6c4dd0dab6",
+      "renderedVectorSha256": "ec347e602f09f7e5991c20de6175a02bbeaca0cad4122dbad2684f6c4dd0dab6",
+      "cacheKey": "dbec4a256e5e78037e285e6069eb7ad65f6314736593c10901ac0e9bd140cdf1",
+      "renderer": {
+        "archify": "2.16.0",
+        "archifyRevision": "199360cc6687a7857b54dd188d4922b09e466a4b",
+        "export": "official Archify.exportMenu.run",
+        "htmlSha256": "8fea8286d44cfc0aa5d4583a905e9b212302bc81aa907cf253f2b39c3a40f80e",
+        "officialPngSha256": "39520ebe5f83c5a40d684f2f453c7e2c941d19262817fe5719bfa001bf5c7215",
+        "source": "fixed199360 official Archify.exportMenu.run with real browser downloads",
+        "pngSvgProjection": {
+          "svgViewBox": [
+            0.0,
+            0.0,
+            1200.0,
+            630.0
+          ],
+          "officialPngSize": [
+            4800,
+            2520
+          ],
+          "ratioX": 4.0,
+          "ratioY": 4.0,
+          "cropUsesExactOfficialPixels": true
+        }
+      },
+      "outputPath": "images/pdf-agent-simulation-dual-loop-archify-v2.png",
+      "outputSha256": "39520ebe5f83c5a40d684f2f453c7e2c941d19262817fe5719bfa001bf5c7215",
+      "width": 4800,
+      "height": 2520,
+      "panels": [
+        {
+          "row": 1,
+          "column": 1,
+          "sourceVectorSha256": "ec347e602f09f7e5991c20de6175a02bbeaca0cad4122dbad2684f6c4dd0dab6",
+          "rect": [
+            0.0,
+            0.0,
+            1000.0,
+            580.0
+          ],
+          "outputPath": "images/pdf-agent-simulation-dual-loop-archify-v2-detail-1-1.png",
+          "outputSha256": "3a1cb05573a7c60ada18834b071ed43039c9f66d8ed61961fe83fa2ff0245bbf",
+          "width": 4000,
+          "height": 2320,
+          "croppedFromOfficialPngSHA": "39520ebe5f83c5a40d684f2f453c7e2c941d19262817fe5719bfa001bf5c7215",
+          "derivative": {
+            "kind": "lossless-official-png-crop-v1",
+            "pixelRect": [
+              0,
+              0,
+              4000,
+              2320
+            ],
+            "sourcePixelSha256": "2b6adfb4bd684087476295aaad3a2f1fb33e79313e53eab1b652bcf9335e50f8",
+            "ratioX": 4.0,
+            "ratioY": 4.0
+          }
+        },
+        {
+          "row": 1,
+          "column": 2,
+          "sourceVectorSha256": "ec347e602f09f7e5991c20de6175a02bbeaca0cad4122dbad2684f6c4dd0dab6",
+          "rect": [
+            900.0,
+            0.0,
+            300.0,
+            580.0
+          ],
+          "outputPath": "images/pdf-agent-simulation-dual-loop-archify-v2-detail-1-2.png",
+          "outputSha256": "a8ff5a3a8d865eb4ca957122758d489cbb64b3a778e0a9f565198a99ed8990be",
+          "width": 1200,
+          "height": 2320,
+          "croppedFromOfficialPngSHA": "39520ebe5f83c5a40d684f2f453c7e2c941d19262817fe5719bfa001bf5c7215",
+          "derivative": {
+            "kind": "lossless-official-png-crop-v1",
+            "pixelRect": [
+              3600,
+              0,
+              4800,
+              2320
+            ],
+            "sourcePixelSha256": "45d87beb18f14294734e7123f6a15d0334ddb11d409e0f2e4ecacaf8e7fa8dd5",
+            "ratioX": 4.0,
+            "ratioY": 4.0
+          }
+        },
+        {
+          "row": 2,
+          "column": 1,
+          "sourceVectorSha256": "ec347e602f09f7e5991c20de6175a02bbeaca0cad4122dbad2684f6c4dd0dab6",
+          "rect": [
+            0.0,
+            480.0,
+            1000.0,
+            150.0
+          ],
+          "outputPath": "images/pdf-agent-simulation-dual-loop-archify-v2-detail-2-1.png",
+          "outputSha256": "a16fe88514a79f7483d239a0645364e67e123deee3f902b0d9adba345dddb2df",
+          "width": 4000,
+          "height": 600,
+          "croppedFromOfficialPngSHA": "39520ebe5f83c5a40d684f2f453c7e2c941d19262817fe5719bfa001bf5c7215",
+          "derivative": {
+            "kind": "lossless-official-png-crop-v1",
+            "pixelRect": [
+              0,
+              1920,
+              4000,
+              2520
+            ],
+            "sourcePixelSha256": "fb083e5b8e2ae05af9af2038ec00d5e5f36950ef25531a28ded4171c80386f28",
+            "ratioX": 4.0,
+            "ratioY": 4.0
+          }
+        },
+        {
+          "row": 2,
+          "column": 2,
+          "sourceVectorSha256": "ec347e602f09f7e5991c20de6175a02bbeaca0cad4122dbad2684f6c4dd0dab6",
+          "rect": [
+            900.0,
+            480.0,
+            300.0,
+            150.0
+          ],
+          "outputPath": "images/pdf-agent-simulation-dual-loop-archify-v2-detail-2-2.png",
+          "outputSha256": "956c838b3c1a055833e0f1d5a51d52fd955a4a96263756c7f8b25a520dabf741",
+          "width": 1200,
+          "height": 600,
+          "croppedFromOfficialPngSHA": "39520ebe5f83c5a40d684f2f453c7e2c941d19262817fe5719bfa001bf5c7215",
+          "derivative": {
+            "kind": "lossless-official-png-crop-v1",
+            "pixelRect": [
+              3600,
+              1920,
+              4800,
+              2520
+            ],
+            "sourcePixelSha256": "7e7b44630317976a5db74b1200f35c101678ffd859461ca460f62184332b6353",
+            "ratioX": 4.0,
+            "ratioY": 4.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "agent-deployment:archify:20",
+      "kind": "archify",
+      "articlePath": "knowledge/llm/production/agent-deployment.md",
+      "articleSha256": "bf75dcd9b2fbc7ddf301a16e93f7d6711aa62507fb7ac701d9c20343622919f1",
+      "line": 20,
+      "sourceText": "<iframe src=\"https://www.agent-journey.cn/archify/agent-deployment-versioned-rollout-archify-v2.html\" width=\"100%\" height=\"920\" title=\"模型、Prompt、工具 Schema、策略与评估集组成版本包，经构建、离线评估、影子、5% 金丝雀、25% 放量到全量；质量、安全、延迟、成本和错误率门控，异常暂停并回滚\"></iframe>",
+      "sourceSha256": "2b3099a8d4f6cc7a9a8feb145d50d6f88149609ad9e4dc51f8578ba2292d8cd5",
+      "url": "https://www.agent-journey.cn/archify/agent-deployment-versioned-rollout-archify-v2.html",
+      "specPath": "knowledge/llm/production/agent-deployment-versioned-rollout-archify-v2.archify.json",
+      "specSha256": "f7f7de4c410eb497f66b9c87c544f7c1ee9d4380d63a71f25451ef1565558e51",
+      "vectorSha256": "8a79fc9b640a339675ec3256344c60a4ba10e1ad39a737c49340d423d8d51917",
+      "renderedVectorSha256": "8a79fc9b640a339675ec3256344c60a4ba10e1ad39a737c49340d423d8d51917",
+      "cacheKey": "3e63575b1501e16c6cdc8767e1a4d4a38f6253bdd5f71cf64cf6a8bf06c5004e",
+      "renderer": {
+        "archify": "2.16.0",
+        "archifyRevision": "199360cc6687a7857b54dd188d4922b09e466a4b",
+        "export": "official Archify.exportMenu.run",
+        "htmlSha256": "3f4855591c16e85da3e51f0ea9dd61312e6c5250abfb5fe9409fc6b15e0c141a",
+        "officialPngSha256": "3a32ba8a8c88621d583fb6392dbda54cd2aa3ee44d41c7bca0f1c16b4ea2014a",
+        "source": "fixed199360 official Archify.exportMenu.run with real browser downloads",
+        "pngSvgProjection": {
+          "svgViewBox": [
+            0.0,
+            0.0,
+            1200.0,
+            630.0
+          ],
+          "officialPngSize": [
+            4800,
+            2520
+          ],
+          "ratioX": 4.0,
+          "ratioY": 4.0,
+          "cropUsesExactOfficialPixels": true
+        }
+      },
+      "outputPath": "images/pdf-agent-deployment-versioned-rollout-archify-v2.png",
+      "outputSha256": "3a32ba8a8c88621d583fb6392dbda54cd2aa3ee44d41c7bca0f1c16b4ea2014a",
+      "width": 4800,
+      "height": 2520,
+      "panels": [
+        {
+          "row": 1,
+          "column": 1,
+          "sourceVectorSha256": "8a79fc9b640a339675ec3256344c60a4ba10e1ad39a737c49340d423d8d51917",
+          "rect": [
+            0.0,
+            0.0,
+            1000.0,
+            580.0
+          ],
+          "outputPath": "images/pdf-agent-deployment-versioned-rollout-archify-v2-detail-1-1.png",
+          "outputSha256": "f50e0f63b14ba44b15e0970a47130cac5ccf7d1ce8443628a15fa2f445be22e0",
+          "width": 4000,
+          "height": 2320,
+          "croppedFromOfficialPngSHA": "3a32ba8a8c88621d583fb6392dbda54cd2aa3ee44d41c7bca0f1c16b4ea2014a",
+          "derivative": {
+            "kind": "lossless-official-png-crop-v1",
+            "pixelRect": [
+              0,
+              0,
+              4000,
+              2320
+            ],
+            "sourcePixelSha256": "5fe2a129e86b44475822de64def93da674e4b40f16e51a7928995e50532f3ae3",
+            "ratioX": 4.0,
+            "ratioY": 4.0
+          }
+        },
+        {
+          "row": 1,
+          "column": 2,
+          "sourceVectorSha256": "8a79fc9b640a339675ec3256344c60a4ba10e1ad39a737c49340d423d8d51917",
+          "rect": [
+            900.0,
+            0.0,
+            300.0,
+            580.0
+          ],
+          "outputPath": "images/pdf-agent-deployment-versioned-rollout-archify-v2-detail-1-2.png",
+          "outputSha256": "cc824293844ab01db9b99ef7d1f8ea467a7c357fb66475956074c80470a3cbe1",
+          "width": 1200,
+          "height": 2320,
+          "croppedFromOfficialPngSHA": "3a32ba8a8c88621d583fb6392dbda54cd2aa3ee44d41c7bca0f1c16b4ea2014a",
+          "derivative": {
+            "kind": "lossless-official-png-crop-v1",
+            "pixelRect": [
+              3600,
+              0,
+              4800,
+              2320
+            ],
+            "sourcePixelSha256": "ab3b89751a279bdad7d2884c69b52a147456b24885103c11f6d0be44762e33cf",
+            "ratioX": 4.0,
+            "ratioY": 4.0
+          }
+        },
+        {
+          "row": 2,
+          "column": 1,
+          "sourceVectorSha256": "8a79fc9b640a339675ec3256344c60a4ba10e1ad39a737c49340d423d8d51917",
+          "rect": [
+            0.0,
+            480.0,
+            1000.0,
+            150.0
+          ],
+          "outputPath": "images/pdf-agent-deployment-versioned-rollout-archify-v2-detail-2-1.png",
+          "outputSha256": "a9e4b9c0826ce12a47fe3d94a4f88542722edab63da2eb9cf95eb678aabf2c76",
+          "width": 4000,
+          "height": 600,
+          "croppedFromOfficialPngSHA": "3a32ba8a8c88621d583fb6392dbda54cd2aa3ee44d41c7bca0f1c16b4ea2014a",
+          "derivative": {
+            "kind": "lossless-official-png-crop-v1",
+            "pixelRect": [
+              0,
+              1920,
+              4000,
+              2520
+            ],
+            "sourcePixelSha256": "07afcbd18888a6bb8d7f833ecf7cd07e09e81f49f27e70e30bdf915113711398",
+            "ratioX": 4.0,
+            "ratioY": 4.0
+          }
+        },
+        {
+          "row": 2,
+          "column": 2,
+          "sourceVectorSha256": "8a79fc9b640a339675ec3256344c60a4ba10e1ad39a737c49340d423d8d51917",
+          "rect": [
+            900.0,
+            480.0,
+            300.0,
+            150.0
+          ],
+          "outputPath": "images/pdf-agent-deployment-versioned-rollout-archify-v2-detail-2-2.png",
+          "outputSha256": "23901bb038ee78400aa1832042c5efd2eeac05712f2493e40b7c4ca6ef97e42c",
+          "width": 1200,
+          "height": 600,
+          "croppedFromOfficialPngSHA": "3a32ba8a8c88621d583fb6392dbda54cd2aa3ee44d41c7bca0f1c16b4ea2014a",
+          "derivative": {
+            "kind": "lossless-official-png-crop-v1",
+            "pixelRect": [
+              3600,
+              1920,
+              4800,
+              2520
+            ],
+            "sourcePixelSha256": "23214e49660db3f2f37b85964ed89a998b55546e32b4dcc16f1a3c53be41c2b5",
+            "ratioX": 4.0,
+            "ratioY": 4.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "agent-canary-release:archify:5",
+      "kind": "archify",
+      "articlePath": "knowledge/llm/production/agent-canary-release.md",
+      "articleSha256": "93a25cff253f86056189761f82d6b8ad86bf4935ce1089cd269055ee80231d14",
+      "line": 5,
+      "sourceText": "<iframe src=\"https://www.agent-journey.cn/archify/agent-canary-release-progressive-rollout-archify-v2.html\" width=\"100%\" height=\"920\" title=\"完整发布 bundle 先固定版本，控制组与 5% Canary 在质量、安全、延迟和成本上比较，通过门禁后逐步扩至 25%、50% 和 100%，失败立即回滚\"></iframe>",
+      "sourceSha256": "27b267729ef83de11e4ef48c2872e8318cbc5b41c94f3425ce25c58b6eaa85c0",
+      "url": "https://www.agent-journey.cn/archify/agent-canary-release-progressive-rollout-archify-v2.html",
+      "specPath": "knowledge/llm/production/agent-canary-release-progressive-rollout-archify-v2.archify.json",
+      "specSha256": "15eaf1f23f1ed502fd6726c6b0bfc50078f301d6985b9fb9d2190948e1c4a5c4",
+      "vectorSha256": "6c3dc281f2a5c0b1ad29bc3b9588afee1a923a006b3859ec41037da55bb6916d",
+      "renderedVectorSha256": "6c3dc281f2a5c0b1ad29bc3b9588afee1a923a006b3859ec41037da55bb6916d",
+      "cacheKey": "f618f2b84dae90a0bf68d22187aa1aa3cca83539fd16f516ad510da8ea978a70",
+      "renderer": {
+        "archify": "2.16.0",
+        "archifyRevision": "199360cc6687a7857b54dd188d4922b09e466a4b",
+        "export": "official Archify.exportMenu.run",
+        "htmlSha256": "192771736b2452a31a9cfd3c8630a0f217e57001ebcac987daa40322025d61f5",
+        "officialPngSha256": "28039dfdc938f5034eb8881d2d22aa7adcf848d03d039a6c60da226db1fbc915",
+        "source": "fixed199360 official Archify.exportMenu.run with real browser downloads",
+        "pngSvgProjection": {
+          "svgViewBox": [
+            0.0,
+            0.0,
+            1200.0,
+            680.0
+          ],
+          "officialPngSize": [
+            4800,
+            2720
+          ],
+          "ratioX": 4.0,
+          "ratioY": 4.0,
+          "cropUsesExactOfficialPixels": true
+        }
+      },
+      "outputPath": "images/pdf-agent-canary-release-progressive-rollout-archify-v2.png",
+      "outputSha256": "28039dfdc938f5034eb8881d2d22aa7adcf848d03d039a6c60da226db1fbc915",
+      "width": 4800,
+      "height": 2720,
+      "panels": [
+        {
+          "row": 1,
+          "column": 1,
+          "sourceVectorSha256": "6c3dc281f2a5c0b1ad29bc3b9588afee1a923a006b3859ec41037da55bb6916d",
+          "rect": [
+            0.0,
+            0.0,
+            1000.0,
+            580.0
+          ],
+          "outputPath": "images/pdf-agent-canary-release-progressive-rollout-archify-v2-detail-1-1.png",
+          "outputSha256": "f347b5ed4deb4db55f329de89efb4d934f2f6ac3a8731287e733d010b3454ba9",
+          "width": 4000,
+          "height": 2320,
+          "croppedFromOfficialPngSHA": "28039dfdc938f5034eb8881d2d22aa7adcf848d03d039a6c60da226db1fbc915",
+          "derivative": {
+            "kind": "lossless-official-png-crop-v1",
+            "pixelRect": [
+              0,
+              0,
+              4000,
+              2320
+            ],
+            "sourcePixelSha256": "6fa4b42ecf3fdf9b01e50e29ad69b4216abd0ceb4e2f4ff8d685c4a6a5b8c4b9",
+            "ratioX": 4.0,
+            "ratioY": 4.0
+          }
+        },
+        {
+          "row": 1,
+          "column": 2,
+          "sourceVectorSha256": "6c3dc281f2a5c0b1ad29bc3b9588afee1a923a006b3859ec41037da55bb6916d",
+          "rect": [
+            900.0,
+            0.0,
+            300.0,
+            580.0
+          ],
+          "outputPath": "images/pdf-agent-canary-release-progressive-rollout-archify-v2-detail-1-2.png",
+          "outputSha256": "f74a5414350a52564f750150579de6652bec8f80b91e02c1a3960d9ef7d3b75f",
+          "width": 1200,
+          "height": 2320,
+          "croppedFromOfficialPngSHA": "28039dfdc938f5034eb8881d2d22aa7adcf848d03d039a6c60da226db1fbc915",
+          "derivative": {
+            "kind": "lossless-official-png-crop-v1",
+            "pixelRect": [
+              3600,
+              0,
+              4800,
+              2320
+            ],
+            "sourcePixelSha256": "53e039816ebacdf76059507737fd37bcaf92024c55f320d987150afda27dfa1b",
+            "ratioX": 4.0,
+            "ratioY": 4.0
+          }
+        },
+        {
+          "row": 2,
+          "column": 1,
+          "sourceVectorSha256": "6c3dc281f2a5c0b1ad29bc3b9588afee1a923a006b3859ec41037da55bb6916d",
+          "rect": [
+            0.0,
+            480.0,
+            1000.0,
+            200.0
+          ],
+          "outputPath": "images/pdf-agent-canary-release-progressive-rollout-archify-v2-detail-2-1.png",
+          "outputSha256": "3ceea799fe5026c393f8dd951fe6a294e76e050d4b1d2cff2252f293e29bd6c1",
+          "width": 4000,
+          "height": 800,
+          "croppedFromOfficialPngSHA": "28039dfdc938f5034eb8881d2d22aa7adcf848d03d039a6c60da226db1fbc915",
+          "derivative": {
+            "kind": "lossless-official-png-crop-v1",
+            "pixelRect": [
+              0,
+              1920,
+              4000,
+              2720
+            ],
+            "sourcePixelSha256": "a7e84137bc93f83846bb9d4033d12ad1bb5f785fa64181d5c440361041f4055f",
+            "ratioX": 4.0,
+            "ratioY": 4.0
+          }
+        },
+        {
+          "row": 2,
+          "column": 2,
+          "sourceVectorSha256": "6c3dc281f2a5c0b1ad29bc3b9588afee1a923a006b3859ec41037da55bb6916d",
+          "rect": [
+            900.0,
+            480.0,
+            300.0,
+            200.0
+          ],
+          "outputPath": "images/pdf-agent-canary-release-progressive-rollout-archify-v2-detail-2-2.png",
+          "outputSha256": "f3f48000adb5eb80611b0bf3667446426fc5558179bfe568f588cadd2d2ff8b9",
+          "width": 1200,
+          "height": 800,
+          "croppedFromOfficialPngSHA": "28039dfdc938f5034eb8881d2d22aa7adcf848d03d039a6c60da226db1fbc915",
+          "derivative": {
+            "kind": "lossless-official-png-crop-v1",
+            "pixelRect": [
+              3600,
+              1920,
+              4800,
+              2720
+            ],
+            "sourcePixelSha256": "e8699adadd2d323635572cb66d6dcbf265602dd25d9ef2bcfe3ed3fa77673bf2",
+            "ratioX": 4.0,
+            "ratioY": 4.0
+          }
+        }
+      ]
     }
   ],
   "literals": [

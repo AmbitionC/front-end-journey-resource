@@ -1,0 +1,207 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Agent 缓存：完整身份、分层复用与事件失效",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "animation": "none",
+    "legend": {
+      "mode": "hidden"
+    },
+    "viewBox": [
+      1200,
+      630
+    ]
+  },
+  "components": [
+    {
+      "id": "cache_request_identity",
+      "type": "external",
+      "label": "REQUEST / 请求",
+      "sublabel": "操作与规范化输入",
+      "pos": [
+        40,
+        72
+      ],
+      "size": [
+        210,
+        86
+      ]
+    },
+    {
+      "id": "cache_versioned_key_builder",
+      "type": "backend",
+      "label": "KEY BUILDER / 完整版本化缓存键",
+      "sublabel": "租户·主体·输入摘要·模型/Prompt版本·工具Schema·索引版本·策略",
+      "pos": [
+        365,
+        72
+      ],
+      "size": [
+        795,
+        86
+      ]
+    },
+    {
+      "id": "cache_model_namespace",
+      "type": "database",
+      "label": "MODEL CACHE / 模型缓存",
+      "sublabel": "FRESH · REVALIDATE · MISS",
+      "pos": [
+        40,
+        276
+      ],
+      "size": [
+        245,
+        86
+      ]
+    },
+    {
+      "id": "cache_tool_namespace",
+      "type": "database",
+      "label": "TOOL CACHE / 工具缓存",
+      "sublabel": "FRESH · REVALIDATE · MISS",
+      "pos": [
+        330,
+        276
+      ],
+      "size": [
+        245,
+        86
+      ]
+    },
+    {
+      "id": "cache_retrieval_namespace",
+      "type": "database",
+      "label": "RETRIEVAL / 检索缓存",
+      "sublabel": "FRESH · REVALIDATE · MISS",
+      "pos": [
+        620,
+        276
+      ],
+      "size": [
+        245,
+        86
+      ]
+    },
+    {
+      "id": "cache_result_namespace",
+      "type": "database",
+      "label": "RESULT CACHE / 结果缓存",
+      "sublabel": "FRESH · REVALIDATE · MISS",
+      "pos": [
+        910,
+        276
+      ],
+      "size": [
+        245,
+        86
+      ]
+    },
+    {
+      "id": "cache_invalidation_event",
+      "type": "messagebus",
+      "label": "INVALIDATION EVENT / 失效事件",
+      "sublabel": "数据、策略、工具、模型、Prompt与索引版本变化",
+      "pos": [
+        365,
+        490
+      ],
+      "size": [
+        795,
+        86
+      ]
+    },
+    {
+      "id": "cache_reuse_boundary",
+      "type": "security",
+      "label": "复用边界",
+      "sublabel": "命中重查授权；副作用用幂等账本",
+      "pos": [
+        40,
+        490
+      ],
+      "size": [
+        245,
+        86
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "四层各有命名空间与新鲜度契约；按请求所属层复用",
+      "wraps": [
+        "cache_model_namespace",
+        "cache_tool_namespace",
+        "cache_retrieval_namespace",
+        "cache_result_namespace"
+      ],
+      "pad": 14
+    }
+  ],
+  "connections": [
+    {
+      "id": "cache_request_build_key",
+      "from": "cache_request_identity",
+      "to": "cache_versioned_key_builder"
+    },
+    {
+      "id": "cache_key_select_model",
+      "from": "cache_versioned_key_builder",
+      "to": "cache_model_namespace"
+    },
+    {
+      "id": "cache_key_select_tool",
+      "from": "cache_versioned_key_builder",
+      "to": "cache_tool_namespace",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "cache_key_select_retrieval",
+      "from": "cache_versioned_key_builder",
+      "to": "cache_retrieval_namespace",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "cache_key_select_result",
+      "from": "cache_versioned_key_builder",
+      "to": "cache_result_namespace",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "cache_event_invalidate_model",
+      "from": "cache_invalidation_event",
+      "to": "cache_model_namespace",
+      "variant": "dashed"
+    },
+    {
+      "id": "cache_event_invalidate_tool",
+      "from": "cache_invalidation_event",
+      "to": "cache_tool_namespace",
+      "variant": "dashed",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "cache_event_invalidate_retrieval",
+      "from": "cache_invalidation_event",
+      "to": "cache_retrieval_namespace",
+      "variant": "dashed",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "cache_event_invalidate_result",
+      "from": "cache_invalidation_event",
+      "to": "cache_result_namespace",
+      "variant": "dashed",
+      "fromSide": "top",
+      "toSide": "bottom"
+    }
+  ]
+}

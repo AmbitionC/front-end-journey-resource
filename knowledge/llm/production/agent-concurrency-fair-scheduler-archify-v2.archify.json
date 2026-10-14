@@ -1,0 +1,349 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "并发控制：租户配额、公平调度与背压",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1200,
+      630
+    ]
+  },
+  "components": [
+    {
+      "id": "concurrency_tenant_a_own_quota",
+      "type": "external",
+      "label": "Tenant A → QUOTA",
+      "sublabel": "独立租户配额与预算",
+      "pos": [
+        40,
+        80
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "concurrency_tenant_b_own_quota",
+      "type": "external",
+      "label": "Tenant B → QUOTA",
+      "sublabel": "独立租户配额与预算",
+      "pos": [
+        70,
+        240
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "concurrency_tenant_c_own_quota",
+      "type": "external",
+      "label": "Tenant C → QUOTA",
+      "sublabel": "独立租户配额与预算",
+      "pos": [
+        100,
+        400
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "concurrency_bounded_admission",
+      "type": "security",
+      "label": "准入 ADMISSION",
+      "sublabel": "健康 / 预算 / 队列上限",
+      "pos": [
+        340,
+        240
+      ],
+      "size": [
+        170,
+        80
+      ]
+    },
+    {
+      "id": "concurrency_tenant_a_fair_flow",
+      "type": "messagebus",
+      "label": "租户 A 独立队列",
+      "sublabel": "权重 / 成本 / 等待 / 资源",
+      "pos": [
+        600,
+        80
+      ],
+      "size": [
+        210,
+        64
+      ]
+    },
+    {
+      "id": "concurrency_tenant_b_fair_flow",
+      "type": "messagebus",
+      "label": "租户 B 独立队列",
+      "sublabel": "权重 / 成本 / 等待 / 资源",
+      "pos": [
+        600,
+        240
+      ],
+      "size": [
+        210,
+        64
+      ]
+    },
+    {
+      "id": "concurrency_tenant_c_fair_flow",
+      "type": "messagebus",
+      "label": "租户 C 独立队列",
+      "sublabel": "权重 / 成本 / 等待 / 资源",
+      "pos": [
+        600,
+        400
+      ],
+      "size": [
+        210,
+        64
+      ]
+    },
+    {
+      "id": "concurrency_bounded_worker_pool",
+      "type": "backend",
+      "label": "有界 WORKER POOL",
+      "sublabel": "4执行位为示意；按许可调度",
+      "pos": [
+        900,
+        240
+      ],
+      "size": [
+        260,
+        90
+      ]
+    },
+    {
+      "id": "concurrency_cpu_resource_isolation",
+      "type": "cloud",
+      "label": "CPU",
+      "sublabel": "独立CPU预算",
+      "pos": [
+        900,
+        445
+      ],
+      "size": [
+        110,
+        65
+      ]
+    },
+    {
+      "id": "concurrency_memory_resource_isolation",
+      "type": "database",
+      "label": "MEMORY",
+      "sublabel": "独立内存预算",
+      "pos": [
+        1064,
+        445
+      ],
+      "size": [
+        96,
+        100
+      ]
+    },
+    {
+      "id": "concurrency_tool_resource_isolation",
+      "type": "backend",
+      "label": "TOOL SLOTS",
+      "sublabel": "独立工具/API并发许可",
+      "pos": [
+        900,
+        80
+      ],
+      "size": [
+        260,
+        64
+      ]
+    },
+    {
+      "id": "concurrency_upstream_backpressure",
+      "type": "security",
+      "label": "BACKPRESSURE · 背压",
+      "sublabel": "下游饱和 → 入口减少准入",
+      "pos": [
+        40,
+        545
+      ],
+      "size": [
+        270,
+        65
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "FAIR SCHEDULER · 三租户独立 flow 公平轮转",
+      "wraps": [
+        "concurrency_tenant_a_fair_flow",
+        "concurrency_tenant_b_fair_flow",
+        "concurrency_tenant_c_fair_flow"
+      ],
+      "pad": 20
+    }
+  ],
+  "connections": [
+    {
+      "id": "concurrency_tenant_a_quota_to_admission",
+      "from": "concurrency_tenant_a_own_quota",
+      "to": "concurrency_bounded_admission",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "concurrency_tenant_b_quota_to_admission",
+      "from": "concurrency_tenant_b_own_quota",
+      "to": "concurrency_bounded_admission",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "concurrency_tenant_c_quota_to_admission",
+      "from": "concurrency_tenant_c_own_quota",
+      "to": "concurrency_bounded_admission",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "concurrency_admit_tenant_a_flow",
+      "from": "concurrency_bounded_admission",
+      "to": "concurrency_tenant_a_fair_flow",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "concurrency_admit_tenant_b_flow",
+      "from": "concurrency_bounded_admission",
+      "to": "concurrency_tenant_b_fair_flow",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "concurrency_admit_tenant_c_flow",
+      "from": "concurrency_bounded_admission",
+      "to": "concurrency_tenant_c_fair_flow",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "concurrency_schedule_tenant_a_work",
+      "from": "concurrency_tenant_a_fair_flow",
+      "to": "concurrency_bounded_worker_pool",
+      "fromSide": "right",
+      "toSide": "left",
+      "variant": "emphasis"
+    },
+    {
+      "id": "concurrency_schedule_tenant_b_work",
+      "from": "concurrency_tenant_b_fair_flow",
+      "to": "concurrency_bounded_worker_pool",
+      "fromSide": "right",
+      "toSide": "left",
+      "variant": "emphasis"
+    },
+    {
+      "id": "concurrency_schedule_tenant_c_work",
+      "from": "concurrency_tenant_c_fair_flow",
+      "to": "concurrency_bounded_worker_pool",
+      "fromSide": "right",
+      "toSide": "left",
+      "variant": "emphasis"
+    },
+    {
+      "id": "concurrency_cpu_lease_01_return",
+      "from": "concurrency_cpu_resource_isolation",
+      "to": "concurrency_bounded_worker_pool",
+      "label": "归还",
+      "fromSide": "left",
+      "toSide": "bottom",
+      "variant": "dashed"
+    },
+    {
+      "id": "concurrency_cpu_lease_02_allocation",
+      "from": "concurrency_bounded_worker_pool",
+      "to": "concurrency_cpu_resource_isolation",
+      "label": "分配",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "variant": "dashed"
+    },
+    {
+      "id": "concurrency_memory_lease_01_return",
+      "from": "concurrency_memory_resource_isolation",
+      "to": "concurrency_bounded_worker_pool",
+      "label": "归还",
+      "fromSide": "left",
+      "toSide": "bottom",
+      "variant": "dashed"
+    },
+    {
+      "id": "concurrency_memory_lease_02_allocation",
+      "from": "concurrency_bounded_worker_pool",
+      "to": "concurrency_memory_resource_isolation",
+      "label": "分配",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "variant": "dashed"
+    },
+    {
+      "id": "concurrency_tool_lease_return",
+      "from": "concurrency_tool_resource_isolation",
+      "to": "concurrency_bounded_worker_pool",
+      "label": "归还",
+      "fromSide": "right",
+      "toSide": "right",
+      "variant": "dashed"
+    },
+    {
+      "id": "concurrency_tool_lease_allocation",
+      "from": "concurrency_bounded_worker_pool",
+      "to": "concurrency_tool_resource_isolation",
+      "label": "分配",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "variant": "dashed"
+    },
+    {
+      "id": "concurrency_worker_saturation_backpressure",
+      "from": "concurrency_bounded_worker_pool",
+      "to": "concurrency_upstream_backpressure",
+      "fromSide": "right",
+      "toSide": "right",
+      "variant": "security"
+    },
+    {
+      "id": "concurrency_backpressure_tenant_a",
+      "from": "concurrency_upstream_backpressure",
+      "to": "concurrency_tenant_a_own_quota",
+      "fromSide": "left",
+      "toSide": "left",
+      "variant": "security"
+    },
+    {
+      "id": "concurrency_backpressure_tenant_b",
+      "from": "concurrency_upstream_backpressure",
+      "to": "concurrency_tenant_b_own_quota",
+      "fromSide": "top",
+      "toSide": "left",
+      "variant": "security"
+    },
+    {
+      "id": "concurrency_backpressure_tenant_c",
+      "from": "concurrency_upstream_backpressure",
+      "to": "concurrency_tenant_c_own_quota",
+      "fromSide": "top",
+      "toSide": "right",
+      "variant": "security"
+    }
+  ]
+}
