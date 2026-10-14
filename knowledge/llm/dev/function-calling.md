@@ -209,11 +209,14 @@ async function cancelOrder(orderId: string, session: Session) {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [阿里云 Agent 开发秋招一面（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-1.md)
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)
 - [哔哩哔哩 AI 应用岗 Agent 开发一面（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-1.md)
 - [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)
 <!-- interview-source-history:end -->
+
+## 学习阅读（不计专题频次）
+
+- [阿里云 Agent 开发秋招一面](../../../interview/alibaba/ai/alibaba-ai-1.md)（原问的延伸阅读；主绑定为工具发现、选择与路由，不新增面试流程或本专题频次。）
 
 ## 参考资料
 

@@ -231,7 +231,7 @@ async def evaluate(agent, cases, check_result):
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [阿里国际 Accio Agent 算法一面：数据合成、任务环境与模型后训练（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-3.md)（cluster-10359bdec433）
+- [阿里国际 Accio Agent 算法一面：数据合成、任务环境与 GUI Agent](../../../interview/alibaba/ai/alibaba-ai-3.md)（cluster-10359bdec433）
 - [字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-20.md)（cluster-418d84d3fe66）
 - [淘天 Agent 算法一面：任务构造、轨迹验证与后训练（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-4.md)（cluster-787120ee1249）
 - [百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测（2026 年 8 月）](../../../interview/baidu/ai/baidu-ai-2.md)（cluster-9acb30c57710）

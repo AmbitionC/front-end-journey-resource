@@ -300,13 +300,23 @@
       "key": "llm-training-overview",
       "label": "大模型训练全流程概览",
       "filePath": "llm/basics",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-03",
-      "batch": "interview-content-local-20261003",
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+      "recordedAt": "2026-10-14",
+      "batch": "title-body2-quality-20261014",
+      "reason": "Actual per-question skill execution findings: bounded factual/teaching/quickRead corrections; preserve useful content and media.",
+      "previousRecord": {
+        "key": "llm-training-overview",
+        "label": "大模型训练全流程概览",
+        "filePath": "llm/basics",
+        "status": "published",
+        "action": "updated",
+        "recordedAt": "2026-10-03",
+        "batch": "interview-content-local-20261003",
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     },
     {
       "key": "llm-pretraining",
@@ -1031,10 +1041,20 @@
       "key": "agent-computer-use",
       "label": "Computer-use 桌面操作智能体",
       "filePath": "llm/agent",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-16",
-      "batch": "agent-multi-production-next-20-2026-07-16"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-14",
+      "batch": "title-body2-quality-20261014",
+      "reason": "Actual per-question skill execution findings: bounded factual/teaching/quickRead corrections; preserve useful content and media.",
+      "previousRecord": {
+        "key": "agent-computer-use",
+        "label": "Computer-use 桌面操作智能体",
+        "filePath": "llm/agent",
+        "status": "published",
+        "action": "created",
+        "recordedAt": "2026-07-16",
+        "batch": "agent-multi-production-next-20-2026-07-16"
+      }
     },
     {
       "key": "agent-coding",
@@ -1042,8 +1062,18 @@
       "filePath": "llm/agent",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-08-29",
-      "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
+      "recordedAt": "2026-10-14",
+      "batch": "title-body2-quality-20261014",
+      "reason": "Actual per-question skill execution findings: bounded factual/teaching/quickRead corrections; preserve useful content and media.",
+      "previousRecord": {
+        "key": "agent-coding",
+        "label": "Coding Agent 的架构与执行循环",
+        "filePath": "llm/agent",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-08-29",
+        "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
+      }
     },
     {
       "key": "agent-voice",
@@ -1175,10 +1205,32 @@
       "key": "agent-simulation",
       "label": "用户模拟器与环境模拟测试",
       "filePath": "llm/production",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-16",
-      "batch": "agent-observability-security-next-20-2026-07-16"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-14",
+      "batch": "title-body2-quality-20261014",
+      "reason": "Actual per-question skill execution findings: bounded factual/teaching/quickRead corrections; preserve useful content and media.",
+      "previousRecord": {
+        "key": "agent-simulation",
+        "label": "用户模拟器与环境模拟测试",
+        "filePath": "llm/production",
+        "status": "published",
+        "action": "created",
+        "recordedAt": "2026-07-16",
+        "batch": "agent-observability-security-next-20-2026-07-16"
+      },
+      "diagramMigration": {
+        "standard": "Archify PC HTML / mobile SVG",
+        "status": "pending_archify_replacement",
+        "standardizedDiagramCount": 0,
+        "temporaryFactRepair": {
+          "path": "images/agent-simulation-dual-loop-actions-observations-temporary-v2.png",
+          "sha256": "21e038150ccd5e37abe497d4e3c26e74bfa48a802150e5183c5b2743f50e7014",
+          "correctedSemantics": "Agent to environment ACTIONS; environment to Agent OBSERVATIONS",
+          "originalRetained": "images/agent-simulation-dual-loop-v1.webp",
+          "generatedCandidateSelectedOnce": true
+        }
+      }
     },
     {
       "key": "agent-red-teaming",
@@ -2072,27 +2124,37 @@
       "key": "build-agent-framework",
       "label": "从零构建 Agent 运行时",
       "filePath": "llm/agent",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
       "recordedAt": "2026-10-14",
-      "batch": "title-verified6-quality-20261014",
-      "reason": "对本批面经已绑定知识的技术错误做有一手来源支持的限定修正。",
+      "batch": "title-body2-quality-20261014",
+      "reason": "Actual per-question skill execution findings: bounded factual/teaching/quickRead corrections; preserve useful content and media.",
       "previousRecord": {
         "key": "build-agent-framework",
         "label": "从零构建 Agent 运行时",
         "filePath": "llm/agent",
         "status": "published",
         "action": "updated",
-        "recordedAt": "2026-10-04",
-        "batch": "next-twenty-source-increments-20261004",
-        "publishedAt": "2026-10-05T09:27:13Z",
-        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-        "publishedBySyncRun": 37289136872
-      },
-      "publishedAt": "2026-10-14T18:28:19Z",
-      "publishedByCommit": "afbce3dd82d0e693b14d20e2b3dd02a96c6731b3",
-      "publishedBySyncRun": 38614482119,
-      "publishedByPdfRun": 38614481957
+        "recordedAt": "2026-10-14",
+        "batch": "title-verified6-quality-20261014",
+        "reason": "对本批面经已绑定知识的技术错误做有一手来源支持的限定修正。",
+        "previousRecord": {
+          "key": "build-agent-framework",
+          "label": "从零构建 Agent 运行时",
+          "filePath": "llm/agent",
+          "status": "published",
+          "action": "updated",
+          "recordedAt": "2026-10-04",
+          "batch": "next-twenty-source-increments-20261004",
+          "publishedAt": "2026-10-05T09:27:13Z",
+          "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+          "publishedBySyncRun": 37289136872
+        },
+        "publishedAt": "2026-10-14T18:28:19Z",
+        "publishedByCommit": "afbce3dd82d0e693b14d20e2b3dd02a96c6731b3",
+        "publishedBySyncRun": 38614482119,
+        "publishedByPdfRun": 38614481957
+      }
     },
     {
       "key": "mcp-protocol",
@@ -2134,8 +2196,18 @@
       "filePath": "llm/agent",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-10-14",
+      "batch": "title-body2-quality-20261014",
+      "reason": "Actual per-question skill execution findings: bounded factual/teaching/quickRead corrections; preserve useful content and media.",
+      "previousRecord": {
+        "key": "agent-evaluation",
+        "label": "智能体性能评估",
+        "filePath": "llm/agent",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-07-18",
+        "batch": "complete-remaining-91-2026-07-18"
+      }
     },
     {
       "key": "agent-deep-research",
@@ -2995,8 +3067,18 @@
       "filePath": "career",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-10-14",
+      "batch": "title-body2-quality-20261014",
+      "reason": "Actual per-question skill execution findings: bounded factual/teaching/quickRead corrections; preserve useful content and media.",
+      "previousRecord": {
+        "key": "agent-resume-interview",
+        "label": "AI / Agent 岗位简历与面试",
+        "filePath": "career",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-07-18",
+        "batch": "complete-remaining-91-2026-07-18"
+      }
     },
     {
       "key": "agent-skill-map",
@@ -3047,13 +3129,23 @@
       "key": "agent-skill-design",
       "label": "Agent Skill：渐进式披露、热插拔与版本治理",
       "filePath": "llm/agent",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-03",
-      "batch": "interview-content-local-20261003",
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+      "recordedAt": "2026-10-14",
+      "batch": "title-body2-quality-20261014",
+      "reason": "Actual per-question skill execution findings: bounded factual/teaching/quickRead corrections; preserve useful content and media.",
+      "previousRecord": {
+        "key": "agent-skill-design",
+        "label": "Agent Skill：渐进式披露、热插拔与版本治理",
+        "filePath": "llm/agent",
+        "status": "published",
+        "action": "updated",
+        "recordedAt": "2026-10-03",
+        "batch": "interview-content-local-20261003",
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     },
     {
       "key": "agent-intent-clarification",

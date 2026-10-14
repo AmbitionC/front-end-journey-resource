@@ -22,6 +22,25 @@
 
 [Llama 3 技术报告](https://arxiv.org/abs/2407.21783) 把数据过滤、去重、混合和质量分类作为预训练的重要组成部分，也说明模型能力不只由参数数量决定。
 
+## 数据合成：把生成样本变成可验证的数据
+
+合成数据是为目标任务构造新的输入、答案或交互轨迹，不等于把已有文本清洗一遍。[Self-Instruct](https://arxiv.org/abs/2212.10560) 展示了“生成指令、输入与输出，再过滤无效或相似样本”的流程；它是方法实例，不能据此假定所有 Agent 任务都适合模型自生成、自打分。
+
+先说明要补哪类能力，再选生成方式：规则组合适合边界明确的参数与状态；模型生成适合扩展表达和候选任务；可执行环境采样适合得到工具动作及状态变化。不要只增加容易成功的样本。面向有状态 Agent，可把每条样本组织成以下工程契约：
+
+| 记录 | 要回答的问题 |
+| --- | --- |
+| 任务与来源 | 目标、允许动作、能力标签、初始状态是什么；模板或原始样本来自哪里 |
+| 生成过程 | 使用哪个生成器、模型、提示版本、参数与随机种子；同源变体属于哪一组 |
+| 验证证据 | 哪个版本的规则、测试或人工标准判定；实际终态、错误与筛除原因是什么 |
+| 数据分集 | 任务族、模板或用户分组进入哪个集合；是否与保留评测重叠 |
+
+生成器产出的“成功轨迹”仍是候选。代码可运行不代表满足全部需求，Agent 最终说“完成”也不代表环境终态正确。[Llama 3 技术报告 §4.3.1](https://arxiv.org/html/2407.21783v3#S4.SS3.SSS1) 使用语法检查与执行反馈改进合成代码；[WebArena](https://arxiv.org/abs/2307.13854) 则以功能正确性检验任务完成。可执行条件优先由受控测试或环境状态验证；开放质量再用经校准的 Judge 或人工复核，判定器只能覆盖它明确检查的条件。
+
+例如“为符合条件的订单创建一次退款”可以合成正常、无权限、已退款和提交后响应丢失等初始状态。验证应读取退款记录、金额与副作用，检查既完成目标又没有重复写入；用例可接受多种合法执行路径，不要求机械模仿唯一轨迹。任务环境的状态转移、重置与故障注入见[用户模拟器与环境模拟测试](../production/agent-simulation.md)。
+
+污染检查要同时考虑原始材料和生成后的样本。先按同源模板或任务族划分，再在各集合内生成变体，能减少改写样本被随机分到训练与测试两侧的泄漏；还应做精确与近重复比对，保留独立验收集。隐藏验收条件不能作为额外提示泄露给生成器或被测 Agent。最后用固定、未参与本轮生成和调优的任务集比较效果，不能把合成集上的通过率直接当业务收益。
+
 ## 阶段二：Tokenizer 与样本构造
 
 Tokenizer 把原始文本变成 token ID。训练系统再把文档拼接或切分成固定长度样本，并构造 attention mask、位置编码和目标标签。
@@ -103,7 +122,7 @@ SFT 的关键不是简单堆数量，而是覆盖行为边界并保持示范一�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [阿里国际 Accio Agent 算法一面：数据合成、任务环境与模型后训练（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-3.md)
+- [阿里国际 Accio Agent 算法一面：数据合成、任务环境与 GUI Agent](../../../interview/alibaba/ai/alibaba-ai-3.md)
 - [淘天 Agent 算法一面：任务构造、轨迹验证与后训练（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-4.md)
 - [字节 Agent 后端一面：进程线程、Transformer 与训练](../../../interview/bytedance/base/bytedance-base-31.md)
 - [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)
@@ -117,3 +136,5 @@ SFT 的关键不是简单堆数量，而是覆盖行为边界并保持示范一�
 
 - [Google：过拟合与泛化](https://developers.google.com/machine-learning/crash-course/overfitting/overfitting)（滚动文档，核验于 2026-10-03）
 - [Google：训练、验证与测试数据](https://developers.google.com/machine-learning/crash-course/overfitting/dividing-datasets)（滚动文档，核验于 2026-10-03）
+- [Self-Instruct: Aligning Language Models with Self-Generated Instructions](https://arxiv.org/abs/2212.10560)（生成后过滤的原始研究；不外推为通用正确性保证）。
+- [WebArena: A Realistic Web Environment for Building Autonomous Agents](https://arxiv.org/abs/2307.13854)（以功能正确性验收任务完成）。

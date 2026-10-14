@@ -1,5 +1,5 @@
-![最小 Agent 运行时：用户目标进入 orchestrator，模型决定下一步，tool registry 执行受控调用，state store 保存可恢复状态，guardrails 包围输入输出，trace 贯穿全链路；标出最大步数和审批点](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/build-agent-framework-runtime-boundaries-v1.webp)
-*图：沿“用户目标 → orchestrator → 模型决策 → 受控工具 → 状态写回”阅读，注意 guardrails、审批点、最大步数和 trace 分别约束哪一段。*
+![最小 Agent 运行时概念示意：模型、Guardrail、运行循环、工具注册、结果校验、State 与 Memory 相互配合](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/build-agent-framework-runtime-boundaries-v1.webp)
+*图：先看运行循环、工具与结果校验如何配合，再看 State、Memory 和策略输入；这是职责关系示意，预算、审批和轨迹记录仍须按正文另行实现。*
 
 ---
 
@@ -42,7 +42,7 @@ from openai import OpenAI
 from typing import Iterator
 
 class HelloAgentsLLM:
-    """统一 LLM 接口，兼容 OpenAI 规范的任何服务"""
+    """演示已确认兼容 Chat Completions 的文本接口"""
 
     def __init__(self, model: str = None, api_key: str = None, base_url: str = None):
         self.model = model or os.getenv("LLM_MODEL_ID", "gpt-4o-mini")
@@ -400,7 +400,7 @@ print(react.run("(15 * 8 + 32) / 4 等于多少？"))
 ReAct 循环不收敛时，高上限会放大无效调用。按任务评测选择步数，并结合墙钟、token、费用和无进展检测；本例的 8 步仅是教学参数。预算耗尽应返回未完成状态与已验证进展，不能把固定 5–8 步当成所有任务的默认。
 
 **误区二：工具描述写得太含糊**
-`description` 直接决定 LLM 是否正确选用工具。应当写清楚"适用场景"和"入参格式"，而不是一句话带过。
+`description` 会影响模型选工具，但不能单独保证选对。应当写清楚"适用场景"和"入参格式"，并结合允许工具集合、参数校验与路由评测。
 
 **误区三：Memory 无限增长**
 Context Window 有限，不做裁剪会导致调用失败。滑动窗口、摘要压缩是标配。
@@ -412,7 +412,7 @@ Context Window 有限，不做裁剪会导致调用失败。滑动窗口、摘�
 
 ## 面试常问
 
-- **Agent Loop 的核心是什么？** Thought-Action-Observation 循环；终止条件是输出 `Finish` 或达到最大步数。
+- **Agent Loop 的核心是什么？** 模型决策、受控动作与环境观察交替推进任务。本例收到 `Finish` 或耗尽步数时停止；生产中还要核验业务成功条件，并区分失败、取消与预算耗尽，模型输出 `Finish` 本身不能证明完成。
 - **ReAct 与 Plan-and-Solve 的区别？** ReAct 是动态决策（每步根据 Observation 再规划）；Plan-and-Solve 先生成全局计划再逐步执行，适合步骤确定的任务。
 - **为什么需要 ToolRegistry？** 解耦工具定义与 Agent 逻辑；LLM 只需要知道工具名和描述，不需要知道实现细节。
 - **Memory 的三种策略？** 滑动窗口（最简单）、摘要压缩（节省 token）、向量检索（适合长期知识库）。
@@ -443,6 +443,7 @@ Context Window 有限，不做裁剪会导致调用失败。滑动窗口、摘�
 - [字节 Agent：AI Coding、技能设计与模型工程](../../../interview/bytedance/base/bytedance-base-49.md)
 - [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
+- [阿里云 Agent 开发秋招一面](../../../interview/alibaba/ai/alibaba-ai-1.md)
 <!-- interview-source-history:end -->
 
 ## 学习阅读（不计专题频次）

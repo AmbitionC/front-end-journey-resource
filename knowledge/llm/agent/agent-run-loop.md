@@ -97,7 +97,7 @@ Run Loop 是状态机、预算器与证据循环的组合。观察必须来自�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [阿里云 Agent 开发秋招一面（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-1.md)
+- [阿里云 Agent 开发秋招一面](../../../interview/alibaba/ai/alibaba-ai-1.md)
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)
 - [字节 Agent Infra 校招：运行时、MySQL 与 LRU](../../../interview/bytedance/base/bytedance-base-25.md)
 - [哔哩哔哩 AI 应用岗 Agent 开发一面（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-1.md)

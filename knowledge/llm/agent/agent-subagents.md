@@ -107,7 +107,7 @@ Subagent 设计的重点是边界，而不是数量：以窄合同传入最小�
 
 <!-- interview-source-history:start -->
 - [哔哩哔哩 AI 应用岗一面：端到端 AI Coding 与生产治理（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-2.md)
-- [阿里云 Agent 开发秋招一面（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-1.md)
+- [阿里云 Agent 开发秋招一面](../../../interview/alibaba/ai/alibaba-ai-1.md)
 - [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)
 - [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)
 - [深信服 Agent 开发一面：MCP、多 Agent、安全与网络（2026 年 8 月）](../../../interview/sangfor/ai/sangfor-ai-1.md)

@@ -68,7 +68,7 @@ Computer-use 的能力来自像人一样操作 GUI，可靠性则来自比人更
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [阿里国际 Accio Agent 算法一面：数据合成、任务环境与模型后训练（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-3.md)（cluster-10359bdec433）
+- [阿里国际 Accio Agent 算法一面：数据合成、任务环境与 GUI Agent](../../../interview/alibaba/ai/alibaba-ai-3.md)（cluster-10359bdec433）
 <!-- interview-source-history:end -->
 
 ## 参考资料
