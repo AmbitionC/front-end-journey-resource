@@ -149,7 +149,7 @@ Review 队列有 SLA、所需角色和决策模板。人工批准记录理由、
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [蚂蚁 Code Agent 与 Agent 应用两轮面试（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-2.md)（cluster-2d9e5f67fe86）
+- [蚂蚁 Agent 一二面：Code Agent 与应用开发](../../../interview/antfin/ai/antfin-ai-2.md)（cluster-2d9e5f67fe86）
 - [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)（cluster-3f37b9b18f24）
 - [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../../interview/bytedance/base/bytedance-base-24.md)（cluster-78d45fa26bfd）
 - [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)（cluster-910d0b20a897）

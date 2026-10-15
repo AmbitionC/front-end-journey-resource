@@ -1092,7 +1092,7 @@
         "nodeType": "department",
         "children": [
           {
-            "label": "淘天 Agent 算法一面：任务构造、轨迹验证与后训练（2026 年 8 月）",
+            "label": "阿里淘天 Agent 算法一面：任务构造、轨迹与训练路线",
             "key": "alibaba-ai-4",
             "isLeaf": true,
             "filePath": "alibaba/ai",
@@ -1102,13 +1102,14 @@
               "轨迹评测",
               "模型训练"
             ],
-            "updatedAt": "2026-08-30",
+            "updatedAt": "2026-10-14",
             "department": "淘天",
             "roleCategory": "Agent 与 AI 应用",
-            "role": "Agent算法"
+            "role": "Agent算法",
+            "contentFormat": "short-qa-v2"
           },
           {
-            "label": "淘天 AI 应用研发一面：RAG、限流 Top-K 与优惠策略设计（2026 年 8 月）",
+            "label": "阿里淘天 AI 应用研发一面：RAG、限流 Top-K 与优惠策略",
             "key": "alibaba-ai-5",
             "isLeaf": true,
             "filePath": "alibaba/ai",
@@ -1118,10 +1119,11 @@
               "Top-K",
               "AI Coding"
             ],
-            "updatedAt": "2026-08-30",
+            "updatedAt": "2026-10-14",
             "department": "淘天",
             "roleCategory": "Agent 与 AI 应用",
-            "role": "AI应用研发"
+            "role": "AI应用研发",
+            "contentFormat": "short-qa-v2"
           }
         ]
       },
@@ -1131,7 +1133,7 @@
         "nodeType": "department",
         "children": [
           {
-            "label": "淘宝闪购 Agent 算法一面：框架选型、人工接管与线上安全（2026 年 4 月）",
+            "label": "阿里淘宝闪购 Agent 算法实习一面：框架、记忆与线上排障",
             "key": "alibaba-ai-6",
             "isLeaf": true,
             "filePath": "alibaba/ai",
@@ -1141,10 +1143,11 @@
               "安全",
               "评测"
             ],
-            "updatedAt": "2026-08-30",
+            "updatedAt": "2026-10-14",
             "department": "淘宝闪购",
             "roleCategory": "Agent 与 AI 应用",
-            "role": "Agent"
+            "role": "Agent",
+            "contentFormat": "short-qa-v2"
           }
         ]
       },
@@ -1490,7 +1493,7 @@
             "role": "agent开发"
           },
           {
-            "label": "蚂蚁 Code Agent 与 Agent 应用两轮面试（2026 年 4 月）",
+            "label": "蚂蚁 Agent 一二面：Code Agent 与应用开发",
             "key": "antfin-ai-2",
             "isLeaf": true,
             "filePath": "antfin/ai",
@@ -1500,10 +1503,11 @@
               "上下文工程",
               "Skill"
             ],
-            "updatedAt": "2026-08-23",
+            "updatedAt": "2026-10-14",
             "department": "其他",
             "roleCategory": "Agent 与 AI 应用",
-            "role": "Agent"
+            "role": "Agent",
+            "contentFormat": "short-qa-v2"
           },
           {
             "label": "蚂蚁后端 AI 开发一面：Agent、Redis 与短链系统（2026 年 4 月）",

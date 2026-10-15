@@ -352,7 +352,7 @@ def calculate_relevance(content: str, query: str) -> float:
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [蚂蚁 Code Agent 与 Agent 应用两轮面试（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-2.md)
+- [蚂蚁 Agent 一二面：Code Agent 与应用开发](../../../interview/antfin/ai/antfin-ai-2.md)
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)
 - [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)
 - [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../../interview/bytedance/base/bytedance-base-24.md)

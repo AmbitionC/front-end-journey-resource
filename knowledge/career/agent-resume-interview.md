@@ -109,6 +109,8 @@ AI/Agent 岗位面试通常覆盖以下几个方向。学长不列具体题目�
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../interview/bytedance/base/bytedance-base-56.md)
 - [阿里云 Agent 开发秋招一面](../../interview/alibaba/ai/alibaba-ai-1.md)
 - [阿里国际 Accio Agent 算法一面：数据合成、任务环境与 GUI Agent](../../interview/alibaba/ai/alibaba-ai-3.md)
+- [阿里淘宝闪购 Agent 算法实习一面：框架、记忆与线上排障](../../interview/alibaba/ai/alibaba-ai-6.md)
+- [蚂蚁 Agent 一二面：Code Agent 与应用开发](../../interview/antfin/ai/antfin-ai-2.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

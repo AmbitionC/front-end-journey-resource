@@ -1,11 +1,17 @@
-堆是一棵满足局部顺序的不完全排序树：最小堆保证父节点不大于子节点，最大堆相反。这个不变量让极值始终位于根，并支持对数时间插入和删除，因此适合优先队列、调度和流式 Top-K；它不适合按任意键快速查找。
+二叉堆在完全二叉树的形状上维持局部堆序：最小堆保证父节点不大于子节点，最大堆相反；堆内元素不保证整体有序。这个不变量让极值始终位于根，并支持对数时间插入和删除，因此适合优先队列、调度和流式 Top-K；它不适合按任意键快速查找。
 
-![二叉堆的数组索引、上浮下沉、线性建堆和流式 Top-K 维护过程](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/algorithm-heap-top-k-priority-v1.webp)
-*图：完全二叉树紧凑映射到数组；插入沿父链上浮，删除根后沿子链下沉。*
+<iframe
+  src="https://www.agent-journey.cn/archify/minheap-operations-largest-topk.html"
+  title="最小堆上浮、下沉与流式最大 Top-K"
+></iframe>
+
+*图：0-based 二叉最小堆，节点标为“索引:值”，数组按层序存放。插入 1 沿父链上浮；删除 1 后以末项补根，再与较小子交换下沉。灰色快照是待修复状态。底部用恰好 5 项的最小堆保留已见数据中最大的 5 个值（按出现次数计），根是入选阈值；堆内数组并非有序输出。*
+
+[旧配图勘误存档](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/algorithm-heap-top-k-priority-v1.webp)：旧图含上浮/下沉数值及 K=5 节点数量错误，保留链接供核对；本页教学以当前图和正文为准。
 
 ## 数组表示与不变量
 
-二叉堆是近似完全二叉树，除最后一层外全部填满，最后一层从左到右。因此无需指针即可存在数组。0-based 索引下：
+二叉堆是一棵完全二叉树，除最后一层外全部填满，最后一层的节点从左到右排列。因此无需指针即可存在数组。0-based 索引下：
 
 ```text
 parent(i) = floor((i - 1) / 2)
@@ -48,9 +54,15 @@ pop 保存根，把最后元素移到根，再与更合适的子节点交换下�
 
 ## 流式 Top-K
 
-求最大 K 个元素时维护大小 K 的最小堆：根是当前 Top-K 中最小边界。新元素不大于根则丢弃；更大则替换根并下沉。时间 O(n log K)，空间 O(K)，不需保存全量。求最小 K 个则使用最大堆。
+对 n 个可比较值，若 2≤K≤n，求最大的 K 个元素（按出现次数计）可维护大小至多 K 的最小堆：先填充至 K 项，根是当前 Top-K 的最小边界。之后新元素不大于根可保留原堆；更大则替换根并下沉。扫描时间 O(n log K)，附加空间 O(K)，不需保存全量。K=1 时一次线性扫描求最大值；K≤0、K>n 和非法输入按调用合同处理。求最小 K 个则使用最大堆。
 
 如果还要按最终大小排序，结束后对堆内容排序，或连续 pop。堆内数组本身不是有序 Top-K，直接输出会得到错误顺序。
+
+## 实时商品排行榜不是独立记录的 Top-K
+
+排行榜按商品 ID 聚合，每次销量变化要更新同一个条目，不能把同一商品的多个历史分数当多个候选。只增不减时可维护总量映射与索引堆；交换时同步 id 到位置，更新堆内商品后修复堆序。若允许退货扣减，某个 Top-K 成员下降后可能被堆外商品替代，仅保存 K 个候选不足以恢复精确全局结果，应维护全量有序索引或可查询的候选结构。
+
+[Redis Sorted Set 的 ZADD](https://redis.io/docs/latest/commands/zadd/)可更新同一 member 的 score；排序还须定义同销量的稳定顺序。分片榜单要明确聚合时间和版本，销量分散到多个分片时不能只把局部候选直接合并就称全局精确。
 
 ## 优先调度的现实语义
 
@@ -128,7 +140,7 @@ function trapRainGrid(grid) {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [淘天 AI 应用研发一面：RAG、限流 Top-K 与优惠策略设计（2026 年 8 月）](../../../interview/alibaba/ai/alibaba-ai-5.md)
+- [阿里淘天 AI 应用研发一面：RAG、限流 Top-K 与优惠策略](../../../interview/alibaba/ai/alibaba-ai-5.md)
 - [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
 <!-- interview-source-history:end -->
 

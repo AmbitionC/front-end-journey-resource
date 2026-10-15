@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "最小堆：父子不变量、上浮下沉与最大 K 个值",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [1120, 580],
+    "legend": {"mode": "hidden"}
+  },
+  "components": [
+    {"id":"heap-index-zero","type":"backend","label":"0 : 2","pos":[190,80],"size":[74,46]},
+    {"id":"heap-index-one","type":"backend","label":"1 : 4","pos":[100,185],"size":[74,46]},
+    {"id":"heap-index-two","type":"backend","label":"2 : 3","pos":[280,185],"size":[74,46]},
+    {"id":"heap-index-three","type":"backend","label":"3 : 7","pos":[50,290],"size":[74,46]},
+    {"id":"heap-index-four","type":"backend","label":"4 : 8","pos":[150,290],"size":[74,46]},
+    {"id":"heap-index-five","type":"backend","label":"5 : 5","pos":[280,290],"size":[74,46]},
+    {"id":"insert-one-pending","type":"external","label":"[2,4,3,7,8,5,1]","sublabel":"尾部插入 1：待修复","pos":[440,100],"size":[260,64]},
+    {"id":"insert-one-valid","type":"backend","label":"[1,4,2,7,8,5,3]","sublabel":"到根停止：最小堆成立","pos":[440,290],"size":[260,64]},
+    {"id":"delete-min-pending","type":"external","label":"[3,4,2,7,8,5]","sublabel":"删除 1，尾部 3 补根：待修复","pos":[790,100],"size":[280,64]},
+    {"id":"delete-min-valid","type":"backend","label":"[2,4,3,7,8,5]","sublabel":"3≤其唯一子 5：停止","pos":[790,290],"size":[280,64]},
+    {"id":"largest-five-before","type":"database","label":"[5,8,6,9,15]","sublabel":"K=5 已满；x=4≤根5，忽略","pos":[100,460],"size":[310,64]},
+    {"id":"largest-five-after","type":"database","label":"[6,8,14,9,15]","sublabel":"仍为 5 项；新阈值 6；堆非全序","pos":[710,460],"size":[340,64]}
+  ],
+  "boundaries": [
+    {"kind":"region","label":"① 父≤子；层序 [2,4,3,7,8,5]；节点 i:值","wraps":["heap-index-zero","heap-index-one","heap-index-two","heap-index-three","heap-index-four","heap-index-five"],"pad":22},
+    {"kind":"region","label":"② 插入 1：沿父链上浮","wraps":["insert-one-pending","insert-one-valid"],"pad":20},
+    {"kind":"region","label":"③ 删除最小值 1：与较小子交换","wraps":["delete-min-pending","delete-min-valid"],"pad":20},
+    {"kind":"region","label":"④ 流式保留最大 K 个值：大小 K 的最小堆","wraps":["largest-five-before","largest-five-after"],"pad":24}
+  ],
+  "connections": [
+    {"id":"parent-zero-left-one","from":"heap-index-zero","to":"heap-index-one"},
+    {"id":"parent-zero-right-two","from":"heap-index-zero","to":"heap-index-two"},
+    {"id":"parent-one-left-three","from":"heap-index-one","to":"heap-index-three","fromSide":"bottom","toSide":"top"},
+    {"id":"parent-one-right-four","from":"heap-index-one","to":"heap-index-four","fromSide":"bottom","toSide":"top"},
+    {"id":"parent-two-left-five","from":"heap-index-two","to":"heap-index-five"},
+    {"id":"sift-one-up","from":"insert-one-pending","to":"insert-one-valid","label":"1<3 交换，再与 2 交换","variant":"emphasis","labelDy":70},
+    {"id":"sift-three-down","from":"delete-min-pending","to":"delete-min-valid","label":"3>较小子 2：交换","variant":"emphasis","labelDy":70},
+    {"id":"replace-boundary-five","from":"largest-five-before","to":"largest-five-after","label":"x=14>5：替根，下沉与 6 换","variant":"emphasis"}
+  ],
+  "cards": [
+    {"dot":"cyan","title":"索引与边界（0-based 二叉最小堆）","items":["left(i)=2i+1，right(i)=2i+2；父节点≤已有子节点，数组按层序存放，不保证全局排序。","Top-K 限已填满的 K=5；按出现次数计，x≤根时可保留既有元素。未满 K 时先插入，要求有序结果还需另排序。"]}
+  ]
+}

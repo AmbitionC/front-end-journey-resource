@@ -77,8 +77,11 @@ actor 表示发起主体，delegate 表示代表其行动的 Agent 或服务；�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [淘宝闪购 Agent 算法一面：框架选型、人工接管与线上安全（2026 年 4 月）](../../../interview/alibaba/ai/alibaba-ai-6.md)（cluster-e392a4fd1f33）
 <!-- interview-source-history:end -->
+
+## 学习阅读（不计专题频次）
+
+- [阿里淘宝闪购 Agent 算法实习一面：框架、记忆与线上排障](../../../interview/alibaba/ai/alibaba-ai-6.md)（cluster-e392a4fd1f33）（本页原有延伸阅读；该来源本次逐题主绑定为其他专题，不计本专题频次。）
 
 ## 参考资料
 
