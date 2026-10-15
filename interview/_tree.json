@@ -1105,7 +1105,8 @@
             "updatedAt": "2026-10-14",
             "department": "淘天",
             "roleCategory": "Agent 与 AI 应用",
-            "role": "Agent算法"
+            "role": "Agent算法",
+            "contentFormat": "short-qa-v2"
           },
           {
             "label": "阿里淘天 AI 应用研发一面：RAG、限流 Top-K 与优惠策略",
@@ -1121,7 +1122,8 @@
             "updatedAt": "2026-10-14",
             "department": "淘天",
             "roleCategory": "Agent 与 AI 应用",
-            "role": "AI应用研发"
+            "role": "AI应用研发",
+            "contentFormat": "short-qa-v2"
           }
         ]
       },
@@ -1144,7 +1146,8 @@
             "updatedAt": "2026-10-14",
             "department": "淘宝闪购",
             "roleCategory": "Agent 与 AI 应用",
-            "role": "Agent"
+            "role": "Agent",
+            "contentFormat": "short-qa-v2"
           }
         ]
       },
@@ -1503,7 +1506,8 @@
             "updatedAt": "2026-10-14",
             "department": "其他",
             "roleCategory": "Agent 与 AI 应用",
-            "role": "Agent"
+            "role": "Agent",
+            "contentFormat": "short-qa-v2"
           },
           {
             "label": "蚂蚁后端 AI 开发一面：Agent、Redis 与短链系统（2026 年 4 月）",
