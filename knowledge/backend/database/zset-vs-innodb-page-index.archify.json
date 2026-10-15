@@ -1,0 +1,384 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "ZSet 的内存双索引与 InnoDB 的页式 B+ 树",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "animation": "none",
+    "viewBox": [
+      1360,
+      850
+    ]
+  },
+  "components": [
+    {
+      "id": "member-a",
+      "type": "backend",
+      "label": "字典项 A",
+      "sublabel": "member A → score 10",
+      "pos": [
+        54.6,
+        700
+      ],
+      "size": [
+        185,
+        88
+      ],
+      "tag": "Redis 8.4 非紧凑 ZSet"
+    },
+    {
+      "id": "member-b",
+      "type": "backend",
+      "label": "字典项 B",
+      "sublabel": "member B → score 10",
+      "pos": [
+        273.0,
+        700
+      ],
+      "size": [
+        185,
+        88
+      ]
+    },
+    {
+      "id": "member-c",
+      "type": "backend",
+      "label": "字典项 C",
+      "sublabel": "member C → score 30",
+      "pos": [
+        491.4,
+        700
+      ],
+      "size": [
+        185,
+        88
+      ],
+      "tag": "小对象可用 listpack"
+    },
+    {
+      "id": "a-level-one",
+      "type": "backend",
+      "label": "A · score 10",
+      "sublabel": "L1 · 节点 A 的上层视图",
+      "pos": [
+        54.6,
+        230
+      ],
+      "size": [
+        185,
+        88
+      ]
+    },
+    {
+      "id": "c-level-one",
+      "type": "backend",
+      "label": "C · score 30",
+      "sublabel": "L1 · 节点 C 的上层视图",
+      "pos": [
+        491.4,
+        230
+      ],
+      "size": [
+        185,
+        88
+      ]
+    },
+    {
+      "id": "a-base",
+      "type": "backend",
+      "label": "A · score 10",
+      "sublabel": "L0 · 与上方是同一 A",
+      "pos": [
+        54.6,
+        480
+      ],
+      "size": [
+        185,
+        88
+      ]
+    },
+    {
+      "id": "b-base",
+      "type": "backend",
+      "label": "B · score 10",
+      "sublabel": "L0 · A、B 同分按字节序",
+      "pos": [
+        273.0,
+        480
+      ],
+      "size": [
+        185,
+        88
+      ]
+    },
+    {
+      "id": "c-base",
+      "type": "backend",
+      "label": "C · score 30",
+      "sublabel": "L0 · 与上方是同一 C",
+      "pos": [
+        491.4,
+        480
+      ],
+      "size": [
+        185,
+        88
+      ]
+    },
+    {
+      "id": "root-page",
+      "type": "database",
+      "label": "根页：分隔键 30 | 50",
+      "sublabel": "页内多键与 3 条子页指针",
+      "pos": [
+        932.4,
+        150
+      ],
+      "size": [
+        270,
+        110
+      ],
+      "tag": "InnoDB 8.4 普通索引"
+    },
+    {
+      "id": "leaf-low",
+      "type": "database",
+      "label": "叶页 P1：10 | 20",
+      "sublabel": "页内放多条有序记录",
+      "pos": [
+        730.8,
+        480
+      ],
+      "size": [
+        180,
+        88
+      ]
+    },
+    {
+      "id": "leaf-mid",
+      "type": "database",
+      "label": "叶页 P2：30 | 40",
+      "sublabel": "范围示例：20 ≤ k ≤ 50",
+      "pos": [
+        940.8,
+        480
+      ],
+      "size": [
+        180,
+        88
+      ]
+    },
+    {
+      "id": "leaf-high",
+      "type": "database",
+      "label": "叶页 P3：50 | 60",
+      "sublabel": "定位后沿叶页链扫描",
+      "pos": [
+        1150.8,
+        480
+      ],
+      "size": [
+        180,
+        88
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "member 字典：按成员查 score；SDS 与跳表共享",
+      "wraps": [
+        "member-a",
+        "member-b",
+        "member-c"
+      ],
+      "pad": 22
+    },
+    {
+      "kind": "region",
+      "label": "内存跳表：score 升序，同分按 member 字节序；局部两层，省略 header / span",
+      "wraps": [
+        "a-level-one",
+        "c-level-one",
+        "a-base",
+        "b-base",
+        "c-base"
+      ],
+      "pad": 22
+    },
+    {
+      "kind": "region",
+      "label": "页式 B+ 树：页内多键提高扇出；缓冲池缓存页，磁盘按页存取",
+      "wraps": [
+        "root-page",
+        "leaf-low",
+        "leaf-mid",
+        "leaf-high"
+      ],
+      "pad": 22
+    }
+  ],
+  "connections": [
+    {
+      "id": "dict-a-node",
+      "from": "member-a",
+      "to": "a-base",
+      "label": "同一 member",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "variant": "dashed",
+      "labelAt": [
+        147.1,
+        640
+      ]
+    },
+    {
+      "id": "dict-b-node",
+      "from": "member-b",
+      "to": "b-base",
+      "label": "同一 member",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "variant": "dashed",
+      "labelAt": [
+        365.5,
+        640
+      ]
+    },
+    {
+      "id": "dict-c-node",
+      "from": "member-c",
+      "to": "c-base",
+      "label": "同一 member",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "variant": "dashed",
+      "labelAt": [
+        583.9,
+        640
+      ]
+    },
+    {
+      "id": "upper-forward",
+      "from": "a-level-one",
+      "to": "c-level-one",
+      "label": "L1 forward：跳过 B",
+      "fromSide": "right",
+      "toSide": "left",
+      "variant": "emphasis"
+    },
+    {
+      "id": "a-same-node",
+      "from": "a-level-one",
+      "to": "a-base",
+      "label": "同一节点的两层视图",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "variant": "dashed",
+      "labelAt": [
+        147.1,
+        400
+      ]
+    },
+    {
+      "id": "c-same-node",
+      "from": "c-level-one",
+      "to": "c-base",
+      "label": "同一节点的两层视图",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "variant": "dashed",
+      "labelAt": [
+        583.9,
+        400
+      ]
+    },
+    {
+      "id": "base-a-b",
+      "from": "a-base",
+      "to": "b-base",
+      "fromSide": "right",
+      "toSide": "left",
+      "variant": "emphasis"
+    },
+    {
+      "id": "base-b-c",
+      "from": "b-base",
+      "to": "c-base",
+      "fromSide": "right",
+      "toSide": "left",
+      "variant": "emphasis"
+    },
+    {
+      "id": "root-low-page",
+      "from": "root-page",
+      "to": "leaf-low",
+      "label": "k < 30",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "root-mid-page",
+      "from": "root-page",
+      "to": "leaf-mid",
+      "label": "30 ≤ k < 50",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelAt": [
+        1030,
+        445
+      ]
+    },
+    {
+      "id": "root-high-page",
+      "from": "root-page",
+      "to": "leaf-high",
+      "label": "k ≥ 50",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "leaf-chain-low-mid",
+      "from": "leaf-low",
+      "to": "leaf-mid",
+      "fromSide": "right",
+      "toSide": "left",
+      "variant": "emphasis"
+    },
+    {
+      "id": "leaf-chain-mid-high",
+      "from": "leaf-mid",
+      "to": "leaf-high",
+      "fromSide": "right",
+      "toSide": "left",
+      "variant": "emphasis"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "ZSet 为什么不必照搬 B+ 树",
+      "items": [
+        "内存中的 member 定位与有序范围访问由两种结构分工。",
+        "跳表用多层链接跨越成员；底层链负责顺序遍历。"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "InnoDB 为什么采用页式树",
+      "items": [
+        "一页容纳多键与指针，让每次页面访问完成更多导航。",
+        "范围定位后沿叶页链读取；缓存命中会改变实际 I/O。"
+      ]
+    },
+    {
+      "dot": "slate",
+      "title": "结构示意的边界",
+      "items": [
+        "实线表示 forward 导航或叶链；虚线只表示同一成员 / 节点的视图关联。",
+        "页容量与跳表层高仅为教学示意；不比较性能胜负。"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,281 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Agent 的输入信任与执行边界",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1200,
+      740
+    ]
+  },
+  "components": [
+    {
+      "id": "external-data",
+      "type": "external",
+      "label": "外部内容",
+      "sublabel": "网页 · RAG · Agent 消息",
+      "tag": "间接提示注入入口",
+      "pos": [
+        45,
+        160
+      ],
+      "size": [
+        180,
+        78
+      ]
+    },
+    {
+      "id": "context",
+      "type": "backend",
+      "label": "上下文组装",
+      "sublabel": "保留来源与不可信标记",
+      "tag": "外部数据不升格为指令",
+      "pos": [
+        380,
+        160
+      ],
+      "size": [
+        180,
+        78
+      ]
+    },
+    {
+      "id": "model",
+      "type": "cloud",
+      "label": "模型推理",
+      "sublabel": "仅提出工具与参数",
+      "tag": "提议不等于获得权限",
+      "pos": [
+        715,
+        160
+      ],
+      "size": [
+        180,
+        78
+      ]
+    },
+    {
+      "id": "request-check",
+      "type": "security",
+      "label": "运行时逐请求校验",
+      "sublabel": "身份 · Schema · 用户意图",
+      "tag": "实际参数与资源重新授权",
+      "pos": [
+        715,
+        380
+      ],
+      "size": [
+        180,
+        86
+      ]
+    },
+    {
+      "id": "tool-execution",
+      "type": "backend",
+      "label": "受控工具执行",
+      "sublabel": "最小权限 · 沙箱 · 出网限制",
+      "tag": "副作用发生点",
+      "pos": [
+        380,
+        380
+      ],
+      "size": [
+        180,
+        86
+      ]
+    },
+    {
+      "id": "tool-result",
+      "type": "external",
+      "label": "工具返回文本",
+      "sublabel": "解析与过滤后仍不可信",
+      "tag": "内容不能扩大权限",
+      "pos": [
+        45,
+        380
+      ],
+      "size": [
+        180,
+        86
+      ]
+    },
+    {
+      "id": "approval-policy",
+      "type": "security",
+      "label": "高影响操作确认",
+      "sublabel": "确认具体对象与操作范围",
+      "tag": "未获所需确认即拒绝",
+      "pos": [
+        715,
+        600
+      ],
+      "size": [
+        180,
+        78
+      ]
+    },
+    {
+      "id": "user-identity",
+      "type": "frontend",
+      "label": "用户与身份凭据",
+      "sublabel": "主体 · 租户 · 授权范围",
+      "tag": "可信通道绑定当前请求",
+      "pos": [
+        1000,
+        380
+      ],
+      "size": [
+        170,
+        86
+      ]
+    },
+    {
+      "id": "user-confirmation",
+      "type": "frontend",
+      "label": "用户确认",
+      "sublabel": "审核将发生的具体副作用",
+      "tag": "外部文档不能代替用户同意",
+      "pos": [
+        1000,
+        600
+      ],
+      "size": [
+        170,
+        78
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "不可信数据区",
+      "wraps": [
+        "external-data",
+        "tool-result"
+      ],
+      "pad": 26
+    },
+    {
+      "kind": "region",
+      "label": "推理区：内容可能受注入影响",
+      "wraps": [
+        "context",
+        "model"
+      ],
+      "pad": 26
+    },
+    {
+      "kind": "security-group",
+      "label": "可信执行边界：模型之外强制策略",
+      "wraps": [
+        "request-check",
+        "tool-execution",
+        "approval-policy"
+      ],
+      "pad": 26
+    }
+  ],
+  "connections": [
+    {
+      "id": "external-into-context",
+      "from": "external-data",
+      "to": "context",
+      "label": "不可信数据入站",
+      "variant": "security"
+    },
+    {
+      "id": "context-to-model",
+      "from": "context",
+      "to": "model",
+      "label": "带来源的上下文",
+      "variant": "emphasis"
+    },
+    {
+      "id": "proposal-to-check",
+      "from": "model",
+      "to": "request-check",
+      "label": "调用提议 ≠ 执行",
+      "variant": "security",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelAt": [
+        805,
+        305
+      ]
+    },
+    {
+      "id": "identity-to-check",
+      "from": "user-identity",
+      "to": "request-check",
+      "label": "认证身份与 Scope",
+      "variant": "security"
+    },
+    {
+      "id": "approval-to-check",
+      "from": "approval-policy",
+      "to": "request-check",
+      "label": "按风险要求确认",
+      "variant": "security",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "user-to-approval",
+      "from": "user-confirmation",
+      "to": "approval-policy",
+      "label": "具体操作确认",
+      "variant": "security"
+    },
+    {
+      "id": "check-to-tool",
+      "from": "request-check",
+      "to": "tool-execution",
+      "label": "仅校验通过才执行",
+      "variant": "emphasis"
+    },
+    {
+      "id": "tool-to-result",
+      "from": "tool-execution",
+      "to": "tool-result",
+      "label": "返回内容不继承信任",
+      "variant": "default"
+    },
+    {
+      "id": "result-into-context",
+      "from": "tool-result",
+      "to": "context",
+      "label": "作为数据回填",
+      "variant": "dashed",
+      "fromSide": "top",
+      "toSide": "bottom"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "rose",
+      "title": "注入路径",
+      "items": [
+        "外部内容可能改变模型的调用提议",
+        "身份认证不代表返回文本可信"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "执行检查点",
+      "items": [
+        "每次请求校验实际参数、资源和授权",
+        "权限校验与所需确认缺一即拒绝"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "剩余风险",
+      "items": [
+        "隔离、结构约束和确认只能降低风险",
+        "还需沿攻击路径测试、监控与响应"
+      ]
+    }
+  ]
+}

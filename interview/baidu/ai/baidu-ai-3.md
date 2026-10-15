@@ -1,51 +1,43 @@
-### 百度后端开发一面：Agent 安全、混合检索与 Redis（2026 年 8 月）
+### 百度北京后端秋招一面：Agent 安全、检索与存储
 
-这场约 43 分钟的后端一面从 Agent 项目切入，继续追问安全、BM25 与混合检索，随后回到 Redis 数据结构、分布式锁和 MySQL 索引。回答的关键是把 AI 检索链路与后端基础联系起来。
+以下内容依据候选人自述整理，未经独立证实。原帖记录百度北京后端开发秋招一面约 43 分钟，面试日期写作 8.10，未注明年份；内容从 Agent 项目和检索延伸到 Redis 与 MySQL 索引。
 
-#### （1）怎样介绍实习或 Agent 项目？
+问题依原帖整理；下方短答为教学补充，不代表候选人的实际回答或项目成果。
 
-先用一句话交代用户、问题和成功标准，再按“目标—约束—方案—本人职责—验证结果”展开。架构部分只画关键数据流，选一个最难的技术决策说明备选方案和取舍；指标必须给出口径、基线和测试环境，团队成果与个人贡献要明确区分。
+开场提到了介绍实习与 Agent 项目，原帖未给出具体方案。
 
-如果项目尚未上线，应如实说明验证范围和已知限制。面试官关注的不是组件数量，而是候选人是否真正理解问题并能用证据解释设计。
+<details data-knowledge-key="agent-security-threat-model"><summary>（1）Agent 项目的安全怎样做？</summary></details>
 
-#### （2）Agent 项目的安全应该怎样设计？
+先识别资产、外部内容和工具权限形成的信任边界；模型只提出调用，服务端在执行前校验身份、资源范围、参数与副作用。再结合隔离、审计与对抗测试控制注入、越权和泄露，不能承诺单靠 Prompt 消除攻击。
 
-先按输入、模型、工具、数据、输出和供应链建立威胁模型。外部内容可能包含提示注入，因此检索文本只能作为不可信数据；模型提出工具调用后，服务端仍要校验身份、资源范围和参数，危险写操作要求显式确认并在沙箱中执行。
+<details data-binding-status="pending_semantic_verification"><summary>（2）BM25 是怎样做关键词检索排序的？</summary><p>关联知识点待核实。</p></details>
 
-凭证使用最小权限和短期授权，限制网络出口、文件路径、调用次数与预算；敏感数据在进入模型前脱敏，日志记录授权决定和工具副作用。最后用越权、间接注入、数据外泄和工具污染样例做红队与回归测试。延伸阅读：[Agent 安全威胁建模](../../../knowledge/llm/production/agent-security-threat-model.md)、[最小权限与工具确认](../../../knowledge/llm/production/agent-permission-model.md)。
+BM25 结合词频、词项在语料中的稀有程度和文档长度计算相关性；词频收益会饱和，长度归一化用于减轻长文档的天然优势。具体分词、参数与统计口径取决于实现，分数不是事实正确概率；知识关联仍待语义核验。
 
-#### （3）BM25 是怎样完成关键词检索的？
+<details data-knowledge-key="rag-hybrid-search"><summary>（3）为什么要做混合检索？</summary></details>
 
-BM25 根据查询词在文档中的词频、该词在全集中的稀有程度以及文档长度计算相关性。词频采用饱和函数，避免同一词无限重复就持续等比例加分；IDF 让稀有词权重更高；长度归一化减少长文档天然包含更多词造成的偏差。
+词法检索便于保留错误码、型号等精确词项，向量检索可补充同义改写和语义近似，两路错误有互补时能改善候选覆盖。是否有收益仍需在相同查询集上对比质量、延迟和成本；融合、重排和评测可以教学展开，但不是原帖记录的额外追问。
 
-它对产品名、错误码、缩写等精确词很有效，但无法天然理解未共现的同义表达。分词、停用词、字段权重和领域词典都会显著影响结果，应在标注查询集上调参而不是只看个别案例。
+<details data-knowledge-key="redis-distributed-lock"><summary>（4）单机节点为什么还可能使用 Redis 锁？</summary></details>
 
-#### （4）为什么要做混合检索，怎样合并结果？
+单机不等于单进程：多个 Worker 仍可能竞争同一任务或外部资源。先比较进程内锁、本机进程间协调、数据库约束与 Redis 租约的部署和故障边界；需要共享协调才评估 Redis，不能把跨进程等同于必须用 Redis。
 
-稀疏检索擅长精确实体和罕见词，向量检索擅长语义近似，两者的失败模式互补。实践中先执行权限和元数据过滤，分别召回候选，再用加权分数、RRF 或学习排序融合，最后按需要用 Cross-Encoder 重排。
+<details data-knowledge-key="redis-data-structure"><summary>（5）Redis ZSet 的结构是什么？</summary></details>
 
-两路原始分数通常不在同一尺度，不能直接相加。应分别评估 Recall@K、nDCG、最终答案正确率、延迟和成本，并保存每条结果来自哪一路以便诊断。延伸阅读：[混合检索](../../../knowledge/llm/rag/rag-hybrid-search.md)。
+ZSet 的 member 唯一，按 score 排序；相同 score 再按 member 的字典序排列。以 Redis 8.4 为例，小集合可用 listpack，超过相应编码条件后以字典查 member 对应分数、以跳表维护顺序；具体编码受版本、数据和配置影响，不能笼统说始终只有跳表。
 
-#### （5）单机节点为什么还可能使用 Redis 锁？
+<details data-knowledge-key="redis-data-structure"><summary>（6）承接 ZSet：怎样解释 Redis 没有采用 B+ 树这一选择？</summary></details>
 
-如果真的是单进程、单实例且资源只在进程内共享，本地互斥锁更简单可靠，不应为了“分布式”而引入 Redis。所谓单机节点仍可能运行多个进程或 Worker，也可能在滚动发布、故障转移后短暂出现多个实例；当它们共同竞争数据库任务或定时作业时，才需要跨进程协调。
+这里结合前题限定为 ZSet，比较的是相关有序编码：跳表与字典分别支持分数顺序和 member 查分，页式多路 B+ 树有另一组布局与维护取舍。可从内存访问、范围遍历和实现复杂度解释，不应宣称跳表在所有负载更快，也不能把工程推理当作已核实的官方历史决策。
 
-Redis 锁常用带过期时间的 `SET key token NX PX`，释放时通过脚本比较 token 后删除，并处理租约续期和超时。若过期持有者仍可能写入关键资源，还需 fencing token；能用数据库唯一约束或任务幂等解决时，应优先减少锁依赖。延伸阅读：[Redis 分布式锁](../../../knowledge/backend/database/redis-distributed-lock.md)。
+<details data-knowledge-key="mysql-index"><summary>（7）在常见 InnoDB 普通索引范围内，为什么使用 B+ 树而不是跳表？</summary></details>
 
-#### （6）Redis Sorted Set 的结构和复杂度是什么？
+InnoDB 按页管理索引，高扇出的树降低层数，叶子有序便于范围扫描。比较跳表时应同时讨论页局部性、访问和维护成本；这是一组工程取舍，不能仅凭平均复杂度断言优劣，也不能把结论扩展到所有 MySQL 索引。
 
-Sorted Set 把唯一 member 映射到 score，并按 score 有序访问。小集合可使用紧凑编码以节省内存；达到配置阈值后，经典实现用哈希表保存 member 到 score 的映射，并用跳表维护顺序。查 member 得分可接近 `O(1)`，插入、删除和按排名定位通常为期望 `O(log N)`，范围遍历再加返回元素数 `M`。
+背景记录：反问涉及业务性质、增量业务与部门 AI 应用；原帖没有记录对方回答。
 
-回答时要区分对外语义与内部编码：具体阈值和紧凑结构会随 Redis 版本与配置变化。延伸阅读：[Redis 数据结构](../../../knowledge/backend/database/redis-data-structure.md)。
+#### 延伸阅读
 
-#### （7）Redis 的有序集合为什么通常不用 B+ 树？
+[Agent 安全威胁建模](../../../knowledge/llm/production/agent-security-threat-model.md)、[混合检索与 RRF 融合](../../../knowledge/llm/rag/rag-hybrid-search.md)、[分布式锁与租约](../../../knowledge/backend/database/redis-distributed-lock.md)、[Redis 数据结构](../../../knowledge/backend/database/redis-data-structure.md)、[数据库索引原理与查询优化](../../../knowledge/backend/database/mysql-index.md)。
 
-B+ 树的高扇出和页式布局主要用于减少磁盘或块设备 I/O；Redis 的核心数据位于内存，跳表实现较直接，插入删除只调整局部指针，范围顺序遍历也方便。配合哈希表后，它还能同时满足按 member 查分数和按 score 排序两类访问。
-
-这不是说 B+ 树在内存中不可用，而是数据介质、操作模式、实现复杂度和内存开销共同决定选择。跳表提供的是期望复杂度，不应误说成严格平衡树的最坏情况保证。
-
-#### （8）MySQL 索引为什么不用跳表？
-
-InnoDB 索引需要持久化在固定大小的数据页中。B+ 树节点扇出高，树高低，一次页读取能检查大量 key；叶子按顺序链接，范围查询和顺序扫描高效，也便于与缓冲池、页分裂、事务日志和崩溃恢复配合。
-
-跳表依赖多层指针和随机层高，内存访问灵活，但在页式存储上局部性与 I/O 次数通常不如 B+ 树稳定。数据库索引选择还要服务并发控制和持久化，不能只比较平均时间复杂度。延伸阅读：[MySQL 索引原理与查询优化](../../../knowledge/backend/database/mysql-index.md)。
+[最小权限与工具确认](../../../knowledge/llm/production/agent-permission-model.md)。

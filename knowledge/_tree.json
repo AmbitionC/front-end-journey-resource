@@ -809,7 +809,7 @@
             "contentStatus": "published",
             "heat": 16,
             "currRank": 5,
-            "updatedAt": "2026-09-01",
+            "updatedAt": "2026-10-15",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "混合检索组合词法精确命中与向量语义召回，先约束权限和版本，再去重、融合与重排。不同原始分数不能直接相加；RRF按排名融合也需评测，重排不能补回候选集中已经遗漏的证据。"
@@ -1981,6 +1981,22 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
+            "label": "Agent 威胁建模与安全测试",
+            "key": "agent-security-threat-model",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "published",
+            "heat": 8,
+            "currRank": 5,
+            "updatedAt": "2026-10-15",
+            "interviewBaseHeat": 6,
+            "interviewCount": 2,
+            "interviewCountBasis": "verified-public-posts",
+            "quickRead": {
+              "text": "Agent 安全从资产、攻击者能力、数据流和信任边界出发，把注入、工具滥用、记忆污染和外泄落到具体路径。模型提出调用后，运行时与资源层仍须独立校验用户、租户、参数和权限；用最小权限、执行前审批、幂等与沿路径测试降低风险，并保留检测、隔离和恢复证据。"
+            }
+          },
+          {
             "label": "Agent 服务部署、扩缩容与版本发布",
             "key": "agent-deployment",
             "isLeaf": true,
@@ -1993,19 +2009,6 @@
             "quickRead": {
               "text": "部署需定义任务状态、依赖、容量、启动与关闭、可观测性和版本回退。扩容不自动增加下游配额，长任务需要恢复与取消合同，不能以进程启动证明系统可靠。"
             },
-            "interviewCount": 1,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "Agent 威胁建模与安全测试",
-            "key": "agent-security-threat-model",
-            "isLeaf": true,
-            "filePath": "llm/production",
-            "contentStatus": "published",
-            "heat": 7,
-            "currRank": 4,
-            "updatedAt": "2026-07-16",
-            "interviewBaseHeat": 6,
             "interviewCount": 1,
             "interviewCountBasis": "verified-public-posts"
           },
@@ -2717,6 +2720,22 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
+            "label": "数据库索引原理与查询优化",
+            "key": "mysql-index",
+            "isLeaf": true,
+            "filePath": "backend/database",
+            "contentStatus": "published",
+            "heat": 19,
+            "currRank": 5,
+            "updatedAt": "2026-10-15",
+            "interviewBaseHeat": 1,
+            "quickRead": {
+              "text": "InnoDB 普通有序索引围绕页组织导航与叶子记录，二级索引可能回表，联合索引按完整键的字典序服务过滤与排序。B+ 树与跳表都能查范围，不能只看渐进复杂度或跨产品照搬；按实际引擎、查询、缓存与写入约束读执行计划。EXPLAIN ANALYZE 会执行查询，唯一键的 NULL 与 DDL 锁仍有边界。"
+            },
+            "interviewCount": 18,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
             "label": "Agent 会话、检查点与任务状态存储",
             "key": "agent-state-storage",
             "isLeaf": true,
@@ -2749,22 +2768,6 @@
             }
           },
           {
-            "label": "数据库索引原理与查询优化",
-            "key": "mysql-index",
-            "isLeaf": true,
-            "filePath": "backend/database",
-            "contentStatus": "published",
-            "heat": 18,
-            "currRank": 5,
-            "updatedAt": "2026-10-02",
-            "interviewBaseHeat": 1,
-            "quickRead": {
-              "text": "InnoDB索引按键组织查找与排序，联合索引是否有用取决于查询前缀、过滤和返回列。区分索引可用、优化器选择和真实变快；EXPLAIN ANALYZE会执行查询，写入、锁、回表与可空唯一键也有边界。慢日志用 slow_query_log 控制、long_query_time 秒级阈值，并受管理语句与检查行等条件影响。"
-            },
-            "interviewCount": 17,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
             "label": "对象存储、预签名 URL 与生命周期",
             "key": "object-storage",
             "isLeaf": true,
@@ -2791,6 +2794,38 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
+            "label": "Redis 数据结构与使用场景",
+            "key": "redis-data-structure",
+            "isLeaf": true,
+            "filePath": "backend/database",
+            "contentStatus": "published",
+            "heat": 10,
+            "currRank": 5,
+            "updatedAt": "2026-10-15",
+            "interviewBaseHeat": 1,
+            "quickRead": {
+              "text": "Redis 类型按访问语义选择，内部编码随版本、配置与数据变化。Redis 8.4 的非紧凑 ZSet 以字典做 member 查分数，以跳表做按 score 的有序、范围与排名；B+ 树也能查范围，选型要看内存节点与持久页的成本。原子命令不保证跨命令流程正确，队列仍需认领、确认和幂等。"
+            },
+            "interviewCount": 9,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
+            "label": "Redis 分布式锁：租约、续期与故障边界",
+            "key": "redis-distributed-lock",
+            "isLeaf": true,
+            "filePath": "backend/database",
+            "contentStatus": "published",
+            "heat": 9,
+            "currRank": 5,
+            "updatedAt": "2026-10-15",
+            "interviewBaseHeat": 1,
+            "quickRead": {
+              "text": "Redis 租约锁用原子 NX、随机持有者 token 和过期时间，释放或续期原子核对身份。租约失效、暂停和故障切换可能破坏排他，重要写入需资源端版本或 fencing，watchdog 不自动消除风险。"
+            },
+            "interviewCount": 8,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
             "label": "数据库 Migration、回滚与兼容发布",
             "key": "database-migration",
             "isLeaf": true,
@@ -2814,35 +2849,19 @@
             "updatedAt": "2026-07-17"
           },
           {
-            "label": "Redis 分布式锁：租约、续期与故障边界",
-            "key": "redis-distributed-lock",
+            "label": "数据库数据模型：查询、约束与选择",
+            "key": "database-models",
             "isLeaf": true,
-            "filePath": "backend/database",
+            "filePath": "backend/db",
             "contentStatus": "published",
-            "heat": 9,
-            "currRank": 5,
-            "updatedAt": "2026-09-01",
-            "interviewBaseHeat": 1,
+            "heat": 4,
+            "currRank": 3,
+            "updatedAt": "2026-10-03",
             "quickRead": {
-              "text": "Redis 租约锁用原子 NX、随机持有者 token 和过期时间，释放或续期原子核对身份。租约失效、暂停和故障切换可能破坏排他，重要写入需资源端版本或 fencing，watchdog 不自动消除风险。"
+              "text": "数据模型决定怎样组织、关联和查询数据：关系、键值、文档、列族与图各有合适的访问方式。SQL 与 NoSQL 标签不能代替事务、约束和一致性检查；搜索或向量索引通常需要明确事实来源，以及更新、删除和权限传播边界。"
             },
-            "interviewCount": 8,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "Redis 数据结构与使用场景",
-            "key": "redis-data-structure",
-            "isLeaf": true,
-            "filePath": "backend/database",
-            "contentStatus": "published",
-            "heat": 9,
-            "currRank": 5,
-            "updatedAt": "2026-07-18",
             "interviewBaseHeat": 1,
-            "quickRead": {
-              "text": "Redis 数据类型按操作语义选择：String 存值与计数，Hash 组织字段，List 保留序列，Set 去重，Sorted Set 按分值排序。原子命令只保证各自操作，跨命令流程仍需并发控制；内存和延迟取决于数据规模、编码与命令复杂度，不能只按类型名称判断。Streams 的 PEL 保存未确认分派，XACK/接管配合幂等恢复；字典渐进 rehash 与这些业务语义属于不同层。"
-            },
-            "interviewCount": 8,
+            "interviewCount": 3,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -2882,22 +2901,6 @@
             "updatedAt": "2026-08-29",
             "interviewBaseHeat": 0,
             "interviewCount": 1,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "数据库数据模型：查询、约束与选择",
-            "key": "database-models",
-            "isLeaf": true,
-            "filePath": "backend/db",
-            "contentStatus": "published",
-            "heat": 4,
-            "currRank": 3,
-            "updatedAt": "2026-10-03",
-            "quickRead": {
-              "text": "数据模型决定怎样组织、关联和查询数据：关系、键值、文档、列族与图各有合适的访问方式。SQL 与 NoSQL 标签不能代替事务、约束和一致性检查；搜索或向量索引通常需要明确事实来源，以及更新、删除和权限传播边界。"
-            },
-            "interviewBaseHeat": 1,
-            "interviewCount": 3,
             "interviewCountBasis": "verified-public-posts"
           }
         ]

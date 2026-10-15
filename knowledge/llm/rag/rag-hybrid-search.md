@@ -68,7 +68,7 @@ $$
 
 其中 $m$ 是检索器数量，$k$ 是平滑常数。一个文档若同时在两条链路中排名靠前，会得到更高融合分。Elastic 的 RRF 文档强调，它能组合相关性指标不同的结果集，而不要求这些分数处在同一量纲。[Elasticsearch：Reciprocal rank fusion](https://www.elastic.co/docs/reference/elasticsearch/rest-apis/reciprocal-rank-fusion)
 
-下面是一个最小 TypeScript 实现，便于理解，不代表数据库侧实现一定要搬到应用层：
+下面是一个最小 TypeScript 实现，便于理解，不代表数据库侧实现一定要搬到应用层。约定每条列表中的 id 唯一、rank 从 1 开始且为正整数，k 为正数；不满足约定时应先拒绝或规范化，不能让同一路的重复 id 被加权多次：
 
 ~~~ts
 type RankedItem = { id: string; rank: number };
@@ -146,10 +146,18 @@ RRF 的优点是稳定、少调参、容易建立基线；局限是它主要利�
 
 混合检索是一条分层流水线：结构化过滤守住边界，BM25 保住精确词，向量检索理解语义，RRF 稳定融合，重排器做细粒度判断，评测集负责证明改动有效。先建立可解释的基线，再用数据决定是否引入动态权重和复杂学习排序。
 
+## 面试回答与条件变化
+
+“词法召回保留错误码、编号等精确词，向量召回覆盖同义表达；在同一权限、版本约束下取候选，去重后按校准分数或排名融合，再重排与组装证据。RRF 用排名避免原始分数量纲不一，但也会损失分数间距信息；是否更好仍要和单路基线比较。”
+
+下面是教学追问：**正确文档根本不在两路候选里，换重排器有用吗？** 无法补回未出现的证据，应先修分词、数据、向量或候选范围。**同一个 id 在某一路出现两次，最小 RRF 实现会怎样？** 该代码会累加两次，违反预设的每路唯一条件，所以必须先去重并定义排名。这些是教学扩展，不冒充原面经追加的融合与验证原问。
+
+RRF 公式与 rank 从 1 开始的约定按 Elastic 官方滚动文档核验于 2026-10-15；最小纯函数只做离线输入验证，没有连接检索服务或测量生产召回收益。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [百度后端开发一面：Agent 安全、混合检索与 Redis（2026 年 8 月）](../../../interview/baidu/ai/baidu-ai-3.md)
+- [百度北京后端秋招一面：Agent 安全、检索与存储](../../../interview/baidu/ai/baidu-ai-3.md)
 - [蚂蚁智能体与大模型应用一面：幻觉、Skill 与 RAG（2026 年 5 月）](../../../interview/antfin/ai/antfin-ai-5.md)
 - [字节 AI 应用开发一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-12.md)
 - [字节 Agent 后端实习一面：LangGraph、评测集与混合检索](../../../interview/bytedance/base/bytedance-base-22.md)
