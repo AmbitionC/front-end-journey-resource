@@ -16,17 +16,17 @@ MySQL InnoDB 引擎默认采用 **B+ 树（B+ Tree）** 作为索引结构。理
 
 B+ 树是多路平衡搜索树，与 B 树的核心区别在于：
 
-- **非叶节点只存键值**，不存完整行，扇出与高度取决于页大小、键宽和数据量。
+- **非叶节点保存用于导航的键与子页引用**，不存完整行，扇出与高度取决于页大小、键宽和数据量。
 - **所有数据行（或主键引用）只存在叶子节点**，具体访问成本仍受扫描范围、缓存与回表影响。
 - **叶子节点以双向链表相连**，天然支持范围扫描（`BETWEEN`、`ORDER BY`、`>/<`）。
 
 ```
-                   [50]
-                  /     \
-           [20|30]       [70|80]
-          /   |   \       |    \
-       [10] [25] [35]   [60]  [90]
-        ↔    ↔    ↔      ↔     ↔   ← 叶子链表（顺序连接）
+                   [60]
+                  /    \
+           [25|35]      [90]
+          /   |   \     /  \
+       [10] [25] [35] [60] [90]
+        ↔    ↔    ↔    ↔    ↔   ← 叶子页按键顺序连接
 ```
 
 ### 聚簇索引 vs 二级索引
@@ -57,7 +57,7 @@ flowchart LR
 | 全文索引 | Full-Text Index | 否 | 可为空，NULL不产生检索词项 | InnoDB支持，倒排结构，NULL语义见[8.4表15.2](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/create-index.html) |
 | 前缀索引 | Prefix Index | 可选 | 是 | 对字符串前缀建索引；非二进制字符串长度按字符，二进制字符串按字节 |
 
-> 对于 Agent 后端：全文索引（FULLTEXT）是在 MySQL 内实现关键词检索的低成本方案；RAG 场景中若数据量不大，可用 `MATCH ... AGAINST` 替代向量数据库，降低架构复杂度。
+> 对于 Agent 后端：`FULLTEXT` 可在 MySQL 内提供关键词召回。若任务只需词法搜索，可以先评测这条较简单的路径；它不因此具备向量语义检索的能力，数据量小也不能证明可以无损替代向量检索。
 
 ## 最左前缀原则（Leftmost Prefix Rule）
 
@@ -299,6 +299,25 @@ MySQL 5.6+ 支持 `ALTER TABLE ... ADD INDEX` 的在线 DDL（Online DDL），�
 
 收集 SQL、耗时、检查行与上下文，再看执行计划和数据分布，区分索引选择、排序、锁等待和网络因素。慢日志是定位入口，不能从“没有用某索引”直接推断索引语义失效；优化器可能按成本选择扫描。开启日志与详细分析都有资源成本，在可控制的窗口取样并验证前后负载，别把记录所有语句当零成本方案。
 
+## 为什么常见 InnoDB 索引不直接换成跳表
+
+先在图中分别追踪 member 查分与 score 顺序路径，再看页内多键、三路导航和叶页范围扫描；两侧成本模型不同，不能只用同为对数复杂度决定替换。
+
+<iframe
+  src="https://www.agent-journey.cn/archify/zset-vs-innodb-page-index.html"
+  title="Redis ZSet 双索引与 InnoDB 页式索引的结构比较"
+></iframe>
+
+*图：Redis 8.4 非紧凑 ZSet 的局部层视图，省略 header、span 等字段；小 ZSet 可整体采用 listpack，这是字典加跳表之外的另一种编码，不能理解成只有 C 成员单独使用 listpack。A、B 为同分 10 的不同教学成员，按 member 字节序排列，C 的分数为 30；字典与各层视图指向同一成员。右侧是 InnoDB 8.4 普通有序索引的独立教学页例：根分隔键 30、50 对应三个子页，范围查询先定位再沿叶页链扫描。图中数字不是原题输入、生产实测或固定性能结论。*
+
+回答前限定为本文的 MySQL 8.4 InnoDB 普通有序索引。MySQL 还有全文、空间和不同引擎的索引，不能把它们都称为同一种 B+ 树。官方文档将普通索引描述为 B-tree，并说明索引记录位于叶子页、默认索引页为 16 KiB；本文用 B+ 树说明其叶子数据与页间导航关系。[InnoDB 索引物理结构](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/innodb-physical-structure.html)
+
+跳表与 B+ 树都能有序定位后顺序输出范围，差别不是“能否做范围查询”。页式树把多个键集中到一页，内部页提供多路导航；一次页访问能够检查多个键，页也与缓冲池、持久化及页级维护配合。普通内存跳表则沿多层节点指针前进；若把每个节点直接映射成零散持久访问，节点访问数不能等同于页访问数。这个对比解释了为什么只说两者都是期望或渐进 `O(log N)` 不足以替换存储引擎的数据结构。
+
+这是基于既有结构的工程取舍分析，不是 MySQL 官方宣告“跳表不适合任何数据库”。围绕页布局重新设计的跳表、纯内存系统或另一种存储引擎都需要另算成本；没有相同数据、缓存状态、读写比例与持久性要求的实验，不能报“少几次 I/O”或固定性能倍数。回到项目中，先固定查询与事务约束，再看计划和实际工作量。
+
+教学追问：**数据已在缓冲池，B+ 树的理由是否消失？** 冷读的磁盘访问代价变小，但页内布局、缓存局部性、比较与更新维护仍存在；不能只换一个介质条件就推出跳表必胜。**Redis 能用跳表，是否证明 MySQL 应照搬？** 两者的数据合同不同：Redis 的 ZSet 要同时服务 member 与 score 视图，InnoDB 还承担行与二级索引、持久化和事务的组织。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
@@ -319,11 +338,12 @@ MySQL 5.6+ 支持 `ALTER TABLE ... ADD INDEX` 的在线 DDL（Online DDL），�
 - [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../../interview/bytedance/base/bytedance-base-47.md)
 - [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
+- [百度北京后端秋招一面：Agent 安全、检索与存储](../../../interview/baidu/ai/baidu-ai-3.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
 
-核验于2026-10-02，机制基准MySQL8.4。既有MySQL9.7 VECTOR边界只用于区分产品/版本，不作为本例部署假设；迁移SQL未在数据库运行，不用于证明性能或DDL无阻塞。
+本次对普通索引页结构、跳表比较、skip scan、唯一键NULL、在线DDL限制、慢日志与VECTOR限制重新核验于2026-10-15，机制基准MySQL8.4。既有MySQL9.7 VECTOR边界只用于区分产品/版本，不作为本例部署假设；迁移SQL未在数据库运行，不用于证明性能或DDL无阻塞。
 
 - [MySQL 8.4 Reference: InnoDB Index Types](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/innodb-index-types.html)
 - [MySQL 8.4 Reference: EXPLAIN](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/explain.html)

@@ -1212,7 +1212,7 @@
         "nodeType": "department",
         "children": [
           {
-            "label": "百度后端开发一面：Agent 安全、混合检索与 Redis（2026 年 8 月）",
+            "label": "百度北京后端秋招一面：Agent 安全、检索与存储",
             "key": "baidu-ai-3",
             "isLeaf": true,
             "filePath": "baidu/ai",
@@ -1222,10 +1222,11 @@
               "混合检索",
               "Redis"
             ],
-            "updatedAt": "2026-09-01",
+            "updatedAt": "2026-10-15",
             "department": "其他",
             "roleCategory": "Agent 与 AI 应用",
-            "role": "后端开发"
+            "role": "后端开发",
+            "contentFormat": "short-qa-v2"
           },
           {
             "label": "百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测（2026 年 8 月）",

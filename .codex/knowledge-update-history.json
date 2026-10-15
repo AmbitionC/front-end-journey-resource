@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
-  "updatedAt": "2026-10-14",
+  "updatedAt": "2026-10-15",
   "records": [
     {
       "key": "transformer-arch",
@@ -240,8 +240,18 @@
       "filePath": "llm/rag",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-09-01",
-      "batch": "nowcoder-partial-archive-2026-09-01"
+      "recordedAt": "2026-10-15",
+      "batch": "title-baidu-three-quality-20261015",
+      "reason": "Current source-linked revision awaits exact candidate processing, independent review and production acceptance.",
+      "previousRecord": {
+        "key": "rag-hybrid-search",
+        "label": "Hybrid Search 混合检索",
+        "filePath": "llm/rag",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-09-01",
+        "batch": "nowcoder-partial-archive-2026-09-01"
+      }
     },
     {
       "key": "rag-evaluation",
@@ -1168,10 +1178,20 @@
       "key": "agent-security-threat-model",
       "label": "Agent 威胁建模与安全测试",
       "filePath": "llm/production",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-16",
-      "batch": "agent-multi-production-next-20-2026-07-16"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-15",
+      "batch": "title-baidu-three-quality-20261015",
+      "reason": "Current source-linked revision awaits exact candidate processing, independent review and production acceptance.",
+      "previousRecord": {
+        "key": "agent-security-threat-model",
+        "label": "Agent 威胁建模与安全测试",
+        "filePath": "llm/production",
+        "status": "published",
+        "action": "created",
+        "recordedAt": "2026-07-16",
+        "batch": "agent-multi-production-next-20-2026-07-16"
+      }
     },
     {
       "key": "agent-deployment",
@@ -2493,29 +2513,39 @@
       "key": "mysql-index",
       "label": "数据库索引原理与查询优化",
       "filePath": "backend/database",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004",
+      "recordedAt": "2026-10-15",
+      "batch": "title-baidu-three-quality-20261015",
+      "reason": "Current source-linked revision awaits exact candidate processing, independent review and production acceptance.",
       "previousRecord": {
         "key": "mysql-index",
         "label": "数据库索引原理与查询优化",
         "filePath": "backend/database",
-        "status": "pending",
+        "status": "published",
         "action": "updated",
-        "recordedAt": "2026-08-29",
-        "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
-      },
-      "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
-      "publication": {
-        "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
-        "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
-        "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
-        "syncConclusion": "success"
-      },
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+        "recordedAt": "2026-10-04",
+        "batch": "next-twenty-source-increments-20261004",
+        "previousRecord": {
+          "key": "mysql-index",
+          "label": "数据库索引原理与查询优化",
+          "filePath": "backend/database",
+          "status": "pending",
+          "action": "updated",
+          "recordedAt": "2026-08-29",
+          "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
+        },
+        "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
+        "publication": {
+          "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
+          "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
+          "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
+          "syncConclusion": "success"
+        },
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     },
     {
       "key": "db-transaction-lock",
@@ -2581,13 +2611,23 @@
       "key": "redis-data-structure",
       "label": "Redis 数据结构与使用场景",
       "filePath": "backend/database",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004",
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+      "recordedAt": "2026-10-15",
+      "batch": "title-baidu-three-quality-20261015",
+      "reason": "Current source-linked revision awaits exact candidate processing, independent review and production acceptance.",
+      "previousRecord": {
+        "key": "redis-data-structure",
+        "label": "Redis 数据结构与使用场景",
+        "filePath": "backend/database",
+        "status": "published",
+        "action": "updated",
+        "recordedAt": "2026-10-04",
+        "batch": "next-twenty-source-increments-20261004",
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     },
     {
       "key": "db-sharding",
@@ -3210,8 +3250,18 @@
       "filePath": "backend/database",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-09-01",
-      "batch": "nowcoder-partial-archive-2026-09-01"
+      "recordedAt": "2026-10-15",
+      "batch": "title-baidu-three-quality-20261015",
+      "reason": "Current source-linked revision awaits exact candidate processing, independent review and production acceptance.",
+      "previousRecord": {
+        "key": "redis-distributed-lock",
+        "label": "Redis 分布式锁：租约、续期与故障边界",
+        "filePath": "backend/database",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-09-01",
+        "batch": "nowcoder-partial-archive-2026-09-01"
+      }
     },
     {
       "key": "agentic-rl",

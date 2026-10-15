@@ -665,7 +665,7 @@
   {
     "key": "baidu-ai-3",
     "filePath": "baidu/ai",
-    "label": "百度后端开发一面：Agent 安全、混合检索与 Redis（2026 年 8 月）",
+    "label": "百度北京后端秋招一面：Agent 安全、检索与存储",
     "tags": [
       "Agent",
       "安全",

@@ -5,6 +5,8 @@
 
 Redis 提供多种具有不同顺序性、唯一性和访问操作的数据类型。选型匹配访问模式时可以减少额外转换并简化逻辑，但延迟和内存仍取决于数据规模、编码、命令复杂度和部署方式。本文按命令语义比较这些类型。
 
+内部编码与配置示例以 Redis 8.4 分支为核验范围（2026-10-15）；默认值不等于部署配置，先用实际版本与 `OBJECT ENCODING` 核对。下列 TypeScript 片段为伪代码，未连接 Redis，也未在固定客户端版本下运行；不提供吞吐或可靠投递保证。
+
 ## String（字符串）——最通用的瑞士军刀
 
 [Redis data types](https://redis.io/docs/latest/develop/data-types/) 按 string、hash、list、set、sorted set、stream 等类型定义顺序性、唯一性和访问模式；选型应从操作语义出发。
@@ -12,13 +14,15 @@ Redis 提供多种具有不同顺序性、唯一性和访问操作的数据类�
 
 ### 底层实现：SDS（Simple Dynamic String）
 
-Redis 的 String 并不直接使用 C 原生字符串，而是封装了一种称为 **SDS（简单动态字符串）** 的结构：
+Redis String 是对外的数据类型，不等于一种固定内部编码。可表示为整数的值可能采用整数编码；需要保存字节串时使用 SDS 等表示。SDS（简单动态字符串）保留长度与容量信息，下面仅示意其目的：
 
 ```c
-struct sdshdr {
-    int len;    // 已使用长度
-    int free;   // 剩余可用空间
-    char buf[]; // 实际字节数组
+// 概念示意，不是 Redis 8.4 的真实内存布局。
+// 当前实现按长度范围选择 sdshdr5/8/16/32/64 等头部。
+struct ConceptualString {
+    size_t used;      // 已用字节
+    size_t capacity;  // 可分配容量
+    char bytes[];
 };
 ```
 
@@ -27,7 +31,7 @@ SDS 相比 C 字符串的优势：
 - 预分配空间，追加操作不频繁 `malloc`
 - 二进制安全（可存任意字节，包括 `\0`）
 
-单个 String 最大支持 **512 MB**，但工程上建议单值不超过 **1 MB**，超出则考虑压缩或拆分。
+Redis 8.4 示例配置中的 `proto-max-bulk-len` 默认限制协议中的单个 bulk string 为 512 MB，并可配置；这不是推荐业务值大小。业务上限应按操作成本、网络、内存和延迟预算确定，不存在通用的 1 MB 最佳界线。
 
 ### 使用场景
 
@@ -41,7 +45,7 @@ GET user:1:profile
 **2. 计数器（原子自增）**
 
 ```bash
-INCR page:home:pv          # 访问量 +1，原子操作，天然防并发
+INCR page:home:pv          # 本次自增是原子的；读取、判断再扣减仍不是同一个原子操作
 INCRBY order:2024:count 1  # 订单计数
 DECR stock:item:42         # 库存扣减
 ```
@@ -49,11 +53,11 @@ DECR stock:item:42         # 库存扣减
 **3. 分布式锁**
 
 ```bash
-# NX：不存在才设置；EX：过期时间；防止死锁
-SET lock:payment:order_123 "worker_id_abc" NX EX 30
+# NX：不存在才设置；EX：租约时长，不能阻止过期持有者继续写
+SET lock:payment:order_123 "unique_token_per_acquisition" NX EX 30
 ```
 
-对于 AI Agent 后端，计数器常用于限流（Rate Limiting）：单位时间内对某个 API Key 的调用次数，用 `INCR` + `EXPIRE` 可以极低成本实现滑动窗口计数。
+计数器可用于固定时间桶或从首次事件开始计时的限流，但 `INCR` 加 `EXPIRE` 本身不构成滑动窗口；分别发送还可能在计数后、设置过期前失败。按固定窗口合同用事务或脚本原子设置计数与首次过期；若需滑动窗口，另用时间戳集合或明确的滑窗算法，并评估内存与边界突发。
 
 ---
 
@@ -61,13 +65,9 @@ SET lock:payment:order_123 "worker_id_abc" NX EX 30
 
 ### 底层实现
 
-| Redis 版本 | 小对象（元素少/值小） | 大对象（元素多/值大） |
-|---|---|---|
-| < 3.2 | ziplist（紧凑连续内存） | linkedlist（双向链表） |
-| 3.2 – 7.0 | quicklist（ziplist 节点组成的双向链表） | quicklist |
-| >= 7.0 | quicklist（内部节点改用 **listpack**） | quicklist |
+早期 Redis 使用过 ziplist 与 linkedlist；3.2 引入 quicklist，7.0 的 quicklist 节点改用 listpack。核验的 Redis 8.4 `t_list.c` 同时支持直接 listpack 与 quicklist：小列表可先使用 listpack，增长后按配置与转换条件转为 quicklist，不能把“所有 7.0 以后 List 都只有 quicklist”当成规则。
 
-**ziplist / listpack** 将所有元素紧凑地存放在连续内存中，省去了指针开销，对小列表极度节省内存；但随着元素增多，插入/删除的内存拷贝代价上升，Redis 会自动升级为 quicklist（双向链表，每个节点是一个 listpack）。
+listpack 用连续内存节省指针开销，内部插删可能移动字节；quicklist 将多个紧凑节点连接起来。实际成本还受节点容量、压缩和元素大小影响。
 
 ### 核心命令
 
@@ -82,7 +82,7 @@ LLEN  queue                  # 队列长度
 
 ### Agent 后端实战：缓冲 LLM 流式输出 Token
 
-LLM（Large Language Model）通常以 SSE（Server-Sent Events）流式输出 token。若有多个消费端（如 WebSocket 推送、日志记录、审计），可以用 List 作为流式 token 的中间缓冲层：
+模型接口可通过 SSE 推送增量内容，但网络 chunk、SSE 事件与模型 token 不一一对应。List 可作为允许丢失的单消费缓冲；多个消费者会竞争移除元素，不能直接把同一 List 当作每端均能读取全量内容的广播日志。需要独立消费进度和确认时，应另设消息日志或消费组。
 
 ```typescript
 // ioredis 示例：生产者将 token 写入 List
@@ -91,20 +91,19 @@ const redis = new Redis();
 
 async function bufferLLMToken(sessionId: string, token: string): Promise<void> {
   const key = `llm:stream:${sessionId}`;
-  await redis.rpush(key, token);          // 每个 token 追加到右端
-  await redis.expire(key, 300);           // 5 分钟自动过期，防止内存泄漏
+  // 同一事务提交追加与过期，避免两条独立命令之间中断。
+  const result = await redis.multi().rpush(key, token).expire(key, 300).exec();
+  if (!result || result.some(([error]) => error)) throw new Error("buffer write failed");
 }
 
-// 消费者：批量读取并清空
+// Redis 6.2+ 的 LPOP count 在一条命令中移除并返回有界前缀。
 async function flushTokenBuffer(sessionId: string): Promise<string[]> {
   const key = `llm:stream:${sessionId}`;
-  const tokens = await redis.lrange(key, 0, -1);
-  await redis.del(key);
-  return tokens;
+  return (await redis.lpop(key, 256)) ?? [];
 }
 ```
 
-**注意**：List 用作消息队列时缺少 **ACK 机制**——消费者 `RPOP` 后如果崩溃，消息永久丢失。如需可靠消息传递，应使用 Redis Streams（`XADD/XREADGROUP`）或专业 MQ（Kafka/RabbitMQ）。
+**注意**：256 只是示例批大小，生产按 payload 与延迟预算配置；`MULTI/EXEC` 不会回滚运行期命令错误，须检查结果。弹出后、业务处理前崩溃仍可能丢失；需可靠处理时可设计 processing list 或使用 Redis Streams（`XADD/XREADGROUP`）及确认、接管与业务幂等，专业 MQ 也须核对自身投递合同。
 
 ---
 
@@ -112,13 +111,13 @@ async function flushTokenBuffer(sessionId: string): Promise<string[]> {
 
 ### 底层实现
 
-- **元素 ≤ 128 个且每个值 ≤ 64 字节**：使用 **listpack**（紧凑连续内存，Redis 7.0 前为 ziplist）
-- 超出阈值：升级为 **hashtable**（拉链法哈希表，`O(1)` 查找）
+- Redis 8.4 默认 `hash-max-listpack-entries 512`、`hash-max-listpack-value 64`，满足条目数与 field/value 大小等条件的小 Hash 可用 **listpack**；Redis 7.0 前的对应紧凑编码是 ziplist。
+- 超出配置条件时转为 **hashtable**；字典查找为平均常数成本，紧凑编码则受条目数影响。字段过期等实现条件也应按实际版本核对，不能只看两个数字。
 
 阈值可通过配置调整：
 
 ```bash
-hash-max-listpack-entries 128   # listpack 最大条目数
+hash-max-listpack-entries 512   # Redis 8.4 示例默认值，可配置
 hash-max-listpack-value   64    # 单个字段的最大字节数
 ```
 
@@ -173,9 +172,9 @@ async function getSessionModel(sessionId: string): Promise<string | null> {
 
 ### 底层实现
 
-- **元素 ≤ 128 个且均为整数**：使用 **intset**（有序整数数组，极省内存）
-- **元素为小字符串（≤ 128 个，单值 ≤ 64 字节）**：使用 **listpack**（Redis 7.2+）
-- 超出阈值：升级为 **hashtable**
+- 全部成员可表示为有符号 64 位整数，且未超 `set-max-intset-entries` 时可用 **intset**；Redis 8.4 默认该阈值为 512。
+- Redis 7.2+ 还支持小字符串集合的 **listpack**；8.4 示例默认 `set-max-listpack-entries 128`、`set-max-listpack-value 64`。
+- 超出相应条件时转为 **hashtable**；配置与内容决定实际编码。
 
 ### 核心命令与场景
 
@@ -209,15 +208,15 @@ SPOP lucky:pool 1          # 抽走 1 人，不可重复中奖
 
 ZSet 是 Redis 中实现最精妙的数据结构：
 
-- **元素较少（≤ 128 个，单值 ≤ 64 字节）**：listpack
-- **元素较多**：**skiplist（跳表）+ hashtable 双索引**
+- Redis 8.4 示例默认 `zset-max-listpack-entries 128`、`zset-max-listpack-value 64`，满足对应条件的小集合用 listpack。
+- 超出条件时，核验实现用 **skiplist（跳表）+ hashtable 双索引**；阈值可配置。
 
 ```
 跳表（按 score 排序，支持范围查询）
 hashtable（按 member 查询 score，O(1)）
 ```
 
-跳表是一种多层有序链表，通过概率分层（每层节点数约为下层的 1/4）实现 `O(log N)` 的查找、插入、删除，同时保持有序性——这是平衡树所能提供的性能，但实现更简单。
+跳表通过随机层高建立稀疏索引；Redis 8.4 的提升概率为 1/4，因此节点层数比例是统计期望。查找、插入和删除的期望复杂度为 `O(log N)`，不是平衡搜索树那样的确定性最坏情况保证；范围输出另加返回数量。
 
 ### 核心命令
 
@@ -257,10 +256,14 @@ async function submitAgentTask(
   payload: object
 ): Promise<void> {
   const score = PRIORITY_SCORE[priority];
-  // 同优先级内按提交时间排序：score * 1e13 + timestamp
+  // ZPOPMAX 使更大的时间戳先出；本例不声称同优先级 FIFO。
   const finalScore = score * 1e13 + Date.now();
-  await redis.zadd('agent:task:queue', finalScore, taskId);
-  await redis.set(`agent:task:data:${taskId}`, JSON.stringify(payload), 'EX', 3600);
+  if (!Number.isSafeInteger(finalScore)) throw new Error("score exceeds integer precision");
+  const result = await redis.multi()
+    .set(`agent:task:data:${taskId}`, JSON.stringify(payload), 'EX', 3600)
+    .zadd('agent:task:queue', finalScore, taskId)
+    .exec();
+  if (!result || result.some(([error]) => error)) throw new Error("task enqueue failed");
 }
 
 // Worker 弹出最高优先级任务
@@ -274,7 +277,9 @@ async function popHighestPriorityTask(): Promise<string | null> {
 }
 ```
 
-ZSet 还常用于**延迟队列**：将任务的执行时间戳作为 score，定期用 `ZRANGEBYSCORE queue 0 <now>` 扫描到期任务。
+上例仅说明优先级排序；payload 可能过期，Worker 弹出后也可能崩溃，所以它没有 ACK、重投或可靠任务恢复保证。生产设计须选择原子认领、处理状态、确认与幂等合同；若要求同优先级 FIFO，另定义稳定序号与排序规则。
+
+ZSet 也可用执行时间戳筛选到期任务，但 `ZRANGEBYSCORE` 只是读取；多个 Worker 还需原子认领，不能读到即视为独占执行。
 
 ---
 
@@ -283,23 +288,31 @@ ZSet 还常用于**延迟队列**：将任务的执行时间戳作为 score，�
 [Redis commands 参考](https://redis.io/docs/latest/commands/) 为命令记录参数、返回值和复杂度；同一种数据类型里的不同命令也可能有完全不同的成本。
 
 
-| 操作 | String | List | Hash | Set | ZSet |
-|---|---|---|---|---|---|
-| 增/删单元素 | `O(1)` | `O(1)`（头尾） | `O(1)` | `O(1)` | `O(log N)` |
-| 查单元素 | `O(1)` | `O(N)`（按索引） | `O(1)` | `O(1)` | `O(log N)` |
-| 范围查询 | - | `O(S+N)` | - | - | `O(log N + M)` |
-| 集合运算 | - | - | - | `O(N*M)` | `O(N*log N + M)` |
-| 获取大小 | `O(1)` | `O(1)` | `O(1)` | `O(1)` | `O(1)` |
+| 命令与操作 | 官方复杂度模型 |
+|---|---|
+| `GET` / `INCR` | `O(1)`；GET 的网络传输仍与值长度有关 |
+| `SET` | 官方标注 `O(1)`；载荷传输和内存处理仍受字节数影响 |
+| 单元素 `LPUSH` / `RPOP` | `O(1)`；批量数量另计 |
+| `LRANGE` | `O(S + M)`，S 为定位起点的距离，M 为返回数 |
+| `HGET` / 单字段 `HSET` | `O(1)`；批量字段数另计 |
+| `SISMEMBER` / 单元素 `SADD` | `O(1)`；集合运算按具体命令计算 |
+| `SINTER` | 最坏 `O(N × K)`，N 为最小集合大小，K 为集合数 |
+| `ZSCORE` | `O(1)`，按 member 查分数 |
+| 单元素 `ZADD` / `ZRANK` | `O(log N)`，N 为集合大小 |
+| `ZRANGE` | `O(log N + M)`，M 为返回数 |
+
+复杂度描述绑定命令与参数，不能按“增删/集合运算”给整类命令同一个公式；紧凑编码、值大小与返回字节数仍会影响实际延迟。
 
 ---
 
 ## 内存优化：小对象的 listpack 优化
 
-所有数据结构在元素数量少、单值较小时，Redis 都会使用紧凑编码（listpack/ziplist/intset）存储。以 Hash 为例：
+部分聚合类型在满足配置条件时使用 listpack、intset 等紧凑编码，不能推广到所有 Redis 类型。以 Redis 8.4 中普通小 Hash 的 listpack 为概念示例：
 
 ```
 listpack 存储（元素少）：
-[总字节数][尾部偏移量][field1][val1][field2][val2]...
+[总字节数:4B][元素数量:2B][field1条目][value1条目]...[结束标记]
+每个条目包含编码后的值与用于反向定位的 backlen；没有 ziplist 式尾部偏移字段。
 连续内存，无指针，CPU Cache 友好
 
 hashtable 存储（元素多）：
@@ -310,14 +323,14 @@ hashtable 存储（元素多）：
 
 ```bash
 # redis.conf
-hash-max-listpack-entries 128   # 超过此值升级为 hashtable
-hash-max-listpack-value   64    # 单字段超过此字节数升级
-list-max-listpack-size   128
+hash-max-listpack-entries 512   # Redis 8.4 示例默认，可配置
+hash-max-listpack-value   64
+list-max-listpack-size   -2    # 默认按每节点约8KiB控制；正数表示元素数
 zset-max-listpack-entries 128
 set-max-intset-entries   512
 ```
 
-对于存储大量小 Hash 对象的场景（如用户画像），可以**故意将多个对象合并到一个 Hash** 中（以 UID 后两位为 field 名），利用 listpack 紧凑编码，内存节省可达数倍。
+多个小对象可按明确分桶键聚合到 Hash，但 field 必须在桶内唯一，不能只截取 UID 后两位而忽略桶键。收益需实测；聚合同时影响过期、热点、权限与迁移，不能承诺通用的数倍节省。
 
 ---
 
@@ -325,7 +338,7 @@ set-max-intset-entries   512
 
 ### 1. 大 Key 问题（Big Key）
 
-大 Key 是 Redis 最常见的性能陷阱。当 String 的值超过 10 KB，或 Hash/List/Set/ZSet 的元素超过数千个时，单次操作耗时飙升，并且在**删除（`DEL`）时会阻塞主线程**。
+Big Key 没有跨业务通用的 10 KB 或数千元素界线。先按字节、成员数、命令访问范围与延迟预算判断风险：全量读取/扫描或释放大型聚合对象可能占用较长主线程时间，单元素查询不因跨过某个固定阈值就必然变慢。同步 `DEL` 与按值分配数量和类型相关的释放成本也需区分。
 
 推荐做法：
 - 拆分大 Key：将 Hash 按范围拆成多个子 Key
@@ -343,35 +356,35 @@ set-max-intset-entries   512
                                              消息丢失！
 ```
 
-**解决方案**：用 `LMOVE source dest LEFT RIGHT` 将任务原子移到"处理中"列表，消费完成后 `LREM` 删除；或直接使用 Redis Streams（`XREADGROUP` + `XACK`）。
+**认领与确认的教学方案**：延续上面的 `LPUSH` 入队、右端取最旧任务，可用 `LMOVE source processing RIGHT LEFT` 原子地从源列表右端认领任务并放入处理中列表左端，完成后按唯一任务标识确认并用 `LREM` 移除。还需自行设计超时扫描、失败任务重新入队、重试上限与业务幂等；一条 `LMOVE` 不自动提供可靠投递。若改用其他入出队方向，也要重新核对 FIFO 次序。Redis Streams 的 `XREADGROUP`、`XACK` 和待确认条目接管是另一种方案，同样需要消费者恢复与幂等处理。
 
 ### 3. ZSet score 精度问题
 
-Redis 的 score 是 IEEE 754 双精度浮点数（64 bit），可以精确表示 2^53 以内的整数（约 9 千万亿）。将毫秒时间戳（约 1.7×10^13）作为 score 时仍在精确范围内，但超出则会有精度损失。
+Redis score 使用 IEEE 754 双精度，可精确表示区间 `[-2^53, 2^53]` 内的整数；JavaScript 的安全整数边界还须按 `Number.isSafeInteger` 检查。2026 年 Unix 毫秒时间戳数量级约 `1.8×10^12`。若再拼接优先级、序号或缩放，必须检查组合值与相邻值是否仍可精确区分。
 
 ---
 
 ## 面试常问要点
 
 **Q：Redis String 底层为什么不直接用 C 字符串？**
-SDS 提供 `O(1)` 长度获取、二进制安全、预分配减少重分配次数，C 字符串均不具备这些特性。
+SDS 显式保存长度，能处理包含零字节的数据，并管理追加所需容量；C 的零结尾约定本身不提供这些信息。不要把对外 String 类型等同于所有值都采用同一 SDS 头部。
 
 **Q：Sorted Set 为什么选跳表而非平衡树（红黑树）？**
-跳表实现简单、范围查询（`ZRANGEBYSCORE`）天然支持顺序遍历、并发修改时锁粒度更小；Redis 作者 Antirez 明确表示跳表在实践中性能不逊于平衡树。
+跳表提供有序遍历与期望对数定位，配合字典满足按 member 查分数。它不是因为“并发修改时锁粒度更小”而在 Redis 中自动获胜；Redis 的命令执行模型也不能等同于一般并发跳表。选择还受内存介质、更新方式与实现复杂度影响，不据此宣称对所有平衡树都有性能优势。
 
 **Q：List 的 quicklist 结构是什么？**
-quicklist 是一个双向链表，每个节点是一个 listpack（Redis 7.0+）或 ziplist（旧版）。结合了链表（O(1) 头尾操作）和 listpack（内存紧凑）的优点，通过 `list-max-listpack-size` 控制每个节点的最大大小。
+quicklist 用双向链接组织紧凑节点；Redis 8.4 的普通 packed 节点采用 listpack，大元素还可能使用 plain 节点，具体表示受配置与转换规则影响。`list-max-listpack-size` 可按字节档位或元素数控制节点容量。List 还可直接采用 listpack，不能把 quicklist 的节点形态当作所有 List 的唯一表示。
 
 **Q：Hash 与 JSON String 如何选型？**
 - 需要**局部更新**或**原子递增**字段 → Hash
 - 对象**整体读写**且结构深度嵌套 → JSON String
-- 字段数量较少（≤ 128）且值较小（≤ 64 字节）→ Hash 更省内存（listpack 编码）
+- 满足实际版本与配置的小 Hash → 可用紧凑编码；Redis 8.4 示例默认普通 Hash 的条目阈值为 512，收益仍须按数据实测
 
 **Q：如何用 Redis 实现 Agent 任务优先级调度？**
-ZSet score 编码优先级 + 时间戳（`priority * 1e13 + timestamp`），`ZPOPMAX` 弹出最高优先级任务；延迟任务则以执行时间戳为 score，定时轮询 `ZRANGEBYSCORE queue 0 now`。
+ZSet 可用 score 表达优先级，`ZPOPMAX` 原子移除最高分成员；同优先级 FIFO 另需明确规则。延迟任务以时间戳筛选候选后仍要原子认领；载荷、确认、重试与幂等由队列协议补齐，不能只看容器排序。
 
 **Q：什么是 Big Key？如何处理？**
-单个 String 超过 10 KB，或集合类型元素超过数千个，即视为 Big Key。会阻塞主线程（尤其是删除时）。处理方式：拆分 Key、用 `UNLINK` 异步删除、定期巡检。
+按内存、成员数、访问命令与延迟预算识别 Big Key；不存在通用字节界线。避免无界全量访问，必要时分片或分页，区分同步释放与 `UNLINK` 的后台回收，并按业务负载验证。
 
 ## Streams 消费恢复与字典渐进迁移
 
@@ -380,6 +393,31 @@ ZSet score 编码优先级 + 时间戳（`priority * 1e13 + timestamp`），`ZPO
 [XAUTOCLAIM](https://redis.io/docs/latest/commands/xautoclaim/)从 Redis 6.2 起可按空闲时间和游标转移 pending 所有权，适合恢复失联消费者。接管不能证明旧处理没有完成，业务写入仍需幂等，重试次数超限另设隔离与人工处理。PEL、正文裁剪及持久化策略一起影响恢复能力，Streams 不是自动实现端到端恰好一次处理的系统。
 
 字典 rehash 是不同层次的问题。[Redis 7.2 dict.c 源码](https://github.com/redis/redis/blob/7.2/src/dict.c)中的实现保留旧、新哈希表与迁移进度，按步迁移桶；普通访问可推进迁移，查找在需要时考虑两表，完成后释放旧表。迁移一个桶仍可能遇到较长链，渐进不表示每次操作绝对常数或无停顿。具体行为随版本与暂停条件变化，也不能把 List、Stream 等所有类型都当成这个字典实现。
+
+## ZSet 的双索引与 B+ 树怎样比较
+
+先在图中分别追踪 member 查分与 score 顺序路径，再看页内多键、三路导航和叶页范围扫描；两侧成本模型不同，不能只用同为对数复杂度决定替换。
+
+<iframe
+  src="https://www.agent-journey.cn/archify/zset-vs-innodb-page-index.html"
+  title="Redis ZSet 双索引与 InnoDB 页式索引的结构比较"
+></iframe>
+
+*图：Redis 8.4 非紧凑 ZSet 的局部层视图，省略 header、span 等字段；小 ZSet 可整体采用 listpack，这是字典加跳表之外的另一种编码，不能理解成只有 C 成员单独使用 listpack。A、B 为同分 10 的不同教学成员，按 member 字节序排列，C 的分数为 30；字典与各层视图指向同一成员。右侧是 InnoDB 8.4 普通有序索引的独立教学页例：根分隔键 30、50 对应三个子页，范围查询先定位再沿叶页链扫描。图中数字不是原题输入、生产实测或固定性能结论。*
+
+先限定对象：这里比较 Redis 8.4 ZSet 的非紧凑编码，不是说 Redis 的所有类型都用跳表。字典按 member 找 score；跳表按 `(score, member)` 排序，同分值按成员字节序区分。插入时两套视图同步维护；改分后，成员在有序视图中的位置也可能改变。[官方 `t_zset.c` 的 Sorted set API](https://github.com/redis/redis/blob/8.4/src/t_zset.c)直接说明了这两个视图及共享成员字符串的关系。
+
+例如先写入 Alice=10、Bob=20，查 Alice 的分数走 member 视图；查分数 10 到 20 的成员，先在有序视图定位起点，再顺序输出。把 Alice 改成 30 后，按分数的顺序变为 Bob、Alice。仅有字典不能直接提供这条有序路径；仅有跳表又不承担字典的平均常数 member 定位。
+
+B+ 树同样能实现范围查询。“不用 B+ 树”的回答不能是“它不支持范围”或“跳表一定更快”。InnoDB 的索引围绕持久页组织，页内容纳多个索引项，默认页大小为 16 KiB；Redis 这份 ZSet 实现在内存中用节点、层级 forward/span 和反向指针完成定位、排名及顺序遍历。**这是两种已有实现与工作负载的比较**：分页与扇出、内存分配、更新方式和维护复杂度改变了成本模型，不能仅由 `O(log N)` 推出谁在所有场景更优，更不能冒称测过两者的吞吐。[InnoDB 官方物理结构说明](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/innodb-physical-structure.html)提供页组织的事实；这里的选型取舍是基于结构的工程分析。
+
+可以口述为：“小 ZSet 先看紧凑编码条件；非紧凑编码用字典回答 member 到 score，用跳表回答有序、范围与排名。跳表的复杂度是期望值。B+ 树也能查范围，比较时应说清内存节点与持久页的不同约束，不能给出脱离版本与负载的绝对性能结论。”
+
+以下是教学追问，不是原帖新增题目：
+
+- **只有几十个短成员，为什么未必能看到 skiplist 编码？** 先检查本实例的 listpack 阈值与 `OBJECT ENCODING`，对外有序集合语义与内部编码是两层。
+- **两个成员分数相同，是否会覆盖？** 成员身份决定唯一性；同分成员可共存，并按 member 字节序继续排序。更新同一 member 的分数才是改值。
+- **把全部数据放进内存后，B+ 树就一定更慢吗？** 不能推出；缓存局部性、扇出、键大小、更新分布及实现都会改变结果，需同合同测量。
 
 ## 出现于（热度来源）
 
@@ -392,9 +430,20 @@ ZSet score 编码优先级 + 时间戳（`priority * 1e13 + timestamp`），`ZPO
 - [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../../interview/bytedance/base/bytedance-base-47.md)
 - [字节 Agent 实习：生成质量、多智能体与缓存](../../../interview/bytedance/base/bytedance-base-52.md)
 - [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
+- [百度北京后端秋招一面：Agent 安全、检索与存储](../../../interview/baidu/ai/baidu-ai-3.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
 
+实现范围：Redis 8.4 分支，核验于 2026-10-15。以下来源用于本次精确修正；代码未连接实际 Redis 执行。
+
+- [Redis 8.4 示例配置](https://github.com/redis/redis/blob/8.4/redis.conf)
+- [Redis 8.4 SDS 头部](https://github.com/redis/redis/blob/8.4/src/sds.h)
+- [Redis 8.4 List 编码](https://github.com/redis/redis/blob/8.4/src/t_list.c)
+- [Redis 8.4 Listpack 实现](https://github.com/redis/redis/blob/8.4/src/listpack.c)
+- [Redis 8.4 Sorted Set 实现](https://github.com/redis/redis/blob/8.4/src/t_zset.c)
+- [INCR：计数与限流模式](https://redis.io/docs/latest/commands/incr/)
+- [LPOP：count 与批量弹出](https://redis.io/docs/latest/commands/lpop/)
+- [事务：EXEC 不回滚运行期命令错误](https://redis.io/docs/latest/develop/using-commands/transactions/)
 - [Redis data types](https://redis.io/docs/latest/develop/data-types/)
 - [Redis commands](https://redis.io/docs/latest/commands/)

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "complete": true,
-  "expectedCount": 124,
+  "expectedCount": 127,
   "entries": [
     {
       "id": "context-engineering:mermaid:45",
@@ -3369,7 +3369,7 @@
       "id": "mysql-index:mermaid:40",
       "kind": "mermaid",
       "articlePath": "knowledge/backend/database/mysql-index.md",
-      "articleSha256": "ec261ee636bb94d0e04722f3220d1791e7a020be7283530ab46018beab9bb4b8",
+      "articleSha256": "980e76f3f1c859f95fca98da87507e9175d88b90293845850f4349a47f17c807",
       "line": 40,
       "sourceText": "flowchart LR\n    A[查询: SELECT * FROM users WHERE email = 'a@x.com'] --> B[二级索引\\nemail → user_id=42]\n    B -->|回表| C[聚簇索引\\nuser_id=42 → 完整行数据]\n    C --> D[返回结果]\n",
       "sourceSha256": "8008beb40492f51d154b91cd3ceec194f591f9829070f461ef28f993876e12ef",
@@ -3407,7 +3407,7 @@
       "id": "mysql-index:mermaid:179",
       "kind": "mermaid",
       "articlePath": "knowledge/backend/database/mysql-index.md",
-      "articleSha256": "ec261ee636bb94d0e04722f3220d1791e7a020be7283530ab46018beab9bb4b8",
+      "articleSha256": "980e76f3f1c859f95fca98da87507e9175d88b90293845850f4349a47f17c807",
       "line": 179,
       "sourceText": "flowchart TD\n    A[固定过滤、排序和输出合同] --> B[设计过滤优先与排序优先的候选索引]\n    B --> C[用真实参数和统计比较扫描、排序、回表成本]\n    C --> D[评估覆盖列增加的空间与写入成本]\n    D --> E[验证计划与耗时后选择方案]\n",
       "sourceSha256": "35d2c92e23254e522ebda133e5a0bb532948dc79024a8c638a6107f18f71f62c",
@@ -6882,6 +6882,300 @@
           "outputSha256": "3601b8891b6d448287bd1141287e9affdae28f9d25f774caf6ed8fb3d911aec8",
           "width": 1000,
           "height": 1160
+        }
+      ]
+    },
+    {
+      "id": "agent-security-threat-model-archify-agent-security-trust-boundaries",
+      "kind": "archify",
+      "articlePath": "knowledge/llm/production/agent-security-threat-model.md",
+      "articleSha256": "426b86776a3831e367b85c93c65f04b5e49468558f9abbc88b1c074dbd071004",
+      "line": 11,
+      "sourceText": "<iframe\n  src=\"https://www.agent-journey.cn/archify/agent-security-trust-boundaries.html\"\n  title=\"Agent 不可信内容与工具执行的信任边界\"\n></iframe>",
+      "sourceSha256": "9e70e842125de3ac3120b45814ac92e547c5454adf974f85aaef626aba0e2202",
+      "specPath": "knowledge/llm/production/agent-security-trust-boundaries.archify.json",
+      "specSha256": "a54b2c0091887ad0cd56a00e49c84724fb484e673579ecfdd61090711c9c24a5",
+      "outputPath": "images/pdf-agent-security-trust-boundaries-archify-8225e9beb387.png",
+      "outputSha256": "fdc66f6796c5903a65af8700df34decdc9a74cc5cf3521c254690e0f91592d45",
+      "width": 4800,
+      "height": 2960,
+      "renderedVectorSha256": "8225e9beb3873f9bbd10f253edbadbefa6287121110f7d0d54942e11b2be773b",
+      "panels": [
+        {
+          "row": 1,
+          "column": 1,
+          "sourceVectorSha256": "8225e9beb3873f9bbd10f253edbadbefa6287121110f7d0d54942e11b2be773b",
+          "rect": [
+            0,
+            128,
+            440,
+            580
+          ],
+          "outputPath": "images/pdf-agent-security-trust-boundaries-archify-8225e9beb387-detail-1-1.png",
+          "width": 880,
+          "height": 1160,
+          "outputSha256": "14f14f88677b42a76c79b8aae06a9198cc641fd0a9da9c03920392830668cfbe"
+        },
+        {
+          "row": 1,
+          "column": 2,
+          "sourceVectorSha256": "8225e9beb3873f9bbd10f253edbadbefa6287121110f7d0d54942e11b2be773b",
+          "rect": [
+            350,
+            128,
+            440,
+            580
+          ],
+          "outputPath": "images/pdf-agent-security-trust-boundaries-archify-8225e9beb387-detail-1-2.png",
+          "width": 880,
+          "height": 1160,
+          "outputSha256": "cfa22755ecc63b36f31c53d22f01fde83102c5d4a553cb0dac1a2b770ab65e0f"
+        },
+        {
+          "row": 1,
+          "column": 3,
+          "sourceVectorSha256": "8225e9beb3873f9bbd10f253edbadbefa6287121110f7d0d54942e11b2be773b",
+          "rect": [
+            700,
+            128,
+            440,
+            580
+          ],
+          "outputPath": "images/pdf-agent-security-trust-boundaries-archify-8225e9beb387-detail-1-3.png",
+          "width": 880,
+          "height": 1160,
+          "outputSha256": "c1e846ca2137f846a07300e35f8d84098b12c708f409f12139a8ed05feba82da"
+        },
+        {
+          "row": 1,
+          "column": 4,
+          "sourceVectorSha256": "8225e9beb3873f9bbd10f253edbadbefa6287121110f7d0d54942e11b2be773b",
+          "rect": [
+            735,
+            350,
+            440,
+            358
+          ],
+          "outputPath": "images/pdf-agent-security-trust-boundaries-archify-8225e9beb387-detail-1-4.png",
+          "width": 880,
+          "height": 716,
+          "outputSha256": "5f76616c85fcc64eb9f47d088fd9af0fb906b68d05ef6466f8cc8103dce877f9"
+        }
+      ]
+    },
+    {
+      "id": "redis-data-structure-archify-zset-vs-innodb-page-index",
+      "kind": "archify",
+      "articlePath": "knowledge/backend/database/redis-data-structure.md",
+      "articleSha256": "a3f7f6d822b0c792dad7c3299cd7d07d8635797e6a40b98809d4ab51c7c26605",
+      "line": 401,
+      "sourceText": "<iframe\n  src=\"https://www.agent-journey.cn/archify/zset-vs-innodb-page-index.html\"\n  title=\"Redis ZSet 双索引与 InnoDB 页式索引的结构比较\"\n></iframe>",
+      "sourceSha256": "7c25b41c7d5396b88dd98dd66a1e96e2024e9ca59c5bc09c8df7ac5064216a7f",
+      "specPath": "knowledge/backend/database/zset-vs-innodb-page-index.archify.json",
+      "specSha256": "7bb8abe182b4c972a4790b413ecc2551f623ba6519c2fa9a8eda01f56247ad2b",
+      "outputPath": "images/pdf-zset-vs-innodb-page-index-archify-5916074da9f5.png",
+      "outputSha256": "bc44878d6754a6c285c398e00c91160656f8993341c055041789bcb373dbc882",
+      "width": 4080,
+      "height": 2550,
+      "renderedVectorSha256": "5916074da9f577d40039defacc73426e7fe94a92b9cb7bdf63e31f405568db69",
+      "panels": [
+        {
+          "row": 1,
+          "column": 1,
+          "rect": [
+            25,
+            195,
+            500,
+            405
+          ],
+          "sourceVectorSha256": "5916074da9f577d40039defacc73426e7fe94a92b9cb7bdf63e31f405568db69",
+          "outputPath": "images/pdf-zset-vs-innodb-page-index-archify-5916074da9f5-detail-1-1.png",
+          "width": 1000,
+          "height": 810,
+          "outputSha256": "dd2dcc0746c481da604c4d76a72035a0d7d15647f11a62576b5ed0c718e50c70"
+        },
+        {
+          "row": 1,
+          "column": 2,
+          "rect": [
+            205,
+            195,
+            500,
+            405
+          ],
+          "sourceVectorSha256": "5916074da9f577d40039defacc73426e7fe94a92b9cb7bdf63e31f405568db69",
+          "outputPath": "images/pdf-zset-vs-innodb-page-index-archify-5916074da9f5-detail-1-2.png",
+          "width": 1000,
+          "height": 810,
+          "outputSha256": "336b0b56d26e96ab5cb0c6c85a8d93d8aa08d778f2a47eec63f3e5654c30bbcb"
+        },
+        {
+          "row": 1,
+          "column": 3,
+          "rect": [
+            700,
+            120,
+            440,
+            480
+          ],
+          "sourceVectorSha256": "5916074da9f577d40039defacc73426e7fe94a92b9cb7bdf63e31f405568db69",
+          "outputPath": "images/pdf-zset-vs-innodb-page-index-archify-5916074da9f5-detail-1-3.png",
+          "width": 880,
+          "height": 960,
+          "outputSha256": "073a0b01a5c0266b53e20498855fe1405e233132642c16231f9898d756ac7c84"
+        },
+        {
+          "row": 1,
+          "column": 4,
+          "rect": [
+            920,
+            120,
+            440,
+            480
+          ],
+          "sourceVectorSha256": "5916074da9f577d40039defacc73426e7fe94a92b9cb7bdf63e31f405568db69",
+          "outputPath": "images/pdf-zset-vs-innodb-page-index-archify-5916074da9f5-detail-1-4.png",
+          "width": 880,
+          "height": 960,
+          "outputSha256": "f57d0fa240d0bd2a3eb3a18fa2f923de8c31b59dd148817cdbc031ce6f6c1714"
+        },
+        {
+          "row": 2,
+          "column": 1,
+          "rect": [
+            25,
+            470,
+            440,
+            345
+          ],
+          "sourceVectorSha256": "5916074da9f577d40039defacc73426e7fe94a92b9cb7bdf63e31f405568db69",
+          "outputPath": "images/pdf-zset-vs-innodb-page-index-archify-5916074da9f5-detail-2-1.png",
+          "width": 880,
+          "height": 690,
+          "outputSha256": "bdd278b60354e8b301b74244c484c3874fb17b6ffb25c0b2371087585a532fb3"
+        },
+        {
+          "row": 2,
+          "column": 2,
+          "rect": [
+            265,
+            470,
+            440,
+            345
+          ],
+          "sourceVectorSha256": "5916074da9f577d40039defacc73426e7fe94a92b9cb7bdf63e31f405568db69",
+          "outputPath": "images/pdf-zset-vs-innodb-page-index-archify-5916074da9f5-detail-2-2.png",
+          "width": 880,
+          "height": 690,
+          "outputSha256": "3e0b87c2012d437fef31cd4279865bc1565fa62dbcec5f83091cbe38c4382049"
+        }
+      ]
+    },
+    {
+      "id": "mysql-index-archify-zset-vs-innodb-page-index",
+      "kind": "archify",
+      "articlePath": "knowledge/backend/database/mysql-index.md",
+      "articleSha256": "980e76f3f1c859f95fca98da87507e9175d88b90293845850f4349a47f17c807",
+      "line": 306,
+      "sourceText": "<iframe\n  src=\"https://www.agent-journey.cn/archify/zset-vs-innodb-page-index.html\"\n  title=\"Redis ZSet 双索引与 InnoDB 页式索引的结构比较\"\n></iframe>",
+      "sourceSha256": "7c25b41c7d5396b88dd98dd66a1e96e2024e9ca59c5bc09c8df7ac5064216a7f",
+      "specPath": "knowledge/backend/database/zset-vs-innodb-page-index.archify.json",
+      "specSha256": "7bb8abe182b4c972a4790b413ecc2551f623ba6519c2fa9a8eda01f56247ad2b",
+      "outputPath": "images/pdf-zset-vs-innodb-page-index-archify-5916074da9f5.png",
+      "outputSha256": "bc44878d6754a6c285c398e00c91160656f8993341c055041789bcb373dbc882",
+      "width": 4080,
+      "height": 2550,
+      "renderedVectorSha256": "5916074da9f577d40039defacc73426e7fe94a92b9cb7bdf63e31f405568db69",
+      "panels": [
+        {
+          "row": 1,
+          "column": 1,
+          "rect": [
+            25,
+            195,
+            500,
+            405
+          ],
+          "sourceVectorSha256": "5916074da9f577d40039defacc73426e7fe94a92b9cb7bdf63e31f405568db69",
+          "outputPath": "images/pdf-zset-vs-innodb-page-index-archify-5916074da9f5-detail-1-1.png",
+          "width": 1000,
+          "height": 810,
+          "outputSha256": "dd2dcc0746c481da604c4d76a72035a0d7d15647f11a62576b5ed0c718e50c70"
+        },
+        {
+          "row": 1,
+          "column": 2,
+          "rect": [
+            205,
+            195,
+            500,
+            405
+          ],
+          "sourceVectorSha256": "5916074da9f577d40039defacc73426e7fe94a92b9cb7bdf63e31f405568db69",
+          "outputPath": "images/pdf-zset-vs-innodb-page-index-archify-5916074da9f5-detail-1-2.png",
+          "width": 1000,
+          "height": 810,
+          "outputSha256": "336b0b56d26e96ab5cb0c6c85a8d93d8aa08d778f2a47eec63f3e5654c30bbcb"
+        },
+        {
+          "row": 1,
+          "column": 3,
+          "rect": [
+            700,
+            120,
+            440,
+            480
+          ],
+          "sourceVectorSha256": "5916074da9f577d40039defacc73426e7fe94a92b9cb7bdf63e31f405568db69",
+          "outputPath": "images/pdf-zset-vs-innodb-page-index-archify-5916074da9f5-detail-1-3.png",
+          "width": 880,
+          "height": 960,
+          "outputSha256": "073a0b01a5c0266b53e20498855fe1405e233132642c16231f9898d756ac7c84"
+        },
+        {
+          "row": 1,
+          "column": 4,
+          "rect": [
+            920,
+            120,
+            440,
+            480
+          ],
+          "sourceVectorSha256": "5916074da9f577d40039defacc73426e7fe94a92b9cb7bdf63e31f405568db69",
+          "outputPath": "images/pdf-zset-vs-innodb-page-index-archify-5916074da9f5-detail-1-4.png",
+          "width": 880,
+          "height": 960,
+          "outputSha256": "f57d0fa240d0bd2a3eb3a18fa2f923de8c31b59dd148817cdbc031ce6f6c1714"
+        },
+        {
+          "row": 2,
+          "column": 1,
+          "rect": [
+            25,
+            470,
+            440,
+            345
+          ],
+          "sourceVectorSha256": "5916074da9f577d40039defacc73426e7fe94a92b9cb7bdf63e31f405568db69",
+          "outputPath": "images/pdf-zset-vs-innodb-page-index-archify-5916074da9f5-detail-2-1.png",
+          "width": 880,
+          "height": 690,
+          "outputSha256": "bdd278b60354e8b301b74244c484c3874fb17b6ffb25c0b2371087585a532fb3"
+        },
+        {
+          "row": 2,
+          "column": 2,
+          "rect": [
+            265,
+            470,
+            440,
+            345
+          ],
+          "sourceVectorSha256": "5916074da9f577d40039defacc73426e7fe94a92b9cb7bdf63e31f405568db69",
+          "outputPath": "images/pdf-zset-vs-innodb-page-index-archify-5916074da9f5-detail-2-2.png",
+          "width": 880,
+          "height": 690,
+          "outputSha256": "3e0b87c2012d437fef31cd4279865bc1565fa62dbcec5f83091cbe38c4382049"
         }
       ]
     }
