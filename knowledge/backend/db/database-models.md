@@ -35,6 +35,41 @@
 
 使用多个存储系统时，需要明确谁是事实来源、谁是可重建副本。将主库变更同步到搜索或向量索引，会引入延迟和失败恢复问题；把同一份数据写两次而不定义补偿，不能保证两个系统永远一致。
 
+
+## 一个具体建模练习：保存已收盘的 K 线
+
+先明确业务条件，再列字段。这里假设保存某交易场所、某标的、固定周期的**已收盘**K线，只保留当前有效修订；主要查询是“某标的某周期在一段时间内的记录”。它是教学方案，不是面经作者已采用的实现，也不讨论实时未收盘合成、行情交易策略或实测吞吐。
+
+一条记录表达一个场所、标的、周期和开始时间对应的开、高、低、收价格及成交量。场所与标的采用业务规范化标识；开始时间按约定UTC表示，周期单位固定为秒，避免同一含义写成不同键。
+
+| 字段组 | 含义与约束 |
+| --- | --- |
+| venue、symbol | 场所与标的标识；非空，长度和大小写/排序规则按业务确定 |
+| period_seconds、open_time | 正周期与周期开始时间；明确UTC、精度和对齐规则 |
+| open_price、high_price、low_price、close_price | 同一计价单位的OHLC价格；用业务所需精度的精确数值类型 |
+| volume | 约定单位的成交量；是否允许小数、最大值与非负约束按数据合同确定 |
+| source_version、updated_at | 来源修订版本与摄取更新时间；更新时间不能代替来源版本 |
+
+在此假设下，唯一键可以是 `(venue, symbol, period_seconds, open_time)`：它定义同一根K线的业务身份。若要保存全部修订历史，应另设计历史记录和当前指针，不能把“每版新增”与“当前唯一行”混为一个唯一键合同。高价不应低于开、收、低，低价不应高于开、收；这些是接入时还需验证的业务条件，字段类型本身不能证明行情可信。
+
+以下是针对MySQL8.4的查询示意，本次未连接数据库执行；表名和列名属于本例：
+
+```sql
+SELECT open_time, open_price, high_price, low_price, close_price, volume
+FROM candles
+WHERE venue = ? AND symbol = ? AND period_seconds = ?
+  AND open_time >= ? AND open_time < ?
+ORDER BY open_time
+LIMIT 500;
+```
+
+以这三个等值条件作联合键前缀，再按时间做范围与排序，可以提出相应索引候选；是否被优化器采用、扫描和写入成本如何，仍需代表数据与执行计划验证，不能只看字段顺序宣称性能已证明。索引细节见[数据库索引原理与查询优化](../database/mysql-index.md)。
+
+MySQL的[DECIMAL/NUMERIC](https://dev.mysql.com/doc/refman/8.4/en/fixed-point-types.html)提供精确数值类型，但精度/小数位数应由标的价格与数量范围决定，不照抄一组任意常量。[DATETIME与TIMESTAMP文档](https://dev.mysql.com/doc/refman/8.4/en/datetime.html)说明其时间处理差异；写入DATETIME时，UTC约定需要应用与数据接入共同落实，不能凭类型名认为已自动转换。
+
+来源纠正旧K线时，要验证同一业务身份及修订顺序，防止迟到旧版本覆盖新版本。唯一约束防止重复身份，却不自动决定哪次修订有效；若多写者并发，则还需要事务或版本条件更新。规模与查询目标超出单库能力后再比较分区、分片或专用时序系统，表很大不自动要求更换数据模型。
+
+
 ## 面试口述与条件变化
 
 可以这样回答：“我先按数据关系与主要查询比较关系、文档、键值、列族和图模型，再检查事务范围、一致性、索引与运维边界。类别名称不是产品能力清单；跨对象约束和更新责任比笼统的数据量更能决定方案。”
@@ -47,7 +82,7 @@
 
 ## 参考资料
 
-滚动文档核验于 2026-10-03；本文比较数据模型，不提供未测量的性能排名。
+既有模型主张与新增K线示例的一手资料重新核验于2026-10-16；PostgreSQL18/MySQL8.4示例保留版本，本文不提供未测量性能排名，SQL未执行。
 
 - [Microsoft：Understand data models](https://learn.microsoft.com/en-us/azure/architecture/data-guide/technology-choices/understand-data-store-models)。
 - [PostgreSQL 18：Data Definition](https://www.postgresql.org/docs/18/ddl.html)。

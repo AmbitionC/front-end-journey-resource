@@ -6661,7 +6661,7 @@
       "id": "agent-learning-roadmap:mermaid:17",
       "kind": "mermaid",
       "articlePath": "knowledge/career/agent-learning-roadmap.md",
-      "articleSha256": "63876d5ece53aa25be5dce4f873e15b708e10baca0acca47c7e3d94e30d16232",
+      "articleSha256": "9e7605ac4bf085610f06ab073f54552c30a4ecc0a8d9df808547cb85a7ff4e96",
       "line": 17,
       "sourceText": "gantt\n    title Agent Engineer 成长路线（周为单位）\n    dateFormat  X\n    axisFormat 第%s周\n\n    section Phase 1：打地基\n    大模型基础 + Prompt 工程        :p1, 0, 3w\n\n    section Phase 2：学 Agent 核心\n    Agent 原理 + ReAct 实战         :p2, after p1, 4w\n\n    section Phase 3：进阶与生态\n    框架 + RAG + 多智能体            :p3, after p2, 4w\n\n    section Phase 4：工程化与实战\n    完整产品 + 上线 + 作品集          :p4, after p3, 6w\n",
       "sourceSha256": "d1011c8033614004a92459b202d6ff18013c8fd5112fa34d760f839b982b555c",
