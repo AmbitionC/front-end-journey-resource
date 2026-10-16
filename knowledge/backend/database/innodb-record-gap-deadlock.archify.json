@@ -1,0 +1,236 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "MySQL 8.4 InnoDB：锁兼容与记录锁死锁",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1100,
+      640
+    ],
+    "legend": {
+      "mode": "hidden"
+    }
+  },
+  "components": [
+    {
+      "id": "same-record-shared-shared",
+      "type": "backend",
+      "label": "S / S：兼容",
+      "sublabel": "两个事务可持有同一记录的 S 锁",
+      "pos": [
+        40,
+        35
+      ],
+      "size": [
+        280,
+        70
+      ]
+    },
+    {
+      "id": "same-record-shared-exclusive",
+      "type": "security",
+      "label": "S / X：冲突",
+      "sublabel": "不同事务申请同一索引记录",
+      "pos": [
+        410,
+        35
+      ],
+      "size": [
+        280,
+        70
+      ]
+    },
+    {
+      "id": "same-record-exclusive-exclusive",
+      "type": "security",
+      "label": "X / X：冲突",
+      "sublabel": "不同事务申请同一索引记录",
+      "pos": [
+        780,
+        35
+      ],
+      "size": [
+        280,
+        70
+      ]
+    },
+    {
+      "id": "ordinary-gap-holders",
+      "type": "database",
+      "label": "T3 / T5：普通 gap 锁可共存",
+      "sublabel": "同一间隙 (10,20)，不互相排斥",
+      "pos": [
+        40,
+        175
+      ],
+      "size": [
+        340,
+        70
+      ]
+    },
+    {
+      "id": "inserting-transaction",
+      "type": "backend",
+      "label": "T4：INSERT 索引值 15",
+      "sublabel": "插入位置落在仍被锁定的间隙内",
+      "pos": [
+        720,
+        175
+      ],
+      "size": [
+        340,
+        70
+      ]
+    },
+    {
+      "id": "transaction-one",
+      "type": "backend",
+      "label": "事务 T1",
+      "sublabel": "先锁 A，再申请 B",
+      "pos": [
+        40,
+        350
+      ],
+      "size": [
+        240,
+        72
+      ]
+    },
+    {
+      "id": "index-record-b",
+      "type": "database",
+      "label": "索引记录 B",
+      "sublabel": "X 锁由 T2 持有",
+      "pos": [
+        820,
+        350
+      ],
+      "size": [
+        240,
+        72
+      ]
+    },
+    {
+      "id": "index-record-a",
+      "type": "database",
+      "label": "索引记录 A",
+      "sublabel": "X 锁由 T1 持有",
+      "pos": [
+        40,
+        510
+      ],
+      "size": [
+        240,
+        72
+      ]
+    },
+    {
+      "id": "transaction-two",
+      "type": "backend",
+      "label": "事务 T2",
+      "sublabel": "先锁 B，再申请 A",
+      "pos": [
+        820,
+        510
+      ],
+      "size": [
+        240,
+        72
+      ]
+    },
+    {
+      "id": "deadlock-resolution",
+      "type": "security",
+      "label": "启用死锁检测时",
+      "sublabel": "victim 整事务回滚；应用重试整事务",
+      "pos": [
+        370,
+        450
+      ],
+      "size": [
+        360,
+        64
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "同一索引记录上的记录锁：比较不同事务",
+      "wraps": [
+        "same-record-shared-shared",
+        "same-record-shared-exclusive",
+        "same-record-exclusive-exclusive"
+      ],
+      "pad": 18
+    },
+    {
+      "kind": "region",
+      "label": "普通 gap 锁抑制向间隙插入；不是记录更新锁",
+      "wraps": [
+        "ordinary-gap-holders",
+        "inserting-transaction"
+      ],
+      "pad": 18
+    },
+    {
+      "kind": "region",
+      "label": "两条记录的 X 锁反序：形成真实的循环等待",
+      "wraps": [
+        "transaction-one",
+        "index-record-b",
+        "index-record-a",
+        "transaction-two",
+        "deadlock-resolution"
+      ],
+      "pad": 22
+    }
+  ],
+  "connections": [
+    {
+      "id": "insert-waits-for-gap",
+      "from": "inserting-transaction",
+      "to": "ordinary-gap-holders",
+      "label": "插入意向等待冲突 gap 锁释放",
+      "variant": "security"
+    },
+    {
+      "id": "t1-holds-record-a",
+      "from": "index-record-a",
+      "to": "transaction-one",
+      "label": "X(A) 已授予 T1",
+      "variant": "emphasis",
+      "labelAt": [
+        160,
+        436
+      ]
+    },
+    {
+      "id": "t2-holds-record-b",
+      "from": "index-record-b",
+      "to": "transaction-two",
+      "label": "X(B) 已授予 T2",
+      "variant": "emphasis",
+      "labelAt": [
+        940,
+        436
+      ]
+    },
+    {
+      "id": "t1-waits-record-b",
+      "from": "transaction-one",
+      "to": "index-record-b",
+      "label": "再申请 X(B)，等待 T2",
+      "variant": "security"
+    },
+    {
+      "id": "t2-waits-record-a",
+      "from": "transaction-two",
+      "to": "index-record-a",
+      "label": "再申请 X(A)，等待 T1",
+      "variant": "security"
+    }
+  ]
+}

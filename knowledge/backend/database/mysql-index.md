@@ -1,6 +1,6 @@
 索引（Index）是数据库提升查询性能的核心机制，本质上是用空间换时间的数据结构。对于 AI/Agent 后端工程师来说，无论是存储用户会话、向量元数据，还是构建 RAG 系统的检索层，索引设计可能影响扫描与回表成本，实际吞吐还要看查询、写入、锁和资源。
 
-本文SQL、迁移SQL片段均为未在完整项目运行的示意；应用字段到物理列名的映射须在实际项目核对。讨论InnoDB时以MySQL8.4为基准。
+本文 SQL、迁移 SQL 与 EXPLAIN 输出均为教学示意，本次未连接数据库执行；应用字段到物理列名的映射须在实际项目核对。讨论 InnoDB 时以 MySQL 8.4 为基准。
 
 ## 贯穿案例：联合索引怎样处理租户订单
 
@@ -44,7 +44,7 @@ flowchart LR
     C --> D[返回结果]
 ```
 
-回表意味着两次 B+ 树查找，高并发下是性能的隐患。后文的覆盖索引正是消除回表的手段。
+通过二级索引定位后再访问聚簇记录，会增加查找与可能的页访问。覆盖索引可以减少为获取额外列而做的回表，但不保证省去 MVCC 可见性检查所需的聚簇记录访问。
 
 ## 索引类型对比
 
@@ -84,9 +84,9 @@ SELECT * FROM t WHERE a = 1 AND c = 3;      -- a定位，c可能用于索引内�
 
 ## 覆盖索引（Covering Index）
 
-当查询所需的所有列（`SELECT` + `WHERE` + `ORDER BY`）都已包含在某个索引中，MySQL 可以直接从索引返回结果，**无需回表**，这种情况称为覆盖索引。
+当查询所需的列已包含在某个索引中，该索引具备覆盖查询的条件，可以减少为获取缺失列而访问数据行。`EXPLAIN` 的 `Extra: Using index` 表示使用覆盖索引；它不能证明 InnoDB 执行中从不访问聚簇记录。
 
-EXPLAIN 中 `Extra: Using index` 是覆盖索引的标志。
+InnoDB 的二级索引记录没有聚簇记录的完整版本信息。按 [MySQL 8.4 多版本与二级索引](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/innodb-multi-versioning.html)，若二级记录被标记删除，或二级索引页被较新的事务更新，引擎仍会查聚簇记录，并可能沿 undo 获取可见旧版本。例如旧快照读取 Alice 的姓名与年龄，另一事务已改动对应二级索引项，即使两列都在索引中，也不能仅据列覆盖断言零回表。列覆盖回答“值在哪里”，MVCC 还要判断“哪个版本可见”。
 
 ```sql
 -- 表: users(id, name, age, email, bio)
@@ -101,7 +101,7 @@ SELECT name, age, email FROM users WHERE name = 'Alice';
 -- Extra: (空) 或 Using where
 ```
 
-**高频接口优化技巧**：对 Agent 对话历史表（`session_id, user_id, created_at, content`）中，若频繁按 `session_id` 分页拉取 `user_id` 和 `created_at`，可建 `INDEX(session_id, created_at, user_id)` 覆盖索引，彻底消除回表。
+**高频接口优化技巧**：对 Agent 对话历史表（`session_id, user_id, created_at, content`）中，若频繁按 `session_id` 分页拉取 `user_id` 和 `created_at`，可评估 `INDEX(session_id, created_at, user_id)` 覆盖索引，减少获取这些字段的聚簇记录访问；仍须考虑 MVCC、实际扫描量及索引写入成本。
 
 ## EXPLAIN 执行计划解读
 
@@ -138,8 +138,8 @@ EXPLAIN SELECT * FROM orders WHERE user_id = 100 AND status = 1;
 
 | Extra 值 | 含义 | 应对 |
 |----------|------|------|
-| `Using index` | 覆盖索引，无回表 | 理想状态 |
-| `Using where` | 索引过滤后仍需额外条件判断 | 通常正常 |
+| `Using index` | 查询列被索引覆盖；MVCC 等情形仍可能访问聚簇记录 | 结合可见性和实际工作量判断 |
+| `Using where` | 用 WHERE 条件筛选行；本身不证明使用了索引 | 结合 `type`、`key` 和条件判断 |
 | `Using filesort` | 排序无法利用索引，需额外排序操作 | 考虑调整索引列顺序 |
 | `Using temporary` | 使用了临时表（GROUP BY/DISTINCT） | 优化 SQL 或加索引 |
 | `Using index condition` | 索引条件下推（ICP），减少回表次数 | MySQL 5.6+ 自动优化 |
@@ -188,7 +188,7 @@ flowchart TD
 
 1. **按真实查询设计前导列**：不同值数量不等于某个参数的过滤比例；是否将user_id放在status前，要结合查询是否提供这些条件、数据倾斜、排序与复用成本。
 2. **同时评估过滤和排序**：`WHERE a = ? AND b > ? ORDER BY c` 使用 `(a,b,c)` 可能过滤较好，却不保证c跨不同b全局有序；根据实际plan比较范围读取后排序与按排序索引过滤。
-3. **兼顾覆盖**：将 `SELECT` 中的高频列纳入复合索引末尾，消除回表。
+3. **兼顾覆盖**：评估将高频输出列纳入索引的读收益与键宽、写维护成本；覆盖可减少取额外列的回表，不排除 MVCC 所需的聚簇记录访问。
 4. **避免冗余**：`(a,b)`可覆盖某些`(a)`查询，但键宽、约束、排序和实际计划不同；确认使用与成本后再删。
 5. **控制总数**：没有通用5–6个上限；按实际读写收益、空间、维护与迁移成本管理。
 
@@ -236,7 +236,7 @@ ORDER BY created_at DESC
 LIMIT 1000;
 ```
 
-即使不使用原生向量索引，合理设计普通索引（按 `tenant_id`、`knowledge_base_id`、`created_at` 分区过滤）也能大幅缩减向量召回前的候选集，是 Agent 系统性能优化的低成本手段。
+普通索引可以先执行租户与知识库范围过滤；上例还按时间只保留最近 1000 条，因此检索合同已缩小，不等价于在全部合规文档中寻找最相关结果。是否采用这种候选截断，应同时评测召回损失、延迟和维护成本，不能只以候选数减少证明优化成功。
 
 ## 常见误区
 
@@ -259,7 +259,7 @@ InnoDB 支持对 `NULL` 列建索引，`NULL` 值会被存储在索引中。但 
 
 ### 从 B+ 树一路答到最左前缀和 EXPLAIN
 
-一条完整回答链可以这样组织：InnoDB 用 B+ 树让非叶节点只承担导航、提高扇出；叶子有序，等值、范围和排序都能沿同一结构完成。聚簇索引叶子保存整行，二级索引叶子保存主键，因此查询可能回表；覆盖索引则直接从二级索引得到所需列。
+一条完整回答链可以这样组织：InnoDB 用 B+ 树让非叶节点只承担导航、提高扇出；叶子有序，等值、范围和排序都能沿同一结构完成。聚簇索引叶子保存整行，二级索引叶子保存主键，因此查询可能回表；覆盖索引可减少取额外列的访问，但 MVCC 可见性检查仍可能查聚簇记录。
 
 联合索引 `(a, b, c)` 按完整键的字典序排列。查询要从最左列建立连续可用前缀：`a = ? AND b = ?` 可有效缩小范围；缺少 `a` 通常不能利用这棵树的有序起点；某列进入范围后，右侧列通常不能继续用于缩小扫描区间，但仍可能用于索引下推、覆盖或排序，不能机械回答“范围后全部失效”。
 
@@ -272,7 +272,7 @@ B+ 树叶子链表原生支持范围查询和排序；B 树数据分散在各层
 聚簇索引叶子节点即数据行本身（物理存储有序）；非聚簇索引（二级索引）叶子节点存主键值，查完整行需回表。InnoDB 每表必须有聚簇索引，优先取主键，无主键则取第一个唯一非空索引，否则生成隐藏 rowid。
 
 **Q：什么是回表，如何避免？**
-二级索引查询到主键后，再去聚簇索引取完整行的过程叫回表（二次查找）。通过**覆盖索引**（将查询列纳入索引）可完全避免。
+经二级索引中的主键再访问聚簇记录，通常称为回表。让索引覆盖查询所需列，可减少为取缺失列而回表；但二级记录删除标记或较新事务更新索引页时，MVCC 仍可能要求查聚簇记录与 undo，不能承诺完全避免。
 
 **Q：联合索引字段顺序如何确定？**
 先固定查询族的过滤、排序和输出合同，比较过滤优先与排序优先的候选；前导等值有利于定位，但范围后列、覆盖和写维护仍参与成本，不能机械按列区分度排序。
@@ -292,6 +292,7 @@ MySQL 5.6+ 支持 `ALTER TABLE ... ADD INDEX` 的在线 DDL（Online DDL），�
 - **查询去掉tenant过滤，仍能直接按created_at取最近20条吗？** 原键先按租户排序，不能自然给出跨租户时间全序；重新比较查询与索引。
 - **UNIQUE允许NULL，能拿可空event_id去重吗？** 多个NULL合法；在接入时形成稳定非空事件身份或定义其他明确约束。
 - **加索引支持LOCK=NONE，意味着线上没有阻塞吗？** 不意味着；核对DDL矩阵、元数据锁和资源预算，做受控迁移并监控。
+- **列都被二级索引覆盖，旧快照就一定不查聚簇记录吗？** 不一定；二级记录的删除标记或较新页更新可能触发 MVCC 版本核对，列覆盖不是版本可见性的证明。
 
 ## 慢日志变量：阈值、开关与执行计划
 
@@ -343,10 +344,14 @@ MySQL 5.6+ 支持 `ALTER TABLE ... ADD INDEX` 的在线 DDL（Online DDL），�
 
 ## 参考资料
 
-本次对普通索引页结构、跳表比较、skip scan、唯一键NULL、在线DDL限制、慢日志与VECTOR限制重新核验于2026-10-15，机制基准MySQL8.4。既有MySQL9.7 VECTOR边界只用于区分产品/版本，不作为本例部署假设；迁移SQL未在数据库运行，不用于证明性能或DDL无阻塞。
+2026-10-16 重新核验了覆盖索引与二级记录 MVCC 边界，并据此修正“完全避免回表”的断言；没有连接数据库执行示例。
 
+本次对普通索引页结构、跳表比较、skip scan、唯一键NULL、在线DDL限制、慢日志与VECTOR限制重新核验于2026-10-16，机制基准MySQL8.4。既有MySQL9.7 VECTOR边界只用于区分产品/版本，不作为本例部署假设；迁移SQL未在数据库运行，不用于证明性能或DDL无阻塞。
+
+- [MySQL 8.4 Reference: InnoDB Multi-Versioning — Secondary Indexes](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/innodb-multi-versioning.html)
 - [MySQL 8.4 Reference: InnoDB Index Types](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/innodb-index-types.html)
 - [MySQL 8.4 Reference: EXPLAIN](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/explain.html)
+- [MySQL 8.4 Reference: EXPLAIN Output — Using where](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/explain-output.html)
 - [MySQL 8.4 Reference: Data Types](https://dev.mysql.com/doc/refman/8.4/en/data-types.html)
 - [MySQL 9.7 Reference: The VECTOR Type](https://dev.mysql.com/doc/refman/9.7/en/vector.html)
 

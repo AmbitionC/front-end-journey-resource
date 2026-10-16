@@ -2525,63 +2525,83 @@
       "filePath": "backend/database",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-15",
-      "batch": "title-baidu-three-quality-20261015",
-      "reason": "Current source-linked revision awaits exact candidate processing, independent review and production acceptance.",
+      "recordedAt": "2026-10-16",
+      "batch": "knowledge-teaching-reuse-20261016",
+      "reason": "有一手来源支持的知识正文、速读与既验收静态图修订；等待精确候选独审、CI、同步与生产验收。",
       "previousRecord": {
         "key": "mysql-index",
         "label": "数据库索引原理与查询优化",
         "filePath": "backend/database",
-        "status": "published",
+        "status": "pending",
         "action": "updated",
-        "recordedAt": "2026-10-04",
-        "batch": "next-twenty-source-increments-20261004",
+        "recordedAt": "2026-10-15",
+        "batch": "title-baidu-three-quality-20261015",
+        "reason": "Current source-linked revision awaits exact candidate processing, independent review and production acceptance.",
         "previousRecord": {
           "key": "mysql-index",
           "label": "数据库索引原理与查询优化",
           "filePath": "backend/database",
-          "status": "pending",
+          "status": "published",
           "action": "updated",
-          "recordedAt": "2026-08-29",
-          "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
-        },
-        "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
-        "publication": {
-          "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
-          "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
-          "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
-          "syncConclusion": "success"
-        },
-        "publishedAt": "2026-10-05T09:27:13Z",
-        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-        "publishedBySyncRun": 37289136872
+          "recordedAt": "2026-10-04",
+          "batch": "next-twenty-source-increments-20261004",
+          "previousRecord": {
+            "key": "mysql-index",
+            "label": "数据库索引原理与查询优化",
+            "filePath": "backend/database",
+            "status": "pending",
+            "action": "updated",
+            "recordedAt": "2026-08-29",
+            "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
+          },
+          "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
+          "publication": {
+            "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
+            "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
+            "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
+            "syncConclusion": "success"
+          },
+          "publishedAt": "2026-10-05T09:27:13Z",
+          "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+          "publishedBySyncRun": 37289136872
+        }
       }
     },
     {
       "key": "db-transaction-lock",
       "label": "事务、隔离级别与锁",
       "filePath": "backend/database",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-14",
-      "batch": "title-verified6-quality-20261014",
-      "reason": "对本批面经已绑定知识的技术错误做有一手来源支持的限定修正。",
+      "recordedAt": "2026-10-16",
+      "batch": "knowledge-teaching-reuse-20261016",
+      "reason": "有一手来源支持的知识正文、速读与既验收静态图修订；等待精确候选独审、CI、同步与生产验收。",
       "previousRecord": {
         "key": "db-transaction-lock",
         "label": "事务、隔离级别与锁",
         "filePath": "backend/database",
         "status": "published",
         "action": "updated",
-        "recordedAt": "2026-10-04",
-        "batch": "next-twenty-source-increments-20261004",
-        "publishedAt": "2026-10-05T09:27:13Z",
-        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-        "publishedBySyncRun": 37289136872
-      },
-      "publishedAt": "2026-10-14T18:28:19Z",
-      "publishedByCommit": "afbce3dd82d0e693b14d20e2b3dd02a96c6731b3",
-      "publishedBySyncRun": 38614482119,
-      "publishedByPdfRun": 38614481957
+        "recordedAt": "2026-10-14",
+        "batch": "title-verified6-quality-20261014",
+        "reason": "对本批面经已绑定知识的技术错误做有一手来源支持的限定修正。",
+        "previousRecord": {
+          "key": "db-transaction-lock",
+          "label": "事务、隔离级别与锁",
+          "filePath": "backend/database",
+          "status": "published",
+          "action": "updated",
+          "recordedAt": "2026-10-04",
+          "batch": "next-twenty-source-increments-20261004",
+          "publishedAt": "2026-10-05T09:27:13Z",
+          "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+          "publishedBySyncRun": 37289136872
+        },
+        "publishedAt": "2026-10-14T18:28:19Z",
+        "publishedByCommit": "afbce3dd82d0e693b14d20e2b3dd02a96c6731b3",
+        "publishedBySyncRun": 38614482119,
+        "publishedByPdfRun": 38614481957
+      }
     },
     {
       "key": "redis-cache",

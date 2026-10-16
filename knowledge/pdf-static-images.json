@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "complete": true,
-  "expectedCount": 128,
+  "expectedCount": 129,
   "entries": [
     {
       "id": "context-engineering:mermaid:45",
@@ -3369,7 +3369,7 @@
       "id": "mysql-index:mermaid:40",
       "kind": "mermaid",
       "articlePath": "knowledge/backend/database/mysql-index.md",
-      "articleSha256": "980e76f3f1c859f95fca98da87507e9175d88b90293845850f4349a47f17c807",
+      "articleSha256": "35e7f368a0a8046f24ca8586d8266a062651982206a16d985630ce75f4d91aee",
       "line": 40,
       "sourceText": "flowchart LR\n    A[查询: SELECT * FROM users WHERE email = 'a@x.com'] --> B[二级索引\\nemail → user_id=42]\n    B -->|回表| C[聚簇索引\\nuser_id=42 → 完整行数据]\n    C --> D[返回结果]\n",
       "sourceSha256": "8008beb40492f51d154b91cd3ceec194f591f9829070f461ef28f993876e12ef",
@@ -3407,7 +3407,7 @@
       "id": "mysql-index:mermaid:179",
       "kind": "mermaid",
       "articlePath": "knowledge/backend/database/mysql-index.md",
-      "articleSha256": "980e76f3f1c859f95fca98da87507e9175d88b90293845850f4349a47f17c807",
+      "articleSha256": "35e7f368a0a8046f24ca8586d8266a062651982206a16d985630ce75f4d91aee",
       "line": 179,
       "sourceText": "flowchart TD\n    A[固定过滤、排序和输出合同] --> B[设计过滤优先与排序优先的候选索引]\n    B --> C[用真实参数和统计比较扫描、排序、回表成本]\n    C --> D[评估覆盖列增加的空间与写入成本]\n    D --> E[验证计划与耗时后选择方案]\n",
       "sourceSha256": "35d2c92e23254e522ebda133e5a0bb532948dc79024a8c638a6107f18f71f62c",
@@ -3442,102 +3442,128 @@
       "renderedVectorSha256": "41196a0c761c6202c937a8fc8776ff720c6fd3495e9888b024e4c779ac279028"
     },
     {
-      "id": "db-transaction-lock:mermaid:55",
-      "kind": "mermaid",
+      "kind": "archify",
       "articlePath": "knowledge/backend/database/db-transaction-lock.md",
-      "articleSha256": "09f8198820ba65dc79e72daa153a8cdbb8d7727ffbf95528b08af7150f0ba460",
-      "line": 55,
-      "sourceText": "flowchart TD\n    A[当前事务读取某行] --> B{行的 trx_id\\n< 创建 ReadView 时最小活跃事务ID?}\n    B -- 是 --> C[版本在 ReadView 前已提交\\n直接可见]\n    B -- 否 --> D{trx_id\\n是当前事务自身?}\n    D -- 是 --> E[自己写的\\n直接可见]\n    D -- 否 --> F{trx_id\\n在活跃事务列表中?}\n    F -- 是 --> G[版本未提交\\n不可见\\n沿 undo log 找更旧版本]\n    F -- 否 --> H{trx_id\\n> 创建 ReadView 时最大事务ID?}\n    H -- 是 --> I[ReadView 之后启动的事务\\n不可见]\n    H -- 否 --> J[在 ReadView 前已提交\\n可见]\n    G --> A2[读取 undo log 指向的旧版本\\n重新判断]\n",
-      "sourceSha256": "23d7265887dc768903fd16471e8ca2302d0c44f5fe0568c1b9b3086a39dc7649",
-      "type": "flowchart",
-      "cacheKey": "d9022a1f59ff4caf36b6b0bbfc903ab67ea54c6e088e399cffbf6de1a12d0c8a",
-      "renderer": {
-        "mermaid": "11.15.0",
-        "bundleSha256": "70137e77bb273bb2ef972b86e8b0400cca8be53cb25bfc45911a186dc98665de",
-        "puppeteer": "24.43.1",
-        "scale": 2,
-        "fontFamily": "PingFang SC, Arial, sans-serif",
-        "fonts": [
-          {
-            "name": "PingFang.ttc",
-            "sha256": "6bccdb1a967b2ae7e856927eb559591b2ce05656b0d4ad2764b9c9429f12c0b7"
-          },
-          {
-            "name": "Arial.ttf",
-            "sha256": "525979822591a3447cfc49d943d6f7683508e25543407871c0ed8fed05fd2bd9"
-          },
-          {
-            "name": "Arial Unicode.ttf",
-            "sha256": "876af2cd4854644e7f3e7feb2f688997fdb3343c6df6693611209c9dfb47ccec"
-          }
-        ],
-        "browser": "Chrome/148.0.7778.97"
-      },
-      "outputPath": "images/pdf-db-transaction-lock-mermaid-d9022a1f59ff.png",
-      "outputSha256": "724cd0c812a46c398a2115e74dd1663f51d10fe4b1c7da5c106f50221f68ca2f",
-      "width": 1970,
-      "height": 3150,
-      "renderedVectorSha256": "289d5334aaf0d4c425d0f5359698ea2e17053855f5150ff556ed843ac2859bfc",
+      "outputPath": "images/pdf-readview-visibility-archify-c8bea82a35ec.png",
+      "outputSha256": "c4cbb41a57927172e8bee5ecef921c6776a51ae5365288b67e64d21848d7dbd0",
+      "width": 4844,
+      "height": 2608,
+      "renderedVectorSha256": "c8bea82a35eccd36daf01642923eaecbbc5e3514c9d8facf13297855c42b04ea",
       "panels": [
         {
           "row": 1,
           "column": 1,
-          "sourceVectorSha256": "289d5334aaf0d4c425d0f5359698ea2e17053855f5150ff556ed843ac2859bfc",
+          "sourceVectorSha256": "c8bea82a35eccd36daf01642923eaecbbc5e3514c9d8facf13297855c42b04ea",
           "rect": [
             0,
             0,
-            944.828125,
-            1300
+            500,
+            652
           ],
-          "outputPath": "images/pdf-db-transaction-lock-mermaid-d9022a1f59ff-detail-1-1.png",
-          "outputSha256": "9a1bf63ab09ff83702971c468cf3b80532a6e4e1a55ce7710b2ac33475e484bd",
-          "width": 1890,
-          "height": 2600
+          "outputPath": "images/pdf-readview-visibility-archify-c8bea82a35ec-detail-1-1.png",
+          "outputSha256": "50c564a4b5f507096c435f4c699cb6b498eee6e88e60fce23a378ab6a7b6a629",
+          "width": 1000,
+          "height": 1304
         },
         {
           "row": 1,
           "column": 2,
-          "sourceVectorSha256": "289d5334aaf0d4c425d0f5359698ea2e17053855f5150ff556ed843ac2859bfc",
+          "sourceVectorSha256": "c8bea82a35eccd36daf01642923eaecbbc5e3514c9d8facf13297855c42b04ea",
           "rect": [
-            900,
+            356,
             0,
-            44.828125,
-            1300
+            500,
+            652
           ],
-          "outputPath": "images/pdf-db-transaction-lock-mermaid-d9022a1f59ff-detail-1-2.png",
-          "outputSha256": "380d532a5de785fb8f9b5b722f3e991c8d4b608c06ae969aee579abdf0086c98",
-          "width": 90,
-          "height": 2600
+          "outputPath": "images/pdf-readview-visibility-archify-c8bea82a35ec-detail-1-2.png",
+          "outputSha256": "a23233ea7e4b7c159bf6832efbafd0cef4263e87127fd1dd39cb2cd04007e2c6",
+          "width": 1000,
+          "height": 1304
         },
         {
-          "row": 2,
+          "row": 1,
+          "column": 3,
+          "sourceVectorSha256": "c8bea82a35eccd36daf01642923eaecbbc5e3514c9d8facf13297855c42b04ea",
+          "rect": [
+            711,
+            0,
+            500,
+            652
+          ],
+          "outputPath": "images/pdf-readview-visibility-archify-c8bea82a35ec-detail-1-3.png",
+          "outputSha256": "9dd3dbdc947620fb344f1d4409bd1cbdafba3ae4ac4278cba1144723835a5450",
+          "width": 1000,
+          "height": 1304
+        }
+      ],
+      "id": "db-transaction-lock-archify-readview-visibility",
+      "specPath": "knowledge/backend/database/readview-visibility.archify.json",
+      "specSha256": "6d8fdc9d27b7715940b8c0ecf0b1c01bdc6a3cb85abfcb12b57e7b9e67c30e0c",
+      "articleSha256": "fe2e1c9bfa3f8c25f9573f9aeac9715dcc7fb863bb20901c4299dc4beb327aa4",
+      "line": 37,
+      "sourceText": "<iframe src=\"https://www.agent-journey.cn/archify/readview-visibility.html\" title=\"InnoDB ReadView 版本可见性判断\" width=\"100%\" height=\"760\" loading=\"lazy\"></iframe>",
+      "sourceSha256": "87811218184e42a17794b45ecc29e44bb75cfa1224f886d66e2c6445b9c1f381"
+    },
+    {
+      "id": "db-transaction-lock-archify-innodb-record-gap-deadlock",
+      "kind": "archify",
+      "articlePath": "knowledge/backend/database/db-transaction-lock.md",
+      "articleSha256": "fe2e1c9bfa3f8c25f9573f9aeac9715dcc7fb863bb20901c4299dc4beb327aa4",
+      "line": 65,
+      "sourceText": "<iframe src=\"https://www.agent-journey.cn/archify/innodb-record-gap-deadlock.html\" title=\"InnoDB 记录锁、间隙锁、插入等待与死锁\" width=\"100%\" height=\"760\" loading=\"lazy\"></iframe>",
+      "sourceSha256": "0326970d92d1ea5e8d0dbd0d2533f3378403421c22ac07130d42660ba3253487",
+      "specPath": "knowledge/backend/database/innodb-record-gap-deadlock.archify.json",
+      "specSha256": "ce36a5d646a7c8dfe9533bc6893d76c664e4ff5f6a048003fd67d5003165371e",
+      "outputPath": "images/pdf-innodb-record-gap-deadlock-archify-fffc3e4fbca2.png",
+      "outputSha256": "be0378f5616c34778e3fa317fbeb16d4f61df105eac6793fb034d6bff4619401",
+      "width": 4400,
+      "height": 2560,
+      "renderedVectorSha256": "fffc3e4fbca237cf6a9d20fbda6d1bd99f92f806db8476b9facac69b27b74d05",
+      "panels": [
+        {
+          "row": 1,
           "column": 1,
-          "sourceVectorSha256": "289d5334aaf0d4c425d0f5359698ea2e17053855f5150ff556ed843ac2859bfc",
+          "sourceVectorSha256": "fffc3e4fbca237cf6a9d20fbda6d1bd99f92f806db8476b9facac69b27b74d05",
           "rect": [
             0,
-            1200,
-            944.828125,
-            335.1875
+            0,
+            500,
+            640
           ],
-          "outputPath": "images/pdf-db-transaction-lock-mermaid-d9022a1f59ff-detail-2-1.png",
-          "outputSha256": "21c1b45b2c599d1cf852cf1280ceff07a627a24624a0313858f32d7ceb37a7bc",
-          "width": 1890,
-          "height": 670
+          "outputPath": "images/pdf-innodb-record-gap-deadlock-archify-fffc3e4fbca2-detail-1-1.png",
+          "width": 1000,
+          "height": 1280,
+          "outputSha256": "fb66019dd72572262f8cda4e4f447900b0f77544ccea3fcd7bb5ab17ddd97681"
         },
         {
-          "row": 2,
+          "row": 1,
           "column": 2,
-          "sourceVectorSha256": "289d5334aaf0d4c425d0f5359698ea2e17053855f5150ff556ed843ac2859bfc",
+          "sourceVectorSha256": "fffc3e4fbca237cf6a9d20fbda6d1bd99f92f806db8476b9facac69b27b74d05",
           "rect": [
-            900,
-            1200,
-            44.828125,
-            335.1875
+            300,
+            0,
+            500,
+            640
           ],
-          "outputPath": "images/pdf-db-transaction-lock-mermaid-d9022a1f59ff-detail-2-2.png",
-          "outputSha256": "1327cff4565f45b0649d6676cbdd18d01b3de2a05dfc90155297cc09631038dc",
-          "width": 90,
-          "height": 670
+          "outputPath": "images/pdf-innodb-record-gap-deadlock-archify-fffc3e4fbca2-detail-1-2.png",
+          "width": 1000,
+          "height": 1280,
+          "outputSha256": "4e20c6e7ce4765e4ce6b0ea39a4fbebb0bfb8eac0f92fd8c0e7ef750b188cc20"
+        },
+        {
+          "row": 1,
+          "column": 3,
+          "sourceVectorSha256": "fffc3e4fbca237cf6a9d20fbda6d1bd99f92f806db8476b9facac69b27b74d05",
+          "rect": [
+            600,
+            0,
+            500,
+            640
+          ],
+          "outputPath": "images/pdf-innodb-record-gap-deadlock-archify-fffc3e4fbca2-detail-1-3.png",
+          "width": 1000,
+          "height": 1280,
+          "outputSha256": "9c1dfa5203bae18f4c08b6fe1acb35bf944375c4892aba2a1c6b83a63a36682b"
         }
       ]
     },
@@ -7075,8 +7101,8 @@
       "id": "mysql-index-archify-zset-vs-innodb-page-index",
       "kind": "archify",
       "articlePath": "knowledge/backend/database/mysql-index.md",
-      "articleSha256": "980e76f3f1c859f95fca98da87507e9175d88b90293845850f4349a47f17c807",
-      "line": 306,
+      "articleSha256": "35e7f368a0a8046f24ca8586d8266a062651982206a16d985630ce75f4d91aee",
+      "line": 307,
       "sourceText": "<iframe\n  src=\"https://www.agent-journey.cn/archify/zset-vs-innodb-page-index.html\"\n  title=\"Redis ZSet 双索引与 InnoDB 页式索引的结构比较\"\n></iframe>",
       "sourceSha256": "7c25b41c7d5396b88dd98dd66a1e96e2024e9ca59c5bc09c8df7ac5064216a7f",
       "specPath": "knowledge/backend/database/zset-vs-innodb-page-index.archify.json",
