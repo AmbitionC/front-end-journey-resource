@@ -16,7 +16,13 @@
 
 ![四阶段学习节奏样例：打地基3周、Agent核心4周、进阶4周、工程化6周；横轴为从第0周开始的相对周数](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/pdf-agent-learning-roadmap-mermaid-bc885a73a4f0.png)
 
+*图：总览保留完整阶段关系；下面两张详图沿同一相对周数轴阅读，保留重叠区域。详图边缘的文字或条带裁切不代表阶段起止，请结合总览与相邻详图阅读。*
+
+**详图 1/2：左侧窗口**
+
 ![四阶段学习节奏局部1：放大阅读阶段名称、条带与相对周数](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/pdf-agent-learning-roadmap-mermaid-bc885a73a4f0-detail-1-1.png)
+
+**详图 2/2：右侧窗口**
 
 ![四阶段学习节奏局部2：放大阅读阶段名称、条带与相对周数](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/pdf-agent-learning-roadmap-mermaid-bc885a73a4f0-detail-1-2.png)
 
