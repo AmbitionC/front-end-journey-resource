@@ -2727,10 +2727,10 @@
             "contentStatus": "published",
             "heat": 19,
             "currRank": 5,
-            "updatedAt": "2026-10-15",
+            "updatedAt": "2026-10-16",
             "interviewBaseHeat": 1,
             "quickRead": {
-              "text": "InnoDB 普通有序索引围绕页组织导航与叶子记录，二级索引可能回表，联合索引按完整键的字典序服务过滤与排序。B+ 树与跳表都能查范围，不能只看渐进复杂度或跨产品照搬；按实际引擎、查询、缓存与写入约束读执行计划。EXPLAIN ANALYZE 会执行查询，唯一键的 NULL 与 DDL 锁仍有边界。"
+              "text": "InnoDB 普通有序索引按页组织导航与叶子记录，联合索引按键的字典序服务过滤和排序。覆盖索引可减少获取额外列的回表，但二级记录删除标记或较新页更新时，MVCC 仍可能要求访问聚簇记录与 undo。按实际查询、版本、读写约束验证计划，不能把索引名、Using index 或候选数减少当作性能与正确性的保证。"
             },
             "interviewCount": 18,
             "interviewCountBasis": "verified-public-posts"
@@ -2785,10 +2785,10 @@
             "contentStatus": "published",
             "heat": 10,
             "currRank": 5,
-            "updatedAt": "2026-10-14",
+            "updatedAt": "2026-10-16",
             "interviewBaseHeat": 1,
             "quickRead": {
-              "text": "事务与隔离控制并发可见性和冲突，锁的范围取决于引擎、索引、语句与隔离级别。undo、redo、binlog 各服务不同层；不能用“开事务”概括所有持久、复制或跨库保证。"
+              "text": "事务定义提交与隔离边界。InnoDB 普通一致性读用 ReadView 与 undo 选择可见版本，锁定读与写语句另按当前数据和锁规则处理；锁范围取决于索引、条件与隔离级别。持久化、错误回滚和跨系统幂等都要说明具体配置与失败边界。"
             },
             "interviewCount": 9,
             "interviewCountBasis": "verified-public-posts"

@@ -1,0 +1,203 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "ReadView：逐个记录版本判断可见性",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "legend": {
+      "mode": "hidden"
+    }
+  },
+  "lanes": [
+    {
+      "id": "watermark-checks",
+      "label": "先检查创建者与水位"
+    },
+    {
+      "id": "active-check",
+      "label": "中间区间检查活跃集合"
+    },
+    {
+      "id": "visibility-result",
+      "label": "当前版本判定"
+    },
+    {
+      "id": "undo-traversal",
+      "label": "不可见时沿版本链重试"
+    }
+  ],
+  "mainPath": [
+    "read-version",
+    "creator-check",
+    "older-than-low",
+    "at-least-high"
+  ],
+  "nodes": [
+    {
+      "id": "read-version",
+      "lane": "watermark-checks",
+      "col": 0,
+      "type": "database",
+      "label": "读取记录版本",
+      "width": 160
+    },
+    {
+      "id": "creator-check",
+      "lane": "watermark-checks",
+      "col": 1,
+      "type": "backend",
+      "label": "等于视图创建者？",
+      "width": 170
+    },
+    {
+      "id": "older-than-low",
+      "lane": "watermark-checks",
+      "col": 2,
+      "type": "backend",
+      "label": "trx_id < m_up_limit_id",
+      "width": 230
+    },
+    {
+      "id": "at-least-high",
+      "lane": "watermark-checks",
+      "col": 3,
+      "type": "backend",
+      "label": "trx_id ≥ m_low_limit_id",
+      "width": 230
+    },
+    {
+      "id": "active-at-snapshot",
+      "lane": "active-check",
+      "col": 3,
+      "type": "backend",
+      "label": "在视图活跃集合中？",
+      "width": 190
+    },
+    {
+      "id": "visible-version",
+      "lane": "visibility-result",
+      "col": 1,
+      "type": "frontend",
+      "label": "当前版本可见",
+      "width": 170
+    },
+    {
+      "id": "invisible-version",
+      "lane": "visibility-result",
+      "col": 3,
+      "type": "security",
+      "label": "当前版本不可见",
+      "width": 190
+    },
+    {
+      "id": "follow-undo-version",
+      "lane": "undo-traversal",
+      "col": 0,
+      "type": "database",
+      "label": "沿 undo 找更旧版本",
+      "width": 190
+    }
+  ],
+  "edges": [
+    {
+      "id": "read-check-creator",
+      "from": "read-version",
+      "to": "creator-check",
+      "label": "检查 trx_id",
+      "role": "main"
+    },
+    {
+      "id": "creator-own-visible",
+      "from": "creator-check",
+      "to": "visible-version",
+      "label": "是",
+      "role": "branch"
+    },
+    {
+      "id": "other-check-low",
+      "from": "creator-check",
+      "to": "older-than-low",
+      "label": "否",
+      "role": "main"
+    },
+    {
+      "id": "old-visible",
+      "from": "older-than-low",
+      "to": "visible-version",
+      "label": "是",
+      "role": "branch"
+    },
+    {
+      "id": "not-old-check-high",
+      "from": "older-than-low",
+      "to": "at-least-high",
+      "label": "否",
+      "role": "main"
+    },
+    {
+      "id": "new-invisible",
+      "from": "at-least-high",
+      "to": "invisible-version",
+      "label": "是",
+      "role": "branch",
+      "variant": "security"
+    },
+    {
+      "id": "middle-check-active",
+      "from": "at-least-high",
+      "to": "active-at-snapshot",
+      "label": "否：中间区间",
+      "role": "branch"
+    },
+    {
+      "id": "active-invisible",
+      "from": "active-at-snapshot",
+      "to": "invisible-version",
+      "label": "是",
+      "role": "branch",
+      "variant": "security"
+    },
+    {
+      "id": "committed-visible",
+      "from": "active-at-snapshot",
+      "to": "visible-version",
+      "label": "否",
+      "role": "branch"
+    },
+    {
+      "id": "invisible-follow-undo",
+      "from": "invisible-version",
+      "to": "follow-undo-version",
+      "label": "继续查旧版本",
+      "role": "return",
+      "variant": "dashed"
+    },
+    {
+      "id": "retry-version-judgement",
+      "from": "follow-undo-version",
+      "to": "read-version",
+      "label": "有更旧版本时重判",
+      "role": "return",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "MySQL 8.4 字段",
+      "items": [
+        "低水位 = m_up_limit_id；高水位 = m_low_limit_id。",
+        "中间区间：m_up_limit_id ≤ trx_id < m_low_limit_id。"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "集合与版本链",
+      "items": [
+        "中间区间在活跃 ID 集合内则不可见；不在则可见。",
+        "创建者的修改优先判断；没有可见版本时按查询语义处理。"
+      ]
+    }
+  ]
+}
