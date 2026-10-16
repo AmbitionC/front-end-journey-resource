@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "complete": true,
-  "expectedCount": 129,
+  "expectedCount": 128,
   "entries": [
     {
       "id": "context-engineering:mermaid:45",
@@ -6656,83 +6656,6 @@
       "width": 1600,
       "height": 428,
       "renderedVectorSha256": "8c0b559f1748505de9c367095c84e17446d2f769302b82851ab04e48b069b55f"
-    },
-    {
-      "id": "agent-learning-roadmap:mermaid:17",
-      "kind": "mermaid",
-      "articlePath": "knowledge/career/agent-learning-roadmap.md",
-      "articleSha256": "9e7605ac4bf085610f06ab073f54552c30a4ecc0a8d9df808547cb85a7ff4e96",
-      "line": 17,
-      "sourceText": "gantt\n    title Agent Engineer 成长路线（周为单位）\n    dateFormat  X\n    axisFormat 第%s周\n\n    section Phase 1：打地基\n    大模型基础 + Prompt 工程        :p1, 0, 3w\n\n    section Phase 2：学 Agent 核心\n    Agent 原理 + ReAct 实战         :p2, after p1, 4w\n\n    section Phase 3：进阶与生态\n    框架 + RAG + 多智能体            :p3, after p2, 4w\n\n    section Phase 4：工程化与实战\n    完整产品 + 上线 + 作品集          :p4, after p3, 6w\n",
-      "sourceSha256": "d1011c8033614004a92459b202d6ff18013c8fd5112fa34d760f839b982b555c",
-      "type": "gantt",
-      "normalization": {
-        "kind": "unix-seconds-to-relative-week-axis-v1",
-        "formula": "round(seconds / 604800)",
-        "leftPadding": 245,
-        "tickInterval": "1week",
-        "weekday": "thursday"
-      },
-      "cacheKey": "bc885a73a4f097d8adfb4dbf0b785cbcbae01d08553693092a5fb3b3a09e8da5",
-      "renderer": {
-        "mermaid": "11.15.0",
-        "bundleSha256": "70137e77bb273bb2ef972b86e8b0400cca8be53cb25bfc45911a186dc98665de",
-        "puppeteer": "24.43.1",
-        "scale": 2,
-        "fontFamily": "PingFang SC, Arial, sans-serif",
-        "fonts": [
-          {
-            "name": "PingFang.ttc",
-            "sha256": "6bccdb1a967b2ae7e856927eb559591b2ce05656b0d4ad2764b9c9429f12c0b7"
-          },
-          {
-            "name": "Arial.ttf",
-            "sha256": "525979822591a3447cfc49d943d6f7683508e25543407871c0ed8fed05fd2bd9"
-          },
-          {
-            "name": "Arial Unicode.ttf",
-            "sha256": "876af2cd4854644e7f3e7feb2f688997fdb3343c6df6693611209c9dfb47ccec"
-          }
-        ],
-        "browser": "Chrome/148.0.7778.97"
-      },
-      "outputPath": "images/pdf-agent-learning-roadmap-mermaid-bc885a73a4f0.png",
-      "outputSha256": "ef83d6aebebbf0321b593afb3d1f14b67e74cb301e80ab7210309ed6d6264aba",
-      "width": 3280,
-      "height": 472,
-      "renderedVectorSha256": "fd56148d8bd92f3a28e93a8e6f2eabce55e5a06a48b2ae9a0b97988c3ff201af",
-      "panels": [
-        {
-          "row": 1,
-          "column": 1,
-          "sourceVectorSha256": "fd56148d8bd92f3a28e93a8e6f2eabce55e5a06a48b2ae9a0b97988c3ff201af",
-          "rect": [
-            0,
-            0,
-            1000,
-            196
-          ],
-          "outputPath": "images/pdf-agent-learning-roadmap-mermaid-bc885a73a4f0-detail-1-1.png",
-          "outputSha256": "8df9726efd8340413825ff2a250f61b679457f901e4a8421da0878ff69e39f2b",
-          "width": 2000,
-          "height": 392
-        },
-        {
-          "row": 1,
-          "column": 2,
-          "sourceVectorSha256": "fd56148d8bd92f3a28e93a8e6f2eabce55e5a06a48b2ae9a0b97988c3ff201af",
-          "rect": [
-            900,
-            0,
-            700,
-            196
-          ],
-          "outputPath": "images/pdf-agent-learning-roadmap-mermaid-bc885a73a4f0-detail-1-2.png",
-          "outputSha256": "ae32f9148ab54ad22b83cd0a4889a521c9ad3c65d38341e384d1264f95468c22",
-          "width": 1400,
-          "height": 392
-        }
-      ]
     },
     {
       "id": "agent-project-portfolio:mermaid:51",
