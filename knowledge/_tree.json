@@ -2856,9 +2856,9 @@
             "contentStatus": "published",
             "heat": 4,
             "currRank": 3,
-            "updatedAt": "2026-10-03",
+            "updatedAt": "2026-10-16",
             "quickRead": {
-              "text": "数据模型决定怎样组织、关联和查询数据：关系、键值、文档、列族与图各有合适的访问方式。SQL 与 NoSQL 标签不能代替事务、约束和一致性检查；搜索或向量索引通常需要明确事实来源，以及更新、删除和权限传播边界。"
+              "text": "数据建模先确定事实、业务身份、约束与主要查询，再比较关系、键值、文档等组织方式。K线示例用场所、标的、周期和时间区分记录；唯一键只定义身份，精度、修订有效性、事务和派生索引仍需单独治理。"
             },
             "interviewBaseHeat": 1,
             "interviewCount": 3,
@@ -4443,10 +4443,10 @@
             "contentStatus": "published",
             "heat": 10,
             "currRank": 5,
-            "updatedAt": "2026-07-18",
+            "updatedAt": "2026-10-16",
             "interviewBaseHeat": 6,
             "quickRead": {
-              "text": "按目标任务找能力缺口，选择官方资料、小实验与可验证项目形成学习闭环。先补必需基础，再扩展框架和工程化，不用技术名词数量代替能独立解决问题的证据。"
+              "text": "学习路线从目标任务和先修能力出发，用最小实现、失败案例与可验证作品检查进展。阶段周数只是练习样例；教程还应说明资料版本、可观察结果和迁移练习，不能用框架名、一次演示或未经核实的经历代替能力证据。"
             },
             "interviewCount": 4,
             "interviewCountBasis": "verified-public-posts"
