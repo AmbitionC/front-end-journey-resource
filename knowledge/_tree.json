@@ -3753,10 +3753,10 @@
             "contentStatus": "published",
             "heat": 15,
             "currRank": 5,
-            "updatedAt": "2026-07-17",
+            "updatedAt": "2026-10-16",
             "interviewBaseHeat": 6,
             "quickRead": {
-              "text": "链表用节点引用表达顺序，已知节点可局部重连，按位置查找仍需遍历。哈希表定位节点加双向链表维护访问顺序，可组成LRU；删除、移动与淘汰要维持两向指针和容量不变量，单链表删除还依赖前驱。"
+              "text": "链表用节点引用表达顺序，按位置查找仍需遍历。双链表已知节点可局部重连，单链表删除通常还需前驱。哈希表平均定位与双链表的常数次重连可组成单机 LRU，淘汰须同步维护 Map、双向指针与容量。分片各自的 LRU 不等于全局严格顺序；幂等去重、条件版本更新和故障恢复需分别约定。"
             },
             "interviewCount": 9,
             "interviewCountBasis": "verified-public-posts"
