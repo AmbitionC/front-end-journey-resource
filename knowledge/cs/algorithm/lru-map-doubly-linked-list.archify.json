@@ -1,0 +1,301 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "LRU：同 key 定位、双向重连与淘汰",
+    "locale": "zh-CN",
+    "animation": "none",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1100,
+      620
+    ],
+    "legend": {
+      "mode": "auto",
+      "entries": {
+        "backend": {
+          "label": "HashMap 条目"
+        },
+        "frontend": {
+          "label": "真实链表节点"
+        },
+        "external": {
+          "label": "哨兵与操作结果"
+        }
+      }
+    }
+  },
+  "components": [
+    {
+      "id": "map-10",
+      "type": "backend",
+      "label": "Map[10]",
+      "sublabel": "引用同 key 节点",
+      "pos": [
+        225,
+        60
+      ],
+      "size": [
+        110,
+        60
+      ]
+    },
+    {
+      "id": "node-10",
+      "type": "frontend",
+      "label": "节点 10",
+      "sublabel": "value A · MRU",
+      "pos": [
+        225,
+        240
+      ],
+      "size": [
+        110,
+        72
+      ]
+    },
+    {
+      "id": "map-20",
+      "type": "backend",
+      "label": "Map[20]",
+      "sublabel": "引用同 key 节点",
+      "pos": [
+        425,
+        60
+      ],
+      "size": [
+        110,
+        60
+      ]
+    },
+    {
+      "id": "node-20",
+      "type": "frontend",
+      "label": "节点 20",
+      "sublabel": "value B",
+      "pos": [
+        425,
+        240
+      ],
+      "size": [
+        110,
+        72
+      ]
+    },
+    {
+      "id": "map-30",
+      "type": "backend",
+      "label": "Map[30]",
+      "sublabel": "引用同 key 节点",
+      "pos": [
+        625,
+        60
+      ],
+      "size": [
+        110,
+        60
+      ]
+    },
+    {
+      "id": "node-30",
+      "type": "frontend",
+      "label": "节点 30",
+      "sublabel": "value C",
+      "pos": [
+        625,
+        240
+      ],
+      "size": [
+        110,
+        72
+      ]
+    },
+    {
+      "id": "map-40",
+      "type": "backend",
+      "label": "Map[40]",
+      "sublabel": "引用同 key 节点",
+      "pos": [
+        825,
+        60
+      ],
+      "size": [
+        110,
+        60
+      ]
+    },
+    {
+      "id": "node-40",
+      "type": "frontend",
+      "label": "节点 40",
+      "sublabel": "value D · LRU",
+      "pos": [
+        825,
+        240
+      ],
+      "size": [
+        110,
+        72
+      ]
+    },
+    {
+      "id": "head-sentinel",
+      "type": "external",
+      "label": "head 哨兵",
+      "sublabel": "不计入容量",
+      "pos": [
+        30,
+        240
+      ],
+      "size": [
+        105,
+        72
+      ]
+    },
+    {
+      "id": "tail-sentinel",
+      "type": "external",
+      "label": "tail 哨兵",
+      "sublabel": "不计入容量",
+      "pos": [
+        1010,
+        240
+      ],
+      "size": [
+        85,
+        72
+      ]
+    },
+    {
+      "id": "after-get30",
+      "type": "external",
+      "label": "get(30)：head ⇄ 30 ⇄ 10 ⇄ 20 ⇄ 40 ⇄ tail",
+      "sublabel": "容量 4 教学示例，非原题输入；只移动同一节点，Map 的四个引用不变",
+      "pos": [
+        50,
+        400
+      ],
+      "size": [
+        1000,
+        60
+      ]
+    },
+    {
+      "id": "after-put50",
+      "type": "external",
+      "label": "再 put(50,E)：head ⇄ 50 ⇄ 30 ⇄ 10 ⇄ 20 ⇄ tail",
+      "sublabel": "同步删 Map[40]，新增 Map[50]→节点50；其余同 key；HashMap 平均 O(1) + 已知双链表节点 O(1)",
+      "pos": [
+        50,
+        490
+      ],
+      "size": [
+        1000,
+        60
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "map-ref-10",
+      "from": "map-10",
+      "to": "node-10"
+    },
+    {
+      "id": "map-ref-20",
+      "from": "map-20",
+      "to": "node-20"
+    },
+    {
+      "id": "map-ref-30",
+      "from": "map-30",
+      "to": "node-30"
+    },
+    {
+      "id": "map-ref-40",
+      "from": "map-40",
+      "to": "node-40"
+    },
+    {
+      "id": "head-sentinel-next",
+      "from": "head-sentinel",
+      "to": "node-10",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "node-10-prev",
+      "from": "node-10",
+      "to": "head-sentinel",
+      "fromSide": "left",
+      "toSide": "right"
+    },
+    {
+      "id": "node-10-next",
+      "from": "node-10",
+      "to": "node-20",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "node-20-prev",
+      "from": "node-20",
+      "to": "node-10",
+      "fromSide": "left",
+      "toSide": "right"
+    },
+    {
+      "id": "node-20-next",
+      "from": "node-20",
+      "to": "node-30",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "node-30-prev",
+      "from": "node-30",
+      "to": "node-20",
+      "fromSide": "left",
+      "toSide": "right"
+    },
+    {
+      "id": "node-30-next",
+      "from": "node-30",
+      "to": "node-40",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "node-40-prev",
+      "from": "node-40",
+      "to": "node-30",
+      "fromSide": "left",
+      "toSide": "right"
+    },
+    {
+      "id": "node-40-next",
+      "from": "node-40",
+      "to": "tail-sentinel",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "tail-sentinel-prev",
+      "from": "tail-sentinel",
+      "to": "node-40",
+      "fromSide": "left",
+      "toSide": "right"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "amber",
+      "title": "稳定状态之外还需维护不变量",
+      "items": [
+        "删除 x：x.prev.next=x.next；x.next.prev=x.prev",
+        "插入到 head 后：同时更新 x.prev、x.next 和两侧邻居的反向引用",
+        "并发实现仍需同步；本例仅按条数计容量，不含 TTL 或权重淘汰"
+      ]
+    }
+  ]
+}
