@@ -1,19 +1,11 @@
 import { spawnSync } from 'node:child_process';
+import { githubRead } from './github-public-read.mjs';
+export { githubRead } from './github-public-read.mjs';
 import { gitPublicationFiles, publicInventory, sha256, validateContentReview, readPrivatePinned } from './content-review.mjs';
 
 const REPOSITORY = 'AmbitionC/front-end-journey-resource';
 const SHA = /^[a-f0-9]{40}$/u;
 
-export async function githubRead(path) {
-  // This repository uses public read endpoints. No token, new permission,
-  // configurable API host or caller-supplied response file is accepted.
-  const response = await fetch(`https://api.github.com/repos/${REPOSITORY}${path?`/${path}`:''}`, {
-    headers: { Accept:'application/vnd.github+json' }, redirect:'error',
-    signal: AbortSignal.timeout(20000),
-  });
-  if (!response.ok) throw new Error(`GitHub 审核证据无法读取（HTTP ${response.status}）`);
-  return response.json();
-}
 
 async function allPages(path, read) {
   const items = [];

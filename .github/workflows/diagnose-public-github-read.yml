@@ -1,0 +1,49 @@
+name: Diagnose public GitHub review reads
+
+# Branch-only deployment avoids the master sync/PDF push routes.
+# No pull_request, dispatch, schedule or workflow_run entry is provided.
+'on':
+  push:
+    branches: [candidate/github-review-safe-diagnostics-20261016]
+    paths:
+      - '.github/workflows/diagnose-public-github-read.yml'
+      - 'scripts/github-public-read.mjs'
+      - 'scripts/diagnose-github-public-read.mjs'
+      - 'scripts/github-release-review.mjs'
+      - 'test/github-read-diagnostics.test.mjs'
+      - 'test/github-public-probe.test.mjs'
+
+permissions: {}
+
+jobs:
+  diagnose:
+    if: github.repository == 'AmbitionC/front-end-journey-resource' && github.event_name == 'push' && github.ref == 'refs/heads/candidate/github-review-safe-diagnostics-20261016'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GIT_CONFIG_NOSYSTEM: '1'
+      GIT_CONFIG_GLOBAL: /dev/null
+      GIT_TERMINAL_PROMPT: '0'
+    steps:
+      - name: Read only the reviewed diagnostic scripts without credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$GITHUB_SHA" =~ ^[a-f0-9]{40}$ ]]
+          git init --quiet
+          git config --local credential.helper ''
+          git config --local http.extraheader ''
+          git config --local core.hooksPath /dev/null
+          git remote add origin https://github.com/AmbitionC/front-end-journey-resource.git
+          git -c protocol.version=2 fetch --quiet --no-tags --depth=1 --filter=blob:none origin "$GITHUB_SHA"
+          git sparse-checkout init --no-cone
+          git sparse-checkout set --no-cone /scripts/github-public-read.mjs /scripts/diagnose-github-public-read.mjs /scripts/resource-paths.mjs
+          git checkout --quiet --detach FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          token: ''
+      - name: Diagnose fixed public review endpoints once without credentials
+        shell: bash
+        run: env -i PATH="$PATH" node scripts/diagnose-github-public-read.mjs
