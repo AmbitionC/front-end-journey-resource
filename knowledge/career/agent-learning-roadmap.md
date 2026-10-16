@@ -14,24 +14,11 @@
 [CS Curricula 2023](https://csed.acm.org/final-report/) 将软件、系统、数据、AI 与安全列为相互关联的基础知识域；学习路线应先补任务所需依赖，而不是从某个流行框架倒推全部能力。
 
 
-```mermaid
-gantt
-    title Agent Engineer 成长路线（周为单位）
-    dateFormat  X
-    axisFormat 第%s周
+![四阶段学习节奏样例：打地基3周、Agent核心4周、进阶4周、工程化6周；横轴为从第0周开始的相对周数](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/pdf-agent-learning-roadmap-mermaid-bc885a73a4f0.png)
 
-    section Phase 1：打地基
-    大模型基础 + Prompt 工程        :p1, 0, 3w
+![四阶段学习节奏局部1：放大阅读阶段名称、条带与相对周数](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/pdf-agent-learning-roadmap-mermaid-bc885a73a4f0-detail-1-1.png)
 
-    section Phase 2：学 Agent 核心
-    Agent 原理 + ReAct 实战         :p2, after p1, 4w
-
-    section Phase 3：进阶与生态
-    框架 + RAG + 多智能体            :p3, after p2, 4w
-
-    section Phase 4：工程化与实战
-    完整产品 + 上线 + 作品集          :p4, after p3, 6w
-```
+![四阶段学习节奏局部2：放大阅读阶段名称、条带与相对周数](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/pdf-agent-learning-roadmap-mermaid-bc885a73a4f0-detail-1-2.png)
 
 ---
 
