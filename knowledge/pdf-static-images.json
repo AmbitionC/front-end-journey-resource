@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "complete": true,
-  "expectedCount": 128,
+  "expectedCount": 127,
   "entries": [
     {
       "id": "context-engineering:mermaid:45",
@@ -5450,54 +5450,6 @@
       "renderedVectorSha256": "d6287e8c165966245ba32272545a2de5cff7a11a751c5baeb9ed18fbfa78d657"
     },
     {
-      "id": "sql-core:mermaid:84",
-      "kind": "mermaid",
-      "articlePath": "knowledge/data/sql/sql-core.md",
-      "articleSha256": "89d981da76d4b47528918e4343366b7c5a0e123c8691cef7c822767a5510fa8a",
-      "line": 84,
-      "sourceText": "venn\n    title LEFT JOIN：orders LEFT JOIN customers\n    A[\"仅在 orders 中\\n(customer_id=NULL 或无对应客户)\\nc.name = NULL\"]\n    B[\"两表匹配\\n(完整订单行)\"]\n    C[\"仅在 customers 中\\n(从未下单的客户)\\n→ 被丢弃\"]\n",
-      "sourceSha256": "0db05bffe6a502b6c65377db6315cd98561e1cee337d240bb398c8a506659b8a",
-      "type": "venn",
-      "normalization": {
-        "kind": "legacy-left-join-regions-v1",
-        "normalizedSource": "venn-beta\n title LEFT JOIN：orders LEFT JOIN customers\n set Orders[\"orders（A）\"]:30\n set Customers[\"customers（C）\"]:30\n union Orders, Customers[\"匹配（B）\"]:8\n style Orders fill:#DCFCE7,stroke:#16A34A,color:#166534\n style Customers fill:#F3F4F6,stroke:#9CA3AF,color:#374151\n",
-        "normalizedSha256": "2038a6b386f9e741af1e1141e6de2a075a7d06833a6835616158a4b9d8e8de45",
-        "supplement": [
-          "A：仅在 orders 中\n(customer_id=NULL 或无对应客户)\nc.name = NULL",
-          "B：两表匹配\n(完整订单行)",
-          "C：仅在 customers 中\n(从未下单的客户)\n→ 被丢弃"
-        ]
-      },
-      "cacheKey": "f6236f43fad988af21f33e9b79b77c8606ac0f62389a0a1d5dfe1f8425e2591b",
-      "renderer": {
-        "mermaid": "11.15.0",
-        "bundleSha256": "70137e77bb273bb2ef972b86e8b0400cca8be53cb25bfc45911a186dc98665de",
-        "puppeteer": "24.43.1",
-        "scale": 2,
-        "fontFamily": "PingFang SC, Arial, sans-serif",
-        "fonts": [
-          {
-            "name": "PingFang.ttc",
-            "sha256": "6bccdb1a967b2ae7e856927eb559591b2ce05656b0d4ad2764b9c9429f12c0b7"
-          },
-          {
-            "name": "Arial.ttf",
-            "sha256": "525979822591a3447cfc49d943d6f7683508e25543407871c0ed8fed05fd2bd9"
-          },
-          {
-            "name": "Arial Unicode.ttf",
-            "sha256": "876af2cd4854644e7f3e7feb2f688997fdb3343c6df6693611209c9dfb47ccec"
-          }
-        ],
-        "browser": "Chrome/148.0.7778.97"
-      },
-      "outputPath": "images/pdf-sql-core-mermaid-f6236f43fad9.png",
-      "outputSha256": "9ee079f175967382bab75030a8b21573e225431ccb2df354f11ae77e0ad1bb94",
-      "width": 1680,
-      "height": 980,
-      "renderedVectorSha256": "735d92794fa17090f4b6b4315557d3d6380cef3dcbaa40c58fe61a72e0b8bbf7"
-    },
-    {
       "id": "postgresql-features:mermaid:358",
       "kind": "mermaid",
       "articlePath": "knowledge/data/sql/postgresql-features.md",
@@ -7132,7 +7084,7 @@
       "id": "algorithm-linked-list-archify-lru-map-doubly-linked-list",
       "kind": "archify",
       "articlePath": "knowledge/cs/algorithm/algorithm-linked-list.md",
-      "articleSha256": "fe806533ad10703eb368f1916e149d8340a185cced0ffc0c2ac2541c20932914",
+      "articleSha256": "7baadebf77ad006fa91b3ba00031ee9c9bba975c76af4a74846d0c3d43e0b305",
       "line": 3,
       "sourceText": "<iframe\n  src=\"https://www.agent-journey.cn/archify/lru-map-doubly-linked-list.html\"\n  title=\"LRU：同 key 定位、双向重连与淘汰\"\n></iframe>",
       "sourceSha256": "a27a3b95e178200f7b58be63cd5ee0767ac90f7fb1ff4125db1fe17b76d6d319",

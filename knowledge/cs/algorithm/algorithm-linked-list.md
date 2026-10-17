@@ -59,7 +59,34 @@ function insertAfter(head, node) {
 
 反转单链表需要同时保存 `next`，再把当前节点指向 previous；若先覆盖 next 而未保存，剩余链条会丢失。时间 O(n)、额外空间 O(1)。
 
-Floyd 快慢指针检测环：slow 每次一步，fast 每次两步，有环时最终相遇。相遇后一个指针回到头，两者同速前进，相遇处为环入口。生产中出现环通常是结构损坏，遍历应有 size/步数保护，防止死循环。
+Floyd 快慢指针先判环，再定位入口。比较的是节点对象身份，值相同不算相遇。输入是有限条节点引用形成的链表，head 与末尾 next 可为 null；算法只读引用，不改节点。[LeetCode 142 的独立教学规格](https://leetcode.com/problems/linked-list-cycle-ii/)可用于核对返回入口、无环返回 null 的合同，不把该题号当作面经原帖事实。
+
+```javascript
+function detectCycle(head) {
+  let slow = head;
+  let fast = head;
+  while (fast && fast.next) {
+    slow = slow.next;
+    fast = fast.next.next;
+    // 先移动再比较，避免把起点初始重合误判为有环。
+    if (slow === fast) {
+      let fromHead = head;
+      while (fromHead !== slow) {
+        fromHead = fromHead.next;
+        slow = slow.next;
+      }
+      return fromHead;
+    }
+  }
+  return null;
+}
+```
+
+第一阶段中，fast 每轮走两步、slow 一步；fast 或 fast.next 为空时无环。有环且两者都进入环后，相对位置每轮改变一（模环长），所以会相遇。
+
+设头到入口有 $\mu$ 条边，环长为 $\lambda$；首次相遇时 slow 走了 $t>0$ 步，相遇点在环内距入口 $x$ 条边，$0\le x<\lambda$。fast 多走的 $t$ 步是整圈，因此 $t=k\lambda$，且 $x\equiv t-\mu\pmod\lambda$，故 $\mu+x\equiv0\pmod\lambda$。重置一个指针到头，再各走 $\mu$ 步：从头的指针到入口，环内指针也绕回入口。此前从头的指针尚在环外，不能提前相遇。这是由步数关系推导的证明。
+
+例如 $\mu=2,\lambda=3$，首次在 $t=3$ 步相遇，环内位置 $x=1$；重置后各走两步，$x+\mu=3$，恰到入口。若 $\mu=0$，重置时两者已经都在入口。空表、单节点无环、自环、入口在头和重复节点值都遵循同一合同。时间 $O(\mu+\lambda)$（无环为 $O(n)$）、额外空间 $O(1)$。生产中若环表示结构损坏，另行诊断的遍历仍应设置步数或资源预算，防止无界运行。
 
 ## LRU：哈希表加双链表
 
@@ -173,3 +200,4 @@ Redis 文档为滚动文档，本文仅引用通用 LRU、WATCH 条件校验与�
 - [Redis：LRU Cache](https://redis.io/glossary/lru-cache/)
 - [Redis：Transactions 与 WATCH 条件更新](https://redis.io/docs/latest/develop/using-commands/transactions/)
 - [Redis：Key eviction 与近似 LRU](https://redis.io/docs/latest/develop/reference/eviction/)
+- [LeetCode 142：Linked List Cycle II（独立教学题规格）](https://leetcode.com/problems/linked-list-cycle-ii/)

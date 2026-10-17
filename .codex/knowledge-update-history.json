@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
-  "updatedAt": "2026-10-16",
+  "updatedAt": "2026-10-17",
   "records": [
     {
       "key": "transformer-arch",
@@ -1860,20 +1860,30 @@
       "filePath": "cs/algorithm",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-16",
-      "batch": "lru-knowledge-repair-20261016",
-      "reason": "Replace incorrect Map-to-node bitmap with the exact verified Archify LRU diagram; clarify local versus global recency, add oral answer and teaching follow-ups, and refresh reviewed PDF derivatives. No interview question/source or heat changes.",
+      "recordedAt": "2026-10-17",
+      "batch": "two-knowledge-text-repair-20261017",
+      "reason": "Verify Floyd meeting and entry phases, identity/null contract, modular entry proof and edge cases; retain the reviewed existing LRU diagrams. No interview/source/heat change.",
       "previousRecord": {
         "key": "algorithm-linked-list",
         "label": "链表、指针与 LRU",
         "filePath": "cs/algorithm",
-        "status": "published",
+        "status": "pending",
         "action": "updated",
-        "recordedAt": "2026-10-04",
-        "batch": "next-twenty-source-increments-20261004",
-        "publishedAt": "2026-10-05T09:27:13Z",
-        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-        "publishedBySyncRun": 37289136872
+        "recordedAt": "2026-10-16",
+        "batch": "lru-knowledge-repair-20261016",
+        "reason": "Replace incorrect Map-to-node bitmap with the exact verified Archify LRU diagram; clarify local versus global recency, add oral answer and teaching follow-ups, and refresh reviewed PDF derivatives. No interview question/source or heat changes.",
+        "previousRecord": {
+          "key": "algorithm-linked-list",
+          "label": "链表、指针与 LRU",
+          "filePath": "cs/algorithm",
+          "status": "published",
+          "action": "updated",
+          "recordedAt": "2026-10-04",
+          "batch": "next-twenty-source-increments-20261004",
+          "publishedAt": "2026-10-05T09:27:13Z",
+          "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+          "publishedBySyncRun": 37289136872
+        }
       }
     },
     {
@@ -2876,8 +2886,18 @@
       "filePath": "data/sql",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-10-17",
+      "batch": "two-knowledge-text-repair-20261017",
+      "reason": "Correct bag-preserving FULL JOIN simulation, duplicate/NULL examples, dialect and outer-filter boundaries and finite-state recursive UNION termination. Reuse the exact existing SQL raster and remove only its obsolete legacy manifest mapping. No interview/source/heat change.",
+      "previousRecord": {
+        "key": "sql-core",
+        "label": "SQL 核心语法与进阶查询",
+        "filePath": "data/sql",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-07-18",
+        "batch": "complete-remaining-91-2026-07-18"
+      }
     },
     {
       "key": "postgresql-features",
