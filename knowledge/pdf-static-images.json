@@ -7084,7 +7084,7 @@
       "id": "algorithm-linked-list-archify-lru-map-doubly-linked-list",
       "kind": "archify",
       "articlePath": "knowledge/cs/algorithm/algorithm-linked-list.md",
-      "articleSha256": "7baadebf77ad006fa91b3ba00031ee9c9bba975c76af4a74846d0c3d43e0b305",
+      "articleSha256": "c21581ffd2acfcfbbea6870117047d948bc54abd2c7658748c2335d9221c7262",
       "line": 3,
       "sourceText": "<iframe\n  src=\"https://www.agent-journey.cn/archify/lru-map-doubly-linked-list.html\"\n  title=\"LRU：同 key 定位、双向重连与淘汰\"\n></iframe>",
       "sourceSha256": "a27a3b95e178200f7b58be63cd5ee0767ac90f7fb1ff4125db1fe17b76d6d319",
