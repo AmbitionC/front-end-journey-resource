@@ -15,6 +15,30 @@
 
 快速排序平均 O(n log n)，原地且局部性好；朴素 pivot 在有序或恶意输入可能 O(n²)。随机化、median-of-three 和 introsort（递归过深切堆排序）控制风险。实际语言标准库常采用 Timsort、introsort 或稳定变体，使用前应查契约而非猜实现。
 
+## 手写插入排序：保持有序前缀
+
+每轮开始时，前缀已按比较器有序；保存下一项，把前缀中严格大于它的项右移，再插入空位。下面返回副本，比较器要求稳定、传递，并对所处理key给出一致顺序。
+
+```javascript
+function insertionSort(values, compare = (a, b) => a - b) {
+  const output = [...values];
+  for (let i = 1; i < output.length; i += 1) {
+    const current = output[i];
+    let j = i - 1;
+    while (j >= 0 && compare(output[j], current) > 0) {
+      output[j + 1] = output[j];
+      j -= 1;
+    }
+    output[j + 1] = current;
+  }
+  return output;
+}
+```
+
+严格`> 0`使相等key不越过原先同key项，因此该实现稳定。逆序时移动总量为二次量级，最坏O(n²)时间；有序时只做线性次比较。因为示例复制输入，额外空间为O(n)；若直接在输入数组上执行同样插入过程，算法辅助空间才是O(1)，不能混淆。
+
+验证空、单项、全相等、逆序与重复key对象，检查有序性、多重集合保持与相等key的原始顺序。此例仅交付插入排序，不声称已实现原题可能要求的快速、冒泡、归并、选择或桶排序全部算法。
+
 ## 稳定性为什么重要
 
 稳定排序保证比较 key 相等的元素保持输入相对顺序。先按姓名稳定排序，再按部门稳定排序，最终同部门内仍按姓名；若第二次不稳定，第一次顺序会被破坏。
@@ -75,6 +99,8 @@ function maxSortedChunks(values) {
 <!-- interview-source-history:start -->
 - [字节 Agent 开发一面：推理缓存、网络与存储基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-18.md)
 - [字节 Agent 实习：生成质量、多智能体与缓存](../../../interview/bytedance/base/bytedance-base-52.md)
+- [网易云音乐全栈一面：JavaScript、排序与 RAG](../../../interview/netease/fullstack/netease-fullstack-2.md)
+- [58同城 Agent 开发一面：MCP、数据查询与后端基础](../../../interview/58tongcheng/ai/58tongcheng-ai-1.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

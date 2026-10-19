@@ -775,10 +775,20 @@
       "key": "rag-routing",
       "label": "查询路由与多索引选择",
       "filePath": "llm/rag",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-15",
-      "batch": "rag-production-agent-next-20-2026-07-15"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-19",
+      "batch": "interview-halfday-b-20261019",
+      "reason": "Bounded teaching fix for selected B interview questions; no publication claimed.",
+      "previousRecord": {
+        "key": "rag-routing",
+        "label": "查询路由与多索引选择",
+        "filePath": "llm/rag",
+        "status": "published",
+        "action": "created",
+        "recordedAt": "2026-07-15",
+        "batch": "rag-production-agent-next-20-2026-07-15"
+      }
     },
     {
       "key": "rag-context-compression",
@@ -1919,13 +1929,23 @@
       "key": "algorithm-sorting",
       "label": "排序算法、稳定性与外部排序",
       "filePath": "cs/algorithm",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004",
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+      "recordedAt": "2026-10-19",
+      "batch": "interview-halfday-b-20261019",
+      "reason": "Bounded teaching fix for selected B interview questions; no publication claimed.",
+      "previousRecord": {
+        "key": "algorithm-sorting",
+        "label": "排序算法、稳定性与外部排序",
+        "filePath": "cs/algorithm",
+        "status": "published",
+        "action": "updated",
+        "recordedAt": "2026-10-04",
+        "batch": "next-twenty-source-increments-20261004",
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     },
     {
       "key": "algorithm-graph",
@@ -2307,8 +2327,18 @@
       "filePath": "llm/agent",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-09-01",
-      "batch": "nowcoder-partial-archive-2026-09-01"
+      "recordedAt": "2026-10-19",
+      "batch": "interview-halfday-b-20261019",
+      "reason": "Bounded teaching fix for selected B interview questions; no publication claimed.",
+      "previousRecord": {
+        "key": "mcp-protocol",
+        "label": "MCP / A2A 智能体通信协议",
+        "filePath": "llm/agent",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-09-01",
+        "batch": "nowcoder-partial-archive-2026-09-01"
+      }
     },
     {
       "key": "multi-agent",
@@ -3140,8 +3170,18 @@
       "filePath": "cs/os",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-10-19",
+      "batch": "interview-halfday-b-20261019",
+      "reason": "Bounded teaching fix for selected B interview questions; no publication claimed.",
+      "previousRecord": {
+        "key": "os-deadlock",
+        "label": "死锁、检测与避免",
+        "filePath": "cs/os",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-07-18",
+        "batch": "complete-remaining-91-2026-07-18"
+      }
     },
     {
       "key": "tcp-handshake",
@@ -3540,13 +3580,23 @@
       "key": "garbage-collection",
       "label": "垃圾回收：可达性、标记与生命周期",
       "filePath": "cs/os",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-10-03",
-      "batch": "interview-content-local-20261003",
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-19",
+      "batch": "interview-halfday-b-20261019",
+      "reason": "Bounded teaching fix for selected B interview questions; no publication claimed.",
+      "previousRecord": {
+        "key": "garbage-collection",
+        "label": "垃圾回收：可达性、标记与生命周期",
+        "filePath": "cs/os",
+        "status": "published",
+        "action": "created",
+        "recordedAt": "2026-10-03",
+        "batch": "interview-content-local-20261003",
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     },
     {
       "key": "browser-navigation-rendering",

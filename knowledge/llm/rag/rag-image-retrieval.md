@@ -122,7 +122,8 @@ type VisualCitation = {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)（cluster-fa3a6af4ebe6）
+- [阿里 Agent 实习一面：图文检索、评估与微调实践](../../../interview/alibaba/ai/alibaba-ai-10.md)
+- [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
