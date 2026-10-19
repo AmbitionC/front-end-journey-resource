@@ -84,6 +84,30 @@ function twoSum(nums, target) {
 
 计数问题的 value 是频次；分组问题的 key 是规范化签名；去重只关心成员关系，使用 Set 更直接。若问题要求稳定输出、全部配对或保留重复位置，value 就可能是数组而不是单个索引。
 
+## 前缀和：为什么保存最早位置
+
+要求连续子数组和为 `k` 时，定义 `prefix[i]` 为下标 `0..i` 的和。若之前位置 `j` 的前缀和等于 `prefix[i] - k`，则 `j+1..i` 的和为 `k`。哈希表的 key 是前缀和，value 应保留它第一次出现的位置：对同一右端点，越早的左边界产生越长区间。
+
+先放入 `0 → -1`，这样从数组第0项开始的解也能用同一规则处理。先查询再记录当前前缀和；相同前缀和不覆盖旧位置。下面的 Number 示例假设输入值、`k` 和所有前缀和均为安全整数；超出范围应改用一致的精确整数表示。
+
+```javascript
+function longestSubarraySum(nums, k) {
+  const earliest = new Map([[0, -1]]);
+  let sum = 0;
+  let longest = 0;
+  for (let i = 0; i < nums.length; i += 1) {
+    sum += nums[i];
+    if (earliest.has(sum - k)) {
+      longest = Math.max(longest, i - earliest.get(sum - k));
+    }
+    if (!earliest.has(sum)) earliest.set(sum, i);
+  }
+  return longest;
+}
+```
+
+例如 `[1, -1, 5, -2, 3]`、`k=3`，处理到下标3时前缀和为3，匹配初始的 `0 → -1`，得到长度4。负数让区间和无法按窗口长度单调变化，因此不能无条件套只适用于正数等约束的滑动窗口。哈希操作平均常数时间时，总时间为O(n)、额外空间为O(n)；没有非空解时返回0。
+
 ## 无序流、Bitmap 与空间边界
 
 有限无序输入可把较小一侧放入哈希集合，再扫描另一侧查成员；需要多重集合交集时，保存计数并在命中后扣减。若流没有结束标记，就不能声称已得到完整交集：未来元素仍可能与过去匹配。面对无界值域和无界历史，精确成员判断需要保留区分已见集合的信息，固定内存不能无条件处理任意增长的唯一元素。
@@ -122,12 +146,13 @@ while iterator.hasNext():
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节 Agent 一面：会话记忆、并发更新与算法](../../../interview/bytedance/base/bytedance-base-29.md)
+- [字节全栈一面：RAG、Java 与线程池](../../../interview/bytedance/base/bytedance-base-37.md)
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)
 - [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)
 - [字节 Agent Infra 校招：运行时、MySQL 与 LRU](../../../interview/bytedance/base/bytedance-base-25.md)
+- [海康威视 AI Agent 开发一面：可靠工具与任务状态](../../../interview/hikvision/ai/hikvision-ai-1.md)
 - [字节 AML / 火山方舟 AI Infra 一面：Agent Runtime、OS 与网络（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-17.md)
-- [字节 Agent 一面：会话记忆、并发更新与算法](../../../interview/bytedance/base/bytedance-base-29.md)
-- [字节全栈一面：RAG、Java 与线程池](../../../interview/bytedance/base/bytedance-base-37.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

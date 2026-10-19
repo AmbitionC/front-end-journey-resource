@@ -919,10 +919,20 @@
       "key": "agent-event-driven",
       "label": "事件驱动 Agent 与异步编排",
       "filePath": "llm/agent",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-16",
-      "batch": "agent-orchestration-next-10-2026-07-16"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-19",
+      "batch": "interview-halfday-a-20261019",
+      "reason": "Bounded teaching addition or accuracy repair required by five selected interview records; no publication claimed.",
+      "previousRecord": {
+        "key": "agent-event-driven",
+        "label": "事件驱动 Agent 与异步编排",
+        "filePath": "llm/agent",
+        "status": "published",
+        "action": "created",
+        "recordedAt": "2026-07-16",
+        "batch": "agent-orchestration-next-10-2026-07-16"
+      }
     },
     {
       "key": "agent-deterministic-workflow",
@@ -1933,10 +1943,20 @@
       "key": "algorithm-backtracking",
       "label": "回溯、剪枝与组合搜索",
       "filePath": "cs/algorithm",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-17",
-      "batch": "complete-knowledge-next-50-2026-07-17"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-19",
+      "batch": "interview-halfday-a-20261019",
+      "reason": "Bounded teaching addition or accuracy repair required by five selected interview records; no publication claimed.",
+      "previousRecord": {
+        "key": "algorithm-backtracking",
+        "label": "回溯、剪枝与组合搜索",
+        "filePath": "cs/algorithm",
+        "status": "published",
+        "action": "created",
+        "recordedAt": "2026-07-17",
+        "batch": "complete-knowledge-next-50-2026-07-17"
+      }
     },
     {
       "key": "linear-algebra-ai",
@@ -2364,8 +2384,18 @@
       "filePath": "llm/production",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-09-01",
-      "batch": "nowcoder-partial-archive-2026-09-01"
+      "recordedAt": "2026-10-19",
+      "batch": "interview-halfday-a-20261019",
+      "reason": "Bounded teaching addition or accuracy repair required by five selected interview records; no publication claimed.",
+      "previousRecord": {
+        "key": "ai-observability",
+        "label": "Agent 可观测性与全链路 Tracing",
+        "filePath": "llm/production",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-09-01",
+        "batch": "nowcoder-partial-archive-2026-09-01"
+      }
     },
     {
       "key": "llm-cost-optimize",
@@ -2373,8 +2403,18 @@
       "filePath": "llm/production",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-10-19",
+      "batch": "interview-halfday-a-20261019",
+      "reason": "Bounded teaching addition or accuracy repair required by five selected interview records; no publication claimed.",
+      "previousRecord": {
+        "key": "llm-cost-optimize",
+        "label": "Token、延迟与成本优化",
+        "filePath": "llm/production",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-07-18",
+        "batch": "complete-remaining-91-2026-07-18"
+      }
     },
     {
       "key": "prompt-injection-defense",
@@ -3069,8 +3109,18 @@
       "filePath": "cs/os",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-10-19",
+      "batch": "interview-halfday-a-20261019",
+      "reason": "Bounded teaching addition or accuracy repair required by five selected interview records; no publication claimed.",
+      "previousRecord": {
+        "key": "os-ipc",
+        "label": "进程间通信（IPC）",
+        "filePath": "cs/os",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-07-18",
+        "batch": "complete-remaining-91-2026-07-18"
+      }
     },
     {
       "key": "os-thread-sync",
@@ -3130,13 +3180,23 @@
       "key": "algorithm-hash",
       "label": "哈希表、缓存与去重",
       "filePath": "data-structure/algorithm",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-03",
-      "batch": "interview-content-local-20261003",
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+      "recordedAt": "2026-10-19",
+      "batch": "interview-halfday-a-20261019",
+      "reason": "Bounded teaching addition or accuracy repair required by five selected interview records; no publication claimed.",
+      "previousRecord": {
+        "key": "algorithm-hash",
+        "label": "哈希表、缓存与去重",
+        "filePath": "data-structure/algorithm",
+        "status": "published",
+        "action": "updated",
+        "recordedAt": "2026-10-03",
+        "batch": "interview-content-local-20261003",
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     },
     {
       "key": "algorithm-tree",
@@ -3310,17 +3370,27 @@
       "filePath": "backend/database",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-15",
-      "batch": "title-baidu-three-quality-20261015",
-      "reason": "Current source-linked revision awaits exact candidate processing, independent review and production acceptance.",
+      "recordedAt": "2026-10-19",
+      "batch": "interview-halfday-a-20261019",
+      "reason": "Bounded teaching addition or accuracy repair required by five selected interview records; no publication claimed.",
       "previousRecord": {
         "key": "redis-distributed-lock",
         "label": "Redis 分布式锁：租约、续期与故障边界",
         "filePath": "backend/database",
         "status": "pending",
         "action": "updated",
-        "recordedAt": "2026-09-01",
-        "batch": "nowcoder-partial-archive-2026-09-01"
+        "recordedAt": "2026-10-15",
+        "batch": "title-baidu-three-quality-20261015",
+        "reason": "Current source-linked revision awaits exact candidate processing, independent review and production acceptance.",
+        "previousRecord": {
+          "key": "redis-distributed-lock",
+          "label": "Redis 分布式锁：租约、续期与故障边界",
+          "filePath": "backend/database",
+          "status": "pending",
+          "action": "updated",
+          "recordedAt": "2026-09-01",
+          "batch": "nowcoder-partial-archive-2026-09-01"
+        }
       }
     },
     {
@@ -3382,9 +3452,19 @@
       "label": "意图识别、澄清反问与对话路由",
       "filePath": "llm/agent",
       "status": "pending",
-      "action": "created",
-      "recordedAt": "2026-08-29",
-      "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
+      "action": "updated",
+      "recordedAt": "2026-10-19",
+      "batch": "interview-halfday-a-20261019",
+      "reason": "Bounded teaching addition or accuracy repair required by five selected interview records; no publication claimed.",
+      "previousRecord": {
+        "key": "agent-intent-clarification",
+        "label": "意图识别、澄清反问与对话路由",
+        "filePath": "llm/agent",
+        "status": "pending",
+        "action": "created",
+        "recordedAt": "2026-08-29",
+        "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
+      }
     },
     {
       "key": "distributed-id",
@@ -3556,13 +3636,23 @@
       "key": "spring-external-config",
       "label": "Spring 外部配置：优先级、刷新与版本对账",
       "filePath": "backend/java",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004",
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-19",
+      "batch": "interview-halfday-a-20261019",
+      "reason": "Bounded teaching addition or accuracy repair required by five selected interview records; no publication claimed.",
+      "previousRecord": {
+        "key": "spring-external-config",
+        "label": "Spring 外部配置：优先级、刷新与版本对账",
+        "filePath": "backend/java",
+        "status": "published",
+        "action": "created",
+        "recordedAt": "2026-10-04",
+        "batch": "next-twenty-source-increments-20261004",
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     },
     {
       "key": "java-nio-reactor",

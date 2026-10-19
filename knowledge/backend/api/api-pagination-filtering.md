@@ -104,6 +104,12 @@ cursor 属于不透明数据，不在日志完整记录；记录版本、queryHa
 
 稳定分页的核心是 canonical query、包含唯一 tie-breaker 的全序和基于最后元组的 keyset predicate。cursor 对客户端不透明，内部绑定查询身份、版本和边界，并经过完整性保护。并发语义与快照能力明确后，API 才能避免看似随机的重复和缺页。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [网易云全栈一面：评估闭环、异步任务与数据查询](../../../interview/netease/fullstack/netease-fullstack-1.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Relay：Cursor Connections Specification](https://relay.dev/graphql/connections.htm)

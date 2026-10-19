@@ -38,7 +38,7 @@ LLM 可观测平台借鉴了分布式追踪的 Trace/Span 模型，并针对 LLM
 
 **Span（跨度）**：Trace 内的单个操作节点，记录起止时间和输入/输出。Span 之间可以形成父子关系，反映调用的嵌套结构。
 
-**Generation（生成，LLM 特有）**：Span 的特殊子类型，专门用于记录 LLM 调用，额外携带：
+**模型调用记录**：部分平台称为 Generation，用于承载 LLM 调用特有字段；这不是 OpenTelemetry 所有 Span 通用的子类型。可按平台约定记录：
 - 模型名称与版本（model）
 - 输入 Prompt 与输出内容（input / output）
 - token 用量（prompt_tokens / completion_tokens / total_tokens）
@@ -407,6 +407,12 @@ results = evaluate(
 
 **离线评估与在线监控结合**：离线评估验证变更安全性，在线监控（用户反馈率、自动质量评分）反映真实用户体验。两者配合，形成双重质量保障。
 
+## 从慢任务定位到受控优化
+
+同类任务从5分钟变成15至20分钟，先固定输入规模、模型、代码、工具与负载，沿关键路径比较排队、检索、首token、生成、工具、重试和汇总；并行Span的耗时不能简单相加当总时长。检查是否多了循环、上下文、重试或下游限流，再选择针对瓶颈的改动。
+
+例如独立查询受控并行、重复且可安全失效的结果缓存、上下文按任务裁剪，或调整模型路由；这些是候选工程方案，不是无条件提速保证。改动后在相同样本和负载下重测端到端分位延迟、完成率、错误、副作用与成本，检查加速是否转移了瓶颈。队列和重试仍共用[端到端超时预算](agent-timeout-budget.md)，不能每层重新获得完整等待时间。
+
 ## 面试常问要点
 
 **Q：LLM 应用可观测性与传统 APM 有什么本质区别？**
@@ -415,7 +421,7 @@ results = evaluate(
 
 **Q：Trace 和 Span 的关系是什么？如何在 Agent 中正确使用？**
 
-Trace 是一次完整请求的根节点，Span 是其中的子操作节点，两者形成树状层级结构。Agent 中应将整个运行周期绑定到一个 Trace，每次 LLM 调用和工具调用创建子 Span（Generation 类型），通过 `parent_id` 维持层级关系。关键是全程传递同一个 `trace_id`，包括跨服务调用场景。
+Trace 是通过共同 trace ID 关联的一组 Span，根 Span 是其中没有父节点的入口操作，两者不是同一个对象。Agent 可为任务入口、模型、检索和工具分别记录 Span，通过父子关系及跨服务上下文传播还原链路。模型调用可带模型版本、token 和首 token 延迟；工具操作记录其输入校验、执行状态与耗时，不应一律标成模型 Generation。见 [OpenTelemetry Traces](https://opentelemetry.io/docs/concepts/signals/traces/)。
 
 **Q：如何实现评估闭环？**
 
@@ -432,10 +438,12 @@ Trace 是一次完整请求的根节点，Span 是其中的子操作节点，两
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [哔哩哔哩 AI 应用岗一面：端到端 AI Coding 与生产治理（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-2.md)（cluster-1c24a80acde8）
-- [字节大模型应用开发一面：Agent、RAG 与可靠性（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-16.md)（cluster-605f9ab081a6）
-- [字节 AI 应用开发一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-12.md)（cluster-9e24453f3753）
-- [快手主站 SRE 一二三面：Agent Skill、性能排障与数据链路（2026 年 4 月）](../../../interview/kuaishou/ai/kuaishou-ai-5.md)（cluster-bef880c39332）
+- [哔哩哔哩 AI 应用岗一面：端到端 AI Coding 与生产治理（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-2.md)
+- [字节大模型应用开发一面：Agent、RAG 与可靠性（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-16.md)
+- [字节 Agent 开发一面：评分、Harness 与任务可靠性](../../../interview/bytedance/base/bytedance-base-57.md)
+- [字节 AI 应用开发一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-12.md)
+- [海康威视 AI Agent 开发一面：可靠工具与任务状态](../../../interview/hikvision/ai/hikvision-ai-1.md)
+- [快手主站 SRE 一二三面：Agent Skill、性能排障与数据链路（2026 年 4 月）](../../../interview/kuaishou/ai/kuaishou-ai-5.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

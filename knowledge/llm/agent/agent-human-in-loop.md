@@ -84,9 +84,10 @@ type ApprovalSnapshot = {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../../interview/bytedance/base/bytedance-base-48.md)
+- [海康威视 AI Agent 开发一面：可靠工具与任务状态](../../../interview/hikvision/ai/hikvision-ai-1.md)
 - [蚂蚁 Agent 实习一面：缓存、消息与 RAG](../../../interview/antfin/ai/antfin-ai-6.md)
 - [阿里淘宝闪购 Agent 算法实习一面：框架、记忆与线上排障](../../../interview/alibaba/ai/alibaba-ai-6.md)
-- [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../../interview/bytedance/base/bytedance-base-48.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
