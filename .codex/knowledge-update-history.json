@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
-  "updatedAt": "2026-10-18",
+  "updatedAt": "2026-10-19",
   "records": [
     {
       "key": "transformer-arch",
@@ -375,10 +375,20 @@
       "key": "llm-rlhf-dpo",
       "label": "RLHF、RLAIF 与 DPO 的差异",
       "filePath": "llm/basics",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-14",
-      "batch": "llm-foundations-next-10-2026-07-14"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-19",
+      "batch": "interview-next-three-20261020",
+      "reason": "Bounded teaching addition for selected MeituanKeeta interview question; preserve prior useful content and source scope. Pending current batch publication.",
+      "previousRecord": {
+        "key": "llm-rlhf-dpo",
+        "label": "RLHF、RLAIF 与 DPO 的差异",
+        "filePath": "llm/basics",
+        "status": "published",
+        "action": "created",
+        "recordedAt": "2026-07-14",
+        "batch": "llm-foundations-next-10-2026-07-14"
+      }
     },
     {
       "key": "llm-quantization",
@@ -778,16 +788,30 @@
       "status": "pending",
       "action": "updated",
       "recordedAt": "2026-10-19",
-      "batch": "interview-halfday-b-20261019",
-      "reason": "Bounded teaching fix for selected B interview questions; no publication claimed.",
+      "batch": "interview-next-three-20261020",
+      "reason": "Bounded teaching addition for selected MeituanKeeta interview question; preserve prior useful content and source scope. Pending current batch publication.",
       "previousRecord": {
         "key": "rag-routing",
         "label": "查询路由与多索引选择",
         "filePath": "llm/rag",
         "status": "published",
-        "action": "created",
-        "recordedAt": "2026-07-15",
-        "batch": "rag-production-agent-next-20-2026-07-15"
+        "action": "updated",
+        "recordedAt": "2026-10-19",
+        "batch": "interview-halfday-b-20261019",
+        "reason": "Bounded teaching fix for selected B interview questions; no publication claimed.",
+        "previousRecord": {
+          "key": "rag-routing",
+          "label": "查询路由与多索引选择",
+          "filePath": "llm/rag",
+          "status": "published",
+          "action": "created",
+          "recordedAt": "2026-07-15",
+          "batch": "rag-production-agent-next-20-2026-07-15"
+        },
+        "publishedByCommit": "13d6caac262c173d1e92ded4dfe81f1118cad023",
+        "publishedBySyncRun": 39284087208,
+        "publishedAt": "2026-10-19T16:42:05Z",
+        "publicationEvidenceMeaning": "Actual same-commit workflow completion metadata update time; preserved exact run and merge in private delivery receipts"
       }
     },
     {
@@ -1880,38 +1904,48 @@
       "filePath": "cs/algorithm",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-18",
-      "batch": "floyd-plaintext-readability-20261018",
-      "reason": "Express the existing Floyd entry proof, example and complexity in readable plaintext for Native PDF; preserve exact detectCycle code, references, diagrams, scope and heat.",
+      "recordedAt": "2026-10-19",
+      "batch": "interview-next-three-20261020",
+      "reason": "Bounded teaching addition for selected MeituanKeeta interview question; preserve prior useful content and source scope. Pending current batch publication.",
       "previousRecord": {
         "key": "algorithm-linked-list",
         "label": "链表、指针与 LRU",
         "filePath": "cs/algorithm",
         "status": "pending",
         "action": "updated",
-        "recordedAt": "2026-10-17",
-        "batch": "two-knowledge-text-repair-20261017",
-        "reason": "Verify Floyd meeting and entry phases, identity/null contract, modular entry proof and edge cases; retain the reviewed existing LRU diagrams. No interview/source/heat change.",
+        "recordedAt": "2026-10-18",
+        "batch": "floyd-plaintext-readability-20261018",
+        "reason": "Express the existing Floyd entry proof, example and complexity in readable plaintext for Native PDF; preserve exact detectCycle code, references, diagrams, scope and heat.",
         "previousRecord": {
           "key": "algorithm-linked-list",
           "label": "链表、指针与 LRU",
           "filePath": "cs/algorithm",
           "status": "pending",
           "action": "updated",
-          "recordedAt": "2026-10-16",
-          "batch": "lru-knowledge-repair-20261016",
-          "reason": "Replace incorrect Map-to-node bitmap with the exact verified Archify LRU diagram; clarify local versus global recency, add oral answer and teaching follow-ups, and refresh reviewed PDF derivatives. No interview question/source or heat changes.",
+          "recordedAt": "2026-10-17",
+          "batch": "two-knowledge-text-repair-20261017",
+          "reason": "Verify Floyd meeting and entry phases, identity/null contract, modular entry proof and edge cases; retain the reviewed existing LRU diagrams. No interview/source/heat change.",
           "previousRecord": {
             "key": "algorithm-linked-list",
             "label": "链表、指针与 LRU",
             "filePath": "cs/algorithm",
-            "status": "published",
+            "status": "pending",
             "action": "updated",
-            "recordedAt": "2026-10-04",
-            "batch": "next-twenty-source-increments-20261004",
-            "publishedAt": "2026-10-05T09:27:13Z",
-            "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-            "publishedBySyncRun": 37289136872
+            "recordedAt": "2026-10-16",
+            "batch": "lru-knowledge-repair-20261016",
+            "reason": "Replace incorrect Map-to-node bitmap with the exact verified Archify LRU diagram; clarify local versus global recency, add oral answer and teaching follow-ups, and refresh reviewed PDF derivatives. No interview question/source or heat changes.",
+            "previousRecord": {
+              "key": "algorithm-linked-list",
+              "label": "链表、指针与 LRU",
+              "filePath": "cs/algorithm",
+              "status": "published",
+              "action": "updated",
+              "recordedAt": "2026-10-04",
+              "batch": "next-twenty-source-increments-20261004",
+              "publishedAt": "2026-10-05T09:27:13Z",
+              "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+              "publishedBySyncRun": 37289136872
+            }
           }
         }
       }

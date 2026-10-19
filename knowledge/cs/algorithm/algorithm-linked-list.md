@@ -90,6 +90,48 @@ function detectCycle(head) {
 
 例如 mu = 2、lambda = 3：首次在 t = 3 步时相遇，环内位置 x = 1。重置后各走两步，x + mu = 3，恰好回到入口。若 mu = 0，重置时两个指针已经都在入口。空表、单节点无环、自环、入口在头和重复节点值都遵循同一合同。时间复杂度为 O(mu + lambda)，无环时为 O(n)；额外空间为 O(1)。生产中若环表示结构损坏，另行诊断的遍历仍应设置步数或资源预算，防止无界运行。
 
+### 删除倒数第 k 个节点：固定间距不等于 Floyd 判环
+
+本例采用明确的教学约定：输入是无环单链表，节点包含 value、next，末尾 next 为 null；允许重连原节点。k 从 1 开始，合法范围为 1 到链表长度。示例对空表或非法 k 抛出 RangeError。这些约定是为了给出可执行合同，不能说成原帖提供的条件或作者已完成的实现。
+
+先增加一个 next 指向原头节点的哑节点，让快、慢指针都指向它。快指针先走 k+1 步，再让两者同速前进，直到快指针为 null。此时慢指针停在待删节点的前驱，绕过其 next 即可；返回哑节点的 next，也就统一处理了删除头节点的情况。
+
+为什么是 k+1？把哑节点编号为0，真实节点编号为1到n，末尾 null 的位置记为n+1。快指针到n+1时，慢指针的位置是(n+1)-(k+1)=n-k；要删的倒数第k个节点编号为n-k+1，恰好是慢指针的后继。这是位置不变量，与“走一快一慢找到环”的 Floyd 机制不同。
+
+```js
+export function removeKthFromEnd(head, k) {
+  if (!Number.isInteger(k) || k < 1) {
+    throw new RangeError('k must be a positive integer');
+  }
+  const dummy = { next: head };
+  let fast = dummy;
+  let slow = dummy;
+  for (let step = 0; step <= k; step += 1) {
+    if (fast === null) {
+      throw new RangeError('k exceeds list length');
+    }
+    fast = fast.next;
+  }
+  while (fast !== null) {
+    fast = fast.next;
+    slow = slow.next;
+  }
+  slow.next = slow.next.next;
+  return dummy.next;
+}
+```
+
+快指针推进和后续同速扫描总量为 O(n)，只使用常数个引用与哑节点，额外空间 O(1)。非法 k 的检查发生在重连之前，失败不会改写链表。
+
+| 边界 | 应观察的结果 |
+|---|---|
+| 单节点、k=1 | 返回 null |
+| k 等于长度 | 返回原第二个节点，或单节点时 null |
+| k=1 | 只移除尾节点 |
+| 中间节点 | 前驱连接到被删节点的后继 |
+| 多节点值相同 | 仍按位置删除，保留其余节点身份 |
+| 空表、k≤0、非整数或k超过长度 | 按本例约定抛错，原链表不变 |
+
 ## LRU：哈希表加双链表
 
 [Redis LRU 说明](https://redis.io/glossary/lru-cache/)展示 LRU 基于最近使用顺序淘汰。经典实现用哈希表平均 O(1) 定位 key 对应节点，再用双链表按新旧排序；已知节点时，摘除与插入只需改常数个引用。get 命中或 put 更新时把节点移到头；容量超限时删除 tail.prev，并同步从 Map 删除。
@@ -183,15 +225,16 @@ function reverseKGroup(head, k) {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../../interview/bytedance/base/bytedance-base-36.md)
+- [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
 - [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)
 - [字节 Agent 暑期实习一面：摘要、工具预算与链表](../../../interview/bytedance/base/bytedance-base-27.md)
 - [字节 Agent Infra 校招：运行时、MySQL 与 LRU](../../../interview/bytedance/base/bytedance-base-25.md)
-- [快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-3.md)
 - [字节剪映 AI 前端一面：Agent 运行时、MCP 与性能](../../../interview/bytedance/base/bytedance-base-30.md)
-- [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../../interview/bytedance/base/bytedance-base-36.md)
+- [快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-3.md)
 - [字节 Agent 全栈一面：工具、评测与编码](../../../interview/bytedance/base/bytedance-base-40.md)
+- [美团 Keeta Agent 一面：客服流程、偏好数据与链表](../../../interview/meituan/ai/meituan-ai-1.md)
 - [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../../interview/bytedance/base/bytedance-base-47.md)
-- [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
