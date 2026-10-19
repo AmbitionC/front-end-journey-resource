@@ -50,6 +50,50 @@ forward checking 在赋值后删除邻居不可能的 domain；arc consistency �
 
 递归深度可能超栈，显式 stack 保存 next candidate 和 undo 信息可替代。长期搜索保存 checkpoint 时，需记录决策路径、候选顺序版本和当前最优，保证恢复语义一致。
 
+## 用给定数字构造上界以内最大数
+
+先确认数字是否允许重复、是否可使用较少位数、0与前导零、严格小于还是不大于。以下只讲“十进制数字可重复、允许更短、除0本身外禁止前导零”的明确模型，不把这些条件补成所有来源的原题事实。
+
+先把严格`< n`转换成`≤ n-1`。按位数从长到短尝试；同位数时维护是否仍与上界前缀相等，高位从大到小选择合法数字。前缀一旦更小，后缀就可取较大的数字；若保持相等走不通，回退上一个选择。先尝试较长位数和较大高位，使第一个完整合法结果就是最大数。
+
+```javascript
+function maxDigitsAtMost(n, digits, { strict = false } = {}) {
+  if (typeof n !== 'bigint') throw new TypeError('n must be BigInt');
+  if (!Array.isArray(digits) || !Array.from(digits).every(d => Number.isInteger(d) && d >= 0 && d <= 9)) {
+    throw new TypeError('digits must be decimal digits');
+  }
+  const upper = n - (strict ? 1n : 0n);
+  if (upper < 0n) return null;
+  const choices = [...new Set(digits)].sort((a, b) => b - a);
+  if (!choices.length) return null;
+  const bound = upper.toString();
+  for (let length = bound.length; length >= 1; length -= 1) {
+    const path = [];
+    const failed = new Set();
+    function search(index, tight) {
+      if (index === length) return true;
+      const state = `${index}:${tight}`;
+      if (failed.has(state)) return false;
+      const limit = tight ? Number(bound[index]) : 9;
+      for (const digit of choices) {
+        if (digit > limit || (index === 0 && length > 1 && digit === 0)) continue;
+        path.push(digit);
+        if (search(index + 1, tight && digit === limit)) return true;
+        path.pop();
+      }
+      failed.add(state);
+      return false;
+    }
+    if (search(0, length === bound.length)) return path.join('');
+  }
+  return null;
+}
+```
+
+例如`n=23121n`、数字`[2,4,9]`且严格小于，得到字符串`"22999"`。数字`[1,2]`、上界`12n`时，不大于可返回`"12"`，严格小于只能返回`"11"`；仅数字0、上界0时，不大于有解`"0"`，严格小于无解`null`。输出字符串避免大整数转Number丢精度。
+
+在同一次位数尝试中，后续合法性只由位置和tight决定，才能记忆失败状态；若加上每个数字使用次数限制，就必须把剩余次数纳入状态。设上界L位、不同数字D个，各位数尝试的宽松总上界为O(L²D)，单次搜索的辅助状态和递归深度O(L)；超长输入需改显式栈或迭代实现以免递归溢出。用小上界和数字子集枚举所有合法整数对拍，而不是只验一个示例。
+
 ## 何时换算法
 
 若子问题大量重叠，动态规划通常更合适；若只要最短层数，用 BFS；约束问题可交给 SAT/SMT/ILP；近似优化可用贪心、局部搜索或随机算法。回溯适合空间可控、约束能强剪枝或需要精确枚举的场景。
@@ -63,7 +107,9 @@ forward checking 在赋值后删除邻居不可能的 domain；arc consistency �
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../../interview/bytedance/base/bytedance-base-24.md)（cluster-78d45fa26bfd）
+- [字节一面：线程池、分布式锁与数字构造](../../../interview/bytedance/base/bytedance-base-58.md)
+- [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../../interview/bytedance/base/bytedance-base-24.md)
+- [字节 Agent 开发一面：评分、Harness 与任务可靠性](../../../interview/bytedance/base/bytedance-base-57.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

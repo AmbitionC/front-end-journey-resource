@@ -62,7 +62,9 @@ Reply with only the tier name.`,
     user: userMessage,
     maxTokens: ROUTING_CONFIG.maxOutputTokens,
   });
-  return response.trim() as TaskTier;
+  const tier = response.trim();
+  if (tier === "simple" || tier === "medium" || tier === "complex") return tier;
+  throw new Error("Invalid routing tier"); // 按产品策略受控失败或回退，不能靠类型断言放行。
 }
 
 async function routedRequest(userMessage: string): Promise<string> {
@@ -246,6 +248,7 @@ Analyze comment. Return JSON:
 {
   "sentiment": "positive|negative|neutral",
   "features": ["string"],
+  "requests": ["string"],
   "score": 1-5
 }
 """
@@ -263,7 +266,11 @@ def compress_history(
     summary_model: str,
     summary_sentence_target: int,
 ) -> list[dict]:
-    """当历史消息超过阈值时，用摘要替换早期消息"""
+    """仅接收普通对话记录；可信系统指令由调用方另行保留并传入。"""
+    if any(m.get("role") in {"system", "developer"} for m in messages):
+        raise ValueError("Keep trusted instructions outside conversation compression")
+    if recent_message_count <= 0:
+        raise ValueError("recent_message_count must be positive")
     total = count_tokens(messages)
     if total <= max_tokens:
         return messages
@@ -280,8 +287,8 @@ def compress_history(
     )
 
     summary_message = {
-        "role": "system",
-        "content": f"[Earlier conversation summary]: {summary_response}"
+        "role": "assistant",
+        "content": f"[Derived conversation summary; check original evidence]: {summary_response}"
     }
 
     return [summary_message] + recent
@@ -328,7 +335,7 @@ async function batchProcess(
 
 ## 上下文裁剪（Context Pruning）
 
-多轮对话中，历史消息会随轮次线性累积，使每次调用的 Input token 成倍增长。上下文裁剪（Context Pruning）通过三种策略控制上下文窗口大小：
+多轮对话中，历史消息会随轮次线性累积，使每次调用的输入token随保留历史增长；若每轮新增长度大致固定，单轮输入近似线性增加，累计重复输入可能呈二次增长。上下文裁剪（Context Pruning）通过三种策略控制上下文窗口大小：
 
 **策略 A：滑动窗口（Sliding Window）**  
 保留最近 N 轮对话，丢弃更早的历史。实现简单，但可能丢失重要的早期上下文。
@@ -337,7 +344,7 @@ async function batchProcess(
 对每条历史消息打分，优先保留用户明确提及的偏好、关键决策点和错误纠正。可用小模型或启发式规则打分。
 
 **策略 C：摘要替换（Summary Compression）**  
-如上文 Prompt 压缩层次三所示，定期将早期对话压缩为摘要，以摘要形式注入后续对话。这是多轮对话系统中最平衡质量与成本的策略。
+如上文 Prompt 压缩层次三所示，定期将早期对话压缩为摘要，以摘要形式注入后续对话。它可能降低输入量，但有事实遗漏和压缩计算成本；是否优于其他策略需在同一任务集上验证。
 
 三种策略通常组合使用：滑动窗口作为硬性上限，重要性采样在窗口内决定保留哪些消息，摘要替换处理超出窗口的远古历史。
 
@@ -434,6 +441,7 @@ Batch API 的完成时限和模型支持范围由提供商决定。在任务量�
 
 <!-- interview-source-history:start -->
 - [字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-20.md)
+- [海康威视 AI Agent 开发一面：可靠工具与任务状态](../../../interview/hikvision/ai/hikvision-ai-1.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

@@ -323,6 +323,36 @@
         "nodeType": "department",
         "children": [
           {
+            "key": "bytedance-base-58",
+            "label": "字节一面：线程池、分布式锁与数字构造",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "Java",
+              "分布式锁",
+              "算法"
+            ],
+            "updatedAt": "2026-10-19",
+            "department": "其他",
+            "roleCategory": "Agent 与后端工程",
+            "contentFormat": "short-qa-v2"
+          },
+          {
+            "key": "bytedance-base-57",
+            "label": "字节 Agent 开发一面：评分、Harness 与任务可靠性",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "Agent",
+              "系统设计"
+            ],
+            "updatedAt": "2026-10-19",
+            "department": "其他",
+            "roleCategory": "Agent 与后端工程",
+            "contentFormat": "short-qa-v2",
+            "role": "Agent开发"
+          },
+          {
             "label": "字节 Agent 二面：RAG 分块、查询改写与随机采样",
             "key": "bytedance-base-28",
             "isLeaf": true,
@@ -1009,6 +1039,21 @@
         "label": "阿里云",
         "nodeType": "department",
         "children": [
+          {
+            "key": "alibaba-ai-9",
+            "label": "阿里云 Agent 一面：Workflow、通信与配置热更新",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "tags": [
+              "Agent",
+              "系统设计"
+            ],
+            "updatedAt": "2026-10-19",
+            "department": "阿里云",
+            "roleCategory": "Agent 与后端工程",
+            "contentFormat": "short-qa-v2",
+            "role": "Agent"
+          },
           {
             "label": "阿里云 Agent Infra 一面：SGX、吞吐与日志写入",
             "key": "alibaba-ai-8",
@@ -1762,5 +1807,63 @@
       }
     ],
     "nodeType": "company"
+  },
+  {
+    "key": "NetEase",
+    "label": "网易",
+    "nodeType": "company",
+    "children": [
+      {
+        "key": "netease-department-other",
+        "label": "其他",
+        "nodeType": "department",
+        "children": [
+          {
+            "key": "netease-fullstack-1",
+            "label": "网易云全栈一面：评估闭环、异步任务与数据查询",
+            "isLeaf": true,
+            "filePath": "netease/fullstack",
+            "tags": [
+              "Agent",
+              "系统设计"
+            ],
+            "updatedAt": "2026-10-19",
+            "department": "其他",
+            "roleCategory": "Agent 与后端工程",
+            "contentFormat": "short-qa-v2",
+            "role": "全栈"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "Hikvision",
+    "label": "海康威视",
+    "nodeType": "company",
+    "children": [
+      {
+        "key": "hikvision-department-other",
+        "label": "其他",
+        "nodeType": "department",
+        "children": [
+          {
+            "key": "hikvision-ai-1",
+            "label": "海康威视 AI Agent 开发一面：可靠工具与任务状态",
+            "isLeaf": true,
+            "filePath": "hikvision/ai",
+            "tags": [
+              "Agent",
+              "系统设计"
+            ],
+            "updatedAt": "2026-10-19",
+            "department": "其他",
+            "roleCategory": "Agent 与后端工程",
+            "contentFormat": "short-qa-v2",
+            "role": "AI Agent开发"
+          }
+        ]
+      }
+    ]
   }
 ]

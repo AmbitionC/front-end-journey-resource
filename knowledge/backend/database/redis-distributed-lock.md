@@ -68,6 +68,12 @@ Redis 主从复制通常是异步的。主节点写入锁后、复制到从节�
 
 对“偶发双执行可由幂等消解”的任务，Redis 锁可能足够；对资金、库存真相或不可逆外部动作，应把最终约束放在权威存储，并评估专用一致性协调系统或数据库锁。不要把某个客户端库的 API 当成端到端 exactly-once 保证。
 
+## Redlock改变了什么假设
+
+[Redis的Redlock说明](https://redis.io/docs/latest/develop/clients/patterns/distributed-locks/)使用多个相互独立的Redis主实例，客户端用同一随机所有权值在多数实例获取租约，并扣除获取耗时与时钟漂移余量计算剩余有效期；失败时释放可能取得的租约。它不是把一个主从组里的多数副本当作独立主实例，也不等同共识日志复制。
+
+多数获取依然有时间与故障假设：本地时钟推进、长暂停、消息延迟、重启丢锁与网络分区都会影响能否在有效期内完成工作。没有有效租期时应停止新操作；已发出的旧写仍须由资源端版本或fencing检查防护。拿到多数租约不能自动给任意下游生成一个可验证的单调fencing序号，更不能取消业务事务与幂等边界。选型需说明业务容许的故障窗口，而不是回答“用了Redlock就没有问题”。
+
 ## 生产检查清单
 
 - 锁 key 包含稳定资源 ID，临界区尽量短；
@@ -92,13 +98,14 @@ Redis 主从复制通常是异步的。主节点写入锁后、复制到从节�
 
 <!-- interview-source-history:start -->
 - [百度北京后端秋招一面：Agent 安全、检索与存储](../../../interview/baidu/ai/baidu-ai-3.md)
+- [字节一面：线程池、分布式锁与数字构造](../../../interview/bytedance/base/bytedance-base-58.md)
+- [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
 - [字节后端开发秋招二面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-6.md)
 - [字节后端与 Code Review Agent 秋招一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-9.md)
+- [字节 Agent 实习：生成质量、多智能体与缓存](../../../interview/bytedance/base/bytedance-base-52.md)
+- [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
 - [蚂蚁后端 AI 开发一面：Agent、Redis 与短链系统（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-3.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)
-- [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
-- [字节 Agent 实习：生成质量、多智能体与缓存](../../../interview/bytedance/base/bytedance-base-52.md)
-- [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

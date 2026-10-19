@@ -28,6 +28,14 @@ Settings forOneRequest = current.get();
 
 若要同时服务 Environment 查询与业务快照，也须统一它们的应用协议。线程安全的单次替换不自动保证多个对象、连接池和属性源一起完成切换。
 
+## 本地 YAML、INI 文件怎样触发热更新
+
+本地文件也要经过“读取完整版本 → 解析 → 业务校验 → 发布快照”，而不是文件一变化就直接修改共享对象。YAML 和 INI 使用相应解析器，并明确重复键、类型转换、缺项、编码与失败策略；不要用文本替换模拟解析。INI 支持需要应用自己选择解析器，不能据此声称 Spring Boot 默认把 INI 当配置格式。
+
+例如编辑器可能先写临时文件再替换目标文件。可监视父目录并关注目标名的创建、修改与删除，合并短时间重复事件；但去抖只减少重复处理，不保证文件已经写完。约定写入方使用临时文件加适用文件系统支持的原子替换，或用版本/校验和重读检查完整性。[Java 21 WatchService](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/WatchService.html)明确提醒：修改事件不代表写入已完成，事件可能合并、乱序或溢出。
+
+收到 OVERFLOW 或监听失效时重新检查目录与文件状态，并通过周期性版本/校验和对账补漏。解析或校验失败保留最后有效快照并暴露错误；成功后用一致的版本规则替换，避免较慢的旧读取覆盖新版本。测试应覆盖半写入、原子替换、无效 YAML/INI、重复事件、溢出和并发读取。这里给出模块设计边界，不代表已经交付原题要求的完整实现。
+
 ## 漏事件、宕机与最后有效版本
 
 通知可降低更新延迟，但不应是唯一真相。应用记录已应用版本，定期对账；发现缺口后拉取完整快照。若远端允许回滚，也应发布一个新的单调版本，而不是把旧版本无声覆盖回来。
@@ -43,6 +51,7 @@ Settings forOneRequest = current.get();
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [阿里云 Agent 一面：Workflow、通信与配置热更新](../../../interview/alibaba/ai/alibaba-ai-9.md)
 - [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
 <!-- interview-source-history:end -->
 
@@ -52,4 +61,5 @@ Settings forOneRequest = current.get();
 
 - [Spring Boot 3.5：Externalized Configuration](https://docs.spring.io/spring-boot/3.5/reference/features/external-config.html)
 - [Spring：MutablePropertySources](https://docs.spring.io/spring-framework/docs/6.2.x/javadoc-api/org/springframework/core/env/MutablePropertySources.html)
+- [Java 21：WatchService](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/WatchService.html)
 - [Spring：Value 注解](https://docs.spring.io/spring-framework/docs/6.2.x/javadoc-api/org/springframework/beans/factory/annotation/Value.html)
