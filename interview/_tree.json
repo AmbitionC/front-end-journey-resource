@@ -930,6 +930,21 @@
         "nodeType": "department",
         "children": [
           {
+            "key": "tencent-ai-11",
+            "label": "腾讯 AI Agent 应用开发一面：上下文、强化学习与系统基础",
+            "isLeaf": true,
+            "filePath": "tencent/ai",
+            "tags": [
+              "Agent",
+              "AI"
+            ],
+            "updatedAt": "2026-10-19",
+            "department": "其他",
+            "role": "AI Agent应用开发",
+            "roleCategory": "Agent 与全栈工程",
+            "contentFormat": "short-qa-v2"
+          },
+          {
             "label": "腾讯 Agent 实习一面：RAG、工具与通信",
             "key": "tencent-ai-10",
             "isLeaf": true,
@@ -1201,6 +1216,21 @@
         "label": "其他",
         "nodeType": "department",
         "children": [
+          {
+            "key": "alibaba-ai-10",
+            "label": "阿里 Agent 实习一面：图文检索、评估与微调实践",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "tags": [
+              "Agent",
+              "AI"
+            ],
+            "updatedAt": "2026-10-19",
+            "department": "其他",
+            "role": "大模型Agent实习",
+            "roleCategory": "Agent 与全栈工程",
+            "contentFormat": "short-qa-v2"
+          },
           {
             "label": "阿里 Agent 开发暑期实习一面",
             "key": "alibaba-ai-2",
@@ -1834,6 +1864,28 @@
             "role": "全栈"
           }
         ]
+      },
+      {
+        "key": "netease-department-music",
+        "label": "网易云音乐",
+        "nodeType": "department",
+        "children": [
+          {
+            "key": "netease-fullstack-2",
+            "label": "网易云音乐全栈一面：JavaScript、排序与 RAG",
+            "isLeaf": true,
+            "filePath": "netease/fullstack",
+            "tags": [
+              "Agent",
+              "全栈"
+            ],
+            "updatedAt": "2026-10-19",
+            "department": "网易云音乐",
+            "role": "全栈",
+            "roleCategory": "Agent 与全栈工程",
+            "contentFormat": "short-qa-v2"
+          }
+        ]
       }
     ]
   },
@@ -1861,6 +1913,64 @@
             "roleCategory": "Agent 与后端工程",
             "contentFormat": "short-qa-v2",
             "role": "AI Agent开发"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "LiAuto",
+    "label": "理想汽车",
+    "nodeType": "company",
+    "children": [
+      {
+        "key": "liauto-department-other",
+        "label": "其他",
+        "nodeType": "department",
+        "children": [
+          {
+            "key": "liauto-fullstack-1",
+            "label": "理想汽车 IT 全栈交付培养生一面：Skill、测试与工作流",
+            "isLeaf": true,
+            "filePath": "liauto/fullstack",
+            "tags": [
+              "Agent",
+              "全栈"
+            ],
+            "updatedAt": "2026-10-19",
+            "department": "其他",
+            "role": "IT全栈交付培养生",
+            "roleCategory": "Agent 与全栈工程",
+            "contentFormat": "short-qa-v2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "FiveEight",
+    "label": "58同城",
+    "nodeType": "company",
+    "children": [
+      {
+        "key": "58tongcheng-department-other",
+        "label": "其他",
+        "nodeType": "department",
+        "children": [
+          {
+            "key": "58tongcheng-ai-1",
+            "label": "58同城 Agent 开发一面：MCP、数据查询与后端基础",
+            "isLeaf": true,
+            "filePath": "58tongcheng/ai",
+            "tags": [
+              "Agent",
+              "AI"
+            ],
+            "updatedAt": "2026-10-19",
+            "department": "其他",
+            "role": "Agent开发",
+            "roleCategory": "Agent 与全栈工程",
+            "contentFormat": "short-qa-v2"
           }
         ]
       }

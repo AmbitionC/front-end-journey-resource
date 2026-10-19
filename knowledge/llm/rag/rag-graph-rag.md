@@ -100,6 +100,12 @@ Global Search 先让相关社区报告各自产生 partial response（map），�
 
 GraphRAG 的价值在于把跨段关系与全局结构变成可检索索引：Local 以实体邻域和原文回答具体问题，Global 以社区报告做全局汇总。实体、关系和摘要都是版本化派生物；只有证据链返回原始 TextUnit，图增强才不会变成另一层不可审计的生成。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [阿里 Agent 实习一面：图文检索、评估与微调实践](../../../interview/alibaba/ai/alibaba-ai-10.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Edge et al. — From Local to Global: A Graph RAG Approach](https://arxiv.org/abs/2404.16130)

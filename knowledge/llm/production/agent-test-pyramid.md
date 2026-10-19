@@ -116,6 +116,12 @@ Agent 输出常没有唯一正确字符串，需要确定性规则、模型评�
 
 Agent 测试金字塔从单元契约、工具集成、受控场景到端到端逐步增加现实性和成本。把断言放到最低但足够的层级，用场景覆盖模型与世界交互，用少量端到端验证部署协同，并用评估与人工证据处理非唯一答案。金字塔的目标不是层数漂亮，而是让失败尽早出现、容易定位、可安全重放。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [理想汽车 IT 全栈交付培养生一面：Skill、测试与工作流](../../../interview/liauto/fullstack/liauto-fullstack-1.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [NIST：AI Test, Evaluation, Validation and Verification](https://www.nist.gov/ai-test-evaluation-validation-and-verification-tevv)
