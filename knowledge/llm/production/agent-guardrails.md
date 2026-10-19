@@ -61,3 +61,9 @@ Guardrails 是贯穿 Agent 数据与动作路径的控制平面：输入标记�
 - [OpenAI — Safety in building agents](https://developers.openai.com/api/docs/guides/agent-builder-safety)
 - [OWASP — Securing Agentic Applications Guide](https://genai.owasp.org/resource/securing-agentic-applications-guide-1-0/)
 - [NIST — Adversarial Machine Learning Taxonomy](https://csrc.nist.gov/pubs/ai/100/2/e2025/final)
+
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [腾讯 CSIG 元宝内容安全日常实习：评测集、输出校验与问题归因](../../../interview/tencent/ai/tencent-ai-15.md)
+<!-- interview-source-history:end -->

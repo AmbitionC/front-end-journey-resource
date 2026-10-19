@@ -1,4 +1,4 @@
-![顺时针 ReAct 循环：任务输入→Reason 推理→Act 工具调用→Observe 环境结果→更新状态，旁边标出停止、重试与错误分支；](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-react-reason-act-observe-loop-v1.webp)
+![ReAct 循环：Reason→Act→Observe→Update；Tool经Evidence返回观察，目标完成或预算耗尽指向Stop。](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-react-reason-act-observe-loop-v1.webp)
 *图：沿图中的节点与箭头阅读；Thought 是原论文描述推理轨迹的记号，生产接口应只暴露结构化 Action、Observation 与经过安全处理的状态。*
 
 ---
@@ -7,30 +7,30 @@ ReAct（Reasoning + Acting）是智能体领域最具影响力的范式之一，
 
 ## 从 CoT 到 ReAct：为什么需要行动？
 
-在 ReAct 诞生之前，LLM 增强推理的主流方向是 Chain-of-Thought（思维链，CoT）。CoT 通过引导模型逐步展开中间步骤，显著提升了复杂推理任务的准确率。但 CoT 有一个根本性的缺陷：**它是封闭的**。模型只能依赖训练时的参数记忆，无法获取外部的实时信息，也无法调用计算器、数据库等精确工具，因此在知识时效性和计算准确性上存在天花板。
+ReAct 论文比较了多种提示设置：其中 CoT 基线移除了行动与环境观察，只使用输入及模型内部知识，因此本身不构成外部信息核验的闭环。这个限制针对论文的基线合同，不代表采用 CoT 提示的所有工程系统都不能接入工具；中间文本也不能替代事实与计算结果的核验。
 
-另一条路线是"纯行动"型（Action-only），直接让模型输出要执行的指令。这种方式能调用工具，但缺乏显式的推理过程，模型没法在行动失败后有条理地重新规划。
+Action-only 提示不要求显式生成 Thought，但仍可接收环境观察并据此选择下一动作；缺少文本推理轨迹不等于无法根据失败反馈调整。是否改善任务规划与成功率，需要在明确任务和相同预算下比较。
 
 ReAct 融合了两者：**推理（Reasoning）指导行动更有目的性，行动（Acting）为推理提供真实的外部依据**。
 
-| 维度 | 纯 LLM | 纯 CoT | 纯行动 | ReAct |
+| 维度 | 一次无工具回答（本例） | CoT 提示（论文基线） | Act-only 提示 | ReAct 提示 |
 |------|--------|--------|--------|-------|
-| 复杂推理 | 弱 | 强 | 弱 | 强 |
-| 外部信息获取 | 无 | 无 | 有 | 有 |
-| 可观察轨迹 | 少 | 可有文本轨迹 | 行动可记录 | 行动与环境反馈可记录 |
-| 外部事实错误风险 | 高 | 仍需核验 | 取决于工具与参数 | 取决于工具、观察与核验 |
-| 动态纠错能力 | 无 | 无 | 有限 | 有 |
-| token 消耗 | 低 | 中 | 低 | 高 |
+| 显式中间文本 | 不要求 | 可有文本推理轨迹 | 不要求 Thought | 按任务可密集或稀疏 |
+| 工具或环境反馈 | 本例无 | 基线移除 | 可有 | 有 |
+| 可记录接口 | 答案 | 可见文本，与隐藏推理不同 | 动作和观察 | 动作、观察及安全状态 |
+| 外部事实核验 | 仍需核验 | 仍需核验 | 工具及结果仍需核验 | 工具及结果仍需核验 |
+| 根据外部反馈调整 | 本例不构成该闭环 | 基线不构成该闭环 | 可按观察调整 | 可按观察调整 |
+| 质量、延迟与 token | 按任务评测 | 按任务评测 | 按任务评测 | 按任务评测 |
 
 ## Thought-Action-Observation：三节拍循环
 
-ReAct 的核心是一个严格的三段式格式，每一轮循环由以下三部分组成：
+以下用 Thought、Action、Observation 解释行动与反馈的关系，不把它当成每轮必须输出三段文本的通用协议。原论文在部分推理任务中密集交替，在交互决策任务中允许 Thought 稀疏出现；生产接口不应据此索取模型的详细隐藏推理：
 
 - **Thought（思考）**：原始 ReAct 提示中的文本推理轨迹。只要模型把它生成到响应文本中，它就会被调用方看到；它不等于现代推理模型可能保留在模型侧的隐藏推理。生产系统不应把详细思维链当作 UI、日志或审计接口，通常只记录结构化行动和经过安全处理的进度状态。
 - **Action（行动）**：LLM 决定调用的具体工具及其输入参数，格式通常是 `工具名[输入]` 或结构化 JSON。
 - **Observation（观察）**：工具实际执行后返回的结果，由外部系统写入，再传回 LLM 作为下一轮推理的上下文。
 
-形式上，可以把整个过程表达为：在时间步 $t$，智能体的策略（即 LLM）根据原始问题 $q$ 和历史轨迹 $(a_1, o_1), \ldots, (a_{t-1}, o_{t-1})$，生成本轮的思考 $th_t$ 和行动 $a_t$：
+为解释下面这个密集交替的教学例子，可以用以下记号概括原始问题 $q$、历史行动与观察对当前选择的影响；公式省略了完整上下文中的既往 Thought，不是所有实现逐轮输出文本推理的规范：
 
 $$
 (th_t, a_t) = \pi\bigl(q,\,(a_1,o_1),\ldots,(a_{t-1},o_{t-1})\bigr)
@@ -299,7 +299,7 @@ ReAct 把工具或环境返回的 Observation 引入下一步决策，使错误�
 ### 主要优势
 
 1. **行动可追踪**：结构化 Action、工具参数、Observation 与安全状态可以形成可审计轨迹；这不要求暴露模型隐藏推理。
-2. **动态纠错**：Observation 的反馈让智能体可以在中途修正方向，不像一次性规划那样"滑铁卢就全完了"。
+2. **根据反馈调整**：Observation 让运行循环有机会修正下一行动；显式计划也可以依据执行结果重规划，两种结构都不自动保证纠错成功。
 3. **工具协同**：LLM 负责推理，工具负责精确执行（搜索、计算、API 调用），各司其职。
 4. **实现简洁**：核心逻辑百行以内，没有复杂状态机。
 
@@ -308,7 +308,7 @@ ReAct 把工具或环境返回的 Observation 引入下一步决策，使错误�
 1. **本例工具串行**：本文单动作循环每轮等待一个 Observation，需要前一步结果的轮次会产生串行延迟。同一轮模型提出的相互独立工具调用可以由运行时并发执行；应用仍须定义结果聚合、预算和失败语义。参见 [Function calling：并行函数调用](https://developers.openai.com/api/docs/guides/function-calling#parallel-function-calling)。
 2. **高度依赖底层 LLM**：格式遵循能力差的模型会频繁输出无法解析的响应，导致整个循环中断。
 3. **提示词脆弱性**：工具描述稍有歧义，或提示词格式稍微变化，都可能引发模型行为大幅变动。
-4. **缺乏全局规划**：步进式决策容易陷入局部最优，对需要提前规划十步以上的复杂任务力不从心。
+4. **本例没有独立的全局计划**：复杂依赖可能需要显式计划与执行反馈后的调整；是否需要这种结构，应由具体任务表现和额外成本决定，不存在通用的十步能力阈值。
 5. **上下文膨胀**：每步累积的 Action 与 Observation 会消耗 context window；若实现还保留文本推理轨迹，增长更快。
 
 ## 常见误区与最佳实践
@@ -339,7 +339,7 @@ ReAct 论文的交互决策实验使用了 [ALFWorld](https://arxiv.org/abs/2010
 ReAct 可以让后续推理接触工具返回的外部证据，从而减少仅依赖参数记忆的情况，但它不能保证消除幻觉。模型可能选错工具、误读或忽略 Observation；工具、网页和中间适配层也可能返回错误、陈旧或恶意内容。生产系统需要验证工具身份与参数、保留原始结果、隔离不可信内容，并在最终回答中把结论追溯到可核验证据。[ReAct 论文](https://arxiv.org/abs/2210.03629)展示的是特定任务下交替推理与行动的收益，不提供“每步截断幻觉”的保证。
 
 **Q：ReAct 和 Plan-and-Execute 怎么选？**
-ReAct 适合探索性任务，每步行动取决于上一步结果，无法提前全局规划。Plan-and-Execute 更适合结构清晰、可以提前分解的任务，执行效率更高，但失去了 ReAct 的中途纠错灵活性。实践中两者可以结合：外层用规划范式制定计划，内层每步用 ReAct 动态执行。
+ReAct 强调根据最新观察决定下一行动，适合需要持续探索的任务；Plan-and-Execute 显式分解阶段目标与依赖，适合能形成可检查计划的任务。后者也可以在执行反馈后重规划，并不必然失去纠错能力；效率取决于规划、工具调用和重规划成本，需在相同任务集上评测。两者可组合，例如外层维护计划，内层用 ReAct 完成某一步。[LangChain 的 Plan-and-Execute 示例](https://www.langchain.com/blog/planning-agents)包含执行后的重规划环节。
 
 **Q：Thought 是否会被用户看到？**
 原始 ReAct 的提示轨迹包含文本 Thought，因此接收原始响应的调用方可以看到它；这与模型侧隐藏推理不是一回事。生产接口不应索取、存储或展示详细隐藏推理，只应暴露 schema 校验后的 Action、工具 Observation、最终答案，以及“执行中 / 等待授权 / 预算耗尽”等经过安全处理的状态。
@@ -352,13 +352,14 @@ ReAct 适合探索性任务，每步行动取决于上一步结果，无法提�
 <!-- interview-source-history:start -->
 - [字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)
 - [腾讯 AI 应用开发面试：跨会话记忆与多 Agent](../../../interview/tencent/ai/tencent-ai-4.md)
+- [百度后端一面：ReAct、规划与流式工具参数](../../../interview/baidu/ai/baidu-ai-4.md)
 - [OPPO IT 开发一面：ReAct、MCP 与智能问数（2026 年 8 月）](../../../interview/oppo/ai/oppo-ai-3.md)
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)
 - [字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-20.md)
 - [字节大模型应用开发一面：Agent、RAG 与可靠性（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-16.md)
+- [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
 - [小红书 Agent 开发一面：多智能体、Memory 与广告投放优化（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-1.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)
-- [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
@@ -366,3 +367,5 @@ ReAct 适合探索性任务，每步行动取决于上一步结果，无法提�
 - [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)
 - [ALFWorld: Aligning Text and Embodied Environments for Interactive Learning](https://arxiv.org/abs/2010.03768)
 - [OpenAI：Function calling，Parallel function calling](https://developers.openai.com/api/docs/guides/function-calling#parallel-function-calling)
+- [LangChain：Plan-and-Execute Agents](https://www.langchain.com/blog/planning-agents)
+- [ReAct v3：任务设置、稀疏 Thought 与 Act 消融](https://arxiv.org/html/2210.03629v3)（2023-03-10 版本；2026-10-20 北京时间核验）

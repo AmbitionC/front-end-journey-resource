@@ -67,3 +67,9 @@ Agent Gateway 的价值是形成一个可审计的统一边界：正确保留 HT
 - [RFC 9110：HTTP Semantics](https://www.rfc-editor.org/rfc/rfc9110.html)
 - [NIST SP 800-207：Zero Trust Architecture](https://csrc.nist.gov/pubs/sp/800/207/final)
 - [W3C：Trace Context](https://www.w3.org/TR/trace-context/)
+
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [腾讯职能线 AI 全栈一面：容量、安全、Worker 与限流](../../../interview/tencent/ai/tencent-ai-14.md)
+<!-- interview-source-history:end -->

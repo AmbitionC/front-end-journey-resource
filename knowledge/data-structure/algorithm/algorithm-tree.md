@@ -261,15 +261,85 @@ function maximumWidth(root) {
 
 测试空树、单边深链和同层两端稀疏节点，后者可以证明空位不能省略。位置编号是教学算法的辅助数据，不需要真的创建全部空节点。
 
+## 无权树最大独立集：后序保存选与不选
+
+独立集要求任意两个选中顶点都没有边相连。原帖只给题名，下面自选教学合同为：`n` 个编号 `0..n-1` 的顶点、无向无权边列表，返回最大独立集的**数量**；空输入 `n=0, edges=[]` 返回 0，非空输入必须是连通无环树。重复边、自环、越界编号与不连通图拒绝，不推断现场是否带权、是否需要返回集合或使用哪种语言。
+
+[CMU 树动态规划讲义第 3 节](https://www.cs.cmu.edu/~15451-f24/lectures/lecture09-dp.pdf)从选根或不选根推导最优子结构。这里将所有顶点权重设为 1，并保存两个显式状态：`take[v]` 为必须选 v 的最优数量，`skip[v]` 为必须不选 v 的最优数量。
+
+~~~text
+take[v] = 1 + sum(skip[c])
+skip[v] = sum(max(take[c], skip[c]))
+~~~
+
+选 v 就不能选孩子；不选 v 时，每个孩子可以独立选更优状态。树的孩子子树互不相交且没有跨子树边，因此这些最优解可以相加。叶子为 1/0，答案取根两状态最大值。这是对讲义最优子结构的两状态展开，不是原作者的代码。三节点路径以中点为根：选中点得 1，不选则可取两端得 2；局部度数或“一直选根”不能代替状态比较。
+
+下面先验证边和连通性，建立父数组与父先于子的遍历序，再逆序累计子状态。它使用显式数组，避免深链触发 JavaScript 递归栈限制；只跳过父节点而不检查已访问节点，不能把一般图当成树。
+
+
+```javascript
+function maximumIndependentSetSize(n, edges) {
+  if (!Number.isSafeInteger(n) || n < 0 || !Array.isArray(edges)) {
+    throw new TypeError('Expected a nonnegative safe integer and edge array');
+  }
+  if (edges.length !== Math.max(0, n - 1)) {
+    throw new RangeError('A nonempty tree needs n-1 edges');
+  }
+  const adjacent = Array.from({length: n}, () => []);
+  for (const edge of edges) {
+    if (!Array.isArray(edge) || edge.length !== 2) throw new TypeError('Expected endpoint pair');
+    const [u, v] = edge;
+    if (!Number.isInteger(u) || !Number.isInteger(v) || u < 0 || v < 0 || u >= n || v >= n || u === v) {
+      throw new RangeError('Invalid endpoint or self loop');
+    }
+    adjacent[u].push(v);
+    adjacent[v].push(u);
+  }
+  if (n === 0) return 0;
+  const parent = Array(n).fill(-2), order = [0];
+  parent[0] = -1;
+  for (let i = 0; i < order.length; i++) {
+    const v = order[i];
+    for (const u of adjacent[v]) {
+      if (u === parent[v]) continue;
+      if (parent[u] !== -2) throw new RangeError('Cycle or duplicate edge');
+      parent[u] = v;
+      order.push(u);
+    }
+  }
+  if (order.length !== n) throw new RangeError('Tree must be connected');
+  const take = Array(n).fill(1), skip = Array(n).fill(0);
+  for (let i = order.length - 1; i > 0; i--) {
+    const v = order[i], p = parent[v];
+    take[p] += skip[v];
+    skip[p] += Math.max(take[v], skip[v]);
+  }
+  return Math.max(take[0], skip[0]);
+}
+```
+
+每条边仅做常数次处理，时间 O(n)，邻接、父数组、顺序与 DP 状态共 O(n) 空间。代码不修改输入边列表，只返回数量；带权、森林或返回实际节点集合需要另定合同。
+
+该教学实现已与独立枚举所有顶点子集的 oracle 对照，覆盖 1 至 7 顶点的 18249 棵标号树，并检查空树、非法图、边界与 100001 节点深链。测试支持这些实现行为，递推正确性仍依赖上面的最优子结构论证；没有把这些测试称作原作者现场验证。
+
+口述时可说：“独立集不能包含相邻点。树上选父则跳过孩子，不选父时各孩子可独立取更优状态，后序累加两个状态，最后取根的最大值；成立前提是明确的树输入合同。”
+
+以下是教学模拟追问：
+
+- **若每个节点有权重，还能直接用当前函数吗？** 不能；需另定义权重与空集合同，再把选中状态的 1 改为该节点权重并验证数值边界。
+- **把三角形图也只跳过父边，会发生什么？** 子树不再独立，遍历还可能重复；当前实现拒绝这种图，树递推不能直接用于一般图。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [百度大模型研发一面：Context、Harness 与 RAG（2026 年 8 月）](../../../interview/baidu/ai/baidu-ai-1.md)
 - [字节 Agent 一面：会话记忆、并发更新与算法](../../../interview/bytedance/base/bytedance-base-29.md)
 - [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
+- [百度大模型研发一面：Context、Harness 与 RAG（2026 年 8 月）](../../../interview/baidu/ai/baidu-ai-1.md)
+- [字节生活服务 AI 全栈二面：AI 作业、接口幂等与树题](../../../interview/bytedance/base/bytedance-base-64.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
 
 - [Boost Graph Library breadth-first search](https://www.boost.org/doc/libs/latest/libs/graph/doc/breadth_first_search.html)
 - [Boost Graph Library depth-first search](https://www.boost.org/doc/libs/latest/libs/graph/doc/depth_first_search.html)
+- [CMU 15-451 Fall 2024：Dynamic Programming，第 3 节树独立集](https://www.cs.cmu.edu/~15451-f24/lectures/lecture09-dp.pdf)（稳定算法讲义；2026-10-20 北京时间核验）

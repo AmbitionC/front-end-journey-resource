@@ -38,6 +38,19 @@ CSRF 利用浏览器自动携带 Cookie 等凭据，让受害者跨站发出状�
 
 XSS 往往能以同源脚本身份绕过页面内的 CSRF 交互，因此不能用“已经有 CSRF token”降低 XSS 修复优先级。
 
+## 同源、CORS 与请求意图分别检查
+
+[HTML 标准的 origin 定义](https://html.spec.whatwg.org/multipage/browsers.html#concept-origin)区分 tuple 与 opaque origin；常见 HTTP(S) 同源比较 scheme、host 与 port。同站不必同源，也不能用字符串后缀代替来源判断。[浏览器同源策略](https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Same-origin_policy#cross-origin_network_access)主要限制跨源读取与对象访问，某些跨源表单提交仍可发出；“跨源”不等于请求一定被阻止。
+
+CORS 规定浏览器允许哪些跨源访问，不替代用户授权或请求意图检查。[OWASP CSRF 防御](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#employing-custom-request-headers-for-ajaxapi)说明严格来源允许清单、自定义头和预检可构成一种防御方案，但接受简单请求或允许不受控子域会改变前提。应结合上面的会话、token、来源与 SameSite 合同选择方案，不能只凭“已配置 CORS”宣布免疫 CSRF。
+
+口述时可说：“同源策略限制浏览器跨源访问，CORS 声明允许的跨源范围，CSRF 防御验证状态变更是否符合用户意图。跨源表单可能发出，所以不能靠禁止读响应来证明不会发生副作用。”
+
+以下是教学模拟追问：
+
+- **攻击页面读不到响应，还可能让业务写入吗？** 可能；服务端须验证状态变更请求本身，不能只保护响应读取。
+- **只允许某域的自定义头后，还能放开所有子域吗？** 不能随意放开；不受控子域可能破坏来源假设，预检和授权需按真实允许清单检验。
+
 ## CSP 是纵深防御
 
 [Content Security Policy Level 3](https://www.w3.org/TR/CSP3/)定义 source list、nonce/hash 与脚本执行模型。严格 CSP 可让页面只执行带正确 nonce/hash 的脚本，并通过 report-only/报告端点发现违规。
@@ -73,8 +86,9 @@ CSP 不能替代上下文编码和 sanitization。宽泛的 `unsafe-inline`、�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节前端全栈实习一面：渲染、Worker 与认证](../../../interview/bytedance/base/bytedance-base-38.md)
+- [腾讯职能线 AI 全栈一面：容量、安全、Worker 与限流](../../../interview/tencent/ai/tencent-ai-14.md)
 - [字节全栈实习：Session、权限与前端基础](../../../interview/bytedance/base/bytedance-base-46.md)
+- [字节前端全栈实习一面：渲染、Worker 与认证](../../../interview/bytedance/base/bytedance-base-38.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
@@ -82,3 +96,5 @@ CSP 不能替代上下文编码和 sanitization。宽泛的 `unsafe-inline`、�
 - [OWASP Cross Site Scripting Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html)
 - [OWASP Cross-Site Request Forgery Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html)
 - [Content Security Policy Level 3](https://www.w3.org/TR/CSP3/)
+- [WHATWG HTML：Origins](https://html.spec.whatwg.org/multipage/browsers.html#concept-origin)（滚动文档，2026-10-20 北京时间核验）
+- [MDN：同源策略与跨源网络访问](https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Same-origin_policy#cross-origin_network_access)（滚动文档，2026-10-20 北京时间核验）

@@ -116,6 +116,8 @@ Trace 记录搜索、读取、编辑、命令、退出码、diff 统计和验证
 - [字节财经保险 AI 全栈实习一面：项目设计、AI Coding 与 Diff](../../../interview/bytedance/base/bytedance-base-34.md)
 - [百度大模型研发一面：Context、Harness 与 RAG（2026 年 8 月）](../../../interview/baidu/ai/baidu-ai-1.md)
 - [字节 Agent 开发一面：评分、Harness 与任务可靠性](../../../interview/bytedance/base/bytedance-base-57.md)
+- [字节生活服务 AI 全栈二面：AI 作业、接口幂等与树题](../../../interview/bytedance/base/bytedance-base-64.md)
+- [字节抖音电商 Agent 一至三面：AI Coding、证据校验与长文档](../../../interview/bytedance/base/bytedance-base-63.md)
 - [腾讯微信支付后台开发日常实习一面](../../../interview/tencent/ai/tencent-ai-5.md)
 - [腾讯 Agent 开发一面：RAG、安全与后端工程（2026 年 5 月）](../../../interview/tencent/ai/tencent-ai-1.md)
 - [腾讯 AI Agent 应用开发一面：上下文、强化学习与系统基础](../../../interview/tencent/ai/tencent-ai-11.md)
