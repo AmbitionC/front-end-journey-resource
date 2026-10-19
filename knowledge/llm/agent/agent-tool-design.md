@@ -123,6 +123,7 @@ MCP 解决发现与调用协议，不替代工具本身的生产契约。把一�
 - [字节 Agent 开发一面：评分、Harness 与任务可靠性](../../../interview/bytedance/base/bytedance-base-57.md)
 - [字节 AI 应用开发一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-12.md)
 - [海康威视 AI Agent 开发一面：可靠工具与任务状态](../../../interview/hikvision/ai/hikvision-ai-1.md)
+- [淘天 Agent 一面：工具调用、上下文与记忆更新](../../../interview/alibaba/ai/alibaba-ai-11.md)
 - [快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-3.md)
 - [快手大模型应用 Java 实习一面：Agent、SkillHub 与 Vibe Coding（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-1.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)

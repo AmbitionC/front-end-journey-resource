@@ -12,6 +12,22 @@ rejected: 事务就是让数据库更快……
 
 评价者依据明确指南比较事实性、任务完成度、表达和安全边界。偏好是相对判断，不等于 chosen 完美，也不代表 rejected 在所有场景都错误。提示分布、评价者背景和指南都会进入最终模型。
 
+### 从偏好样本构造到质量复核
+
+构造偏好对时，先固定同一输入及可比较的条件，再依评价指南选择相对更好的回答。记录候选来源、生成版本、比较理由和标注版本；没有可靠偏好时留作待审，不为凑数据强制排序。这是一种数据治理设计，不是任何面经作者已采用的流程。
+
+[TRL DPO 文档](https://huggingface.co/docs/trl/dpo_trainer)以同一 prompt 的 chosen/rejected 回答描述偏好训练，并支持标准文本与对话格式。显式 prompt 和可推导公共前缀的格式都可能出现，因此不能只检查有没有一个名叫 prompt 的字段；要确认两条回答实际对应同一上下文，且模板和截断没有改变比较条件。
+
+复核应检查：
+
+- **标签方向**：导入后的 chosen/rejected 是否与理由一致，转换字段时有没有交换；
+- **近重复与覆盖**：重复改写是否挤占权重，困难任务和长尾失败是否缺席；
+- **表面捷径**：长度、格式或免责声明是否压过事实与任务完成度；
+- **可比较性**：上下文、题目条件及可用证据是否一致；
+- **评价隔离**：训练用偏好对与保留评价材料是否有同源泄漏。
+
+可以先按来源、任务类型和争议程度抽样复核，再对异常类别扩大检查。AI 评审只能提供一种判断信号，需要用独立标注或可核验任务校准。最终报告偏好胜率之外的失败类型，不能用训练损失下降证明业务效果。
+
 ## 三条常见训练路径
 
 ![RLHF、RLAIF 与 DPO 从偏好数据到策略模型的不同训练路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-rlhf-dpo-preference-paths-v1.webp)
@@ -74,6 +90,7 @@ RLHF、RLAIF 与 DPO 是三种把偏好变成模型行为的路径。RLHF 用奖
 <!-- interview-source-history:start -->
 - [字节 TikTok Agent 开发秋招一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-11.md)
 - [阿里 Agent 实习一面：图文检索、评估与微调实践](../../../interview/alibaba/ai/alibaba-ai-10.md)
+- [美团 Keeta Agent 一面：客服流程、偏好数据与链表](../../../interview/meituan/ai/meituan-ai-1.md)
 <!-- interview-source-history:end -->
 
 ## 学习阅读（不计专题频次）
@@ -81,6 +98,9 @@ RLHF、RLAIF 与 DPO 是三种把偏好变成模型行为的路径。RLHF 用奖
 - [字节抖音电商 Agent 一面：分层、上下文与 GRPO](../../../interview/bytedance/base/bytedance-base-21.md)（cluster-b34d62449917）（GRPO/PPO 原题另由 agentic-rl 承接；偏好优化路径只有背景学习相关性。不是完整专题被考察的证据，不计专题频次。）
 
 ## 参考资料
+
+- [TRL：DPO Trainer 数据约定](https://huggingface.co/docs/trl/dpo_trainer)
+- [TRL：Dataset formats and types](https://huggingface.co/docs/trl/dataset_formats)
 
 - [Training language models to follow instructions with human feedback](https://arxiv.org/abs/2203.02155)
 - [Constitutional AI: Harmlessness from AI Feedback](https://arxiv.org/abs/2212.08073)

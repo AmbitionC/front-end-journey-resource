@@ -438,6 +438,7 @@ Trace 是通过共同 trace ID 关联的一组 Span，根 Span 是其中没有�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节 Agent 暑期一面：优化证据、指令偏差与长上下文](../../../interview/bytedance/base/bytedance-base-59.md)
 - [哔哩哔哩 AI 应用岗一面：端到端 AI Coding 与生产治理（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-2.md)
 - [字节大模型应用开发一面：Agent、RAG 与可靠性（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-16.md)
 - [字节 Agent 开发一面：评分、Harness 与任务可靠性](../../../interview/bytedance/base/bytedance-base-57.md)

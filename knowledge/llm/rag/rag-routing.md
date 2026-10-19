@@ -104,11 +104,26 @@ Routing 自身不能成为最慢阶段。规则和轻量分类器并行或级联
 
 “Agentic RAG”在不同系统中的边界不完全一致，应展示具体运行循环与评测。Hybrid常描述检索信号组合，GraphRAG描述图结构增强，二者可出现在受控循环中，并非互斥产品分类。原题若只写“c-rag”等未展开缩写，先确认全称，不能从本文反推提问者含义。
 
+### 先比较检索控制权，再比较调用次数
+
+比较自己实际的 RAG 与 Agentic RAG 时，先画出控制流，说明是谁决定查询、何时补证据及何时停止。[LangChain Retrieval 文档](https://docs.langchain.com/oss/python/deepagents/retrieval)将“先检索再生成”的 2-step 结构与模型在推理中选择检索时机、工具的 Agentic 结构分开。
+
+| 对照项 | 预先确定的检索—生成流程 | 模型参与检索决策的有界循环 |
+|---|---|---|
+| 谁决定步骤 | 代码规定查询和先后关系 | 模型在受控工具与状态中提出下一步 |
+| 缺少证据 | 代码分支决定重试、澄清或停止 | 模型可提出补查，执行层仍验证路径与预算 |
+| 调用预算 | 较容易预先给出上限 | 需独立限制轮次、时间、候选和 token |
+| 怎样比较 | 同任务的正确性、延迟、成本 | 同样的指标，并检查每次补查是否增加有效证据 |
+
+多次检索本身不证明使用了 Agent：固定代码也能安排多轮。反过来，模型参与路由也不表示整个系统都要自治。应展示实际控制权和失败路径，而不是从一个框架名称推断实现。延迟还受检索 API、网络和服务资源影响，不能保证固定流程在所有负载下都更快。
+
 ## 小结
 
 多索引路由是一个受治理的策略层：硬授权与数据类型门禁先确定可见世界，路由器再按意图、时效与置信度选择单路、组合或 fan-out。Fallback 保持原权限，Abstain 明确无安全路径；完整 trace 让错误可校准、可定位。
 
 ## 参考资料
+
+- [LangChain：Retrieval 与 2-step / Agentic RAG](https://docs.langchain.com/oss/python/deepagents/retrieval)
 
 - [Microsoft GraphRAG — Query Engine](https://microsoft.github.io/graphrag/query/overview/)
 - [OpenAI — Latency optimization](https://developers.openai.com/api/docs/guides/latency-optimization)
@@ -119,4 +134,5 @@ Routing 自身不能成为最慢阶段。规则和轻量分类器并行或级联
 - [字节 AI 平台一面：Agent 评测、框架与数据结构](../../../interview/bytedance/base/bytedance-base-33.md)
 - [字节全栈：多智能体导购、客户端与系统评测](../../../interview/bytedance/base/bytedance-base-43.md)
 - [网易云音乐全栈一面：JavaScript、排序与 RAG](../../../interview/netease/fullstack/netease-fullstack-2.md)
+- [美团 Keeta Agent 一面：客服流程、偏好数据与链表](../../../interview/meituan/ai/meituan-ai-1.md)
 <!-- interview-source-history:end -->

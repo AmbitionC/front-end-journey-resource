@@ -103,6 +103,7 @@ Prompt 调试的核心是可复现的证据链：行为契约决定数据集，�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节 Agent 暑期一面：优化证据、指令偏差与长上下文](../../../interview/bytedance/base/bytedance-base-59.md)
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
 <!-- interview-source-history:end -->
 

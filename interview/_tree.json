@@ -323,6 +323,22 @@
         "nodeType": "department",
         "children": [
           {
+            "key": "bytedance-base-59",
+            "label": "字节 Agent 暑期一面：优化证据、指令偏差与长上下文",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "Agent",
+              "可观测性",
+              "Prompt调试",
+              "长上下文"
+            ],
+            "updatedAt": "2026-10-19",
+            "department": "其他",
+            "roleCategory": "Agent 与全栈工程",
+            "role": "暑期Agent开发"
+          },
+          {
             "key": "bytedance-base-58",
             "label": "字节一面：线程池、分布式锁与数字构造",
             "isLeaf": true,
@@ -1152,6 +1168,22 @@
         "nodeType": "department",
         "children": [
           {
+            "key": "alibaba-ai-11",
+            "label": "淘天 Agent 一面：工具调用、上下文与记忆更新",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "tags": [
+              "Agent",
+              "Function Calling",
+              "记忆",
+              "上下文工程"
+            ],
+            "updatedAt": "2026-10-19",
+            "department": "淘天",
+            "roleCategory": "Agent 与全栈工程",
+            "role": "Agent开发"
+          },
+          {
             "label": "阿里淘天 Agent 算法一面：任务构造、轨迹与训练路线",
             "key": "alibaba-ai-4",
             "isLeaf": true,
@@ -1971,6 +2003,37 @@
             "role": "Agent开发",
             "roleCategory": "Agent 与全栈工程",
             "contentFormat": "short-qa-v2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "Meituan",
+    "label": "美团",
+    "nodeType": "company",
+    "children": [
+      {
+        "key": "meituan-department-keeta",
+        "label": "Keeta",
+        "nodeType": "department",
+        "children": [
+          {
+            "key": "meituan-ai-1",
+            "label": "美团 Keeta Agent 一面：客服流程、偏好数据与链表",
+            "isLeaf": true,
+            "filePath": "meituan/ai",
+            "tags": [
+              "Agent",
+              "RAG",
+              "SFT",
+              "DPO",
+              "链表"
+            ],
+            "updatedAt": "2026-10-19",
+            "department": "Keeta",
+            "roleCategory": "Agent 与全栈工程",
+            "role": "Agent开发（智能客服方向）"
           }
         ]
       }
