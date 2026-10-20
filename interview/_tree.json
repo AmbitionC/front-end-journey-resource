@@ -57,6 +57,24 @@
             "roleCategory": "Agent 与后端工程",
             "role": "Agent 开发",
             "contentFormat": "short-qa-v2"
+          },
+          {
+            "key": "bytedance-base-63",
+            "label": "字节抖音电商 Agent 一至三面：AI Coding、证据校验与长文档",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "department": "抖音电商",
+            "role": "Agent开发",
+            "roleCategory": "Agent 与 AI 应用",
+            "tags": [
+              "Agent",
+              "AI Coding",
+              "长文档",
+              "证据核验",
+              "MCP"
+            ],
+            "updatedAt": "2026-10-20",
+            "contentFormat": "short-qa-v2"
           }
         ]
       },
@@ -846,6 +864,30 @@
             "roleCategory": "Agent 与后端工程"
           }
         ]
+      },
+      {
+        "key": "bytedance-department-local-services",
+        "label": "生活服务",
+        "nodeType": "department",
+        "children": [
+          {
+            "key": "bytedance-base-64",
+            "label": "字节生活服务 AI 全栈二面：AI 作业、接口幂等与树题",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "department": "生活服务",
+            "role": "AI全栈工程师",
+            "roleCategory": "Agent 与全栈工程",
+            "tags": [
+              "全栈",
+              "AI Coding",
+              "接口幂等",
+              "树动态规划"
+            ],
+            "updatedAt": "2026-10-20",
+            "contentFormat": "short-qa-v2"
+          }
+        ]
       }
     ],
     "nodeType": "company"
@@ -874,6 +916,24 @@
             "department": "CSIG",
             "roleCategory": "Agent 与 AI 应用",
             "role": "后台开发"
+          },
+          {
+            "key": "tencent-ai-15",
+            "label": "腾讯 CSIG 元宝内容安全日常实习：评测集、输出校验与问题归因",
+            "isLeaf": true,
+            "filePath": "tencent/ai",
+            "department": "CSIG",
+            "role": "日常实习（具体岗位未明确）",
+            "roleCategory": "Agent 与 AI 应用",
+            "tags": [
+              "元宝",
+              "内容安全",
+              "评测",
+              "安全校验",
+              "自动归因"
+            ],
+            "updatedAt": "2026-10-20",
+            "contentFormat": "short-qa-v2"
           }
         ]
       },
@@ -1055,6 +1115,24 @@
             "role": "AI应用开发",
             "contentFormat": "short-qa-v2",
             "originalLabel": "腾讯 AI 应用开发面试：跨会话记忆与多 Agent（2026 年 4 月）"
+          },
+          {
+            "key": "tencent-ai-14",
+            "label": "腾讯职能线 AI 全栈一面：容量、安全、Worker 与限流",
+            "isLeaf": true,
+            "filePath": "tencent/ai",
+            "department": "其他",
+            "role": "AI全栈工程师",
+            "roleCategory": "Agent 与全栈工程",
+            "tags": [
+              "全栈",
+              "输入容量",
+              "同源策略",
+              "Worker",
+              "限流"
+            ],
+            "updatedAt": "2026-10-20",
+            "contentFormat": "short-qa-v2"
           }
         ]
       }
@@ -1134,6 +1212,24 @@
             "department": "阿里云",
             "roleCategory": "Agent 与 AI 应用",
             "role": "agent开发",
+            "contentFormat": "short-qa-v2"
+          },
+          {
+            "key": "alibaba-ai-16",
+            "label": "阿里云 AI 应用一面：并发审查、RAG 评估与海量商品",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "department": "阿里云",
+            "role": "AI应用开发",
+            "roleCategory": "Agent 与 AI 应用",
+            "tags": [
+              "AI应用",
+              "Java同步",
+              "RAG评测",
+              "MCP",
+              "分片"
+            ],
+            "updatedAt": "2026-10-20",
             "contentFormat": "short-qa-v2"
           }
         ]
@@ -1215,6 +1311,23 @@
             "department": "淘天",
             "roleCategory": "Agent 与 AI 应用",
             "role": "AI应用研发",
+            "contentFormat": "short-qa-v2"
+          },
+          {
+            "key": "alibaba-ai-13",
+            "label": "阿里淘天 Agent 一面：Skill、路由与灰度发布",
+            "filePath": "alibaba/ai",
+            "tags": [
+              "Agent",
+              "Skill",
+              "上下文",
+              "灰度发布"
+            ],
+            "department": "淘天",
+            "role": "Agent开发",
+            "roleCategory": "Agent 与 AI 应用",
+            "isLeaf": true,
+            "updatedAt": "2026-10-20",
             "contentFormat": "short-qa-v2"
           }
         ]
@@ -1350,6 +1463,23 @@
             "department": "其他",
             "roleCategory": "Agent 与 AI 应用",
             "role": "Agent"
+          },
+          {
+            "key": "baidu-ai-4",
+            "label": "百度后端一面：ReAct、规划与流式工具参数",
+            "filePath": "baidu/ai",
+            "tags": [
+              "Agent",
+              "ReAct",
+              "SSE",
+              "RAG"
+            ],
+            "department": "其他",
+            "role": "后端开发",
+            "roleCategory": "后端工程",
+            "isLeaf": true,
+            "updatedAt": "2026-10-20",
+            "contentFormat": "short-qa-v2"
           }
         ]
       }

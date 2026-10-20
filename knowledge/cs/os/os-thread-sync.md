@@ -1,5 +1,5 @@
 ![两个线程访问 shared state：mutex 临界区建立互斥，condition variable 用 while predicate 等待并通知，semaphore 控制有限资源槽；箭头标出 happens-before，未加锁路径显示 data race](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/thread-synchronization-happens-before-v1.webp)
-*图：沿图中的节点与箭头阅读，重点是happens-before 思维解释 mutex、condition variable、semaphore、atomic 与锁顺序，而不是只列 API。*
+*图：左栏是互斥锁的解锁与后续加锁，中栏是 while 谓词和条件变量，右栏是有限资源信号量。中栏允许 unlock 后通知、左下“数据竞争为未定义行为”采用通用/C++ 示例语境；Java Object.notify/notifyAll 必须持有同一对象的 monitor，Java 数据竞争后果应按 JMM 分析，不能照搬图中的通知顺序或未定义行为结论。*
 
 ---
 
@@ -23,11 +23,11 @@
 
 我们把"访问共享资源、必须串行执行的那段代码"称为**临界区(Critical Section)**。上例中 `count++` 就是临界区。
 
-保证临界区**任意时刻最多只有一个线程进入**,这个性质叫**互斥(Mutual Exclusion)**。互斥是同步最基础的需求。一个正确的互斥机制要同时满足:（参见 [POSIX pthread_mutex_lock](https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_mutex_lock.html)）
+保证临界区**任意时刻最多只有一个线程进入**，这个安全性质叫**互斥(Mutual Exclusion)**；进展与公平还需单独分析。（参见 [POSIX pthread_mutex_lock](https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_mutex_lock.html)）
 
-- **互斥性**:同一时刻只有一个线程在临界区内;
-- **无死锁/无饥饿**:想进入的线程最终能进入;
-- **不假设线程速度与数量**:正确性不依赖 CPU 调度。
+- **互斥性**：同一时刻最多一个线程进入对应临界区；
+- **无死锁与无饥饿**：是需要协议与调度条件支持的不同进展目标，不由“使用一把锁”自动保证；
+- **调度假设**：具体 API、锁顺序、等待谓词与线程调度都影响进展，不能将互斥本身当成公平承诺。
 
 > 对 Agent 工程的意义:Agent 的"会话内存"、"工具调用计数"、"token 预算"本质上都是共享可变状态。当多个并发请求或多个子 Agent 同时读写它们时,如果不做同步,统计会丢失、配额会超发——这就是上面 `count++` 问题在业务层的翻版。
 
@@ -237,16 +237,36 @@ graph LR
 
 排查时问线程在等哪项条件、谁负责满足、是否有期限与取消，再选择同步协议。业务状态与线程状态也不同：一个任务排队不意味着某个线程必然 WAITING。
 
+## Java 有界栈：monitor 与条件重检
+
+下面是独立教学审查合同，不是原帖代码的还原。共享栈、容量与关闭标记由同一个 monitor 保护：push 在满且未关闭时用 `while` 等待，pop 在空且未关闭时等待；被唤醒并重新取得 monitor 后再次检查谓词。栈使用 LIFO，不能把它悄悄换成 FIFO 队列。
+
+[Java SE 25 Object API](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#wait(long,int))规定 `wait`、`notify` 与 `notifyAll` 必须持有相应对象的 monitor。`wait` 释放该对象上的锁，不释放仍持有的其他对象锁；`notify` 不解锁，也不保证选择哪个等待者。通知不代表条件已成立，虚假唤醒和其他线程先改变状态都要求重检谓词。
+
+多生产者与消费者共用一个 wait set 时，`notify` 可能唤醒条件仍不满足的一类等待者。可先使用 `notifyAll` 配合条件循环保证所有等待者有机会重新检查；它不会保证调度公平，也不能补救漏发通知或错误谓词。
+
+中断会在恢复 monitor 后抛出 `InterruptedException`，并清除中断状态。应明确向上传播，还是按上层取消合同恢复标记并退出，不能吞掉异常继续无限等待。关闭时在持锁下改变标记并通知等待者，再说明空且已关闭时的返回或异常、是否允许排空已有元素。这里只给审查机制，没有交付或运行 Java 栈实现。
+
+口述时可说：“用同一 monitor 保护栈与状态，等待时释放对应锁，唤醒后重新持锁检查谓词。通知不解锁也不承诺公平；关闭和中断必须进入同一生命周期合同。”
+
+以下是教学模拟追问：
+
+- **把 while 换成 if，只有两个线程就安全吗？** 不能据线程数量排除虚假唤醒；重检谓词是等待协议的一部分。
+- **notifyAll 后所有线程都会依次完成操作吗？** 不保证；它们仍竞争 monitor、重新判断条件，关闭、调度与取消还会影响进展。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)
-- [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)
 - [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../../interview/bytedance/base/bytedance-base-36.md)
+- [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
+- [阿里云 AI 应用一面：并发审查、RAG 评估与海量商品](../../../interview/alibaba/ai/alibaba-ai-16.md)
+- [快手 AI 应用开发秋招一面：线程池、OOM 与项目深挖（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-2.md)
+- [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
 
 - [POSIX pthread_mutex_lock](https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_mutex_lock.html)
 - [POSIX sem_wait](https://pubs.opengroup.org/onlinepubs/9799919799/functions/sem_wait.html)
+- [Java SE 25 Object：wait / notify / notifyAll](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html)（2026-10-20 北京时间核验）

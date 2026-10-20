@@ -77,6 +77,7 @@ Worker 取到消息后用条件更新获取租约：只有 queued、retrying 或
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [腾讯职能线 AI 全栈一面：容量、安全、Worker 与限流](../../../interview/tencent/ai/tencent-ai-14.md)
 <!-- interview-source-history:end -->
 
 ## 相关机制阅读（不计专题频次）

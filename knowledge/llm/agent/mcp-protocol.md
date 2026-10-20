@@ -1,5 +1,5 @@
-![左右分区：左侧 MCP 的 Host–Client–Server、tools/resources/prompts 与传输层；右侧 A2A 的 Client Agent–Remote Agent、Agent Card、Task、Message、Artifact；中间明确“上下文/工具接入”与“智能体互操作”不是同一层](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/mcp-a2a-protocol-boundaries-v1.webp)
-*图：左侧读 MCP 的 Host–Client–Server 与 tools/resources/prompts，右侧读 A2A 的 Agent Card–Task–Message–Artifact；中线强调两者责任层不同。*
+![MCP Host 中的 Client 与 Server 之间交换 Initialize、Capabilities、List Tools、Call Tool 与 Result，旁侧标示 Auth 与 Validate 概念边界](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/mcp-a2a-protocol-boundaries-v1.webp)
+*图：此图仅示意 MCP 2025-11-25 的初始化、能力发现与工具调用交互；A2A 的职责和对象由下文说明，图中没有 A2A 区域。2026-07-28 的无状态发现另见本文版本说明。*
 
 ---
 
@@ -69,6 +69,23 @@ MCP 负责“能力如何发现和调用”，Skill 负责“任务如何被理�
 
 部署选择需核协议版本、生命周期、Origin/认证、连接恢复与限流；HTTP服务并不因协议统一而自动安全，stdio子进程也有文件权限、环境与退出边界。SDK示例应固定包及版本，不能用未经核验的第三方类名冒充官方API。
 
+## CLI 接口与 MCP 包装怎样分工
+
+CLI 通常以命令、参数、标准输入输出与退出状态提供进程接口；MCP 约定客户端与服务端的消息、能力和工具合同。受控 MCP Server 可以调用现有 CLI，再把结果映射成协议返回，但原 CLI 不会自动因此成为 MCP Server。CLI 的“退出成功”也不等于业务后置条件已满足。
+
+沿用本文 **2025-11-25** 合同，[stdio 规范](https://modelcontextprotocol.io/specification/2025-11-25/basic/transports)要求按行传递 JSON-RPC 消息，stdout 不能夹杂进度条或人类日志，日志可写 stderr。适配器还需定义参数与环境、输入输出、权限、超时、取消和未知副作用，避免把不可信参数拼成 shell 命令。
+
+版本边界须另记：[2026-07-28 架构](https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture)改用无状态请求元数据，并以 `server/discover` 提供版本、能力与身份发现。本文上方的初始化顺序图解释的是明确固定的 2025 版，不能当成所有版本都必须经过的握手；接入与迁移应分别核对所用版本。
+
+比较性能时，分开测进程启动、连接、网络、序列化与业务执行，再看共享范围及治理成本。CLI、stdio MCP 与远程 MCP 都没有仅凭名称成立的延迟胜负；上面的包装是教学设计，不代表原作者实际采用了它。
+
+口述时可先说：“CLI 是进程使用接口，MCP 是能力交互协议；可以受控包装，但参数、权限与业务结果仍须校验。再明确所用协议版本，不能把旧版初始化复制成跨版本保证。”
+
+以下是教学模拟追问：
+
+- **CLI 输出进度条，能直接接到 MCP stdout 吗？** 不能；适配器分离日志与协议消息，并校验返回结构。
+- **本地 CLI 一定比远程 MCP 快吗？** 不能仅凭名称判断；比较相同任务的启动、连接和业务关键路径，注明环境与复用方式。
+
 ## MCP与模型工具调用如何组合
 
 模型工具调用接口让模型提出函数与参数；MCP让应用发现服务的能力并按协议交互。宿主可把允许的MCP工具映射到模型工具接口，也可由代码或用户直接发起调用；MCP客户端本身不必依赖模型决策。
@@ -99,8 +116,10 @@ MCP 负责“能力如何发现和调用”，Skill 负责“任务如何被理�
 - [腾讯 Agent 项目二面：记忆、RAG 与 MCP（2026 年 5 月）](../../../interview/tencent/ai/tencent-ai-2.md)
 - [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)
 - [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)
+- [字节抖音电商 Agent 一至三面：AI Coding、证据校验与长文档](../../../interview/bytedance/base/bytedance-base-63.md)
 - [字节剪映 AI 前端一面：Agent 运行时、MCP 与性能](../../../interview/bytedance/base/bytedance-base-30.md)
 - [深信服 Agent 开发一面：MCP、多 Agent、安全与网络（2026 年 8 月）](../../../interview/sangfor/ai/sangfor-ai-1.md)
+- [阿里云 AI 应用一面：并发审查、RAG 评估与海量商品](../../../interview/alibaba/ai/alibaba-ai-16.md)
 - [快手主站 SRE 一二三面：Agent Skill、性能排障与数据链路（2026 年 4 月）](../../../interview/kuaishou/ai/kuaishou-ai-5.md)
 - [蚂蚁 Agent 开发一面：多 Agent 并发与质量保障（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-1.md)
 - [快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-3.md)
@@ -120,3 +139,4 @@ MCP 负责“能力如何发现和调用”，Skill 负责“任务如何被理�
 - [MCP 2025-11-25 Prompts](https://modelcontextprotocol.io/specification/2025-11-25/server/prompts)
 - [MCP 2025-11-25 Transports](https://modelcontextprotocol.io/specification/2025-11-25/basic/transports)
 - [A2A Protocol Specification](https://a2a-protocol.org/latest/specification/)（读取于2026-10-19；接入时固定协议版本）
+- [MCP 2026-07-28 架构：无状态与发现](https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture)（2026-10-20 北京时间核验；本文原顺序图仍限定 2025-11-25）

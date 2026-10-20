@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
-  "updatedAt": "2026-10-19",
+  "updatedAt": "2026-10-20",
   "records": [
     {
       "key": "transformer-arch",
@@ -1286,10 +1286,20 @@
       "key": "agent-debugging",
       "label": "Agent 调试方法与失败复现",
       "filePath": "llm/production",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-16",
-      "batch": "agent-observability-security-next-20-2026-07-16"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-20",
+      "batch": "interview-seven-coherent-local-20261020",
+      "reason": "Actual bounded seven-source reconciliation; exact current independent review and publication remain pending.",
+      "previousRecord": {
+        "key": "agent-debugging",
+        "label": "Agent 调试方法与失败复现",
+        "filePath": "llm/production",
+        "status": "published",
+        "action": "created",
+        "recordedAt": "2026-07-16",
+        "batch": "agent-observability-security-next-20-2026-07-16"
+      }
     },
     {
       "key": "agent-test-pyramid",
@@ -2277,24 +2287,34 @@
       "key": "agent-react",
       "label": "ReAct：推理与行动框架",
       "filePath": "llm/agent",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-14",
-      "batch": "title-verified6-quality-20261014",
-      "reason": "限定单工具ReAct教学循环与运行时可并发独立工具调用的适用边界。",
+      "recordedAt": "2026-10-20",
+      "batch": "interview-seven-coherent-local-20261020",
+      "reason": "Actual bounded seven-source reconciliation; exact current independent review and publication remain pending.",
       "previousRecord": {
         "key": "agent-react",
         "label": "ReAct：推理与行动框架",
         "filePath": "llm/agent",
-        "status": "pending",
+        "status": "published",
         "action": "updated",
-        "recordedAt": "2026-09-01",
-        "batch": "nowcoder-partial-archive-2026-09-01"
-      },
-      "publishedAt": "2026-10-14T18:28:19Z",
-      "publishedByCommit": "afbce3dd82d0e693b14d20e2b3dd02a96c6731b3",
-      "publishedBySyncRun": 38614482119,
-      "publishedByPdfRun": 38614481957
+        "recordedAt": "2026-10-14",
+        "batch": "title-verified6-quality-20261014",
+        "reason": "限定单工具ReAct教学循环与运行时可并发独立工具调用的适用边界。",
+        "previousRecord": {
+          "key": "agent-react",
+          "label": "ReAct：推理与行动框架",
+          "filePath": "llm/agent",
+          "status": "pending",
+          "action": "updated",
+          "recordedAt": "2026-09-01",
+          "batch": "nowcoder-partial-archive-2026-09-01"
+        },
+        "publishedAt": "2026-10-14T18:28:19Z",
+        "publishedByCommit": "afbce3dd82d0e693b14d20e2b3dd02a96c6731b3",
+        "publishedBySyncRun": 38614482119,
+        "publishedByPdfRun": 38614481957
+      }
     },
     {
       "key": "agent-paradigms",
@@ -2361,17 +2381,27 @@
       "filePath": "llm/agent",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-19",
-      "batch": "interview-halfday-b-20261019",
-      "reason": "Bounded teaching fix for selected B interview questions; no publication claimed.",
+      "recordedAt": "2026-10-20",
+      "batch": "interview-seven-coherent-local-20261020",
+      "reason": "Actual bounded seven-source reconciliation; exact current independent review and publication remain pending.",
       "previousRecord": {
         "key": "mcp-protocol",
         "label": "MCP / A2A 智能体通信协议",
         "filePath": "llm/agent",
         "status": "pending",
         "action": "updated",
-        "recordedAt": "2026-09-01",
-        "batch": "nowcoder-partial-archive-2026-09-01"
+        "recordedAt": "2026-10-19",
+        "batch": "interview-halfday-b-20261019",
+        "reason": "Bounded teaching fix for selected B interview questions; no publication claimed.",
+        "previousRecord": {
+          "key": "mcp-protocol",
+          "label": "MCP / A2A 智能体通信协议",
+          "filePath": "llm/agent",
+          "status": "pending",
+          "action": "updated",
+          "recordedAt": "2026-09-01",
+          "batch": "nowcoder-partial-archive-2026-09-01"
+        }
       }
     },
     {
@@ -2789,8 +2819,18 @@
       "filePath": "backend/database",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-10-20",
+      "batch": "interview-seven-coherent-local-20261020",
+      "reason": "Actual bounded seven-source reconciliation; exact current independent review and publication remain pending.",
+      "previousRecord": {
+        "key": "db-sharding",
+        "label": "分库分表、读写分离与扩展",
+        "filePath": "backend/database",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-07-18",
+        "batch": "complete-remaining-91-2026-07-18"
+      }
     },
     {
       "key": "jwt-auth",
@@ -3190,13 +3230,23 @@
       "key": "os-thread-sync",
       "label": "锁、信号量与并发同步",
       "filePath": "cs/os",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004",
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+      "recordedAt": "2026-10-20",
+      "batch": "interview-seven-coherent-local-20261020",
+      "reason": "Actual bounded seven-source reconciliation; exact current independent review and publication remain pending.",
+      "previousRecord": {
+        "key": "os-thread-sync",
+        "label": "锁、信号量与并发同步",
+        "filePath": "cs/os",
+        "status": "published",
+        "action": "updated",
+        "recordedAt": "2026-10-04",
+        "batch": "next-twenty-source-increments-20261004",
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     },
     {
       "key": "os-deadlock",
@@ -3276,13 +3326,23 @@
       "key": "algorithm-tree",
       "label": "树、图与遍历",
       "filePath": "data-structure/algorithm",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004",
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+      "recordedAt": "2026-10-20",
+      "batch": "interview-seven-coherent-local-20261020",
+      "reason": "Actual bounded seven-source reconciliation; exact current independent review and publication remain pending.",
+      "previousRecord": {
+        "key": "algorithm-tree",
+        "label": "树、图与遍历",
+        "filePath": "data-structure/algorithm",
+        "status": "published",
+        "action": "updated",
+        "recordedAt": "2026-10-04",
+        "batch": "next-twenty-source-increments-20261004",
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     },
     {
       "key": "algorithm-loop",
@@ -3332,8 +3392,18 @@
       "filePath": "network/security",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-07-18",
-      "batch": "complete-remaining-91-2026-07-18"
+      "recordedAt": "2026-10-20",
+      "batch": "interview-seven-coherent-local-20261020",
+      "reason": "Actual bounded seven-source reconciliation; exact current independent review and publication remain pending.",
+      "previousRecord": {
+        "key": "web-attack",
+        "label": "XSS、CSRF、CSP 与 Web 安全基础",
+        "filePath": "network/security",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-07-18",
+        "batch": "complete-remaining-91-2026-07-18"
+      }
     },
     {
       "key": "type-system",
