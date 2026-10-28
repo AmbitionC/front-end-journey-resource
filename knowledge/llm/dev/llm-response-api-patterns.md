@@ -168,8 +168,6 @@ Chat 是消息组织模式，Responses/Interactions 类接口更接近多类型�
 
 ## 出现于（热度来源）
 
-- [OPPO AI 全栈一面：Prompt 到 UI、RAG 与前端性能](../../../interview/oppo/ai/oppo-ai-2.md)
-
 <!-- interview-source-history:start -->
 - [OPPO AI 全栈一面：Prompt 到 UI、RAG 与前端性能](../../../interview/oppo/ai/oppo-ai-2.md)
 <!-- interview-source-history:end -->
