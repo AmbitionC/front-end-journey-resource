@@ -94,7 +94,7 @@
               "Skill",
               "认证"
             ],
-            "updatedAt": "2026-10-02",
+            "updatedAt": "2026-10-28",
             "department": "火山引擎方舟",
             "roleCategory": "Agent 与后端工程",
             "role": "Agent",
@@ -194,7 +194,7 @@
         "nodeType": "department",
         "children": [
           {
-            "label": "字节 TikTok Agent 开发秋招一面（2026 年 8 月）",
+            "label": "字节 TikTok Agent 开发秋招一面：会议转写与长上下文",
             "key": "bytedance-base-11",
             "isLeaf": true,
             "filePath": "bytedance/base",
@@ -204,10 +204,11 @@
               "多 Agent",
               "算法"
             ],
-            "updatedAt": "2026-08-25",
+            "updatedAt": "2026-10-28",
             "department": "TikTok",
             "roleCategory": "Agent 与后端工程",
-            "role": "AI Agent开发"
+            "role": "AI Agent开发",
+            "contentFormat": "short-qa-v2"
           },
           {
             "label": "字节全栈与测试：JVM、并发与 SQL 排查",
@@ -485,7 +486,7 @@
             "role": "Agent开发"
           },
           {
-            "label": "字节 Agent 开发一面：推理缓存、网络与存储基础（2026 年 8 月）",
+            "label": "字节 Agent 开发一面：推理缓存、网络与存储基础",
             "key": "bytedance-base-18",
             "isLeaf": true,
             "filePath": "bytedance/base",
@@ -495,10 +496,11 @@
               "网络",
               "存储"
             ],
-            "updatedAt": "2026-08-29",
+            "updatedAt": "2026-10-28",
             "department": "其他",
             "roleCategory": "Agent 与后端工程",
-            "role": "agent开发"
+            "role": "agent开发",
+            "contentFormat": "short-qa-v2"
           },
           {
             "label": "字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）",
@@ -533,7 +535,7 @@
             "role": "agent开发"
           },
           {
-            "label": "字节 Agent 开发一面：Skill、MCP 与后端基础（2026 年 7 月）",
+            "label": "字节一面：Agent 项目、Skill、MCP 与后端基础",
             "key": "bytedance-base-15",
             "isLeaf": true,
             "filePath": "bytedance/base",
@@ -543,12 +545,13 @@
               "MCP",
               "后端"
             ],
-            "updatedAt": "2026-08-26",
+            "updatedAt": "2026-10-28",
             "department": "其他",
-            "roleCategory": "Agent 与后端工程"
+            "roleCategory": "Agent 与后端工程",
+            "contentFormat": "short-qa-v2"
           },
           {
-            "label": "字节大模型应用开发一面：Agent、RAG 与可靠性（2026 年 8 月）",
+            "label": "字节大模型应用开发一面：Agent、RAG 与可靠性",
             "key": "bytedance-base-16",
             "isLeaf": true,
             "filePath": "bytedance/base",
@@ -558,10 +561,11 @@
               "多 Agent",
               "RAG"
             ],
-            "updatedAt": "2026-08-26",
+            "updatedAt": "2026-10-28",
             "department": "其他",
             "roleCategory": "Agent 与后端工程",
-            "role": "大模型应用开发"
+            "role": "大模型应用开发",
+            "contentFormat": "short-qa-v2"
           },
           {
             "label": "字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）",
@@ -580,7 +584,7 @@
             "role": "AI Agent"
           },
           {
-            "label": "字节 AI 应用开发一面（2026 年 8 月）",
+            "label": "字节 AI 应用开发一面：Agent 与 RAG",
             "key": "bytedance-base-12",
             "isLeaf": true,
             "filePath": "bytedance/base",
@@ -590,13 +594,14 @@
               "Memory",
               "可观测性"
             ],
-            "updatedAt": "2026-08-25",
+            "updatedAt": "2026-10-28",
             "department": "其他",
             "roleCategory": "Agent 与后端工程",
-            "role": "AI 应用开发"
+            "role": "AI 应用开发",
+            "contentFormat": "short-qa-v2"
           },
           {
-            "label": "字节 AI 全栈开发一面（2026 年 8 月）",
+            "label": "字节 AI 全栈开发一面：Agent 项目与算法",
             "key": "bytedance-base-13",
             "isLeaf": true,
             "filePath": "bytedance/base",
@@ -606,13 +611,14 @@
               "SSE",
               "算法"
             ],
-            "updatedAt": "2026-08-25",
+            "updatedAt": "2026-10-28",
             "department": "其他",
             "roleCategory": "Agent 与后端工程",
-            "role": "AI全栈开发"
+            "role": "AI全栈开发",
+            "contentFormat": "short-qa-v2"
           },
           {
-            "label": "字节后端与 Code Review Agent 秋招一面（2026 年 8 月）",
+            "label": "字节后端与 Code Review Agent 秋招一面",
             "key": "bytedance-base-9",
             "isLeaf": true,
             "filePath": "bytedance/base",
@@ -622,10 +628,11 @@
               "Redis",
               "评测"
             ],
-            "updatedAt": "2026-08-23",
+            "updatedAt": "2026-10-28",
             "department": "其他",
             "roleCategory": "Agent 与后端工程",
-            "role": "后端开发"
+            "role": "后端开发",
+            "contentFormat": "short-qa-v2"
           },
           {
             "label": "字节 Agent 开发实习一面：自进化与评测",
@@ -902,7 +909,7 @@
         "nodeType": "department",
         "children": [
           {
-            "label": "腾讯 CSIG 后台开发一面：Agent Memory、SkillRouter 与多 Agent Code Review（2026 年 7 月）",
+            "label": "腾讯 CSIG 后台开发一面：Agent Memory、SkillRouter 与多 Agent Code Review",
             "key": "tencent-ai-9",
             "isLeaf": true,
             "filePath": "tencent/ai",
@@ -912,10 +919,11 @@
               "SkillRouter",
               "Code Review"
             ],
-            "updatedAt": "2026-09-01",
+            "updatedAt": "2026-10-28",
             "department": "CSIG",
             "roleCategory": "Agent 与 AI 应用",
-            "role": "后台开发"
+            "role": "后台开发",
+            "contentFormat": "short-qa-v2"
           },
           {
             "key": "tencent-ai-15",
@@ -943,7 +951,7 @@
         "nodeType": "department",
         "children": [
           {
-            "label": "腾讯 AI 开发一面：Coding Agent 记忆、评测与可靠运行（2026 年 8 月）",
+            "label": "腾讯 WXG 微信读书一面：Coding Agent 记忆、评测与可靠运行",
             "key": "tencent-ai-8",
             "isLeaf": true,
             "filePath": "tencent/ai",
@@ -953,9 +961,10 @@
               "评测",
               "状态恢复"
             ],
-            "updatedAt": "2026-08-29",
+            "updatedAt": "2026-10-28",
             "department": "WXG",
-            "roleCategory": "Agent 与 AI 应用"
+            "roleCategory": "Agent 与 AI 应用",
+            "contentFormat": "short-qa-v2"
           },
           {
             "label": "腾讯微信支付后台开发日常实习一面",
@@ -983,7 +992,7 @@
         "nodeType": "department",
         "children": [
           {
-            "label": "腾讯 TEG 后端一面：RAG 多智能体与分布式 LRU（2026 年 8 月）",
+            "label": "腾讯 TEG 后端一面：RAG 多智能体与分布式 LRU",
             "key": "tencent-ai-6",
             "isLeaf": true,
             "filePath": "tencent/ai",
@@ -993,10 +1002,11 @@
               "上下文",
               "成本"
             ],
-            "updatedAt": "2026-08-25",
+            "updatedAt": "2026-10-28",
             "department": "TEG",
             "roleCategory": "Agent 与 AI 应用",
-            "role": "后端开发"
+            "role": "后端开发",
+            "contentFormat": "short-qa-v2"
           }
         ]
       },
@@ -1038,7 +1048,7 @@
             "contentFormat": "short-qa-v2"
           },
           {
-            "label": "腾讯大模型算法岗一二面：Agentic RL、PPO/GRPO 与 DeepSeek V4（2026 年 8 月）",
+            "label": "腾讯大模型算法岗一二面：Agentic RL、PPO/GRPO 与 DeepSeek V4",
             "key": "tencent-ai-7",
             "isLeaf": true,
             "filePath": "tencent/ai",
@@ -1048,13 +1058,14 @@
               "DeepSeek V4",
               "算法"
             ],
-            "updatedAt": "2026-08-29",
+            "updatedAt": "2026-10-28",
             "department": "其他",
             "roleCategory": "Agent 与 AI 应用",
-            "role": "大模型算法岗"
+            "role": "大模型算法岗",
+            "contentFormat": "short-qa-v2"
           },
           {
-            "label": "腾讯 Agent 开发一面：RAG、安全与后端工程（2026 年 5 月）",
+            "label": "腾讯一面：RAG、安全与后端工程",
             "key": "tencent-ai-1",
             "isLeaf": true,
             "filePath": "tencent/ai",
@@ -1064,12 +1075,13 @@
               "安全",
               "后端"
             ],
-            "updatedAt": "2026-08-23",
+            "updatedAt": "2026-10-28",
             "department": "其他",
-            "roleCategory": "Agent 与 AI 应用"
+            "roleCategory": "Agent 与 AI 应用",
+            "contentFormat": "short-qa-v2"
           },
           {
-            "label": "腾讯 Agent 项目二面：记忆、RAG 与 MCP（2026 年 5 月）",
+            "label": "腾讯 Agent 项目二面：记忆、RAG 与 MCP",
             "key": "tencent-ai-2",
             "isLeaf": true,
             "filePath": "tencent/ai",
@@ -1079,12 +1091,13 @@
               "RAG",
               "MCP"
             ],
-            "updatedAt": "2026-08-23",
+            "updatedAt": "2026-10-28",
             "department": "其他",
-            "roleCategory": "Agent 与 AI 应用"
+            "roleCategory": "Agent 与 AI 应用",
+            "contentFormat": "short-qa-v2"
           },
           {
-            "label": "腾讯后端 AI 开发实习面试（2026 年 4 月）",
+            "label": "腾讯后端 AI 开发实习面试：RAG、Agent 与基础工程",
             "key": "tencent-ai-3",
             "isLeaf": true,
             "filePath": "tencent/ai",
@@ -1094,9 +1107,10 @@
               "后端",
               "算法"
             ],
-            "updatedAt": "2026-08-23",
+            "updatedAt": "2026-10-28",
             "department": "其他",
-            "roleCategory": "Agent 与 AI 应用"
+            "roleCategory": "Agent 与 AI 应用",
+            "contentFormat": "short-qa-v2"
           },
           {
             "label": "腾讯 AI 应用开发面试：跨会话记忆与多 Agent",
@@ -1109,7 +1123,7 @@
               "多 Agent",
               "Skill"
             ],
-            "updatedAt": "2026-08-23",
+            "updatedAt": "2026-10-28",
             "department": "其他",
             "roleCategory": "Agent 与 AI 应用",
             "role": "AI应用开发",
@@ -1290,7 +1304,7 @@
               "轨迹评测",
               "模型训练"
             ],
-            "updatedAt": "2026-10-14",
+            "updatedAt": "2026-10-28",
             "department": "淘天",
             "roleCategory": "Agent 与 AI 应用",
             "role": "Agent算法",
@@ -1409,7 +1423,7 @@
         "nodeType": "department",
         "children": [
           {
-            "label": "百度大模型研发一面：Context、Harness 与 RAG（2026 年 8 月）",
+            "label": "百度大模型研发一面：Context、Harness 与 RAG",
             "key": "baidu-ai-1",
             "isLeaf": true,
             "filePath": "baidu/ai",
@@ -1419,10 +1433,11 @@
               "Harness",
               "RAG"
             ],
-            "updatedAt": "2026-08-30",
+            "updatedAt": "2026-10-28",
             "department": "MEG 广告投放",
             "roleCategory": "Agent 与 AI 应用",
-            "role": "大模型研发"
+            "role": "大模型研发",
+            "contentFormat": "short-qa-v2"
           }
         ]
       },
@@ -1449,7 +1464,7 @@
             "contentFormat": "short-qa-v2"
           },
           {
-            "label": "百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测（2026 年 8 月）",
+            "label": "百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测",
             "key": "baidu-ai-2",
             "isLeaf": true,
             "filePath": "baidu/ai",
@@ -1459,10 +1474,11 @@
               "记忆",
               "系统设计"
             ],
-            "updatedAt": "2026-08-30",
+            "updatedAt": "2026-10-28",
             "department": "其他",
             "roleCategory": "Agent 与 AI 应用",
-            "role": "Agent"
+            "role": "Agent",
+            "contentFormat": "short-qa-v2"
           },
           {
             "key": "baidu-ai-4",
@@ -1496,7 +1512,7 @@
         "nodeType": "department",
         "children": [
           {
-            "label": "快手商业化效果营销一面：多 Agent 协作、Netty 与限流（2026 年 8 月）",
+            "label": "快手商业化效果营销一面：多 Agent 协作、Netty 与限流",
             "key": "kuaishou-ai-4",
             "isLeaf": true,
             "filePath": "kuaishou/ai",
@@ -1506,9 +1522,10 @@
               "Netty",
               "限流"
             ],
-            "updatedAt": "2026-09-01",
+            "updatedAt": "2026-10-28",
             "department": "商业化效果营销",
-            "roleCategory": "Agent 与 AI 应用"
+            "roleCategory": "Agent 与 AI 应用",
+            "contentFormat": "short-qa-v2"
           }
         ]
       },
@@ -1518,7 +1535,7 @@
         "nodeType": "department",
         "children": [
           {
-            "label": "快手主站 SRE 一二三面：Agent Skill、性能排障与数据链路（2026 年 4 月）",
+            "label": "快手主站 SRE 一二三面：Agent Skill、性能排障与数据链路",
             "key": "kuaishou-ai-5",
             "isLeaf": true,
             "filePath": "kuaishou/ai",
@@ -1528,9 +1545,10 @@
               "Skill",
               "性能排障"
             ],
-            "updatedAt": "2026-09-01",
+            "updatedAt": "2026-10-28",
             "department": "主站",
-            "roleCategory": "Agent 与 AI 应用"
+            "roleCategory": "Agent 与 AI 应用",
+            "contentFormat": "short-qa-v2"
           }
         ]
       },
@@ -1540,7 +1558,7 @@
         "nodeType": "department",
         "children": [
           {
-            "label": "快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理（2026 年 8 月）",
+            "label": "快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理",
             "key": "kuaishou-ai-3",
             "isLeaf": true,
             "filePath": "kuaishou/ai",
@@ -1550,13 +1568,14 @@
               "评测",
               "MCP"
             ],
-            "updatedAt": "2026-08-29",
+            "updatedAt": "2026-10-28",
             "department": "其他",
             "roleCategory": "Agent 与 AI 应用",
-            "role": "AI应用开发"
+            "role": "AI应用开发",
+            "contentFormat": "short-qa-v2"
           },
           {
-            "label": "快手 AI 应用开发秋招一面：线程池、OOM 与项目深挖（2026 年 8 月）",
+            "label": "快手 AI 应用开发秋招一面：线程池、OOM 与项目深挖",
             "key": "kuaishou-ai-2",
             "isLeaf": true,
             "filePath": "kuaishou/ai",
@@ -1566,12 +1585,13 @@
               "并发",
               "工程风险"
             ],
-            "updatedAt": "2026-08-26",
+            "updatedAt": "2026-10-28",
             "department": "其他",
-            "roleCategory": "Agent 与 AI 应用"
+            "roleCategory": "Agent 与 AI 应用",
+            "contentFormat": "short-qa-v2"
           },
           {
-            "label": "快手大模型应用 Java 实习一面：Agent、SkillHub 与 Vibe Coding（2026 年 8 月）",
+            "label": "快手大模型应用 Java 实习一面：Agent、SkillHub 与 Vibe Coding",
             "key": "kuaishou-ai-1",
             "isLeaf": true,
             "filePath": "kuaishou/ai",
@@ -1581,9 +1601,10 @@
               "Kafka",
               "浏览器插件"
             ],
-            "updatedAt": "2026-08-25",
+            "updatedAt": "2026-10-28",
             "department": "其他",
-            "roleCategory": "Agent 与 AI 应用"
+            "roleCategory": "Agent 与 AI 应用",
+            "contentFormat": "short-qa-v2"
           }
         ]
       }
@@ -1600,7 +1621,7 @@
         "nodeType": "department",
         "children": [
           {
-            "label": "OPPO IT 开发一面：ReAct、MCP 与智能问数（2026 年 8 月）",
+            "label": "OPPO IT 开发一面：ReAct、MCP 与智能问数",
             "key": "oppo-ai-3",
             "isLeaf": true,
             "filePath": "oppo/ai",
@@ -1610,13 +1631,14 @@
               "MCP",
               "Text-to-SQL"
             ],
-            "updatedAt": "2026-09-01",
+            "updatedAt": "2026-10-28",
             "department": "其他",
             "roleCategory": "AI 全栈",
-            "role": "IT开发"
+            "role": "IT开发",
+            "contentFormat": "short-qa-v2"
           },
           {
-            "label": "OPPO AI 全栈一面：Prompt 到 UI、RAG 与前端性能（2026 年 8 月）",
+            "label": "OPPO AI 全栈一面：Prompt 到 UI、RAG 与前端性能",
             "key": "oppo-ai-2",
             "isLeaf": true,
             "filePath": "oppo/ai",
@@ -1626,13 +1648,14 @@
               "多 Agent",
               "前端性能"
             ],
-            "updatedAt": "2026-08-29",
+            "updatedAt": "2026-10-28",
             "department": "其他",
             "roleCategory": "AI 全栈",
-            "role": "AI全栈"
+            "role": "AI全栈",
+            "contentFormat": "short-qa-v2"
           },
           {
-            "label": "OPPO AI 全栈一面：AI Coding、Skill 与数据结构（2026 年 8 月）",
+            "label": "OPPO AI 全栈一面：AI Coding、Skill 与数据结构",
             "key": "oppo-ai-1",
             "isLeaf": true,
             "filePath": "oppo/ai",
@@ -1642,10 +1665,11 @@
               "协作",
               "算法"
             ],
-            "updatedAt": "2026-08-25",
+            "updatedAt": "2026-10-28",
             "department": "其他",
             "roleCategory": "AI 全栈",
-            "role": "AI全栈"
+            "role": "AI全栈",
+            "contentFormat": "short-qa-v2"
           }
         ]
       }
@@ -1662,7 +1686,7 @@
         "nodeType": "department",
         "children": [
           {
-            "label": "蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）",
+            "label": "蚂蚁财富技术部一面：协作式 Agent、交付门禁与后端基础",
             "key": "antfin-ai-4",
             "isLeaf": true,
             "filePath": "antfin/ai",
@@ -1672,9 +1696,10 @@
               "质量门禁",
               "后端"
             ],
-            "updatedAt": "2026-08-29",
+            "updatedAt": "2026-10-28",
             "department": "财富技术部",
-            "roleCategory": "Agent 与 AI 应用"
+            "roleCategory": "Agent 与 AI 应用",
+            "contentFormat": "short-qa-v2"
           }
         ]
       },
@@ -1700,7 +1725,7 @@
             "contentFormat": "short-qa-v2"
           },
           {
-            "label": "蚂蚁智能体与大模型应用一面：幻觉、Skill 与 RAG（2026 年 5 月）",
+            "label": "蚂蚁智能体与大模型应用一面：幻觉、Skill 与 RAG",
             "key": "antfin-ai-5",
             "isLeaf": true,
             "filePath": "antfin/ai",
@@ -1710,12 +1735,13 @@
               "RAG",
               "后端基础"
             ],
-            "updatedAt": "2026-08-30",
+            "updatedAt": "2026-10-28",
             "department": "其他",
-            "roleCategory": "Agent 与 AI 应用"
+            "roleCategory": "Agent 与 AI 应用",
+            "contentFormat": "short-qa-v2"
           },
           {
-            "label": "蚂蚁 Agent 开发一面：多 Agent 并发与质量保障（2026 年 4 月）",
+            "label": "蚂蚁 Agent 开发一面：多 Agent 并发与质量保障",
             "key": "antfin-ai-1",
             "isLeaf": true,
             "filePath": "antfin/ai",
@@ -1725,10 +1751,11 @@
               "并发",
               "RAG"
             ],
-            "updatedAt": "2026-08-23",
+            "updatedAt": "2026-10-28",
             "department": "其他",
             "roleCategory": "Agent 与 AI 应用",
-            "role": "agent开发"
+            "role": "agent开发",
+            "contentFormat": "short-qa-v2"
           },
           {
             "label": "蚂蚁 Agent 一二面：Code Agent 与应用开发",
@@ -1741,14 +1768,14 @@
               "上下文工程",
               "Skill"
             ],
-            "updatedAt": "2026-10-14",
+            "updatedAt": "2026-10-28",
             "department": "其他",
             "roleCategory": "Agent 与 AI 应用",
             "role": "Agent",
             "contentFormat": "short-qa-v2"
           },
           {
-            "label": "蚂蚁后端 AI 开发一面：Agent、Redis 与短链系统（2026 年 4 月）",
+            "label": "蚂蚁后端 AI 开发一面：Agent、Redis 与短链系统",
             "key": "antfin-ai-3",
             "isLeaf": true,
             "filePath": "antfin/ai",
@@ -1758,9 +1785,10 @@
               "分布式锁",
               "系统设计"
             ],
-            "updatedAt": "2026-08-23",
+            "updatedAt": "2026-10-28",
             "department": "其他",
-            "roleCategory": "Agent 与 AI 应用"
+            "roleCategory": "Agent 与 AI 应用",
+            "contentFormat": "short-qa-v2"
           }
         ]
       }
@@ -1777,7 +1805,7 @@
         "nodeType": "department",
         "children": [
           {
-            "label": "拼多多 AI Agent 岗两轮技术面：RAG、多 Agent 与系统能力（2026 年 8 月）",
+            "label": "拼多多 AI Agent 岗两轮技术面：RAG、多 Agent 与系统能力",
             "key": "pinduoduo-ai-1",
             "isLeaf": true,
             "filePath": "pinduoduo/ai",
@@ -1787,10 +1815,11 @@
               "会议助手",
               "系统基础"
             ],
-            "updatedAt": "2026-08-26",
+            "updatedAt": "2026-10-28",
             "department": "其他",
             "roleCategory": "Agent 与 AI 应用",
-            "role": "AI Agent"
+            "role": "AI Agent",
+            "contentFormat": "short-qa-v2"
           }
         ]
       }
@@ -1807,7 +1836,7 @@
         "nodeType": "department",
         "children": [
           {
-            "label": "哔哩哔哩 AI 应用岗一面：端到端 AI Coding 与生产治理（2026 年 8 月）",
+            "label": "哔哩哔哩一面：端到端 AI Coding 与生产治理",
             "key": "bilibili-ai-2",
             "isLeaf": true,
             "filePath": "bilibili/ai",
@@ -1817,12 +1846,13 @@
               "可观测性",
               "灰度发布"
             ],
-            "updatedAt": "2026-08-29",
+            "updatedAt": "2026-10-28",
             "department": "其他",
-            "roleCategory": "Agent 与 AI 应用"
+            "roleCategory": "Agent 与 AI 应用",
+            "contentFormat": "short-qa-v2"
           },
           {
-            "label": "哔哩哔哩 AI 应用岗 Agent 开发一面（2026 年 8 月）",
+            "label": "哔哩哔哩 AI 应用岗 Agent 开发一面",
             "key": "bilibili-ai-1",
             "isLeaf": true,
             "filePath": "bilibili/ai",
@@ -1832,10 +1862,11 @@
               "工具调用",
               "Memory"
             ],
-            "updatedAt": "2026-08-26",
+            "updatedAt": "2026-10-28",
             "department": "其他",
             "roleCategory": "Agent 与 AI 应用",
-            "role": "AI应用岗"
+            "role": "AI应用岗",
+            "contentFormat": "short-qa-v2"
           }
         ]
       }
@@ -1852,7 +1883,7 @@
         "nodeType": "department",
         "children": [
           {
-            "label": "深信服 Agent 开发一面：MCP、多 Agent、安全与网络（2026 年 8 月）",
+            "label": "深信服 Agent 开发一面：MCP、多 Agent、安全与网络",
             "key": "sangfor-ai-1",
             "isLeaf": true,
             "filePath": "sangfor/ai",
@@ -1862,10 +1893,11 @@
               "Skill",
               "系统迁移"
             ],
-            "updatedAt": "2026-08-26",
+            "updatedAt": "2026-10-28",
             "department": "其他",
             "roleCategory": "Agent 与 AI 应用",
-            "role": "agent开发"
+            "role": "agent开发",
+            "contentFormat": "short-qa-v2"
           }
         ]
       }
@@ -1882,7 +1914,7 @@
         "nodeType": "department",
         "children": [
           {
-            "label": "小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展（2026 年 8 月）",
+            "label": "小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展",
             "key": "redbook-ai-3",
             "isLeaf": true,
             "filePath": "redbook/ai",
@@ -1892,13 +1924,14 @@
               "安全",
               "混合部署"
             ],
-            "updatedAt": "2026-08-29",
+            "updatedAt": "2026-10-28",
             "department": "其他",
             "roleCategory": "Agent 与 AI 应用",
-            "role": "Agent开发"
+            "role": "Agent开发",
+            "contentFormat": "short-qa-v2"
           },
           {
-            "label": "小红书 Agent 开发一面：多智能体、Memory 与广告投放优化（2026 年 8 月）",
+            "label": "小红书 Agent 开发一面：多智能体、Memory 与广告投放优化",
             "key": "redbook-ai-1",
             "isLeaf": true,
             "filePath": "redbook/ai",
@@ -1908,10 +1941,11 @@
               "Memory",
               "系统设计"
             ],
-            "updatedAt": "2026-08-26",
+            "updatedAt": "2026-10-28",
             "department": "其他",
             "roleCategory": "Agent 与 AI 应用",
-            "role": "Agent开发"
+            "role": "Agent开发",
+            "contentFormat": "short-qa-v2"
           },
           {
             "label": "小红书与百度 Agent 面试合并记录：LangGraph 子图、Skill 与工程校验",
@@ -1925,7 +1959,7 @@
               "工程校验",
               "百度"
             ],
-            "updatedAt": "2026-08-26",
+            "updatedAt": "2026-10-28",
             "department": "其他",
             "roleCategory": "Agent 与 AI 应用",
             "role": "Agent 开发",
@@ -1951,7 +1985,7 @@
         "nodeType": "department",
         "children": [
           {
-            "label": "大疆创新 AI Agent 开发面经：容错、Token 与后端基础（2026 年 8 月）",
+            "label": "大疆创新 AI Agent 开发面经：容错、Token 与后端基础",
             "key": "dji-ai-1",
             "isLeaf": true,
             "filePath": "dji/ai",
@@ -1961,10 +1995,11 @@
               "Token",
               "后端"
             ],
-            "updatedAt": "2026-08-26",
+            "updatedAt": "2026-10-28",
             "department": "其他",
             "roleCategory": "Agent 与 AI 应用",
-            "role": "AI Agent开发"
+            "role": "AI Agent开发",
+            "contentFormat": "short-qa-v2"
           }
         ]
       }

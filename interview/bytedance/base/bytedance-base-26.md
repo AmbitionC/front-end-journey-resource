@@ -1,6 +1,6 @@
-公司：字节跳动；方向：火山引擎方舟 Managed Agent；招聘场景：27 届秋招；轮次：一面，作者记录约 57 分钟。正文文字未给具体面试日；候选人附图标记2026年8月13日19:00、57分22秒，属于作者附图记录，未独立证实。
+公司：字节跳动；方向：火山引擎方舟 Managed Agent；招聘场景：27 届秋招；轮次：一面。正文文字未给具体面试日；原帖附图未核验，不据其补写日期或总时长。
 
-背景、经历和提问范围来自候选人自述，未独立证实。以下问题按原文归纳；答题思路为独立教学整理，不代表作者现场作答或企业标准答案。
+背景、经历和提问范围来自候选人自述，未独立证实。本文选录原帖可见的技术问题，按主题合并；未收录个人背景、自我介绍、实习细节、个人复盘及反问。答题思路和演算为独立教学整理，不代表作者现场作答、实际项目实现或企业标准答案。
 
 ## 教学演算：收到流式文本不代表工具已经成功
 
@@ -118,19 +118,19 @@ SSE 是 HTTP 上的单向服务器事件流，WebSocket 支持双向消息。按
 
 知识导航：[WebSocket 实时通信](../../../knowledge/backend/api/websocket.md)、[SSE 服务端推送与连接管理](../../../knowledge/backend/api/sse-server.md)、[消息队列、异步任务与后台 Job](../../../knowledge/backend/api/async-job-queue.md)。
 
-#### （7）Cookie 与 JWT 有何区别，JWT 如何验证？
+#### （7）Cookie 与 JWT 有何区别，JWT 的结构是什么、如何验证？
 
 <details data-knowledge-key="localStorage-sessionStorage">
-<summary>（15）Cookie 与 JWT 有何区别，JWT 如何验证？</summary>
+<summary>（15）Cookie 与 JWT 有何区别，JWT 的结构是什么、如何验证？</summary>
 </details>
 
-Cookie 是浏览器保存和随请求发送数据的机制，JWT 是签名或加密令牌格式；Cookie 可以承载 JWT，也可以承载随机 Session ID。签名验证还要校验允许算法、发行者、受众和有效期，签名不等于加密。常见签名 JWT 可本地验证，但撤销、轮换、权限变化仍可能需要服务端状态。
+Cookie 是浏览器保存和随请求发送数据的机制，JWT 是签名或加密令牌格式；常见采用 JWS 紧凑序列化的签名 JWT 由 Header、Payload、Signature 三段组成，前两段编码后可读取，不能放入明文机密；Cookie 可以承载 JWT，也可以承载随机 Session ID。签名验证还要校验允许算法、发行者、受众和有效期，签名不等于加密。常见签名 JWT 可本地验证，但撤销、轮换、权限变化仍可能需要服务端状态。
 
 <details data-knowledge-key="jwt-auth">
-<summary>（16）同一原问的复习入口（JWT 认证机制）：Cookie 与 JWT 有何区别，JWT 如何验证？</summary>
+<summary>（16）同一原问的复习入口（JWT 认证机制）：Cookie 与 JWT 有何区别，JWT 的结构是什么、如何验证？</summary>
 </details>
 
-Cookie 是浏览器保存和随请求发送数据的机制，JWT 是签名或加密令牌格式；Cookie 可以承载 JWT，也可以承载随机 Session ID。签名验证还要校验允许算法、发行者、受众和有效期，签名不等于加密。常见签名 JWT 可本地验证，但撤销、轮换、权限变化仍可能需要服务端状态。
+Cookie 是浏览器保存和随请求发送数据的机制，JWT 是签名或加密令牌格式；常见采用 JWS 紧凑序列化的签名 JWT 由 Header、Payload、Signature 三段组成，前两段编码后可读取，不能放入明文机密；Cookie 可以承载 JWT，也可以承载随机 Session ID。签名验证还要校验允许算法、发行者、受众和有效期，签名不等于加密。常见签名 JWT 可本地验证，但撤销、轮换、权限变化仍可能需要服务端状态。
 
 知识导航：[Cookie、Storage 与浏览器状态](../../../knowledge/network/others/localStorage-sessionStorage.md)、[JWT 认证机制](../../../knowledge/backend/auth/jwt-auth.md)。
 
@@ -159,6 +159,15 @@ Cookie 是浏览器保存和随请求发送数据的机制，JWT 是签名或加
 用哈希函数把 key 映射到桶，碰撞用拉链或开放寻址处理，比较 key 判断真正命中。开放寻址删除不能随意清空会阻断探测链的位置；负载增长触发扩容并重新散列。平均 O(1) 依赖分布和受控装载，冲突集中会退化，不能承诺每次操作常数时间。
 
 知识导航：[哈希表、缓存与去重](../../../knowledge/data-structure/algorithm/algorithm-hash.md)。
+
+#### （10）Agent 能否参与性能分析和问题定位？
+
+<details data-binding-status="pending_semantic_verification">
+<summary>（20）Agent 能否参与性能分析和问题定位？</summary>
+<p>关联知识点待核实。</p>
+</details>
+
+可以让 Agent 汇总脱敏的 Trace、阶段耗时和剖析结果，提出瓶颈假设并生成受控的验证步骤；定位结论仍要用真实测量、最小复现和优化前后的对照来确认。采集、压测和变更应限制权限与预算，不能把模型推测当成已经测得的根因。
 
 ## 原帖记录边界
 

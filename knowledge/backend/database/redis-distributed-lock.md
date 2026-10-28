@@ -11,6 +11,12 @@ Redis 分布式锁不是“跨进程版 mutex”，而是一份有期限的独�
 3. 冲突时重试是否安全？
 4. 锁失效后，资源侧如何拒绝旧持有者？
 
+## 互斥租约与乐观 CAS 怎样区分
+
+先取得互斥资格、再进入临界区的租约方案，通常按悲观协调理解，但排他仍受租约有效期与故障假设限制。CAS 则把“当前值或版本等于期望值时才更新”作为原子条件；失败后重新读取并核对，不能无界忙重试。高竞争会增加重试，单位置的 CAS 也不自动维护多个资源之间的不变量。
+
+只比较值时，状态从 A 变 B 又回 A，CAS 可能看不出期间发生过变化，这就是 ABA 风险。把值与每次更新都推进的版本一起原子比较可帮助识别这种变化；[Java 的 AtomicStampedReference](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/concurrent/atomic/AtomicStampedReference.html)提供引用与 stamp 的联合比较更新，应用仍须管理版本推进与复用边界。资源端版本、锁租约与业务幂等解决不同问题，不能仅凭一次 CAS 成功推断整项业务恰好执行一次。
+
 ## 单机为什么仍可能需要 Redis 锁
 
 “单机”说的是机器数量，不一定是互斥域。一个主机上可以运行多个 Worker 进程、容器或独立服务；滚动更新时新旧实例也可能短时并存。进程内 mutex 只约束共享那把锁的参与者，不能自动挡住另一进程。若这些参与者都要修改同一资源，可能仍需跨进程协调。
@@ -101,10 +107,9 @@ Redis 主从复制通常是异步的。主节点写入锁后、复制到从节�
 - [字节一面：线程池、分布式锁与数字构造](../../../interview/bytedance/base/bytedance-base-58.md)
 - [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
 - [字节后端开发秋招二面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-6.md)
-- [字节后端与 Code Review Agent 秋招一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-9.md)
 - [字节 Agent 实习：生成质量、多智能体与缓存](../../../interview/bytedance/base/bytedance-base-52.md)
 - [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
-- [蚂蚁后端 AI 开发一面：Agent、Redis 与短链系统（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-3.md)
+- [蚂蚁后端 AI 开发一面：Agent、Redis 与短链系统](../../../interview/antfin/ai/antfin-ai-3.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)
 <!-- interview-source-history:end -->
 
@@ -113,3 +118,4 @@ Redis 主从复制通常是异步的。主节点写入锁后、复制到从节�
 - [Redis 官方文档：Distributed Locks with Redis](https://redis.io/docs/latest/develop/clients/patterns/distributed-locks/)
 - [Redis 官方文档：SET](https://redis.io/docs/latest/commands/set/)
 - [Redisson Reference Guide：Locks and synchronizers](https://redisson.pro/docs/data-and-services/locks-and-synchronizers/)
+- [Java SE 25：AtomicStampedReference](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/concurrent/atomic/AtomicStampedReference.html)

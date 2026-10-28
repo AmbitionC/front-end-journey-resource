@@ -99,8 +99,6 @@ Agent 工作流可靠性来自事件驱动状态和副作用协议：run/step ID
 - [字节 Agent 开发日常实习一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-5.md)
 - [阿里 Agent 实习一面：图文检索、评估与微调实践](../../../interview/alibaba/ai/alibaba-ai-10.md)
 - [字节后端开发秋招二面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-6.md)
-- [字节后端与 Code Review Agent 秋招一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-9.md)
-- [腾讯 AI 开发一面：Coding Agent 记忆、评测与可靠运行（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-8.md)
 <!-- interview-source-history:end -->
 
 ## 相关机制阅读（不计专题频次）

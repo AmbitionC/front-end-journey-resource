@@ -110,13 +110,11 @@ trace 将 workflow/run、decision、activity、approval 和 operation ID 关联�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 AI 全栈开发一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-13.md)
 - [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)
 - [阿里云 Agent 一面：Workflow、通信与配置热更新](../../../interview/alibaba/ai/alibaba-ai-9.md)
 - [字节 Agent Infra 校招：运行时、MySQL 与 LRU](../../../interview/bytedance/base/bytedance-base-25.md)
 - [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)
 - [vivo Agent 秋招线下面：Harness 与工程诊断](../../../interview/vivo/ai/vivo-ai-1.md)
-- [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)
 - [理想汽车 IT 全栈交付培养生一面：Skill、测试与工作流](../../../interview/liauto/fullstack/liauto-fullstack-1.md)
 - [字节 Agent 后端实习一面：LangGraph、评测集与混合检索](../../../interview/bytedance/base/bytedance-base-22.md)
 - [海康威视 AI Agent 开发一面：可靠工具与任务状态](../../../interview/hikvision/ai/hikvision-ai-1.md)

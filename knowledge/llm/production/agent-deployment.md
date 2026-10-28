@@ -20,6 +20,14 @@
 ![模型、Prompt、工具 Schema、策略与评估集组成版本包，经构建、离线评估、影子、5% 金丝雀、25% 放量到全量；质量、安全、延迟、成本和错误率门控，异常暂停并回滚](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-deployment-versioned-rollout-v1.webp)
 *图：Startup、Readiness、Liveness 分别处理启动、接流量和重启；队列与并发驱动扩缩容。*
 
+## 本地与云端同时覆盖大量设备
+
+端云扩展先回答“任务在哪运行、数据能否离开设备、断网后如何继续”。一个可验证的设计示例是：控制面统一登记设备身份、能力、版本、策略和配额；执行面按数据位置、延迟、算力和获准权限把任务交给设备或云端 Worker。涉及本地文件或不宜外传的数据时优先在设备侧处理，需要云端计算时只传获准的最小数据。这里是设计取舍，不代表所有业务都应采用同一分层。
+
+设备与云端都要在工具执行前验证主体、设备、资源和动作权限，不能因为设备在内网或由企业拥有就默认可信。[NIST SP 800-207](https://csrc.nist.gov/pubs/sp/800/207/final)明确区分身份认证与授权，并反对仅凭位置或所有权赋予隐式信任。
+
+设备可能离线、版本落后或在执行后丢失回执。任务因此需要稳定 ID、版本兼容的检查点、租约和幂等操作；连接恢复后先核对已执行动作与状态版本，再重放未完成部分。设备分组灰度、资源上限、取消与回滚沿用下文的发布合同；云端扩容仍受模型与外部工具配额约束。验收时加入断网重连、重复命令、旧设备协议与设备撤权场景，确认不会重复副作用或继续使用已撤销能力。
+
 ## 构建与离线门
 
 构建产物固定依赖、镜像 digest、SBOM 和配置 schema，签名后进入制品库。部署前运行单元/集成、安全、回归和任务 eval；比较当前生产基线，按功能、安全、成本和延迟切片，而不是只看总分。
@@ -73,7 +81,7 @@ Agent 发布以版本包为原子单位，把代码、模型、prompt、工具�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-3.md)
+- [小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展](../../../interview/redbook/ai/redbook-ai-3.md)
 <!-- interview-source-history:end -->
 
 ## 学习阅读（不计专题频次）
@@ -84,6 +92,7 @@ Agent 发布以版本包为原子单位，把代码、模型、prompt、工具�
 
 ## 参考资料
 
+- [NIST — Zero Trust Architecture（SP 800-207）](https://csrc.nist.gov/pubs/sp/800/207/final)
 - [NIST — AI RMF Generative AI Profile](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf)
 - [Kubernetes — Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
 - [Kubernetes — Update a Deployment](https://kubernetes.io/docs/tasks/run-application/update-deployment-rolling/)

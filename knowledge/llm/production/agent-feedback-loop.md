@@ -79,7 +79,6 @@
 - [理想汽车 IT 全栈交付培养生一面：Skill、测试与工作流](../../../interview/liauto/fullstack/liauto-fullstack-1.md)
 - [字节 Agent 开发实习一面：自进化与评测](../../../interview/bytedance/base/bytedance-base-8.md)
 - [海康威视 AI Agent 开发一面：可靠工具与任务状态](../../../interview/hikvision/ai/hikvision-ai-1.md)
-- [腾讯大模型算法岗一二面：Agentic RL、PPO/GRPO 与 DeepSeek V4（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-7.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

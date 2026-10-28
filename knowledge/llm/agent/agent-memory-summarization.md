@@ -36,6 +36,10 @@ type SummaryFact = {
 
 摘要失败时保留原消息。若上下文已无法容纳，停止发起新的大调用，缩小待处理区间、保留关键原文或返回阻断；“先删旧消息、稍后补摘要”会让失败后无从恢复。保留最近消息还要保持工具请求与结果配对，避免只留下一个无法解释的工具响应。
 
+### 最近消息也可能放不下
+
+“保留最近 8 条”只能是待验证策略，消息条数不能代表 token 大小。若尾部本身超过可用窗口，先从总预算扣除指令、工具定义、关键状态与预期输出，按剩余容量选择尾部；对超长工具结果或文档，把完整正文放到可授权回读的存储，只在上下文保留摘要、精确关键字段和引用。工具调用与结果仍须配对，不能切出一段无法解释的半条轨迹。若保留所有必要信息后仍放不下，就拆分任务、缩小输入或明确阻断，不能为了保住固定条数静默截断授权、日期或未完成操作。
+
 ## 异步压缩为什么会出现迟到覆盖
 
 异步方式让摘要任务在后台处理冻结前缀，主会话继续。它减少等待，却需要明确读写协议。考虑如下时序：
@@ -82,15 +86,15 @@ type SummaryFact = {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节 Agent 一面：会话记忆、并发更新与算法](../../../interview/bytedance/base/bytedance-base-29.md)
 - [腾讯 AI 应用开发面试：跨会话记忆与多 Agent](../../../interview/tencent/ai/tencent-ai-4.md)
+- [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../../interview/bytedance/base/bytedance-base-48.md)
 - [字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-20.md)
 - [字节 Agent 暑期实习一面：摘要、工具预算与链表](../../../interview/bytedance/base/bytedance-base-27.md)
-- [腾讯 Agent 项目二面：记忆、RAG 与 MCP（2026 年 5 月）](../../../interview/tencent/ai/tencent-ai-2.md)
+- [字节 Agent Infra 校招：运行时、MySQL 与 LRU](../../../interview/bytedance/base/bytedance-base-25.md)
 - [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../../interview/bytedance/base/bytedance-base-24.md)
-- [百度大模型研发一面：Context、Harness 与 RAG（2026 年 8 月）](../../../interview/baidu/ai/baidu-ai-1.md)
+- [百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测](../../../interview/baidu/ai/baidu-ai-2.md)
 - [字节抖音电商 Agent 一面：分层、上下文与 GRPO](../../../interview/bytedance/base/bytedance-base-21.md)
-- [字节 Agent 一面：会话记忆、并发更新与算法](../../../interview/bytedance/base/bytedance-base-29.md)
-- [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../../interview/bytedance/base/bytedance-base-48.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

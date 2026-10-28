@@ -97,7 +97,6 @@ Agent 威胁模型从资产、攻击者能力、数据流和信任边界出发�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [腾讯 Agent 开发一面：RAG、安全与后端工程（2026 年 5 月）](../../../interview/tencent/ai/tencent-ai-1.md)
 - [百度北京后端秋招一面：Agent 安全、检索与存储](../../../interview/baidu/ai/baidu-ai-3.md)
 <!-- interview-source-history:end -->
 

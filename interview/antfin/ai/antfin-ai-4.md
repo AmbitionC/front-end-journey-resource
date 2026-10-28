@@ -1,28 +1,40 @@
-### 蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）
+### 蚂蚁财富技术部一面：协作式 Agent、交付门禁与后端基础
 
-这轮把 Agent 记忆、协作模式、自动化交付、工具安全和后端基础放在同一条追问链中。复习时应先说明系统边界，再说明可验证的质量与故障处理机制。
+作者记述这是蚂蚁财富技术部一面，时长约一个半小时；原文未明确具体岗位及面试日期，采集元数据中的 2026 年 8 月是发帖时间。本文把 Agent 记忆、协作、自动交付、工具安全与后端基础合并为下列 16 组技术题；不收录自我介绍、三项实习产出的个人介绍及面试表现反问。AI/Agent 是题目主题，不据此认定岗位。下文均为教学答法，不代表候选人的实际产出、回答或面试官确认的标准答案。
 
-#### （1）为什么有些记忆适合 Markdown，而不是 RAG？
+<details data-binding-status="pending_semantic_verification">
+<summary>（1）为什么有些记忆适合 Markdown，而不是 RAG？</summary>
+<p>关联知识点待核实。</p>
+</details>
 
 体量小、结构稳定、需要被完整阅读和人工维护的项目约定、决策记录或任务状态，适合用 Markdown 加版本控制：内容可审阅、可 diff、可直接按章节加载。RAG 更适合文档规模大、更新频繁且每次只需取回少量相关片段的知识库。
 
 两者可以结合：将权威且精简的工作规则保留为文档，将大规模参考资料作为检索源。关键不在存储格式，而在于是否能保证来源、权限、版本和读取范围正确。
 
-#### （2）记忆更新中的语义匹配怎样做得可靠？
+<details data-knowledge-key="agent-memory-architecture">
+<summary>（2）记忆更新中的语义匹配怎样做得可靠？</summary>
+</details>
 
 向量相似度只能产生候选，不能单独决定“同一事实”。写入时先按主体、作用域、时间和字段过滤候选，再结合语义相似度、关键词或结构化键进行判断；对可能冲突的事实，保留来源和版本并要求验证，而不是直接覆盖。
+
+知识导航：[Agent 记忆系统架构设计](../../../knowledge/llm/agent/agent-memory-architecture.md)。
 
 应在标注过的重复、冲突、过期样本上测量合并准确率、误合并率和漏合并率，并保留人工纠正和回滚通道。尤其是权限、偏好和业务状态，错误合并的代价远高于少量重复。
 
 延伸阅读：[Agent 记忆](../../../knowledge/llm/agent/agent-memory.md)。
 
-#### （3）什么时候选协作式多 Agent，什么时候选确定性工作流？
+<details data-binding-status="pending_semantic_verification">
+<summary>（3）什么时候选协作式多 Agent，什么时候选确定性工作流？</summary>
+<p>关联知识点待核实。</p>
+</details>
 
 步骤固定、依赖明确、审批路径稳定时，工作流更易测试、重放和审计，应优先使用。只有多个子任务可独立并行、需要不同专业上下文或权限、且协作收益能够覆盖通信和协调成本时，才考虑对等协作的多 Agent 模式。
 
 协作式设计必须约定角色、任务 ID、输入输出 Schema、共享状态所有者和结果合并规则。不能因为每个节点都叫 Agent，就放弃确定性的状态机和验收条件。
 
-#### （4）协作式多 Agent 与“主 Agent 调子 Agent”有什么差异和缺点？
+<details data-knowledge-key="multi-agent">
+<summary>（4）协作式多 Agent 与“主 Agent 调子 Agent”有什么差异和缺点？</summary>
+</details>
 
 主从模式由主 Agent 分解、派发和汇总，控制路径清晰，适合需要统一目标和最终裁决的任务。对等协作模式允许角色之间直接通信或共同推进，更适合迭代探索，但会增加消息拓扑、重复上下文、冲突解决和调试难度。
 
@@ -30,7 +42,9 @@
 
 延伸阅读：[多智能体协作边界](../../../knowledge/llm/agent/multi-agent.md)。
 
-#### （5）不依赖人工审批的自动交付，怎样保证可靠性？
+<details data-knowledge-key="agent-quality-gates">
+<summary>（5）不依赖人工审批的自动交付，怎样保证可靠性？</summary>
+</details>
 
 先将交付物转化为可执行验收：格式与类型检查、单元/集成测试、契约测试、回归集、安全扫描和策略检查。流水线应使用隔离环境、最小权限和固定依赖；每一步输出可追溯证据，失败即阻断，而不是让 Agent 自行声明通过。
 
@@ -38,7 +52,9 @@
 
 延伸阅读：[发布质量门禁与回归阻断](../../../knowledge/llm/production/agent-quality-gates.md)。
 
-#### （6）事务的 ACID、MVCC 和 MySQL 日志怎样关联？
+<details data-knowledge-key="db-transaction-lock">
+<summary>（6）事务的 ACID、MVCC 和 MySQL 日志怎样关联？</summary>
+</details>
 
 原子性要求事务的修改要么全部成功要么全部回滚，一致性要求数据始终满足约束，隔离性约束并发事务的可见性，持久性要求提交后的结果可恢复。MVCC 通过版本记录和一致性视图让读操作在许多场景下不必阻塞写操作，但它不消除所有并发问题，范围写入仍要结合隔离级别和锁讨论。
 
@@ -46,13 +62,17 @@
 
 延伸阅读：[数据库事务与锁](../../../knowledge/backend/database/db-transaction-lock.md)。
 
-#### （7）MySQL 为什么使用 B+ 树？
+<details data-knowledge-key="mysql-index">
+<summary>（7）MySQL 为什么使用 B+ 树？</summary>
+</details>
 
 B+ 树的高扇出降低磁盘页访问次数，内部节点用于导航，叶子节点按键有序并常带相邻链接，因此同时适合等值查询和范围扫描。索引是否有效仍取决于过滤条件、联合索引顺序、选择性与回表成本，应结合执行计划回答。
 
 延伸阅读：[MySQL 索引与执行计划](../../../knowledge/backend/database/mysql-index.md)。
 
-#### （8）缓存穿透、击穿、雪崩与分布式缓存如何治理？
+<details data-knowledge-key="redis-cache">
+<summary>（8）缓存穿透、击穿、雪崩与分布式缓存如何治理？</summary>
+</details>
 
 穿透用空值缓存、布隆过滤器和限流削减不存在请求；热点 key 过期导致的击穿可用互斥重建、逻辑过期或预热；大量同时失效或缓存整体故障导致的雪崩，需要错峰 TTL、分层缓存、降级和容量冗余。分布式缓存还要考虑一致性、热点倾斜、分片迁移和故障切换。
 
@@ -60,13 +80,18 @@ B+ 树的高扇出降低磁盘页访问次数，内部节点用于导航，叶�
 
 延伸阅读：[Redis 缓存策略与一致性](../../../knowledge/backend/database/redis-cache.md)。
 
-#### （9）消息怎样可靠发送，并避免重复消费？
+<details data-binding-status="pending_semantic_verification">
+<summary>（9）消息怎样可靠发送，并避免重复消费？</summary>
+<p>关联知识点待核实。</p>
+</details>
 
 生产者应在消息服务确认持久化后再认为发送成功；若业务写库与发消息要保持一致，可使用事务消息或 outbox，把待发送事件与业务修改放入同一数据库事务，再由可靠投递器异步发布。消费者面对至少一次投递应假定会重复，使用业务唯一键、幂等记录或状态机去重。
 
 失败重试需区分可恢复和不可恢复错误，设置退避、最大次数、死信队列和告警。顺序、延迟和“恰好一次”语义都必须结合消息系统与业务存储的真实边界说明。
 
-#### （10）限流、熔断和降级分别解决什么问题？
+<details data-knowledge-key="rate-limit-circuit">
+<summary>（10）限流、熔断和降级分别解决什么问题？</summary>
+</details>
 
 限流在入口控制速率或并发，保护系统不过载；熔断在依赖持续失败时快速拒绝或走备用路径，避免请求堆积；降级是在资源或依赖受限时主动关闭非核心能力、返回简化结果或延后处理。三者常组合使用，但目标不同。
 
@@ -74,7 +99,9 @@ B+ 树的高扇出降低磁盘页访问次数，内部节点用于导航，叶�
 
 延伸阅读：[限流、熔断与降级](../../../knowledge/backend/auth/rate-limit-circuit.md)。
 
-#### （11）怎样判断一个人能否参加所有会议？最少需要多少会议室？
+<details data-knowledge-key="algorithm-interval-scheduling">
+<summary>（11）怎样判断一个人能否参加所有会议？最少需要多少会议室？</summary>
+</details>
 
 判断能否全部参加：按开始时间排序，依次检查当前会议的开始时间是否早于前一场的结束时间；若有重叠则不能参加，时间复杂度为 $O(n \log n)$。最少会议室数是任意时刻的最大重叠数：按开始时间排序，并用最小堆维护正在占用的结束时间；开始时间不早于堆顶结束时间时可复用该会议室，否则新增一个。
 
@@ -82,7 +109,9 @@ B+ 树的高扇出降低磁盘页访问次数，内部节点用于导航，叶�
 
 延伸阅读：[区间调度与会议室问题](../../../knowledge/cs/algorithm/algorithm-interval-scheduling.md)。
 
-#### （12）模型怎样调用工具？MCP 解决什么问题？
+<details data-knowledge-key="mcp-protocol">
+<summary>（12）模型怎样调用工具？MCP 解决什么问题？</summary>
+</details>
 
 模型并不直接执行外部操作；运行时把可用工具的名称、描述和参数 Schema 提供给模型，模型输出结构化调用意图，宿主程序校验权限与参数后执行，再把受控结果返回模型。副作用操作需要幂等、审计、超时与审批策略。
 
@@ -90,19 +119,26 @@ MCP 提供客户端与工具/资源服务之间的标准连接和能力发现方
 
 延伸阅读：[MCP / A2A 协议](../../../knowledge/llm/agent/mcp-protocol.md)、[Agent 工具契约](../../../knowledge/llm/agent/agent-tool-design.md)。
 
-#### （13）长期与短期记忆怎样划分？
+<details data-knowledge-key="agent-memory-architecture">
+<summary>（13）长期与短期记忆怎样划分？</summary>
+</details>
 
 短期记忆服务当前运行：任务、计划、近期对话和工具证据，随 token 预算压缩或过期。长期记忆保存跨会话仍成立的偏好、知识和经验，需带来源、权限、时间、置信度和撤销机制。两者都不能不加筛选地写入模型输出，否则会产生过期事实与注入污染。
 
 延伸阅读：[Agent 记忆架构](../../../knowledge/llm/agent/agent-memory-architecture.md)、[记忆投毒防护](../../../knowledge/llm/production/agent-memory-poisoning.md)。
 
-#### （14）Temperature、Top-k、Top-p 是什么？为什么 Temperature 为 0 仍可能不完全一致？
+<details data-binding-status="pending_semantic_verification">
+<summary>（14）Temperature、Top-k、Top-p 是什么？为什么 Temperature 为 0 仍可能不完全一致？</summary>
+<p>关联知识点待核实。</p>
+</details>
 
 Temperature 缩放 logits，越低越偏向高概率 token；Top-k 只在概率最高的 k 个候选中采样；Top-p 选择累计概率达到阈值的最小候选集合。它们影响随机性和多样性，应结合任务质量而非追求某个固定参数。
 
 即使 Temperature 为 0，推理服务仍可能因并行计算的浮点舍入、非确定性内核、动态批处理、模型或服务版本、工具返回和上下文差异而不同。需要稳定输出时，还应固定模型版本、解码参数、随机种子（若服务支持）和完整输入，并用外部验证而非字符串完全相等作为主要标准。
 
-#### （15）什么是 Prompt 注入，怎样防护？
+<details data-knowledge-key="prompt-injection-defense">
+<summary>（15）什么是 Prompt 注入，怎样防护？</summary>
+</details>
 
 Prompt 注入是把不可信文本伪装成高优先级指令，诱导模型忽略原任务、泄露数据或调用越权工具。系统应把外部内容当作数据而非指令，明确区分可信规则和不可信输入；敏感工具在服务端做最小权限、参数白名单、用户确认和审计，不能依赖模型“听话”。
 
@@ -110,7 +146,9 @@ Prompt 注入是把不可信文本伪装成高优先级指令，诱导模型忽�
 
 延伸阅读：[Prompt 注入防护](../../../knowledge/llm/production/prompt-injection-defense.md)、[Agent 安全威胁模型](../../../knowledge/llm/production/agent-security-threat-model.md)。
 
-#### （16）Skill 的懒加载和 Agent 的基本组成如何说明？
+<details data-knowledge-key="agent-architecture">
+<summary>（16）Skill 的懒加载、Agent 的组成与 Harness 包括什么？</summary>
+</details>
 
 Skill 懒加载是先用简短元数据参与路由，确定任务需要后才加载详细说明、模板和资源，以控制上下文成本并减少无关规则干扰。每个 Skill 应有版本、权限、依赖和可测验收条件；加载后仍需由工具层独立鉴权。
 

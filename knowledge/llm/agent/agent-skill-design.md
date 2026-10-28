@@ -9,7 +9,7 @@ Skill 是把「某类任务该怎么做」固化下来、供 Agent 按需加载�
 | 提示词工程 | 怎样设计指令、示例、格式与上下文 | 可用于一次或一类任务的交互设计 |
 | **Skill** | **这类任务该怎么做，且能复用** | 一类任务的做法沉淀 |
 | MCP | 外部工具与数据怎么标准化接入 | 连接与发现协议 |
-| RAG | 私域事实从哪来、如何接地 | 上下文的事实供给 |
+| RAG | 与问题相关的外部证据从哪来、如何支撑输出 | 上下文的证据供给，可来自公开或私有资料 |
 
 一句话概括：**MCP 管「怎么连」，Skill 管「怎么做」，RAG 管「拿什么事实」，提示词工程管「怎样设计交互」**。它们可以叠加——一个 Skill 完全可以规定「先用 RAG 查内部规范，再调某个 MCP 工具落库」。
 
@@ -19,11 +19,11 @@ Skill 是把「某类任务该怎么做」固化下来、供 Agent 按需加载�
 
 朴素做法是把所有 Skill 正文都塞进 System Prompt，Skill 一多上下文就爆。渐进式披露（progressive disclosure）把加载拆成层次，用多少读多少：
 
-1. **元信息层（常驻）**：只加载每个 Skill 的名称 + 描述，几十 token，作为「目录」供模型判断要不要用。
+1. **元信息层**：先提供名称、用途和触发边界，作为路由目录；实际展示范围与 token 开销取决于宿主的目录预算。
 2. **正文层（命中后）**：确定使用后才加载完整说明书——步骤、规范、判断标准。
 3. **资源层（按需）**：正文引用的参考文件、脚本、模板，真正需要时才读取或执行。
 
-效果是**常驻开销 ∝ Skill 数量 × 一行描述**，而非 × 整篇正文；挂 100 个 Skill 仍然可控。这与上下文工程里的 JIT 加载是同一思想在「能力」维度的应用。
+在“所有描述均进入上下文”的简化模型中，目录开销随描述总量增长，而非所有正文总量；数量大时仍需候选检索、描述预算和误触发评测，不能由“有 100 个 Skill”推断一定可控。这与上下文工程里的 JIT 加载有共同思路，具体行为以宿主为准。
 
 ### 懒加载的可执行链路
 
@@ -56,7 +56,7 @@ Skill 是把「某类任务该怎么做」固化下来、供 Agent 按需加载�
 - 语义化版本，**已发布版本不可变**，升级即发布新版本而非原地覆盖。
 - 任务开始时记录所用 `skill_id@version` 并在整个运行期 pin 住，以锁定制品这一项变量；模型、依赖、数据和外部工具状态也需记录，不能因此保证整个任务可复现。
 - 保持向后兼容契约：名称、描述语义、输入输出结构不随意改；破坏性变更升 major 并保留旧版一段时间。
-- 灰度放量 + 秒级回滚；升级前跑路由评测与端到端回归。
+- 灰度放量并验证版本回退路径；升级前跑路由评测与端到端回归，恢复时长按实际系统测量。
 
 依赖同理：在清单中**显式声明**依赖的工具、其它 Skill 及版本范围，装载时做依赖解析与环检测，缺依赖即拒绝装载。设计上倾向扁平、少依赖——Skill 之间尽量通过明确的输入输出协作，而非深度耦合的调用链。
 
@@ -69,7 +69,7 @@ Skill 是把「某类任务该怎么做」固化下来、供 Agent 按需加载�
 - **可评测**：配套用例，能量化回答「这次改动让它变好了吗」。
 - **上下文经济**：正文精炼，重资料下沉到资源层按需读取。
 
-规模化后如何提升选中率（召回、准确、F1），属于路由问题，见[工具发现、选择与路由](agent-tool-selection.md)——Skill 选择与工具选择在工程上是同一套两段式检索 + 精排方法。
+规模化后如何提升选中率（召回、准确、F1），属于路由问题，见[工具发现、选择与路由](agent-tool-selection.md)。Skill 选择可借用候选检索与精排，但不是所有宿主都采用同一算法；技能触发、正文遵循和工具执行仍需分别评测。
 
 ## SkillHub 的发布与运行门禁
 
@@ -80,6 +80,10 @@ Skill 是把「某类任务该怎么做」固化下来、供 Agent 按需加载�
 3. **运行时约束**：任务启动时固定制品哈希，按最小权限授予工具，记录调用审计；常规升级可让已开始任务继续使用原制品，避免混用版本；紧急安全撤销要按策略暂停或取消在途任务并核对副作用，不能一概继续。
 
 这套机制把“能找到一个 Skill”和“敢在生产环境运行它”分开：前者由检索与路由解决，后者由供应链校验、沙箱执行、权限控制和审计共同保证。
+
+## 从执行经验演进到新 Skill
+
+成功轨迹、失败复盘和人工修正先作为候选经验，经过用途检查、脱敏与语义去重，再提炼适用条件、步骤、反例和验收标准；一次成功不能直接写成永久规则。用未参与本轮编写的固定任务比较旧版与候选，观察任务成功、误触发、权限边界、延迟与成本，通过后发布新版本并保留回退。在途任务继续使用已绑定的合适版本，候选 Skill 不应自行修改线上验收规则来证明自己有效。[官方 Skill 迭代与评估说明](https://code.claude.com/docs/en/skills#evaluate-and-iterate-on-a-skill)提供测试与迭代入口；上述版本和发布门禁是应用治理设计。
 
 ## MCP 与 Skill 可同时存在
 
@@ -102,28 +106,22 @@ MCP 组织宿主与服务器的能力发现和调用，Skill 组织按需加载�
 - [蚂蚁 Agent 一二面：Code Agent 与应用开发](../../../interview/antfin/ai/antfin-ai-2.md)
 - [腾讯 AI 应用开发面试：跨会话记忆与多 Agent](../../../interview/tencent/ai/tencent-ai-4.md)
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../../interview/bytedance/base/bytedance-base-48.md)
-- [OPPO IT 开发一面：ReAct、MCP 与智能问数（2026 年 8 月）](../../../interview/oppo/ai/oppo-ai-3.md)
+- [OPPO IT 开发一面：ReAct、MCP 与智能问数](../../../interview/oppo/ai/oppo-ai-3.md)
 - [小红书与百度 Agent 面试合并记录：LangGraph 子图、Skill 与工程校验](../../../interview/redbook/ai/redbook-ai-2.md)
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)
-- [蚂蚁智能体与大模型应用一面：幻觉、Skill 与 RAG（2026 年 5 月）](../../../interview/antfin/ai/antfin-ai-5.md)
-- [大疆创新 AI Agent 开发面经：容错、Token 与后端基础（2026 年 8 月）](../../../interview/dji/ai/dji-ai-1.md)
+- [蚂蚁智能体与大模型应用一面：幻觉、Skill 与 RAG](../../../interview/antfin/ai/antfin-ai-5.md)
+- [大疆创新 AI Agent 开发面经：容错、Token 与后端基础](../../../interview/dji/ai/dji-ai-1.md)
 - [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
 - [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)
-- [腾讯后端 AI 开发实习面试（2026 年 4 月）](../../../interview/tencent/ai/tencent-ai-3.md)
 - [字节 Agent 暑期实习一面：摘要、工具预算与链表](../../../interview/bytedance/base/bytedance-base-27.md)
 - [字节 Agent Infra 校招：运行时、MySQL 与 LRU](../../../interview/bytedance/base/bytedance-base-25.md)
-- [腾讯 Agent 项目二面：记忆、RAG 与 MCP（2026 年 5 月）](../../../interview/tencent/ai/tencent-ai-2.md)
 - [字节抖音 Agent 一面：Skill、MCP 与记忆](../../../interview/bytedance/base/bytedance-base-39.md)
-- [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)
 - [理想汽车 IT 全栈交付培养生一面：Skill、测试与工作流](../../../interview/liauto/fullstack/liauto-fullstack-1.md)
 - [字节剪映 AI 前端一面：Agent 运行时、MCP 与性能](../../../interview/bytedance/base/bytedance-base-30.md)
-- [OPPO AI 全栈一面：AI Coding、Skill 与数据结构（2026 年 8 月）](../../../interview/oppo/ai/oppo-ai-1.md)
-- [深信服 Agent 开发一面：MCP、多 Agent、安全与网络（2026 年 8 月）](../../../interview/sangfor/ai/sangfor-ai-1.md)
-- [快手主站 SRE 一二三面：Agent Skill、性能排障与数据链路（2026 年 4 月）](../../../interview/kuaishou/ai/kuaishou-ai-5.md)
+- [OPPO AI 全栈一面：AI Coding、Skill 与数据结构](../../../interview/oppo/ai/oppo-ai-1.md)
+- [快手主站 SRE 一二三面：Agent Skill、性能排障与数据链路](../../../interview/kuaishou/ai/kuaishou-ai-5.md)
 - [网易云音乐全栈一面：JavaScript、排序与 RAG](../../../interview/netease/fullstack/netease-fullstack-2.md)
-- [字节 Agent 开发一面：Skill、MCP 与后端基础（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-15.md)
-- [蚂蚁后端 AI 开发一面：Agent、Redis 与短链系统（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-3.md)
-- [快手大模型应用 Java 实习一面：Agent、SkillHub 与 Vibe Coding（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-1.md)
+- [快手大模型应用 Java 实习一面：Agent、SkillHub 与 Vibe Coding](../../../interview/kuaishou/ai/kuaishou-ai-1.md)
 - [58同城 Agent 开发一面：MCP、数据查询与后端基础](../../../interview/58tongcheng/ai/58tongcheng-ai-1.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)
 - [字节 Agent：AI Coding、技能设计与模型工程](../../../interview/bytedance/base/bytedance-base-49.md)

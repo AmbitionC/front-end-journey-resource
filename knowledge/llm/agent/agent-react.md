@@ -102,11 +102,11 @@ History: {history}
 
 - **工具清单（`{tools}`）**：告诉 LLM 有哪些工具可用。工具描述的质量直接决定 LLM 能否正确选择工具，这是最容易踩坑的地方。
 - **格式规约（Action/Status）**：用 schema 校验工具名、参数和状态；不要依赖详细 Thought 文本或正则提取隐藏推理。
-- **动态上下文（`{question}`/`{history}`）**：每一轮都把完整历史注入，让 LLM 可以"看到"之前的所有行动和观察。
+- **动态上下文（`{question}`/`{history}`）**：本教学例逐轮注入历史行动与观察；生产应按 token 预算选择相关证据、保留可回读引用和关键约束，不能无界重放所有原始结果。
 
 ## 从零实现一个 ReAct Agent
 
-下面的 Python 代码展示了 ReAct 循环的完整骨架，以供理解原理（实际生产项目建议使用 LangChain、LangGraph 等框架，以官方文档为准）。
+下面的 Python 代码展示了单动作 ReAct 循环的教学骨架，适配器与工具服务需另行实现。循环前后检查时间不等于能中断阻塞的模型/工具调用；生产还需传递剩余 deadline、执行授权、验证参数与结果，并对 finish 提议检查独立成功条件。示例中的 `completed` 只表示收到模型 finish，不能证明外部业务已完成。采用 LangChain、LangGraph 等框架也仍需定义这些合同。
 
 ### 工具管理器
 
@@ -301,7 +301,7 @@ ReAct 把工具或环境返回的 Observation 引入下一步决策，使错误�
 1. **行动可追踪**：结构化 Action、工具参数、Observation 与安全状态可以形成可审计轨迹；这不要求暴露模型隐藏推理。
 2. **根据反馈调整**：Observation 让运行循环有机会修正下一行动；显式计划也可以依据执行结果重规划，两种结构都不自动保证纠错成功。
 3. **工具协同**：LLM 负责推理，工具负责精确执行（搜索、计算、API 调用），各司其职。
-4. **实现简洁**：核心逻辑百行以内，没有复杂状态机。
+4. **教学循环简洁**：可以用少量代码展示行动与观察；生产所需状态、预算、恢复与授权不能由代码行数推断。
 
 ### 教学示例与工程限制
 
@@ -353,12 +353,11 @@ ReAct 强调根据最新观察决定下一行动，适合需要持续探索的�
 - [字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)
 - [腾讯 AI 应用开发面试：跨会话记忆与多 Agent](../../../interview/tencent/ai/tencent-ai-4.md)
 - [百度后端一面：ReAct、规划与流式工具参数](../../../interview/baidu/ai/baidu-ai-4.md)
-- [OPPO IT 开发一面：ReAct、MCP 与智能问数（2026 年 8 月）](../../../interview/oppo/ai/oppo-ai-3.md)
+- [OPPO IT 开发一面：ReAct、MCP 与智能问数](../../../interview/oppo/ai/oppo-ai-3.md)
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)
 - [字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-20.md)
-- [字节大模型应用开发一面：Agent、RAG 与可靠性（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-16.md)
 - [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
-- [小红书 Agent 开发一面：多智能体、Memory 与广告投放优化（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-1.md)
+- [小红书 Agent 开发一面：多智能体、Memory 与广告投放优化](../../../interview/redbook/ai/redbook-ai-1.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)
 <!-- interview-source-history:end -->
 

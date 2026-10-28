@@ -182,6 +182,14 @@ async def evaluate(agent, cases, check_result):
 
 **渐进式评估策略**：先用一个覆盖关键路径的冒烟子集验证评估管道，再按风险切片扩大运行范围。子集大小、放大条件和最终样本量来自覆盖目标、基线方差、最小可检测变化与预算；不能由固定条数或准确率阈值决定。
 
+## 意图识别的评测集与指标
+
+先固定意图集合、槽位和允许动作的标注规则，再从获准的真实请求抽样，补入同义表达、上下文省略、多意图、无答案与应澄清的边界样本。开发集用于调参，独立保留集用于最终比较；近重复请求应按会话或来源分组，避免同一句改写同时出现在两边。样本数量取决于场景覆盖、类别频率、目标误差与预算，不能从一个通用条数推断充分性。
+
+总体准确率之外，用混淆矩阵查看意图之间的误分，并逐类报告 Precision、Recall 和 F1：Precision 关注“判成该类的有多少确实属于该类”，Recall 关注“实际该类中找回了多少”。Macro-F1 先算每类 F1 再等权平均，能帮助观察少数类；它仍不是业务风险权重。计算定义与多类平均方式见 [scikit-learn 分类指标说明](https://scikit-learn.org/stable/modules/model_evaluation.html#precision-recall-f-measure-metrics)。
+
+路由正确也不等于任务成功。另统计槽位正确率、应拒识/澄清样本的判断、无谓反问、澄清后成功率和高风险误执行。例如把只读查询误路由到删除，即使只占少量样本，也应触发独立安全门禁。把拒识样本、缺少标签和环境故障的分母说明白；多意图任务按标签集合或子任务验收，不强制套用单标签准确率。
+
 ## 为什么准确率不够：一个完整视角
 
 下面是一个**不带通用数值的决策示例**，展示只看准确率会错过什么：
@@ -197,7 +205,7 @@ async def evaluate(agent, cases, check_result):
 - A 的鲁棒性差，真实用户的各种表述下会频繁失败；
 - B 在综合考量下可能是最优选择。
 
-评估维度选取应与**业务目标对齐**：如果成本是最高约束，重点看 Token 效率；如果是客户服务场景，鲁棒性比准确率更重要；如果是研究竞赛，准确率才是第一位。
+评估维度选取应与**业务目标对齐**：如果成本是最高约束，重点看 Token 效率；如果客户服务输入变化大，就要在关键正确性与安全要求之外重点检查鲁棒性；研究竞赛也应按其实际任务与评分规则解释结果，不能预设通用优先级。
 
 ## 常见误区与最佳实践
 
@@ -237,15 +245,18 @@ Self-Refine可以按“生成候选 → 对照任务要求给出具体反馈 →
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [阿里国际 Accio Agent 算法一面：数据合成、任务环境与 GUI Agent](../../../interview/alibaba/ai/alibaba-ai-3.md)（cluster-10359bdec433）
-- [字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-20.md)（cluster-418d84d3fe66）
-- [阿里淘天 Agent 算法一面：任务构造、轨迹与训练路线](../../../interview/alibaba/ai/alibaba-ai-4.md)（cluster-787120ee1249）
-- [百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测（2026 年 8 月）](../../../interview/baidu/ai/baidu-ai-2.md)（cluster-9acb30c57710）
-- [阿里淘宝闪购 Agent 算法实习一面：框架、记忆与线上排障](../../../interview/alibaba/ai/alibaba-ai-6.md)（cluster-e392a4fd1f33）
+- [阿里国际 Accio Agent 算法一面：数据合成、任务环境与 GUI Agent](../../../interview/alibaba/ai/alibaba-ai-3.md)
+- [小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展](../../../interview/redbook/ai/redbook-ai-3.md)
+- [字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-20.md)
+- [阿里淘天 Agent 算法一面：任务构造、轨迹与训练路线](../../../interview/alibaba/ai/alibaba-ai-4.md)
+- [百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测](../../../interview/baidu/ai/baidu-ai-2.md)
+- [快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理](../../../interview/kuaishou/ai/kuaishou-ai-3.md)
+- [阿里淘宝闪购 Agent 算法实习一面：框架、记忆与线上排障](../../../interview/alibaba/ai/alibaba-ai-6.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
 
+- [scikit-learn：分类指标与平均方式](https://scikit-learn.org/stable/modules/model_evaluation.html#precision-recall-f-measure-metrics)
 - [AgentBench: Evaluating LLMs as Agents](https://arxiv.org/abs/2308.03688)
 - [WebArena: A Realistic Web Environment for Building Autonomous Agents](https://arxiv.org/abs/2307.13854)
 - [G-Eval: NLG Evaluation using GPT-4 with Better Human Alignment](https://arxiv.org/abs/2303.16634)

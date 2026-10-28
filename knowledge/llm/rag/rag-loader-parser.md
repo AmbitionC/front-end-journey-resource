@@ -135,6 +135,10 @@ Loader 建立可信的字节边界，Parser 建立可审计的结构解释。两
 - [字节全栈一面：RAG、Java 与线程池](../../../interview/bytedance/base/bytedance-base-37.md)
 <!-- interview-source-history:end -->
 
+## 相关机制阅读（不计专题频次）
+
+- [OPPO IT 开发一面：ReAct、MCP 与智能问数](../../../interview/oppo/ai/oppo-ai-3.md)（原题问 Word 图文输入到图文回答的整条链路；本篇支撑其中的文档解析与关系保留，图像召回和视觉证据可继续读[图像检索](./rag-image-retrieval.md)，不把整链路问题等同于解析专题的独立追问。）
+
 ## 参考资料
 
 - [Apache Tika — The Parser interface](https://tika.apache.org/2.6.0/parser.html)

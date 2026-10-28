@@ -1,20 +1,28 @@
-### 快手主站 SRE 一二三面：Agent Skill、性能排障与数据链路（2026 年 4 月）
+### 快手主站 SRE 一二三面：Agent Skill、性能排障与数据链路
 
-这份记录覆盖主站 SRE 运维开发的三轮技术面。问题从智能分配项目延伸到 gRPC、HTTP/3、OOM、CPU 排障、缓存与数据库，再深入 Kafka、Redis、ClickHouse 数据链路，以及 Skill、MCP 和 AI 辅助故障定位。本文按能力域合并重复追问，保留可迁移的答题框架。
+作者记述主站 SRE 运维开发三轮技术面发生在 4 月、约每周一轮，未明示年份；采集元数据的 2026 年 5 月是发帖时间。本文选录并合并为下列 16 组能力题，答案是教学框架，不代表候选人的实际回答或项目结果。未展开的原问包括 OSPF/BGP、free -h 的 buff/cache、BIOS/GPU、高可用爬虫的质量和性能、实验室启动门槛 5k 与批次 3k 的分配场景、跨核心服务器压测执行细节、大批量分单的资源控制、AI 开发转向全栈与平台的趋势，以及个人职责、实习成长和工作地点。数据库题仅选录 SQL、索引、分页和架构调优概要，未展开范式设计、实时/离线数仓、文件压缩与归档、集群同步监控；这些不能视为已经完整覆盖。原作者对 Flink CDC 的面后推测也不作为面试官确认的标准答案。
 
-#### （1）智能分配问题如何建模？硬约束与软约束有什么区别？
+<details data-binding-status="pending_semantic_verification">
+<summary>（1）智能分配问题如何建模？硬约束与软约束有什么区别？</summary>
+<p>关联知识点待核实。</p>
+</details>
 
 先把决策变量、目标函数和约束写清楚。例如“任务是否分给某资源”是决策变量；容量、资质、地域和截止时间通常是不可违反的硬约束；成本、均衡度、时效偏好可作为带权惩罚的软约束。无可行解时，系统应明确是拒绝、排队还是按优先级放宽某项软约束，不能静默突破安全或合规边界。
 
 算法选型要基于问题结构和规模：规则/贪心实现简单、延迟稳定，但可能陷入局部最优；整数规划或约束求解器能给出更强的可行性与最优性保证，却可能在大规模下变慢；爬山等启发式方法适合允许近似解的场景。回答时应给出候选方案在质量、延迟、可解释性和维护成本上的对比。
 
-#### （2）怎样证明新分配方案优于原有逻辑？
+<details data-binding-status="pending_semantic_verification">
+<summary>（2）怎样证明新分配方案优于原有逻辑？</summary>
+<p>关联知识点待核实。</p>
+</details>
 
 先用历史订单做离线回放，与旧规则比较可行解率、总成本、超时率、负载方差和求解时延；再对边界条件、无解输入和大批量任务做压力测试。上线时采用影子计算或小流量灰度，设置业务护栏和一键回退。
 
 “技术指标更好”不等于业务有效，还应说明人工调度量、履约时效、资源利用率或异常工单等业务结果。若算法只在特定规模下有效，要明确触发阈值以及超时后的降级方案。
 
-#### （3）gRPC 改造为什么可能降低延迟？怎样证明不是组件替换带来的错觉？
+<details data-knowledge-key="grpc-basics">
+<summary>（3）gRPC 改造为什么可能降低延迟？怎样证明不是组件替换带来的错觉？</summary>
+</details>
 
 gRPC 常用 Protobuf 减少编解码体积，并借助 HTTP/2 的长连接、多路复用与流控降低连接开销；但它不会天然让所有请求更快。真正收益还可能来自连接复用、批量接口、缓存、反射或序列化优化，以及删除冗余过滤器，因此应拆分变量逐项压测。
 
@@ -22,25 +30,36 @@ gRPC 常用 Protobuf 减少编解码体积，并借助 HTTP/2 的长连接、多
 
 延伸阅读：[gRPC 与 Protocol Buffers](../../../knowledge/backend/api/grpc-basics.md)。
 
-#### （4）线上 OOM 应该怎样分类和定位？
+<details data-binding-status="pending_semantic_verification">
+<summary>（4）线上 OOM 应该怎样分类和定位？</summary>
+<p>关联知识点待核实。</p>
+</details>
 
 先确认是哪类内存耗尽：Java 堆、Metaspace、Direct Memory、线程栈还是容器总内存。堆 OOM 结合 GC 日志、Heap Dump、对象直方图和分配速率定位泄漏或无界缓存；直接内存检查 Netty Buffer 与本地内存；线程过多则结合线程数、栈大小和线程转储；容器被 OOMKilled 还要核对 cgroup 限额与堆外占用。
 
 处置顺序是先止血，再保留证据，最后复现和修复。临时扩容只能换取诊断时间；真正修复需要给队列、缓存和并发设置边界，关闭资源泄漏，并用压测验证内存能在稳定水位回收。
 
-#### （5）接口变慢或 CPU 飙升时，排查路径是什么？
+<details data-binding-status="pending_semantic_verification">
+<summary>（5）接口变慢或 CPU 飙升时，排查路径是什么？</summary>
+<p>关联知识点待核实。</p>
+</details>
 
 接口变慢先按“入口—应用—下游—资源”缩小范围：比较成功率和延迟分位，沿 Trace 找到慢 Span，再检查线程池队列、锁竞争、GC、数据库、缓存、网络和依赖超时。不要一开始只盯平均延迟，也不要在证据不足时直接重启丢失现场。
 
 Java 进程 CPU 飙升时，可用 `top` 找进程、`top -H -p <pid>` 找高 CPU 线程，将线程 ID 转为十六进制后在 `jstack` 中定位对应栈；再结合持续采样或 JFR 判断是热点计算、忙等、锁、自旋还是频繁 GC。命令只是定位入口，最终结论要由多次采样和业务指标交叉验证。
 
-#### （6）HTTP/1.1、HTTP/2 与 HTTP/3 的关键差异是什么？QUIC 如何保证可靠性？
+<details data-binding-status="pending_semantic_verification">
+<summary>（6）HTTP/1.1、HTTP/2 与 HTTP/3 的关键差异是什么？QUIC 如何保证可靠性？</summary>
+<p>关联知识点待核实。</p>
+</details>
 
 HTTP/1.1 常依赖多连接缓解串行阻塞；HTTP/2 在单个 TCP 连接上多路复用，但发生丢包时，TCP 层会阻塞该连接上的所有流；HTTP/3 基于 QUIC，让不同流拥有独立的可靠传输状态，从而减少跨流队头阻塞，并把 TLS 1.3 握手与传输建立结合起来。
 
 QUIC 仍是可靠传输：通过包号、ACK、丢包检测、重传和拥塞控制保证数据交付与顺序；同一流内丢失的数据仍会阻塞该流。它还支持连接 ID 和路径迁移，但是否更快取决于网络、代理支持、连接复用和负载特征，不能只靠协议名称下结论。
 
-#### （7）缓存一致性有哪些常见方案？
+<details data-knowledge-key="redis-cache">
+<summary>（7）缓存一致性有哪些常见方案？</summary>
+</details>
 
 通用 Cache-Aside 写路径是先提交数据库，再删除缓存，并为缓存设置 TTL；并发读写仍存在短暂不一致窗口，可用版本号、延迟双删、消息/CDC 驱动失效或单 key 串行化按风险加强。强一致业务应以数据库或权威状态为准，不能把缓存成功当作交易提交。
 
@@ -48,7 +67,9 @@ QUIC 仍是可靠传输：通过包号、ACK、丢包检测、重传和拥塞控
 
 延伸阅读：[Redis 缓存与一致性](../../../knowledge/backend/database/redis-cache.md)。
 
-#### （8）Agent Skill、MCP 与 RAG 分别解决什么问题？
+<details data-knowledge-key="agent-skill-design">
+<summary>（8）Agent Skill、MCP 与 RAG 分别解决什么问题？</summary>
+</details>
 
 Skill 封装“某类任务应该怎样做”，包括步骤、约束、资源和验收标准，适合按需加载、版本治理和复用；MCP 标准化 Agent 如何发现并调用外部工具或资源；RAG 从知识库检索证据并放入上下文。三者可以组合，但不能互相替代。
 
@@ -56,13 +77,18 @@ Skill 封装“某类任务应该怎样做”，包括步骤、约束、资源�
 
 延伸阅读：[Agent Skill 设计与版本治理](../../../knowledge/llm/agent/agent-skill-design.md)、[MCP / A2A 智能体通信协议](../../../knowledge/llm/agent/mcp-protocol.md)。
 
-#### （9）Skill 如何改善多 MCP 架构？
+<details data-binding-status="pending_semantic_verification">
+<summary>（9）Skill 如何改善多 MCP 架构？</summary>
+<p>关联知识点待核实。</p>
+</details>
 
 多个 MCP Server 直接暴露大量工具，会增加上下文、选错工具和权限审计的成本。Skill 可以按任务先筛选所需 Server 和工具，规定调用顺序、参数校验、失败降级和验收条件，并通过渐进式披露只加载当前阶段需要的说明。
 
 但 Skill 不会消除 MCP 层的连接、认证、Schema 演进和隔离问题。合理架构仍需可信注册表、工具命名空间、最小权限、连接健康检查和 Trace；Skill 负责可复用的做法，执行层负责真正的安全边界。
 
-#### （10）数据库调优怎样从 SQL 扩展到架构层？
+<details data-knowledge-key="sql-index-optimize">
+<summary>（10）数据库调优怎样从 SQL 扩展到架构层？</summary>
+</details>
 
 先定位瓶颈再调优：用慢查询与执行计划判断扫描行数、索引、Join 顺序、排序和锁等待；随后检查字段类型、分页方式、连接池与缓存。只有单机容量、写入冲突或读扩展确实成为瓶颈时，才考虑读写分离、分库分表、冷热分层和归档。
 
@@ -70,25 +96,37 @@ Skill 封装“某类任务应该怎样做”，包括步骤、约束、资源�
 
 延伸阅读：[SQL 索引与执行计划优化](../../../knowledge/data/sql/sql-index-optimize.md)。
 
-#### （11）Kubernetes 中如何实现优雅关闭？
+<details data-binding-status="pending_semantic_verification">
+<summary>（11）Kubernetes 中如何实现优雅关闭？</summary>
+<p>关联知识点待核实。</p>
+</details>
 
 Pod 终止时先让 readiness 变为不可用并从流量入口摘除，再停止接收新任务；应用收到终止信号后关闭消费者拉取、等待在途请求到安全点、提交必要状态并释放连接。`preStop` 和 `terminationGracePeriodSeconds` 需要覆盖服务发现传播与最长安全处理时间。
 
 对 Kafka 消费者、定时任务和长 RPC，还要明确再均衡、offset 提交、幂等重放与超时后的强制退出。发布验证应包含滚动升级时的错误率、在途请求丢失和终止耗时，而不只是看到进程退出码为 0。
 
-#### （12）Kafka 消费突然变慢，应该怎样排查？
+<details data-binding-status="pending_semantic_verification">
+<summary>（12）Kafka 消费突然变慢，应该怎样排查？</summary>
+<p>关联知识点待核实。</p>
+</details>
 
 先确认 lag 是所有分区同时增长还是少数分区热点，再分层检查生产速率、Broker 磁盘与网络、分区分布、消费者处理时长、GC、下游依赖和提交策略。若消费者频繁加入退出或单次处理超过约束，还可能形成重平衡风暴。
 
 止血可以扩容消费者、隔离慢下游、降低非关键流量或临时增加批量；但消费者数超过分区数不会提高并行度。长期优化应针对真实瓶颈调整分区键、批量大小、并发、背压和幂等语义，并监控 lag 的年龄而不只看消息条数。
 
-#### （13）Redis 操作变慢时有哪些特殊检查项？
+<details data-binding-status="pending_semantic_verification">
+<summary>（13）Redis 操作变慢时有哪些特殊检查项？</summary>
+<p>关联知识点待核实。</p>
+</details>
 
 先看服务端延迟、网络、连接池和客户端排队，再用 Slow Log 与命令统计检查 `O(N)` 命令、大 key、热 key、Lua 长脚本和批量操作。还要关注持久化 fork、AOF 重写、内存碎片、扩容 rehash、淘汰和操作系统 swap；一旦 Redis 页面被换出到磁盘，延迟会显著恶化。
 
 排查时把单次命令耗时和请求端到端耗时分开。拆大 key、限制返回量、分散热点和隔离慢命令通常比盲目增加客户端重试更有效，后者可能放大拥塞。
 
-#### （14）Canal + Kafka 同步 ClickHouse 太慢，怎样定位和优化？
+<details data-binding-status="pending_semantic_verification">
+<summary>（14）Canal + Kafka 同步 ClickHouse 太慢，怎样定位和优化？</summary>
+<p>关联知识点待核实。</p>
+</details>
 
 先把链路拆成 binlog 读取、事件序列化、Kafka 生产与消费、转换、ClickHouse 写入和后台 merge，测每段吞吐、积压与批次大小。ClickHouse 偏好批量写入；过多小批次会产生大量 part，因此可调整批量、并行度、分区键与压缩，同时确保重试不会重复写坏业务语义。
 
@@ -96,7 +134,10 @@ Flink CDC 可以把变更捕获、状态、检查点和流式转换放进统一�
 
 延伸阅读：[ClickHouse 核心原理](../../../knowledge/data/sql/clickhouse-intro.md)、[批处理与流处理](../../../knowledge/data/pipeline/batch-stream-processing.md)。
 
-#### （15）如何用 AI 辅助线上故障定位？
+<details data-binding-status="pending_semantic_verification">
+<summary>（15）如何用 AI 辅助线上故障定位？</summary>
+<p>关联知识点待核实。</p>
+</details>
 
 先把指标、日志、Trace、部署变更和依赖拓扑统一到一次事件时间线，再让 AI 检索相关 Runbook、生成候选根因和下一步只读查询。每个判断应附证据引用，并由确定性规则验证时间范围、服务身份和阈值；执行重启、扩容或配置修改前保留审批和回滚。
 
@@ -104,7 +145,9 @@ Flink CDC 可以把变更捕获、状态、检查点和流式转换放进统一�
 
 延伸阅读：[Agent 可观测性与全链路 Tracing](../../../knowledge/llm/production/ai-observability.md)。
 
-#### （16）最长公共子序列和斐波那契数怎样回答？
+<details data-knowledge-key="algorithm-loop">
+<summary>（16）最长公共子序列和斐波那契数怎样回答？</summary>
+</details>
 
 最长公共子序列用二维动态规划：字符相同则继承左上角并加一，否则取上方与左方最大值，时间复杂度 `O(mn)`；只求长度时可用滚动数组压缩空间。斐波那契数若直接递归会重复计算，可用两个变量自底向上迭代到 `O(n)` 时间、`O(1)` 空间；若题目要求大数或取模，还需处理溢出和输入边界。
 

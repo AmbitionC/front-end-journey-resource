@@ -17,7 +17,7 @@
 - **反思**：一个"评审员"角色的 LLM 调用（可以是同一模型加不同 Prompt，也可以是独立模型）对初稿进行批判，输出结构化反馈。
 - **优化**：智能体根据反馈修改初稿，生成新版本。
 
-该范式由 Shinn 等人于 2023 年在 Reflexion 框架中系统化（发表于 NeurIPS 2023）。在代码生成、文本写作、数学推理等任务上，Reflection 可以将一个"功能正确但低效"的初稿迭代为"高质量"的最终版本。（参见 [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366)）
+这里要区分两项研究：[Self-Refine](https://arxiv.org/abs/2303.17651)用同一模型生成、反馈和修订，不额外更新权重；[Reflexion](https://arxiv.org/abs/2303.11366)则把任务反馈提炼为文字反思，存入情景记忆以影响后续试验。下文是反馈—修订的教学骨架，不是 Reflexion 完整算法。两篇论文报告各自任务条件下的改善，更多自评轮次不能保证质量提高。
 
 形式化地，第 $i$ 轮迭代中，反思模型 $\pi_\text{reflect}$ 对当前输出 $O_i$ 生成反馈 $F_i$：
 
@@ -31,7 +31,7 @@ $$
 O_{i+1} = \pi_\text{refine}(\text{Task},\, O_i,\, F_i)
 $$
 
-直到 $F_i$ 中出现"无需改进"或达到最大迭代次数。
+“无需改进”可以作为停止继续修订的候选信号，但不构成验收证据。系统还需独立测试或评分，并在达到迭代、时间、token 预算或无进展条件时停止。
 
 ```mermaid
 flowchart LR
@@ -49,7 +49,7 @@ flowchart LR
 
 ### 三套提示词
 
-Reflection 需要为不同阶段单独设计提示词，这是与其他范式最大的工程差异：
+下面的教学实现为生成、反馈和修订分别提供提示词；角色拆分不是所有反思实现都必须采用的协议：
 
 ```python
 # ── 1. 初始执行提示词 ──────────────────────────────────────────────
@@ -119,6 +119,8 @@ class RuntimeBudget:
     def before_model_call(self) -> None:
         if self.model_steps >= self.max_model_steps:
             raise BudgetExceeded("model step budget exhausted")
+        if self.total_tokens >= self.max_total_tokens:
+            raise BudgetExceeded("token budget exhausted")
         if time.monotonic() - self.started_at >= self.max_seconds:
             raise BudgetExceeded("wall-clock budget exhausted")
 
@@ -153,7 +155,9 @@ class Memory:
         return None
 ```
 
-### ReflectionAgent 完整实现
+### ReflectionAgent 教学骨架
+
+示例假设适配器提供 `think_with_usage` 和实际 token 用量，尚未连接真实模型执行。循环前后检查预算不等于能中断阻塞调用；适配器还需将剩余 deadline 传为请求超时，并限制单次输出。
 
 ```python
 class ReflectionAgent:
@@ -193,8 +197,8 @@ class ReflectionAgent:
             self.memory.add("reflection", feedback)
             print(f"反馈: {feedback[:80]}...")
 
-            if "无需改进" in feedback:
-                print("评审认为已无需改进，提前收敛。")
+            if feedback.strip() == "无需改进":
+                print("停止继续修订；结果仍需独立验收。")
                 break
 
             # 优化
@@ -209,18 +213,18 @@ class ReflectionAgent:
         return self.memory.last_execution() or ""
 ```
 
-**运行效果示意（素数查找任务）**：
+**手工教学示意（查找不大于 n 的素数；不是实测输出）**：
 
 - 初稿：试除法，时间复杂度 $O(n\sqrt{n})$
 - 第 1 轮反思：指出效率瓶颈，建议改为埃拉托斯特尼筛法
 - 第 1 轮优化：筛法实现，复杂度降至 $O(n \log\log n)$
-- 第 2 轮反思：确认算法已达常规最优，输出"无需改进"，循环收敛
+- 第 2 轮反思：提出停止修订；仍需验证素数结果、边界和资源占用，不能凭模型评价证明算法最优
 
 ### 成本收益分析
 
 | 维度 | 评估 |
 |------|------|
-| API 调用次数 | 每轮迭代额外 2 次（反思 + 优化），$k$ 次迭代共 $2k+1$ 次调用 |
+| API 调用次数 | 每个完整修订轮额外 2 次，完成 $k$ 轮为 $2k+1$ 次；反思后提前停止或预算耗尽时另计 |
 | 总延迟 | 串行叠加，随每轮模型/工具耗时和迭代次数增长；在目标任务上测量 |
 | 输出质量变化 | 需在目标任务与固定评分口径上测量；更多迭代不保证更好 |
 | 提示词复杂度 | 高，需要为执行/反思/优化三种角色各自调试 |
@@ -233,7 +237,7 @@ class ReflectionAgent:
 
 ### 核心思想
 
-Lei Wang 等人于 2023 年提出 Plan-and-Solve Prompting，旨在解决 CoT 在多步骤问题上"中途跑偏"的问题。其策略是将任务处理分为两个明确阶段：（参见 [Plan-and-Solve Prompting](https://arxiv.org/abs/2305.04091)）
+Lei Wang 等人于 2023 年提出 [Plan-and-Solve Prompting](https://arxiv.org/abs/2305.04091)，重点缓解零样本 CoT 的漏步骤问题：先划分子任务，再按计划求解。它是提示策略，不能等同于所有工具型 Plan-and-Execute 架构。[LangChain 的工程示例](https://www.langchain.com/blog/planning-agents)明确包含执行后的重规划。下面先讲一个不重规划、顺序推进的简化版本：
 
 1. **规划阶段（Planning）**：LLM 接收完整问题，输出一个分步执行计划。此阶段不执行任何操作，只生成计划列表。
 2. **执行阶段（Solving）**：执行器按照计划顺序逐步推进，将每步的结果作为下一步的输入。
@@ -268,8 +272,8 @@ flowchart TD
 | 维度 | ReAct | Plan-and-Execute |
 |------|-------|-----------------|
 | 决策时机 | 每步动态决策 | 先一次性规划，后顺序执行 |
-| 中途纠错 | 可以，每步都可调整 | 难，计划一旦生成基本固定 |
-| 全局结构性 | 弱 | 强 |
+| 中途纠错 | 可依据观察提出调整，仍需验证 | 本文静态示例不重规划；其他实现可加入重规划 |
+| 全局结构性 | 是否维护全局计划由应用决定 | 显式保存分步计划 |
 | 适合任务类型 | 探索性、结果依赖未知 | 结构清晰、步骤可提前分解 |
 | LLM 调用次数 | 动态（步骤数不确定） | 规划 1 次 + 执行 n 次，可预估 |
 
@@ -280,7 +284,7 @@ import json
 
 PLANNER_PROMPT = """
 你是顶级 AI 规划专家。将以下问题分解为逻辑顺序的若干子步骤。
-每个步骤必须是独立、可执行的子任务。
+每个步骤目标明确、可验证，并按前后依赖顺序安排。
 只输出 JSON 字符串数组，不要使用 Markdown 代码围栏。
 
 问题: {question}
@@ -305,7 +309,11 @@ class Planner:
                 isinstance(step, str) for step in result
             ):
                 return []
-            return result[:self.max_plan_steps]
+            if not result or len(result) > self.max_plan_steps or any(
+                not step.strip() for step in result
+            ):
+                return []  # 不截断依赖计划；由调用方澄清、重规划或停止
+            return result
         except Exception as e:
             print(f"解析计划失败: {e}")
             return []
@@ -397,7 +405,7 @@ Plan-and-Execute 特别适合以下类型的任务：
 - **代码架构设计**：先规划模块划分，再逐模块实现
 - **流程自动化**：任务流程固定，每步目标明确
 
-不适合：步骤取决于运行时数据的探索性任务（此类用 ReAct 更合适）。
+本文不重规划的静态示例不适合步骤高度依赖运行时观察的任务。可以评估 ReAct，或给显式计划增加有预算的重规划；两者也可组合，需按任务成功、延迟与成本比较。
 
 ---
 
@@ -509,7 +517,7 @@ tools = [
         "type": "function",
         "function": {
             "name": "calculator",
-            "description": "执行数学表达式计算，返回精确数值结果。",
+            "description": "计算白名单算术表达式；结果受 Python 数值精度与资源策略限制。",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -575,13 +583,15 @@ def run_with_tools(user_message: str) -> str:
 result = run_with_tools("2025 年华为最新旗舰手机的定价是多少元人民币？")
 ```
 
+以上是 Chat Completions 手工工具循环的教学骨架，工具结果以匹配的 `tool_call_id` 回填。它没有实现完整参数校验、授权、幂等、异常恢复和单次调用超时，不能直接作为生产执行器。模型生成的 JSON 参数仍可能无效或超出 Schema，执行前应由应用校验。[官方 SDK 工具调用类型与校验说明](https://github.com/openai/openai-python/blob/main/src/openai/types/chat/chat_completion_message_function_tool_call_param.py)说明了这条边界。
+
 ### 工具设计的最佳实践
 
 **粒度原则**：工具粒度不应过细（目录过大且功能重叠会增加选择难度），也不应过粗（一个工具塞入无关能力会让参数和权限难以约束）。可同时暴露的工具数没有通用区间，应在目标模型和真实意图集上测工具选择准确率、Prompt token、延迟与误调用成本。
 
 **描述中避免歧义**：两个功能相近的工具（如 `web_search` 和 `knowledge_base_search`）必须在描述中明确区分：前者"适用于实时、最新信息"，后者"适用于内部文档库"。
 
-**错误处理**：工具执行失败时，应返回描述性的错误消息（而非抛出异常），让 LLM 可以根据错误信息进行重试或换一种方式。
+**错误处理**：适配层捕获可处理异常并归一化为带稳定错误码、可重试标志与副作用状态的结果；不可恢复或权限错误交给运行时停止/升级。给模型的描述性文本只是证据，不能自行决定无限重试。
 
 **幂等性设计**：LLM 可能因解析问题重复调用同一工具。写操作类工具（发邮件、提交表单）应设计幂等保护，防止重复执行。
 
@@ -591,16 +601,18 @@ result = run_with_tools("2025 年华为最新旗舰手机的定价是多少元�
 
 | 维度 | ReAct | Plan-and-Execute | Reflection | Tool-Use（Function Calling） |
 |------|-------|-----------------|------------|------------------------------|
-| 决策方式 | 动态逐步 | 一次规划，顺序执行 | 生成 → 评审 → 改进循环 | 模型自主选择工具时机 |
-| 中途纠错 | 强（每步） | 弱（计划固定） | 强（专门反思阶段） | 中（依赖模型判断） |
-| 全局结构 | 弱 | 强 | 中 | 中 |
+| 决策方式 | 依据最新观察选择动作 | 显式计划后执行，可配置重规划 | 生成 → 评审 → 改进循环 | 通过工具契约提出调用 |
+| 纠错来源 | 新观察与验证 | 执行反馈与可选重规划 | 反馈与独立验收 | 工具结果与运行时校验 |
+| 计划与状态 | 应用可维护 | 显式计划 | 候选与反馈版本 | 由调用方维护 |
 | 可观察轨迹 | Action/Observation 可追踪 | 计划与步骤可读 | 反馈与版本可追溯 | 结构化工具调用可追踪 |
-| LLM 调用成本 | 中（步数不定） | 可预估（1+n 次） | 高（2k+1 次） | 可预估 |
-| 格式解析稳定性 | 低（依赖文本解析） | 中 | 中 | 高（结构化 JSON） |
+| LLM 调用成本 | 按实际轮数计 | 本文静态例为1+n，重规划另计 | 完整k轮为2k+1，早停另计 | 依实际工具循环计 |
+| 格式解析 | 原始文本提示需解析；也可结构化 | 计划与步骤需校验 | 反馈与修订需校验 | 原生结构化调用仍需校验 |
 | 更适合的任务 | 探索性、依赖运行时反馈 | 结构清晰、多步推理 | 可迭代评审的生成任务 | 有明确工具契约的场景 |
-| 不适合的任务 | 长链规划 | 运行时动态分支 | 实时响应、成本敏感 | 不需要工具的纯文本任务 |
+| 主要边界 | 长循环需计划、预算与恢复 | 静态计划不适应未知分支 | 额外调用可能超出延迟/成本预算 | 不需要工具时无需增加调用 |
 
 ### 场景选择决策树
+
+下图只用于提出候选架构，不是放行规则；“质量要求高”并不自动意味着应增加 Reflection。先确认反馈可靠、结果可独立验收，再用相同任务和总预算验证组合的收益。
 
 ```mermaid
 flowchart TD
@@ -631,10 +643,10 @@ flowchart TD
 ## 面试常问
 
 **Q：Reflection 和 RLHF 有什么区别？**
-RLHF 是通过人类偏好数据微调模型权重，是训练阶段的优化，不改变推理时的行为。Reflection 是推理时的自我校正，通过提示词让模型批判自己的输出并改进，不改变模型权重，可以即插即用。
+RLHF 在训练阶段利用人类偏好信号更新模型；这些权重变化会影响之后的推理行为，但不会在每次推理时自动继续训练。[InstructGPT 论文](https://arxiv.org/abs/2203.02155)给出了一种具体流程。本文的反馈—修订循环在推理时改变上下文与输出，不更新权重；它是否有效仍须独立评测。
 
 **Q：Plan-and-Execute 如何处理执行失败？**
-标准实现中计划是静态的，一旦某步失败整体中断。改进方案是"动态重规划"：将执行失败和错误信息反馈给 Planner，让其重新生成剩余步骤的计划，类似于 ReAct 的动态纠错。
+本文静态骨架没有实现重规划，但这不是所有 Plan-and-Execute 的定义。生产可把失败类型、已完成步骤和新证据交给 Planner 修订剩余计划；恢复前仍检查权限、幂等、预算与结果有效性，不能盲目重跑已产生副作用的步骤。
 
 **Q：Function Calling 和 ReAct 文本解析哪个更好？**
 如果所用模型与 SDK 提供结构化 Tool Use，通常应先评估该接口，因为它能把工具名和参数放进机器可解析的契约；但 schema 遵循、并行调用、token 用量和准确率都取决于具体模型与 API，不能宣称普遍更高。文本 ReAct 仍可用于研究、教学或不支持结构化调用的模型；生产系统还要避免把隐藏推理当作必须展示给用户的接口数据。
@@ -645,11 +657,15 @@ RLHF 是通过人类偏好数据微调模型权重，是训练阶段的优化，
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [快手大模型应用 Java 实习一面：Agent、SkillHub 与 Vibe Coding（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-1.md)（cluster-e2ae8847e22e）
+- [快手大模型应用 Java 实习一面：Agent、SkillHub 与 Vibe Coding](../../../interview/kuaishou/ai/kuaishou-ai-1.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
 
+- [Self-Refine: Iterative Refinement with Self-Feedback](https://arxiv.org/abs/2303.17651)
+- [LangChain：Plan-and-Execute Agents](https://www.langchain.com/blog/planning-agents)
+- [InstructGPT：Training language models to follow instructions with human feedback](https://arxiv.org/abs/2203.02155)
+- [OpenAI Python SDK：工具参数类型与校验边界](https://github.com/openai/openai-python/blob/main/src/openai/types/chat/chat_completion_message_function_tool_call_param.py)
 - [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366)
 - [Plan-and-Solve Prompting](https://arxiv.org/abs/2305.04091)
 - [Toolformer: Language Models Can Teach Themselves to Use Tools](https://arxiv.org/abs/2302.04761)

@@ -117,8 +117,7 @@ assert:
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [阿里国际 Accio Agent 算法一面：数据合成、任务环境与 GUI Agent](../../../interview/alibaba/ai/alibaba-ai-3.md)（cluster-10359bdec433）
-- [阿里淘天 Agent 算法一面：任务构造、轨迹与训练路线](../../../interview/alibaba/ai/alibaba-ai-4.md)（cluster-787120ee1249）
+- [阿里国际 Accio Agent 算法一面：数据合成、任务环境与 GUI Agent](../../../interview/alibaba/ai/alibaba-ai-3.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

@@ -99,6 +99,8 @@ flowchart TD
 
 标准结构的概率性质不替代集合同步；重启、故障装载或同步落后时回源，避免误拒绝真实用户。位操作返回类型和批处理失败语义由所选客户端维护者合同决定。
 
+**关键参数怎样一起选？** 先估计要加入的元素数 $n$ 与目标假阳性率 $p$，再选择位数组长度 $m$ 和哈希数量 $k$。在常用均匀散列近似下，$m \approx -n\ln(p)/(\ln 2)^2$、$k \approx (m/n)\ln 2$；要求更低误判率通常需要更多位和哈希计算，不能只把 $k$ 调大。固定容量下不断超量加入会提高误判率，需重建或按实现扩容。[Redis 的 BF.RESERVE](https://redis.io/docs/latest/commands/bf.reserve/)以 `capacity` 与 `error_rate` 接收这组目标，并说明哈希数量取整及扩容子过滤器的额外成本；不要把通用位图伪代码当作已经配置好该功能。容量与误判率还不负责同步新增、删除及真实数据版本。
+
 ---
 
 ## 缓存击穿（Cache Breakdown）
@@ -302,19 +304,17 @@ flowchart LR
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 Agent 开发一面：推理缓存、网络与存储基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-18.md)
-- [腾讯 TEG 后端一面：RAG 多智能体与分布式 LRU（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-6.md)
-- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)
-- [字节 Agent Infra 校招：运行时、MySQL 与 LRU](../../../interview/bytedance/base/bytedance-base-25.md)
-- [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)
-- [腾讯 Agent 开发一面：RAG、安全与后端工程（2026 年 5 月）](../../../interview/tencent/ai/tencent-ai-1.md)
-- [字节 Agent 开发一面：Skill、MCP 与后端基础（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-15.md)
-- [蚂蚁 Agent 实习一面：缓存、消息与 RAG](../../../interview/antfin/ai/antfin-ai-6.md)
-- [蚂蚁后端 AI 开发一面：Agent、Redis 与短链系统（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-3.md)
 - [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../../interview/bytedance/base/bytedance-base-36.md)
-- [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../../interview/bytedance/base/bytedance-base-47.md)
-- [字节 Agent 实习：生成质量、多智能体与缓存](../../../interview/bytedance/base/bytedance-base-52.md)
 - [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
+- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)
+- [快手商业化效果营销一面：多 Agent 协作、Netty 与限流](../../../interview/kuaishou/ai/kuaishou-ai-4.md)
+- [字节 Agent Infra 校招：运行时、MySQL 与 LRU](../../../interview/bytedance/base/bytedance-base-25.md)
+- [蚂蚁财富技术部一面：协作式 Agent、交付门禁与后端基础](../../../interview/antfin/ai/antfin-ai-4.md)
+- [字节 Agent 实习：生成质量、多智能体与缓存](../../../interview/bytedance/base/bytedance-base-52.md)
+- [快手主站 SRE 一二三面：Agent Skill、性能排障与数据链路](../../../interview/kuaishou/ai/kuaishou-ai-5.md)
+- [蚂蚁 Agent 实习一面：缓存、消息与 RAG](../../../interview/antfin/ai/antfin-ai-6.md)
+- [蚂蚁后端 AI 开发一面：Agent、Redis 与短链系统](../../../interview/antfin/ai/antfin-ai-3.md)
+- [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../../interview/bytedance/base/bytedance-base-47.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
@@ -328,3 +328,4 @@ Redis 滚动文档，核验于 2026-10-02。本文配置、客户端片段与协
 - [Redis：SET（NX与过期）](https://redis.io/docs/latest/commands/set/)
 - [Redis：Distributed locks（有限租约与安全释放）](https://redis.io/docs/latest/develop/clients/patterns/distributed-locks/)
 - [Redis：Replication（异步复制边界）](https://redis.io/docs/latest/operate/oss_and_stack/management/replication/)
+- [Redis：BF.RESERVE（容量、误判率与哈希数量）](https://redis.io/docs/latest/commands/bf.reserve/)

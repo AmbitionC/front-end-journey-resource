@@ -1,46 +1,66 @@
-### 百度大模型研发一面：Context、Harness 与 RAG（2026 年 8 月）
+### 百度大模型研发一面：Context、Harness 与 RAG
 
-这场百度 MEG 大模型研发一面约 80 分钟，重点是 Agent 上下文工程、Coding Harness、RAG，以及数据库、前端和算法基础。
+这场百度 MEG 大模型研发一面约 80 分钟，记录中的面试日期为 8 月 18 日，未注明年份。重点是 Agent 上下文工程、Coding Harness、RAG，以及数据库、前端和算法基础。
 
-#### （1）怎样用 AI 提效而不只停留在“生成代码”？
+本页选录以下八组主题：上下文题只整理通用压缩设计，未展开 Claude Code 的具体压缩实现及“三层压缩”追问；学习体系题未展开教程内容来源的组织方式。短答与方案示例为教学补充，不代表作者当时的回答或项目实现。
+
+<details data-binding-status="pending_semantic_verification">
+<summary>（1）平时怎样用 AI 提效，能结合实际场景举例吗？</summary>
+<p>关联知识点待核实。</p>
+</details>
 
 选一个真实任务讲清基线耗时、AI 介入点、验证方式和最终收益。AI 可用于需求拆解、代码检索、测试生成、故障定位和文档整理，但产出必须经过测试、静态检查与评审；用任务成功率和返工成本证明效果。
 
-#### （2）Prompt Engineering、Context Engineering 与 Harness Engineering 有什么区别？
+<details data-knowledge-key="context-engineering">
+<summary>（2）Prompt Engineering、Context Engineering 与 Harness Engineering 有什么区别？</summary>
+</details>
 
 Prompt Engineering 关注单次指令表达；Context Engineering 关注每次模型调用前应选择哪些规则、状态、证据和工具结果；Harness Engineering 则把循环控制、工具、权限、检查点、评测和恢复组织成可运行系统。三者是职责范围逐步扩大，不是彼此替代。
 
 延伸阅读：[上下文工程（Context Engineering）](../../../knowledge/llm/agent/context-engineering.md)。
 
-#### （3）上下文接近窗口上限时，怎样设计压缩？
+<details data-knowledge-key="prompt-context-compression">
+<summary>（3）上下文接近窗口上限时，怎样设计压缩？</summary>
+</details>
 
 先保留系统约束、当前目标、未完成事项和关键证据，再裁剪重复或可外部引用的大结果；较早对话生成结构化摘要，原始事件仍保存在外部存储以便追溯。压缩后要做事实与约束校验，并用真实长任务测试成功率，而不能只看 Token 减少量。
 
 延伸阅读：[上下文压缩、摘要与裁剪](../../../knowledge/llm/prompt/prompt-context-compression.md)、[会话摘要、压缩与记忆提炼](../../../knowledge/llm/agent/agent-memory-summarization.md)。
 
-#### （4）从零搭建团队知识问答 RAG，需要哪些步骤？
+<details data-knowledge-key="rag-pipeline">
+<summary>（4）从零搭建团队知识问答 RAG，需要哪些步骤？</summary>
+</details>
 
 先定义用户、权限、问题类型和正确答案标准，再完成数据接入、解析清洗、切分、索引、召回、重排、生成与引用。离线建立 Golden Set，线上记录查询、命中文档、无答案和反馈；文档更新还要支持增量索引、版本切换与回滚。
 
 延伸阅读：[RAG 完整流程实战](../../../knowledge/llm/rag/rag-pipeline.md)。
 
-#### （5）怎样设计一套 Agent 学习体系？
+<details data-knowledge-key="agent-coding">
+<summary>（5）怎样设计一套 Agent 学习体系？</summary>
+</details>
 
 按“模型与工具基础 → Agent Loop → 状态与记忆 → RAG → 多 Agent → 安全与评测 → 生产案例”递进。每章都应有最小实现、失败案例、可观察指标和练习；Coding Agent 要重点研究仓库检索、工具权限、补丁范围、测试闭环与长任务恢复。
 
 延伸阅读：[Coding Agent 的架构与执行循环](../../../knowledge/llm/agent/agent-coding.md)。
 
-#### （6）数据库索引怎样结合真实项目回答？
+<details data-knowledge-key="mysql-index">
+<summary>（6）数据库索引怎样结合真实项目回答？</summary>
+</details>
 
 先从查询模式出发：过滤、连接、排序和范围条件决定联合索引顺序；再用执行计划验证扫描行数、回表和排序开销。索引会增加写入、空间与维护成本，不能“字段都建索引”。K 线表通常按标的和时间组织主键或联合索引，并按数据量考虑分区。
 
 延伸阅读：[数据库索引原理与查询优化](../../../knowledge/backend/database/mysql-index.md)。
 
-#### （7）前端经验应该怎样说明？
+<details data-binding-status="pending_semantic_verification">
+<summary>（7）前端经验应该怎样说明？</summary>
+<p>关联知识点待核实。</p>
+</details>
 
 说明使用过的框架、负责的页面与状态流，以及接口、性能和错误处理。若主要岗位是后端或算法，也应能讲清浏览器请求、组件状态、列表渲染和基础工程化，而不是只报“会 React/Vue”。
 
-#### （8）二叉树前序遍历和层序遍历怎样实现？
+<details data-knowledge-key="algorithm-tree">
+<summary>（8）二叉树前序遍历和层序遍历怎样实现？</summary>
+</details>
 
 前序遍历顺序是根、左、右，可用递归或显式栈；迭代时先压右子树再压左子树。层序遍历使用队列，按当前队列长度分层弹出并加入子节点，两者时间复杂度都是 $O(n)$。
 

@@ -51,6 +51,12 @@ AWS 的[限控重试建议](https://docs.aws.amazon.com/wellarchitected/latest/f
 
 不使用专用引擎也应 checkpoint：计划版本、任务状态、工具 operation ID、结果 hash、审批和预算。写 checkpoint 与状态转移保持一致，避免记录 done 但副作用尚未确认。
 
+## 子图“跑偏”时先修订语义，再决定重跑
+
+工具超时是执行失败，子图依据错误目标得出结论则是语义失败，不能都用退避重试处理。先保存失败输入、输出、证据和检查点，确认是缺少上下文、工具结果错误、路由错误还是验收不满足；修订任务契约、补证据或重新规划后，从最近仍可信的边界创建新 attempt，旧结果和依赖它的下游产物标记失效。重复执行同一错误计划不算恢复。
+
+以本次核验的 [LangGraph Time Travel 文档](https://docs.langchain.com/oss/python/langgraph/use-time-travel)为例，从旧检查点回放会重新执行其后的节点，包括模型和 API 调用；默认子图由父图作为一个整体检查点边界处理，若要在子图内部恢复，需要相应的独立检查点历史。不能从“有 checkpoint”推断任意节点内语句都能继续，也不能推断外部副作用只执行一次。恢复前仍要对账、检查幂等和剩余预算；这是框架机制示例，其他引擎按自身恢复合同实现。
+
 ## 降级、升级和终止
 
 备用数据源、缓存结果、只读模式或减少功能可作为显式降级。输出标注新鲜度和缺失，不把降级冒充完整成功。策略拒绝不重试；参数错误修正后作为新 attempt；权限缺失请求用户/管理员；永久业务错误进入 terminal。
@@ -69,16 +75,17 @@ Trace 记录 operation ID、attempt、错误类别、sideEffectState、backoff�
 
 ## 出现于（热度来源）
 
+来源归属说明（同一面经页，不另计次）：
+
+- [百度部分（小红书与百度合并记录）：LangGraph、Skill 与工程校验](../../../interview/redbook/ai/redbook-ai-2.md)；对应合并页中已明确标出的百度部分。
+
 <!-- interview-source-history:start -->
-- [百度部分（小红书与百度合并记录）：LangGraph、Skill 与工程校验](../../../interview/redbook/ai/redbook-ai-2.md)
+- [小红书与百度 Agent 面试合并记录：LangGraph 子图、Skill 与工程校验](../../../interview/redbook/ai/redbook-ai-2.md)
 - [字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-20.md)
-- [大疆创新 AI Agent 开发面经：容错、Token 与后端基础（2026 年 8 月）](../../../interview/dji/ai/dji-ai-1.md)
+- [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
 - [腾讯微信支付后台开发日常实习一面](../../../interview/tencent/ai/tencent-ai-5.md)
 - [字节 AML / 火山方舟 AI Infra 一面：Agent Runtime、OS 与网络（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-17.md)
-- [深信服 Agent 开发一面：MCP、多 Agent、安全与网络（2026 年 8 月）](../../../interview/sangfor/ai/sangfor-ai-1.md)
-- [蚂蚁 Agent 开发一面：多 Agent 并发与质量保障（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-1.md)
-- [快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-3.md)
-- [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
+- [阿里淘宝闪购 Agent 算法实习一面：框架、记忆与线上排障](../../../interview/alibaba/ai/alibaba-ai-6.md)
 <!-- interview-source-history:end -->
 
 ## 学习阅读（不计专题频次）
@@ -90,4 +97,5 @@ Trace 记录 operation ID、attempt、错误类别、sideEffectState、backoff�
 - [AWS — Control and limit retry calls](https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_mitigate_interaction_failure_limit_retries.html)
 - [RFC 9110 — Idempotent Methods](https://www.rfc-editor.org/rfc/rfc9110.html#section-9.2.2)
 - [AWS — Circuit breaker pattern](https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/circuit-breaker.html)
+- [LangGraph — Time travel](https://docs.langchain.com/oss/python/langgraph/use-time-travel)
 - [Temporal — Documentation](https://docs.temporal.io/)

@@ -3,7 +3,7 @@
 
 ---
 
-数据库索引（Index）是建立在数据列上的有序辅助结构，可以减少定位和过滤工作，但取结果、回表、排序与传输的成本仍需计算。理解索引的物理结构、适用边界与失效场景，是写出可扩展 SQL 查询的前提。
+数据库索引（Index）是辅助定位数据的结构，可以按有序键、哈希或其他方式组织；它减少部分定位和过滤工作，但取结果、回表、排序与传输的成本仍需计算。理解索引的物理结构、适用边界与失效场景，是写出可扩展 SQL 查询的前提。
 
 本文SQL、计划输出和参数为示意，混合涉及MySQL8.4、PostgreSQL18与pgvector；没有在完整数据库运行，数字不代表实验结果。
 
@@ -233,6 +233,10 @@ flowchart TD
     G --> H[相同约束复测; 全扫描合理时保留]
 ```
 
+### 从 SQL 优化扩展到架构层
+
+先把慢查询、锁等待、连接池、缓存命中和存储资源放到同一时间范围核对，确认瓶颈是访问路径、巨大输出、读负载、写竞争还是容量增长。字段与索引、等价SQL改写、分页和缓存可分别减少某类工作，但都要维持结果与一致性合同。副本读可分担读取，却带来复制延迟；分片可分散部分容量和写入，还会增加路由、迁移、跨片查询及事务成本。冷热分层、压缩和归档也要验证查询时效与恢复要求。根据测量选择方案，不因“表很大”就跳到分库分表；机制可继续读[分库分表与读写分离](../../backend/database/db-sharding.md)和[Redis缓存一致性](../../backend/database/redis-cache.md)。
+
 ### 深分页优化
 
 `LIMIT offset, size` 的代价随 offset 线性增长，因为引擎必须扫描并丢弃前 offset 行：
@@ -344,7 +348,7 @@ MySQL 的 Index Merge 合并代价不低；改写为 UNION 时还须处理两侧
 
 1. **建索引前评估选择性**：`SELECT COUNT(DISTINCT col) / COUNT(*) FROM table`，该比例只描述列区分度，另看查询参数命中率与分布，不能设置通用0.1门槛。
 2. **复合索引优先于多个单列索引**：`(a, b)` 复合索引在 `WHERE a = ? AND b = ?` 场景下通常优于各自单列索引，且树数量更少。
-3. **指定列 + 覆盖索引**：避免 `SELECT *`，将高频查询的返回列加入索引，消除回表。
+3. **指定列 + 覆盖索引**：只取必要列，评估增加覆盖字段以减少取额外列的行访问；MVCC可见性仍可能要求查堆或聚簇记录，另计空间与写维护成本。
 4. **比较过滤与排序的列顺序**：前导等值及其后的范围影响扫描区间，后续列仍可能过滤或覆盖；不能统一规定范围列最后。
 5. **保持统计信息最新**：定期执行 `ANALYZE` 或调小 `autovacuum_analyze_threshold`，避免优化器依据陈旧统计选错执行计划。
 6. **深分页改游标分页**：出现深分页瓶颈时比较 Keyset Pagination；需要稳定排序、跳页需求和并发变更合同，没有固定1000阈值。
@@ -375,10 +379,11 @@ MySQL 的 Index Merge 合并代价不低；改写为 UNION 时还须处理两侧
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)（cluster-3f37b9b18f24）
-- [字节 Agent Infra 校招：运行时、MySQL 与 LRU](../../../interview/bytedance/base/bytedance-base-25.md)（cluster-74e92db1eff9）
-- [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../../interview/bytedance/base/bytedance-base-24.md)（cluster-78d45fa26bfd）
-- [阿里云可观测存储 AI Agent 工程岗一面：存储性能与查询优化](../../../interview/alibaba/ai/alibaba-ai-7.md)（cluster-cf26fe3b37d5）
+- [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)
+- [字节 Agent Infra 校招：运行时、MySQL 与 LRU](../../../interview/bytedance/base/bytedance-base-25.md)
+- [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../../interview/bytedance/base/bytedance-base-24.md)
+- [快手主站 SRE 一二三面：Agent Skill、性能排障与数据链路](../../../interview/kuaishou/ai/kuaishou-ai-5.md)
+- [阿里云可观测存储 AI Agent 工程岗一面：存储性能与查询优化](../../../interview/alibaba/ai/alibaba-ai-7.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

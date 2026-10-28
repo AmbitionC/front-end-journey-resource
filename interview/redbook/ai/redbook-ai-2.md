@@ -1,9 +1,12 @@
 ### 小红书与百度 Agent 面试合并记录：LangGraph 子图、Skill 与工程校验
 
-同一份记录包含小红书与百度两家公司的面试。小红书部分围绕自动切题 Agent 追问 Pipeline、子图通信、Skill、AI Coding，以及 MySQL 索引与锁；百度部分追问节点输入输出、输出不达预期、子图跑偏后的恢复和动态路由。下列第（6）至（8）题归百度，其余题归小红书。本页复用已有合并记录，不增加独立面试样本；回答为教学整理，不代表现场作答。发帖月份也不等于面试日期。
+同一份记录包含小红书与百度两家公司的面试。本页仅选录以下十二组技术问答：第（6）至（8）题归百度，其余题归小红书。复用已有合并记录，不增加独立面试样本；具体面试日期未写明，原文的“上周”不能据发帖月份改成确定日期。短答为教学补充，不代表现场作答。
 
-<details data-knowledge-key="agent-state-machine">
-<summary>（1）怎样说明七步 Pipeline，而不陷入流程背诵？</summary>
+未展开小红书的项目背景、实际开发框架与语言、Claude 工具使用习惯、MySQL 索引种类和 B 树比较；未展开百度的业务受众与痛点、子图节点数量、LangGraph 与子 Agent 结合的理由、人工移除出图的具体行为、其他框架调研，以及个人实习去向等追问。下文七步流程只给教学示例，原记录没有披露作者实际七步的具体定义。
+
+<details data-binding-status="pending_semantic_verification">
+<summary>（1）自动切题 Agent 中的七步 Pipeline 流程是什么？</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 先给每一步定义输入、输出、所有者和成功条件，再说明为什么有这个边界。一条典型链路可以是：请求规范化、意图路由、上下文检索、任务规划、工具执行、结果校验、交付与反馈。每一步都写入结构化状态，并记录版本、耗时和错误；只有校验通过才能进入下一步。面试官真正关心的是步骤是否可替换、可恢复和可观测。
@@ -18,8 +21,9 @@
 
 延伸阅读：[多 Agent 消息与状态同步](../../../knowledge/llm/agent/agent-multi-agent-messaging.md)。
 
-<details data-knowledge-key="agent-state-machine">
+<details data-binding-status="pending_semantic_verification">
 <summary>（3）为什么拆成三个子图，而不是一条长 Pipeline？</summary>
+<p>关联知识点待核实。</p>
 </details>
 
 只有在领域职责、工具权限、故障边界或生命周期明显不同的时候才拆子图。例如理解与规划、内容生产、质量校验可以独立演进和重试。拆分收益是隔离上下文、降低权限、并行执行和独立评测；代价是通信、状态一致性和观测复杂度。若步骤始终串行且共享大量状态，一条显式 Pipeline 往往更简单。
@@ -50,12 +54,12 @@ Prompt 适合短小、全局且每次都适用的约束；Skill 是可独立检�
 <summary>（7）子图跑偏后怎样重跑并恢复？</summary>
 </details>
 
-可恢复错误采用限次退避重试或替代工具，不可恢复错误进入人工队列。执行副作用前生成幂等键，检查点保存“已完成什么”，重跑时从最后一个安全边界继续。
+先保存失败输入、输出、证据和检查点，区分目标、上下文或路由错误与瞬态工具故障。语义跑偏先修订任务或补证据，使旧结果及依赖产物失效，再从仍可信的检查点开启新 attempt；只有瞬态错误才在总预算内限次退避重试。恢复可能重新执行检查点后的模型和 API，副作用先查账并按幂等合同处理；有检查点不代表能从任意语句继续，也不保证外部动作恰好执行一次。
 
 延伸阅读：[Agent 失败恢复](../../../knowledge/llm/production/agent-failure-recovery.md)。
 
 <details data-binding-status="pending_semantic_verification">
-<summary>（8）动态路由该由规则还是模型决定？</summary>
+<summary>（8）LangGraph 上层怎样做路由决策，是否由 AI 判断节点？</summary>
 <p>关联知识点待核实。</p>
 </details>
 

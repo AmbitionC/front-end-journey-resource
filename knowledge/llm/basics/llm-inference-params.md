@@ -108,7 +108,7 @@ Temperature 控制分布尖锐程度，Top-K 用固定数量裁剪候选，Top-P
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)（cluster-910d0b20a897）
+
 <!-- interview-source-history:end -->
 
 ## 参考资料

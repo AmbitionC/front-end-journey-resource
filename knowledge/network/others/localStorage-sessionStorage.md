@@ -30,6 +30,10 @@ Web Storage 读写是同步的，频繁序列化大对象会阻塞主线程。�
 
 HttpOnly 不是“防止 XSS”：恶意同源脚本仍可能代表用户发请求或读取页面数据。Cookie 会自动发送，所以还要配合 SameSite、CSRF token 和 Origin 检查。
 
+## Cookie 与 JWT 属于不同层
+
+Cookie 是浏览器存储并按规则随请求发送数据的机制；[JWT](https://www.rfc-editor.org/rfc/rfc7519.html) 是表示 claims 的令牌格式，可以被签名或加密。Cookie 里既可放随机 Session ID，也可承载 JWT，因此两者不是互斥的会话方案。采用签名 JWT 的本地验证，也不意味着浏览器存储本身完成了鉴权；服务端仍须按 [JWT 安全实践](https://www.rfc-editor.org/rfc/rfc8725.html)验证算法、受信密钥和发行者、受众、时效等声明，并检查当前业务权限。JWT 的结构与验证边界见[JWT 认证机制](../../backend/auth/jwt-auth.md)，浏览器端仍需独立选择合适的存储和传输方式。
+
 ## 不要把敏感 token 默认放进 localStorage
 
 localStorage/sessionStorage 没有 HttpOnly 属性，任何成功运行在该 origin 的脚本都可读。把长期 bearer token 放入其中，会让 XSS 直接获得可带离浏览器的凭据。更稳妥的会话设计通常让服务器设置 Secure、HttpOnly、SameSite Cookie，并缩短会话、轮换令牌、限制权限。
@@ -87,3 +91,5 @@ export function savePreferences(preferences) {
 - [RFC 6265: HTTP State Management Mechanism](https://www.rfc-editor.org/rfc/rfc6265.html)
 - [WHATWG Storage Standard](https://storage.spec.whatwg.org/)
 - [RFC 6265bis: Cookies — HTTP State Management Mechanism](https://httpwg.org/http-extensions/draft-ietf-httpbis-rfc6265bis.html)
+- [RFC 7519: JSON Web Token](https://www.rfc-editor.org/rfc/rfc7519.html)
+- [RFC 8725: JSON Web Token Best Current Practices](https://www.rfc-editor.org/rfc/rfc8725.html)
