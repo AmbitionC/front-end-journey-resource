@@ -45,11 +45,11 @@ const logger = pino({
 export default logger;
 ```
 
-输出示例（生产 JSON）：
+输出示例（生产 JSON；未配置级别或时间格式器时，`info` 默认写成数值 `30`，`time` 是 Unix epoch 毫秒。业务字段由调用日志方法时传入）：
 ```json
 {
-  "level": "info",
-  "time": "2024-06-18T10:23:45.123Z",
+  "level": 30,
+  "time": 1718706225123,
   "service": "agent-service",
   "traceId": "7f3a9b2c-...",
   "spanId": "d4e5f6a7",
@@ -89,7 +89,7 @@ export const llmCallDuration = new Histogram({
   name: 'llm_call_duration_seconds',
   help: 'LLM API call latency',
   labelNames: ['model', 'status'],          // status: success | timeout | rate_limited
-  buckets: [0.5, 1, 2, 5, 10, 30, 60],     // LLM 延迟比普通接口高一个量级
+  buckets: [0.5, 1, 2, 5, 10, 30, 60],     // 教学桶边界；生产中按实际链路的延迟分布调整
   registers: [register],
 });
 
@@ -359,8 +359,8 @@ function shouldSample(statusCode: number, durationMs: number): boolean {
 **常见误区**
 
 - **没有 requestId/traceId**：多条日志无法串联，排查时只能靠时间范围猜测，在多步 Agent 链路中尤为致命
-- **记录用户敏感对话**：直接将 prompt/completion 写入日志违反数据合规要求，需要脱敏或默认不记录
-- **只看平均延迟**：LLM 调用延迟分布极不均匀，P99 往往是均值的 5-10 倍，平均值会掩盖真实的长尾问题
+- **记录用户敏感对话**：直接记录 prompt/completion 可能暴露敏感内容；应按授权用途、访问控制和保留期限处理，采用脱敏或默认不记录的策略
+- **只看平均延迟**：只看均值会掩盖长尾，应同时检查分位分布和失败样本；P99 与均值的关系取决于实际分布，不能套用固定倍数
 - **日志级别滥用**：全部用 `info` 导致关键 `error` 淹没在噪音中，或全部用 `debug` 导致生产成本爆炸
 
 **最佳实践**
@@ -375,11 +375,12 @@ function shouldSample(statusCode: number, durationMs: number): boolean {
 - **为什么用结构化日志**：稳定字段便于配置解析、索引和聚合，减少从自由文本提取含义的歧义
 - **RED 方法**：Rate、Errors、Duration，是衡量服务健康度的最小必要指标集
 - **OpenTelemetry 的价值**：厂商中立的可观测性标准，一次埋点可同时接入 Jaeger / Zipkin / SLS / DataDog
-- **Agent 服务的监控重点**：LLM 调用延迟（比普通接口高 10-100x）、token 消耗（直接影响成本）、工具调用成功率、多轮会话中的错误传播
+- **Agent 服务的监控重点**：LLM 调用延迟及其分布（在实际链路测量）、token 消耗（直接影响成本）、工具调用成功率、多轮会话中的错误传播
 
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [拼多多提前批一面：Agent 超时、消息可靠性与线上排障](../../../interview/pinduoduo/ai/pinduoduo-ai-2.md)
 - [阿里云 Agent Infra 一面：SGX、吞吐与日志写入](../../../interview/alibaba/ai/alibaba-ai-8.md)
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)
 - [字节 Agent 暑期实习一面：摘要、工具预算与链表](../../../interview/bytedance/base/bytedance-base-27.md)
@@ -393,3 +394,4 @@ function shouldSample(statusCode: number, durationMs: number): boolean {
 - [OpenTelemetry JS：升级到 2.x](https://github.com/open-telemetry/opentelemetry-js/blob/main/doc/upgrade-to-2.x.md)
 - [Prometheus：histogram_quantile](https://prometheus.io/docs/prometheus/latest/querying/functions/#histogram_quantile)
 - [Prometheus：Vector matching](https://prometheus.io/docs/prometheus/latest/querying/operators/#vector-matching)
+- [Pino API：日志级别、格式器与 timestamp](https://github.com/pinojs/pino/blob/main/docs/api.md)

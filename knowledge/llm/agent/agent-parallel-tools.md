@@ -75,6 +75,12 @@ Trace 至少记录 `planVersion`、`taskId`、`parentId`、依赖集合、排队
 
 可靠并行是一套依赖与生命周期协议：DAG 决定谁能同时运行，结构化并发保证子任务不逃逸，Join 校验证据和版本，失败策略定义部分结果，背压与预算保护下游。只有当这些条件成立，并行才是可证明的加速，而不是放大竞态。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [淘天供应链 AI 应用一面：失败复盘、工具并行与精确检索](../../../interview/alibaba/ai/alibaba-ai-19.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [LangGraph — Workflows and agents](https://docs.langchain.com/oss/python/langgraph/workflows-agents)

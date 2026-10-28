@@ -3,7 +3,7 @@
 [RabbitMQ Reliability Guide](https://www.rabbitmq.com/docs/reliability)区分发布确认与消费者确认：前者确认生产者到 Broker 的责任转移，后者确认 Broker 到消费者的处理结果。两段确认都成功，也不等于业务副作用天然 exactly-once；网络在提交后断开时，重复投递仍然可能发生。
 
 ![任务从提交、持久队列、租约、Worker、检查点、幂等副作用到确认，失败按瞬态与永久分类进入退避重投或死信](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-queue-worker-job-lifecycle-v1.webp)
-*图：ACK 是“持久完成后的责任转移”，不是 Worker 一收到消息就发送的收件回执。*
+*图中 Checkpoint 表示执行中的可恢复检查点，不代表任务已最终提交。幂等副作用完成后，还须原子持久化结果与最终任务状态，随后才 ACK；完整顺序见下文。*
 
 ## 任务记录先于消息
 
@@ -77,6 +77,8 @@ Worker 取到消息后用条件更新获取租约：只有 queued、retrying 或
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [小红书一面：检索评测、上下文压缩与任务幂等](../../../interview/redbook/ai/redbook-ai-4.md)
+- [百度网盘后端二面：图生图工作流、任务管理与缓存一致性](../../../interview/baidu/ai/baidu-ai-5.md)
 - [腾讯职能线 AI 全栈一面：容量、安全、Worker 与限流](../../../interview/tencent/ai/tencent-ai-14.md)
 <!-- interview-source-history:end -->
 

@@ -1,8 +1,5 @@
 TCP 建连与关闭不是两张孤立的“背诵图”，而是一套由序列号、确认号、标志位和定时器共同驱动的状态机。排障时应从状态迁移与报文证据出发，而不是只记“三次握手、四次挥手”。
 
-![客户端与服务端通过 SYN、ACK、FIN 在 TCP 状态机中完成建连、半关闭与最终释放](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/tcp-connection-state-handshake-close-v1.webp)
-*图：上半部分同步两个方向的初始序列号，下半部分展示主动关闭方经过 FIN-WAIT 与 TIME-WAIT、被动关闭方经过 CLOSE-WAIT 与 LAST-ACK。*
-
 ---
 
 ## 三次握手在同步什么
@@ -26,6 +23,9 @@ SYN 中可以携带 MSS、窗口扩大、SACK permitted、时间戳等选项。�
 ## 关闭为何常画成四步
 
 TCP 是全双工字节流，两个方向可以独立关闭。主动关闭方发送 FIN 只表示“我不会再发送新字节”，仍可继续接收对方的数据，这叫 half-close。
+
+![无丢包且 FIN 与 ACK 分开发送的常规主动关闭：A 发 FIN 后等待确认，对端稍后发 FIN；A 收到该 FIN 并发送最后 ACK 后进入 TIME-WAIT，B 收到最后 ACK 后关闭](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/tcp-active-close-time-wait-v2.png)
+*图：TIME-WAIT 的进入点是收到对端 FIN 并发送最后 ACK，不能写成收到对端 ACK。图中的 2MSL 属于这条 TIME-WAIT 路径的协议计时；同时关闭、报文合并或重传应按实际 TCP 状态机判断，不能把它当所有连接关闭的固定耗时。*
 
 典型流程如下：
 
@@ -85,6 +85,7 @@ TCP 只能根据收到的报文和本地定时器更新状态。若对端突然�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [华为 Agent 实习两轮记录：TCP、C 存储期与拓扑序](../../../interview/huawei/ai/huawei-ai-1.md)
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
 - [蚂蚁智能体与大模型应用一面：幻觉、Skill 与 RAG](../../../interview/antfin/ai/antfin-ai-5.md)
 - [字节 AML / 火山方舟 AI Infra 一面：Agent Runtime、OS 与网络（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-17.md)

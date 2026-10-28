@@ -352,6 +352,7 @@ def calculate_relevance(content: str, query: str) -> float:
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [阿里 Token Foundry AI 应用研发一面：Critic、上下文与幂等](../../../interview/alibaba/ai/alibaba-ai-17.md)
 - [蚂蚁 Agent 一二面：Code Agent 与应用开发](../../../interview/antfin/ai/antfin-ai-2.md)
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)
 - [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)

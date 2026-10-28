@@ -3,7 +3,7 @@
 [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html)定义 PUT、DELETE 等方法的幂等语义，POST 默认不具备。应用可以用 client-generated key 让某个具体 POST 操作具备重试安全性，但必须定义作用域、请求一致性、并发和保留期。
 
 ![请求携带 Idempotency Key 与请求指纹进入原子账本，首个请求成为 owner 并执行一次；相同请求重放已存响应，不同请求复用同 key 返回冲突](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/api-idempotency-request-ledger-v1.webp)
-*图：IN PROGRESS 是并发协调状态；不能让两个请求同时发现“没有记录”后都去执行。*
+*图中的一次业务效果以账本与业务变更在同一数据库事务中原子提交为前提。IN PROGRESS 是并发协调状态；跨系统效果仍需下游幂等与对账，单一 owner 不能自动保证一次效果。*
 
 ## 契约
 
@@ -43,7 +43,7 @@ ledger primary key = scope + idempotency_key
 
 ## 副作用与账本的一致性
 
-若副作用和账本在同一数据库，把业务写入与 completed 响应放一个事务最简单。若调用外部支付或消息系统，无法做一个可靠分布式事务，需要 operationId、下游幂等键或 outbox：
+若副作用和账本在同一数据库，把业务写入与 completed 响应放一个事务最简单。外部支付或消息系统通常不能自动加入这个本地事务，应先核对下游提供的原子性与重试契约，再选择 operationId、下游幂等键或 outbox：
 
 1. 原子成为 owner；
 2. 给下游发送稳定 operationId；
@@ -55,7 +55,7 @@ ledger primary key = scope + idempotency_key
 
 ## 重放什么响应
 
-[Stripe Idempotent Requests](https://docs.stripe.com/api/idempotent_requests)是成熟生产设计示例：服务保存某个 key 的首次结果，并对相同重试返回同一结果，同时检测参数不一致。具体状态码、保存哪些错误和保留时间属于提供方契约，不能把示例当通用标准。
+[Stripe API v1 的 Idempotent Requests](https://docs.stripe.com/api/idempotent_requests)是成熟生产设计示例：服务保存某个 key 的首次结果，并对相同重试返回同一结果，同时检测参数不一致。具体状态码、保存哪些错误和保留时间属于提供方契约，不能把示例当通用标准。
 
 通常保存 HTTP status、允许列表 Header、响应 body 或对象引用，以及完成时间和 Schema 版本。不要重放 Set-Cookie、Date、traceId 等逐请求字段；新响应生成新的 requestId，同时可标记 replayed=true 并引用 originalRequestId。
 
@@ -96,6 +96,7 @@ API 幂等需要一个原子账本，而不只是 Header。key 在明确作用�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [快手 Agent 岗一面：CSS 能力边界与插入幂等](../../../interview/kuaishou/ai/kuaishou-ai-10.md)
 - [字节 Agent 一面：会话记忆、并发更新与算法](../../../interview/bytedance/base/bytedance-base-29.md)
 - [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)
 - [字节全栈二、三面：幂等、索引与字符串匹配](../../../interview/bytedance/base/bytedance-base-32.md)

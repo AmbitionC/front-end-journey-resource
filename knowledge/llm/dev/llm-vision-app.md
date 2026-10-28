@@ -139,6 +139,7 @@ Anthropic 的[视觉指南](https://platform.claude.com/docs/en/build-with-claud
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [百度网盘后端二面：图生图工作流、任务管理与缓存一致性](../../../interview/baidu/ai/baidu-ai-5.md)
 - [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
 <!-- interview-source-history:end -->
 

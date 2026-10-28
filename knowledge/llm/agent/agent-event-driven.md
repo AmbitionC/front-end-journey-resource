@@ -91,6 +91,7 @@ payload 只携带必要数据。大文档使用不可变对象引用、hash、�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [阿里 Token Foundry AI 应用研发一面：Critic、上下文与幂等](../../../interview/alibaba/ai/alibaba-ai-17.md)
 - [网易云全栈一面：评估闭环、异步任务与数据查询](../../../interview/netease/fullstack/netease-fullstack-1.md)
 <!-- interview-source-history:end -->
 

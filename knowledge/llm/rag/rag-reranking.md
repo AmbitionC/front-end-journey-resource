@@ -85,6 +85,7 @@ answer = generate_from_evidence(query, evidence)
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [蚂蚁 AI 应用暑期一面：工具超时与 RAG Top-K](../../../interview/antfin/ai/antfin-ai-8.md)
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
 - [字节 Agent 后端实习一面：LangGraph、评测集与混合检索](../../../interview/bytedance/base/bytedance-base-22.md)
 - [字节 Agent 实习：生成质量、多智能体与缓存](../../../interview/bytedance/base/bytedance-base-52.md)

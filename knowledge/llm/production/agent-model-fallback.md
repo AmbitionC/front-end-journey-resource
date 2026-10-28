@@ -76,6 +76,12 @@ known quality floors by task
 
 模型降级是一套受治理的路由协议：Retry 处理同一依赖的瞬态失败，Circuit Breaker 限制故障放大，Fallback 只在能力、政策、数据和质量门禁全部通过时发生。没有合格替代者时明确失败，往往比悄悄返回低可信答案更可靠。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [小红书 AI 全栈业务交叉面与二面：MVP、运行稳定性和视频 Agent](../../../interview/redbook/ai/redbook-ai-5.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [gRPC：Retry](https://grpc.io/docs/guides/retry/)

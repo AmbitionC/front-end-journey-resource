@@ -18,8 +18,10 @@ type AgentFailure = {
 
 工具适配器把供应商错误映射到稳定类别，保留原始 code 作为证据。不要让模型从错误文案猜 retryable；策略由操作语义和服务契约决定。
 
-![错误先分类为瞬态、限流、校验、部分副作用或策略拒绝，再分别进入退避重试、等待、修正输入、对账补偿或升级终止；重复依赖失败触发断路器，持久状态从检查点恢复](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-failure-recovery-error-taxonomy-v1.webp)
-*图：所有路径最终到 Verified State 或 Terminal Failure，而不是无限重试。*
+![错误分类后分别重试等待、修订、对账或停止；恢复候选与检查点进入继续处理，再由独立结果验收区分已验证结果和未解决终态](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-failure-recovery-verify-outcome-v2.png)
+*图：修参、补偿与检查点恢复都不直接代表成功，只有结果验收通过才进入 Verified Result；重试仍受次数与期限限制。*
+
+图中的“继续处理”要以对账和可信状态为依据：已提交的动作读取既有结果，不再重发；只对仍有必要、获准且可安全执行的步骤继续操作。修参后重新执行、补偿失败或恢复后缺证据，都可能无法通过验收；保留未解决状态，再按策略终止或升级，不能把异常被捕获、输入被修正或补偿已发起当成任务完成。
 
 ## Retry 只处理瞬态失败
 
@@ -80,6 +82,7 @@ Trace 记录 operation ID、attempt、错误类别、sideEffectState、backoff�
 - [百度部分（小红书与百度合并记录）：LangGraph、Skill 与工程校验](../../../interview/redbook/ai/redbook-ai-2.md)；对应合并页中已明确标出的百度部分。
 
 <!-- interview-source-history:start -->
+- [快手 AI 应用服务端秋招三面：分布式 Agent、通信与 Lua](../../../interview/kuaishou/ai/kuaishou-ai-6.md)
 - [小红书与百度 Agent 面试合并记录：LangGraph 子图、Skill 与工程校验](../../../interview/redbook/ai/redbook-ai-2.md)
 - [字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-20.md)
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)

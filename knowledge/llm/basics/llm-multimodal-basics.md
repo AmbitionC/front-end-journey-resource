@@ -82,6 +82,12 @@ Agent 可以读取截图、听取语音、结合文本指令后调用工具。�
 
 多模态模型的核心是编码、对齐/融合与解码。不同模态不会自动共享语义，系统也不会因为能接收媒体就获得可靠感知。把各阶段拆开评估，才能知道错误来自输入解析、表示对齐、语言生成还是外部工具。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [小红书产品工程师一面：一致性、知识来源与多模态评估](../../../interview/redbook/ai/redbook-ai-6.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Learning Transferable Visual Models From Natural Language Supervision（CLIP）](https://arxiv.org/abs/2103.00020)

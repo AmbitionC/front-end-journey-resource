@@ -83,6 +83,9 @@ schema 演进遵循向后兼容：新增可选字段，旧消费者忽略未知�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [快手 AI 应用服务端日常实习一面：协作、上下文与评测](../../../interview/kuaishou/ai/kuaishou-ai-7.md)
+- [快手 AI 应用服务端秋招三面：分布式 Agent、通信与 Lua](../../../interview/kuaishou/ai/kuaishou-ai-6.md)
+- [快手 Agent 面试：多智能体通信与推理模型](../../../interview/kuaishou/ai/kuaishou-ai-11.md)
 - [字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)
 - [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
 - [小红书与百度 Agent 面试合并记录：LangGraph 子图、Skill 与工程校验](../../../interview/redbook/ai/redbook-ai-2.md)
