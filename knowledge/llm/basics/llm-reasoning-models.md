@@ -23,7 +23,7 @@
 ## Test-time compute：推理时多花预算
 
 ![推理模型在生成、校验、修订循环中使用额外测试时计算预算](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-reasoning-models-budget-loop-v1.webp)
-*图：额外预算可用于更长轨迹、并行候选、验证与修订；收益通常递减，并增加延迟和成本。*
+*图：额外预算可用于更长轨迹、并行候选、验证与修订，收益需实测。实际计算投入通常增加资源与费用；图中延迟箭头只示意一种可能趋势，墙钟延迟还取决于并行度、调度和验证方式。*
 
 测试时计算不只等于“输出更多 token”，还可以包括：
 
@@ -37,7 +37,7 @@
 
 ## 预算应该花在哪里
 
-可把一次请求成本粗略拆成：候选数量 $n$、每条轨迹长度 $L$、验证成本 $V$ 和可能的工具调用。增加任一项都会提高延迟。合理系统应按难度自适应：简单问题快速回答，困难且高价值的问题才扩大搜索。
+可把一次请求成本粗略拆成：候选数量 $n$、每条轨迹长度 $L$、验证成本 $V$ 和可能的工具调用。增加实际生成的候选、轨迹长度或验证工作，通常会增加总计算量与费用；墙钟延迟则取决于并行度、调度、验证方式和可用资源，不能仅由预算大小推出。[并行请求说明](https://developers.openai.com/api/docs/guides/latency-optimization#parallelize)展示了独立步骤可并发执行的情形。合理系统应按难度自适应：简单问题快速回答，困难且高价值的问题才扩大搜索。
 
 当任务有可靠验证器时，多采样尤其有效，例如单元测试、编译器、数值答案或约束求解。开放式建议、事实问答和价值判断缺少完美 verifier；模型自评还可能与生成器共享偏差，此时增加采样不一定增加真实性。
 
@@ -84,7 +84,14 @@
 
 推理模型通过后训练和 test-time compute，把更多预算投入分解、搜索、验证与修订。它们在可验证的复杂任务上最有价值；在简单或缺乏可靠反馈的问题上，额外思考可能只增加成本。正确用法是按难度分配预算，并用工具和独立证据验证结果。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [快手 Agent 面试：多智能体通信与推理模型](../../../interview/kuaishou/ai/kuaishou-ai-11.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning](https://arxiv.org/abs/2501.12948)
 - [Scaling LLM Test-Time Compute Optimally can be More Effective than Scaling Model Parameters](https://arxiv.org/abs/2408.03314)
+- [OpenAI：Latency optimization — Parallelize](https://developers.openai.com/api/docs/guides/latency-optimization#parallelize)

@@ -1,8 +1,3 @@
-![三栏对比图：Reflection 的执行后反馈回路、Plan-and-Execute 的计划器与执行器分离、Tool-Use 的模型到工具再回模型；统一任务入口和结果出口，标出各自最适合的任务特征](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-paradigms-reactive-deliberative-hybrid-learning-v1.webp)
-*图：沿图中的节点与箭头阅读，重点是比较 Reflection、Plan-and-Execute、Tool-Use 的控制流与适用边界。*
-
----
-
 智能体不止一种思考方式。除了 ReAct 的"边想边做"，业界还形成了几种更具针对性的范式：**Reflection（反思范式）**、**Plan-and-Execute（先规划后执行）**、**Tool-Use（工具调用）**。理解它们各自的适用边界，是构建生产级智能体的必要前提。
 
 ## 一、Reflection / Self-Refine：反思范式
@@ -35,17 +30,23 @@ $$
 
 ```mermaid
 flowchart LR
-    T[任务] --> E[初始执行\n生成初稿 O₀]
-    E --> R{Reflection\n评审员分析}
-    R -- 发现问题 --> RF[Refinement\n生成优化稿 Oᵢ₊₁]
+    T[任务] --> E[初始执行<br/>生成初稿 O₀]
+    E --> R{Reflection<br/>评审员分析}
+    R -- 发现问题 --> RF[Refinement<br/>生成优化稿 Oᵢ₊₁]
     RF --> R
-    R -- 无需改进 --> DONE[最终输出]
+    R -- 自评无需改进 --> V{独立验收<br/>测试或证据检查}
+    V -- 通过 --> DONE[最终输出]
+    V -- 未通过 / 证据不足 --> STOP[失败 / 需干预]
 
     style E fill:#6366f1,color:#fff
     style R fill:#d97706,color:#fff
     style RF fill:#059669,color:#fff
-    style DONE fill:#dc2626,color:#fff
+    style V fill:#2563eb,color:#fff
+    style DONE fill:#059669,color:#fff
+    style STOP fill:#dc2626,color:#fff
 ```
+
+[Self-Refine 官方项目页](https://selfrefine.info/)将停止条件设为任务相关，并用人工评价或任务指标报告效果。图中的独立验收是应用层放行门；下方教学代码只返回待验收候选，未接入验收器或证据不足时不能声称验证通过。
 
 ### 三套提示词
 
@@ -657,6 +658,10 @@ RLHF 在训练阶段利用人类偏好信号更新模型；这些权重变化会
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [百度 Agent 秋招二面：执行范式与记忆压缩](../../../interview/baidu/ai/baidu-ai-6.md)
+- [字节 AI 应用开发一、二面：规划、结构化输出与部署取舍](../../../interview/bytedance/base/bytedance-base-65.md)
+- [阿里 Token Foundry AI 应用研发一面：Critic、上下文与幂等](../../../interview/alibaba/ai/alibaba-ai-17.md)
+- [小红书 AI 后端一面：执行模式、Memory、意图与 RAG](../../../interview/redbook/ai/redbook-ai-8.md)
 - [快手大模型应用 Java 实习一面：Agent、SkillHub 与 Vibe Coding](../../../interview/kuaishou/ai/kuaishou-ai-1.md)
 <!-- interview-source-history:end -->
 
@@ -669,3 +674,4 @@ RLHF 在训练阶段利用人类偏好信号更新模型；这些权重变化会
 - [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366)
 - [Plan-and-Solve Prompting](https://arxiv.org/abs/2305.04091)
 - [Toolformer: Language Models Can Teach Themselves to Use Tools](https://arxiv.org/abs/2302.04761)
+- [Self-Refine 官方项目页：停止条件与评估方式](https://selfrefine.info/)

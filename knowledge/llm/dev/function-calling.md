@@ -4,7 +4,8 @@
 
 它让模型从“只会说话”扩展到查询订单、搜索知识库、调用计算器或生成工单，但并没有自动解决权限、安全和业务正确性。
 
-![Function Calling 的可信执行闭环](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/function-calling-execution-loop-v3.webp)
+![模型提出工具调用，应用校验并执行，带 call_id 的工具结果回到模型后继续调用或回答](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/function-calling-execution-loop-v4.png)
+*图：工具结果绑定原 call_id 回到模型，模型可以继续提出调用或回答。校验与授权由应用执行；副作用路径复用有效授权，并按策略做必要确认。图中 tool_result 泛指工具输出，Responses API 使用 function_call_output；最终回答仍需按业务目标验收。*
 
 ## 一、完整闭环，而不是一次函数调用
 
@@ -213,6 +214,7 @@ async function cancelOrder(orderId: string, session: Session) {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [快手 AI 应用一面：沙箱中的 Skill、工具调用与记忆压缩](../../../interview/kuaishou/ai/kuaishou-ai-12.md)
 - [阿里云 Agent 开发秋招一面](../../../interview/alibaba/ai/alibaba-ai-1.md)
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)
 - [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)

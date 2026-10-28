@@ -62,6 +62,14 @@ AsyncAPI 文档描述 submit、started、progress、completed、failed 和 cance
 
 不要在收到消息后立即 ACK 再异步处理，那会在进程崩溃时丢任务；也不要依赖 Broker 的“恰好一次”宣传替代业务幂等。
 
+## 保序先定义范围，再约束提交效果
+
+“消息按序”要说明是一个生产通道的入队顺序、消费者收到的顺序，还是业务变更最终提交的顺序。[RabbitMQ 的消息排序说明](https://www.rabbitmq.com/docs/queues#message-ordering)指出，单通道发布的消息按发布顺序入队；多个通道会交错，优先级和重投会影响实际交付。即使按序收到，两条消息交给并行任务后，耗时不同也可能让后收到的任务先提交。
+
+若要求同一订单的变更按序生效，可按订单 ID 分区，并让同一分区串行处理到持久提交；不同订单仍可并发。教学例子中，订单状态已应用到版本 7，事件 9 先到而 8 未到，不能只因 9 是新消息就直接应用：按业务合同等待或补查缺口，再用条件更新检查预期版本。重复的旧事件也应结合事件账本处理，而非再次改变状态。这里的版本约束是应用方案，不是 Broker 自动提供的保证。
+
+重试队列、DLQ 重放与分区迁移也要遵守相同范围。前一事件失败时，是阻塞该实体、核对权威状态后跳过，还是补偿后继续，应有明确规则；把失败事件移走后立即执行后续事件，可能破坏依赖。保序、幂等与防丢失分别解决不同问题，只有在约定的范围内一起验证，才能说明业务效果符合要求。
+
 ## 租约、重试与 DLQ
 
 Worker 用 leaseOwner、leaseUntil 和 fencingToken 表示执行权。心跳延长租约，旧 token 不能写新状态。进程崩溃后租约过期，消息被重投或扫描器重新调度。
@@ -113,6 +121,7 @@ RabbitMQ 的 TTL 限制消息存活期，死信交换机路由过期、拒收等
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [拼多多提前批一面：Agent 超时、消息可靠性与线上排障](../../../interview/pinduoduo/ai/pinduoduo-ai-2.md)
 - [阿里云 Agent Infra 一面：SGX、吞吐与日志写入](../../../interview/alibaba/ai/alibaba-ai-8.md)
 - [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)
 - [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)

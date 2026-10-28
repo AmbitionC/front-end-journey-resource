@@ -20,7 +20,7 @@ type IdempotentRequest = {
 `intentHash` 由规范化后的业务参数计算。相同 key + 相同 intent 是重放；相同 key + 不同 intent 必须拒绝，不能返回第一次结果掩盖调用方错误。
 
 ![客户端以 Caller ID、Idempotency Key 与 Intent Hash 请求服务，服务在原子边界内通过操作账本区分 New、Running、Succeeded、Failed；重复成功请求重放语义结果，不同意图拒绝](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-idempotency-operation-ledger-v1.webp)
-*图：重复和迟到请求汇聚到同一 ledger entry，外部 Side Effect 只发生一次。*
+*图：重复和迟到请求汇聚到同一账本，在同库原子事务内一起提交业务效果与账本记录。跨外部系统仍需下游幂等与结果对账，不能仅凭占位或唯一 owner 保证一次效果。*
 
 ## 操作账本
 
@@ -79,6 +79,7 @@ Key 唯一范围至少包含 principal/tenant 和 operation，防止不同用户
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [阿里 Token Foundry AI 应用研发一面：Critic、上下文与幂等](../../../interview/alibaba/ai/alibaba-ai-17.md)
 - [海康威视 AI Agent 开发一面：可靠工具与任务状态](../../../interview/hikvision/ai/hikvision-ai-1.md)
 <!-- interview-source-history:end -->
 

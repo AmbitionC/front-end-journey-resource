@@ -7,7 +7,7 @@
       "id": "context-engineering:mermaid:45",
       "kind": "mermaid",
       "articlePath": "knowledge/llm/agent/context-engineering.md",
-      "articleSha256": "492426c60960bdd9ae726d01044120353483e840a39a2feb712c53897da34620",
+      "articleSha256": "556bfe71b949bb257f8010d5c5db9595c85b73ba462ffe4d3fdd948f7a7ca0f1",
       "line": 45,
       "sourceText": "graph TD\n    A[有效上下文] --> B[系统提示 System Prompt]\n    A --> C[工具定义 Tools]\n    A --> D[少样本示例 Few-shot]\n    A --> E[对话历史 History]\n    A --> F[外部知识 RAG / Memory]\n    B --> B1[角色定位 + 行为规范\\n分区组织 XML/Markdown]\n    C --> C1[职责单一 + 接口清晰\\n最小可行工具集 MVTS]\n    D --> D1[多样且典型\\n直接画像期望行为]\n",
       "sourceSha256": "0b5c73dfb7e9ad2d5cb79f93acc1aa104de349bc27a90ce5f71168145ef30adb",
@@ -77,7 +77,7 @@
       "id": "context-engineering:mermaid:105",
       "kind": "mermaid",
       "articlePath": "knowledge/llm/agent/context-engineering.md",
-      "articleSha256": "492426c60960bdd9ae726d01044120353483e840a39a2feb712c53897da34620",
+      "articleSha256": "556bfe71b949bb257f8010d5c5db9595c85b73ba462ffe4d3fdd948f7a7ca0f1",
       "line": 105,
       "sourceText": "flowchart LR\n    A[多源信息] -->|Gather| B[候选信息包]\n    B -->|Select| C[评分筛选]\n    C -->|Structure| D[结构化模板]\n    D -->|Compress| E[最终上下文]\n\n    style A fill:#f5f5f5\n    style E fill:#e8f5e9\n",
       "sourceSha256": "793697de664a57dd03ff1503dbe26d6a3d2154cf3e6ad23d7362aec8e7919925",
@@ -147,7 +147,7 @@
       "id": "context-engineering:mermaid:211",
       "kind": "mermaid",
       "articlePath": "knowledge/llm/agent/context-engineering.md",
-      "articleSha256": "492426c60960bdd9ae726d01044120353483e840a39a2feb712c53897da34620",
+      "articleSha256": "556bfe71b949bb257f8010d5c5db9595c85b73ba462ffe4d3fdd948f7a7ca0f1",
       "line": 212,
       "sourceText": "sequenceDiagram\n    participant C as 对话历史\n    participant L as LLM（压缩）\n    participant N as 新上下文窗口\n\n    C->>L: 接近上限，触发压缩\n    L->>N: 生成摘要 + 保留近期少量工件\n    Note over N: 架构决策 + 未解决问题 + 实现细节\n    Note over C: 丢弃：重复工具输出 + 噪声\n",
       "sourceSha256": "624b060ab1ae68f9951ec8534081194dbf8ae5184ab1886944bff9d20040f79b",
@@ -185,7 +185,7 @@
       "id": "mcp-protocol:mermaid:68",
       "kind": "mermaid",
       "articlePath": "knowledge/llm/agent/mcp-protocol.md",
-      "articleSha256": "238dd96786b5cd995faf4c660e51d24f7ced6945a65a14c969722ccb4abaed91",
+      "articleSha256": "a67018376d4bb77bd36ec7f3e59c33cb82696b04dd3946e7db980717c2ca8b6e",
       "line": 17,
       "sourceText": "sequenceDiagram\n    participant User as 用户\n    participant Host as Host (Claude Desktop / 你的应用)\n    participant Client as MCP Client\n    participant Server as MCP Server (文件系统/GitHub/数据库)\n\n    User->>Host: \"我桌面上有哪些文档？\"\n    Host->>Client: 激活 MCP Client\n    Client->>Server: 初始化、协商能力与 tools/list\n    Server-->>Client: [read_file, list_directory, ...]\n    Client->>Host: 将工具描述注入 LLM 上下文\n    Host->>Client: call_tool(\"list_directory\", {path: \"~/Desktop\"})\n    Client->>Server: tools/call（校验后的参数）\n    Server-->>Client: [\"report.pdf\", \"notes.md\", ...]\n    Client-->>Host: 工具结果\n    Host-->>User: \"你桌面上有 report.pdf 和 notes.md...\"\n",
       "sourceSha256": "169b15661b2709afc1bb13bbe4c10089615058590eb0b3a6fb2c97a7a9f3b555",
@@ -393,70 +393,58 @@
       "id": "agent-memory-architecture:svg:14",
       "kind": "svg",
       "articlePath": "knowledge/llm/agent/agent-memory-architecture.md",
-      "articleSha256": "38c0d20fe0dde3de3134e102694454cece47cd69e6398ea0dad0481f0cff3e0a",
+      "articleSha256": "dd565998c8cd4c1a1edae33ca6b934f9871bcdea7b92f1945595bcbcafc6896c",
       "line": 14,
-      "sourceText": "https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-memory-write-recall-policy-v1.svg",
-      "sourceSha256": "6e6cc76fadd4e64b6547b2064d1c0ff398989b18fe87a509bbb4e4308708df9f",
-      "url": "https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-memory-write-recall-policy-v1.svg",
-      "vectorPath": "images/agent-memory-write-recall-policy-v1.svg",
-      "vectorSha256": "007a432362061571b1f05043c52d50105c0f27f45055bd02d901c9251d8b1e01",
-      "alt": "Agent 记忆写入与召回策略：请求和运行上下文经过写入门，按用途进入事实、证据或检查点存储，冲突和低置信内容进入隔离区",
-      "cacheKey": "8f409d33fce6471f236786b0bcb0751d205abe0b10eb48430f325cb2f55c586c",
+      "sourceText": "https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-memory-write-recall-policy-v2.svg",
+      "sourceSha256": "008387af2e11b87e53b1c4cf3f58110f5493f6bd5685da63b02b3ffe2a553626",
+      "url": "https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-memory-write-recall-policy-v2.svg",
+      "vectorPath": "images/agent-memory-write-recall-policy-v2.svg",
+      "vectorSha256": "a71864f1643640429443d1b059dc556d1648f41ba88f4d1bed0302cdf0bd9daf",
+      "alt": "Agent 记忆写入与召回策略：请求和运行上下文经过写入门进入事实、证据或检查点存储；冲突和低置信内容进入隔离区，不自动流向回答或动作",
+      "cacheKey": "82aa86f87456f1e0f36eaa0ce834b39dcfb053a35d9d76659bb67221bb7b88f4",
       "renderer": {
-        "mermaid": "11.15.0",
-        "bundleSha256": "70137e77bb273bb2ef972b86e8b0400cca8be53cb25bfc45911a186dc98665de",
         "puppeteer": "24.43.1",
+        "browser": "Chrome/156.0.8078.49",
         "scale": 2,
         "fontFamily": "PingFang SC, Arial, sans-serif",
-        "fonts": [
-          {
-            "name": "PingFang.ttc",
-            "sha256": "6bccdb1a967b2ae7e856927eb559591b2ce05656b0d4ad2764b9c9429f12c0b7"
-          },
-          {
-            "name": "Arial.ttf",
-            "sha256": "525979822591a3447cfc49d943d6f7683508e25543407871c0ed8fed05fd2bd9"
-          },
-          {
-            "name": "Arial Unicode.ttf",
-            "sha256": "876af2cd4854644e7f3e7feb2f688997fdb3343c6df6693611209c9dfb47ccec"
-          }
-        ],
-        "browser": "Chrome/148.0.7778.97"
+        "actualFontChecks": {
+          "pingFang": true,
+          "arial": true
+        }
       },
-      "outputPath": "images/pdf-agent-memory-architecture-svg-8f409d33fce6.png",
-      "outputSha256": "a8e820e0938ab5b2fff064b67b12b5def51923c4df76dea916fb78a4dd3a6f44",
-      "width": 2480,
-      "height": 1440,
-      "renderedVectorSha256": "4e87670a525a45b39a6541dd21ede065ad668cd55e0542e47af6ea78216a2616",
+      "outputPath": "images/pdf-agent-memory-architecture-svg-82aa86f87456.png",
+      "outputSha256": "d99ba86d38f69e70ed087e12db6c7522b79886c9d9ff8f33c8d8fcb931cdac32",
+      "width": 2400,
+      "height": 1360,
+      "renderedVectorSha256": "635cfb931d9583a2c96834eba88135ac6bda3603b296bf66deaea4a941ce8932",
       "panels": [
         {
           "row": 1,
           "column": 1,
-          "sourceVectorSha256": "4e87670a525a45b39a6541dd21ede065ad668cd55e0542e47af6ea78216a2616",
+          "sourceVectorSha256": "635cfb931d9583a2c96834eba88135ac6bda3603b296bf66deaea4a941ce8932",
           "rect": [
             0,
             0,
             1000,
             680
           ],
-          "outputPath": "images/pdf-agent-memory-architecture-svg-8f409d33fce6-detail-1-1.png",
-          "outputSha256": "1f05b906cde9eb9b552254ca5091d9f35d03350e386eb45c7e8f159ec8d93309",
+          "outputPath": "images/pdf-agent-memory-architecture-svg-82aa86f87456-detail-1-1.png",
+          "outputSha256": "af4a46bdbe16a655bf252041ca1b7ca80b52b263f862a2ec003a6a9f3b9ce561",
           "width": 2000,
           "height": 1360
         },
         {
           "row": 1,
           "column": 2,
-          "sourceVectorSha256": "4e87670a525a45b39a6541dd21ede065ad668cd55e0542e47af6ea78216a2616",
+          "sourceVectorSha256": "635cfb931d9583a2c96834eba88135ac6bda3603b296bf66deaea4a941ce8932",
           "rect": [
             900,
             0,
             300,
             680
           ],
-          "outputPath": "images/pdf-agent-memory-architecture-svg-8f409d33fce6-detail-1-2.png",
-          "outputSha256": "8d0fb62778cb586d8575a001f6b2e44ac0dc17a7199ae9a453e450ae651506a3",
+          "outputPath": "images/pdf-agent-memory-architecture-svg-82aa86f87456-detail-1-2.png",
+          "outputSha256": "2871dc21d28d7ba77f85cae58ad4d964f17200b7fec6717c3ac06b925f143724",
           "width": 600,
           "height": 1360
         }
@@ -758,7 +746,7 @@
       "id": "agent-tool-selection:archify:26",
       "kind": "archify",
       "articlePath": "knowledge/llm/agent/agent-tool-selection.md",
-      "articleSha256": "d6cf0c2b8311a8c4912be9054d6789dfa9b859a958e436f3e62727eb823428c5",
+      "articleSha256": "3eb063683a994d85fc10e577733ac426deb5512a76c3f5397d76d1ce4641c4b5",
       "line": 26,
       "sourceText": "<iframe\n  src=\"/archify/agent-tool-selection.html\"\n  title=\"Agent 工具选择与授权漏斗交互架构图\"\n></iframe>",
       "sourceSha256": "24143b756970f63a70713dee7fe4208be8f96359b13d4e0724788787c0a41db5",
@@ -831,7 +819,7 @@
       "id": "build-agent-framework:archify:27",
       "kind": "archify",
       "articlePath": "knowledge/llm/agent/build-agent-framework.md",
-      "articleSha256": "9d6e276c95714cb66499b1234343e6f791dceca97627d95fab1b87ecbb0fd8c5",
+      "articleSha256": "41f2c40f4bf492ea0f241913e444f5c5bc22fdebf939730f5f0b88d30388b98e",
       "line": 27,
       "sourceText": "<iframe\n  src=\"/archify/build-agent-framework.html\"\n  title=\"最小 Agent 运行时交互架构图\"\n></iframe>",
       "sourceSha256": "6447d0e5e861f910b7288aa2a39e9c72d8f3dd50af6f67970407e911d61ab4d5",
@@ -1050,7 +1038,7 @@
       "id": "agent-run-loop:archify:34",
       "kind": "archify",
       "articlePath": "knowledge/llm/agent/agent-run-loop.md",
-      "articleSha256": "ef308485d2921e832e7232a41681b169eb69e3cb6230eec5201102f5a3360034",
+      "articleSha256": "d8588b3408c3c7e50fed804abb66856a942404d844f9eb71de17b52d56e03922",
       "line": 34,
       "sourceText": "<iframe\n  src=\"/archify/agent-run-loop.html\"\n  title=\"Agent Run Loop 单轮执行与终止交互架构图\"\n></iframe>",
       "sourceSha256": "a2caa2ea6d85b82bcb99eff07049d00199dca1a468adae77cb00d4b702143bec",
@@ -1266,7 +1254,7 @@
       "id": "agent-human-in-loop:archify:32",
       "kind": "archify",
       "articlePath": "knowledge/llm/agent/agent-human-in-loop.md",
-      "articleSha256": "6ec50eac5be127fd4f36352541e4f6a8b3355546c188ba337f06ffc7b01c890a",
+      "articleSha256": "21ea72865cca21d03d2d6e1852aed4491597f325ee3dbb5c055662ae24de1368",
       "line": 32,
       "sourceText": "<iframe\n  src=\"/archify/agent-human-in-loop.html\"\n  title=\"Human-in-the-loop 持久审批协议交互架构图\"\n></iframe>",
       "sourceSha256": "16e118c0f611fc1e53aa84395a78b5638f528609e6975e35a4a8fb698a32dc58",
@@ -1339,46 +1327,79 @@
       "id": "agent-paradigms:mermaid:36",
       "kind": "mermaid",
       "articlePath": "knowledge/llm/agent/agent-paradigms.md",
-      "articleSha256": "8d2753d1452b367278c8d55250bdb07612e7a63c2ff4efba5641996fb0b80e23",
-      "line": 36,
-      "sourceText": "flowchart LR\n    T[任务] --> E[初始执行\\n生成初稿 O₀]\n    E --> R{Reflection\\n评审员分析}\n    R -- 发现问题 --> RF[Refinement\\n生成优化稿 Oᵢ₊₁]\n    RF --> R\n    R -- 无需改进 --> DONE[最终输出]\n\n    style E fill:#6366f1,color:#fff\n    style R fill:#d97706,color:#fff\n    style RF fill:#059669,color:#fff\n    style DONE fill:#dc2626,color:#fff\n",
-      "sourceSha256": "c99f77783e5b56fe0c0655e5bcd8db4093c116d91fae20cdc67576c1305818a8",
+      "articleSha256": "c82c1a9761ceea1869279361460d67c8f55f48e41a6b4e59e04c4ce8288ff64d",
+      "line": 31,
+      "sourceText": "flowchart LR\n    T[任务] --> E[初始执行<br/>生成初稿 O₀]\n    E --> R{Reflection<br/>评审员分析}\n    R -- 发现问题 --> RF[Refinement<br/>生成优化稿 Oᵢ₊₁]\n    RF --> R\n    R -- 自评无需改进 --> V{独立验收<br/>测试或证据检查}\n    V -- 通过 --> DONE[最终输出]\n    V -- 未通过 / 证据不足 --> STOP[失败 / 需干预]\n\n    style E fill:#6366f1,color:#fff\n    style R fill:#d97706,color:#fff\n    style RF fill:#059669,color:#fff\n    style V fill:#2563eb,color:#fff\n    style DONE fill:#059669,color:#fff\n    style STOP fill:#dc2626,color:#fff\n",
+      "sourceSha256": "de2fec2f31f280548c07b6c89937d77ab9714975a9818aa7aa4cadcc56509125",
       "type": "flowchart",
-      "cacheKey": "398795e0b067f66b7b557fface527237453def797fb978d82fbcd9a974898f21",
+      "cacheKey": "38ecbc5782f110b4da8b88fc862ae732e52ba0b1a67695bccfaad764504833d2",
       "renderer": {
         "mermaid": "11.15.0",
         "bundleSha256": "70137e77bb273bb2ef972b86e8b0400cca8be53cb25bfc45911a186dc98665de",
         "puppeteer": "24.43.1",
+        "browser": "Chrome/156.0.8078.49",
         "scale": 2,
         "fontFamily": "PingFang SC, Arial, sans-serif",
-        "fonts": [
-          {
-            "name": "PingFang.ttc",
-            "sha256": "6bccdb1a967b2ae7e856927eb559591b2ce05656b0d4ad2764b9c9429f12c0b7"
-          },
-          {
-            "name": "Arial.ttf",
-            "sha256": "525979822591a3447cfc49d943d6f7683508e25543407871c0ed8fed05fd2bd9"
-          },
-          {
-            "name": "Arial Unicode.ttf",
-            "sha256": "876af2cd4854644e7f3e7feb2f688997fdb3343c6df6693611209c9dfb47ccec"
+        "configuration": {
+          "startOnLoad": false,
+          "securityLevel": "strict",
+          "theme": "default",
+          "fontFamily": "PingFang SC, Arial, sans-serif",
+          "deterministicIds": true,
+          "deterministicIDSeed": "de2fec2f31f280548c07b6c89937d77ab9714975a9818aa7aa4cadcc56509125",
+          "flowchart": {
+            "htmlLabels": false
           }
-        ],
-        "browser": "Chrome/148.0.7778.97"
+        },
+        "actualFontChecks": {
+          "pingFang": true,
+          "arial": true
+        }
       },
-      "outputPath": "images/pdf-agent-paradigms-mermaid-398795e0b067.png",
-      "outputSha256": "ed68d78b793a20c04729ebb31b4ff25cf342663c4ee0f35ee1462feb9dd1ea30",
-      "width": 1684,
-      "height": 476,
-      "renderedVectorSha256": "68dca80caef458c13d1d4a9caf55a58731b50663eda789e8babe6353ea7cb69c"
+      "outputPath": "images/pdf-agent-paradigms-mermaid-38ecbc5782f1.png",
+      "outputSha256": "6ea998e041df43df5631f5c628234901d57e4c01328d79f337acd238915630bc",
+      "width": 2398,
+      "height": 668,
+      "renderedVectorSha256": "07fa34536b3aeaa533916079d16d3332d5e243c4e68c85f0a310b5970cec3c9a",
+      "panels": [
+        {
+          "row": 1,
+          "column": 1,
+          "sourceVectorSha256": "07fa34536b3aeaa533916079d16d3332d5e243c4e68c85f0a310b5970cec3c9a",
+          "rect": [
+            0,
+            0,
+            1000,
+            334
+          ],
+          "outputPath": "images/pdf-agent-paradigms-mermaid-38ecbc5782f1-detail-1-1.png",
+          "outputSha256": "65c4e31c6722142deaedf1f7deea5f2c97d9bdcbc6fab6c16127cc9b07df0132",
+          "width": 2000,
+          "height": 668
+        },
+        {
+          "row": 1,
+          "column": 2,
+          "sourceVectorSha256": "07fa34536b3aeaa533916079d16d3332d5e243c4e68c85f0a310b5970cec3c9a",
+          "rect": [
+            900,
+            0,
+            299,
+            334
+          ],
+          "outputPath": "images/pdf-agent-paradigms-mermaid-38ecbc5782f1-detail-1-2.png",
+          "outputSha256": "935125d75f720f8cbe932bf38e89ad60022d7284ba87bb364c2c2bcbe6b1df92",
+          "width": 598,
+          "height": 668
+        }
+      ]
     },
     {
       "id": "agent-paradigms:mermaid:253",
       "kind": "mermaid",
       "articlePath": "knowledge/llm/agent/agent-paradigms.md",
-      "articleSha256": "8d2753d1452b367278c8d55250bdb07612e7a63c2ff4efba5641996fb0b80e23",
-      "line": 257,
+      "articleSha256": "c82c1a9761ceea1869279361460d67c8f55f48e41a6b4e59e04c4ce8288ff64d",
+      "line": 258,
       "sourceText": "flowchart TD\n    Q[用户问题] --> P[Planner\\n生成步骤列表 P = p₁,p₂,...,pₙ]\n    P --> E1[执行 p₁\\n得到 s₁]\n    E1 --> E2[执行 p₂\\n输入包含 s₁]\n    E2 --> E3[...]\n    E3 --> EN[执行 pₙ\\n输入包含所有前序结果]\n    EN --> DONE[最终答案 sₙ]\n\n    style P fill:#6366f1,color:#fff\n    style DONE fill:#dc2626,color:#fff\n",
       "sourceSha256": "6200c53f9aa19df01617314b8c5d07debf8d358628587a870b13b456dd6320c1",
       "type": "flowchart",
@@ -1415,8 +1436,8 @@
       "id": "agent-paradigms:mermaid:415",
       "kind": "mermaid",
       "articlePath": "knowledge/llm/agent/agent-paradigms.md",
-      "articleSha256": "8d2753d1452b367278c8d55250bdb07612e7a63c2ff4efba5641996fb0b80e23",
-      "line": 423,
+      "articleSha256": "c82c1a9761ceea1869279361460d67c8f55f48e41a6b4e59e04c4ce8288ff64d",
+      "line": 424,
       "sourceText": "flowchart LR\n    U[用户请求] --> LLM[LLM\\n分析意图]\n    LLM -- \"决定调用工具\" --> TC[Tool Call\\n结构化 JSON]\n    TC --> TE[Tool Executor\\n实际执行]\n    TE -- \"返回结果\" --> LLM2[LLM\\n整合结果，继续推理]\n    LLM2 -- \"完成任务\" --> RESP[最终响应]\n    LLM2 -- \"需要更多工具\" --> TC\n\n    style TC fill:#059669,color:#fff\n    style TE fill:#d97706,color:#fff\n",
       "sourceSha256": "03e7844ef5dc3b5e5b4f3d31b2b296e4ad7a2a91c5da5e3e86e43ce873338a77",
       "type": "flowchart",
@@ -1485,8 +1506,8 @@
       "id": "agent-paradigms:mermaid:605",
       "kind": "mermaid",
       "articlePath": "knowledge/llm/agent/agent-paradigms.md",
-      "articleSha256": "8d2753d1452b367278c8d55250bdb07612e7a63c2ff4efba5641996fb0b80e23",
-      "line": 617,
+      "articleSha256": "c82c1a9761ceea1869279361460d67c8f55f48e41a6b4e59e04c4ce8288ff64d",
+      "line": 618,
       "sourceText": "flowchart TD\n    START[新任务] --> Q1{需要外部工具吗？}\n    Q1 -- 否 --> PLAIN[纯 LLM 或 CoT]\n    Q1 -- 是 --> Q2{步骤能提前规划吗？}\n    Q2 -- 能 --> Q3{对结果质量要求极高？}\n    Q3 -- 是 --> RFL[Plan-and-Execute\\n+ Reflection]\n    Q3 -- 否 --> PE[Plan-and-Execute]\n    Q2 -- 不能（依赖运行时） --> Q4{对结果质量要求极高？}\n    Q4 -- 是 --> REFL2[ReAct + Reflection]\n    Q4 -- 否 --> REACT[ReAct]\n\n    style REACT fill:#6366f1,color:#fff\n    style PE fill:#059669,color:#fff\n    style RFL fill:#d97706,color:#fff\n    style REFL2 fill:#dc2626,color:#fff\n",
       "sourceSha256": "87926a032b84dd8cb8e70b00e25002bd116b55774bc129efc59d334d8d61e122",
       "type": "flowchart",
@@ -1747,7 +1768,7 @@
       "id": "agent-supervisor:archify:23",
       "kind": "archify",
       "articlePath": "knowledge/llm/agent/agent-supervisor.md",
-      "articleSha256": "2a8d7d127bc5eb28407fb0d7cbdef93f3e41343fd7720b339c70442a17f177d1",
+      "articleSha256": "0eb57135795a34912cb8d560c869a7d60c8d83360d91fde74f280e690b475690",
       "line": 23,
       "sourceText": "<iframe\n  src=\"/archify/agent-supervisor.html\"\n  title=\"有界且有状态的 Supervisor 控制环交互架构图\"\n></iframe>",
       "sourceSha256": "0c44fd862bdda8eb2100ad1df29d68af0fde3b4bd89bf5a81de45bc9f4d06cd5",
@@ -1820,7 +1841,7 @@
       "id": "agent-intent-clarification:svg:3",
       "kind": "svg",
       "articlePath": "knowledge/llm/agent/agent-intent-clarification.md",
-      "articleSha256": "89f0d06c187488cf711a23c4f66ef69567383073fc368f8f37f655843a4abf71",
+      "articleSha256": "6a9dd8347aae4b0d8af31944710c5082069c8be071cc048fecee819080611805",
       "line": 3,
       "sourceText": "https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-intent-clarification-routing-v1.svg",
       "sourceSha256": "2e4c72f856edda568ae70ef90db7f8de9dc9914d0cce067d5dc2bae890ea882d",
@@ -3130,7 +3151,7 @@
       "id": "redis-cache:mermaid:49",
       "kind": "mermaid",
       "articlePath": "knowledge/backend/database/redis-cache.md",
-      "articleSha256": "aac668651f273a2d1276188ffe31c0da3330295f010989926940c0c1b1bc08f2",
+      "articleSha256": "ddb4f639c4ecaa1c93e028d8bf53fbc940abeab5e14f9a2f2f662772ecb0ac6c",
       "line": 49,
       "sourceText": "flowchart TD\n    A[客户端请求] --> B{Redis 命中?}\n    B -- 是 --> C[返回缓存数据]\n    B -- 否 --> D[查询数据库]\n    D --> E{DB 有数据?}\n    E -- 是 --> F[写入 Redis + 设 TTL]\n    F --> G[返回数据]\n    E -- 否 --> H[缓存空值 TTL=60s]\n    H --> I[返回 null]\n\n    J[写请求] --> K[更新数据库]\n    K --> L[删除 Redis 对应 key]\n",
       "sourceSha256": "c63fe3e7093505313b02a0800ee836b4e2001cd39641db740a45531ef701b4df",
@@ -3168,7 +3189,7 @@
       "id": "redis-cache:mermaid:204",
       "kind": "mermaid",
       "articlePath": "knowledge/backend/database/redis-cache.md",
-      "articleSha256": "aac668651f273a2d1276188ffe31c0da3330295f010989926940c0c1b1bc08f2",
+      "articleSha256": "ddb4f639c4ecaa1c93e028d8bf53fbc940abeab5e14f9a2f2f662772ecb0ac6c",
       "line": 206,
       "sourceText": "flowchart LR\n    subgraph 主从复制\n        M1[Master] -->|异步复制| S1[Slave 1]\n        M1 -->|异步复制| S2[Slave 2]\n    end\n\n    subgraph Sentinel 哨兵\n        Sen1[Sentinel 1] & Sen2[Sentinel 2] & Sen3[Sentinel 3]\n        Sen1 -- 监控/故障转移 --> M1\n    end\n\n    subgraph Cluster 集群\n        N1[Node1\\nSlot 0-5460] <--> N2[Node2\\nSlot 5461-10922]\n        N2 <--> N3[Node3\\nSlot 10923-16383]\n    end\n",
       "sourceSha256": "f35b0004230f386aee9b165edff1b168ceb4a63a31ce0c041609d9a5a0ae8e6f",
@@ -3409,7 +3430,7 @@
       "id": "db-transaction-lock-archify-readview-visibility",
       "specPath": "knowledge/backend/database/readview-visibility.archify.json",
       "specSha256": "6d8fdc9d27b7715940b8c0ecf0b1c01bdc6a3cb85abfcb12b57e7b9e67c30e0c",
-      "articleSha256": "fd2f67243d9b774a458e286378a9a63e81fc4c480697e51e79e1c5cfecfa7e44",
+      "articleSha256": "256498054a018e1504756f9e7dedd46ea32382996620114337f641ba036260d7",
       "line": 37,
       "sourceText": "<iframe src=\"https://www.agent-journey.cn/archify/readview-visibility.html\" title=\"InnoDB ReadView 版本可见性判断\" width=\"100%\" height=\"760\" loading=\"lazy\"></iframe>",
       "sourceSha256": "87811218184e42a17794b45ecc29e44bb75cfa1224f886d66e2c6445b9c1f381"
@@ -3418,7 +3439,7 @@
       "id": "db-transaction-lock-archify-innodb-record-gap-deadlock",
       "kind": "archify",
       "articlePath": "knowledge/backend/database/db-transaction-lock.md",
-      "articleSha256": "fd2f67243d9b774a458e286378a9a63e81fc4c480697e51e79e1c5cfecfa7e44",
+      "articleSha256": "256498054a018e1504756f9e7dedd46ea32382996620114337f641ba036260d7",
       "line": 65,
       "sourceText": "<iframe src=\"https://www.agent-journey.cn/archify/innodb-record-gap-deadlock.html\" title=\"InnoDB 记录锁、间隙锁、插入等待与死锁\" width=\"100%\" height=\"760\" loading=\"lazy\"></iframe>",
       "sourceSha256": "0326970d92d1ea5e8d0dbd0d2533f3378403421c22ac07130d42660ba3253487",
@@ -3802,7 +3823,7 @@
       "id": "logging-monitoring:mermaid:258",
       "kind": "mermaid",
       "articlePath": "knowledge/backend/devops/logging-monitoring.md",
-      "articleSha256": "df4a5945697c86635dd0442fe1c23598d86fd0fb07b36bd634b4120dabe476a4",
+      "articleSha256": "be6a41853210c24c0a8ba9aee5ba1919765e20885a321eb95be2d4981e213101",
       "line": 264,
       "sourceText": "sequenceDiagram\n    participant U as 用户\n    participant G as API Gateway\n    participant A as Agent Service\n    participant L as LLM API\n    participant T as Tool Service\n\n    U->>G: POST /chat (生成 TraceID)\n    G->>A: 转发请求（携带 traceparent header）\n\n    Note over A: Span: parse-intent<br/>日志: INFO request received\n\n    A->>L: LLM Call #1\n    Note over A,L: Span: llm-call-1<br/>指标: llm_call_duration++<br/>指标: llm_tokens_total++\n\n    L-->>A: 返回 tool_use\n\n    A->>T: 调用工具（search_web）\n    Note over A,T: Span: tool-call<br/>指标: agent_tool_call_total++\n\n    T-->>A: 工具结果\n\n    A->>L: LLM Call #2（含工具结果）\n    L-->>A: 最终回复\n\n    A-->>G: 响应（含 X-Trace-Id header）\n    G-->>U: 返回结果\n\n    Note over A: 日志: INFO session completed<br/>traceId/spanId 可关联全链路\n",
       "sourceSha256": "2435df76028f4330d1858cdb1e19353dc2c042932114e6b2565369efb3e4f79f",
@@ -6634,7 +6655,7 @@
       "id": "algorithm-heap-archify-minheap-operations-largest-topk",
       "kind": "archify",
       "articlePath": "knowledge/cs/algorithm/algorithm-heap.md",
-      "articleSha256": "bb7e57b3348890e513479a384212689e44ceadf5584619419cef661d06ce4f01",
+      "articleSha256": "9504a2d4d342699cce9b7634f22d901b73fa3d748b29cff04957b4c6b29b99a6",
       "line": 3,
       "sourceText": "<iframe\n  src=\"https://www.agent-journey.cn/archify/minheap-operations-largest-topk.html\"\n  title=\"最小堆上浮、下沉与流式最大 Top-K\"\n></iframe>",
       "sourceSha256": "d9755f22d2f3c982d768f9423feb3ca49a6c563d0a41337d7776d819b2ce398c",
@@ -7054,7 +7075,7 @@
   "literals": [
     {
       "articlePath": "knowledge/llm/agent/agent-skill-design.md",
-      "articleSha256": "a3260848d3aca24730d3342016ce49a59e9c1fb995d3372f384076ce57d32dad",
+      "articleSha256": "1dce6120f3060af3ad19985a51dffebe5437c229994c479f524a1dd1690771d1",
       "sourceText": ".agents/skills/<id>/"
     }
   ]

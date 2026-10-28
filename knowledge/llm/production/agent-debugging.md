@@ -156,6 +156,8 @@ Agent 调试是一门复现实验：定义失败、冻结快照、还原因果�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节 AI 应用开发一、二面：规划、结构化输出与部署取舍](../../../interview/bytedance/base/bytedance-base-65.md)
+- [淘天供应链 AI 应用一面：失败复盘、工具并行与精确检索](../../../interview/alibaba/ai/alibaba-ai-19.md)
 - [字节剪映 AI 前端一面：Agent 运行时、MCP 与性能](../../../interview/bytedance/base/bytedance-base-30.md)
 - [腾讯 CSIG 元宝内容安全日常实习：评测集、输出校验与问题归因](../../../interview/tencent/ai/tencent-ai-15.md)
 <!-- interview-source-history:end -->

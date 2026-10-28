@@ -45,6 +45,7 @@ CPU 密集任务通常接近实际可用 CPU 并行度开始测量；“核数+1
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [小红书产品工程师 Agent 一面：线程池与幻觉控制](../../../interview/redbook/ai/redbook-ai-9.md)
 - [字节全栈一面：RAG、Java 与线程池](../../../interview/bytedance/base/bytedance-base-37.md)
 - [字节一面：线程池、分布式锁与数字构造](../../../interview/bytedance/base/bytedance-base-58.md)
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)

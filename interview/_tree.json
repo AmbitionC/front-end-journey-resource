@@ -140,6 +140,21 @@
             "filePath": "bytedance/base",
             "department": "中国交易与广告",
             "roleCategory": "Agent 与后端工程"
+          },
+          {
+            "label": "字节 AI 全栈实习一面：多 Agent 编排与海量 URL Top-K",
+            "key": "bytedance-base-68",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "Agent",
+              "工程实践"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "中国交易与广告",
+            "originalLabel": "字节 AI 全栈实习一面：多 Agent 编排与海量 URL Top-K",
+            "roleCategory": "AI 与 Agent 工程"
           }
         ]
       },
@@ -217,6 +232,21 @@
             "filePath": "bytedance/base",
             "department": "TikTok",
             "roleCategory": "Agent 与后端工程"
+          },
+          {
+            "label": "字节 TikTok Shop 质量方向一面：LLM Judge 与测试集覆盖",
+            "key": "bytedance-base-66",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "Agent",
+              "工程实践"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "TikTok",
+            "originalLabel": "字节 TikTok Shop 质量方向一面：LLM Judge 与测试集覆盖",
+            "roleCategory": "AI 与 Agent 工程"
           }
         ]
       },
@@ -869,6 +899,38 @@
             "filePath": "bytedance/base",
             "department": "其他",
             "roleCategory": "Agent 与后端工程"
+          },
+          {
+            "label": "字节 AI 应用开发一、二面：规划、结构化输出与部署取舍",
+            "key": "bytedance-base-65",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "Agent",
+              "架构",
+              "结构化输出",
+              "部署"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "originalLabel": "字节 AI 应用开发一、二面：规划、结构化输出与部署取舍",
+            "roleCategory": "AI 与 Agent 工程"
+          },
+          {
+            "label": "字节 Agent 一面：生成代码质量与限时 AI Coding",
+            "key": "bytedance-base-67",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "Agent",
+              "工程实践"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "originalLabel": "字节 Agent 一面：生成代码质量与限时 AI Coding",
+            "roleCategory": "AI 与 Agent 工程"
           }
         ]
       },
@@ -983,6 +1045,21 @@
             "role": "后台开发",
             "contentFormat": "short-qa-v2",
             "originalLabel": "腾讯微信支付 AI 软件工程一面（2026 年 8 月）"
+          },
+          {
+            "label": "腾讯 WXG 一面：转人工 Agent、Skill 与检索边界",
+            "key": "tencent-ai-16",
+            "isLeaf": true,
+            "filePath": "tencent/ai",
+            "tags": [
+              "Agent",
+              "工程实践"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "WXG",
+            "originalLabel": "腾讯 WXG 一面：转人工 Agent、Skill 与检索边界",
+            "roleCategory": "AI 与 Agent 工程"
           }
         ]
       },
@@ -1343,6 +1420,21 @@
             "isLeaf": true,
             "updatedAt": "2026-10-20",
             "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "淘天供应链 AI 应用一面：失败复盘、工具并行与精确检索",
+            "key": "alibaba-ai-19",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "tags": [
+              "Agent",
+              "工程实践"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "淘天",
+            "originalLabel": "淘天供应链 AI 应用一面：失败复盘、工具并行与精确检索",
+            "roleCategory": "AI 与 Agent 工程"
           }
         ]
       },
@@ -1407,6 +1499,36 @@
             "role": "Agent开发",
             "contentFormat": "short-qa-v2",
             "originalLabel": "阿里 Agent 开发暑期实习一面（2026 年 8 月）"
+          },
+          {
+            "label": "阿里 Token Foundry AI 应用研发一面：Critic、上下文与幂等",
+            "key": "alibaba-ai-17",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "tags": [
+              "Agent",
+              "工程实践"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "originalLabel": "阿里 Token Foundry AI 应用研发一面：Critic、上下文与幂等",
+            "roleCategory": "AI 与 Agent 工程"
+          },
+          {
+            "label": "阿里控股 Agent Infra 一面：Agent 选择、记忆纠错与持续改进",
+            "key": "alibaba-ai-18",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "tags": [
+              "Agent",
+              "工程实践"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "originalLabel": "阿里控股 Agent Infra 一面：Agent 选择、记忆纠错与持续改进",
+            "roleCategory": "AI 与 Agent 工程"
           }
         ]
       }
@@ -1438,6 +1560,28 @@
             "roleCategory": "Agent 与 AI 应用",
             "role": "大模型研发",
             "contentFormat": "short-qa-v2"
+          }
+        ]
+      },
+      {
+        "label": "网盘",
+        "key": "baidu-department-netdisk",
+        "nodeType": "department",
+        "children": [
+          {
+            "label": "百度网盘后端二面：图生图工作流、任务管理与缓存一致性",
+            "key": "baidu-ai-5",
+            "isLeaf": true,
+            "filePath": "baidu/ai",
+            "tags": [
+              "Agent",
+              "工程实践"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "网盘",
+            "originalLabel": "百度网盘后端二面：图生图工作流、任务管理与缓存一致性",
+            "roleCategory": "AI 与 Agent 工程"
           }
         ]
       },
@@ -1496,6 +1640,36 @@
             "isLeaf": true,
             "updatedAt": "2026-10-20",
             "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "百度 Agent 秋招二面：执行范式与记忆压缩",
+            "key": "baidu-ai-6",
+            "isLeaf": true,
+            "filePath": "baidu/ai",
+            "tags": [
+              "Agent",
+              "工程实践"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "originalLabel": "百度 Agent 秋招二面：执行范式与记忆压缩",
+            "roleCategory": "AI 与 Agent 工程"
+          },
+          {
+            "label": "百度 AI 应用社招一面：工作区权限、工具发现与上下文",
+            "key": "baidu-ai-7",
+            "isLeaf": true,
+            "filePath": "baidu/ai",
+            "tags": [
+              "Agent",
+              "工程实践"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "originalLabel": "百度 AI 应用社招一面：工作区权限、工具发现与上下文",
+            "roleCategory": "AI 与 Agent 工程"
           }
         ]
       }
@@ -1605,6 +1779,111 @@
             "department": "其他",
             "roleCategory": "Agent 与 AI 应用",
             "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "快手 AI 应用服务端秋招三面：分布式 Agent、通信与 Lua",
+            "key": "kuaishou-ai-6",
+            "isLeaf": true,
+            "filePath": "kuaishou/ai",
+            "tags": [
+              "Agent",
+              "工程实践"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "originalLabel": "快手 AI 应用服务端秋招三面：分布式 Agent、通信与 Lua",
+            "roleCategory": "AI 与 Agent 工程"
+          },
+          {
+            "label": "快手 AI 应用服务端日常实习一面：协作、上下文与评测",
+            "key": "kuaishou-ai-7",
+            "isLeaf": true,
+            "filePath": "kuaishou/ai",
+            "tags": [
+              "Agent",
+              "工程实践"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "originalLabel": "快手 AI 应用服务端日常实习一面：协作、上下文与评测",
+            "roleCategory": "AI 与 Agent 工程"
+          },
+          {
+            "label": "快手 AI 全栈一二面：Harness、沙箱与需求交付",
+            "key": "kuaishou-ai-8",
+            "isLeaf": true,
+            "filePath": "kuaishou/ai",
+            "tags": [
+              "Agent",
+              "工程实践"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "originalLabel": "快手 AI 全栈一二面：Harness、沙箱与需求交付",
+            "roleCategory": "AI 与 Agent 工程"
+          },
+          {
+            "label": "快手 AI 全栈一面：Skill 成本、Agent 链路与开发验收",
+            "key": "kuaishou-ai-9",
+            "isLeaf": true,
+            "filePath": "kuaishou/ai",
+            "tags": [
+              "Agent",
+              "工程实践"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "originalLabel": "快手 AI 全栈一面：Skill 成本、Agent 链路与开发验收",
+            "roleCategory": "AI 与 Agent 工程"
+          },
+          {
+            "label": "快手 Agent 岗一面：CSS 能力边界与插入幂等",
+            "key": "kuaishou-ai-10",
+            "isLeaf": true,
+            "filePath": "kuaishou/ai",
+            "tags": [
+              "Agent",
+              "工程实践"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "originalLabel": "快手 Agent 岗一面：CSS 能力边界与插入幂等",
+            "roleCategory": "AI 与 Agent 工程"
+          },
+          {
+            "label": "快手 Agent 面试：多智能体通信与推理模型",
+            "key": "kuaishou-ai-11",
+            "isLeaf": true,
+            "filePath": "kuaishou/ai",
+            "tags": [
+              "Agent",
+              "工程实践"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "originalLabel": "快手 Agent 面试：多智能体通信与推理模型",
+            "roleCategory": "AI 与 Agent 工程"
+          },
+          {
+            "label": "快手 AI 应用一面：沙箱中的 Skill、工具调用与记忆压缩",
+            "key": "kuaishou-ai-12",
+            "isLeaf": true,
+            "filePath": "kuaishou/ai",
+            "tags": [
+              "Agent",
+              "工程实践"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "originalLabel": "快手 AI 应用一面：沙箱中的 Skill、工具调用与记忆压缩",
+            "roleCategory": "AI 与 Agent 工程"
           }
         ]
       }
@@ -1704,6 +1983,28 @@
         ]
       },
       {
+        "label": "蚂蚁国际",
+        "key": "antfin-department-international",
+        "nodeType": "department",
+        "children": [
+          {
+            "label": "蚂蚁国际 Agent 一面：跨系统 AI 交付与 MCP 工具链",
+            "key": "antfin-ai-7",
+            "isLeaf": true,
+            "filePath": "antfin/ai",
+            "tags": [
+              "Agent",
+              "工程实践"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "蚂蚁国际",
+            "originalLabel": "蚂蚁国际 Agent 一面：跨系统 AI 交付与 MCP 工具链",
+            "roleCategory": "AI 与 Agent 工程"
+          }
+        ]
+      },
+      {
         "key": "antfin-department-other",
         "label": "其他",
         "nodeType": "department",
@@ -1789,6 +2090,51 @@
             "department": "其他",
             "roleCategory": "Agent 与 AI 应用",
             "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "蚂蚁 AI 应用暑期一面：工具超时与 RAG Top-K",
+            "key": "antfin-ai-8",
+            "isLeaf": true,
+            "filePath": "antfin/ai",
+            "tags": [
+              "Agent",
+              "工程实践"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "originalLabel": "蚂蚁 AI 应用暑期一面：工具超时与 RAG Top-K",
+            "roleCategory": "AI 与 Agent 工程"
+          },
+          {
+            "label": "蚂蚁 Agent 一面：代码验收与运行循环",
+            "key": "antfin-ai-9",
+            "isLeaf": true,
+            "filePath": "antfin/ai",
+            "tags": [
+              "Agent",
+              "工程实践"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "originalLabel": "蚂蚁 Agent 一面：代码验收与运行循环",
+            "roleCategory": "AI 与 Agent 工程"
+          },
+          {
+            "label": "蚂蚁一面：交付门禁、准确率口径与商品问答",
+            "key": "antfin-ai-10",
+            "isLeaf": true,
+            "filePath": "antfin/ai",
+            "tags": [
+              "Agent",
+              "工程实践"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "originalLabel": "蚂蚁一面：交付门禁、准确率口径与商品问答",
+            "roleCategory": "AI 与 Agent 工程"
           }
         ]
       }
@@ -1820,6 +2166,21 @@
             "roleCategory": "Agent 与 AI 应用",
             "role": "AI Agent",
             "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "拼多多提前批一面：Agent 超时、消息可靠性与线上排障",
+            "key": "pinduoduo-ai-2",
+            "isLeaf": true,
+            "filePath": "pinduoduo/ai",
+            "tags": [
+              "Agent",
+              "工程实践"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "originalLabel": "拼多多提前批一面：Agent 超时、消息可靠性与线上排障",
+            "roleCategory": "AI 与 Agent 工程"
           }
         ]
       }
@@ -1909,6 +2270,28 @@
     "key": "Redbook",
     "children": [
       {
+        "label": "商业平台技术",
+        "key": "redbook-department-commercial-platform",
+        "nodeType": "department",
+        "children": [
+          {
+            "label": "小红书产品工程师一面：一致性、知识来源与多模态评估",
+            "key": "redbook-ai-6",
+            "isLeaf": true,
+            "filePath": "redbook/ai",
+            "tags": [
+              "Agent",
+              "工程实践"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "商业平台技术",
+            "originalLabel": "小红书产品工程师一面：一致性、知识来源与多模态评估",
+            "roleCategory": "AI 与 Agent 工程"
+          }
+        ]
+      },
+      {
         "key": "redbook-department-other",
         "label": "其他",
         "nodeType": "department",
@@ -1969,6 +2352,85 @@
             ],
             "contentFormat": "short-qa-v2",
             "originalLabel": "小红书与百度 Agent 面试合并记录：LangGraph 子图、Skill 与工程校验（2026 年 8 月发帖）"
+          },
+          {
+            "label": "小红书一面：检索评测、上下文压缩与任务幂等",
+            "key": "redbook-ai-4",
+            "isLeaf": true,
+            "filePath": "redbook/ai",
+            "tags": [
+              "Agent",
+              "RAG",
+              "上下文",
+              "幂等"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "originalLabel": "小红书一面：检索评测、上下文压缩与任务幂等",
+            "roleCategory": "AI 与 Agent 工程"
+          },
+          {
+            "label": "小红书 AI 全栈业务交叉面与二面：MVP、运行稳定性和视频 Agent",
+            "key": "redbook-ai-5",
+            "isLeaf": true,
+            "filePath": "redbook/ai",
+            "tags": [
+              "Agent",
+              "工程实践"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "originalLabel": "小红书 AI 全栈业务交叉面与二面：MVP、运行稳定性和视频 Agent",
+            "roleCategory": "AI 与 Agent 工程"
+          },
+          {
+            "label": "小红书大模型平台全栈一面：写边界、Harness 与意图澄清",
+            "key": "redbook-ai-7",
+            "isLeaf": true,
+            "filePath": "redbook/ai",
+            "tags": [
+              "Agent",
+              "工程实践"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "originalLabel": "小红书大模型平台全栈一面：写边界、Harness 与意图澄清",
+            "roleCategory": "AI 与 Agent 工程"
+          },
+          {
+            "label": "小红书 AI 后端一面：执行模式、Memory、意图与 RAG",
+            "key": "redbook-ai-8",
+            "isLeaf": true,
+            "filePath": "redbook/ai",
+            "tags": [
+              "Agent",
+              "工程实践"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "originalLabel": "小红书 AI 后端一面：执行模式、Memory、意图与 RAG",
+            "roleCategory": "AI 与 Agent 工程"
+          },
+          {
+            "label": "小红书产品工程师 Agent 一面：线程池与幻觉控制",
+            "key": "redbook-ai-9",
+            "isLeaf": true,
+            "filePath": "redbook/ai",
+            "tags": [
+              "Agent",
+              "Java",
+              "线程池",
+              "大模型"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "originalLabel": "小红书产品工程师 Agent 一面：线程池与幻觉控制",
+            "roleCategory": "AI 与 Agent 工程"
           }
         ]
       }
@@ -2203,5 +2665,34 @@
         ]
       }
     ]
+  },
+  {
+    "label": "华为",
+    "key": "huawei",
+    "children": [
+      {
+        "label": "其他",
+        "key": "huawei-department-other",
+        "nodeType": "department",
+        "children": [
+          {
+            "label": "华为 Agent 实习两轮记录：TCP、C 存储期与拓扑序",
+            "key": "huawei-ai-1",
+            "isLeaf": true,
+            "filePath": "huawei/ai",
+            "tags": [
+              "Agent",
+              "工程实践"
+            ],
+            "updatedAt": "2026-10-28",
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "originalLabel": "华为 Agent 实习两轮记录：TCP、C 存储期与拓扑序",
+            "roleCategory": "AI 与 Agent 工程"
+          }
+        ]
+      }
+    ],
+    "nodeType": "company"
   }
 ]

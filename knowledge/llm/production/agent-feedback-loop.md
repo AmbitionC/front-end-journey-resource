@@ -75,6 +75,7 @@
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [阿里控股 Agent Infra 一面：Agent 选择、记忆纠错与持续改进](../../../interview/alibaba/ai/alibaba-ai-18.md)
 - [网易云全栈一面：评估闭环、异步任务与数据查询](../../../interview/netease/fullstack/netease-fullstack-1.md)
 - [理想汽车 IT 全栈交付培养生一面：Skill、测试与工作流](../../../interview/liauto/fullstack/liauto-fullstack-1.md)
 - [字节 Agent 开发实习一面：自进化与评测](../../../interview/bytedance/base/bytedance-base-8.md)

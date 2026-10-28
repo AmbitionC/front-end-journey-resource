@@ -11,8 +11,8 @@ Agent 的“遗忘”不是数据库里随便删一行，而是让无效、过�
 
 把四者都实现成 `DELETE FROM memory` 会丢失冲突历史，也无法区分“过时”与“从未存在”。反过来，只标软删除却继续让向量索引召回，也不是真正退出使用。
 
-![记忆目录中的来源、时间、置信度和状态经过 TTL、相关性、同意与冲突策略，执行衰减、过期、替代或删除；冲突事实保留来源并生成独立 Current View](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-memory-forgetting-conflict-update-v1.webp)
-*图：Current View 是版本折叠结果；Supersede 不抹去历史，Delete 留下不含原文的审计记录。*
+![四条独立的记忆动作：衰减降低检索排序；过期退出当前视图；替代保留旧版本链并建立新当前版本；删除移除内容与派生副本，仅保留最小审计标识](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-memory-forgetting-four-actions-v2.png)
+*图：四行表示可分别执行的策略，不是顺序流水线。Decay 后记录仍可能被召回；Expire 后退出 Current View，存储保留按政策处理；Supersede 仅让新版本进入当前视图；Delete 移除原文及派生内容，tombstone 仅保留最小标识和状态。当前检索还必须同时满足 active、授权与有效期条件。*
 
 ## 状态模型
 
@@ -75,6 +75,7 @@ Tombstone 只保存最小标识、请求时间、处理状态和政策依据，�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [阿里控股 Agent Infra 一面：Agent 选择、记忆纠错与持续改进](../../../interview/alibaba/ai/alibaba-ai-18.md)
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../../interview/bytedance/base/bytedance-base-48.md)
 - [百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测](../../../interview/baidu/ai/baidu-ai-2.md)
 - [淘天 Agent 一面：工具调用、上下文与记忆更新](../../../interview/alibaba/ai/alibaba-ai-11.md)

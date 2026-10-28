@@ -16,8 +16,8 @@ $$
 
 解码器再根据这个分布选择一个 token，重复执行，最终形成整段文本。训练目标主要奖励“预测训练数据中的后续 token”，并不直接验证一句话是否对应现实、引用是否存在或结论是否满足业务规则。
 
-![从概率生成到事实核验的大模型可靠性闭环](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-capability-boundaries-confidence-loop-v1.webp)
-*图：高置信度只代表模型分布集中，不等价于现实中的正确；重要输出需要检索、工具、校准和人工复核。*
+![候选 token 的相对倾向示意与事实核验闭环，明确模型置信不等于答案正确](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-capability-boundaries-relative-token-boundary-v2.png)
+*图：候选柱只示意相对倾向，没有概率读数或实测数据。较高 token 概率不等于整句事实正确，仍需检索、工具核验、校准与必要的人工复核。*
 
 这也解释了两个常见误区：
 
@@ -75,6 +75,8 @@ $$
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [小红书产品工程师 Agent 一面：线程池与幻觉控制](../../../interview/redbook/ai/redbook-ai-9.md)
+- [腾讯 WXG 一面：转人工 Agent、Skill 与检索边界](../../../interview/tencent/ai/tencent-ai-16.md)
 - [网易云全栈一面：评估闭环、异步任务与数据查询](../../../interview/netease/fullstack/netease-fullstack-1.md)
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
 - [蚂蚁智能体与大模型应用一面：幻觉、Skill 与 RAG](../../../interview/antfin/ai/antfin-ai-5.md)

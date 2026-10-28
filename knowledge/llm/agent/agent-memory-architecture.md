@@ -11,8 +11,8 @@ Agent 记忆不是把所有历史塞回上下文，而是让系统在正确时�
 
 这些类别可以落在同一数据库，但检索和更新策略不同。用户今天说“本次用英文”可能只属于当前线程；“长期偏好英文”需要明确同意后才写入语义记忆；安全策略则不能由普通对话覆盖。
 
-![Agent 记忆写入与召回策略：请求和运行上下文经过写入门，按用途进入事实、证据或检查点存储，冲突和低置信内容进入隔离区](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-memory-write-recall-policy-v1.svg)
-*图：会话状态、长期事实与原始证据分开治理；相似度只能提供候选，不能替代写入授权、冲突检查和来源绑定。*
+![Agent 记忆写入与召回策略：请求和运行上下文经过写入门进入事实、证据或检查点存储；冲突和低置信内容进入隔离区，不自动流向回答或动作](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-memory-write-recall-policy-v2.svg)
+*图：会话状态、长期事实与原始证据分开治理；隔离内容不自动写入或使用，复核通过后仍须重新经过写入门。相似度只能提供候选，不能替代授权、冲突检查和来源绑定。*
 
 ## 分层而不是无限上下文
 
@@ -127,6 +127,9 @@ InMemorySaver 适合内存内示范，不保证进程重启后恢复；持久 sa
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [快手 AI 应用服务端日常实习一面：协作、上下文与评测](../../../interview/kuaishou/ai/kuaishou-ai-7.md)
+- [百度 Agent 秋招二面：执行范式与记忆压缩](../../../interview/baidu/ai/baidu-ai-6.md)
+- [小红书 AI 后端一面：执行模式、Memory、意图与 RAG](../../../interview/redbook/ai/redbook-ai-8.md)
 - [字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)
 - [腾讯 AI 应用开发面试：跨会话记忆与多 Agent](../../../interview/tencent/ai/tencent-ai-4.md)
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../../interview/bytedance/base/bytedance-base-48.md)

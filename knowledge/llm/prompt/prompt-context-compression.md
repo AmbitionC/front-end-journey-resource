@@ -69,6 +69,20 @@
 
 [LongBench](https://arxiv.org/abs/2308.14508)覆盖多种长上下文任务，提醒我们不能只用单一“针检索”验证压缩。摘要、代码、多文档问答和 Few-Shot 上的可损失信息并不相同。
 
+## 怎样用 usage 证明压缩有收益
+
+先固定同一任务、输入记录、检索与工具返回、模型版本及生成参数，再比较“未压缩”和“压缩后”继续任务的表现。保存每次真实模型调用的原始 usage，并区分生成摘要、后续问答、失败重试与其他调用；不能只挑后续问答中最省的一次响应，忽略摘要器自身和重试消耗。报告时把原始 token 数、缓存命中、延迟、估算费用和任务质量分开，明确统计范围；供应商账单用于实际费用对账。
+
+usage 是提供商对这次调用的计量结果，tokenizer 的事前估算用于预算，两者用途不同。以 [Google Gen AI Python SDK 的 GenerateContentResponseUsageMetadata](https://googleapis.github.io/python-genai/genai.html) 为例，它区分 prompt、candidates、cached content、thoughts 和工具返回等字段，prompt 计数已包含缓存内容。因此不要把 input 与 cached 无条件相加，也不要把可见回复长度当全部模型用量。跨供应商、流式或累计事件先核对对应版本的包含关系与累计语义，再聚合一次；缓存折扣、token 变少与业务费用下降不是同一指标。
+
+在相同题集上同时比较关键事实、否定与单位、引用支持、约束遵守和最终任务成功；再保留未参与调优的样本检查泛化。只有把压缩和重试开销计入后仍有收益、关键质量未越过业务容忍边界，才能说压缩值得采用。
+
+## 换模型时怎样处理摘要
+
+切到模型 B 不意味着所有用户事实失效。原始消息与已确认事实应继续可追溯；模型 A 的推断、已撤回决定、过期工具结果和与目标模型不兼容的工作视图，则不能自动成为 B 的当前事实。为摘要记录覆盖消息范围、来源指纹、摘要版本、生成模型与模板版本、目标模型兼容版本，并在切换时重新检查目标模型的输入合同和 token 预算；不兼容时从原始证据与最新事实重建视图，而非继续摘要旧摘要。
+
+异步任务携带生成时的基准摘要版本；提交时用原子条件写拒绝过期版本，只移除已覆盖前缀，保留后续消息及最新权限约束。详细的事实层、覆盖游标和迟到提交协议见[会话摘要、压缩与记忆提炼](../agent/agent-memory-summarization.md)。[LangGraph 的记忆文档](https://docs.langchain.com/oss/python/langgraph/add-memory)演示保存 summary 与移除消息，但这里的来源核验、跨模型兼容与并发提交门禁是应用设计，不是框架自动保证。
+
 ## 一个保护事实清单示例
 
 ```json
@@ -112,6 +126,10 @@
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [小红书一面：检索评测、上下文压缩与任务幂等](../../../interview/redbook/ai/redbook-ai-4.md)
+- [百度 AI 应用社招一面：工作区权限、工具发现与上下文](../../../interview/baidu/ai/baidu-ai-7.md)
+- [快手 AI 应用服务端日常实习一面：协作、上下文与评测](../../../interview/kuaishou/ai/kuaishou-ai-7.md)
+- [快手 AI 应用一面：沙箱中的 Skill、工具调用与记忆压缩](../../../interview/kuaishou/ai/kuaishou-ai-12.md)
 - [字节 Agent 一面：会话记忆、并发更新与算法](../../../interview/bytedance/base/bytedance-base-29.md)
 - [阿里淘天 Agent 一面：Skill、路由与灰度发布](../../../interview/alibaba/ai/alibaba-ai-13.md)
 - [字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)
@@ -135,3 +153,5 @@
 - [LongLLMLingua: Accelerating and Enhancing LLMs in Long Context Scenarios via Prompt Compression](https://arxiv.org/abs/2310.06839)
 - [Lost in the Middle: How Language Models Use Long Contexts](https://arxiv.org/abs/2307.03172)
 - [LongBench: A Bilingual, Multitask Benchmark for Long Context Understanding](https://arxiv.org/abs/2308.14508)
+- [Google Gen AI Python SDK：GenerateContentResponseUsageMetadata](https://googleapis.github.io/python-genai/genai.html)
+- [LangGraph：Memory，Summarize messages](https://docs.langchain.com/oss/python/langgraph/add-memory)

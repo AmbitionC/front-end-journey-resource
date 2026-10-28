@@ -82,13 +82,23 @@
       "label": "结构化输出与 JSON Schema",
       "filePath": "llm/prompt",
       "status": "pending",
-      "action": "updated",
+      "action": "audited",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
-      "previousPublication": {
-        "status": "published",
-        "batch": "llm-model-selection-and-prompt-core-2026-07-13",
-        "recordedAt": "2026-07-13"
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "prompt-structured-output",
+        "label": "结构化输出与 JSON Schema",
+        "filePath": "llm/prompt",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "previousPublication": {
+          "status": "published",
+          "batch": "llm-model-selection-and-prompt-core-2026-07-13",
+          "recordedAt": "2026-07-13"
+        }
       }
     },
     {
@@ -164,11 +174,21 @@
       "status": "pending",
       "action": "updated",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
-      "previousPublication": {
-        "status": "published",
-        "batch": "deepseek-streaming-tools-and-frontend-integration-2026-07-14",
-        "recordedAt": "2026-07-14"
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "function-calling",
+        "label": "Function Calling 与工具调用",
+        "filePath": "llm/dev",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "previousPublication": {
+          "status": "published",
+          "batch": "deepseek-streaming-tools-and-frontend-integration-2026-07-14",
+          "recordedAt": "2026-07-14"
+        }
       }
     },
     {
@@ -237,21 +257,31 @@
       "status": "pending",
       "action": "audited",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
-      "reason": "Reclassifies the existing Ant2 backlink as learning-only after actual primary question binding review; this navigation outside the canonical heat block is a real Markdown update and requires current-version quality review.",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
       "previousRecord": {
         "key": "rag-pipeline",
         "label": "RAG 完整流程实战",
         "filePath": "llm/rag",
-        "status": "published",
-        "action": "updated",
-        "recordedAt": "2026-07-14",
-        "batch": "frontend-scenarios-and-rag-foundations-2026-07-14"
-      },
-      "previousPublication": {
         "status": "pending",
-        "batch": "title-body4-quality-20261014",
-        "recordedAt": "2026-10-14"
+        "action": "audited",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "reason": "Reclassifies the existing Ant2 backlink as learning-only after actual primary question binding review; this navigation outside the canonical heat block is a real Markdown update and requires current-version quality review.",
+        "previousRecord": {
+          "key": "rag-pipeline",
+          "label": "RAG 完整流程实战",
+          "filePath": "llm/rag",
+          "status": "published",
+          "action": "updated",
+          "recordedAt": "2026-07-14",
+          "batch": "frontend-scenarios-and-rag-foundations-2026-07-14"
+        },
+        "previousPublication": {
+          "status": "pending",
+          "batch": "title-body4-quality-20261014",
+          "recordedAt": "2026-10-14"
+        }
       }
     },
     {
@@ -261,31 +291,51 @@
       "status": "pending",
       "action": "audited",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
-      "reason": "Current source-linked revision awaits exact candidate processing, independent review and production acceptance.",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
       "previousRecord": {
         "key": "rag-hybrid-search",
         "label": "Hybrid Search 混合检索",
         "filePath": "llm/rag",
         "status": "pending",
-        "action": "updated",
-        "recordedAt": "2026-09-01",
-        "batch": "nowcoder-partial-archive-2026-09-01"
-      },
-      "previousPublication": {
-        "status": "pending",
-        "batch": "title-baidu-three-quality-20261015",
-        "recordedAt": "2026-10-15"
+        "action": "audited",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "reason": "Current source-linked revision awaits exact candidate processing, independent review and production acceptance.",
+        "previousRecord": {
+          "key": "rag-hybrid-search",
+          "label": "Hybrid Search 混合检索",
+          "filePath": "llm/rag",
+          "status": "pending",
+          "action": "updated",
+          "recordedAt": "2026-09-01",
+          "batch": "nowcoder-partial-archive-2026-09-01"
+        },
+        "previousPublication": {
+          "status": "pending",
+          "batch": "title-baidu-three-quality-20261015",
+          "recordedAt": "2026-10-15"
+        }
       }
     },
     {
       "key": "rag-evaluation",
       "label": "RAG 评估与优化",
       "filePath": "llm/rag",
-      "status": "published",
-      "action": "updated",
-      "recordedAt": "2026-07-14",
-      "batch": "rag-evaluation-and-agent-foundations-2026-07-14"
+      "status": "pending",
+      "action": "audited",
+      "recordedAt": "2026-10-28",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "rag-evaluation",
+        "label": "RAG 评估与优化",
+        "filePath": "llm/rag",
+        "status": "published",
+        "action": "updated",
+        "recordedAt": "2026-07-14",
+        "batch": "rag-evaluation-and-agent-foundations-2026-07-14"
+      }
     },
     {
       "key": "agent-architecture",
@@ -324,23 +374,43 @@
       "label": "大模型的能力边界、幻觉与不确定性",
       "filePath": "llm/basics",
       "status": "pending",
-      "action": "audited",
+      "action": "updated",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
-      "previousPublication": {
-        "status": "published",
-        "batch": "llm-foundations-next-10-2026-07-14",
-        "recordedAt": "2026-07-14"
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "llm-capability-boundaries",
+        "label": "大模型的能力边界、幻觉与不确定性",
+        "filePath": "llm/basics",
+        "status": "pending",
+        "action": "audited",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "previousPublication": {
+          "status": "published",
+          "batch": "llm-foundations-next-10-2026-07-14",
+          "recordedAt": "2026-07-14"
+        }
       }
     },
     {
       "key": "llm-multimodal-basics",
       "label": "多模态模型基础：文本 / 图像 / 音频",
       "filePath": "llm/basics",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-14",
-      "batch": "llm-foundations-next-10-2026-07-14"
+      "status": "pending",
+      "action": "audited",
+      "recordedAt": "2026-10-28",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "llm-multimodal-basics",
+        "label": "多模态模型基础：文本 / 图像 / 音频",
+        "filePath": "llm/basics",
+        "status": "published",
+        "action": "created",
+        "recordedAt": "2026-07-14",
+        "batch": "llm-foundations-next-10-2026-07-14"
+      }
     },
     {
       "key": "llm-tokenizer",
@@ -457,10 +527,20 @@
       "key": "llm-reasoning-models",
       "label": "推理模型、思考预算与使用边界",
       "filePath": "llm/basics",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-14",
-      "batch": "llm-foundations-next-10-2026-07-14"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-28",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "llm-reasoning-models",
+        "label": "推理模型、思考预算与使用边界",
+        "filePath": "llm/basics",
+        "status": "published",
+        "action": "created",
+        "recordedAt": "2026-07-14",
+        "batch": "llm-foundations-next-10-2026-07-14"
+      }
     },
     {
       "key": "llm-long-context",
@@ -475,13 +555,23 @@
       "key": "llm-open-source-deployment",
       "label": "开源模型选型、推理与本地部署",
       "filePath": "llm/basics",
-      "status": "published",
-      "action": "updated",
-      "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004",
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+      "status": "pending",
+      "action": "audited",
+      "recordedAt": "2026-10-28",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "llm-open-source-deployment",
+        "label": "开源模型选型、推理与本地部署",
+        "filePath": "llm/basics",
+        "status": "published",
+        "action": "updated",
+        "recordedAt": "2026-10-04",
+        "batch": "next-twenty-source-increments-20261004",
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     },
     {
       "key": "prompt-testing-debugging",
@@ -542,13 +632,23 @@
       "label": "上下文压缩、摘要与裁剪",
       "filePath": "llm/prompt",
       "status": "pending",
-      "action": "audited",
+      "action": "updated",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
-      "previousPublication": {
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "prompt-context-compression",
+        "label": "上下文压缩、摘要与裁剪",
+        "filePath": "llm/prompt",
         "status": "pending",
-        "batch": "nowcoder-agent-market-20260829032320626-7f773caa",
-        "recordedAt": "2026-08-29"
+        "action": "audited",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "previousPublication": {
+          "status": "pending",
+          "batch": "nowcoder-agent-market-20260829032320626-7f773caa",
+          "recordedAt": "2026-08-29"
+        }
       }
     },
     {
@@ -660,13 +760,23 @@
       "key": "llm-vision-app",
       "label": "视觉理解与图像生成应用",
       "filePath": "llm/dev",
-      "status": "published",
-      "action": "updated",
-      "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004",
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+      "status": "pending",
+      "action": "audited",
+      "recordedAt": "2026-10-28",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "llm-vision-app",
+        "label": "视觉理解与图像生成应用",
+        "filePath": "llm/dev",
+        "status": "published",
+        "action": "updated",
+        "recordedAt": "2026-10-04",
+        "batch": "next-twenty-source-increments-20261004",
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     },
     {
       "key": "llm-audio-realtime",
@@ -731,25 +841,35 @@
       "key": "rag-reranking",
       "label": "Rerank 重排序原理与实践",
       "filePath": "llm/rag",
-      "status": "published",
-      "action": "updated",
-      "recordedAt": "2026-10-02",
-      "batch": "nowcoder-byte-campus-pilot-10-20261002",
+      "status": "pending",
+      "action": "audited",
+      "recordedAt": "2026-10-28",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
       "previousRecord": {
         "key": "rag-reranking",
         "label": "Rerank 重排序原理与实践",
         "filePath": "llm/rag",
         "status": "published",
-        "action": "created",
-        "recordedAt": "2026-07-15",
-        "batch": "ai-app-rag-next-10-2026-07-15"
-      },
-      "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
-      "publication": {
-        "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
-        "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
-        "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
-        "syncConclusion": "success"
+        "action": "updated",
+        "recordedAt": "2026-10-02",
+        "batch": "nowcoder-byte-campus-pilot-10-20261002",
+        "previousRecord": {
+          "key": "rag-reranking",
+          "label": "Rerank 重排序原理与实践",
+          "filePath": "llm/rag",
+          "status": "published",
+          "action": "created",
+          "recordedAt": "2026-07-15",
+          "batch": "ai-app-rag-next-10-2026-07-15"
+        },
+        "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
+        "publication": {
+          "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
+          "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
+          "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
+          "syncConclusion": "success"
+        }
       }
     },
     {
@@ -768,11 +888,21 @@
       "status": "pending",
       "action": "audited",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
-      "previousPublication": {
-        "status": "published",
-        "batch": "ai-app-rag-next-10-2026-07-15",
-        "recordedAt": "2026-07-15"
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "rag-citation-grounding",
+        "label": "引用溯源、Grounding 与事实一致性",
+        "filePath": "llm/rag",
+        "status": "pending",
+        "action": "audited",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "previousPublication": {
+          "status": "published",
+          "batch": "ai-app-rag-next-10-2026-07-15",
+          "recordedAt": "2026-07-15"
+        }
       }
     },
     {
@@ -1018,9 +1148,19 @@
       "label": "Human-in-the-loop 审批与人工接管",
       "filePath": "llm/agent",
       "status": "pending",
-      "action": "updated",
-      "recordedAt": "2026-09-01",
-      "batch": "archify-diagram-10-2026-09-01"
+      "action": "audited",
+      "recordedAt": "2026-10-28",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "agent-human-in-loop",
+        "label": "Human-in-the-loop 审批与人工接管",
+        "filePath": "llm/agent",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-09-01",
+        "batch": "archify-diagram-10-2026-09-01"
+      }
     },
     {
       "key": "agent-sandbox",
@@ -1028,8 +1168,18 @@
       "filePath": "llm/agent",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-08-29",
-      "batch": "nowcoder-agent-market-20260829032320626-7f773caa"
+      "recordedAt": "2026-10-28",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Remove the obsolete non-counting duplicate navigation after canonical historical sandbox count restoration; technical teaching content and historical source grades/statuses remain unchanged. Pending is not an online claim.",
+      "previousRecord": {
+        "key": "agent-sandbox",
+        "label": "代码执行、浏览器与文件操作沙箱",
+        "filePath": "llm/agent",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-08-29",
+        "batch": "nowcoder-agent-market-20260829032320626-7f773caa"
+      }
     },
     {
       "key": "agent-run-loop",
@@ -1038,11 +1188,21 @@
       "status": "pending",
       "action": "audited",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
-      "previousPublication": {
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "agent-run-loop",
+        "label": "Agent Run Loop、轮次与终止条件",
+        "filePath": "llm/agent",
         "status": "pending",
-        "batch": "archify-diagram-10-2026-09-01",
-        "recordedAt": "2026-09-01"
+        "action": "audited",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "previousPublication": {
+          "status": "pending",
+          "batch": "archify-diagram-10-2026-09-01",
+          "recordedAt": "2026-09-01"
+        }
       }
     },
     {
@@ -1064,18 +1224,28 @@
       "label": "事件驱动 Agent 与异步编排",
       "filePath": "llm/agent",
       "status": "pending",
-      "action": "updated",
-      "recordedAt": "2026-10-19",
-      "batch": "interview-halfday-a-20261019",
-      "reason": "Bounded teaching addition or accuracy repair required by five selected interview records; no publication claimed.",
+      "action": "audited",
+      "recordedAt": "2026-10-28",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
       "previousRecord": {
         "key": "agent-event-driven",
         "label": "事件驱动 Agent 与异步编排",
         "filePath": "llm/agent",
-        "status": "published",
-        "action": "created",
-        "recordedAt": "2026-07-16",
-        "batch": "agent-orchestration-next-10-2026-07-16"
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-10-19",
+        "batch": "interview-halfday-a-20261019",
+        "reason": "Bounded teaching addition or accuracy repair required by five selected interview records; no publication claimed.",
+        "previousRecord": {
+          "key": "agent-event-driven",
+          "label": "事件驱动 Agent 与异步编排",
+          "filePath": "llm/agent",
+          "status": "published",
+          "action": "created",
+          "recordedAt": "2026-07-16",
+          "batch": "agent-orchestration-next-10-2026-07-16"
+        }
       }
     },
     {
@@ -1101,9 +1271,19 @@
       "label": "工具发现、选择与路由",
       "filePath": "llm/agent",
       "status": "pending",
-      "action": "updated",
-      "recordedAt": "2026-09-01",
-      "batch": "archify-diagram-10-2026-09-01"
+      "action": "audited",
+      "recordedAt": "2026-10-28",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "agent-tool-selection",
+        "label": "工具发现、选择与路由",
+        "filePath": "llm/agent",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-09-01",
+        "batch": "archify-diagram-10-2026-09-01"
+      }
     },
     {
       "key": "agent-tool-result-validation",
@@ -1126,21 +1306,41 @@
       "status": "pending",
       "action": "audited",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
-      "previousPublication": {
-        "status": "published",
-        "batch": "agent-orchestration-next-10-2026-07-16",
-        "recordedAt": "2026-07-16"
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "agent-tool-timeout",
+        "label": "工具超时、取消与重试",
+        "filePath": "llm/agent",
+        "status": "pending",
+        "action": "audited",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "previousPublication": {
+          "status": "published",
+          "batch": "agent-orchestration-next-10-2026-07-16",
+          "recordedAt": "2026-07-16"
+        }
       }
     },
     {
       "key": "agent-parallel-tools",
       "label": "并行工具调用与依赖调度",
       "filePath": "llm/agent",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-16",
-      "batch": "agent-multi-production-next-20-2026-07-16"
+      "status": "pending",
+      "action": "audited",
+      "recordedAt": "2026-10-28",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "agent-parallel-tools",
+        "label": "并行工具调用与依赖调度",
+        "filePath": "llm/agent",
+        "status": "published",
+        "action": "created",
+        "recordedAt": "2026-07-16",
+        "batch": "agent-multi-production-next-20-2026-07-16"
+      }
     },
     {
       "key": "agent-subagents",
@@ -1164,9 +1364,19 @@
       "label": "Supervisor 监督者模式",
       "filePath": "llm/agent",
       "status": "pending",
-      "action": "updated",
-      "recordedAt": "2026-09-01",
-      "batch": "archify-diagram-10-2026-09-01"
+      "action": "audited",
+      "recordedAt": "2026-10-28",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "agent-supervisor",
+        "label": "Supervisor 监督者模式",
+        "filePath": "llm/agent",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-09-01",
+        "batch": "archify-diagram-10-2026-09-01"
+      }
     },
     {
       "key": "agent-delegation",
@@ -1182,13 +1392,23 @@
       "label": "多智能体消息、协议与状态同步",
       "filePath": "llm/agent",
       "status": "pending",
-      "action": "updated",
+      "action": "audited",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
-      "previousPublication": {
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "agent-multi-agent-messaging",
+        "label": "多智能体消息、协议与状态同步",
+        "filePath": "llm/agent",
         "status": "pending",
-        "batch": "nowcoder-partial-archive-2026-09-01",
-        "recordedAt": "2026-09-01"
+        "action": "updated",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "previousPublication": {
+          "status": "pending",
+          "batch": "nowcoder-partial-archive-2026-09-01",
+          "recordedAt": "2026-09-01"
+        }
       }
     },
     {
@@ -1196,16 +1416,26 @@
       "label": "Agent 记忆系统架构设计",
       "filePath": "llm/agent",
       "status": "pending",
-      "action": "audited",
+      "action": "updated",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
-      "previousPublication": {
-        "status": "published",
-        "batch": "interview-content-local-20261003",
-        "recordedAt": "2026-10-03",
-        "publishedAt": "2026-10-05T09:27:13Z",
-        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-        "publishedBySyncRun": 37289136872
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "agent-memory-architecture",
+        "label": "Agent 记忆系统架构设计",
+        "filePath": "llm/agent",
+        "status": "pending",
+        "action": "audited",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "previousPublication": {
+          "status": "published",
+          "batch": "interview-content-local-20261003",
+          "recordedAt": "2026-10-03",
+          "publishedAt": "2026-10-05T09:27:13Z",
+          "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+          "publishedBySyncRun": 37289136872
+        }
       }
     },
     {
@@ -1243,13 +1473,23 @@
       "label": "遗忘策略、冲突处理与记忆更新",
       "filePath": "llm/agent",
       "status": "pending",
-      "action": "audited",
+      "action": "updated",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
-      "previousPublication": {
-        "status": "published",
-        "batch": "agent-multi-production-next-20-2026-07-16",
-        "recordedAt": "2026-07-16"
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "agent-memory-forgetting",
+        "label": "遗忘策略、冲突处理与记忆更新",
+        "filePath": "llm/agent",
+        "status": "pending",
+        "action": "audited",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "previousPublication": {
+          "status": "published",
+          "batch": "agent-multi-production-next-20-2026-07-16",
+          "recordedAt": "2026-07-16"
+        }
       }
     },
     {
@@ -1292,26 +1532,36 @@
       "status": "pending",
       "action": "audited",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
-      "reason": "Actual per-question skill execution findings: bounded factual/teaching/quickRead corrections; preserve useful content and media.",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
       "previousRecord": {
         "key": "agent-coding",
         "label": "Coding Agent 的架构与执行循环",
         "filePath": "llm/agent",
         "status": "pending",
-        "action": "updated",
-        "recordedAt": "2026-08-29",
-        "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
-      },
-      "publishedByPdfRun": 38639074189,
-      "publicationAcceptanceSha256": "db119149ffa5eb1e77b36d8139d5afe3fd90bb3d4530967cd52749e28fa6b38d",
-      "previousPublication": {
-        "status": "published",
-        "batch": "title-body2-quality-20261014",
-        "recordedAt": "2026-10-14",
-        "publishedAt": "2026-10-14T22:17:17.306Z",
-        "publishedByCommit": "0c66885813a50113c1a22e42f381cca14119b63d",
-        "publishedBySyncRun": 38639074103
+        "action": "audited",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "reason": "Actual per-question skill execution findings: bounded factual/teaching/quickRead corrections; preserve useful content and media.",
+        "previousRecord": {
+          "key": "agent-coding",
+          "label": "Coding Agent 的架构与执行循环",
+          "filePath": "llm/agent",
+          "status": "pending",
+          "action": "updated",
+          "recordedAt": "2026-08-29",
+          "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
+        },
+        "publishedByPdfRun": 38639074189,
+        "publicationAcceptanceSha256": "db119149ffa5eb1e77b36d8139d5afe3fd90bb3d4530967cd52749e28fa6b38d",
+        "previousPublication": {
+          "status": "published",
+          "batch": "title-body2-quality-20261014",
+          "recordedAt": "2026-10-14",
+          "publishedAt": "2026-10-14T22:17:17.306Z",
+          "publishedByCommit": "0c66885813a50113c1a22e42f381cca14119b63d",
+          "publishedBySyncRun": 38639074103
+        }
       }
     },
     {
@@ -1339,11 +1589,21 @@
       "status": "pending",
       "action": "audited",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
-      "previousPublication": {
-        "status": "published",
-        "batch": "agent-multi-production-next-20-2026-07-16",
-        "recordedAt": "2026-07-16"
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "agent-permission-model",
+        "label": "最小权限、授权与工具调用确认",
+        "filePath": "llm/production",
+        "status": "pending",
+        "action": "audited",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "previousPublication": {
+          "status": "published",
+          "batch": "agent-multi-production-next-20-2026-07-16",
+          "recordedAt": "2026-07-16"
+        }
       }
     },
     {
@@ -1353,21 +1613,41 @@
       "status": "pending",
       "action": "updated",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
-      "previousPublication": {
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "agent-failure-recovery",
+        "label": "失败分类、重试、补偿与恢复",
+        "filePath": "llm/production",
         "status": "pending",
-        "batch": "nowcoder-agent-market-20260829032320626-7f773caa",
-        "recordedAt": "2026-08-29"
+        "action": "updated",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "previousPublication": {
+          "status": "pending",
+          "batch": "nowcoder-agent-market-20260829032320626-7f773caa",
+          "recordedAt": "2026-08-29"
+        }
       }
     },
     {
       "key": "agent-idempotency",
       "label": "幂等性、重复执行与副作用控制",
       "filePath": "llm/production",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-16",
-      "batch": "agent-multi-production-next-20-2026-07-16"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-28",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "agent-idempotency",
+        "label": "幂等性、重复执行与副作用控制",
+        "filePath": "llm/production",
+        "status": "published",
+        "action": "created",
+        "recordedAt": "2026-07-16",
+        "batch": "agent-multi-production-next-20-2026-07-16"
+      }
     },
     {
       "key": "agent-data-privacy",
@@ -1421,9 +1701,19 @@
       "label": "线上反馈、评估集与持续改进闭环",
       "filePath": "llm/production",
       "status": "pending",
-      "action": "updated",
-      "recordedAt": "2026-08-29",
-      "batch": "nowcoder-agent-market-20260829032320626-7f773caa"
+      "action": "audited",
+      "recordedAt": "2026-10-28",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "agent-feedback-loop",
+        "label": "线上反馈、评估集与持续改进闭环",
+        "filePath": "llm/production",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-08-29",
+        "batch": "nowcoder-agent-market-20260829032320626-7f773caa"
+      }
     },
     {
       "key": "agent-trace-model",
@@ -1457,18 +1747,28 @@
       "label": "Agent 调试方法与失败复现",
       "filePath": "llm/production",
       "status": "pending",
-      "action": "updated",
-      "recordedAt": "2026-10-20",
-      "batch": "interview-seven-coherent-local-20261020",
-      "reason": "Actual bounded seven-source reconciliation; exact current independent review and publication remain pending.",
+      "action": "audited",
+      "recordedAt": "2026-10-28",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
       "previousRecord": {
         "key": "agent-debugging",
         "label": "Agent 调试方法与失败复现",
         "filePath": "llm/production",
-        "status": "published",
-        "action": "created",
-        "recordedAt": "2026-07-16",
-        "batch": "agent-observability-security-next-20-2026-07-16"
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-10-20",
+        "batch": "interview-seven-coherent-local-20261020",
+        "reason": "Actual bounded seven-source reconciliation; exact current independent review and publication remain pending.",
+        "previousRecord": {
+          "key": "agent-debugging",
+          "label": "Agent 调试方法与失败复现",
+          "filePath": "llm/production",
+          "status": "published",
+          "action": "created",
+          "recordedAt": "2026-07-16",
+          "batch": "agent-observability-security-next-20-2026-07-16"
+        }
       }
     },
     {
@@ -1537,11 +1837,21 @@
       "status": "pending",
       "action": "audited",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
-      "previousPublication": {
-        "status": "published",
-        "batch": "agent-observability-security-next-20-2026-07-16",
-        "recordedAt": "2026-07-16"
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "agent-benchmark",
+        "label": "Agent Benchmark 的设计与解读",
+        "filePath": "llm/production",
+        "status": "pending",
+        "action": "audited",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "previousPublication": {
+          "status": "published",
+          "batch": "agent-observability-security-next-20-2026-07-16",
+          "recordedAt": "2026-07-16"
+        }
       }
     },
     {
@@ -1569,27 +1879,37 @@
       "status": "pending",
       "action": "audited",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
       "previousRecord": {
         "key": "agent-quality-gates",
         "label": "发布质量门禁与回归阻断",
         "filePath": "llm/production",
-        "status": "published",
-        "action": "created",
-        "recordedAt": "2026-07-16",
-        "batch": "agent-observability-security-next-20-2026-07-16"
-      },
-      "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
-      "publication": {
-        "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
-        "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
-        "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
-        "syncConclusion": "success"
-      },
-      "previousPublication": {
-        "status": "published",
-        "batch": "nowcoder-byte-campus-pilot-10-20261002",
-        "recordedAt": "2026-10-02"
+        "status": "pending",
+        "action": "audited",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "previousRecord": {
+          "key": "agent-quality-gates",
+          "label": "发布质量门禁与回归阻断",
+          "filePath": "llm/production",
+          "status": "published",
+          "action": "created",
+          "recordedAt": "2026-07-16",
+          "batch": "agent-observability-security-next-20-2026-07-16"
+        },
+        "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
+        "publication": {
+          "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
+          "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
+          "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
+          "syncConclusion": "success"
+        },
+        "previousPublication": {
+          "status": "published",
+          "batch": "nowcoder-byte-campus-pilot-10-20261002",
+          "recordedAt": "2026-10-02"
+        }
       }
     },
     {
@@ -1704,10 +2024,20 @@
       "key": "agent-queue-worker",
       "label": "队列、Worker 与长任务执行",
       "filePath": "llm/production",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-17",
-      "batch": "agent-platform-backend-next-20-2026-07-17"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-28",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "agent-queue-worker",
+        "label": "队列、Worker 与长任务执行",
+        "filePath": "llm/production",
+        "status": "published",
+        "action": "created",
+        "recordedAt": "2026-07-17",
+        "batch": "agent-platform-backend-next-20-2026-07-17"
+      }
     },
     {
       "key": "agent-concurrency",
@@ -1730,10 +2060,20 @@
       "key": "agent-timeout-budget",
       "label": "端到端超时预算与 Deadline 传播",
       "filePath": "llm/production",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-17",
-      "batch": "agent-platform-backend-next-20-2026-07-17"
+      "status": "pending",
+      "action": "audited",
+      "recordedAt": "2026-10-28",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "agent-timeout-budget",
+        "label": "端到端超时预算与 Deadline 传播",
+        "filePath": "llm/production",
+        "status": "published",
+        "action": "created",
+        "recordedAt": "2026-07-17",
+        "batch": "agent-platform-backend-next-20-2026-07-17"
+      }
     },
     {
       "key": "agent-cache",
@@ -1748,10 +2088,20 @@
       "key": "agent-model-fallback",
       "label": "模型降级、Fallback 与熔断",
       "filePath": "llm/production",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-17",
-      "batch": "agent-platform-backend-next-20-2026-07-17"
+      "status": "pending",
+      "action": "audited",
+      "recordedAt": "2026-10-28",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "agent-model-fallback",
+        "label": "模型降级、Fallback 与熔断",
+        "filePath": "llm/production",
+        "status": "published",
+        "action": "created",
+        "recordedAt": "2026-07-17",
+        "batch": "agent-platform-backend-next-20-2026-07-17"
+      }
     },
     {
       "key": "agent-disaster-recovery",
@@ -1807,29 +2157,39 @@
       "key": "async-job-queue",
       "label": "消息队列、异步任务与后台 Job",
       "filePath": "backend/api",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004",
+      "recordedAt": "2026-10-28",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
       "previousRecord": {
         "key": "async-job-queue",
         "label": "消息队列、异步任务与后台 Job",
         "filePath": "backend/api",
         "status": "published",
-        "action": "created",
-        "recordedAt": "2026-07-17",
-        "batch": "agent-platform-backend-next-20-2026-07-17"
-      },
-      "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
-      "publication": {
-        "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
-        "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
-        "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
-        "syncConclusion": "success"
-      },
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+        "action": "updated",
+        "recordedAt": "2026-10-04",
+        "batch": "next-twenty-source-increments-20261004",
+        "previousRecord": {
+          "key": "async-job-queue",
+          "label": "消息队列、异步任务与后台 Job",
+          "filePath": "backend/api",
+          "status": "published",
+          "action": "created",
+          "recordedAt": "2026-07-17",
+          "batch": "agent-platform-backend-next-20-2026-07-17"
+        },
+        "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
+        "publication": {
+          "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
+          "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
+          "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
+          "syncConclusion": "success"
+        },
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     },
     {
       "key": "grpc-basics",
@@ -1879,10 +2239,20 @@
       "key": "api-idempotency",
       "label": "API 幂等键与重复请求处理",
       "filePath": "backend/api",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-07-17",
-      "batch": "agent-platform-backend-next-20-2026-07-17"
+      "status": "pending",
+      "action": "updated",
+      "recordedAt": "2026-10-28",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "api-idempotency",
+        "label": "API 幂等键与重复请求处理",
+        "filePath": "backend/api",
+        "status": "published",
+        "action": "created",
+        "recordedAt": "2026-07-17",
+        "batch": "agent-platform-backend-next-20-2026-07-17"
+      }
     },
     {
       "key": "agent-state-storage",
@@ -2102,20 +2472,30 @@
       "filePath": "cs/algorithm",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-14",
-      "batch": "title-body4-quality-20261014",
-      "reason": "Bounded source-grounded factual, teaching or quick-read corrections; pending status is cleared only after current-version review, publication and production acceptance.",
+      "recordedAt": "2026-10-28",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
       "previousRecord": {
         "key": "algorithm-heap",
         "label": "堆、优先队列与 Top-K",
         "filePath": "cs/algorithm",
-        "status": "published",
+        "status": "pending",
         "action": "updated",
-        "recordedAt": "2026-10-04",
-        "batch": "next-twenty-source-increments-20261004",
-        "publishedAt": "2026-10-05T09:27:13Z",
-        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-        "publishedBySyncRun": 37289136872
+        "recordedAt": "2026-10-14",
+        "batch": "title-body4-quality-20261014",
+        "reason": "Bounded source-grounded factual, teaching or quick-read corrections; pending status is cleared only after current-version review, publication and production acceptance.",
+        "previousRecord": {
+          "key": "algorithm-heap",
+          "label": "堆、优先队列与 Top-K",
+          "filePath": "cs/algorithm",
+          "status": "published",
+          "action": "updated",
+          "recordedAt": "2026-10-04",
+          "batch": "next-twenty-source-increments-20261004",
+          "publishedAt": "2026-10-05T09:27:13Z",
+          "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+          "publishedBySyncRun": 37289136872
+        }
       }
     },
     {
@@ -2210,13 +2590,23 @@
       "key": "algorithm-graph",
       "label": "BFS、DFS、最短路与拓扑排序",
       "filePath": "cs/algorithm",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-03",
-      "batch": "interview-content-local-20261003",
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+      "recordedAt": "2026-10-28",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "algorithm-graph",
+        "label": "BFS、DFS、最短路与拓扑排序",
+        "filePath": "cs/algorithm",
+        "status": "published",
+        "action": "updated",
+        "recordedAt": "2026-10-03",
+        "batch": "interview-content-local-20261003",
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     },
     {
       "key": "algorithm-backtracking",
@@ -2487,25 +2877,35 @@
       "status": "pending",
       "action": "audited",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
-      "reason": "对本批面经已绑定知识的技术错误做有一手来源支持的限定修正。",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
       "previousRecord": {
         "key": "context-engineering",
         "label": "上下文工程（Context Engineering）",
         "filePath": "llm/agent",
         "status": "pending",
-        "action": "updated",
-        "recordedAt": "2026-08-30",
-        "batch": "e2dba44a-025f-4188-b6da-efdf085842e1"
-      },
-      "publishedByPdfRun": 38614481957,
-      "previousPublication": {
-        "status": "published",
-        "batch": "title-verified6-quality-20261014",
-        "recordedAt": "2026-10-14",
-        "publishedAt": "2026-10-14T18:28:19Z",
-        "publishedByCommit": "afbce3dd82d0e693b14d20e2b3dd02a96c6731b3",
-        "publishedBySyncRun": 38614482119
+        "action": "audited",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "reason": "对本批面经已绑定知识的技术错误做有一手来源支持的限定修正。",
+        "previousRecord": {
+          "key": "context-engineering",
+          "label": "上下文工程（Context Engineering）",
+          "filePath": "llm/agent",
+          "status": "pending",
+          "action": "updated",
+          "recordedAt": "2026-08-30",
+          "batch": "e2dba44a-025f-4188-b6da-efdf085842e1"
+        },
+        "publishedByPdfRun": 38614481957,
+        "previousPublication": {
+          "status": "published",
+          "batch": "title-verified6-quality-20261014",
+          "recordedAt": "2026-10-14",
+          "publishedAt": "2026-10-14T18:28:19Z",
+          "publishedByCommit": "afbce3dd82d0e693b14d20e2b3dd02a96c6731b3",
+          "publishedBySyncRun": 38614482119
+        }
       }
     },
     {
@@ -2553,11 +2953,21 @@
       "status": "pending",
       "action": "updated",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
-      "previousPublication": {
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "agent-paradigms",
+        "label": "Reflection、Plan-and-Execute 与 Tool-Use",
+        "filePath": "llm/agent",
         "status": "pending",
-        "batch": "complete-remaining-91-2026-07-18",
-        "recordedAt": "2026-07-18"
+        "action": "updated",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "previousPublication": {
+          "status": "pending",
+          "batch": "complete-remaining-91-2026-07-18",
+          "recordedAt": "2026-07-18"
+        }
       }
     },
     {
@@ -2581,43 +2991,53 @@
       "status": "pending",
       "action": "audited",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
-      "reason": "Actual per-question skill execution findings: bounded factual/teaching/quickRead corrections; preserve useful content and media.",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
       "previousRecord": {
         "key": "build-agent-framework",
         "label": "从零构建 Agent 运行时",
         "filePath": "llm/agent",
-        "status": "published",
-        "action": "updated",
-        "recordedAt": "2026-10-14",
-        "batch": "title-verified6-quality-20261014",
-        "reason": "对本批面经已绑定知识的技术错误做有一手来源支持的限定修正。",
+        "status": "pending",
+        "action": "audited",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "reason": "Actual per-question skill execution findings: bounded factual/teaching/quickRead corrections; preserve useful content and media.",
         "previousRecord": {
           "key": "build-agent-framework",
           "label": "从零构建 Agent 运行时",
           "filePath": "llm/agent",
           "status": "published",
           "action": "updated",
-          "recordedAt": "2026-10-04",
-          "batch": "next-twenty-source-increments-20261004",
-          "publishedAt": "2026-10-05T09:27:13Z",
-          "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-          "publishedBySyncRun": 37289136872
+          "recordedAt": "2026-10-14",
+          "batch": "title-verified6-quality-20261014",
+          "reason": "对本批面经已绑定知识的技术错误做有一手来源支持的限定修正。",
+          "previousRecord": {
+            "key": "build-agent-framework",
+            "label": "从零构建 Agent 运行时",
+            "filePath": "llm/agent",
+            "status": "published",
+            "action": "updated",
+            "recordedAt": "2026-10-04",
+            "batch": "next-twenty-source-increments-20261004",
+            "publishedAt": "2026-10-05T09:27:13Z",
+            "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+            "publishedBySyncRun": 37289136872
+          },
+          "publishedAt": "2026-10-14T18:28:19Z",
+          "publishedByCommit": "afbce3dd82d0e693b14d20e2b3dd02a96c6731b3",
+          "publishedBySyncRun": 38614482119,
+          "publishedByPdfRun": 38614481957
         },
-        "publishedAt": "2026-10-14T18:28:19Z",
-        "publishedByCommit": "afbce3dd82d0e693b14d20e2b3dd02a96c6731b3",
-        "publishedBySyncRun": 38614482119,
-        "publishedByPdfRun": 38614481957
-      },
-      "publishedByPdfRun": 38639074189,
-      "publicationAcceptanceSha256": "db119149ffa5eb1e77b36d8139d5afe3fd90bb3d4530967cd52749e28fa6b38d",
-      "previousPublication": {
-        "status": "published",
-        "batch": "title-body2-quality-20261014",
-        "recordedAt": "2026-10-14",
-        "publishedAt": "2026-10-14T22:17:17.306Z",
-        "publishedByCommit": "0c66885813a50113c1a22e42f381cca14119b63d",
-        "publishedBySyncRun": 38639074103
+        "publishedByPdfRun": 38639074189,
+        "publicationAcceptanceSha256": "db119149ffa5eb1e77b36d8139d5afe3fd90bb3d4530967cd52749e28fa6b38d",
+        "previousPublication": {
+          "status": "published",
+          "batch": "title-body2-quality-20261014",
+          "recordedAt": "2026-10-14",
+          "publishedAt": "2026-10-14T22:17:17.306Z",
+          "publishedByCommit": "0c66885813a50113c1a22e42f381cca14119b63d",
+          "publishedBySyncRun": 38639074103
+        }
       }
     },
     {
@@ -2627,31 +3047,41 @@
       "status": "pending",
       "action": "audited",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
-      "reason": "Actual bounded seven-source reconciliation; exact current independent review and publication remain pending.",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
       "previousRecord": {
         "key": "mcp-protocol",
         "label": "MCP / A2A 智能体通信协议",
         "filePath": "llm/agent",
         "status": "pending",
-        "action": "updated",
-        "recordedAt": "2026-10-19",
-        "batch": "interview-halfday-b-20261019",
-        "reason": "Bounded teaching fix for selected B interview questions; no publication claimed.",
+        "action": "audited",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "reason": "Actual bounded seven-source reconciliation; exact current independent review and publication remain pending.",
         "previousRecord": {
           "key": "mcp-protocol",
           "label": "MCP / A2A 智能体通信协议",
           "filePath": "llm/agent",
           "status": "pending",
           "action": "updated",
-          "recordedAt": "2026-09-01",
-          "batch": "nowcoder-partial-archive-2026-09-01"
+          "recordedAt": "2026-10-19",
+          "batch": "interview-halfday-b-20261019",
+          "reason": "Bounded teaching fix for selected B interview questions; no publication claimed.",
+          "previousRecord": {
+            "key": "mcp-protocol",
+            "label": "MCP / A2A 智能体通信协议",
+            "filePath": "llm/agent",
+            "status": "pending",
+            "action": "updated",
+            "recordedAt": "2026-09-01",
+            "batch": "nowcoder-partial-archive-2026-09-01"
+          }
+        },
+        "previousPublication": {
+          "status": "pending",
+          "batch": "interview-seven-coherent-local-20261020",
+          "recordedAt": "2026-10-20"
         }
-      },
-      "previousPublication": {
-        "status": "pending",
-        "batch": "interview-seven-coherent-local-20261020",
-        "recordedAt": "2026-10-20"
       }
     },
     {
@@ -2661,27 +3091,37 @@
       "status": "pending",
       "action": "audited",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
       "previousRecord": {
         "key": "multi-agent",
         "label": "多智能体协作与适用边界",
         "filePath": "llm/agent",
         "status": "pending",
-        "action": "updated",
-        "recordedAt": "2026-09-01",
-        "batch": "nowcoder-partial-archive-2026-09-01"
-      },
-      "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
-      "publication": {
-        "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
-        "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
-        "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
-        "syncConclusion": "success"
-      },
-      "previousPublication": {
-        "status": "published",
-        "batch": "nowcoder-byte-campus-pilot-10-20261002",
-        "recordedAt": "2026-10-02"
+        "action": "audited",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "previousRecord": {
+          "key": "multi-agent",
+          "label": "多智能体协作与适用边界",
+          "filePath": "llm/agent",
+          "status": "pending",
+          "action": "updated",
+          "recordedAt": "2026-09-01",
+          "batch": "nowcoder-partial-archive-2026-09-01"
+        },
+        "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
+        "publication": {
+          "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
+          "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
+          "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
+          "syncConclusion": "success"
+        },
+        "previousPublication": {
+          "status": "published",
+          "batch": "nowcoder-byte-campus-pilot-10-20261002",
+          "recordedAt": "2026-10-02"
+        }
       }
     },
     {
@@ -2803,32 +3243,42 @@
       "label": "Agent 评测原理：任务、轨迹与环境结果",
       "filePath": "llm/production",
       "status": "pending",
-      "action": "audited",
+      "action": "updated",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
       "previousRecord": {
         "key": "agent-eval-framework",
-        "label": "生产级 Agent 评估系统设计",
+        "label": "Agent 评测原理：任务、轨迹与环境结果",
         "filePath": "llm/production",
         "status": "pending",
-        "action": "updated",
-        "recordedAt": "2026-08-30",
-        "batch": "e2dba44a-025f-4188-b6da-efdf085842e1"
-      },
-      "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
-      "publication": {
-        "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
-        "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
-        "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
-        "syncConclusion": "success"
-      },
-      "previousPublication": {
-        "status": "published",
-        "batch": "interview-content-local-20261003",
-        "recordedAt": "2026-10-03",
-        "publishedAt": "2026-10-05T09:27:13Z",
-        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-        "publishedBySyncRun": 37289136872
+        "action": "audited",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "previousRecord": {
+          "key": "agent-eval-framework",
+          "label": "生产级 Agent 评估系统设计",
+          "filePath": "llm/production",
+          "status": "pending",
+          "action": "updated",
+          "recordedAt": "2026-08-30",
+          "batch": "e2dba44a-025f-4188-b6da-efdf085842e1"
+        },
+        "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
+        "publication": {
+          "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
+          "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
+          "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
+          "syncConclusion": "success"
+        },
+        "previousPublication": {
+          "status": "published",
+          "batch": "interview-content-local-20261003",
+          "recordedAt": "2026-10-03",
+          "publishedAt": "2026-10-05T09:27:13Z",
+          "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+          "publishedBySyncRun": 37289136872
+        }
       }
     },
     {
@@ -3018,38 +3468,48 @@
       "status": "pending",
       "action": "audited",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
-      "reason": "有一手来源支持的知识正文、速读与既验收静态图修订；等待精确候选独审、CI、同步与生产验收。",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
       "previousRecord": {
         "key": "db-transaction-lock",
         "label": "事务、隔离级别与锁",
         "filePath": "backend/database",
-        "status": "published",
-        "action": "updated",
-        "recordedAt": "2026-10-14",
-        "batch": "title-verified6-quality-20261014",
-        "reason": "对本批面经已绑定知识的技术错误做有一手来源支持的限定修正。",
+        "status": "pending",
+        "action": "audited",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "reason": "有一手来源支持的知识正文、速读与既验收静态图修订；等待精确候选独审、CI、同步与生产验收。",
         "previousRecord": {
           "key": "db-transaction-lock",
           "label": "事务、隔离级别与锁",
           "filePath": "backend/database",
           "status": "published",
           "action": "updated",
-          "recordedAt": "2026-10-04",
-          "batch": "next-twenty-source-increments-20261004",
-          "publishedAt": "2026-10-05T09:27:13Z",
-          "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-          "publishedBySyncRun": 37289136872
+          "recordedAt": "2026-10-14",
+          "batch": "title-verified6-quality-20261014",
+          "reason": "对本批面经已绑定知识的技术错误做有一手来源支持的限定修正。",
+          "previousRecord": {
+            "key": "db-transaction-lock",
+            "label": "事务、隔离级别与锁",
+            "filePath": "backend/database",
+            "status": "published",
+            "action": "updated",
+            "recordedAt": "2026-10-04",
+            "batch": "next-twenty-source-increments-20261004",
+            "publishedAt": "2026-10-05T09:27:13Z",
+            "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+            "publishedBySyncRun": 37289136872
+          },
+          "publishedAt": "2026-10-14T18:28:19Z",
+          "publishedByCommit": "afbce3dd82d0e693b14d20e2b3dd02a96c6731b3",
+          "publishedBySyncRun": 38614482119,
+          "publishedByPdfRun": 38614481957
         },
-        "publishedAt": "2026-10-14T18:28:19Z",
-        "publishedByCommit": "afbce3dd82d0e693b14d20e2b3dd02a96c6731b3",
-        "publishedBySyncRun": 38614482119,
-        "publishedByPdfRun": 38614481957
-      },
-      "previousPublication": {
-        "status": "pending",
-        "batch": "knowledge-teaching-reuse-20261016",
-        "recordedAt": "2026-10-16"
+        "previousPublication": {
+          "status": "pending",
+          "batch": "knowledge-teaching-reuse-20261016",
+          "recordedAt": "2026-10-16"
+        }
       }
     },
     {
@@ -3057,29 +3517,39 @@
       "label": "Redis 缓存策略与一致性",
       "filePath": "backend/database",
       "status": "pending",
-      "action": "updated",
+      "action": "audited",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
       "previousRecord": {
         "key": "redis-cache",
         "label": "Redis 缓存策略与一致性",
         "filePath": "backend/database",
         "status": "pending",
         "action": "updated",
-        "recordedAt": "2026-07-18",
-        "batch": "complete-remaining-91-2026-07-18"
-      },
-      "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
-      "publication": {
-        "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
-        "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
-        "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
-        "syncConclusion": "success"
-      },
-      "previousPublication": {
-        "status": "published",
-        "batch": "nowcoder-byte-campus-pilot-10-20261002",
-        "recordedAt": "2026-10-02"
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "previousRecord": {
+          "key": "redis-cache",
+          "label": "Redis 缓存策略与一致性",
+          "filePath": "backend/database",
+          "status": "pending",
+          "action": "updated",
+          "recordedAt": "2026-07-18",
+          "batch": "complete-remaining-91-2026-07-18"
+        },
+        "reason": "具体原题相关修订已独立审核；PR #33 合并后内容同步成功，本批回填终态。",
+        "publication": {
+          "pullRequest": "https://github.com/AmbitionC/front-end-journey-resource/pull/33",
+          "mergeSha": "57cf8251981a779c6cf11d9cf517ca3449873768",
+          "syncAction": "https://github.com/AmbitionC/front-end-journey-resource/actions/runs/36975394048",
+          "syncConclusion": "success"
+        },
+        "previousPublication": {
+          "status": "published",
+          "batch": "nowcoder-byte-campus-pilot-10-20261002",
+          "recordedAt": "2026-10-02"
+        }
       }
     },
     {
@@ -3253,11 +3723,21 @@
       "status": "pending",
       "action": "updated",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
-      "previousPublication": {
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "logging-monitoring",
+        "label": "日志、指标、Tracing 与告警",
+        "filePath": "backend/devops",
         "status": "pending",
-        "batch": "complete-remaining-91-2026-07-18",
-        "recordedAt": "2026-07-18"
+        "action": "updated",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "previousPublication": {
+          "status": "pending",
+          "batch": "complete-remaining-91-2026-07-18",
+          "recordedAt": "2026-07-18"
+        }
       }
     },
     {
@@ -3612,16 +4092,26 @@
       "label": "TCP 建连、断开与连接状态",
       "filePath": "network/tcpIp",
       "status": "pending",
-      "action": "audited",
+      "action": "updated",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
-      "previousPublication": {
-        "status": "published",
-        "batch": "next-twenty-source-increments-20261004",
-        "recordedAt": "2026-10-04",
-        "publishedAt": "2026-10-05T09:27:13Z",
-        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-        "publishedBySyncRun": 37289136872
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "tcp-handshake",
+        "label": "TCP 建连、断开与连接状态",
+        "filePath": "network/tcpIp",
+        "status": "pending",
+        "action": "audited",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "previousPublication": {
+          "status": "published",
+          "batch": "next-twenty-source-increments-20261004",
+          "recordedAt": "2026-10-04",
+          "publishedAt": "2026-10-05T09:27:13Z",
+          "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+          "publishedBySyncRun": 37289136872
+        }
       }
     },
     {
@@ -3949,31 +4439,41 @@
       "label": "Agent Skill：渐进式披露、热插拔与版本治理",
       "filePath": "llm/agent",
       "status": "pending",
-      "action": "updated",
+      "action": "audited",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
-      "reason": "Actual per-question skill execution findings: bounded factual/teaching/quickRead corrections; preserve useful content and media.",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
       "previousRecord": {
         "key": "agent-skill-design",
         "label": "Agent Skill：渐进式披露、热插拔与版本治理",
         "filePath": "llm/agent",
-        "status": "published",
+        "status": "pending",
         "action": "updated",
-        "recordedAt": "2026-10-03",
-        "batch": "interview-content-local-20261003",
-        "publishedAt": "2026-10-05T09:27:13Z",
-        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-        "publishedBySyncRun": 37289136872
-      },
-      "publishedByPdfRun": 38639074189,
-      "publicationAcceptanceSha256": "db119149ffa5eb1e77b36d8139d5afe3fd90bb3d4530967cd52749e28fa6b38d",
-      "previousPublication": {
-        "status": "published",
-        "batch": "title-body2-quality-20261014",
-        "recordedAt": "2026-10-14",
-        "publishedAt": "2026-10-14T22:17:17.306Z",
-        "publishedByCommit": "0c66885813a50113c1a22e42f381cca14119b63d",
-        "publishedBySyncRun": 38639074103
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "reason": "Actual per-question skill execution findings: bounded factual/teaching/quickRead corrections; preserve useful content and media.",
+        "previousRecord": {
+          "key": "agent-skill-design",
+          "label": "Agent Skill：渐进式披露、热插拔与版本治理",
+          "filePath": "llm/agent",
+          "status": "published",
+          "action": "updated",
+          "recordedAt": "2026-10-03",
+          "batch": "interview-content-local-20261003",
+          "publishedAt": "2026-10-05T09:27:13Z",
+          "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+          "publishedBySyncRun": 37289136872
+        },
+        "publishedByPdfRun": 38639074189,
+        "publicationAcceptanceSha256": "db119149ffa5eb1e77b36d8139d5afe3fd90bb3d4530967cd52749e28fa6b38d",
+        "previousPublication": {
+          "status": "published",
+          "batch": "title-body2-quality-20261014",
+          "recordedAt": "2026-10-14",
+          "publishedAt": "2026-10-14T22:17:17.306Z",
+          "publishedByCommit": "0c66885813a50113c1a22e42f381cca14119b63d",
+          "publishedBySyncRun": 38639074103
+        }
       }
     },
     {
@@ -3981,23 +4481,33 @@
       "label": "意图识别、澄清反问与对话路由",
       "filePath": "llm/agent",
       "status": "pending",
-      "action": "updated",
+      "action": "audited",
       "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
-      "reason": "Bounded teaching addition or accuracy repair required by five selected interview records; no publication claimed.",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
       "previousRecord": {
         "key": "agent-intent-clarification",
         "label": "意图识别、澄清反问与对话路由",
         "filePath": "llm/agent",
         "status": "pending",
-        "action": "created",
-        "recordedAt": "2026-08-29",
-        "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
-      },
-      "previousPublication": {
-        "status": "pending",
-        "batch": "interview-halfday-a-20261019",
-        "recordedAt": "2026-10-19"
+        "action": "updated",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "reason": "Bounded teaching addition or accuracy repair required by five selected interview records; no publication claimed.",
+        "previousRecord": {
+          "key": "agent-intent-clarification",
+          "label": "意图识别、澄清反问与对话路由",
+          "filePath": "llm/agent",
+          "status": "pending",
+          "action": "created",
+          "recordedAt": "2026-08-29",
+          "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
+        },
+        "previousPublication": {
+          "status": "pending",
+          "batch": "interview-halfday-a-20261019",
+          "recordedAt": "2026-10-19"
+        }
       }
     },
     {
@@ -4118,13 +4628,23 @@
       "key": "java-thread-pool",
       "label": "Java线程池：容量、排队与拒绝",
       "filePath": "backend/java",
-      "status": "published",
-      "action": "created",
-      "recordedAt": "2026-10-03",
-      "batch": "interview-content-local-20261003",
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+      "status": "pending",
+      "action": "audited",
+      "recordedAt": "2026-10-28",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "previousRecord": {
+        "key": "java-thread-pool",
+        "label": "Java线程池：容量、排队与拒绝",
+        "filePath": "backend/java",
+        "status": "published",
+        "action": "created",
+        "recordedAt": "2026-10-03",
+        "batch": "interview-content-local-20261003",
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     },
     {
       "key": "java-value-semantics",
@@ -4219,6 +4739,36 @@
       "publishedAt": "2026-10-05T09:27:13Z",
       "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
       "publishedBySyncRun": 37289136872
+    },
+    {
+      "key": "c-object-storage-duration",
+      "label": "C 对象的存储期与生命周期",
+      "filePath": "cs/language",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-10-28",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim."
+    },
+    {
+      "key": "css-script-boundaries",
+      "label": "CSS 与脚本执行的边界",
+      "filePath": "html-css/css",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-10-28",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim."
+    },
+    {
+      "key": "lua-host-runtime",
+      "label": "Lua 脚本与宿主运行边界",
+      "filePath": "backend/runtime",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-10-28",
+      "batch": "agentjourney-thirty-20261028",
+      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim."
     }
   ],
   "deliveryEvidence": {

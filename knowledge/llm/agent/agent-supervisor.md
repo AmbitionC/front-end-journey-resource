@@ -78,6 +78,12 @@ Trace 以一次目标为根，包含每轮状态摘要、路由候选、选中�
 
 Supervisor 是有界、可审计的控制环：维护一份权威状态，通过能力目录选择窄专家，以合同调用，以证据验证，以版本化 reducer 合并，并在明确预算内完成、重规划或升级。中心化的价值是责任一致，而不是让一个模型无限自治。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [阿里控股 Agent Infra 一面：Agent 选择、记忆纠错与持续改进](../../../interview/alibaba/ai/alibaba-ai-18.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [LangChain — Subagents](https://docs.langchain.com/oss/python/langchain/multi-agent/subagents)

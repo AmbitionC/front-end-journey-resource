@@ -49,6 +49,14 @@ Agent 会选择工具、改变外部状态并持续执行。评测因此要回�
 
 证据缺失时应输出“无法判断”或明确的错误状态。例如测试容器未启动，不能记为测试通过，也不应未经诊断就归因于 Agent 能力。报告应同时列出计划执行数、有效执行数、环境故障数和任务失败数，说明分母，避免靠删除坏运行抬高成功率。
 
+## 视频 Agent：产物可播放，还不等于任务完成
+
+假设任务要求把获准使用的素材剪成一段带字幕的视频。先固定素材版本、目标时长范围、必须保留的内容、字幕要求和成本预算，再保存实际输出文件；下面是验收设计示例，不是某个项目的实测结果。
+
+验收可以分两层。程序先检查产物是否存在、能否解码、是否包含要求的媒体流，以及时长等确定属性；[ffprobe 文档](https://ffmpeg.org/ffprobe.html)提供流、帧、包和时间戳信息的读取方式。随后对照原始素材与任务要求检查内容遗漏、字幕错字、切点和音画同步，开放质量按有样例的量表交给人工或经过校准的模型判断。容器可解析、音视频总时长接近，都不能单独证明全片没有错位或内容正确。
+
+耗时也要拆开记录：素材读取、转写、规划、生成、渲染、验收各用了多久，失败发生在哪一步。若生成完成但渲染失败，任务终态仍是未完成；若工具返回成功却没有可用产物，应归入产物校验失败。用同一组任务和可比较预算检查这些维度，才能区分生成质量、流程可靠性与速度的变化。
+
 ## 回归比较为什么要看切片和重复执行
 
 Agent 的改动可能影响工具选择、提示词、检索、上下文管理或运行逻辑。为了判断改动是否有效，应保存基线版本、用例版本、环境配置、工具版本、预算和评分规则，再在可比较条件下运行新版本。固定这些条件能够减少混杂因素，但不保证模型每次输出完全相同。
@@ -102,6 +110,11 @@ Agent 的改动可能影响工具选择、提示词、检索、上下文管理�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [小红书 AI 全栈业务交叉面与二面：MVP、运行稳定性和视频 Agent](../../../interview/redbook/ai/redbook-ai-5.md)
+- [快手 AI 应用服务端日常实习一面：协作、上下文与评测](../../../interview/kuaishou/ai/kuaishou-ai-7.md)
+- [字节 TikTok Shop 质量方向一面：LLM Judge 与测试集覆盖](../../../interview/bytedance/base/bytedance-base-66.md)
+- [蚂蚁一面：交付门禁、准确率口径与商品问答](../../../interview/antfin/ai/antfin-ai-10.md)
+- [小红书产品工程师一面：一致性、知识来源与多模态评估](../../../interview/redbook/ai/redbook-ai-6.md)
 - [字节 AI 平台一面：Agent 评测、框架与数据结构](../../../interview/bytedance/base/bytedance-base-33.md)
 - [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)
@@ -127,3 +140,4 @@ Agent 的改动可能影响工具选择、提示词、检索、上下文管理�
 - [Judging LLM-as-a-Judge](https://arxiv.org/html/2306.05685v4)：裁判偏差及其边界。
 - [OpenAI：Evaluation best practices](https://developers.openai.com/api/docs/guides/evaluation-best-practices)：任务专属评测、人工校准与持续评测。
 - [LangSmith：Evaluation concepts](https://docs.langchain.com/langsmith/evaluation-concepts)：数据集、实验及线上线下评测。
+- [FFmpeg：ffprobe Documentation](https://ffmpeg.org/ffprobe.html)：媒体流、帧、包及时间戳的读取；这些信息是产物验收的部分证据。

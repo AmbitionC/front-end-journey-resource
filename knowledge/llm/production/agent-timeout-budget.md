@@ -67,6 +67,7 @@ Agent runtime 为每个 Run 建立 cancellation token，并派生给模型流、
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节 Agent 一面：生成代码质量与限时 AI Coding](../../../interview/bytedance/base/bytedance-base-67.md)
 - [海康威视 AI Agent 开发一面：可靠工具与任务状态](../../../interview/hikvision/ai/hikvision-ai-1.md)
 <!-- interview-source-history:end -->
 

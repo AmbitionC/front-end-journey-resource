@@ -1,7 +1,7 @@
 图把“对象”和“关系”作为一等公民。选算法前先识别有向/无向、加权/无权、是否可能有负权、是否应为 DAG，以及图是否稀疏。BFS、DFS、拓扑排序和最短路回答的是不同问题，不能因为都能遍历就互换。
 
-![同一张图上的 BFS 分层、DFS 深入、Dijkstra 最短路和 DAG 拓扑排序](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/algorithm-graph-traversal-path-dag-v1.webp)
-*图：无权最短路使用 BFS；加权最短路取决于边权条件；拓扑序只对有向无环图存在。*
+![左侧 BFS 在无向无权图上从 A 得到层级 A、B和C、D、E；中间 DFS 的首次访问顺序为 A、B、D、C、E，访问 E 前从 C 回溯 D；右侧独立 DAG 的边为 A到C、B到C、C到D，允许两种拓扑顺序](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/algorithm-graph-traversal-dependency-order-v2.png)
+*图：左、中两图仅有 AB、AC、BD、CD、DE 五条无向边；BFS 按边数分层，DFS 标记首次访问次序，序列相邻不代表存在直接边。右图是另一张有向图，A、B 可交换顺序，但都必须先于 C。加权最短路的条件另见下文。*
 
 ## 表示决定基础成本
 
@@ -101,6 +101,7 @@ function dependencyBatches(ids, edges) {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [华为 Agent 实习两轮记录：TCP、C 存储期与拓扑序](../../../interview/huawei/ai/huawei-ai-1.md)
 - [字节前端全栈实习一面：渲染、Worker 与认证](../../../interview/bytedance/base/bytedance-base-38.md)
 <!-- interview-source-history:end -->
 
