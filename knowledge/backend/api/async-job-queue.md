@@ -56,6 +56,14 @@ AsyncAPI 文档描述 submit、started、progress、completed、failed 和 cance
 
 ## ACK 不是 exactly-once
 
+### Redis 已预扣，发消息前崩溃怎么办
+
+不能把“Redis Lua 扣减成功”直接写成“业务已可靠受理”。若随后应用崩溃、尚未发送 MQ，消费者看不到这次操作；事后在数据库写 outbox 也不能回头让 Redis 与数据库成为同一事务。先定义库存事实源、预占状态与唯一操作 ID，再选择恢复路径。
+
+若数据库保存权威库存，可在同库事务中保存预占/订单状态和 outbox，由可靠发布器投递，Redis 只作可重建视图。若确实先在 Redis 预占，至少要让库存变化与可恢复的操作记录共享 Redis 内的原子边界；例如在受控脚本中校验后写预占记录及待转发 Stream，再由转发器恢复发布。这个方案仍须处理脚本错误、同槽约束、AOF/复制的丢失窗口，以及 Stream 正文和待确认记录的保留，不能承诺故障后永不丢失。
+
+[Redis 脚本](https://redis.io/docs/latest/develop/programmability/)提供服务器内的原子执行边界，[Streams](https://redis.io/docs/latest/develop/data-types/streams/)提供追加日志和消费组能力；将它们组合为库存恢复协议是这里的教学设计。转发器投递成功后、保存进度前崩溃可能重发，所以消费者仍以稳定操作 ID 做同库去重与业务更新，提交后再确认。恢复器按操作记录和权威库存对账，不能仅从“当前 Redis 总库存减了多少”猜出丢失的是哪些订单。
+
 [RabbitMQ Reliability Guide](https://www.rabbitmq.com/docs/reliability)解释了生产者确认与消费者确认各自转移责任。网络故障发生在 Worker 完成业务提交后、ACK 到达 Broker 前，消息会重投；这属于正常至少一次语义。
 
 [RabbitMQ Confirms](https://www.rabbitmq.com/docs/confirms)进一步说明消费者确认和重投机制。Worker 按“读取任务 → 获取租约 → 执行 → 持久化终态 → ACK”顺序。重复消息看到任务已终态便 ACK。同一数据库内的业务变更与幂等账本要在同一事务提交；外部副作用还需要对方支持幂等键、查询或补偿，单独记录 operationId 不能保证它不会重复。
@@ -122,6 +130,9 @@ RabbitMQ 的 TTL 限制消息存活期，死信交换机路由过期、拒收等
 
 <!-- interview-source-history:start -->
 - [拼多多提前批一面：Agent 超时、消息可靠性与线上排障](../../../interview/pinduoduo/ai/pinduoduo-ai-2.md)
+- [蚂蚁大模型应用秋招一面：记忆评测、事务日志与消息积压](../../../interview/antfin/ai/antfin-ai-11.md)
+- [美团本地核心一面：缓存一致性、库存故障与 Agent 记忆](../../../interview/meituan/ai/meituan-ai-4.md)
+- [美团容器平台 JAVA 一二面：消息一致性、MCP 权限与代码审查](../../../interview/meituan/ai/meituan-ai-5.md)
 - [阿里云 Agent Infra 一面：SGX、吞吐与日志写入](../../../interview/alibaba/ai/alibaba-ai-8.md)
 - [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)
 - [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
@@ -142,3 +153,6 @@ RabbitMQ 的 TTL 限制消息存活期，死信交换机路由过期、拒收等
 
 - [RFC9110：202 Accepted](https://www.rfc-editor.org/rfc/rfc9110.html#section-15.3.3)（2022）
 - [WHATWG HTML：Last-Event-ID](https://html.spec.whatwg.org/multipage/server-sent-events.html#the-last-event-id-header)（滚动文档，核验于2026-10-02）
+
+- [Redis — Programmability](https://redis.io/docs/latest/develop/programmability/)
+- [Redis — Streams](https://redis.io/docs/latest/develop/data-types/streams/)

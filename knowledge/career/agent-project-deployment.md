@@ -3,7 +3,15 @@
 ![Agent 上线前从身份与状态、观测 SLO、容量安全到 Canary、回滚和事故归属的生产就绪检查](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-project-deployment-production-readiness-v1.webp)
 *图：release bundle 同时固定模型、Prompt、索引、工具与 Policy；Canary 指标异常时回到兼容版本和状态。*
 
+## 先让另一个人能复现部署环境
+
+部署说明先交代操作系统、CPU/内存或容器限额、语言运行时与依赖版本、数据库/队列等外部服务、构建产物及启动方式。配置项给名称、用途和来源，秘密留在受控配置系统；不要把真实 token、账号或生产地址贴进操作示例。Linux 基础也应落到需要验证的进程、端口、文件权限、资源和日志，而非只罗列命令名。
+
+说明启动成功的证据：进程存在与端口监听只是其中一层，还要区分存活、就绪、依赖可用与一次有权限的业务请求。保存版本、关键日志与检查结果，并给停止、回滚和恢复入口。没有实际环境或故障信息时，只能给检查方法，不能替项目补造已经执行的 Docker、Kubernetes 或 Linux 操作。
+
+
 ## 定义发布 Bundle
+
 
 bundle 包含应用 commit、模型/provider/参数、system prompt、retrieval corpus/index、embedding model、tool schema/implementation、policy 和 feature flags。生成不可变 releaseId，写入 run、trace、评测与产物。
 
@@ -56,6 +64,12 @@ SLO 面向用户：例如“99% 合格交互在 30 秒内获得可用草稿”�
 事故按用户结果分级，支持快速禁用某模型、工具、索引或租户。runbook 给查询、止血、回滚和数据修复步骤。事后回顾 detection、blast radius、状态一致性和用户沟通，修复进入测试与门禁。
 
 生产化完成的标准，是团队能在凌晨回答：哪个 bundle 出问题、影响哪些 run、如何停止新伤害、外部动作是否重复、怎样恢复服务与数据，以及谁负责决定恢复流量。
+
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [阿里云 SRE 运维开发一面：部署、网络与最大拼接数](../../interview/alibaba/ai/alibaba-ai-20.md)
+<!-- interview-source-history:end -->
 
 ## 参考资料
 

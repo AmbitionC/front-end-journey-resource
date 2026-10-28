@@ -30,7 +30,17 @@ $$
 
 过程奖励可以提供更密集信号，但也可能奖励表面步骤或被模型投机。正确做法不是无条件增加打分点，而是让步骤结果可验证，并用独立终局验证确认任务真的完成。
 
+## 奖励模型与过程监督分别监督什么
+
+先确定监督单位：结果奖励判断整条回答或任务终态，过程奖励判断某个推理/行动步骤在已有上下文中是否合适。一个 reward model 的输入可以是任务与候选回答，也可以是任务与步骤前缀；标签和输出必须与目标单位对应，不能把终局成功平均分给每一步就称为已验证的过程监督。
+
+[TRL 0.25.0 的 PRM 文档](https://github.com/huggingface/trl/blob/v0.25.0/docs/source/prm_trainer.md)使用 `prompt`、逐步 `completions` 和一一对应的 `labels` 表达步骤监督。这是明确固定版本的数据约定，不代表所有当前训练器仍提供同名接口。教学例子中，“2+3=5”与“5×2=12”的步骤标签可分别为正确和错误；真实任务还要定义步骤边界、标注指南、无法判断与前序错误传播如何处理，并抽样核对标签及来源。
+
+过程信号可用于训练、候选轨迹排序、搜索剪枝或定位错误，但这些应用仍需独立验证收益。步骤看似规范不等于最终任务完成；奖励模型也可能误判、偏爱冗长形式，或在策略持续优化时被利用。用保留任务检查终局成功、关键步骤判定与分布外失败，区分标签质量、奖励预测质量与策略效果。这里没有提供任何候选人论文的具体模型、数据或实验结果。
+
+
 ## PPO：Critic 与 GAE 分工
+
 
 [PPO](https://arxiv.org/abs/1707.06347)通过新旧策略概率比的裁剪限制单次更新幅度。Actor-Critic 中，Critic 估计状态价值 $V(s_t)$；Actor 更新需要的则是动作相对基线有多好，即优势 $A_t$。
 
@@ -53,6 +63,10 @@ $\lambda$ 在偏差与方差之间折中。Critic 提供基线，GAE 负责把�
 [DeepSeekMath](https://arxiv.org/abs/2402.03300)提出的 GRPO 对同一问题采样一组回答，用组内奖励的均值和标准差构造相对优势，不再训练单独的 Critic。它降低了价值模型的内存与训练成本，但不自动解决长时序归因：常见做法会把一个序列级优势分配给整条回答中的 Token。
 
 当一组样本全对或全错时，归一化后的相对信号可能失效；当奖励只看终局时，模型仍不知道哪一个工具动作真正促成结果。因此需要关心组采样是否有区分度、奖励是否可靠，以及损失如何在 Token 与序列之间归约。
+
+“全0或全1”要先问清指什么。如果指同一问题的一组二值奖励都相同，组内均值等于每个奖励，中心化的相对优势没有区分度；实现还须处理标准差为零。加数值保护只能避免除零，不能创造比较信号；也不能因此断言整个训练一定没有梯度，KL、熵或其他损失项可能仍在更新。
+
+[TRL 1.16.0 的 GRPO 文档](https://github.com/huggingface/trl/blob/v1.16.0/docs/source/grpo_trainer.md)记录 `frac_reward_zero_std`、奖励分布、熵、截断比例和KL等指标，并区分组内与批次标准差缩放。先检查评分器、解析失败、采样多样性、题目难度与截断，再评估课程、数据配比、采样或奖励设计。过滤同分组要记录被过滤比例与剩余任务分布，不能为提高有效组比例无限生成，或把困难样本全部丢掉后只报告更好的训练分数。配置名和可用指标按实际训练器版本核对，没有通用的温度、组大小或学习率答案。
 
 ## Clip 与 KL 不是同一个约束
 
@@ -113,6 +127,7 @@ Agentic RL 的核心挑战是长轨迹上的信用分配与分布控制。PPO �
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [美团北斗大模型算法一至四面：过程监督、GRPO 与工具参数](../../../interview/meituan/ai/meituan-ai-3.md)
 - [字节抖音电商 Agent 一面：分层、上下文与 GRPO](../../../interview/bytedance/base/bytedance-base-21.md)
 - [腾讯 AI Agent 应用开发一面：上下文、强化学习与系统基础](../../../interview/tencent/ai/tencent-ai-11.md)
 <!-- interview-source-history:end -->
@@ -124,3 +139,5 @@ Agentic RL 的核心挑战是长轨迹上的信用分配与分布控制。PPO �
 - [DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models](https://arxiv.org/abs/2402.03300)
 - [DAPO: An Open-Source LLM Reinforcement Learning System at Scale](https://arxiv.org/abs/2503.14476)
 - [DSPO: Dynamic-filter Sequence-level Policy Optimization for Agentic Search](https://arxiv.org/abs/2510.09255)
+- [TRL 0.25.0 — PRM steps and labels](https://github.com/huggingface/trl/blob/v0.25.0/docs/source/prm_trainer.md)
+- [TRL 1.16.0 — GRPO advantages and logged metrics](https://github.com/huggingface/trl/blob/v1.16.0/docs/source/grpo_trainer.md)

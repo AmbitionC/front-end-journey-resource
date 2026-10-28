@@ -101,6 +101,7 @@ function dependencyBatches(ids, edges) {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节大模型应用秋招一面：日志盲区、框架选择与 BFS](../../../interview/bytedance/base/bytedance-base-71.md)
 - [华为 Agent 实习两轮记录：TCP、C 存储期与拓扑序](../../../interview/huawei/ai/huawei-ai-1.md)
 - [字节前端全栈实习一面：渲染、Worker 与认证](../../../interview/bytedance/base/bytedance-base-38.md)
 <!-- interview-source-history:end -->

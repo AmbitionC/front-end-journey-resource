@@ -458,6 +458,7 @@ SELECT node FROM reachable ORDER BY node;
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [百度测开多轮：SQL 分组与 Skill 实践](../../../interview/baidu/ai/baidu-ai-8.md)
 - [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
 <!-- interview-source-history:end -->

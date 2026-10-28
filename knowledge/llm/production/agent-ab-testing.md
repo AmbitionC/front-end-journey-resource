@@ -4,7 +4,7 @@ A/B 测试用于估计“把符合条件的用户随机分配给 Agent A 或 B �
 
 ![Agent A/B 实验从随机分配、曝光记录到效应估计](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-ab-testing-experiment-funnel-v1.webp)
 
-图中的 Control A 与 Treatment B 使用同一资格规则和结果窗口。只有真正曝光于分配版本的用户才进入相应分析；若分组后又根据结果剔除“麻烦样本”，随机化带来的可比性会被破坏。
+图中的 Control A 与 Treatment B 使用同一资格规则和结果窗口，Exposure Logging 用于记录实际处理版本，不是自动剔除未曝光者的分析门。主要分析若采用 intention-to-treat，应按预先随机分配保留实验单位；只分析曝光人群则是另一种分析口径，须说明选择机制。不能分组后再根据结果剔除“麻烦样本”。
 
 ## 写预注册实验卡
 
@@ -39,6 +39,14 @@ owner: agent-experimentation
 使用稳定实验 ID、单位 ID 和哈希进行可审计分桶，记录 allocation version。粘性保证同一单位在实验期间维持组别；重新分桶会让用户体验混乱并污染状态。
 
 [NIST 的完全随机设计说明](https://www.itl.nist.gov/div898/handbook/pri/section3/pri331.htm)指出，处理水平随机分配给实验单位，平衡与重复有助于后续比较。上线后先做 Sample Ratio Mismatch 检查：实际 A/B 数量若显著偏离预期，可能是分流、曝光、过滤或客户端故障，应暂停解释结果。
+
+## 多个实验怎样分配而不改动彼此
+
+单实验的分组与多个实验之间的流量安排是两层问题。一种教学方案先判断资格，再选择实验，最后分配组别。实验内部用稳定实验 ID、单位 ID 和确定性哈希映射到固定桶，并按冻结比例划定区间；配置带 allocation version，不能每次请求临时随机，也不能更换哈希输入后假装用户仍保持原组。
+
+允许重叠的实验使用各自命名空间，新增实验不应改动已有实验的分桶规则。若两个处理会冲突地修改同一体验，则先在互斥层划分不相交的实验流量，再在各实验内部安排控制组和处理组。[Eppo 的实验分配](https://docs.geteppo.com/feature-flagging/concepts/experiment-assignment/)与[互斥层文档](https://docs.geteppo.com/feature-flagging/concepts/mutual_exclusion/)分别说明分组和互斥配置；这里的哈希输入是应用设计示例，不是对其 SDK 算法的复现。
+
+命名空间隔离只避免分配规则互相覆盖，不保证业务效果没有交互。共享库存、社交关系、缓存或服务负载仍可能让一组影响另一组；需要按干扰范围选择用户、组织等随机化单位，或隔离资源、设置互斥。修改流量比例时明确迁移规则，必要时保存已入组记录；用配置版本和实际分配、曝光日志核对变化。
 
 ## 分配不等于曝光
 
@@ -95,8 +103,16 @@ owner: agent-experimentation
 
 可信 Agent A/B 测试从预注册假设开始，选择匹配干扰范围的随机单位，保持粘性，完整记录分配与曝光，在共同窗口中估计效应并独立监控安全护栏。它回答方案包对真实用户的平均影响；离线评估、红队和发布门禁仍负责能力、长尾与风险验证。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [快手春招多轮面经：信号量、Top-K 与实验分流](../../../interview/kuaishou/ai/kuaishou-ai-13.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [NIST：What is experimental design?](https://itl.nist.gov/div898/handbook/pri/section1/pri11.htm)
 - [NIST：Completely randomized designs](https://www.itl.nist.gov/div898/handbook/pri/section3/pri331.htm)
 - [NIST：How do you select an experimental design?](https://www.itl.nist.gov/div898/handbook/pri/section3/pri33.htm)
+- [Eppo：Experiment assignment](https://docs.geteppo.com/feature-flagging/concepts/experiment-assignment/)
+- [Eppo：Mutual exclusion (Layers)](https://docs.geteppo.com/feature-flagging/concepts/mutual_exclusion/)

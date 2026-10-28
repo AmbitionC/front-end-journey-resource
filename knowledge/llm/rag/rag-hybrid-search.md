@@ -157,6 +157,8 @@ RRF 公式与 rank 从 1 开始的约定按 Elastic 官方滚动文档核验于 
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [美团后端暑期一面：RAG 消融、工具调用与并发一致性](../../../interview/meituan/ai/meituan-ai-2.md)
+- [字节后端研发实习一面：向量索引与混合检索](../../../interview/bytedance/base/bytedance-base-70.md)
 - [腾讯 WXG 一面：转人工 Agent、Skill 与检索边界](../../../interview/tencent/ai/tencent-ai-16.md)
 - [淘天供应链 AI 应用一面：失败复盘、工具并行与精确检索](../../../interview/alibaba/ai/alibaba-ai-19.md)
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)

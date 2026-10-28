@@ -116,6 +116,18 @@ for (let round = 0; round < 4; round += 1) {
 
 不同提供方的字段名与消息回传规则可能不同，换模型时应做协议适配层，不能只替换 `baseURL` 就认为完成迁移。
 
+### 流式参数：先等调用完成，再进入执行边界
+
+下面以 [OpenAI `/v1/responses` 的流式事件合同](https://developers.openai.com/api/docs/guides/function-calling#streaming)为例，按 2026-10-29 的官方文档核对；接入时仍须固定实际提供方、API 与 SDK 版本。参数的字符串分片还不是一次可执行调用。
+
+1. 收到 `response.output_item.added` 的 `function_call` 项时，登记工具名、`call_id` 和 item ID；按所属 `response_id` 与 `output_index`/`item_id` 分开保存缓冲，不能把不同调用的分片混在一起。
+2. 将相应的 `response.function_call_arguments.delta` 按事件顺序追加到该调用的参数缓冲。不要用 token 数、花括号配对或“当前刚好能解析 JSON”判断完成。
+3. 依据该 API 的 `response.function_call_arguments.done` 完整参数，以及 `response.output_item.done` 的完整调用项核对身份与参数。确认调用完成后，才解析 JSON，并依次执行 Schema、业务和权限校验；重复完成事件不能重复触发写操作。
+
+截断、取消、流错误或缺少完成依据时，不执行尚未完成的调用。完整 JSON 也只代表可进入校验，不代表业务允许或执行成功。把这些事件适配成应用内统一的“完整调用”后，再交给执行器；其他提供方的分片字段和完成条件必须各自核对。
+
+模型提供方的参数增量事件与 [MCP 的 JSON-RPC 数据层、传输层分帧](https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture#layers)是不同层次。不能把提供方的 `done` 事件当成 MCP 统一保证，也不能把未完成的参数文本当作一个完整的 MCP 工具请求。
+
 ## 四、验证分为三层
 
 ### 1. 结构验证
@@ -214,6 +226,7 @@ async function cancelOrder(orderId: string, session: Session) {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [百度 Java 实习：流式工具调用、答案忠实度与记忆](../../../interview/baidu/ai/baidu-ai-11.md)
 - [快手 AI 应用一面：沙箱中的 Skill、工具调用与记忆压缩](../../../interview/kuaishou/ai/kuaishou-ai-12.md)
 - [阿里云 Agent 开发秋招一面](../../../interview/alibaba/ai/alibaba-ai-1.md)
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)

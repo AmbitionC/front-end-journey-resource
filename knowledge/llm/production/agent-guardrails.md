@@ -65,5 +65,6 @@ Guardrails 是贯穿 Agent 数据与动作路径的控制平面：输入标记�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [百度后端二面：Agent 风险、缓存与索引](../../../interview/baidu/ai/baidu-ai-9.md)
 - [腾讯 CSIG 元宝内容安全日常实习：评测集、输出校验与问题归因](../../../interview/tencent/ai/tencent-ai-15.md)
 <!-- interview-source-history:end -->

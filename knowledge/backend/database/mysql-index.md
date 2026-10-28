@@ -322,6 +322,9 @@ MySQL 5.6+ 支持 `ALTER TABLE ... ADD INDEX` 的在线 DDL（Online DDL），�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [腾讯 AI 应用开发实习一面：事务快照与 B+树索引](../../../interview/tencent/ai/tencent-ai-18.md)
+- [百度后端二面：Agent 风险、缓存与索引](../../../interview/baidu/ai/baidu-ai-9.md)
+- [腾讯 AI 应用开发日常实习二面：并发模型与索引设计](../../../interview/tencent/ai/tencent-ai-17.md)
 - [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../../interview/bytedance/base/bytedance-base-36.md)
 - [字节 Agent 一面：会话记忆、并发更新与算法](../../../interview/bytedance/base/bytedance-base-29.md)
 - [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)

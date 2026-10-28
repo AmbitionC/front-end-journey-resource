@@ -76,6 +76,8 @@ Tombstone 只保存最小标识、请求时间、处理状态和政策依据，�
 
 <!-- interview-source-history:start -->
 - [阿里控股 Agent Infra 一面：Agent 选择、记忆纠错与持续改进](../../../interview/alibaba/ai/alibaba-ai-18.md)
+- [快手 AI 应用开发实习二面：循环、记忆与重排](../../../interview/kuaishou/ai/kuaishou-ai-14.md)
+- [百度 Java 实习：流式工具调用、答案忠实度与记忆](../../../interview/baidu/ai/baidu-ai-11.md)
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../../interview/bytedance/base/bytedance-base-48.md)
 - [百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测](../../../interview/baidu/ai/baidu-ai-2.md)
 - [淘天 Agent 一面：工具调用、上下文与记忆更新](../../../interview/alibaba/ai/alibaba-ai-11.md)

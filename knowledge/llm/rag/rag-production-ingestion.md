@@ -25,7 +25,7 @@ event_id = hash(tenant_id, source_id, source_version, operation)
 operation ∈ {UPSERT, DELETE}
 ```
 
-消费者先记录 event_id，再执行幂等写入。消息“至少投递一次”时，重复执行不会产生重复 chunk；任务在中途崩溃时，也能从已完成阶段继续，而不是重建整个语料。
+消费者按 event_id 建立待处理状态，再执行可重试的幂等阶段；只有阶段产物与完成标记满足约定的持久化边界后，才记为完成并确认消息。不能先写“已处理”就跳过尚未落地的副作用。消息“至少投递一次”时，重复执行不应产生重复 chunk；任务在中途崩溃时，从已验证完成的阶段继续，而不是重建整个语料。
 
 ## 版本属于产物，而不只属于代码
 
@@ -44,8 +44,8 @@ operation ∈ {UPSERT, DELETE}
 
 只记录“索引更新时间”无法解释为什么一次升级改变了召回。manifest 使线上答案、离线评测和事故回放指向同一套构建输入。
 
-![来源变更与删除事件经过版本化处理，在影子索引验证后原子发布，并保留回滚与血缘](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-production-ingestion-versioned-pipeline-v1.webp)
-*图：UPSERT 与 DELETE 共用一条可重放链路；解析、分块、模型版本和索引版本共同决定最终产物。*
+![版本化摄取流程：UPSERT 经校验、解析与分块生成索引；DELETE 写持久删除标记并清理派生产物。候选构建经门禁后切换并核实路由，回滚、删除标记与权限撤回均受当前查询过滤约束](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-production-ingestion-versioned-pipeline-v2.png)
+*图：DELETE 分支不经过解析、分块或 embedding。删除标记与现行权限独立约束查询，不能等待重建或通过回滚恢复已撤销访问；路由切换还需核实实际指向。*
 
 ## 增量更新不是只做 upsert
 
@@ -72,6 +72,16 @@ chunk_id = hash(tenant_id, source_id, source_version,
 
 ## 用影子构建替代原地升级
 
+### 同一文档有多个版本，查询该选哪一版
+
+先区分业务版本与索引构建版本：合同条款的 v2/v3 是内容生效范围，换解析器后重建同一份 v3 则是处理产物变化。不能简单按上传时间取最新，也不能把新旧块混在一次回答里。先明确查询是“按当前规则回答”，还是“回看某个时间点的规则”；未说明时应澄清，或使用产品事先约定并向用户展示的口径。
+
+一个教学数据模型可以让每个块携带 `documentId`、`sourceVersion`、`validFrom/validTo`、发布状态、权限与 `buildId`。当前规则查询限定已发布且在有效期内的业务版本；历史查询按指定时间筛选，明确保留已被替代的版本。区间可约定为左闭右开，但这是应用合同，不能从时间戳自然推出。时间边界、时区、缺失有效期和多个有效版本冲突都需要校验；草稿刚上传不代表已生效。
+
+词法与向量两路必须采用相同的版本与授权条件，缓存键也要包含相关版本口径。引用保留来源版本和块位置，才能区分“引用了旧规则”与“索引没更新”。[Qdrant 的过滤条件](https://qdrant.tech/documentation/search/filtering/)支持组合结构化条件；这里的数据模型与生效规则是教学设计，不是该数据库自动提供的业务版本语义。
+
+例如 v3 在 7 月 1 日生效，6 月 30 日的历史查询仍可能需要 v2；当前查询不能因为 v2 的向量更相似就选它。若 v3 校验失败，应保持已知可用的服务版本并返回构建失败，不能让“部分新块加部分旧块”冒充一个完整发布。业务版本撤销、权限撤回与回滚也要分别定义，回滚索引不应恢复已撤销的访问权。
+
 解析器或 embedding 模型升级时，不要边读边改当前索引。创建不可变的 shadow index，完成后运行四类门禁：
 
 - 完整性：期望来源数、chunk 数、删除数和失败数；
@@ -80,6 +90,8 @@ chunk_id = hash(tenant_id, source_id, source_version,
 - 运行性：索引大小、查询延迟、错误率和预估成本。
 
 门禁通过后，应用只切换一个逻辑别名或路由指针。Elasticsearch 的 [Reindex API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-reindex) 明确要求源与目标不同，并提醒目标 mapping、分片等配置不会自动复制；[Aliases 文档](https://www.elastic.co/guide/en/elasticsearch/reference/current/aliases.html)则说明别名可以实时改变应用使用的索引。这正是蓝绿索引的基础：构建与服务解耦，切换可以原子化，旧版仍可回滚。
+
+以 Elasticsearch 的一个别名变更请求为例，应把移除旧指向与添加新指向放在同一请求，并处理逐动作失败；需要任一动作失败就停止整组变更时，按所用版本核对 `must_exist` 等条件。官方[别名多动作结果](https://www.elastic.co/docs/manage-data/data-store/aliases#multiple-action-results)说明动作可能部分成功，因此不能只看到 HTTP 成功或 `acknowledged` 就记作切换完成。检查 `errors`、每项结果，再读取最终别名指向；失败时保持结果未知或执行已定义的恢复流程，不无条件重复切换。
 
 ## 失败、回放与背压
 
@@ -123,8 +135,9 @@ chunk_id = hash(tenant_id, source_id, source_version,
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 Agent 后端实习一面：LangGraph、评测集与混合检索](../../../interview/bytedance/base/bytedance-base-22.md)（cluster-a84ba0858191）
-- [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)（cluster-fa3a6af4ebe6）
+- [美团容器平台 JAVA 一二面：消息一致性、MCP 权限与代码审查](../../../interview/meituan/ai/meituan-ai-5.md)
+- [字节 Agent 后端实习一面：LangGraph、评测集与混合检索](../../../interview/bytedance/base/bytedance-base-22.md)
+- [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)
 <!-- interview-source-history:end -->
 
 ## 相关机制阅读（不计专题频次）
@@ -136,3 +149,5 @@ chunk_id = hash(tenant_id, source_id, source_version,
 - [Apache Tika — The Parser interface](https://tika.apache.org/2.6.0/parser.html)
 - [Elastic — Reindex documents](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-reindex)
 - [Elastic — Aliases](https://www.elastic.co/guide/en/elasticsearch/reference/current/aliases.html)
+- [Elastic — Multiple alias action results](https://www.elastic.co/docs/manage-data/data-store/aliases#multiple-action-results)
+- [Qdrant — Filtering clauses](https://qdrant.tech/documentation/search/filtering/)

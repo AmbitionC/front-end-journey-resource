@@ -304,8 +304,11 @@ flowchart LR
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节抖音研发一面：Agent 执行范式与缓存恢复](../../../interview/bytedance/base/bytedance-base-69.md)
 - [拼多多提前批一面：Agent 超时、消息可靠性与线上排障](../../../interview/pinduoduo/ai/pinduoduo-ai-2.md)
+- [百度后端二面：Agent 风险、缓存与索引](../../../interview/baidu/ai/baidu-ai-9.md)
 - [百度网盘后端二面：图生图工作流、任务管理与缓存一致性](../../../interview/baidu/ai/baidu-ai-5.md)
+- [美团本地核心一面：缓存一致性、库存故障与 Agent 记忆](../../../interview/meituan/ai/meituan-ai-4.md)
 - [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../../interview/bytedance/base/bytedance-base-36.md)
 - [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
 - [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)

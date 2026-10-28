@@ -11,10 +11,10 @@ Agent 框架是连接大语言模型（LLM）与真实世界任务的工程骨�
 
 成熟框架（LangChain、AutoGen 等）提供了极大的便利，但也带来了代价：
 
-- **过度抽象**：Chain、Retriever、Runnable……概念层叠，初学者入门成本高。
-- **快速迭代**：商业框架 API 变动频繁，升级后代码常常跑不起来。
-- **黑盒化**：核心循环被封装得严严实实，出了问题只能翻 Issue。
-- **依赖爆炸**：安装一个框架可能带来上百个间接依赖，与其它项目冲突。
+- **抽象是否合适**：任务很小时，额外组件可能增加理解与调试成本；复杂任务也可能因此减少重复实现。
+- **升级成本**：应固定实际版本、读取变更并运行契约回归，不能只按框架名称推定兼容性。
+- **状态是否可观察**：检查循环、节点输入输出、恢复位置与工具事件能否追踪，而非预设框架一定是黑盒。
+- **依赖与集成**：核对实际依赖图、安全维护、许可证及现有部署约束，不以未经测量的依赖数量判断优劣。
 
 自建框架并不是为了取代它们，而是让你真正理解"框架在做什么"，从使用者跃升为构建者。
 
@@ -384,6 +384,8 @@ print(react.run("(15 * 8 + 32) / 4 等于多少？"))
 
 ## 框架演进路线
 
+下表是一种教学拆分，不是生产系统必经的版本顺序。MCP、模型工具调用、记忆和多 Agent 可以按任务独立组合；增加层数不等于能力或可靠性自然提高。
+
 | 阶段 | 新增能力 | 关键技术 |
 |------|----------|----------|
 | v0 最小框架 | 单轮对话 | LLM + Message |
@@ -421,6 +423,8 @@ Context Window 有限，不做裁剪会导致调用失败。滑动窗口、摘�
 
 ## LangChain 组件与 LangGraph 状态执行
 
+“使用 LangGraph 自建”与“改造一个开源 Agent 应用”并不是框架和零框架的二选一。前者可能复用图执行、检查点与中断组件，自己定义任务状态和工具；后者还要核对现有应用的消息模型、权限、许可证、部署与升级路径。把同一任务的成功条件、状态恢复、副作用幂等、可观测、维护与迁移成本列成对照，再用小型可复现任务验证。没有指明开源项目与版本时，不能替它编造能力缺口，也不能断言自建必然更快或更简单。
+
 [LangChain 概览](https://docs.langchain.com/oss/python/langchain/overview)提供模型、工具与 Agent 的集成组件；[LangGraph Graph API](https://docs.langchain.com/oss/python/langgraph/graph-api)用 state、node、edge 描述执行：state 是跨步骤数据合同，node 读取状态并返回更新，edge 决定后续步骤，条件边表达分支。每个字段的 reducer 决定更新替换还是合并；累加 reducer 接到空列表不等于清空旧结果。
 
 检查点保存运行状态，结合 thread 标识组织恢复与人工中断；选用持久后端和故障策略才能跨进程延续。恢复可能重放步骤，外部写操作仍需幂等与对账。状态字段要标明所有者与合并规则，并行节点不能任意同时覆盖同一业务事实。
@@ -438,6 +442,8 @@ Context Window 有限，不做裁剪会导致调用失败。滑动窗口、摘�
 - [小红书 AI 全栈业务交叉面与二面：MVP、运行稳定性和视频 Agent](../../../interview/redbook/ai/redbook-ai-5.md)
 - [快手 AI 全栈一二面：Harness、沙箱与需求交付](../../../interview/kuaishou/ai/kuaishou-ai-8.md)
 - [小红书大模型平台全栈一面：写边界、Harness 与意图澄清](../../../interview/redbook/ai/redbook-ai-7.md)
+- [字节大模型应用秋招一面：日志盲区、框架选择与 BFS](../../../interview/bytedance/base/bytedance-base-71.md)
+- [京东后端一面：交付标准、Agent 选型与跨语言数据边界](../../../interview/jd/ai/jd-ai-1.md)
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
 - [字节 Agent 一面：会话记忆、并发更新与算法](../../../interview/bytedance/base/bytedance-base-29.md)
 - [字节 AI 平台一面：Agent 评测、框架与数据结构](../../../interview/bytedance/base/bytedance-base-33.md)

@@ -102,6 +102,20 @@ type VisualCitation = {
 
 图像也会携带 Prompt injection，例如截图中写“忽略指令”。OCR 与视觉文字一律视为不可信数据，只用于检索证据，不能升级为系统指令。
 
+## 视频 RAG：图像证据还要对齐时间
+
+视频不能只当成没有时间关系的图片集合。以原始 `videoId + sourceVersion` 为根，记录片段区间、帧ID、呈现时间、原片位置，以及裁剪或转码后的时间映射。[FFmpeg 7.1 的 AVFrame 定义](https://github.com/FFmpeg/FFmpeg/blob/n7.1/libavutil/frame.h)说明 PTS 使用对应 time base 表示呈现时间；变帧率视频不能无条件用“帧序号 / 名义帧率”反推精确时刻。时间戳缺失、异常或音画偏移时先校验，无法恢复就标为时间未知。
+
+可以按任务选择固定间隔、场景变化或关键帧作为候选采样，保存策略和版本，再复用 OCR、caption 与视觉检索通道。当前 [Gemini 视频理解指南](https://ai.google.dev/gemini-api/docs/video-understanding)提供片段和采样率配置，并提醒快速动作可能因采样丢失细节；这是本次核对的供应商例子，不是跨模型的固定帧率合同。未采到某事件不能证明它没有发生，可对命中片段提高局部采样密度、回看原视频或说明证据不足。
+
+| 派生观测 | 需要保留的定位信息 | 不能替代的原始证据 |
+|---|---|---|
+| 帧视觉、OCR和区域描述 | frameId、呈现时间、bbox、模型/解析版本 | 对应原帧与邻近时间片段 |
+| 音频转写 | 转写片段ID、起止时间、版本与置信信息 | 原音轨；转写也可能出错 |
+| 片段摘要 | videoId、来源版本、时间区间及引用帧/转写ID | 动作先后、声音与画面是否一致的原片核对 |
+
+检索时按相同授权、版本和时间口径融合视觉、文字与语音候选，回答附可回放的片段引用。判断动作先后或因果需要邻近帧、音画对齐与上下文；单帧相似或自动摘要不能独自证明。评测另加短暂事件漏检、时间定位误差、跨片段拼接错误、转写错误和权限撤回传播，不只测图片 Recall@K。以上是可选教学设计，采样率、片段长度与阈值须用实际任务验证。
+
 ## 多模态评测
 
 测试集要覆盖：纯文字截图、扫描件、照片、流程图、图表、相似图、裁剪图、多语言、低分辨率和敏感内容。分别评：
@@ -122,6 +136,7 @@ type VisualCitation = {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [腾讯音乐后台秋招一面：AI 开发交付与多模态 RAG](../../../interview/tencent-music/ai/tme-ai-1.md)
 - [OPPO IT 开发一面：ReAct、MCP 与智能问数](../../../interview/oppo/ai/oppo-ai-3.md)
 - [阿里 Agent 实习一面：图文检索、评估与微调实践](../../../interview/alibaba/ai/alibaba-ai-10.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)
@@ -131,3 +146,5 @@ type VisualCitation = {
 
 - [Tesseract — User Manual](https://tesseract-ocr.github.io/tessdoc/)
 - [OpenAI — Images and vision](https://developers.openai.com/api/docs/guides/images-vision)
+- [Gemini：视频片段、采样与时间引用](https://ai.google.dev/gemini-api/docs/video-understanding)
+- [FFmpeg 7.1：AVFrame 的 PTS 与 time base](https://github.com/FFmpeg/FFmpeg/blob/n7.1/libavutil/frame.h)
