@@ -88,9 +88,9 @@ Trace 记录 operation ID、attempt、错误类别、sideEffectState、backoff�
 - [阿里淘宝闪购 Agent 算法实习一面：框架、记忆与线上排障](../../../interview/alibaba/ai/alibaba-ai-6.md)
 <!-- interview-source-history:end -->
 
-## 学习阅读（不计专题频次）
+## 补充学习阅读（不重复计次）
 
-- [阿里淘宝闪购 Agent 算法实习一面：框架、记忆与线上排障](../../../interview/alibaba/ai/alibaba-ai-6.md)（本页原有延伸阅读；该来源本次逐题主绑定为其他专题，不计本专题频次。）
+- [阿里淘宝闪购 Agent 算法实习一面：框架、记忆与线上排障](../../../interview/alibaba/ai/alibaba-ai-6.md)（补充阅读入口；同一来源在上方已有记录，本节重复列出不再增加频次。）
 
 ## 参考资料
 
