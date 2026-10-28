@@ -73,7 +73,7 @@ Canary 是“完整行为 bundle + 代表性流量 + 可归因对照 + 绝对门
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [哔哩哔哩 AI 应用岗一面：端到端 AI Coding 与生产治理（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-2.md)（cluster-1c24a80acde8）
+- [哔哩哔哩一面：端到端 AI Coding 与生产治理](../../../interview/bilibili/ai/bilibili-ai-2.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

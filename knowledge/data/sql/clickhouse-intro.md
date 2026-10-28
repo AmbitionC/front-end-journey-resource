@@ -9,7 +9,7 @@ ClickHouse 是一款开源的列式 OLAP（在线分析处理）数据库，专�
 
 ### 行式与列式 I/O 的本质差异
 
-传统行式数据库（Row-oriented Database，如 MySQL、PostgreSQL）将一行数据连续存储在磁盘上。当执行 `SELECT sum(tokens_in) FROM llm_logs` 这类只涉及单列的聚合时，引擎仍需将每一行的全部字段从磁盘读入内存，其中绝大部分字节对本次查询毫无用处。
+传统行式数据库（Row-oriented Database，如 MySQL、PostgreSQL）通常把同一行的字段组织在一起。这类表做大范围少列聚合时，读取的数据页可能包含很多无关字段；但覆盖索引、缓存和具体存储实现可能减少读取，不能断言每次都读取全部行字段。
 
 列式数据库（Columnar Database）将同一列的所有值连续存放，分析查询只需将目标列的数据块加载到内存，完全跳过其他列。
 
@@ -43,7 +43,7 @@ MergeTree 是 ClickHouse 最核心的存储引擎，几乎所有生产场景都�
 
 ### 写入-数据块-合并生命周期
 
-每次写入操作会将一批数据落地为独立的**数据块（part）**，每个 part 在写入时按排序键（sort key）完成排序。后台的合并进程（merge process）持续将小 part 合并为大 part，这正是"MergeTree"名字的来源。
+写入通常按分区和批次形成一个或多个独立的**数据块（part）**，每个 part 按排序键（sort key）完成排序。后台的合并进程（merge process）持续将小 part 合并为大 part；已提交的 part 不需要等后台 merge 才可查询。
 
 ```mermaid
 flowchart TD
@@ -54,7 +54,8 @@ flowchart TD
     C & D & E --> F{后台 Merge 进程}
     F --> G[合并为更大的 part\n重新排序 + 重建稀疏索引]
     G --> H[旧 part 异步删除]
-    G --> I[查询可见\n稀疏索引生效]
+    C & D & E --> I[读取已提交 parts\n稀疏索引跳过范围]
+    G --> I
 
     style F fill:#f0a500,color:#fff
     style G fill:#2d8a4e,color:#fff
@@ -64,7 +65,7 @@ flowchart TD
 
 ### 稀疏索引与 index_granularity
 
-ClickHouse 的主键索引不是 B-tree，而是**稀疏索引（sparse index）**：每隔固定行数（默认 8192 行，由 `index_granularity` 参数控制）写入一条索引记录，指向该数据粒度（granule）的起始位置。
+ClickHouse 的主键索引不是 B-tree，而是**稀疏索引（sparse index）**：为每个数据粒度（granule）记录键值与读取位置。`index_granularity` 默认 8192，表示行数上限；启用自适应粒度时，`index_granularity_bytes` 也影响实际粒度，不能假定每粒度恒为 8192 行。见[官方稀疏主索引说明](https://clickhouse.com/docs/guides/clickhouse/data-modelling/sparse-primary-indexes)。
 
 查询时，引擎通过稀疏索引定位到可能包含数据的粒度范围，然后只扫描这些粒度，跳过其余部分。与 MySQL 主键不同，ClickHouse 的排序键不要求值唯一，它是物理排序的依据而非唯一性约束。
 
@@ -84,7 +85,7 @@ CREATE TABLE llm_call_logs
 ENGINE = MergeTree()
 PARTITION BY toYYYYMM(call_date)
 ORDER BY (call_date, model, user_id)      -- 排序键：先日期，再模型，再用户
-SETTINGS index_granularity = 8192;        -- 每 8192 行一条稀疏索引记录
+SETTINGS index_granularity = 8192;        -- 行数上限；默认自适应粒度还受字节阈值影响
 ```
 
 ## 分区设计
@@ -112,10 +113,10 @@ PARTITION BY (toYYYYMM(call_date), model)
 | 需要快速删除历史数据 | 按时间分区 + DROP PARTITION | 效率远高于 DELETE WHERE |
 
 ```sql
--- 删除整个分区（毫秒级，推荐用于数据保留策略）
+-- 删除整个分区；耗时与物理清理由部署、复制及数据量决定
 ALTER TABLE llm_call_logs DROP PARTITION '202405';
 
--- 避免：逐行 DELETE 是重量级操作，ClickHouse 通过 mutation 实现，会重写整个 part
+-- ALTER TABLE ... DELETE 是重量级 mutation；不同于轻量 DELETE FROM 的行标记
 -- ALTER TABLE llm_call_logs DELETE WHERE call_date < '2024-05-01';  -- 慎用
 ```
 
@@ -128,18 +129,18 @@ ALTER TABLE llm_call_logs DROP PARTITION '202405';
 | 唯一性 | 强制唯一 | 不要求唯一 |
 | 作用 | B-tree 索引，精确定位行 | 决定物理排序 + 稀疏索引的覆盖范围 |
 | 值重复 | 报错 | 允许 |
-| 查询定位粒度 | 精确到行 | 精确到粒度（默认 8192 行） |
+| 查询定位粒度 | 精确到行 | 粒度范围；实际行数受行数与字节阈值影响 |
 | 设计目标 | 标识行 | 跳过不相关数据块 |
 
 ```sql
 -- 好的设计：把高频过滤字段放左侧，高基数字段放右侧
 ORDER BY (call_date, model, user_id)
 
--- 不好的设计：UUID 基数极高，稀疏索引无法跳过任何粒度
+-- 若主查询按日期过滤，UUID 首键可能降低日期范围剪枝与其他列压缩率
 -- ORDER BY (request_uuid, call_date)
 ```
 
-**原则**：将查询中 `WHERE` 子句最常出现的字段放在排序键左侧，高基数字段（UUID、IP 等）放在右侧或完全不放入排序键。
+**原则**：排序键按主要过滤模式、选择性与压缩需求共同设计。UUID 首键仍可用于按 UUID 定位，并非索引失效；若主要是时间范围聚合，日期、模型等前缀通常更合适。显式 `PRIMARY KEY` 可为排序键前缀；省略时才默认采用 `ORDER BY`，二者不应无条件等同。
 
 ## 聚合函数与 GROUP BY 优化
 
@@ -152,7 +153,7 @@ SELECT
     model,
     toDate(call_time)              AS call_date,
     count()                        AS total_calls,     -- 总调用次数
-    uniq(user_id)                  AS approx_uv,       -- 近似去重用户数（HyperLogLog，误差约 2%）
+    uniq(user_id)                  AS approx_uv,       -- 近似去重用户数，自适应采样
     uniqExact(user_id)             AS exact_uv,        -- 精确去重用户数（内存与基数成正比）
     sum(tokens_in)                 AS total_tokens_in,
     sum(tokens_out)                AS total_tokens_out,
@@ -166,7 +167,7 @@ GROUP BY model, call_date
 ORDER BY call_date DESC, total_calls DESC;
 ```
 
-`uniq` 使用 HyperLogLog（一种概率基数估算算法）实现，误差约 2%，适合 DAU、UV 这类对精度要求不苛刻的场景。`uniqExact` 精确但内存消耗与基数线性相关，高基数（亿级以上）时慎用。
+[`uniq` 官方文档](https://clickhouse.com/docs/reference/functions/aggregate-functions/uniq)说明它使用自适应采样；不要与 `uniqHLL12` 等函数的算法混淆，也不要承诺所有输入都有固定 2% 误差。它适合允许估算的 DAU、UV；`uniqExact` 精确但状态随基数增长，应按实际规模估算内存。
 
 ### GROUP BY WITH ROLLUP / CUBE
 
@@ -179,7 +180,8 @@ SELECT
 FROM llm_call_logs
 GROUP BY model, ym WITH ROLLUP
 ORDER BY model, ym;
--- 结果包含：(model, ym) 明细 + (model, NULL) 按模型汇总 + (NULL, NULL) 总计
+-- 结果包含明细、按 model 汇总和总计；默认用类型默认值补缺失分组键
+-- 需要 NULL 表示缺失维度时显式设置 group_by_use_nulls = 1，并用 GROUPING 消歧
 
 -- WITH CUBE：生成所有维度组合的交叉汇总
 SELECT model, is_error, count()
@@ -238,7 +240,7 @@ GROUP BY call_date, model
 ORDER BY call_date DESC;
 ```
 
-物化视图在数据写入 `llm_call_logs` 的同时自动触发，`*State` 函数将中间聚合状态持久化，`*Merge` 函数在查询时将状态合并为最终结果。AggregatingMergeTree 负责在后台合并同一分组下多个 part 的聚合状态，保证结果一致性。
+这种增量物化视图只处理新插入块，不会自动反映源表既有行的 UPDATE、DELETE 或历史回填。`*State` 持久化聚合状态，查询仍需用 `*Merge` 与 `GROUP BY` 合并所有相关状态；结果正确性不能依赖后台 merge 恰好完成。源表重复写入也可能重复累计，应另定去重与恢复合同。见[官方增量物化视图说明](https://clickhouse.com/docs/concepts/features/materialized-views/incremental-materialized-view)。
 
 ## 与行式数据库的场景对比
 
@@ -256,7 +258,7 @@ graph LR
 |------|--------------------|----|
 | 适合查询 | 点查、JOIN、事务 | 全表扫描、聚合、GROUP BY |
 | 写入模式 | 逐行写入，实时可见 | 批量写入，合并后效果最佳 |
-| UPDATE / DELETE | 高效 | 重量级 mutation，尽量避免 |
+| UPDATE / DELETE | 支持面向事务的行更新 | 支持多种更新/删除路径；传统 mutation 较重，需按版本和操作核实 |
 | 数据压缩 | 一般 | 极高（列同质 + 专用编解码） |
 | 主键语义 | 唯一约束 + B-tree | 排序键 + 稀疏索引，无唯一约束 |
 | 并发模式 | 高并发短查询 | 低并发重查询 |
@@ -268,15 +270,15 @@ graph LR
 
 ## 常见误区
 
-1. **把高基数字段放在排序键最左侧**：如将 UUID 或 request_id 放到 ORDER BY 首位，会导致稀疏索引完全失效，每次查询都需要全量扫描。高基数字段应放在排序键末尾或不放入排序键。
+1. **脱离查询模式选排序键**：UUID 首键可服务 UUID 定位，却可能不利于日期范围过滤与压缩。检查实际读取粒度和执行计划，不能仅凭基数宣称索引完全失效。
 
 2. **频繁小批量写入**：每次 INSERT 几行会产生大量小 part，后台合并压力剧增，严重时触发"too many parts"错误，导致写入被限速甚至阻塞。应使用 Buffer 引擎或应用层批量缓冲后再写入。
 
-3. **用 DELETE WHERE 清理历史数据**：ClickHouse 的 DELETE 是通过 mutation 实现的，会重写整个 part，消耗极大。应设计好时间分区，用 `ALTER TABLE ... DROP PARTITION` 替代。
+3. **混淆删除路径**：`ALTER TABLE ... DELETE` 是重量级 mutation；轻量 `DELETE FROM` 先标记行，物理回收通常随合并发生，实际机制依版本与设置。整分区过期可考虑 `DROP PARTITION`，不能用它替代任意业务行删除。见[轻量删除文档](https://clickhouse.com/docs/concepts/features/operations/delete/lightweight-delete)。
 
 4. **混淆 uniq 和 uniqExact 的适用场景**：对精度要求不高的 UV 统计使用 `uniqExact` 会导致内存暴涨；反之，对精确数字有要求（如计费、合规审计）时错误使用 `uniq` 会引入误差。
 
-5. **将 ClickHouse 当作 MySQL 替代品**：ClickHouse 不支持高频单行更新、不适合复杂多表 JOIN（大表 JOIN 大表尤其危险）、事务支持非常有限。两者定位不同，不可相互替代。
+5. **将分析与事务负载混为一谈**：ClickHouse 支持 JOIN 和多种更新机制，但吞吐、延迟、内存与一致性合同不同于典型 OLTP 数据库。大表关联、频繁小更新与多步事务都应单独压测和核实，不能据“支持 SQL”判断能直接替代 MySQL。
 
 6. **忽视 LowCardinality 类型**：对枚举值少的字符串列（如 model 名、region、status）不使用 `LowCardinality(String)` 会浪费存储和计算资源；该类型通过字典编码显著提升压缩率和过滤速度。
 
@@ -289,7 +291,7 @@ graph LR
 - **批量写入**：每批 INSERT 至少数千行，推荐数万行以上，可借助 Kafka + ClickHouse Kafka 引擎或应用层缓冲实现。
 - **预聚合高频报表**：对每日/每小时汇总类查询，使用 Materialized View + AggregatingMergeTree 预聚合，将重复的全表扫描变为轻量的预聚合结果读取。
 - **Agent trace / LLM 日志设计**：将 `model`、`user_id`、`call_date` 放入排序键；`tokens_in`、`tokens_out`、`latency_ms` 使用数值类型而非字符串；通过物化视图维护按模型、用户的每日 Token 消耗汇总，方便配额管控和成本分析。
-- **避免大表 JOIN**：若必须关联，优先将小表放在 JOIN 右侧（ClickHouse 会将右表加载到内存），并考虑使用字典（Dictionary）替代维度表 JOIN。
+- **按计划和算法优化 JOIN**：先尽量过滤两侧输入，再核实实际版本、执行计划与 `join_algorithm`；新版本可能自动调整关联顺序。哈希 JOIN 可通过较小的构建侧降低内存，但排序合并、grace hash 等算法并非把整张右表装入内存。维度查询是否适合 Dictionary 也应按更新和查询语义验证，不能仅按 SQL 中的左右位置判断（[官方 JOIN 优化建议](https://clickhouse.com/docs/best-practices/minimize-optimize-joins)）。
 - **监控 part 数量**：通过 `system.parts` 表监控各表的 part 数量，若活跃 part 持续偏多，需检查写入频率或调整合并参数。
 
 ---
@@ -298,17 +300,22 @@ graph LR
 
 - **为什么列式存储在 OLAP 下比行式快？** 分析查询通常只涉及少数列，列式存储只读目标列，大幅减少磁盘 I/O；同列数据类型一致，LZ4/ZSTD 压缩率更高；连续存储的同类数据可被 SIMD 指令向量化批量处理，CPU 利用率更高。
 
-- **MergeTree 的主键（排序键）和 MySQL 主键有什么本质区别？** ClickHouse 排序键不要求唯一，是稀疏索引，每隔 `index_granularity`（默认 8192）行记录一条索引，用于定位粒度范围，无法精确定位单行。MySQL 主键是 B-tree 唯一索引，可精确定位单行。
+- **MergeTree 的主键和 MySQL 主键有什么本质区别？** MergeTree 主键索引稀疏且不保证唯一，用于定位粒度范围；排序键控制 part 内物理顺序，主键可为其前缀。8192 是默认行数上限，自适应粒度还受字节阈值影响。MySQL 主键施加唯一约束，两者用途不同。
 
-- **如何设计分区键和排序键？** 分区键决定目录层面的物理分割粒度，常用时间维度（月/天）；排序键决定块内物理顺序和稀疏索引覆盖，把高频过滤字段放左侧，高基数字段放右侧。两者服务于不同层次的查询优化，应协同设计。
+- **如何设计分区键和排序键？** 分区键服务数据生命周期与粗粒度剪枝，排序键按主要过滤模式、选择性和压缩需求设计；用真实查询验证读取粒度与延迟，不把“高基数必须靠右”当通则。
 
-- **uniq 和 uniqExact 怎么选？** `uniq` 基于 HyperLogLog，误差约 2%，内存极小，适合 DAU/UV 等允许误差的场景；`uniqExact` 精确，但内存随基数线性增长，高基数时可能 OOM，适合需要精确数字的计费或审计场景。
+- **uniq 和 uniqExact 怎么选？** `uniq` 使用自适应采样，适合允许估算的统计；`uniqExact` 精确，但状态随基数增长。先确认精度与资源预算，不把近似结果用于要求精确的计费或审计。
 
 - **物化视图 + AggregatingMergeTree 解决什么问题？** 解决高频重复聚合的性能瓶颈：数据写入时实时预聚合，查询时只需合并少量预聚合状态，避免每次查询都全表扫描；特别适合 LLM Token 用量每日报表、Agent 调用量统计等固定维度的汇总看板。
 
-- **ClickHouse 能替代 MySQL 吗？** 不能。ClickHouse 不支持高频单行更新、复杂事务和多表 JOIN，适合分析型只读查询（OLAP）；MySQL 适合联机事务处理（OLTP）。二者通常配合使用：MySQL 处理写入和事务，ClickHouse 承担分析查询。
+- **ClickHouse 能替代 MySQL 吗？** 先比较负载和一致性合同。ClickHouse 面向分析查询，支持 JOIN 与多种变更路径；这些能力不等于 MySQL 的事务与点查合同。常见组合是 MySQL 处理在线事务，ClickHouse 承担聚合分析。
 
 ## 参考资料
 
 - [ClickHouse introduction](https://clickhouse.com/docs/intro)
 - [ClickHouse MergeTree](https://clickhouse.com/docs/engines/table-engines/mergetree-family/mergetree)
+- [ClickHouse：稀疏主索引](https://clickhouse.com/docs/guides/clickhouse/data-modelling/sparse-primary-indexes)
+- [ClickHouse：uniq](https://clickhouse.com/docs/reference/functions/aggregate-functions/uniq)
+- [ClickHouse：GROUP BY 与分组修饰符](https://clickhouse.com/docs/reference/statements/select/group-by)
+- [ClickHouse：增量物化视图](https://clickhouse.com/docs/concepts/features/materialized-views/incremental-materialized-view)
+- [ClickHouse：轻量删除](https://clickhouse.com/docs/concepts/features/operations/delete/lightweight-delete)

@@ -11,7 +11,7 @@ AI/Agent 岗位考察的核心是**系统思维**，而不只是代码能力。�
 
 ### 项目描述怎么写
 
-[USAJOBS 简历指南](https://help.usajobs.gov/faq/application/documents/resume/what-to-include) 要求用具体任务、上下文、结果、数字和影响描述经历；指标必须来自可核验项目事实，不能用示例数字冒充个人成果。
+[USAJOBS 简历指南](https://usajobshelp.opm.gov/hc/en-us/articles/52839989720851-How-do-I-write-a-resume-for-a-federal-job) 要求用具体任务、上下文、结果、数字和影响描述经历；指标必须来自可核验项目事实，不能用示例数字冒充个人成果。
 
 
 AI 项目描述最常见的错误，是写成工具清单："使用 LangChain + OpenAI + ChromaDB 搭建了 RAG 系统。"这句话几乎没有信息量——面试官只知道你会调 API，不知道你解决了什么问题，也不知道你做了哪些判断。
@@ -83,38 +83,42 @@ AI/Agent 岗位面试通常覆盖以下几个方向。学长不列具体题目�
 
 ## 出现于（热度来源）
 
-<!-- interview-source-history:start -->
-- [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../interview/bytedance/base/bytedance-base-24.md)
-- [字节 Agent 后端实习一面：LangGraph、评测集与混合检索](../../interview/bytedance/base/bytedance-base-22.md)
-- [蚂蚁 Agent 实习一面：缓存、消息与 RAG](../../interview/antfin/ai/antfin-ai-6.md)
-- [腾讯 Agent 实习一面：RAG、工具与通信](../../interview/tencent/ai/tencent-ai-10.md)
-- [字节全栈二、三面：幂等、索引与字符串匹配](../../interview/bytedance/base/bytedance-base-32.md)
-- [字节财经保险 AI 全栈实习一面：项目设计、AI Coding 与 Diff](../../interview/bytedance/base/bytedance-base-34.md)
-- [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../interview/bytedance/base/bytedance-base-36.md)
-- [字节全栈一面：RAG、Java 与线程池](../../interview/bytedance/base/bytedance-base-37.md)
-- [字节前端全栈实习一面：渲染、Worker 与认证](../../interview/bytedance/base/bytedance-base-38.md)
-- [字节抖音 Agent 一面：Skill、MCP 与记忆](../../interview/bytedance/base/bytedance-base-39.md)
-- [字节 Agent 全栈一面：工具、评测与编码](../../interview/bytedance/base/bytedance-base-40.md)
-- [字节 Agent 实习：异步消息、上下文与容器隔离](../../interview/bytedance/base/bytedance-base-41.md)
-- [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../interview/bytedance/base/bytedance-base-42.md)
-- [字节全栈：多智能体导购、客户端与系统评测](../../interview/bytedance/base/bytedance-base-43.md)
-- [字节 Agent：任务取消、Spring 配置与并发执行](../../interview/bytedance/base/bytedance-base-45.md)
-- [字节全栈实习：Session、权限与前端基础](../../interview/bytedance/base/bytedance-base-46.md)
-- [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../interview/bytedance/base/bytedance-base-47.md)
-- [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../interview/bytedance/base/bytedance-base-48.md)
-- [字节 Agent：AI Coding、技能设计与模型工程](../../interview/bytedance/base/bytedance-base-49.md)
-- [字节 Agent：幻觉、任务恢复与 Java 基础](../../interview/bytedance/base/bytedance-base-50.md)
-- [字节 Agent 实习：生成质量、多智能体与缓存](../../interview/bytedance/base/bytedance-base-52.md)
-- [字节全栈一二面：调度器、流式恢复与浏览器网络](../../interview/bytedance/base/bytedance-base-53.md)
-- [字节全栈与测试：JVM、并发与 SQL 排查](../../interview/bytedance/base/bytedance-base-56.md)
+补充复习导航（不计热度）：
+
 - [阿里云 Agent 开发秋招一面](../../interview/alibaba/ai/alibaba-ai-1.md)
 - [阿里国际 Accio Agent 算法一面：数据合成、任务环境与 GUI Agent](../../interview/alibaba/ai/alibaba-ai-3.md)
 - [阿里淘宝闪购 Agent 算法实习一面：框架、记忆与线上排障](../../interview/alibaba/ai/alibaba-ai-6.md)
+
+<!-- interview-source-history:start -->
+- [字节全栈一二面：调度器、流式恢复与浏览器网络](../../interview/bytedance/base/bytedance-base-53.md)
+- [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../interview/bytedance/base/bytedance-base-36.md)
 - [蚂蚁 Agent 一二面：Code Agent 与应用开发](../../interview/antfin/ai/antfin-ai-2.md)
+- [字节全栈一面：RAG、Java 与线程池](../../interview/bytedance/base/bytedance-base-37.md)
+- [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../interview/bytedance/base/bytedance-base-48.md)
+- [字节全栈：多智能体导购、客户端与系统评测](../../interview/bytedance/base/bytedance-base-43.md)
+- [字节 Agent：幻觉、任务恢复与 Java 基础](../../interview/bytedance/base/bytedance-base-50.md)
+- [字节 Agent 实习：异步消息、上下文与容器隔离](../../interview/bytedance/base/bytedance-base-41.md)
+- [字节全栈二、三面：幂等、索引与字符串匹配](../../interview/bytedance/base/bytedance-base-32.md)
+- [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../interview/bytedance/base/bytedance-base-24.md)
+- [字节全栈实习：Session、权限与前端基础](../../interview/bytedance/base/bytedance-base-46.md)
+- [字节抖音 Agent 一面：Skill、MCP 与记忆](../../interview/bytedance/base/bytedance-base-39.md)
+- [字节财经保险 AI 全栈实习一面：项目设计、AI Coding 与 Diff](../../interview/bytedance/base/bytedance-base-34.md)
+- [字节全栈一二面：调度器、流式恢复与浏览器网络](../../interview/bytedance/base/bytedance-base-53.md)
+- [字节 Agent 后端实习一面：LangGraph、评测集与混合检索](../../interview/bytedance/base/bytedance-base-22.md)
+- [字节全栈与测试：JVM、并发与 SQL 排查](../../interview/bytedance/base/bytedance-base-56.md)
+- [字节 Agent 实习：生成质量、多智能体与缓存](../../interview/bytedance/base/bytedance-base-52.md)
+- [字节 Agent：任务取消、Spring 配置与并发执行](../../interview/bytedance/base/bytedance-base-45.md)
+- [蚂蚁 Agent 实习一面：缓存、消息与 RAG](../../interview/antfin/ai/antfin-ai-6.md)
+- [字节前端全栈实习一面：渲染、Worker 与认证](../../interview/bytedance/base/bytedance-base-38.md)
+- [字节 Agent 全栈一面：工具、评测与编码](../../interview/bytedance/base/bytedance-base-40.md)
+- [腾讯 Agent 实习一面：RAG、工具与通信](../../interview/tencent/ai/tencent-ai-10.md)
+- [字节 Agent：AI Coding、技能设计与模型工程](../../interview/bytedance/base/bytedance-base-49.md)
+- [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../interview/bytedance/base/bytedance-base-47.md)
+- [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../interview/bytedance/base/bytedance-base-42.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
 
-- [How do I write a resume for a federal job? — USAJOBS Help Center](https://help.usajobs.gov/faq/application/documents/resume/what-to-include)
+- [How do I write a resume for a federal job? — USAJOBS Help Center](https://usajobshelp.opm.gov/hc/en-us/articles/52839989720851-How-do-I-write-a-resume-for-a-federal-job)
 - [SDE II Interview Prep — Amazon Jobs](https://amazon.jobs/content/en/how-we-hire/sde-ii-interview-prep)
 - [GitHub Certified: Agentic AI Developer (beta)](https://learn.microsoft.com/en-us/credentials/certifications/agentic-ai-developer/)

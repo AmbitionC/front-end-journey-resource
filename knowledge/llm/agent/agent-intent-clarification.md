@@ -52,9 +52,9 @@ function nextStep(
   policyAllows: boolean,
   confirmed = false,
 ) {
-  const candidateScores = [x.confidence, ...x.alternatives.map(item => item.score)]
-    .sort((a, b) => b - a);
-  const margin = candidateScores[0] - (candidateScores[1] ?? 0);
+  // 比较当前选定意图与最强备选；若备选更高，margin 为负，必须澄清。
+  const bestAlternative = Math.max(0, ...x.alternatives.map(item => item.score));
+  const margin = x.confidence - bestAlternative;
 
   if (!policyAllows) return { kind: 'escalate', reason: 'policy_denied' };
   if (x.missingSlots.length) return { kind: 'clarify', field: x.missingSlots[0] };
@@ -65,6 +65,8 @@ function nextStep(
   return { kind: 'route', intent: x.intent };
 }
 ```
+
+示例中的 `0.75` 和 `0.15` 仅演示分支，不是通用生产阈值；应按标注集、风险和错误成本校准后配置。输入分数还需先校验为有限且合法的数值。若当前候选分数为 0.80、备选为 0.99，差值是 -0.19，应返回澄清，不能先排序后只看两个最高分的绝对差。
 
 ### 2. 一次只问能改变决策的问题
 
@@ -115,7 +117,7 @@ function nextStep(
 - [网易云全栈一面：评估闭环、异步任务与数据查询](../../../interview/netease/fullstack/netease-fullstack-1.md)
 - [字节全栈：多智能体导购、客户端与系统评测](../../../interview/bytedance/base/bytedance-base-43.md)
 - [字节 Agent 后端实习一面：LangGraph、评测集与混合检索](../../../interview/bytedance/base/bytedance-base-22.md)
-- [快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-3.md)
+- [快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理](../../../interview/kuaishou/ai/kuaishou-ai-3.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

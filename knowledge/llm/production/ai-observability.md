@@ -170,7 +170,7 @@ def qa_pipeline(question: str) -> str:
 ### TypeScript SDK 接入
 
 ```typescript
-import { Client, traceable } from "langsmith";
+import { Client } from "langsmith";
 
 const client = new Client({
   apiKey: process.env.LANGCHAIN_API_KEY,
@@ -191,32 +191,37 @@ async function agentRun(userInput: string) {
     run_type: "chain",
     inputs: { userInput },
   });
+  await rt.postRun();
 
   const retrievalRt = await rt.createChild({
     name: "rag-retrieval",
     run_type: "retriever",
     inputs: { query: userInput },
   });
+  await retrievalRt.postRun();
   const docs = await retrieveDocuments(userInput);
   await retrievalRt.end({ outputs: { docs } });
-  await retrievalRt.postRun();
+  await retrievalRt.patchRun();
 
   const llmRt = await rt.createChild({
     name: "llm-generate",
     run_type: "llm",
     inputs: { messages: [{ role: "user", content: userInput }] },
   });
+  await llmRt.postRun();
   const response = await openai.chat.completions.create({
     model: "gpt-4o",
     messages: [{ role: "user", content: userInput }],
   });
   await llmRt.end({ outputs: { response } });
-  await llmRt.postRun();
+  await llmRt.patchRun();
 
   await rt.end({ outputs: { answer: response.choices[0].message.content } });
-  await rt.postRun();
+  await rt.patchRun();
 }
 ```
+
+[LangSmith SDK 的 RunTree 示例](https://github.com/langchain-ai/langsmith-sdk/blob/main/js/README.md)区分了创建与完成更新：`postRun()` 创建记录，`end()` 只更新本地结束状态，`patchRun()` 才发送完成更新；生产路径还应在异常分支记录错误并结束对应 Span。函数包装器 `traceable` 从 `langsmith/traceable` 子路径导入，不能从包根导入。
 
 ## Langfuse：开源框架无关的可观测平台
 
@@ -439,12 +444,8 @@ Trace 是通过共同 trace ID 关联的一组 Span，根 Span 是其中没有�
 
 <!-- interview-source-history:start -->
 - [字节 Agent 暑期一面：优化证据、指令偏差与长上下文](../../../interview/bytedance/base/bytedance-base-59.md)
-- [哔哩哔哩 AI 应用岗一面：端到端 AI Coding 与生产治理（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-2.md)
-- [字节大模型应用开发一面：Agent、RAG 与可靠性（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-16.md)
 - [字节 Agent 开发一面：评分、Harness 与任务可靠性](../../../interview/bytedance/base/bytedance-base-57.md)
-- [字节 AI 应用开发一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-12.md)
 - [海康威视 AI Agent 开发一面：可靠工具与任务状态](../../../interview/hikvision/ai/hikvision-ai-1.md)
-- [快手主站 SRE 一二三面：Agent Skill、性能排障与数据链路（2026 年 4 月）](../../../interview/kuaishou/ai/kuaishou-ai-5.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

@@ -1,16 +1,33 @@
-### 字节 TikTok Agent 开发秋招一面（2026 年 8 月）
+### 字节 TikTok Agent 开发秋招一面：会议转写与长上下文
+
+原帖只记录面试月日为 8 月 9 日，未给出面试年份；原帖发布于 2026 年 8 月。本文按主题选录可见技术问题，省略个人经历介绍与选择方向的个人陈述；以下答案是教学整理，不代表候选人现场回答或项目实际实现。
 
 这轮一面从会议转写项目切入，连续追问 ASR、隐私、RAG、长上下文、训练方法和多 Agent 编排，并包含两道树结构算法题。
 
 #### （1）怎样介绍会议转写的完整链路？
 
+<details data-binding-status="pending_semantic_verification">
+<summary>（1）怎样介绍会议转写的完整链路？</summary>
+<p>关联知识点待核实。</p>
+</details>
+
 音视频进入后先完成鉴权、解码、降噪、分帧与语音活动检测，再把音频片段送入 ASR；识别文本经过标点恢复、说话人区分、时间戳对齐和领域词修正，最后持久化并通过检索、摘要或 Agent 流程生成会议结果。回答时要补充流式与离线模式、乱序处理、失败重试，以及端到端延迟和字错率的观测位置。
 
 #### （2）为什么选择某个 ASR 服务，准确率怎样评估和优化？
 
+<details data-binding-status="pending_semantic_verification">
+<summary>（2）为什么选择某个 ASR 服务，准确率怎样评估和优化？</summary>
+<p>关联知识点待核实。</p>
+</details>
+
 选型应比较普通话与方言效果、实时率、流式能力、热词、并发限制、数据合规、成本和故障策略。以人工校准文本为基准计算 CER/WER，并按噪声、口音、专有名词和多人重叠语音切片分析。优化可从音频质量、VAD、热词词表、领域后处理和置信度兜底入手；切换服务前先在固定数据集做对照实验。
 
 #### （3）视频通话数据如何保护？架构该中心化还是去中心化？
+
+<details data-binding-status="pending_semantic_verification">
+<summary>（3）视频通话数据如何保护？架构该中心化还是去中心化？</summary>
+<p>关联知识点待核实。</p>
+</details>
 
 采集前取得明确授权，传输与存储加密，凭据最小权限，日志脱敏，并设置租户隔离、保留期和可审计删除。是否中心化取决于一致性、治理和可用性：中心编排便于统一策略与追踪，但可能形成瓶颈；去中心化扩展性更强，却增加协调和一致性成本。可以让控制面中心化、媒体与任务执行水平扩展。
 
@@ -18,11 +35,21 @@
 
 #### （4）RAG 的 Chunk 大小和切分策略怎样确定？
 
+<details data-binding-status="pending_semantic_verification">
+<summary>（4）RAG 的 Chunk 大小和切分策略怎样确定？</summary>
+<p>关联知识点待核实。</p>
+</details>
+
 先按标题、段落、代码块等语义边界切分，再根据文档类型和问题粒度设置 Token 上限；重叠只用于保留跨边界语义，过大会制造重复召回。用真实问答集比较 Recall@K、上下文精确率和最终回答质量，并同时观察索引量、延迟与成本。长文还可采用父子块：小块召回，父块补上下文。
 
 延伸阅读：[RAG 文档切分策略](../../../knowledge/llm/rag/rag-chunking.md)。
 
 #### （5）Token 为什么不是固定的字符或单词？
+
+<details data-binding-status="pending_semantic_verification">
+<summary>（5）Token 为什么不是固定的字符或单词？</summary>
+<p>关联知识点待核实。</p>
+</details>
 
 Tokenizer 通常用 BPE、Unigram 等方法从语料学习子词词表，在词表规模、序列长度和未知词泛化之间取舍。高频词可能是一个 Token，低频词会拆成多个子词，因此不同模型对同一文本计数不同。字符粒度序列过长，整词粒度又难覆盖新词，子词是工程折中。
 
@@ -30,11 +57,21 @@ Tokenizer 通常用 BPE、Unigram 等方法从语料学习子词词表，在词�
 
 #### （6）Transformer 中 Q、K、V 和 Attention 如何工作？
 
+<details data-binding-status="pending_semantic_verification">
+<summary>（6）Transformer 中 Q、K、V 和 Attention 如何工作？</summary>
+<p>关联知识点待核实。</p>
+</details>
+
 输入经线性映射得到 Query、Key、Value，注意力计算为 $softmax(QK^T/\sqrt{d_k})V$：Q 表达当前位置要找什么，K 用于匹配，V 提供被聚合的信息。多头注意力在不同子空间建模关系，残差、归一化和前馈网络保证稳定表达。回答还应说明自注意力的时间与显存通常随序列长度平方增长。
 
 延伸阅读：[Transformer 架构原理](../../../knowledge/llm/basics/transformer-arch.md)。
 
 #### （7）为什么会 Lost in the Middle？长上下文是否越大越好？
+
+<details data-binding-status="pending_semantic_verification">
+<summary>（7）为什么会 Lost in the Middle？长上下文是否越大越好？</summary>
+<p>关联知识点待核实。</p>
+</details>
 
 模型可能更偏向序列开头和结尾，长输入中的无关内容还会稀释注意力，使中部证据难被利用。缓解方式包括先检索再排序、去重压缩，把关键证据放在清晰位置，并在回答中强制引用。上下文上限由位置表示、训练长度、推理实现和显存共同决定；产品标称窗口不等于有效利用长度，具体模型数字应以当时官方规格为准。
 
@@ -42,14 +79,56 @@ Tokenizer 通常用 BPE、Unigram 等方法从语料学习子词词表，在词�
 
 #### （8）SFT、PPO、DPO、GRPO 分别解决什么？
 
+<details data-binding-status="pending_semantic_verification">
+<summary>（8）SFT、PPO、DPO、GRPO 分别解决什么？</summary>
+<p>关联知识点待核实。</p>
+</details>
+
 SFT 用高质量示范学习目标输出；PPO 基于奖励优化策略，并用裁剪限制更新幅度；DPO 直接从偏好对学习相对倾向，省去显式奖励模型与在线采样链路；GRPO 用同一问题的一组候选相对奖励估计优势。选择取决于数据、奖励可验证性、训练稳定性和计算预算，不能只背缩写。
 
 延伸阅读：[RLHF、DPO 与偏好对齐](../../../knowledge/llm/basics/llm-rlhf-dpo.md)。
 
 #### （9）多 Agent 为什么需要编排？
 
+<details data-binding-status="pending_semantic_verification">
+<summary>（9）多 Agent 为什么需要编排？</summary>
+<p>关联知识点待核实。</p>
+</details>
+
 当任务需要不同权限、上下文或专业能力时，多 Agent 才有价值。中心协调者可以维护全局目标、依赖、预算和冲突处理；完全去中心化会增加消息风暴、重复劳动和终止判断难度。中心并不意味着所有数据都经过单点，可把执行分散，同时让状态变更与责任归属可追踪。
 
 #### （10）List 转树与之字形层序遍历怎样实现？
 
+<details data-binding-status="pending_semantic_verification">
+<summary>（10）List 转树与之字形层序遍历怎样实现？</summary>
+<p>关联知识点待核实。</p>
+</details>
+
 List 转树可先用 Map 按 ID 建节点，再遍历一次按 parentId 挂到父节点；缺失父节点时按约定报错或作为根，整体 $O(n)$。之字形层序遍历使用 BFS，每层固定读取当前队列长度；偶数层顺序写入，奇数层反向写入，避免把整棵树反复翻转，时间复杂度同样为 $O(n)$。
+
+#### （11）什么是上下文，为什么大模型需要上下文信息？
+
+<details data-binding-status="pending_semantic_verification">
+<summary>（11）什么是上下文，为什么大模型需要上下文信息？</summary>
+<p>关联知识点待核实。</p>
+</details>
+
+上下文是本次推理能够读取的输入，包括当前问题、必要的历史、约束和外部证据；模型依据这些内容生成后续输出。它不等于永久记忆，也不保证全部信息都被正确利用。工程上要明确来源和优先级，保留最小充分证据，并验证模型是否真的使用了关键内容。
+
+#### （12）以 Codex 为例怎样确认上下文窗口，能否人为调整？
+
+<details data-binding-status="pending_semantic_verification">
+<summary>（12）以 Codex 为例怎样确认上下文窗口，能否人为调整？</summary>
+<p>关联知识点待核实。</p>
+</details>
+
+先确认具体模型标识、版本和服务配置，再查对应官方规格，区分模型上限、产品可用输入和预留输出。原帖没有给出具体型号或窗口数值，本文不补一个通用数字。客户端可以减少或裁剪输入，但提高配置上限本身不能让模型可靠支持任意长上下文，还需要模型和推理实现具备相应支持。
+
+#### （13）模型支持更长上下文通常需要怎样训练和验证？
+
+<details data-binding-status="pending_semantic_verification">
+<summary>（13）模型支持更长上下文通常需要怎样训练和验证？</summary>
+<p>关联知识点待核实。</p>
+</details>
+
+应让模型的位置表示、训练序列长度和推理实现适配目标长度，并通过长序列训练或继续训练学习远距离依赖。验收不只看请求能否送入：还要测试不同位置的证据利用、长程关联、答案质量、延迟和显存。原帖未说明具体模型的训练方案，不能据此复原某个产品的内部过程。

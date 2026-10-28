@@ -122,6 +122,7 @@ type VisualCitation = {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [OPPO IT 开发一面：ReAct、MCP 与智能问数](../../../interview/oppo/ai/oppo-ai-3.md)
 - [阿里 Agent 实习一面：图文检索、评估与微调实践](../../../interview/alibaba/ai/alibaba-ai-10.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)
 <!-- interview-source-history:end -->

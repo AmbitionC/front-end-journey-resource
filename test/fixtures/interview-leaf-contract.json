@@ -122,7 +122,7 @@
   {
     "key": "bytedance-base-18",
     "filePath": "bytedance/base",
-    "label": "字节 Agent 开发一面：推理缓存、网络与存储基础（2026 年 8 月）",
+    "label": "字节 Agent 开发一面：推理缓存、网络与存储基础",
     "tags": [
       "Agent",
       "KV Cache",
@@ -166,7 +166,7 @@
   {
     "key": "bytedance-base-15",
     "filePath": "bytedance/base",
-    "label": "字节 Agent 开发一面：Skill、MCP 与后端基础（2026 年 7 月）",
+    "label": "字节一面：Agent 项目、Skill、MCP 与后端基础",
     "tags": [
       "Agent",
       "Skill",
@@ -177,7 +177,7 @@
   {
     "key": "bytedance-base-16",
     "filePath": "bytedance/base",
-    "label": "字节大模型应用开发一面：Agent、RAG 与可靠性（2026 年 8 月）",
+    "label": "字节大模型应用开发一面：Agent、RAG 与可靠性",
     "tags": [
       "Agent",
       "沙箱",
@@ -199,7 +199,7 @@
   {
     "key": "bytedance-base-11",
     "filePath": "bytedance/base",
-    "label": "字节 TikTok Agent 开发秋招一面（2026 年 8 月）",
+    "label": "字节 TikTok Agent 开发秋招一面：会议转写与长上下文",
     "tags": [
       "Agent",
       "RAG",
@@ -210,7 +210,7 @@
   {
     "key": "bytedance-base-12",
     "filePath": "bytedance/base",
-    "label": "字节 AI 应用开发一面（2026 年 8 月）",
+    "label": "字节 AI 应用开发一面：Agent 与 RAG",
     "tags": [
       "Agent",
       "Tool",
@@ -221,7 +221,7 @@
   {
     "key": "bytedance-base-13",
     "filePath": "bytedance/base",
-    "label": "字节 AI 全栈开发一面（2026 年 8 月）",
+    "label": "字节 AI 全栈开发一面：Agent 项目与算法",
     "tags": [
       "Agent",
       "RAG",
@@ -232,7 +232,7 @@
   {
     "key": "bytedance-base-9",
     "filePath": "bytedance/base",
-    "label": "字节后端与 Code Review Agent 秋招一面（2026 年 8 月）",
+    "label": "字节后端与 Code Review Agent 秋招一面",
     "tags": [
       "Agent",
       "Code Agent",
@@ -474,7 +474,7 @@
   {
     "key": "tencent-ai-9",
     "filePath": "tencent/ai",
-    "label": "腾讯 CSIG 后台开发一面：Agent Memory、SkillRouter 与多 Agent Code Review（2026 年 7 月）",
+    "label": "腾讯 CSIG 后台开发一面：Agent Memory、SkillRouter 与多 Agent Code Review",
     "tags": [
       "Agent",
       "Memory",
@@ -485,7 +485,7 @@
   {
     "key": "tencent-ai-8",
     "filePath": "tencent/ai",
-    "label": "腾讯 AI 开发一面：Coding Agent 记忆、评测与可靠运行（2026 年 8 月）",
+    "label": "腾讯 WXG 微信读书一面：Coding Agent 记忆、评测与可靠运行",
     "tags": [
       "Coding Agent",
       "记忆",
@@ -496,7 +496,7 @@
   {
     "key": "tencent-ai-7",
     "filePath": "tencent/ai",
-    "label": "腾讯大模型算法岗一二面：Agentic RL、PPO/GRPO 与 DeepSeek V4（2026 年 8 月）",
+    "label": "腾讯大模型算法岗一二面：Agentic RL、PPO/GRPO 与 DeepSeek V4",
     "tags": [
       "Agentic RL",
       "PPO/GRPO",
@@ -519,7 +519,7 @@
   {
     "key": "tencent-ai-6",
     "filePath": "tencent/ai",
-    "label": "腾讯 TEG 后端一面：RAG 多智能体与分布式 LRU（2026 年 8 月）",
+    "label": "腾讯 TEG 后端一面：RAG 多智能体与分布式 LRU",
     "tags": [
       "Agent",
       "RAG",
@@ -530,7 +530,7 @@
   {
     "key": "tencent-ai-1",
     "filePath": "tencent/ai",
-    "label": "腾讯 Agent 开发一面：RAG、安全与后端工程（2026 年 5 月）",
+    "label": "腾讯一面：RAG、安全与后端工程",
     "tags": [
       "Agent",
       "RAG",
@@ -541,7 +541,7 @@
   {
     "key": "tencent-ai-2",
     "filePath": "tencent/ai",
-    "label": "腾讯 Agent 项目二面：记忆、RAG 与 MCP（2026 年 5 月）",
+    "label": "腾讯 Agent 项目二面：记忆、RAG 与 MCP",
     "tags": [
       "Agent",
       "记忆",
@@ -552,7 +552,7 @@
   {
     "key": "tencent-ai-3",
     "filePath": "tencent/ai",
-    "label": "腾讯后端 AI 开发实习面试（2026 年 4 月）",
+    "label": "腾讯后端 AI 开发实习面试：RAG、Agent 与基础工程",
     "tags": [
       "Agent",
       "RAG",
@@ -676,7 +676,7 @@
   {
     "key": "baidu-ai-1",
     "filePath": "baidu/ai",
-    "label": "百度大模型研发一面：Context、Harness 与 RAG（2026 年 8 月）",
+    "label": "百度大模型研发一面：Context、Harness 与 RAG",
     "tags": [
       "Agent",
       "上下文工程",
@@ -687,7 +687,7 @@
   {
     "key": "baidu-ai-2",
     "filePath": "baidu/ai",
-    "label": "百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测（2026 年 8 月）",
+    "label": "百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测",
     "tags": [
       "Agent",
       "状态恢复",
@@ -698,7 +698,7 @@
   {
     "key": "kuaishou-ai-4",
     "filePath": "kuaishou/ai",
-    "label": "快手商业化效果营销一面：多 Agent 协作、Netty 与限流（2026 年 8 月）",
+    "label": "快手商业化效果营销一面：多 Agent 协作、Netty 与限流",
     "tags": [
       "Agent",
       "多 Agent",
@@ -709,7 +709,7 @@
   {
     "key": "kuaishou-ai-5",
     "filePath": "kuaishou/ai",
-    "label": "快手主站 SRE 一二三面：Agent Skill、性能排障与数据链路（2026 年 4 月）",
+    "label": "快手主站 SRE 一二三面：Agent Skill、性能排障与数据链路",
     "tags": [
       "Agent",
       "SRE",
@@ -720,7 +720,7 @@
   {
     "key": "kuaishou-ai-3",
     "filePath": "kuaishou/ai",
-    "label": "快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理（2026 年 8 月）",
+    "label": "快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理",
     "tags": [
       "Agent",
       "意图澄清",
@@ -731,7 +731,7 @@
   {
     "key": "kuaishou-ai-2",
     "filePath": "kuaishou/ai",
-    "label": "快手 AI 应用开发秋招一面：线程池、OOM 与项目深挖（2026 年 8 月）",
+    "label": "快手 AI 应用开发秋招一面：线程池、OOM 与项目深挖",
     "tags": [
       "Agent",
       "线程池",
@@ -742,7 +742,7 @@
   {
     "key": "kuaishou-ai-1",
     "filePath": "kuaishou/ai",
-    "label": "快手大模型应用 Java 实习一面：Agent、SkillHub 与 Vibe Coding（2026 年 8 月）",
+    "label": "快手大模型应用 Java 实习一面：Agent、SkillHub 与 Vibe Coding",
     "tags": [
       "Agent",
       "Skill",
@@ -753,7 +753,7 @@
   {
     "key": "oppo-ai-3",
     "filePath": "oppo/ai",
-    "label": "OPPO IT 开发一面：ReAct、MCP 与智能问数（2026 年 8 月）",
+    "label": "OPPO IT 开发一面：ReAct、MCP 与智能问数",
     "tags": [
       "Agent",
       "ReAct",
@@ -764,7 +764,7 @@
   {
     "key": "oppo-ai-2",
     "filePath": "oppo/ai",
-    "label": "OPPO AI 全栈一面：Prompt 到 UI、RAG 与前端性能（2026 年 8 月）",
+    "label": "OPPO AI 全栈一面：Prompt 到 UI、RAG 与前端性能",
     "tags": [
       "AI 全栈",
       "RAG",
@@ -775,7 +775,7 @@
   {
     "key": "oppo-ai-1",
     "filePath": "oppo/ai",
-    "label": "OPPO AI 全栈一面：AI Coding、Skill 与数据结构（2026 年 8 月）",
+    "label": "OPPO AI 全栈一面：AI Coding、Skill 与数据结构",
     "tags": [
       "AI Coding",
       "Skill",
@@ -797,7 +797,7 @@
   {
     "key": "antfin-ai-5",
     "filePath": "antfin/ai",
-    "label": "蚂蚁智能体与大模型应用一面：幻觉、Skill 与 RAG（2026 年 5 月）",
+    "label": "蚂蚁智能体与大模型应用一面：幻觉、Skill 与 RAG",
     "tags": [
       "Agent",
       "Skill",
@@ -808,7 +808,7 @@
   {
     "key": "antfin-ai-4",
     "filePath": "antfin/ai",
-    "label": "蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）",
+    "label": "蚂蚁财富技术部一面：协作式 Agent、交付门禁与后端基础",
     "tags": [
       "Agent",
       "多 Agent",
@@ -819,7 +819,7 @@
   {
     "key": "antfin-ai-1",
     "filePath": "antfin/ai",
-    "label": "蚂蚁 Agent 开发一面：多 Agent 并发与质量保障（2026 年 4 月）",
+    "label": "蚂蚁 Agent 开发一面：多 Agent 并发与质量保障",
     "tags": [
       "Agent",
       "多 Agent",
@@ -841,7 +841,7 @@
   {
     "key": "antfin-ai-3",
     "filePath": "antfin/ai",
-    "label": "蚂蚁后端 AI 开发一面：Agent、Redis 与短链系统（2026 年 4 月）",
+    "label": "蚂蚁后端 AI 开发一面：Agent、Redis 与短链系统",
     "tags": [
       "Agent",
       "Redis",
@@ -852,7 +852,7 @@
   {
     "key": "pinduoduo-ai-1",
     "filePath": "pinduoduo/ai",
-    "label": "拼多多 AI Agent 岗两轮技术面：RAG、多 Agent 与系统能力（2026 年 8 月）",
+    "label": "拼多多 AI Agent 岗两轮技术面：RAG、多 Agent 与系统能力",
     "tags": [
       "Agent",
       "RAG",
@@ -863,7 +863,7 @@
   {
     "key": "bilibili-ai-2",
     "filePath": "bilibili/ai",
-    "label": "哔哩哔哩 AI 应用岗一面：端到端 AI Coding 与生产治理（2026 年 8 月）",
+    "label": "哔哩哔哩一面：端到端 AI Coding 与生产治理",
     "tags": [
       "AI Coding",
       "MCP",
@@ -874,7 +874,7 @@
   {
     "key": "bilibili-ai-1",
     "filePath": "bilibili/ai",
-    "label": "哔哩哔哩 AI 应用岗 Agent 开发一面（2026 年 8 月）",
+    "label": "哔哩哔哩 AI 应用岗 Agent 开发一面",
     "tags": [
       "Agent",
       "RAG",
@@ -885,7 +885,7 @@
   {
     "key": "sangfor-ai-1",
     "filePath": "sangfor/ai",
-    "label": "深信服 Agent 开发一面：MCP、多 Agent、安全与网络（2026 年 8 月）",
+    "label": "深信服 Agent 开发一面：MCP、多 Agent、安全与网络",
     "tags": [
       "Agent",
       "MCP",
@@ -896,7 +896,7 @@
   {
     "key": "redbook-ai-3",
     "filePath": "redbook/ai",
-    "label": "小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展（2026 年 8 月）",
+    "label": "小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展",
     "tags": [
       "Agent",
       "评测",
@@ -907,7 +907,7 @@
   {
     "key": "redbook-ai-1",
     "filePath": "redbook/ai",
-    "label": "小红书 Agent 开发一面：多智能体、Memory 与广告投放优化（2026 年 8 月）",
+    "label": "小红书 Agent 开发一面：多智能体、Memory 与广告投放优化",
     "tags": [
       "Agent",
       "多 Agent",
@@ -930,7 +930,7 @@
   {
     "key": "dji-ai-1",
     "filePath": "dji/ai",
-    "label": "大疆创新 AI Agent 开发面经：容错、Token 与后端基础（2026 年 8 月）",
+    "label": "大疆创新 AI Agent 开发面经：容错、Token 与后端基础",
     "tags": [
       "Agent",
       "容错",

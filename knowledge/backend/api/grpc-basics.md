@@ -26,6 +26,15 @@ message Report {
   string status = 2;
   bytes content = 3;
 }
+
+message StreamReportRequest {
+  string report_id = 1;
+}
+
+message ReportChunk {
+  uint64 sequence = 1;
+  bytes content = 2;
+}
 ~~~
 
 package 加版本命名空间，字段使用稳定编号。protoc 配合语言插件生成 stub 和 interface；服务端实现 interface，客户端调用 stub，不需要手写路径和编解码。
@@ -95,6 +104,7 @@ RPC 是调用远端服务的方法与契约抽象，HTTP 是可承载通信的�
 <!-- interview-source-history:start -->
 - [阿里云 Agent 一面：Workflow、通信与配置热更新](../../../interview/alibaba/ai/alibaba-ai-9.md)
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
+- [快手主站 SRE 一二三面：Agent Skill、性能排障与数据链路](../../../interview/kuaishou/ai/kuaishou-ai-5.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

@@ -13,7 +13,7 @@ Chrome DevTools 的 Performance 面板可记录交互，并展示本地 Interact
 
 一次点击到用户看到更新，大致经过：输入排队 → 事件处理 → JavaScript/框架更新 → 样式计算 → layout → paint/composite → 下一帧呈现。任何一段过长都可能推迟可见反馈；因此“JS 时间少”不代表交互快，“网络很快”也不代表滚动流畅。
 
-W3C Long Tasks API 将持续时间超过 50ms 的事件循环任务、其后的 microtask checkpoint，或渲染步骤等记录为 long task。[规范](https://www.w3.org/TR/longtasks-1/)说明它们会垄断 UI 线程并阻塞输入等关键任务。50ms 是定位信号，不是性能目标：许多小任务、频繁布局或等待关键网络资源同样能造成体验问题。
+支持 Long Tasks API 的浏览器可报告占用 UI 线程至少 50ms 的长任务；它们可能阻塞输入等关键工作。W3C 的 [Long Tasks 草案](https://www.w3.org/TR/longtasks-1/)已于 2026-10-20 转为 Discontinued Draft，引用时应标明这一状态，不能当作仍在推进的推荐标准；API 的实际可用性需核对[当前实现与兼容说明](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceLongTaskTiming)。50ms 是定位信号，不是性能目标：许多小任务、频繁布局或等待关键网络资源同样能造成体验问题。
 
 诊断时把 trace 读成四条证据链：
 
@@ -32,13 +32,16 @@ W3C Long Tasks API 将持续时间超过 50ms 的事件循环任务、其后的 
 
 ```ts
 // 将长任务关联到版本、路由和交互上下文；避免上报 URL 参数或用户内容。
-new PerformanceObserver((list) => {
-  for (const entry of list.getEntries()) {
-    if (entry.duration >= 50) {
-      report({ type: 'long-task', start: entry.startTime, duration: entry.duration });
+if (typeof PerformanceObserver !== 'undefined' &&
+    PerformanceObserver.supportedEntryTypes?.includes('longtask')) {
+  new PerformanceObserver((list) => {
+    for (const entry of list.getEntries()) {
+      if (entry.duration >= 50) {
+        report({ type: 'long-task', start: entry.startTime, duration: entry.duration });
+      }
     }
-  }
-}).observe({ type: 'longtask', buffered: true });
+  }).observe({ type: 'longtask', buffered: true });
+}
 ```
 
 Long Task 的 attribution 不是完整的函数级火焰图，跨源内容也可能只能显示受限归因；应以 Performance trace 和 source map/CPU profile 继续定位，而不是把一个 long-task 条目当作最终根因。
@@ -122,12 +125,13 @@ function observeFCP(onMetric) {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [OPPO AI 全栈一面：Prompt 到 UI、RAG 与前端性能（2026 年 8 月）](../../../interview/oppo/ai/oppo-ai-2.md)
+- [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
+- [字节全栈：多智能体导购、客户端与系统评测](../../../interview/bytedance/base/bytedance-base-43.md)
+- [OPPO AI 全栈一面：Prompt 到 UI、RAG 与前端性能](../../../interview/oppo/ai/oppo-ai-2.md)
+- [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)
 - [字节剪映 AI 前端一面：Agent 运行时、MCP 与性能](../../../interview/bytedance/base/bytedance-base-30.md)
 - [字节前端全栈实习一面：渲染、Worker 与认证](../../../interview/bytedance/base/bytedance-base-38.md)
-- [字节全栈：多智能体导购、客户端与系统评测](../../../interview/bytedance/base/bytedance-base-43.md)
 - [字节全栈：预请求、列表复用与 ThreadLocal](../../../interview/bytedance/base/bytedance-base-44.md)
-- [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

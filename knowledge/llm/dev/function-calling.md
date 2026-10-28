@@ -131,12 +131,16 @@ for (let round = 0; round < 4; round += 1) {
 
 ```ts
 async function cancelOrder(orderId: string, session: Session) {
-  const order = await db.order.findUnique({ where: { id: orderId } });
-  if (!order || order.userId !== session.userId) throw new Error("FORBIDDEN");
-  if (order.status !== "PENDING") throw new Error("INVALID_STATE");
-  return db.order.update({ where: { id: orderId }, data: { status: "CANCELLED" } });
+  const result = await db.order.updateMany({
+    where: { id: orderId, userId: session.userId, status: "PENDING" },
+    data: { status: "CANCELLED" },
+  });
+  if (result.count !== 1) throw new Error("NOT_ALLOWED_OR_STATE_CHANGED");
+  return { orderId, status: "CANCELLED" };
 }
 ```
+
+上例采用 [Prisma 的条件更新与计数返回](https://www.prisma.io/docs/orm/v7/prisma-client/queries/transactions#optimistic-concurrency-control)，把归属和允许状态放进同一更新条件，避免“先查可取消、再按 ID 无条件写入”覆盖并发状态变化。它只演示本地订单状态转换；真实取消若涉及退款或其他系统，仍需独立的幂等与恢复合同。
 
 ## 五、副作用必须单独治理
 
@@ -209,8 +213,8 @@ async function cancelOrder(orderId: string, session: Session) {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [阿里云 Agent 开发秋招一面](../../../interview/alibaba/ai/alibaba-ai-1.md)
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)
-- [哔哩哔哩 AI 应用岗 Agent 开发一面（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-1.md)
 - [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)
 <!-- interview-source-history:end -->
 

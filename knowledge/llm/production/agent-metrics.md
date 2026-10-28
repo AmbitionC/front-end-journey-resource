@@ -96,7 +96,7 @@ cost_per_qualified_success = total_eligible_cost / qualified_success_count
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测（2026 年 8 月）](../../../interview/baidu/ai/baidu-ai-2.md)（cluster-9acb30c57710）
+
 <!-- interview-source-history:end -->
 
 ## 参考资料

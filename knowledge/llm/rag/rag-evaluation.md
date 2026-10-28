@@ -187,14 +187,11 @@ RAG 评估是一套诊断系统，而不是排行榜。先用检索指标判断�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [拼多多 AI Agent 岗两轮技术面：RAG、多 Agent 与系统能力（2026 年 8 月）](../../../interview/pinduoduo/ai/pinduoduo-ai-1.md)
 - [字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)
 - [字节全栈一面：RAG、Java 与线程池](../../../interview/bytedance/base/bytedance-base-37.md)
 - [阿里 Agent 实习一面：图文检索、评估与微调实践](../../../interview/alibaba/ai/alibaba-ai-10.md)
 - [字节 Agent 暑期实习一面：摘要、工具预算与链表](../../../interview/bytedance/base/bytedance-base-27.md)
-- [腾讯 Agent 项目二面：记忆、RAG 与 MCP（2026 年 5 月）](../../../interview/tencent/ai/tencent-ai-2.md)
 - [字节 Agent 后端实习一面：LangGraph、评测集与混合检索](../../../interview/bytedance/base/bytedance-base-22.md)
-- [腾讯 Agent 开发一面：RAG、安全与后端工程（2026 年 5 月）](../../../interview/tencent/ai/tencent-ai-1.md)
 - [字节抖音电商 Agent 一面：分层、上下文与 GRPO](../../../interview/bytedance/base/bytedance-base-21.md)
 - [阿里云 AI 应用一面：并发审查、RAG 评估与海量商品](../../../interview/alibaba/ai/alibaba-ai-16.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)

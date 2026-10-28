@@ -271,7 +271,6 @@ class ToolArguments {
 <!-- interview-source-history:start -->
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
 - [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)
-- [字节 AI 全栈开发一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-13.md)
 - [百度后端一面：ReAct、规划与流式工具参数](../../../interview/baidu/ai/baidu-ai-4.md)
 - [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)

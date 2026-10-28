@@ -83,7 +83,7 @@ GC 前确认：回滚窗口结束、无 alias、无活跃查询/任务、构建�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [深信服 Agent 开发一面：MCP、多 Agent、安全与网络（2026 年 8 月）](../../../interview/sangfor/ai/sangfor-ai-1.md)（cluster-bb3431ce1c81）
+
 <!-- interview-source-history:end -->
 
 ## 参考资料

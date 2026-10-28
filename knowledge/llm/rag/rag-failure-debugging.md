@@ -46,6 +46,8 @@ gold evidence 是否在候选中但被重排到截断线以下？保存 reranker
 
 反事实：使用 gold query、去除非授权之外的可选 filter、分别跑 BM25/向量。注意：绝不为了诊断绕过 ACL；在隔离评测环境用合成权限复现。
 
+若要比较 Embedding，先固定已核对的解析、Chunk、权限与索引版本，用同一查询—证据标注集比较语言、领域、精确实体及长文本切片的召回和排序，再看延迟、费用与部署条件。[MTEB 原始研究](https://arxiv.org/abs/2210.07316)在其任务集合中没有发现通吃所有任务的方法，榜单总分不能替代业务验收。更换模型还要重建兼容的文档向量，核对维度、预处理与距离函数；具体机制见[Embedding 基础](./embedding-basics.md)。
+
 ## Stage 5：Index
 
 确认目标 source/chunk 是否存在、embedding/关键词字段正确、indexVersion 与 alias 是否匹配、更新/删除是否传播、缓存是否返回旧版本。查 chunk ID、sourceVersion、parser/chunk/model 版本和 freshness watermark。
@@ -103,13 +105,16 @@ RAG 调试是一条逆向证据链：先冻结可回放 trace，从 generation �
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节大模型应用开发一面：Agent、RAG 与可靠性（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-16.md)（cluster-605f9ab081a6）
-- [字节 AI 应用开发一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-12.md)（cluster-9e24453f3753）
-- [哔哩哔哩 AI 应用岗 Agent 开发一面（2026 年 8 月）](../../../interview/bilibili/ai/bilibili-ai-1.md)（cluster-c5c44d791f6e）
+- [哔哩哔哩 AI 应用岗 Agent 开发一面](../../../interview/bilibili/ai/bilibili-ai-1.md)
 <!-- interview-source-history:end -->
+
+## 相关机制阅读（不计专题频次）
+
+- [OPPO AI 全栈一面：Prompt 到 UI、RAG 与前端性能](../../../interview/oppo/ai/oppo-ai-2.md)（原题问证据不足时怎样拒答；本篇帮助定位证据缺失在哪一层，拒答门禁以[引用溯源与证据对齐](./rag-citation-grounding.md)为直接复习入口。）
 
 ## 参考资料
 
 - [OpenTelemetry — Signals](https://opentelemetry.io/docs/concepts/signals/)
 - [OpenTelemetry — Context propagation](https://opentelemetry.io/docs/concepts/context-propagation/)
 - [Es et al. — RAGAS](https://arxiv.org/abs/2309.15217)
+- [Muennighoff et al. — MTEB](https://arxiv.org/abs/2210.07316)

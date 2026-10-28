@@ -119,7 +119,7 @@ function mergeClosedIntervals(intervals) {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [蚂蚁 AI 开发一面：协作式 Agent、交付门禁与后端基础（2026 年 8 月）](../../../interview/antfin/ai/antfin-ai-4.md)
+- [蚂蚁财富技术部一面：协作式 Agent、交付门禁与后端基础](../../../interview/antfin/ai/antfin-ai-4.md)
 - [字节 Agent 全栈一面：工具、评测与编码](../../../interview/bytedance/base/bytedance-base-40.md)
 <!-- interview-source-history:end -->
 

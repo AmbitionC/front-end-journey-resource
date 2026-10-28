@@ -66,12 +66,12 @@
 
 即使平台宣称严格结构化输出，应用也应再次验证。原因包括：SDK/网关转换、模型不支持、响应截断、降级路径和未来版本变化。
 
-TypeScript 可使用 Ajv、Zod 等工具：
+TypeScript 可使用 Ajv、Zod 等工具。下例使用 Ajv v8 的 `Ajv2020`，与上文声明的 draft 2020-12 对齐；默认 `Ajv` 类使用 draft-07，不能直接编译这份 schema。不同草案应使用匹配的实例（[Ajv 官方：JSON Schema 版本](https://ajv.js.org/json-schema.html#draft-2020-12)）：
 
 ```typescript
-import Ajv from 'ajv'
+import Ajv2020 from 'ajv/dist/2020.js'
 
-const ajv = new Ajv({ allErrors: true })
+const ajv = new Ajv2020({ allErrors: true })
 const validate = ajv.compile(ticketSchema)
 
 const parsed = JSON.parse(responseText)
@@ -158,7 +158,7 @@ if (!validate(parsed)) {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-3.md)
+- [小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展](../../../interview/redbook/ai/redbook-ai-3.md)
 - [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)
 - [字节财经保险 AI 全栈实习一面：项目设计、AI Coding 与 Diff](../../../interview/bytedance/base/bytedance-base-34.md)
 - [字节 Agent 开发一面：评分、Harness 与任务可靠性](../../../interview/bytedance/base/bytedance-base-57.md)
@@ -166,6 +166,7 @@ if (!validate(parsed)) {
 
 ## 参考资料
 
+- [Ajv：JSON Schema 版本与 draft 2020-12](https://ajv.js.org/json-schema.html#draft-2020-12)
 - [OpenAI API：Structured model outputs](https://developers.openai.com/api/docs/guides/structured-outputs)
 - [Anthropic：Features overview—Structured outputs](https://docs.anthropic.com/claude/reference/getting-started-with-the-api)
 - [Anthropic：OpenAI SDK compatibility](https://docs.anthropic.com/en/api/openai-sdk)

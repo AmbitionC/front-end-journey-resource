@@ -58,6 +58,12 @@ ACK 只说明 broker 或 Agent 接收了消息。AWS 的[异步通信指导](htt
 
 多 Agent 不应通过互相转发完整聊天历史同步状态。共享权威账本保存任务状态，消息只携带变化和引用。若采用事件溯源，current view 是事件折叠结果；修正通过新事件而不是改写旧事件。
 
+## 同一图内的子图怎样传递状态
+
+跨进程的消息信封与同一运行时的子图状态传递是两个层次。以当前 [LangGraph 子图文档](https://docs.langchain.com/oss/python/langgraph/use-subgraphs)为例，父子图共享状态键时，可把编译后的子图作为节点，让它读写声明的状态通道；状态 Schema 不同时，用包装节点显式把父状态映射为子图输入，再把子图输出映射回父状态。不能仅因有三个子图，就推断需要三套消息队列或复制完整聊天历史。
+
+并行更新同一状态键时，要定义符合业务语义的 reducer 或先隔离结果再统一合并；简单拼接只适合确实允许追加的字段，不能解决同一事实互相矛盾。若 B 依赖 A 的输出，编排层应在 A 的结果通过结构、版本与业务校验后才解锁 B。只有跨进程、持久队列或外部 Agent 通信时，再增加前文的序列化、认证、去重与交付协议；图内状态更新本身不自动提供外部副作用幂等。
+
 ## 兼容性与安全
 
 schema 演进遵循向后兼容：新增可选字段，旧消费者忽略未知字段；破坏性变更使用新 type 或 major version。消费者根据 schemaVersion 解析，不能让模型猜字段含义。
@@ -78,16 +84,16 @@ schema 演进遵循向后兼容：新增可选字段，旧消费者忽略未知�
 
 <!-- interview-source-history:start -->
 - [字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)
-- [小红书部分（小红书与百度合并记录）：LangGraph、Skill 与工程校验](../../../interview/redbook/ai/redbook-ai-2.md)
-- [字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-20.md)
-- [快手商业化效果营销一面：多 Agent 协作、Netty 与限流（2026 年 8 月）](../../../interview/kuaishou/ai/kuaishou-ai-4.md)
-- [腾讯 CSIG 后台开发一面：Agent Memory、SkillRouter 与多 Agent Code Review（2026 年 7 月）](../../../interview/tencent/ai/tencent-ai-9.md)
-- [百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测（2026 年 8 月）](../../../interview/baidu/ai/baidu-ai-2.md)
 - [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
+- [小红书与百度 Agent 面试合并记录：LangGraph 子图、Skill 与工程校验](../../../interview/redbook/ai/redbook-ai-2.md)
+- [字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-20.md)
+- [快手商业化效果营销一面：多 Agent 协作、Netty 与限流](../../../interview/kuaishou/ai/kuaishou-ai-4.md)
+- [百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测](../../../interview/baidu/ai/baidu-ai-2.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
 
+- [LangGraph — Use subgraphs](https://docs.langchain.com/oss/python/langgraph/use-subgraphs)
 - [CloudEvents — Specification](https://github.com/cloudevents/spec/blob/ce@stable/cloudevents/spec.md)
 - [CloudEvents — Primer](https://github.com/cloudevents/spec/blob/ce@stable/cloudevents/primer.md)
 - [JSON-RPC 2.0 Specification](https://www.jsonrpc.org/specification)

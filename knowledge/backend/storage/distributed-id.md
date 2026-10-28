@@ -80,7 +80,7 @@ WHERE biz_tag = :tag;
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 Agent 开发一面：推理缓存、网络与存储基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-18.md)（cluster-265dac6c3b53）
+
 <!-- interview-source-history:end -->
 
 ## 参考资料

@@ -1,8 +1,12 @@
-### 小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展（2026 年 8 月）
+### 小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展
 
-这是一轮 Agent 开发二面，重点不再是复述编排概念，而是追问分析结论怎样被验证、结构化产物如何约束，以及多 Agent 在安全和混合部署下怎样保持可控。以下仅保留相邻一面记录未展开的二面角度。
+这是一轮小红书 Agent 开发二面，原记录没有明确面试日期。本页选录以下六个技术角度：分析结论正确性、结构化格式、Prompt Injection、工具调用风险、多 Agent 拆分风险，以及本地与云端设备扩展。
 
-#### （1）分析类 Agent 返回结论，怎样证明它可靠？
+未展开实习项目的部门背景、整体架构和输入到输出流程、OpenManus 与 LangGraph 的框架取舍、并发资源争抢、上下文与状态隔离、Workflow 与自治 Agent 的差异、为何不拆成多 Agent、未来 AI 与编程趋势，以及到岗等个人事项。短答中的 Schema、授权、校验和部署设计均为教学补充，不代表作者的现场答案或项目实现。
+
+<details data-knowledge-key="agent-evaluation">
+<summary>（1）分析类 Agent 返回结论，怎样证明它可靠？</summary>
+</details>
 
 先把“正确”拆开：事实是否有来源支持，计算是否可复现，推断是否遵守业务规则，建议是否符合当前权限和风险阈值。Agent 输出不应只有一段结论，还要带证据引用、数据时间范围、使用的方法、假设、缺失信息和置信/不确定性。确定性计算、规则校验和数据查询应由工具执行，模型负责解释和组织，不能让模型凭文本替代计算。
 
@@ -10,15 +14,21 @@
 
 延伸阅读：[Agent 评测](../../../knowledge/llm/agent/agent-evaluation.md)、[Agent Benchmark 的设计与解读](../../../knowledge/llm/production/agent-benchmark.md)。
 
-#### （2）结构化结论的 Schema 应如何设计和验证？
+<details data-knowledge-key="prompt-structured-output">
+<summary>（2）结构化结论用了什么格式？</summary>
+</details>
 
-Schema 应服务下游动作，而非为了格式好看。为结论定义版本、必填字段、枚举、数值范围、引用 ID、证据时间和不确定状态；将面向用户的解释与机器可执行字段分开。模型输出先通过严格解析与 Schema 校验，再校验引用是否属于本次允许证据、数字是否与工具结果一致、建议是否落在策略范围内。
+原记录没有披露作者采用的格式。作为教学方案，Schema 应服务下游动作，而非为了格式好看。为结论定义版本、必填字段、枚举、数值范围、引用 ID、证据时间和不确定状态；将面向用户的解释与机器可执行字段分开。模型输出先通过严格解析与 Schema 校验，再校验引用是否属于本次允许证据、数字是否与工具结果一致、建议是否落在策略范围内。
+
+知识导航：[结构化输出与 JSON Schema](../../../knowledge/llm/prompt/prompt-structured-output.md)。
 
 解析失败、缺字段或校验不通过时，应返回可修复错误并限次重试，或降级为“无法形成合格结论”；不能把近似 JSON 用宽松解析悄悄放进下游。Schema 演进采用版本化和契约测试，保证旧消费者有明确迁移路径。
 
 延伸阅读：[工具结果校验](../../../knowledge/llm/agent/agent-tool-result-validation.md)。
 
-#### （3）如何防御通过 Prompt Injection 窃取指令或改变 Agent 行为？
+<details data-knowledge-key="prompt-injection-defense">
+<summary>（3）如何防御通过 Prompt Injection 窃取指令或改变 Agent 行为？</summary>
+</details>
 
 把用户输入、网页、文档、工具输出和其他 Agent 消息一律视为不可信数据，并在结构上与可信系统策略分隔。即使模型被诱导改变文本，也不能绕过服务端的身份、对象授权、参数校验、出站限制和审计；系统提示本身不应存放可造成实质损害的密钥或权限规则。
 
@@ -26,7 +36,9 @@ Schema 应服务下游动作，而非为了格式好看。为结论定义版本�
 
 延伸阅读：[Prompt Injection 与间接注入防御](../../../knowledge/llm/production/prompt-injection-defense.md)、[Agent 威胁建模与安全测试](../../../knowledge/llm/production/agent-security-threat-model.md)。
 
-#### （4）若不限制工具调用，会有什么风险？怎样建立授权模型？
+<details data-knowledge-key="agent-permission-model">
+<summary>（4）Agent 工具调用不作限制有哪些风险，怎样避免？</summary>
+</details>
 
 模型可能选错工具、伪造参数、重复执行、访问超出用户范围的数据，或在被注入后执行高影响操作；无限重试还会造成成本、配额和下游资源耗尽。工具注册表应把每个能力标记为只读/有副作用、可否幂等、数据敏感级别和所需确认级别，并由服务端根据主体、资源、环境和当前任务状态做授权。
 
@@ -34,7 +46,9 @@ Schema 应服务下游动作，而非为了格式好看。为结论定义版本�
 
 延伸阅读：[最小权限、授权与工具调用确认](../../../knowledge/llm/production/agent-permission-model.md)、[Agent 工具契约、Schema 与错误语义](../../../knowledge/llm/agent/agent-tool-design.md)。
 
-#### （5）多 Agent 拆分在安全与正确性上会新增哪些风险？
+<details data-knowledge-key="multi-agent">
+<summary>（5）多 Agent 拆分在安全与正确性上会新增哪些风险？</summary>
+</details>
 
 拆分会扩大消息边界与攻击面：一个子 Agent 的错误摘要可能污染其他人的判断，权限若沿父链无差别继承会越权，多个角色也可能重复调用工具、相互肯定错误结论或在冲突状态上做出不一致写入。更多上下文复制还会增加敏感数据暴露和成本。
 
@@ -42,7 +56,9 @@ Schema 应服务下游动作，而非为了格式好看。为结论定义版本�
 
 延伸阅读：[多 Agent 消息与状态同步](../../../knowledge/llm/agent/agent-multi-agent-messaging.md)、[多智能体系统](../../../knowledge/llm/agent/multi-agent.md)。
 
-#### （6）本地 Agent 和云端 Agent 同时扩展到大量设备，架构重点是什么？
+<details data-knowledge-key="agent-deployment">
+<summary>（6）本地 Agent 和云端 Agent 同时扩展到大量设备，架构重点是什么？</summary>
+</details>
 
 控制面统一管理身份、设备/Agent 注册、版本、策略、模型与工具目录、配额和审计；数据面按任务调度到本地或云端。含本地文件、低延迟交互或不宜外传的数据优先留在设备侧，云端承担弹性计算、协作和集中评测，但每次跨边界传输都要有用户/租户授权、最小数据集和加密传输。
 

@@ -1,8 +1,15 @@
-### 腾讯 Agent 项目二面：记忆、RAG 与 MCP（2026 年 5 月）
+### 腾讯 Agent 项目二面：记忆、RAG 与 MCP
 
-这是一份 B 级项目深挖记录，没有手撕题。问题集中在 Agent 记忆、RAG 评测、MCP/Skill 和 Redis 工程细节。
+原帖发布于 2026 年 5 月，未披露具体面试日期。本文按主题选录可见技术问题，省略未展开的后端项目介绍和项目展示；其具体实现与展示结果未知。答案是教学整理，不代表候选人现场回答或项目真实测试结果。
+
+这是一份候选人自述的项目深挖记录，原帖注明没有手撕和 AI Coding。问题集中在 Agent 记忆、RAG 评测、MCP/Skill 和 Redis 工程细节。
 
 #### （1）Agent 记忆模块怎样设计？
+
+<details data-binding-status="pending_semantic_verification">
+<summary>（1）Agent 记忆模块怎样设计？</summary>
+<p>关联知识点待核实。</p>
+</details>
 
 先区分工作记忆、会话记忆和跨会话长期记忆。写入链路负责从事件中提取候选事实，经过权限、置信度、去重和冲突检查后持久化；读取链路根据用户、会话、时间和语义相关性召回，并把有限内容注入上下文。原始事件保留审计，摘要不是唯一真相源。
 
@@ -10,9 +17,19 @@
 
 #### （2）怎样证明自己的记忆方案更好？
 
+<details data-binding-status="pending_semantic_verification">
+<summary>（2）怎样证明自己的记忆方案更好？</summary>
+<p>关联知识点待核实。</p>
+</details>
+
 建立对照基线，例如只保留最近 N 轮、全量历史或框架默认记忆；用跨会话事实召回、冲突更新、用户隔离、长对话成本和回答正确率等任务比较。还要测试删除请求、错误记忆传播和不同租户串数据，不能只展示一个顺利 demo。
 
 #### （3）记忆摘要包含什么？
+
+<details data-binding-status="pending_semantic_verification">
+<summary>（3）记忆摘要包含什么？</summary>
+<p>关联知识点待核实。</p>
+</details>
 
 摘要可包含用户目标、已确认事实、约束、未完成事项、关键决策和证据引用；不应把模型猜测写成事实。每条摘要带来源事件、时间、用户/租户作用域和版本，后续事实冲突时可重算或失效。
 
@@ -20,9 +37,19 @@
 
 #### （4）记忆放 Redis 用什么结构？
 
+<details data-binding-status="pending_semantic_verification">
+<summary>（4）记忆放 Redis 用什么结构？</summary>
+<p>关联知识点待核实。</p>
+</details>
+
 短期状态可用 Hash 保存会话字段、ZSet 按时间或分数索引事件，正文较大时只存对象存储/数据库引用。长期语义记忆通常还需向量或全文索引。数据结构选择要同时说明 TTL、容量、原子更新、持久化和真相源；Redis 不应因为访问快就承担所有永久数据。
 
 #### （5）RAG 效果怎样评测和提升？
+
+<details data-binding-status="pending_semantic_verification">
+<summary>（5）RAG 效果怎样评测和提升？</summary>
+<p>关联知识点待核实。</p>
+</details>
 
 按“解析—召回—重排—生成”拆分定位。先用带相关证据的 Golden Set 测 Recall@K 和上下文精确率，再看答案忠实度与正确性。提升手段包括修复解析、调整 chunk、混合检索、元数据过滤、查询改写和 rerank；每次只改变少数变量并回归。
 
@@ -30,9 +57,19 @@
 
 #### （6）MCP 服务怎样设计？
 
+<details data-binding-status="pending_semantic_verification">
+<summary>（6）MCP 服务怎样设计？</summary>
+<p>关联知识点待核实。</p>
+</details>
+
 把资源、工具和提示能力按最小职责暴露，输入输出使用明确 Schema；服务端独立鉴权、校验、限流和审计。优先复用经过验证的 MCP 服务，但第三方服务属于供应链依赖，需要审查权限和数据去向。
 
 #### （7）Skill 里的脚本怎样封装？
+
+<details data-binding-status="pending_semantic_verification">
+<summary>（7）Skill 里的脚本怎样封装？</summary>
+<p>关联知识点待核实。</p>
+</details>
 
 Skill 负责说明何时使用、输入输出、步骤和安全边界；脚本承载可重复、确定的机械操作。脚本应支持参数校验、非交互运行、明确退出码、幂等和测试，不能把密钥写进 Skill，也不能让外部采集文本覆盖其规则。
 
@@ -40,4 +77,27 @@ Skill 负责说明何时使用、输入输出、步骤和安全边界；脚本�
 
 #### （8）Lua 执行时 Redis 宕机怎么办？
 
+<details data-binding-status="pending_semantic_verification">
+<summary>（8）Lua 执行时 Redis 宕机怎么办？</summary>
+<p>关联知识点待核实。</p>
+</details>
+
 Lua 只能保证脚本在一个 Redis 实例上的执行不被其他命令插入，不能保证实例宕机后结果一定持久化或已复制。客户端遇到断连时可能不知道操作是否成功，因此业务必须使用幂等键、可查询的结果状态和重试策略；关键数据仍由具备合适一致性保证的真相源承载。
+
+#### （9）QPS 怎样测量，结果怎样才有可比性？
+
+<details data-binding-status="pending_semantic_verification">
+<summary>（9）QPS 怎样测量，结果怎样才有可比性？</summary>
+<p>关联知识点待核实。</p>
+</details>
+
+固定请求分布、数据与索引规模、硬件、依赖版本和缓存状态，设置预热、并发、到达速率与测试时长，同时记录吞吐、成功率和 P95/P99 延迟。区分客户端发起数与服务端成功完成数，逐步增加压力确认瓶颈；原帖未给出具体脚本或结果，不能补造项目 QPS。
+
+#### （10）Redis 为什么通常能提供较低延迟，边界是什么？
+
+<details data-binding-status="pending_semantic_verification">
+<summary>（10）Redis 为什么通常能提供较低延迟，边界是什么？</summary>
+<p>关联知识点待核实。</p>
+</details>
+
+常见原因包括主要操作以内存访问为主、针对用途优化的数据结构，以及核心命令路径避免大量锁竞争；实际表现仍受命令复杂度、网络、持久化、过期与淘汰、大 Key 和热点影响。不能概括成“只有单线程所以一定快”，也不能据此推断任意负载下的性能。

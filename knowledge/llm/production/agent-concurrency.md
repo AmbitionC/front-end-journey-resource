@@ -53,7 +53,7 @@ Worker 池按主要瓶颈分开：CPU 任务、模型协调、浏览器和高内
 
 ### 多 Agent 共享写入的并发语义
 
-多个 Agent 并行不等于允许它们任意写同一资源。优先按资源所有权划分：同一文档、数据库聚合或外部账户由一个 writer 串行处理，其他 Agent 产出候选变更。确需并发时，数据库使用事务、唯一约束和乐观版本号；文件写入独立临时文件后原子替换；队列消息使用幂等键和可重放事件。
+多个 Agent 并行不等于允许它们任意写同一资源。优先按资源所有权划分：同一文档、数据库聚合或外部账户由一个 writer 串行处理，其他 Agent 产出候选变更。确需并发时，数据库使用事务、唯一约束和乐观版本号；文件先在目标所在文件系统写独立临时文件，再使用支持原子替换的文件系统操作；跨文件系统移动不能据此保证原子性。[Python `os.replace` 文档](https://docs.python.org/3/library/os.html#os.replace)明确提示跨文件系统可能失败。原子替换只防止读到半份文件，仍需版本检查，避免两个写者先后替换导致更新丢失。队列消息使用幂等键和可重放事件。
 
 共享状态的字段还要定义 reducer/merge 语义。集合可以按稳定 ID 合并，计数器可用原子增量，业务状态机则按合法状态转移更新；不能把“最后写入者获胜”当通用方案。冲突时保留两份证据并交给确定性规则或人工处理，模型不应静默覆盖。
 
@@ -108,10 +108,9 @@ drain(key, s):
 
 <!-- interview-source-history:start -->
 - [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)
-- [小红书 Agent 开发一面：多智能体、Memory 与广告投放优化（2026 年 8 月）](../../../interview/redbook/ai/redbook-ai-1.md)
-- [蚂蚁 Agent 开发一面：多 Agent 并发与质量保障（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-1.md)
-- [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
 - [字节 Agent 实习：生成质量、多智能体与缓存](../../../interview/bytedance/base/bytedance-base-52.md)
+- [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
+- [蚂蚁 Agent 开发一面：多 Agent 并发与质量保障](../../../interview/antfin/ai/antfin-ai-1.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

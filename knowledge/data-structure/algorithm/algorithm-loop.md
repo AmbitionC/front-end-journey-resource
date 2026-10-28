@@ -195,13 +195,15 @@ function simulateDoors(n) {
 
 <!-- interview-source-history:start -->
 - [阿里云 Agent Infra 一面：SGX、吞吐与日志写入](../../../interview/alibaba/ai/alibaba-ai-8.md)
-- [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)
-- [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)
-- [字节抖音电商 Agent 一面：分层、上下文与 GRPO](../../../interview/bytedance/base/bytedance-base-21.md)
-- [字节全栈二、三面：幂等、索引与字符串匹配](../../../interview/bytedance/base/bytedance-base-32.md)
-- [字节财经保险 AI 全栈实习一面：项目设计、AI Coding 与 Diff](../../../interview/bytedance/base/bytedance-base-34.md)
 - [字节全栈一面：RAG、Java 与线程池](../../../interview/bytedance/base/bytedance-base-37.md)
 - [字节全栈：多智能体导购、客户端与系统评测](../../../interview/bytedance/base/bytedance-base-43.md)
+- [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)
+- [快手商业化效果营销一面：多 Agent 协作、Netty 与限流](../../../interview/kuaishou/ai/kuaishou-ai-4.md)
+- [字节全栈二、三面：幂等、索引与字符串匹配](../../../interview/bytedance/base/bytedance-base-32.md)
+- [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)
+- [字节财经保险 AI 全栈实习一面：项目设计、AI Coding 与 Diff](../../../interview/bytedance/base/bytedance-base-34.md)
+- [字节抖音电商 Agent 一面：分层、上下文与 GRPO](../../../interview/bytedance/base/bytedance-base-21.md)
+- [快手主站 SRE 一二三面：Agent Skill、性能排障与数据链路](../../../interview/kuaishou/ai/kuaishou-ai-5.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

@@ -334,7 +334,7 @@ function maximumIndependentSetSize(n, edges) {
 <!-- interview-source-history:start -->
 - [字节 Agent 一面：会话记忆、并发更新与算法](../../../interview/bytedance/base/bytedance-base-29.md)
 - [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
-- [百度大模型研发一面：Context、Harness 与 RAG（2026 年 8 月）](../../../interview/baidu/ai/baidu-ai-1.md)
+- [百度大模型研发一面：Context、Harness 与 RAG](../../../interview/baidu/ai/baidu-ai-1.md)
 - [字节生活服务 AI 全栈二面：AI 作业、接口幂等与树题](../../../interview/bytedance/base/bytedance-base-64.md)
 <!-- interview-source-history:end -->
 

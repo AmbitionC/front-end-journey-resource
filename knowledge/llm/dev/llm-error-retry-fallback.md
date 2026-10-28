@@ -18,6 +18,10 @@
 
 同一个 HTTP 状态不总能决定动作。流式响应可能已经返回 200，随后在事件中报告错误；网关 504 可能表示上游仍在执行。必须同时解析 HTTP、供应商错误类型、流事件和本地取消原因。
 
+## 线上接口超时先定位哪一段
+
+先用 request ID 或 trace ID 确认受影响的请求、版本与时间范围，再沿客户端、网关、应用、模型或工具、数据库逐段比较耗时；区分排队、建连、首 token、持续读取和执行时间。把延迟分位数与请求量、错误率、连接池等待及 CPU/GC 等资源信号对照，才知道是容量饱和、某个依赖变慢，还是超时配置不匹配。跨服务的 Span 与传播上下文用于关联同一次请求，机制见 [OpenTelemetry Traces](https://opentelemetry.io/docs/concepts/signals/traces/)；具体埋点可继续读[日志、指标、Tracing 与告警](../../backend/devops/logging-monitoring.md)。定位后再决定隔离、扩容、修复依赖或调整预算，不能把增加重试当作诊断结论。
+
 ## 超时是一个预算，不是一个数字
 
 为用户操作定义总预算，再分给排队、连接、首 token、持续读取和工具执行：
@@ -121,6 +125,7 @@ OpenAI 官方 Node SDK 的[仓库文档](https://github.com/openai/openai-node)�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [哔哩哔哩一面：端到端 AI Coding 与生产治理](../../../interview/bilibili/ai/bilibili-ai-2.md)
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
 <!-- interview-source-history:end -->
 
@@ -131,3 +136,4 @@ OpenAI 官方 Node SDK 的[仓库文档](https://github.com/openai/openai-node)�
 - [Anthropic — API errors](https://platform.claude.com/docs/en/api/errors)
 - [Anthropic — Rate limits](https://platform.claude.com/docs/en/api/rate-limits)
 - [OpenAI — openai-node](https://github.com/openai/openai-node)
+- [OpenTelemetry — Traces](https://opentelemetry.io/docs/concepts/signals/traces/)

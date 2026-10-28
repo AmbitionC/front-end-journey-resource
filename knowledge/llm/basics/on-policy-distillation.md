@@ -90,7 +90,7 @@ OPD 的关键是“学生生成状态，教师在学生分布上监督”。它�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [腾讯大模型算法岗一二面：Agentic RL、PPO/GRPO 与 DeepSeek V4（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-7.md)（cluster-daad361f34b4）
+
 <!-- interview-source-history:end -->
 
 ## 参考资料

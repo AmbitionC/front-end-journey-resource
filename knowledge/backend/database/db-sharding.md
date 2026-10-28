@@ -433,7 +433,7 @@ class SnowflakeIdGen {
 
 <!-- interview-source-history:start -->
 - [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
-- [百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测（2026 年 8 月）](../../../interview/baidu/ai/baidu-ai-2.md)
+- [百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测](../../../interview/baidu/ai/baidu-ai-2.md)
 - [阿里云 AI 应用一面：并发审查、RAG 评估与海量商品](../../../interview/alibaba/ai/alibaba-ai-16.md)
 <!-- interview-source-history:end -->
 

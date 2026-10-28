@@ -100,9 +100,8 @@ action 不应直接“先发请求、后写状态”，否则进程在中间崩�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [腾讯 AI 应用开发面试：跨会话记忆与多 Agent](../../../interview/tencent/ai/tencent-ai-4.md)（cluster-2fc69bb3d45d）
-- [小红书部分（小红书与百度合并记录）：LangGraph、Skill 与工程校验](../../../interview/redbook/ai/redbook-ai-2.md)（cluster-3fa76fc5d243）
-- [腾讯微信支付后台开发日常实习一面](../../../interview/tencent/ai/tencent-ai-5.md)（cluster-ab43c892c4ed）
+- [腾讯 AI 应用开发面试：跨会话记忆与多 Agent](../../../interview/tencent/ai/tencent-ai-4.md)
+- [腾讯微信支付后台开发日常实习一面](../../../interview/tencent/ai/tencent-ai-5.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

@@ -13,14 +13,14 @@
             "isLeaf": true,
             "filePath": "llm/basics",
             "contentStatus": "published",
-            "heat": 17,
+            "heat": 16,
             "currRank": 5,
             "updatedAt": "2026-08-23",
             "interviewBaseHeat": 11,
             "quickRead": {
               "text": "模型按 token 消费上下文并自回归生成，窗口限制影响可放入的指令、证据与历史。KV Cache 保存既有注意力计算的键值，增长会占显存；它不是长期业务记忆，也不证明模型输出事实正确。PD 分离将输入计算与逐步生成解耦，但 KV 交接、调度与回收有成本，Mooncake 等方案须按真实负载评测。"
             },
-            "interviewCount": 6,
+            "interviewCount": 5,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -45,14 +45,14 @@
             "isLeaf": true,
             "filePath": "llm/basics",
             "contentStatus": "published",
-            "heat": 12,
+            "heat": 11,
             "currRank": 5,
             "updatedAt": "2026-07-14",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "模型可能在缺证据、错误检索或推断时输出不实内容。先定位失败层，再补证据、校验、限制或拒答；提示、RAG 和微调都不能保证无幻觉，效果要在具体任务上验证。"
             },
-            "interviewCount": 6,
+            "interviewCount": 5,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -61,14 +61,14 @@
             "isLeaf": true,
             "filePath": "llm/basics",
             "contentStatus": "published",
-            "heat": 10,
+            "heat": 9,
             "currRank": 5,
             "updatedAt": "2026-07-14",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "用固定任务集比较模型质量、工具行为、时延与成本，再按业务约束选型。先建立可接受基线和失败分类，不能凭排行榜、单次体感或参数量决定所有场景。"
             },
-            "interviewCount": 4,
+            "interviewCount": 3,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -77,31 +77,15 @@
             "isLeaf": true,
             "filePath": "llm/basics",
             "contentStatus": "published",
-            "heat": 10,
+            "heat": 8,
             "currRank": 5,
             "updatedAt": "2026-07-14",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Transformer 用 Attention 混合位置间信息，用逐位置前馈网络变换表示，再通过残差与归一化堆叠层。注意力可见范围由架构和掩码决定；训练可并行处理已知序列，自回归生成仍依赖前一个 Token。KV Cache 减少重复计算，却不消除依赖或长上下文成本。"
             },
-            "interviewCount": 4,
+            "interviewCount": 2,
             "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "长上下文、注意力稀释与有效利用",
-            "key": "llm-long-context",
-            "isLeaf": true,
-            "filePath": "llm/basics",
-            "contentStatus": "published",
-            "heat": 10,
-            "currRank": 5,
-            "updatedAt": "2026-07-15",
-            "interviewBaseHeat": 6,
-            "interviewCount": 4,
-            "interviewCountBasis": "verified-public-posts",
-            "quickRead": {
-              "text": "长窗口能容纳更多 token，不保证模型可靠利用全部内容。先区分声明窗口、资源可运行长度与任务上的有效上下文，再固定版本和负载检查首 Token、总延迟与质量；按目标筛选证据、保留来源并验证压缩后的正确性。"
-            }
           },
           {
             "label": "RLHF、RLAIF 与 DPO 的差异",
@@ -109,28 +93,15 @@
             "isLeaf": true,
             "filePath": "llm/basics",
             "contentStatus": "published",
-            "heat": 9,
+            "heat": 8,
             "currRank": 5,
             "updatedAt": "2026-10-19",
             "interviewBaseHeat": 6,
-            "interviewCount": 3,
+            "interviewCount": 2,
             "interviewCountBasis": "verified-public-posts",
             "quickRead": {
               "text": "预训练模型会延续语料中的模式，却不会自动知道哪种回答更有帮助、更真实或更安全。偏好学习把“多个答案中哪个更好”转成训练信号。"
             }
-          },
-          {
-            "label": "Tokenizer、词表与子词切分",
-            "key": "llm-tokenizer",
-            "isLeaf": true,
-            "filePath": "llm/basics",
-            "contentStatus": "published",
-            "heat": 8,
-            "currRank": 5,
-            "updatedAt": "2026-07-14",
-            "interviewBaseHeat": 6,
-            "interviewCount": 2,
-            "interviewCountBasis": "verified-public-posts"
           },
           {
             "label": "开源模型选型、推理与本地部署",
@@ -149,6 +120,22 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
+            "label": "长上下文、注意力稀释与有效利用",
+            "key": "llm-long-context",
+            "isLeaf": true,
+            "filePath": "llm/basics",
+            "contentStatus": "published",
+            "heat": 7,
+            "currRank": 4,
+            "updatedAt": "2026-07-15",
+            "interviewBaseHeat": 6,
+            "interviewCount": 1,
+            "interviewCountBasis": "verified-public-posts",
+            "quickRead": {
+              "text": "长窗口能容纳更多 token，不保证模型可靠利用全部内容。先区分声明窗口、资源可运行长度与任务上的有效上下文，再固定版本和负载检查首 Token、总延迟与质量；按目标筛选证据、保留来源并验证压缩后的正确性。"
+            }
+          },
+          {
             "label": "模型对齐：SFT、偏好数据与安全",
             "key": "llm-alignment",
             "isLeaf": true,
@@ -159,6 +146,22 @@
             "updatedAt": "2026-07-14",
             "interviewBaseHeat": 6,
             "interviewCount": 1,
+            "interviewCountBasis": "verified-public-posts",
+            "quickRead": {
+              "text": "对齐通过示范 SFT、偏好优化、原则与红队塑造帮助性、真实性和安全边界；数据与评分目标可能产生偏差。运行时权限、工具约束和独立评估仍不可省略，对齐改善不保证模型永远正确，也不替代参数高效微调方法的专门选型。"
+            }
+          },
+          {
+            "label": "Tokenizer、词表与子词切分",
+            "key": "llm-tokenizer",
+            "isLeaf": true,
+            "filePath": "llm/basics",
+            "contentStatus": "published",
+            "heat": 6,
+            "currRank": 4,
+            "updatedAt": "2026-07-14",
+            "interviewBaseHeat": 6,
+            "interviewCount": 0,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -167,11 +170,11 @@
             "isLeaf": true,
             "filePath": "llm/basics",
             "contentStatus": "published",
-            "heat": 7,
+            "heat": 6,
             "currRank": 4,
             "updatedAt": "2026-07-14",
             "interviewBaseHeat": 6,
-            "interviewCount": 1,
+            "interviewCount": 0,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -243,11 +246,11 @@
             "isLeaf": true,
             "filePath": "llm/basics",
             "contentStatus": "published",
-            "heat": 1,
-            "currRank": 1,
+            "heat": 0,
+            "currRank": 0,
             "updatedAt": "2026-08-29",
             "interviewBaseHeat": 0,
-            "interviewCount": 1,
+            "interviewCount": 0,
             "interviewCountBasis": "verified-public-posts"
           }
         ]
@@ -262,14 +265,14 @@
             "isLeaf": true,
             "filePath": "llm/prompt",
             "contentStatus": "published",
-            "heat": 25,
+            "heat": 21,
             "currRank": 5,
             "updatedAt": "2026-08-29",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "上下文压缩在预算内保留目标、事实、条件和出处，删除、抽取与摘要各有损失。不能丢否定、单位、权限或冲突证据；用原文对照和任务评测检查压缩后是否仍能完成，摘要可导航但不能替代必要原始证据。"
             },
-            "interviewCount": 19,
+            "interviewCount": 15,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -278,14 +281,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 20,
+            "heat": 18,
             "currRank": 5,
             "updatedAt": "2026-10-14",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "上下文工程决定模型此刻能看到哪些指令、工具、历史、记忆和检索证据。按任务与预算选择内容，保留来源与权限，压缩后做回归；提供更多文本并不自动让回答更可靠。"
             },
-            "interviewCount": 14,
+            "interviewCount": 12,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -299,22 +302,6 @@
             "updatedAt": "2026-07-15"
           },
           {
-            "label": "Prompt 设计基础与原则",
-            "key": "prompt-basics",
-            "isLeaf": true,
-            "filePath": "llm/prompt",
-            "contentStatus": "published",
-            "heat": 10,
-            "currRank": 5,
-            "updatedAt": "2026-07-14",
-            "interviewBaseHeat": 6,
-            "quickRead": {
-              "text": "提示应明确任务、输入、约束和输出，把不确定或缺证据时的行为也写清。用代表性样例验证并版本化，先修具体错误；“不要编造”等口号不能代替结果核验。"
-            },
-            "interviewCount": 4,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
             "label": "结构化输出与 JSON Schema",
             "key": "prompt-structured-output",
             "isLeaf": true,
@@ -322,12 +309,28 @@
             "contentStatus": "published",
             "heat": 10,
             "currRank": 5,
-            "updatedAt": "2026-07-14",
+            "updatedAt": "2026-10-28",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "结构化输出用明确数据合同约束模型结果，让程序按字段消费。合法 JSON、符合 Schema 和业务事实正确是不同层次，应用仍须校验结构、语义与权限，并处理拒答、截断和接口失败；平台支持的 Schema 子集与版本不能默认等同完整标准。"
             },
             "interviewCount": 4,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
+            "label": "Prompt 设计基础与原则",
+            "key": "prompt-basics",
+            "isLeaf": true,
+            "filePath": "llm/prompt",
+            "contentStatus": "published",
+            "heat": 9,
+            "currRank": 5,
+            "updatedAt": "2026-07-14",
+            "interviewBaseHeat": 6,
+            "quickRead": {
+              "text": "提示应明确任务、输入、约束和输出，把不确定或缺证据时的行为也写清。用代表性样例验证并版本化，先修具体错误；“不要编造”等口号不能代替结果核验。"
+            },
+            "interviewCount": 3,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -478,14 +481,14 @@
             "isLeaf": true,
             "filePath": "llm/dev",
             "contentStatus": "published",
-            "heat": 17,
+            "heat": 16,
             "currRank": 5,
             "updatedAt": "2026-07-14",
             "interviewBaseHeat": 10,
             "quickRead": {
               "text": "网络 chunk 不等于 SSE 事件，完整事件也可能只含工具参数 delta。先增量解码和分帧，再按调用标识累计参数，完成后解析、校验和授权；断流与重复事件不能导致错误执行。"
             },
-            "interviewCount": 7,
+            "interviewCount": 6,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -516,7 +519,7 @@
             "contentStatus": "published",
             "heat": 9,
             "currRank": 5,
-            "updatedAt": "2026-07-14",
+            "updatedAt": "2026-10-28",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "模型提出结构化工具请求，宿主负责参数校验、授权、执行与结果回送。调用能力只是 Agent 的一个环节，仍需状态、次数、超时与终止合同，格式正确也不等于动作安全。"
@@ -530,14 +533,14 @@
             "isLeaf": true,
             "filePath": "llm/dev",
             "contentStatus": "published",
-            "heat": 9,
+            "heat": 8,
             "currRank": 5,
             "updatedAt": "2026-07-15",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "把指令、当前任务、历史、检索与输出分配到明确 token 预算，按价值裁剪而非固定留几轮。观测每段消耗和循环调用，压缩后保留关键事实与来源，防止省成本却损坏任务。"
             },
-            "interviewCount": 3,
+            "interviewCount": 2,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -551,6 +554,22 @@
             "updatedAt": "2026-07-15",
             "quickRead": {
               "text": "模型 API 通常接收消息、模型与生成参数，返回文本、工具请求或增量事件。供应商的角色、完成信号和错误语义有差异，适配层要保留这些边界，调用成功不等于业务完成。"
+            },
+            "interviewBaseHeat": 6,
+            "interviewCount": 2,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
+            "label": "超时、重试、Fallback 与错误处理",
+            "key": "llm-error-retry-fallback",
+            "isLeaf": true,
+            "filePath": "llm/dev",
+            "contentStatus": "published",
+            "heat": 8,
+            "currRank": 5,
+            "updatedAt": "2026-10-28",
+            "quickRead": {
+              "text": "按瞬态、永久与结果未知分类错误，传播 deadline，有限退避重试并记录失败。Fallback 需满足能力和权限合同；写操作超时不能证明未执行，先用幂等或结果查询处理。"
             },
             "interviewBaseHeat": 6,
             "interviewCount": 2,
@@ -580,23 +599,10 @@
             "updatedAt": "2026-07-15",
             "interviewBaseHeat": 6,
             "interviewCount": 1,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "超时、重试、Fallback 与错误处理",
-            "key": "llm-error-retry-fallback",
-            "isLeaf": true,
-            "filePath": "llm/dev",
-            "contentStatus": "published",
-            "heat": 7,
-            "currRank": 4,
-            "updatedAt": "2026-07-15",
+            "interviewCountBasis": "verified-public-posts",
             "quickRead": {
-              "text": "按瞬态、永久与结果未知分类错误，传播 deadline，有限退避重试并记录失败。Fallback 需满足能力和权限合同；写操作超时不能证明未执行，先用幂等或结果查询处理。"
-            },
-            "interviewBaseHeat": 6,
-            "interviewCount": 1,
-            "interviewCountBasis": "verified-public-posts"
+              "text": "模型路由先按模态、上下文、工具、数据区域和质量底线排除不合格候选，再比较完整任务的成本与延迟。能力目录要保存版本和验证证据，适配器保留供应商语义差异；故障后用剩余预算重新检查备用路线，并以评测、追踪和回滚校正策略。"
+            }
           },
           {
             "label": "流式请求取消、续传与状态恢复",
@@ -631,6 +637,21 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
+            "label": "Responses、Chat 与统一生成接口模式",
+            "key": "llm-response-api-patterns",
+            "isLeaf": true,
+            "filePath": "llm/dev",
+            "contentStatus": "published",
+            "heat": 7,
+            "currRank": 4,
+            "updatedAt": "2026-07-15",
+            "quickRead": {
+              "text": "生成接口不只返回文本，还承载内容部件、工具调用、状态与流式事件。应用应以生成服务和供应商适配器隔离接口差异，统一增量聚合、错误与完成状态；网络断开不等于成功，供应商响应引用也不能直接替代应用会话身份。"
+            },
+            "interviewBaseHeat": 6,
+            "interviewCount": 1
+          },
+          {
             "label": "OpenAI SDK 核心使用",
             "key": "openai-sdk",
             "isLeaf": true,
@@ -653,16 +674,6 @@
           {
             "label": "多模态输入输出应用开发",
             "key": "llm-multimodal-api",
-            "isLeaf": true,
-            "filePath": "llm/dev",
-            "contentStatus": "published",
-            "heat": 6,
-            "currRank": 4,
-            "updatedAt": "2026-07-15"
-          },
-          {
-            "label": "Responses、Chat 与统一生成接口模式",
-            "key": "llm-response-api-patterns",
             "isLeaf": true,
             "filePath": "llm/dev",
             "contentStatus": "published",
@@ -778,14 +789,14 @@
             "isLeaf": true,
             "filePath": "llm/rag",
             "contentStatus": "published",
-            "heat": 30,
+            "heat": 25,
             "currRank": 5,
             "updatedAt": "2026-07-14",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "RAG有离线解析、切块、向量化和索引，以及在线过滤、召回、重排、上下文和生成两条路径。原文、权限与版本是索引的依据；检索与上下文装配步骤本身不更新模型参数，也不消除幻觉，需要评测和trace定位每层失败。"
             },
-            "interviewCount": 24,
+            "interviewCount": 19,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -794,14 +805,14 @@
             "isLeaf": true,
             "filePath": "llm/rag",
             "contentStatus": "published",
-            "heat": 17,
+            "heat": 16,
             "currRank": 5,
             "updatedAt": "2026-10-15",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "混合检索组合词法精确命中与向量语义召回，先约束权限和版本，再去重、融合与重排。不同原始分数不能直接相加；RRF按排名融合也需评测，重排不能补回候选集中已经遗漏的证据。"
             },
-            "interviewCount": 11,
+            "interviewCount": 10,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -810,30 +821,14 @@
             "isLeaf": true,
             "filePath": "llm/rag",
             "contentStatus": "published",
-            "heat": 17,
+            "heat": 14,
             "currRank": 5,
             "updatedAt": "2026-08-23",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "RAG评测分别检查检索、生成和端到端任务，先定义不可接受的失败与样本。召回、排序、忠实度、引用、延迟和成本应分开看；自动指标、模型判断和人工复核互补，冻结回归集与错误切片避免只优化总分。"
             },
-            "interviewCount": 11,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "文本分块策略（Chunking）",
-            "key": "rag-chunking",
-            "isLeaf": true,
-            "filePath": "llm/rag",
-            "contentStatus": "published",
-            "heat": 16,
-            "currRank": 5,
-            "updatedAt": "2026-07-14",
-            "interviewBaseHeat": 6,
-            "quickRead": {
-              "text": "分块在可检索粒度、语义完整性与模型预算间取舍，保留标题、位置、版本和权限。整篇向量可能稀释局部主题，过细又可能丢条件；按实际token和代表性问题评估边界、重叠与召回，不存在统一最优块长。"
-            },
-            "interviewCount": 10,
+            "interviewCount": 8,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -842,14 +837,30 @@
             "isLeaf": true,
             "filePath": "llm/rag",
             "contentStatus": "published",
-            "heat": 15,
+            "heat": 14,
             "currRank": 5,
             "updatedAt": "2026-10-02",
             "interviewBaseHeat": 10,
             "quickRead": {
               "text": "先召回候选，再联合评估查询与片段相关性进行重排，选少量证据进入上下文。重排不能找回漏召回内容，分数也不是事实概率；需要一起测质量、时延与成本。"
             },
-            "interviewCount": 5,
+            "interviewCount": 4,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
+            "label": "文本分块策略（Chunking）",
+            "key": "rag-chunking",
+            "isLeaf": true,
+            "filePath": "llm/rag",
+            "contentStatus": "published",
+            "heat": 12,
+            "currRank": 5,
+            "updatedAt": "2026-07-14",
+            "interviewBaseHeat": 6,
+            "quickRead": {
+              "text": "分块在可检索粒度、语义完整性与模型预算间取舍，保留标题、位置、版本和权限。整篇向量可能稀释局部主题，过细又可能丢条件；按实际token和代表性问题评估边界、重叠与召回，不存在统一最优块长。"
+            },
+            "interviewCount": 6,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -892,7 +903,7 @@
             "contentStatus": "published",
             "heat": 10,
             "currRank": 5,
-            "updatedAt": "2026-07-16",
+            "updatedAt": "2026-10-28",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Loader可靠获取、识别和解码字节，Parser恢复段落、表格与版面结构。页码、坐标、顺序和原生/OCR来源支持取证；错序、乱码、低质量或空文档应分类处理，上传成功不代表已形成可用检索证据。"
@@ -930,19 +941,6 @@
               "text": "向量库选型先明确数据量、更新频率、延迟召回目标、过滤权限、事务与运维约束，再用真实数据验证。近似索引用召回权衡速度与资源，严格过滤也可能减少有效候选；应同时测更新删除、多租户隔离和成本，产品名称或无过滤基准不能代替场景测试。"
             },
             "interviewCount": 4,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "RAG 失败诊断：数据、召回、排序与生成",
-            "key": "rag-failure-debugging",
-            "isLeaf": true,
-            "filePath": "llm/rag",
-            "contentStatus": "published",
-            "heat": 9,
-            "currRank": 5,
-            "updatedAt": "2026-07-16",
-            "interviewBaseHeat": 6,
-            "interviewCount": 3,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1010,6 +1008,22 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
+            "label": "图像、OCR 与多模态检索",
+            "key": "rag-image-retrieval",
+            "isLeaf": true,
+            "filePath": "llm/rag",
+            "contentStatus": "published",
+            "heat": 9,
+            "currRank": 5,
+            "updatedAt": "2026-07-16",
+            "interviewBaseHeat": 6,
+            "interviewCount": 3,
+            "interviewCountBasis": "verified-public-posts",
+            "quickRead": {
+              "text": "图像检索不是“先 OCR，再把文本扔进向量库”。一张图同时包含像素、空间区域、可见文字、视觉语义和上下文关系。"
+            }
+          },
+          {
             "label": "生产级文档解析、索引与增量更新",
             "key": "rag-production-ingestion",
             "isLeaf": true,
@@ -1039,33 +1053,20 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
-            "label": "图像、OCR 与多模态检索",
-            "key": "rag-image-retrieval",
-            "isLeaf": true,
-            "filePath": "llm/rag",
-            "contentStatus": "published",
-            "heat": 8,
-            "currRank": 5,
-            "updatedAt": "2026-07-16",
-            "interviewBaseHeat": 6,
-            "interviewCount": 2,
-            "interviewCountBasis": "verified-public-posts",
-            "quickRead": {
-              "text": "图像检索不是“先 OCR，再把文本扔进向量库”。一张图同时包含像素、空间区域、可见文字、视觉语义和上下文关系。"
-            }
-          },
-          {
-            "label": "索引版本、重建与回滚",
-            "key": "rag-index-versioning",
+            "label": "RAG 失败诊断：数据、召回、排序与生成",
+            "key": "rag-failure-debugging",
             "isLeaf": true,
             "filePath": "llm/rag",
             "contentStatus": "published",
             "heat": 7,
             "currRank": 4,
-            "updatedAt": "2026-07-16",
+            "updatedAt": "2026-10-28",
             "interviewBaseHeat": 6,
             "interviewCount": 1,
-            "interviewCountBasis": "verified-public-posts"
+            "interviewCountBasis": "verified-public-posts",
+            "quickRead": {
+              "text": "RAG 出错先冻结查询、权限、来源与索引版本、候选、最终上下文和模型配置，再从生成回看上下文、重排、召回、索引与解析。每次只替换一个条件，用正确证据或候选做反事实定位；Embedding 也需在同一查询—证据集比较，不能把相似度或单一总分当根因。"
+            }
           },
           {
             "label": "Parent-Child 与 Small-to-Big Retrieval",
@@ -1113,6 +1114,19 @@
             },
             "interviewBaseHeat": 6,
             "interviewCount": 1
+          },
+          {
+            "label": "索引版本、重建与回滚",
+            "key": "rag-index-versioning",
+            "isLeaf": true,
+            "filePath": "llm/rag",
+            "contentStatus": "published",
+            "heat": 6,
+            "currRank": 4,
+            "updatedAt": "2026-07-16",
+            "interviewBaseHeat": 6,
+            "interviewCount": 0,
+            "interviewCountBasis": "verified-public-posts"
           },
           {
             "label": "RAG 数据权限与多租户隔离",
@@ -1182,14 +1196,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 40,
+            "heat": 34,
             "currRank": 5,
             "updatedAt": "2026-10-14",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Coding Agent 把需求转为检查仓库、规划、修改和验证的循环。运行时应固定代码基线、保护已有修改，并用任务状态与工具证据判断进展；测试和差异审查检验结果，独立任务才适合并行。模型宣称完成不能代替实际验证。"
             },
-            "interviewCount": 34,
+            "interviewCount": 28,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1198,14 +1212,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 32,
+            "heat": 26,
             "currRank": 5,
-            "updatedAt": "2026-10-14",
+            "updatedAt": "2026-10-28",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "Skill按需组织任务说明、资源和版本，工具执行仍由运行时校验。MCP解决能力接入，Skill可使用本地或MCP工具，两者可组合；自定义YAML注册表要区分官方格式，发现不等于执行，路径、输入和权限边界也不能被配置绕过。"
             },
-            "interviewCount": 31,
+            "interviewCount": 25,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1214,14 +1228,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 30,
+            "heat": 24,
             "currRank": 5,
             "updatedAt": "2026-10-20",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "MCP 约定 Host、Client、Server 的能力交互，CLI 提供进程接口，A2A处理Agent间任务互操作。受控适配器可以包装CLI，但参数、权限与业务结果仍需校验；协议版本影响发现和生命周期，不能把2025初始化套作所有版本保证。"
             },
-            "interviewCount": 24,
+            "interviewCount": 18,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1230,14 +1244,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 29,
+            "heat": 22,
             "currRank": 5,
             "updatedAt": "2026-10-02",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "多Agent让执行者分别持有上下文、工具与证据，由协调者合并。是否值得分工要用同一任务、数据、权限和预算与单Agent或普通代码比较；角色增多不保证正确，通信、共享状态和合并失败都需要验证。"
             },
-            "interviewCount": 23,
+            "interviewCount": 16,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1246,14 +1260,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 25,
+            "heat": 20,
             "currRank": 5,
             "updatedAt": "2026-10-03",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Agent记忆按用途管理当前状态、可恢复checkpoint、长期事实和证据，写入与检索都有来源和权限边界。LangGraph按super-step提交完整快照，并保存步内成功节点写入；挂checkpointer不会自动写入任意变量。Claude Code持久文件仅在加载后进入当前上下文，文件格式不等于通用记忆架构。"
             },
-            "interviewCount": 19,
+            "interviewCount": 14,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1262,14 +1276,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 22,
+            "heat": 20,
             "currRank": 5,
             "updatedAt": "2026-07-14",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "智能体围绕目标感知、行动并读取结果，模型只是可能的决策组件。用PEAS界定绩效、环境、执行器和观察，循环还需状态、权限、预算与终止条件；路径固定时普通工作流也可能更可靠。"
             },
-            "interviewCount": 16,
+            "interviewCount": 14,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1278,28 +1292,12 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 22,
+            "heat": 20,
             "currRank": 5,
             "updatedAt": "2026-10-14",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Agent 运行时连接模型、记忆、规划、工具注册和执行循环：模型提出下一步，运行时调用工具，把观察写回状态后继续决策。最大步数、错误处理、权限边界和执行轨迹使流程可控制与排查；最小教学循环并不自动具备生产级可靠性。LangGraph 用状态、节点、边与 reducer 表达更新和分支，检查点支持恢复但不代替外部副作用幂等。"
-            },
-            "interviewCount": 16,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "Agent 工具契约、Schema 与错误语义",
-            "key": "agent-tool-design",
-            "isLeaf": true,
-            "filePath": "llm/agent",
-            "contentStatus": "published",
-            "heat": 20,
-            "currRank": 5,
-            "updatedAt": "2026-08-29",
-            "interviewBaseHeat": 6,
-            "quickRead": {
-              "text": "工具契约写清用途、参数 Schema、权限、输出与错误，限制输入范围和副作用。执行前校验并授权，结果也要解析验证；好的描述不能代替工具侧控制。"
             },
             "interviewCount": 14,
             "interviewCountBasis": "verified-public-posts"
@@ -1310,14 +1308,30 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 20,
+            "heat": 19,
             "currRank": 5,
-            "updatedAt": "2026-10-20",
+            "updatedAt": "2026-10-28",
             "interviewBaseHeat": 10,
             "quickRead": {
               "text": "ReAct 交替选择行动、执行工具与观察结果，直到满足终止条件。它与 React UI 库不同；模型决定动作后仍由宿主校验权限、预算和结果，循环不能无限继续。"
             },
-            "interviewCount": 10,
+            "interviewCount": 9,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
+            "label": "Agent Run Loop、轮次与终止条件",
+            "key": "agent-run-loop",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published",
+            "heat": 18,
+            "currRank": 5,
+            "updatedAt": "2026-07-16",
+            "interviewBaseHeat": 6,
+            "quickRead": {
+              "text": "Agent循环依次读取状态、决策、校验、执行、吸收结果并判断是否继续。工具调用成功不等于目标完成；每轮应保留trace、预算与进展证据，区分正常完成、超限、失败和人工介入，避免无限循环。"
+            },
+            "interviewCount": 12,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1326,14 +1340,30 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 19,
+            "heat": 17,
             "currRank": 5,
             "updatedAt": "2026-08-29",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "确定性步骤用显式节点和依赖表达，不确定决策放入受控 Agent 节点。状态、失败出口、恢复和人工接管需共同设计，步骤多不意味着必须采用多智能体。"
             },
-            "interviewCount": 13,
+            "interviewCount": 11,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
+            "label": "Agent 工具契约、Schema 与错误语义",
+            "key": "agent-tool-design",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published",
+            "heat": 16,
+            "currRank": 5,
+            "updatedAt": "2026-08-29",
+            "interviewBaseHeat": 6,
+            "quickRead": {
+              "text": "工具契约写清用途、参数 Schema、权限、输出与错误，限制输入范围和副作用。执行前校验并授权，结果也要解析验证；好的描述不能代替工具侧控制。"
+            },
+            "interviewCount": 10,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1342,31 +1372,15 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 18,
+            "heat": 16,
             "currRank": 5,
             "updatedAt": "2026-07-18",
             "interviewBaseHeat": 6,
-            "interviewCount": 12,
+            "interviewCount": 10,
             "interviewCountBasis": "verified-public-posts",
             "quickRead": {
-              "text": "Agent 的记忆系统决定了它能否跨轮次保持上下文、积累经验、从历史中学习。没有记忆，每次对话都是一次性的——Agent 不知道你是谁，也不记得上一轮说过什么。"
+              "text": "短期记忆保存当前任务上下文与可恢复状态，长期记忆保存跨任务仍有价值且获准保留的事实或经验。存储与索引按查询和恢复需求选择；相似度只产生候选，召回仍需权限、时效和来源检查，更新与删除要同步派生索引。"
             }
-          },
-          {
-            "label": "Agent Run Loop、轮次与终止条件",
-            "key": "agent-run-loop",
-            "isLeaf": true,
-            "filePath": "llm/agent",
-            "contentStatus": "published",
-            "heat": 17,
-            "currRank": 5,
-            "updatedAt": "2026-07-16",
-            "interviewBaseHeat": 6,
-            "quickRead": {
-              "text": "Agent循环依次读取状态、决策、校验、执行、吸收结果并判断是否继续。工具调用成功不等于目标完成；每轮应保留trace、预算与进展证据，区分正常完成、超限、失败和人工介入，避免无限循环。"
-            },
-            "interviewCount": 11,
-            "interviewCountBasis": "verified-public-posts"
           },
           {
             "label": "会话摘要、压缩与记忆提炼",
@@ -1376,26 +1390,10 @@
             "contentStatus": "published",
             "heat": 15,
             "currRank": 5,
-            "updatedAt": "2026-10-02",
+            "updatedAt": "2026-10-28",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "会话摘要是有损压缩，不能创造新事实。保留可追溯原始记录，把事实、约束、未完成事项和当前工作视图分开；否定、版本和授权范围不能在压缩中丢失。异步生成的旧摘要须检查覆盖范围与版本，避免覆盖新状态。"
-            },
-            "interviewCount": 9,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "工具结果校验、解析与反馈",
-            "key": "agent-tool-result-validation",
-            "isLeaf": true,
-            "filePath": "llm/agent",
-            "contentStatus": "published",
-            "heat": 15,
-            "currRank": 5,
-            "updatedAt": "2026-07-16",
-            "interviewBaseHeat": 6,
-            "quickRead": {
-              "text": "工具结果要依次检查解析与结构、业务语义、权限、来源和新鲜度，合格后才能成为决策证据。HTTP 成功或字段齐全不代表事实正确、操作已生效或用户有权使用；失败需区分重试、拒绝、隔离和部分成功，不能统一记为完成。"
             },
             "interviewCount": 9,
             "interviewCountBasis": "verified-public-posts"
@@ -1417,35 +1415,51 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
+            "label": "工具结果校验、解析与反馈",
+            "key": "agent-tool-result-validation",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published",
+            "heat": 13,
+            "currRank": 5,
+            "updatedAt": "2026-10-28",
+            "interviewBaseHeat": 6,
+            "quickRead": {
+              "text": "工具结果要依次检查解析与结构、业务语义、权限、来源和新鲜度，合格后才能成为决策证据。HTTP 成功或字段齐全不代表事实正确、操作已生效或用户有权使用；失败需区分重试、拒绝、隔离和部分成功，不能统一记为完成。"
+            },
+            "interviewCount": 7,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
+            "label": "智能体性能评估",
+            "key": "agent-evaluation",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published",
+            "heat": 13,
+            "currRank": 5,
+            "updatedAt": "2026-10-28",
+            "interviewBaseHeat": 6,
+            "interviewCount": 7,
+            "interviewCountBasis": "verified-public-posts",
+            "quickRead": {
+              "text": "Agent 评测同时检查任务完成、工具与轨迹约束，以及成本、延迟和鲁棒性。优先用环境终态或可执行测试判断结果，开放质量使用经人工样本校准的 Judge。冻结任务、环境与模型配置，按场景切片并保留失败证据，单个准确率不能代替整体可靠性。"
+            }
+          },
+          {
             "label": "Subagent 子智能体设计",
             "key": "agent-subagents",
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 14,
+            "heat": 12,
             "currRank": 5,
             "updatedAt": "2026-07-16",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "子智能体承担边界清楚的子任务，拥有必要上下文、工具与预算，向父任务返回可验证结果。职责拆分不自动提升质量，重复工作、共享写入与失败归并需要治理。Deep Agents 使用隔离子任务与文件上下文，规划能力依版本配置，归并与授权仍由宿主负责。"
             },
-            "interviewCount": 8,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "任务规划、分解与动态重规划",
-            "key": "agent-planning",
-            "isLeaf": true,
-            "filePath": "llm/agent",
-            "contentStatus": "published",
-            "heat": 14,
-            "currRank": 5,
-            "updatedAt": "2026-07-16",
-            "interviewBaseHeat": 6,
-            "quickRead": {
-              "text": "把目标拆成有依赖、可验证的步骤，执行中依据证据重规划，保留预算与终止条件。计划是候选动作而非权限，简单稳定任务可直接用规则流程，避免无谓增加模型调用。"
-            },
-            "interviewCount": 8,
+            "interviewCount": 6,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1454,28 +1468,12 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 13,
+            "heat": 12,
             "currRank": 5,
-            "updatedAt": "2026-09-01",
+            "updatedAt": "2026-10-28",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "智能体交换带任务身份、结构化内容、状态与版本的消息，明确谁拥有共享事实和最终写入。通信协议不自动解决冲突、超时、重复投递和副作用，归并规则必须显式定义。"
-            },
-            "interviewCount": 7,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "工作流状态、检查点与断点续跑",
-            "key": "agent-workflow-state",
-            "isLeaf": true,
-            "filePath": "llm/agent",
-            "contentStatus": "published",
-            "heat": 13,
-            "currRank": 5,
-            "updatedAt": "2026-08-23",
-            "interviewBaseHeat": 7,
-            "quickRead": {
-              "text": "检查点保存执行状态与位置，以稳定会话或任务身份恢复运行。重放外部操作仍可能重复效果，需幂等与结果对账；状态持久化不等于跨系统事务完成。"
             },
             "interviewCount": 6,
             "interviewCountBasis": "verified-public-posts"
@@ -1497,20 +1495,36 @@
             }
           },
           {
-            "label": "智能体性能评估",
-            "key": "agent-evaluation",
+            "label": "任务规划、分解与动态重规划",
+            "key": "agent-planning",
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
             "heat": 11,
             "currRank": 5,
-            "updatedAt": "2026-10-14",
+            "updatedAt": "2026-07-16",
             "interviewBaseHeat": 6,
-            "interviewCount": 5,
-            "interviewCountBasis": "verified-public-posts",
             "quickRead": {
-              "text": "Agent 评测同时检查任务完成、工具与轨迹约束，以及成本、延迟和鲁棒性。优先用环境终态或可执行测试判断结果，开放质量使用经人工样本校准的 Judge。冻结任务、环境与模型配置，按场景切片并保留失败证据，单个准确率不能代替整体可靠性。"
-            }
+              "text": "把目标拆成有依赖、可验证的步骤，执行中依据证据重规划，保留预算与终止条件。计划是候选动作而非权限，简单稳定任务可直接用规则流程，避免无谓增加模型调用。"
+            },
+            "interviewCount": 5,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
+            "label": "工作流状态、检查点与断点续跑",
+            "key": "agent-workflow-state",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published",
+            "heat": 11,
+            "currRank": 5,
+            "updatedAt": "2026-08-23",
+            "interviewBaseHeat": 7,
+            "quickRead": {
+              "text": "检查点保存执行状态与位置，以稳定会话或任务身份恢复运行。重放外部操作仍可能重复效果，需幂等与结果对账；状态持久化不等于跨系统事务完成。"
+            },
+            "interviewCount": 4,
+            "interviewCountBasis": "verified-public-posts"
           },
           {
             "label": "工具超时、取消与重试",
@@ -1560,22 +1574,6 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
-            "label": "用状态机建模 Agent 行为",
-            "key": "agent-state-machine",
-            "isLeaf": true,
-            "filePath": "llm/agent",
-            "contentStatus": "published",
-            "heat": 9,
-            "currRank": 5,
-            "updatedAt": "2026-07-16",
-            "interviewBaseHeat": 6,
-            "interviewCount": 3,
-            "interviewCountBasis": "verified-public-posts",
-            "quickRead": {
-              "text": "Agent 状态机用状态、事件、Guard 与 Action 说明行为边界。Guard 保持纯且可重放，状态实例隔离，迁移按版本提交；副作用通过 Outbox 与幂等键执行，迟到结果、重复事件和恢复都要有明确策略。"
-            }
-          },
-          {
             "label": "遗忘策略、冲突处理与记忆更新",
             "key": "agent-memory-forgetting",
             "isLeaf": true,
@@ -1592,6 +1590,22 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
+            "label": "用状态机建模 Agent 行为",
+            "key": "agent-state-machine",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published",
+            "heat": 8,
+            "currRank": 5,
+            "updatedAt": "2026-07-16",
+            "interviewBaseHeat": 6,
+            "interviewCount": 2,
+            "interviewCountBasis": "verified-public-posts",
+            "quickRead": {
+              "text": "Agent 状态机用状态、事件、Guard 与 Action 说明行为边界。Guard 保持纯且可重放，状态实例隔离，迁移按版本提交；副作用通过 Outbox 与幂等键执行，迟到结果、重复事件和恢复都要有明确策略。"
+            }
+          },
+          {
             "label": "Reflection、Plan-and-Execute 与 Tool-Use",
             "key": "agent-paradigms",
             "isLeaf": true,
@@ -1599,10 +1613,13 @@
             "contentStatus": "published",
             "heat": 7,
             "currRank": 4,
-            "updatedAt": "2026-07-18",
+            "updatedAt": "2026-10-28",
             "interviewBaseHeat": 6,
             "interviewCount": 1,
-            "interviewCountBasis": "verified-public-posts"
+            "interviewCountBasis": "verified-public-posts",
+            "quickRead": {
+              "text": "Reflection 用反馈修订候选，Self-Refine 与保存跨试验反思的 Reflexion 有所区别；Plan-and-Execute 显式分解任务，也可依据结果重规划；Tool-Use 通过工具契约提出调用。三者能与 ReAct 组合，但效果与成本需在同任务、同预算下验证，自评停止不能代替独立验收。"
+            }
           },
           {
             "label": "Computer-use 桌面操作智能体",
@@ -1734,7 +1751,7 @@
             "contentStatus": "published",
             "heat": 4,
             "currRank": 3,
-            "updatedAt": "2026-10-19",
+            "updatedAt": "2026-10-28",
             "interviewBaseHeat": 0,
             "quickRead": {
               "text": "先识别下一步动作需要的意图与条件，低置信度或缺关键信息时澄清。保留未知分支与安全退出，不能把开放任务硬塞进预定义类别或让模型猜隐含需求。"
@@ -1748,11 +1765,11 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 3,
-            "currRank": 3,
+            "heat": 2,
+            "currRank": 2,
             "updatedAt": "2026-08-29",
             "interviewBaseHeat": 0,
-            "interviewCount": 3,
+            "interviewCount": 2,
             "interviewCountBasis": "verified-public-posts",
             "quickRead": {
               "text": "Agentic RL 不是给普通问答换一个新名字，而是把模型放进会持续变化的环境：模型要读取观察、选择动作、调用工具，再根据新观察继续决策。轨迹可能跨几十到几百步，最终奖励却只在任务结束时出现。"
@@ -1770,14 +1787,14 @@
             "isLeaf": true,
             "filePath": "llm/production",
             "contentStatus": "published",
-            "heat": 26,
+            "heat": 19,
             "currRank": 5,
             "updatedAt": "2026-10-03",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Agent 评测先定义任务、初始环境和成功判据，再分别检查运行轨迹与环境终态；最终回复不能代替实际结果。程序检查确定条件，模型或人工判断开放质量并校准。回归比较应固定版本与分布，说明切片、重复执行和环境故障的分母。"
             },
-            "interviewCount": 20,
+            "interviewCount": 13,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1786,31 +1803,15 @@
             "isLeaf": true,
             "filePath": "llm/production",
             "contentStatus": "published",
-            "heat": 15,
+            "heat": 12,
             "currRank": 5,
-            "updatedAt": "2026-07-16",
+            "updatedAt": "2026-10-28",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "分类失败后选择重试、降级、补偿、重规划或人工处理，保存恢复位置与证据。模型可提出建议，确定性执行器仍检查状态、权限和预算，结果未知不能记作成功。"
             },
-            "interviewCount": 9,
+            "interviewCount": 6,
             "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "Agent 可观测性与全链路 Tracing",
-            "key": "ai-observability",
-            "isLeaf": true,
-            "filePath": "llm/production",
-            "contentStatus": "published",
-            "heat": 13,
-            "currRank": 5,
-            "updatedAt": "2026-10-19",
-            "interviewBaseHeat": 6,
-            "interviewCount": 7,
-            "interviewCountBasis": "verified-public-posts",
-            "quickRead": {
-              "text": "Trace关联一次任务中的多个Span，根Span只是入口操作；按模型、检索、工具与状态迁移拆耗时、错误、版本和用量。跨服务传播上下文，脱敏并验证采样与导出，日志成功不等于任务目标完成。"
-            }
           },
           {
             "label": "最小权限、授权与工具调用确认",
@@ -1818,14 +1819,14 @@
             "isLeaf": true,
             "filePath": "llm/production",
             "contentStatus": "published",
-            "heat": 12,
+            "heat": 11,
             "currRank": 5,
             "updatedAt": "2026-07-16",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "按资源与操作授予最小必要权限，宿主和工具共同落实，默认拒绝越界动作。描述、角色或技能不自动授予执行权，授权变化、审批范围与审计要有明确生命周期。"
             },
-            "interviewCount": 6,
+            "interviewCount": 5,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1845,19 +1846,6 @@
             }
           },
           {
-            "label": "模型、工具、检索与结果缓存",
-            "key": "agent-cache",
-            "isLeaf": true,
-            "filePath": "llm/production",
-            "contentStatus": "published",
-            "heat": 11,
-            "currRank": 5,
-            "updatedAt": "2026-07-17",
-            "interviewBaseHeat": 10,
-            "interviewCount": 1,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
             "label": "Agent 身份、用户身份与委托授权",
             "key": "agent-identity-auth",
             "isLeaf": true,
@@ -1874,19 +1862,32 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
+            "label": "模型、工具、检索与结果缓存",
+            "key": "agent-cache",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "published",
+            "heat": 10,
+            "currRank": 5,
+            "updatedAt": "2026-07-17",
+            "interviewBaseHeat": 10,
+            "interviewCount": 0,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
             "label": "Agent Benchmark 的设计与解读",
             "key": "agent-benchmark",
             "isLeaf": true,
             "filePath": "llm/production",
             "contentStatus": "published",
-            "heat": 11,
+            "heat": 10,
             "currRank": 5,
             "updatedAt": "2026-07-17",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Agent Benchmark 是任务、数据、执行环境、评分器和预算共同组成的实验。先固定初始状态、工具权限与成功判据，再报告重复运行、切片和不确定性；平均分不能掩盖严重失败，接触过的测试集也不能可靠证明泛化能力。"
             },
-            "interviewCount": 5,
+            "interviewCount": 4,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1895,14 +1896,14 @@
             "isLeaf": true,
             "filePath": "llm/production",
             "contentStatus": "published",
-            "heat": 11,
+            "heat": 10,
             "currRank": 5,
-            "updatedAt": "2026-08-23",
+            "updatedAt": "2026-10-28",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "并发治理分别处理准入、配额、公平、隔离和背压；同 key FIFO 则用独立队列与协调的运行标志。任务在锁外执行，空检查与新提交需避免丢唤醒，生产队列和资源仍须有界。"
             },
-            "interviewCount": 5,
+            "interviewCount": 4,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1911,11 +1912,11 @@
             "isLeaf": true,
             "filePath": "llm/production",
             "contentStatus": "published",
-            "heat": 11,
+            "heat": 10,
             "currRank": 5,
             "updatedAt": "2026-07-16",
             "interviewBaseHeat": 6,
-            "interviewCount": 5,
+            "interviewCount": 4,
             "interviewCountBasis": "verified-public-posts",
             "quickRead": {
               "text": "线上反馈闭环不是收集点赞后直接改 prompt，而是把生产信号转换为可复现案例，进入版本化评估集，用离线和人工校准验证候选变更，再通过受控发布观察真实影响。每个箭头都有质量门，才能避免“修一个案例，退化一大片”。"
@@ -1942,17 +1943,20 @@
             "updatedAt": "2026-07-17"
           },
           {
-            "label": "敏感数据、日志脱敏与隐私保护",
-            "key": "agent-data-privacy",
+            "label": "Agent 可观测性与全链路 Tracing",
+            "key": "ai-observability",
             "isLeaf": true,
             "filePath": "llm/production",
             "contentStatus": "published",
             "heat": 9,
             "currRank": 5,
-            "updatedAt": "2026-08-20",
-            "interviewBaseHeat": 7,
-            "interviewCount": 2,
-            "interviewCountBasis": "verified-public-posts"
+            "updatedAt": "2026-10-28",
+            "interviewBaseHeat": 6,
+            "interviewCount": 3,
+            "interviewCountBasis": "verified-public-posts",
+            "quickRead": {
+              "text": "Trace关联一次任务中的多个Span，根Span只是入口操作；按模型、检索、工具与状态迁移拆耗时、错误、版本和用量。跨服务传播上下文，脱敏并验证采样与导出，日志成功不等于任务目标完成。"
+            }
           },
           {
             "label": "Prompt Injection 与间接注入防御",
@@ -1960,59 +1964,14 @@
             "isLeaf": true,
             "filePath": "llm/production",
             "contentStatus": "published",
-            "heat": 9,
-            "currRank": 5,
-            "updatedAt": "2026-08-29",
-            "interviewBaseHeat": 6,
-            "interviewCount": 3,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "用户模拟器与环境模拟测试",
-            "key": "agent-simulation",
-            "isLeaf": true,
-            "filePath": "llm/production",
-            "contentStatus": "published",
             "heat": 8,
             "currRank": 5,
-            "updatedAt": "2026-10-14",
+            "updatedAt": "2026-10-28",
             "interviewBaseHeat": 6,
             "interviewCount": 2,
             "interviewCountBasis": "verified-public-posts",
             "quickRead": {
-              "text": "用户模拟器描述目标与可见行为，环境模拟器管理世界状态和工具效果；被测 Agent 只通过正式观察与动作接口交互。初始状态、随机种子、版本、故障注入与停止条件让测试可重放，目标完成需核验环境终态；模拟成功不能直接代表现实表现。"
-            }
-          },
-          {
-            "label": "模型、工具、MCP 与依赖供应链安全",
-            "key": "agent-supply-chain",
-            "isLeaf": true,
-            "filePath": "llm/production",
-            "contentStatus": "published",
-            "heat": 8,
-            "currRank": 5,
-            "updatedAt": "2026-07-17",
-            "interviewBaseHeat": 6,
-            "quickRead": {
-              "text": "核对模型、工具、MCP 与插件的来源、版本、依赖和可执行权限，升级前验证行为。名字或下载次数不证明可信，隔离与结果校验仍需实施，未指定版本不能编造能力。"
-            },
-            "interviewCount": 2,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "Agent 威胁建模与安全测试",
-            "key": "agent-security-threat-model",
-            "isLeaf": true,
-            "filePath": "llm/production",
-            "contentStatus": "published",
-            "heat": 8,
-            "currRank": 5,
-            "updatedAt": "2026-10-15",
-            "interviewBaseHeat": 6,
-            "interviewCount": 2,
-            "interviewCountBasis": "verified-public-posts",
-            "quickRead": {
-              "text": "Agent 安全从资产、攻击者能力、数据流和信任边界出发，把注入、工具滥用、记忆污染和外泄落到具体路径。模型提出调用后，运行时与资源层仍须独立校验用户、租户、参数和权限；用最小权限、执行前审批、幂等与沿路径测试降低风险，并保留检测、隔离和恢复证据。"
+              "text": "Prompt 注入可能让网页、文档、工具结果中的不可信文字偏转模型。角色、标签、规则和评审模型只提供辅助控制；身份与资源授权、参数校验、最小权限、网络出口及必要批准应由执行层强制检查。系统提示不放机密，模型输出在每个消费点仍按目的验证，并用真实入口的攻击用例检查边界。"
             }
           },
           {
@@ -2048,6 +2007,67 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
+            "label": "敏感数据、日志脱敏与隐私保护",
+            "key": "agent-data-privacy",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "published",
+            "heat": 7,
+            "currRank": 4,
+            "updatedAt": "2026-08-20",
+            "interviewBaseHeat": 7,
+            "interviewCount": 0,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
+            "label": "用户模拟器与环境模拟测试",
+            "key": "agent-simulation",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "published",
+            "heat": 7,
+            "currRank": 4,
+            "updatedAt": "2026-10-14",
+            "interviewBaseHeat": 6,
+            "interviewCount": 1,
+            "interviewCountBasis": "verified-public-posts",
+            "quickRead": {
+              "text": "用户模拟器描述目标与可见行为，环境模拟器管理世界状态和工具效果；被测 Agent 只通过正式观察与动作接口交互。初始状态、随机种子、版本、故障注入与停止条件让测试可重放，目标完成需核验环境终态；模拟成功不能直接代表现实表现。"
+            }
+          },
+          {
+            "label": "模型、工具、MCP 与依赖供应链安全",
+            "key": "agent-supply-chain",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "published",
+            "heat": 7,
+            "currRank": 4,
+            "updatedAt": "2026-07-17",
+            "interviewBaseHeat": 6,
+            "quickRead": {
+              "text": "核对模型、工具、MCP 与插件的来源、版本、依赖和可执行权限，升级前验证行为。名字或下载次数不证明可信，隔离与结果校验仍需实施，未指定版本不能编造能力。"
+            },
+            "interviewCount": 1,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
+            "label": "Agent 威胁建模与安全测试",
+            "key": "agent-security-threat-model",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "published",
+            "heat": 7,
+            "currRank": 4,
+            "updatedAt": "2026-10-15",
+            "interviewBaseHeat": 6,
+            "interviewCount": 1,
+            "interviewCountBasis": "verified-public-posts",
+            "quickRead": {
+              "text": "Agent 安全从资产、攻击者能力、数据流和信任边界出发，把注入、工具滥用、记忆污染和外泄落到具体路径。模型提出调用后，运行时与资源层仍须独立校验用户、租户、参数和权限；用最小权限、执行前审批、幂等与沿路径测试降低风险，并保留检测、隔离和恢复证据。"
+            }
+          },
+          {
             "label": "Agent 服务部署、扩缩容与版本发布",
             "key": "agent-deployment",
             "isLeaf": true,
@@ -2055,10 +2075,10 @@
             "contentStatus": "published",
             "heat": 7,
             "currRank": 4,
-            "updatedAt": "2026-07-16",
+            "updatedAt": "2026-10-28",
             "interviewBaseHeat": 6,
             "quickRead": {
-              "text": "部署需定义任务状态、依赖、容量、启动与关闭、可观测性和版本回退。扩容不自动增加下游配额，长任务需要恢复与取消合同，不能以进程启动证明系统可靠。"
+              "text": "Agent 发布应固定代码、模型、Prompt、工具、策略与评测集的版本包，通过离线、影子和灰度验证。端云多设备还需按数据位置与权限选择执行地，处理离线、幂等、撤权和版本兼容；扩容不能突破下游配额。"
             },
             "interviewCount": 1,
             "interviewCountBasis": "verified-public-posts"
@@ -2074,20 +2094,10 @@
             "updatedAt": "2026-07-17",
             "interviewBaseHeat": 6,
             "interviewCount": 1,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "成功率、质量、延迟、成本与业务指标",
-            "key": "agent-metrics",
-            "isLeaf": true,
-            "filePath": "llm/production",
-            "contentStatus": "published",
-            "heat": 7,
-            "currRank": 4,
-            "updatedAt": "2026-07-17",
-            "interviewBaseHeat": 6,
-            "interviewCount": 1,
-            "interviewCountBasis": "verified-public-posts"
+            "interviewCountBasis": "verified-public-posts",
+            "quickRead": {
+              "text": "Agent 灰度发布应固定模型、Prompt、工具、策略与运行时的完整版本包，按租户或会话稳定分桶，并与同期代表性控制组比较质量、安全、可靠性和成本。满足样本与观察窗口后逐级扩流，越过门禁则暂停或回滚；状态和 Schema 兼容也是回滚条件。"
+            }
           },
           {
             "label": "在线评估、抽样与质量监控",
@@ -2208,6 +2218,19 @@
             },
             "interviewBaseHeat": 6,
             "interviewCount": 1
+          },
+          {
+            "label": "成功率、质量、延迟、成本与业务指标",
+            "key": "agent-metrics",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "published",
+            "heat": 6,
+            "currRank": 4,
+            "updatedAt": "2026-07-17",
+            "interviewBaseHeat": 6,
+            "interviewCount": 0,
+            "interviewCountBasis": "verified-public-posts"
           },
           {
             "label": "AI 应用限流、配额与背压",
@@ -2588,12 +2611,12 @@
             "contentStatus": "published",
             "heat": 10,
             "currRank": 5,
-            "updatedAt": "2026-07-18",
+            "updatedAt": "2026-10-28",
             "interviewBaseHeat": 6,
             "interviewCount": 4,
             "interviewCountBasis": "verified-public-posts",
             "quickRead": {
-              "text": "WebSocket 是建立在 TCP 之上的全双工通信协议，通过 HTTP 握手升级后在客户端与服务端之间交换独立消息。相比应用层轮询，它允许任一端主动发送数据，适用于实时聊天、协同编辑和 Agent 执行状态推送等场景；连接管理、背压与重连仍由应用负责。"
+              "text": "WebSocket 提供双向消息通信；HTTP/1.1可用Upgrade建立，HTTP/2可用扩展CONNECT。适合持续双向交互，SSE更贴近单向文本事件。连接建立不代表消息已获授权或业务已完成，应用仍须处理鉴权、背压、心跳、重连游标与事件重放。"
             }
           },
           {
@@ -2602,14 +2625,14 @@
             "isLeaf": true,
             "filePath": "backend/api",
             "contentStatus": "published",
-            "heat": 8,
-            "currRank": 5,
+            "heat": 7,
+            "currRank": 4,
             "updatedAt": "2026-10-02",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "队列用于可靠通知与缓冲，数据库保存任务真相，完成业务后再确认并用幂等处理重投。延时消息触发一次，TTL 与死信有时机限制；周期更新另需持久 schedule、周期身份和漏跑策略。"
             },
-            "interviewCount": 7,
+            "interviewCount": 6,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -2660,6 +2683,22 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
+            "label": "gRPC、Protobuf 与服务通信",
+            "key": "grpc-basics",
+            "isLeaf": true,
+            "filePath": "backend/api",
+            "contentStatus": "published",
+            "heat": 6,
+            "currRank": 4,
+            "updatedAt": "2026-10-28",
+            "quickRead": {
+              "text": "RPC 描述调用远端服务的合同，gRPC 常以 Protobuf 定义接口并支持多种调用形式。它可基于 HTTP，二者不是互斥层级；兼容演进、deadline、重试与幂等需按实际操作设计。Java HttpClient 可同步或异步发 HTTP，RPC 是契约抽象，取消不保证远端动作未执行。"
+            },
+            "interviewBaseHeat": 3,
+            "interviewCount": 3,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
             "label": "SSE 服务端推送与连接管理",
             "key": "sse-server",
             "isLeaf": true,
@@ -2667,28 +2706,12 @@
             "contentStatus": "published",
             "heat": 5,
             "currRank": 4,
-            "updatedAt": "2026-07-18",
+            "updatedAt": "2026-10-28",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "SSE 在 HTTP 响应中以 text/event-stream 连续发送文本事件，空行结束事件，EventSource 增量接收并按规则重连。事件 ID 可帮助恢复位置，但服务端必须保留可重放数据；代理缓冲、心跳、鉴权和连接清理都影响可用性，重连本身不保证无丢失或无重复。"
             },
             "interviewCount": 4,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "gRPC、Protobuf 与服务通信",
-            "key": "grpc-basics",
-            "isLeaf": true,
-            "filePath": "backend/api",
-            "contentStatus": "published",
-            "heat": 5,
-            "currRank": 4,
-            "updatedAt": "2026-07-17",
-            "quickRead": {
-              "text": "RPC 描述调用远端服务的合同，gRPC 常以 Protobuf 定义接口并支持多种调用形式。它可基于 HTTP，二者不是互斥层级；兼容演进、deadline、重试与幂等需按实际操作设计。Java HttpClient 可同步或异步发 HTTP，RPC 是契约抽象，取消不保证远端动作未执行。"
-            },
-            "interviewBaseHeat": 3,
-            "interviewCount": 2,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -2759,14 +2782,14 @@
             "isLeaf": true,
             "filePath": "backend/database",
             "contentStatus": "published",
-            "heat": 23,
+            "heat": 21,
             "currRank": 5,
-            "updatedAt": "2026-10-02",
+            "updatedAt": "2026-10-28",
             "interviewBaseHeat": 10,
             "quickRead": {
               "text": "Cache-aside 以数据库为权威，读缓存未命中后回填，写数据库后失效缓存。TTL、失效通知和并发请求合并分别约束旧值、传播与负载，却不能保证跨层强一致或阻止旧请求回填；关键决策仍须在权威数据上校验，并设计失效失败的恢复路径。"
             },
-            "interviewCount": 13,
+            "interviewCount": 11,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -2775,14 +2798,14 @@
             "isLeaf": true,
             "filePath": "backend/database",
             "contentStatus": "published",
-            "heat": 21,
+            "heat": 19,
             "currRank": 5,
             "updatedAt": "2026-10-16",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "InnoDB 普通有序索引按页组织导航与叶子记录，联合索引按键的字典序服务过滤和排序。覆盖索引可减少获取额外列的回表，但二级记录删除标记或较新页更新时，MVCC 仍可能要求访问聚簇记录与 undo。按实际查询、版本、读写约束验证计划，不能把索引名、Using index 或候选数减少当作性能与正确性的保证。"
             },
-            "interviewCount": 20,
+            "interviewCount": 18,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -2791,14 +2814,14 @@
             "isLeaf": true,
             "filePath": "backend/storage",
             "contentStatus": "published",
-            "heat": 15,
+            "heat": 14,
             "currRank": 5,
             "updatedAt": "2026-08-29",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "持久状态区分会话消息、执行检查点、任务与事件，按身份与版本更新并限制访问。客户端缓存不是唯一真相，恢复、保留、删除与外部副作用对账要分别定义。"
             },
-            "interviewCount": 9,
+            "interviewCount": 8,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -2823,14 +2846,14 @@
             "isLeaf": true,
             "filePath": "backend/database",
             "contentStatus": "published",
-            "heat": 11,
+            "heat": 10,
             "currRank": 5,
             "updatedAt": "2026-10-15",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "Redis 类型按访问语义选择，内部编码随版本、配置与数据变化。Redis 8.4 的非紧凑 ZSet 以字典做 member 查分数，以跳表做按 score 的有序、范围与排名；B+ 树也能查范围，选型要看内存节点与持久页的成本。原子命令不保证跨命令流程正确，队列仍需认领、确认和幂等。"
             },
-            "interviewCount": 10,
+            "interviewCount": 9,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -2844,35 +2867,35 @@
             "updatedAt": "2026-07-17"
           },
           {
+            "label": "Redis 分布式锁：租约、续期与故障边界",
+            "key": "redis-distributed-lock",
+            "isLeaf": true,
+            "filePath": "backend/database",
+            "contentStatus": "published",
+            "heat": 9,
+            "currRank": 5,
+            "updatedAt": "2026-10-28",
+            "interviewBaseHeat": 1,
+            "quickRead": {
+              "text": "Redis 租约锁用原子 NX、随机持有者 token 和过期时间，释放或续期原子核对身份。租约失效、暂停和故障切换可能破坏排他，重要写入需资源端版本或 fencing，watchdog 不自动消除风险。"
+            },
+            "interviewCount": 8,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
             "label": "事务、隔离级别与锁",
             "key": "db-transaction-lock",
             "isLeaf": true,
             "filePath": "backend/database",
             "contentStatus": "published",
-            "heat": 10,
+            "heat": 8,
             "currRank": 5,
             "updatedAt": "2026-10-16",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "事务定义提交与隔离边界。InnoDB 普通一致性读用 ReadView 与 undo 选择可见版本，锁定读与写语句另按当前数据和锁规则处理；锁范围取决于索引、条件与隔离级别。持久化、错误回滚和跨系统幂等都要说明具体配置与失败边界。"
             },
-            "interviewCount": 9,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "Redis 分布式锁：租约、续期与故障边界",
-            "key": "redis-distributed-lock",
-            "isLeaf": true,
-            "filePath": "backend/database",
-            "contentStatus": "published",
-            "heat": 10,
-            "currRank": 5,
-            "updatedAt": "2026-10-19",
-            "interviewBaseHeat": 1,
-            "quickRead": {
-              "text": "Redis 租约锁用原子 NX、随机持有者 token 和过期时间，释放或续期原子核对身份。租约失效、暂停和故障切换可能破坏排他，重要写入需资源端版本或 fencing，watchdog 不自动消除风险。"
-            },
-            "interviewCount": 9,
+            "interviewCount": 7,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -2881,11 +2904,11 @@
             "isLeaf": true,
             "filePath": "backend/storage",
             "contentStatus": "published",
-            "heat": 7,
+            "heat": 6,
             "currRank": 4,
             "updatedAt": "2026-07-17",
             "interviewBaseHeat": 6,
-            "interviewCount": 1,
+            "interviewCount": 0,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -2946,11 +2969,11 @@
             "isLeaf": true,
             "filePath": "backend/storage",
             "contentStatus": "published",
-            "heat": 1,
-            "currRank": 1,
+            "heat": 0,
+            "currRank": 0,
             "updatedAt": "2026-08-29",
             "interviewBaseHeat": 0,
-            "interviewCount": 1,
+            "interviewCount": 0,
             "interviewCountBasis": "verified-public-posts"
           }
         ]
@@ -2981,14 +3004,14 @@
             "isLeaf": true,
             "filePath": "backend/auth",
             "contentStatus": "published",
-            "heat": 8,
+            "heat": 9,
             "currRank": 5,
             "updatedAt": "2026-07-18",
             "interviewBaseHeat": 3,
             "quickRead": {
               "text": "限流控制进入速率，熔断在依赖持续失败时暂时减少调用，降级保留可接受服务。状态变化与扣减要原子，策略依容量、身份与窗口定义，重试也必须共享预算。"
             },
-            "interviewCount": 5,
+            "interviewCount": 6,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -3015,12 +3038,12 @@
             "contentStatus": "published",
             "heat": 5,
             "currRank": 4,
-            "updatedAt": "2026-07-18",
+            "updatedAt": "2026-10-28",
             "interviewBaseHeat": 1,
             "interviewCount": 4,
             "interviewCountBasis": "verified-public-posts",
             "quickRead": {
-              "text": "完善的可观测性（Observability）体系是生产系统的\"眼睛\"——没有它，故障发生时只能靠猜；有了它，问题在用户感知之前就能被发现和定位。对 AI/Agent 服务而言，除常规接口监控外，还需关注 LLM 调用延迟、token 用量、工具调用成功率等专项指标。"
+              "text": "可观测性通过日志、指标和追踪关联请求、状态与资源信号，帮助尽早发现和定位异常；发现速度和定位能力取决于覆盖范围、采样、关联标识和告警设计。对 AI/Agent 服务而言，除常规接口监控外，还需关注 LLM 调用延迟、token 用量、工具调用成功率等专项指标。"
             }
           },
           {
@@ -3346,28 +3369,15 @@
             "isLeaf": true,
             "filePath": "data/sql",
             "contentStatus": "published",
-            "heat": 5,
+            "heat": 6,
             "currRank": 4,
-            "updatedAt": "2026-10-02",
+            "updatedAt": "2026-10-28",
             "interviewBaseHeat": 1,
-            "interviewCount": 4,
+            "interviewCount": 5,
             "interviewCountBasis": "verified-public-posts",
             "quickRead": {
-              "text": "数据库索引（Index）是建立在数据列上的有序辅助结构，可以减少定位和过滤工作，但取结果、回表、排序与传输的成本仍需计算。理解索引的物理结构、适用边界与失效场景，是写出可扩展 SQL 查询的前提。"
+              "text": "数据库索引以有序键、哈希等结构辅助定位，仍须计算取结果、回表、排序和传输成本。先固定查询与一致性合同，用执行计划和实际工作量验证候选索引；容量、读负载或写竞争确实成为瓶颈时，再比较副本、分片与冷热归档，并承担其一致性和运维代价。"
             }
-          },
-          {
-            "label": "Embedding 模型评估与选型",
-            "key": "embedding-models",
-            "isLeaf": true,
-            "filePath": "data/vector",
-            "contentStatus": "published",
-            "heat": 3,
-            "currRank": 3,
-            "updatedAt": "2026-07-18",
-            "interviewBaseHeat": 1,
-            "interviewCount": 2,
-            "interviewCountBasis": "verified-public-posts"
           },
           {
             "label": "窗口函数与分析查询",
@@ -3402,6 +3412,19 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
+            "label": "Embedding 模型评估与选型",
+            "key": "embedding-models",
+            "isLeaf": true,
+            "filePath": "data/vector",
+            "contentStatus": "published",
+            "heat": 2,
+            "currRank": 2,
+            "updatedAt": "2026-07-18",
+            "interviewBaseHeat": 1,
+            "interviewCount": 1,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
             "label": "PostgreSQL 与 JSON 数据",
             "key": "postgresql-features",
             "isLeaf": true,
@@ -3429,7 +3452,10 @@
             "contentStatus": "published",
             "heat": 1,
             "currRank": 1,
-            "updatedAt": "2026-07-18"
+            "updatedAt": "2026-10-28",
+            "quickRead": {
+              "text": "ClickHouse 面向列式分析，MergeTree 按排序键形成 parts，用稀疏索引跳过数据；排序键不保证唯一，粒度也受字节阈值影响。写入、删除、聚合和物化视图各有版本与一致性边界，查询快不代表 Canal、Kafka 到落库的链路延迟已达标。"
+            }
           }
         ]
       },
@@ -3602,14 +3628,14 @@
             "isLeaf": true,
             "filePath": "network/http",
             "contentStatus": "published",
-            "heat": 17,
+            "heat": 16,
             "currRank": 5,
             "updatedAt": "2026-07-18",
             "interviewBaseHeat": 10,
             "quickRead": {
               "text": "HTTP 方法、状态码、头与内容共同表达请求响应语义，GET 与 POST 不按名称决定性能。HTTPS 在 TLS 下保护传输，HTTP/2 和 HTTP/3 有不同承载与流机制，业务授权仍独立执行。"
             },
-            "interviewCount": 7,
+            "interviewCount": 6,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -3618,30 +3644,14 @@
             "isLeaf": true,
             "filePath": "network/tcpIp",
             "contentStatus": "published",
-            "heat": 15,
+            "heat": 14,
             "currRank": 5,
             "updatedAt": "2026-08-29",
             "interviewBaseHeat": 10,
             "quickRead": {
               "text": "TCP 建连、关闭、状态与拥塞控制各有合同，经典握手和挥手不是 TLS 握手。丢失后的重传与窗口调整依算法和信号决定，不能认为窗口始终翻倍或所有错误同样恢复。"
             },
-            "interviewCount": 5,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "DNS 解析、缓存与容灾",
-            "key": "dns-analysis",
-            "isLeaf": true,
-            "filePath": "network/others",
-            "contentStatus": "published",
-            "heat": 12,
-            "currRank": 5,
-            "updatedAt": "2026-07-17",
-            "interviewBaseHeat": 10,
-            "quickRead": {
-              "text": "域名解析经过浏览器、系统与递归服务的缓存和必要层级查询，别名与记录类型会影响路径。TTL、负缓存和不同解析链有各自边界，返回地址并不证明服务健康。"
-            },
-            "interviewCount": 2,
+            "interviewCount": 4,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -3658,6 +3668,22 @@
               "text": "TCP 提供有序可靠字节流，UDP 提供数据报；QUIC 在 UDP 上自行实现可靠流、恢复与拥塞控制。HTTP/2 的 TCP 丢包可阻塞后续字节交付，QUIC 独立流仍共享部分连接资源。"
             },
             "interviewCount": 2,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
+            "label": "DNS 解析、缓存与容灾",
+            "key": "dns-analysis",
+            "isLeaf": true,
+            "filePath": "network/others",
+            "contentStatus": "published",
+            "heat": 11,
+            "currRank": 5,
+            "updatedAt": "2026-07-17",
+            "interviewBaseHeat": 10,
+            "quickRead": {
+              "text": "域名解析经过浏览器、系统与递归服务的缓存和必要层级查询，别名与记录类型会影响路径。TTL、负缓存和不同解析链有各自边界，返回地址并不证明服务健康。"
+            },
+            "interviewCount": 1,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -3679,14 +3705,14 @@
             "isLeaf": true,
             "filePath": "cs/os",
             "contentStatus": "published",
-            "heat": 10,
+            "heat": 8,
             "currRank": 5,
             "updatedAt": "2026-07-18",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "进程承载地址空间与资源，线程是进程内的执行单元并共享内存，协程可由运行时挂起和恢复以复用线程。共享状态需要同步，协程遇到阻塞调用或长计算仍可能占住所在线程；并发等待不等于多核并行，协程的调度方式也取决于运行时。"
             },
-            "interviewCount": 9,
+            "interviewCount": 7,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -3695,14 +3721,14 @@
             "isLeaf": true,
             "filePath": "cs/os",
             "contentStatus": "published",
-            "heat": 7,
+            "heat": 6,
             "currRank": 4,
             "updatedAt": "2026-10-20",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "同步协调共享状态的互斥、可见性与访问顺序。Java wait释放对应monitor并等待，唤醒后须重新持锁检查谓词；notify不解锁也不保证公平，关闭和中断要有明确合同。锁、条件变量与信号量各自解决不同约束。"
             },
-            "interviewCount": 6,
+            "interviewCount": 5,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -3822,14 +3848,14 @@
             "isLeaf": true,
             "filePath": "data-structure/algorithm",
             "contentStatus": "published",
-            "heat": 14,
+            "heat": 16,
             "currRank": 5,
             "updatedAt": "2026-10-03",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "递归先定义状态、终止和推进，记忆化合并重复状态；DP 明确处理层与转移，回溯保留撤销边界。目标和题需先确认符号与计数契约，0 可带来不同符号方案；通配匹配与 LCS 差异路径同样依赖准确状态，不能只凭题名套模板。"
             },
-            "interviewCount": 8,
+            "interviewCount": 10,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -3838,14 +3864,14 @@
             "isLeaf": true,
             "filePath": "cs/algorithm",
             "contentStatus": "published",
-            "heat": 10,
+            "heat": 9,
             "currRank": 5,
             "updatedAt": "2026-10-19",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "排序比较稳定性、复杂度、内存和数据访问方式；分块排序还需证明跨块顺序。LC768 允许重复值，可用单调栈合并逆序块，不能套排列版的前缀最大值条件。"
             },
-            "interviewCount": 4,
+            "interviewCount": 3,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -3886,14 +3912,14 @@
             "isLeaf": true,
             "filePath": "data-structure/algorithm",
             "contentStatus": "published",
-            "heat": 6,
+            "heat": 5,
             "currRank": 4,
             "updatedAt": "2026-10-03",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "数组与字符串算法先确定顺序、重复、边界和修改输入的契约，再用指针维护不变量。有序交集移动较小端；降序归并从两尾取较大值，剩余也按尾部次序追加。双指针并不自动保证线性复杂度，应检查每个元素被访问多少次。"
             },
-            "interviewCount": 5,
+            "interviewCount": 4,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -4067,7 +4093,7 @@
             "contentStatus": "published",
             "heat": 13,
             "currRank": 5,
-            "updatedAt": "2026-07-18",
+            "updatedAt": "2026-10-28",
             "interviewBaseHeat": 10,
             "quickRead": {
               "text": "Cookie 可按规则随请求发送，Storage 是浏览器本地键值状态，不会自动完成鉴权。选择按生命周期、数据量与敏感性，保存版本和过期规则，客户端缓存不替代服务端权威状态。"
@@ -4256,6 +4282,22 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
+            "label": "前端卡顿定位与性能诊断",
+            "key": "frontend-performance-diagnostics",
+            "isLeaf": true,
+            "filePath": "frontend/engineering",
+            "contentStatus": "published",
+            "heat": 7,
+            "currRank": 4,
+            "updatedAt": "2026-10-28",
+            "interviewBaseHeat": 0,
+            "quickRead": {
+              "text": "前端性能先固定用户场景，用RUM和trace找到主线程、渲染、网络等实际瓶颈，再同条件回归。Canvas裁切需证明绘制成本与边界正确；PV/UV是定义过的访问统计，FCP来自浏览器paint条目，不能用mounted时间或SPA路由计时冒充。大列表仅渲染可视区及缓冲，动态高度需测量并保留消息身份与滚动锚点。"
+            },
+            "interviewCount": 7,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
             "label": "Vite、前端构建与测试基础",
             "key": "vite-testing",
             "isLeaf": true,
@@ -4269,22 +4311,6 @@
             },
             "interviewBaseHeat": 3,
             "interviewCount": 3,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "前端卡顿定位与性能诊断",
-            "key": "frontend-performance-diagnostics",
-            "isLeaf": true,
-            "filePath": "frontend/engineering",
-            "contentStatus": "published",
-            "heat": 6,
-            "currRank": 4,
-            "updatedAt": "2026-10-03",
-            "interviewBaseHeat": 0,
-            "quickRead": {
-              "text": "前端性能先固定用户场景，用RUM和trace找到主线程、渲染、网络等实际瓶颈，再同条件回归。Canvas裁切需证明绘制成本与边界正确；PV/UV是定义过的访问统计，FCP来自浏览器paint条目，不能用mounted时间或SPA路由计时冒充。大列表仅渲染可视区及缓冲，动态高度需测量并保留消息身份与滚动锚点。"
-            },
-            "interviewCount": 6,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -4403,14 +4429,14 @@
             "isLeaf": true,
             "filePath": "career",
             "contentStatus": "published",
-            "heat": 33,
+            "heat": 31,
             "currRank": 5,
-            "updatedAt": "2026-10-14",
+            "updatedAt": "2026-10-28",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "简历围绕问题、个人决策和可核验结果叙述项目，区分个人与团队成果。面试需解释系统边界、选型、评测和失败处理；示例指标不能写成自己的经历，未做过的技术与真实用户情况应如实说明。"
             },
-            "interviewCount": 27,
+            "interviewCount": 25,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -4437,7 +4463,7 @@
             "contentStatus": "published",
             "heat": 16,
             "currRank": 5,
-            "updatedAt": "2026-07-18",
+            "updatedAt": "2026-10-28",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Agent相关岗位覆盖应用、平台、评测、安全与研究工程，名称并不统一。按团队实际产出和工作任务判断方向，工程基础、状态工具与质量验证常有交集；岗位热度不能代替自身能力证据和团队要求。"
@@ -4451,14 +4477,14 @@
             "isLeaf": true,
             "filePath": "career",
             "contentStatus": "published",
-            "heat": 15,
+            "heat": 14,
             "currRank": 5,
             "updatedAt": "2026-07-17",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Agent 项目价值要连接任务结果与业务收益：用相同任务和标准比较基线，离线评测后再观察真实流量与长期表现。质量、安全、延迟、成本和人工返工共同决定净收益；工具返回成功或生成了答案，都不等于业务任务完成。"
             },
-            "interviewCount": 9,
+            "interviewCount": 8,
             "interviewCountBasis": "verified-public-posts"
           },
           {

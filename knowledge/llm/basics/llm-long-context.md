@@ -85,9 +85,6 @@ Transformer 的自注意力本身没有天然顺序，需要位置编码告诉�
 
 <!-- interview-source-history:start -->
 - [字节 Agent 暑期一面：优化证据、指令偏差与长上下文](../../../interview/bytedance/base/bytedance-base-59.md)
-- [拼多多 AI Agent 岗两轮技术面：RAG、多 Agent 与系统能力（2026 年 8 月）](../../../interview/pinduoduo/ai/pinduoduo-ai-1.md)
-- [字节 TikTok Agent 开发秋招一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-11.md)
-- [腾讯 AI 开发一面：Coding Agent 记忆、评测与可靠运行（2026 年 8 月）](../../../interview/tencent/ai/tencent-ai-8.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

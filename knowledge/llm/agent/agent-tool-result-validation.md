@@ -10,7 +10,7 @@
 
 ## Schema 验证形状，不验证事实
 
-[JSON Schema Validation](https://json-schema.org/draft/2020-12/json-schema-validation)可检查类型、required、枚举、范围、格式和额外属性策略。输出 schema 应由受信任 registry 按工具版本选择，不接受结果自己声明一个更宽 schema。
+[JSON Schema Validation](https://json-schema.org/draft/2020-12/json-schema-validation)可检查类型、required、枚举、范围和额外属性策略。Draft 2020-12 的 `format` 默认是注解；若依赖日期、邮箱等格式拒绝无效值，须明确启用并核实验证器的格式断言支持。输出 schema 应由受信任 registry 按工具版本选择，不接受结果自己声明一个更宽 schema。
 
 结构通过后继续做语义检查，例如 `start <= end`、币种与金额匹配、分页 cursor 与请求一致、资源 ID 属于预期对象、总数等于明细汇总。Schema 能确认 `amount` 是 number，却不能确认金额来自真实账本或当前用户有权查看。
 
@@ -94,16 +94,18 @@ async function acceptResult(raw: unknown, ctx: ValidationContext) {
 
 ## 出现于（热度来源）
 
+来源归属说明（同一面经页，不另计次）：
+
+- [百度部分（小红书与百度合并记录）：LangGraph、Skill 与工程校验](../../../interview/redbook/ai/redbook-ai-2.md)；对应合并页中已明确标出的百度部分。
+
 <!-- interview-source-history:start -->
-- [拼多多 AI Agent 岗两轮技术面：RAG、多 Agent 与系统能力（2026 年 8 月）](../../../interview/pinduoduo/ai/pinduoduo-ai-1.md)
-- [百度部分（小红书与百度合并记录）：LangGraph、Skill 与工程校验](../../../interview/redbook/ai/redbook-ai-2.md)
+- [小红书与百度 Agent 面试合并记录：LangGraph 子图、Skill 与工程校验](../../../interview/redbook/ai/redbook-ai-2.md)
 - [字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-20.md)
-- [百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测（2026 年 8 月）](../../../interview/baidu/ai/baidu-ai-2.md)
+- [vivo Agent 秋招线下面：Harness 与工程诊断](../../../interview/vivo/ai/vivo-ai-1.md)
 - [阿里 Agent 开发暑期实习一面](../../../interview/alibaba/ai/alibaba-ai-2.md)
-- [蚂蚁 Agent 开发一面：多 Agent 并发与质量保障（2026 年 4 月）](../../../interview/antfin/ai/antfin-ai-1.md)
 - [字节剪映 AI 前端一面：Agent 运行时、MCP 与性能](../../../interview/bytedance/base/bytedance-base-30.md)
-- [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
 - [阿里淘宝闪购 Agent 算法实习一面：框架、记忆与线上排障](../../../interview/alibaba/ai/alibaba-ai-6.md)
+- [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

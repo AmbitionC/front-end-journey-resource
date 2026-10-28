@@ -3,7 +3,7 @@
 
 ---
 
-完善的可观测性（Observability）体系是生产系统的"眼睛"——没有它，故障发生时只能靠猜；有了它，问题在用户感知之前就能被发现和定位。对 AI/Agent 服务而言，除常规接口监控外，还需关注 LLM 调用延迟、token 用量、工具调用成功率等专项指标。
+可观测性通过日志、指标和追踪关联请求、状态与资源信号，帮助尽早发现和定位异常；发现速度和定位能力取决于覆盖范围、采样、关联标识和告警设计。对 AI/Agent 服务而言，除常规接口监控外，还需关注 LLM 调用延迟、token 用量、工具调用成功率等专项指标。
 
 ## 三大支柱：日志 / 指标 / 追踪
 
@@ -23,7 +23,7 @@ Logging、Metrics、Tracing 并称可观测性三大支柱，定位各不相同�
 
 ### JSON 格式 vs 纯文本
 
-纯文本日志（`console.log`）只能全文搜索，无法按字段过滤或聚合。生产环境应输出 JSON，让日志平台自动建索引。
+缺少结构化字段的纯文本日志通常需要额外解析，才能稳定做字段过滤与聚合。生产环境可输出 JSON，并为日志平台配置解析与索引。
 
 ```ts
 // logger.ts — 使用 pino（高性能结构化日志库）
@@ -139,17 +139,19 @@ Trace: user-request (TraceID: abc123)
 └── Span: format-response (12ms)
 ```
 
+以下按 OpenTelemetry JS SDK 2.x 的资源 API 示意；与其配套的实验包版本需按官方兼容矩阵锁定。2.x 已不再导出 `Resource` 构造类，改用工厂函数，见[官方迁移说明](https://github.com/open-telemetry/opentelemetry-js/blob/main/doc/upgrade-to-2.x.md)。
+
 ```ts
-// otel.ts — OpenTelemetry 初始化
+// otel.ts — OpenTelemetry 初始化示意
 import { NodeSDK } from '@opentelemetry/sdk-node';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
-import { Resource } from '@opentelemetry/resources';
-import { SEMRESATTRS_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
+import { defaultResource, resourceFromAttributes } from '@opentelemetry/resources';
+import { ATTR_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
 
 const sdk = new NodeSDK({
-  resource: new Resource({
-    [SEMRESATTRS_SERVICE_NAME]: 'agent-service',
-  }),
+  resource: defaultResource().merge(resourceFromAttributes({
+    [ATTR_SERVICE_NAME]: 'agent-service',
+  })),
   traceExporter: new OTLPTraceExporter({
     url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT ?? 'http://jaeger:4318/v1/traces',
   }),
@@ -198,7 +200,9 @@ async function callLLM(messages: Message[]): Promise<string> {
     } catch (err) {
       span.recordException(err as Error);
       span.setStatus({ code: SpanStatusCode.ERROR });
-      llmCallDuration.observe({ model, status: 'error' }, (Date.now() - start) / 1000);
+      const status = typeof err === 'object' && err !== null
+        && 'status' in err && err.status === 429 ? 'rate_limited' : 'error';
+      llmCallDuration.observe({ model, status }, (Date.now() - start) / 1000);
       throw err;
     } finally {
       span.end();
@@ -217,6 +221,8 @@ async function callLLM(messages: Message[]): Promise<string> {
 
 ### 告警规则：LLM API 超时/限流
 
+以下阈值仅为教学配置，需按业务 SLO 校准。直方图先按 `le` 与模型合并实例，再计算分位；错误率的分子、分母须先聚合掉 `status`，否则默认标签匹配可能只把错误序列除以自身。[Prometheus 函数](https://prometheus.io/docs/prometheus/latest/querying/functions/#histogram_quantile)与[向量匹配规则](https://prometheus.io/docs/prometheus/latest/querying/operators/#vector-matching)定义了这些计算语义。
+
 ```yaml
 # prometheus-alert-rules.yml
 groups:
@@ -225,7 +231,7 @@ groups:
       - alert: LLMHighLatency
         expr: |
           histogram_quantile(0.95,
-            rate(llm_call_duration_seconds_bucket{status="success"}[5m])
+            sum by (le, model) (rate(llm_call_duration_seconds_bucket{status="success"}[5m]))
           ) > 10
         for: 3m
         labels:
@@ -235,7 +241,7 @@ groups:
 
       - alert: LLMRateLimited
         expr: |
-          rate(llm_call_duration_seconds_count{status="rate_limited"}[5m]) > 0.5
+          sum by (model) (rate(llm_call_duration_seconds_count{status="rate_limited"}[5m])) > 0.5
         for: 1m
         labels:
           severity: critical
@@ -244,8 +250,8 @@ groups:
 
       - alert: AgentToolCallErrorRate
         expr: |
-          rate(agent_tool_call_total{status="error"}[5m])
-          / rate(agent_tool_call_total[5m]) > 0.1
+          sum by (tool) (rate(agent_tool_call_total{status="error"}[5m]))
+          / sum by (tool) (rate(agent_tool_call_total[5m])) > 0.1
         for: 2m
         labels:
           severity: warning
@@ -366,7 +372,7 @@ function shouldSample(statusCode: number, durationMs: number): boolean {
 **面试要点**
 
 - **Logging / Metrics / Tracing 的区别**：三者互补，指标告警定位问题域，追踪定位调用链，日志提供详细上下文
-- **为什么用结构化日志**：JSON 可被平台自动解析建索引，支持字段过滤、聚合分析，而纯文本只能全文搜索
+- **为什么用结构化日志**：稳定字段便于配置解析、索引和聚合，减少从自由文本提取含义的歧义
 - **RED 方法**：Rate、Errors、Duration，是衡量服务健康度的最小必要指标集
 - **OpenTelemetry 的价值**：厂商中立的可观测性标准，一次埋点可同时接入 Jaeger / Zipkin / SLS / DataDog
 - **Agent 服务的监控重点**：LLM 调用延迟（比普通接口高 10-100x）、token 消耗（直接影响成本）、工具调用成功率、多轮会话中的错误传播
@@ -374,13 +380,16 @@ function shouldSample(statusCode: number, durationMs: number): boolean {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [阿里云 Agent Infra 一面：SGX、吞吐与日志写入](../../../interview/alibaba/ai/alibaba-ai-8.md)（cluster-21f88c2e7c88）
-- [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)（cluster-40374dfc6b29）
-- [字节 Agent 暑期实习一面：摘要、工具预算与链表](../../../interview/bytedance/base/bytedance-base-27.md)（cluster-7116079e6b23）
-- [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../../interview/bytedance/base/bytedance-base-24.md)（cluster-78d45fa26bfd）
+- [阿里云 Agent Infra 一面：SGX、吞吐与日志写入](../../../interview/alibaba/ai/alibaba-ai-8.md)
+- [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)
+- [字节 Agent 暑期实习一面：摘要、工具预算与链表](../../../interview/bytedance/base/bytedance-base-27.md)
+- [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../../interview/bytedance/base/bytedance-base-24.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
 
 - [OpenTelemetry signals](https://opentelemetry.io/docs/concepts/signals/)
 - [OpenTelemetry semantic conventions](https://opentelemetry.io/docs/specs/semconv/)
+- [OpenTelemetry JS：升级到 2.x](https://github.com/open-telemetry/opentelemetry-js/blob/main/doc/upgrade-to-2.x.md)
+- [Prometheus：histogram_quantile](https://prometheus.io/docs/prometheus/latest/querying/functions/#histogram_quantile)
+- [Prometheus：Vector matching](https://prometheus.io/docs/prometheus/latest/querying/operators/#vector-matching)
