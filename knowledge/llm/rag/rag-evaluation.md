@@ -188,6 +188,7 @@ RAG 评估是一套诊断系统，而不是排行榜。先用检索指标判断�
 
 <!-- interview-source-history:start -->
 - [小红书一面：检索评测、上下文压缩与任务幂等](../../../interview/redbook/ai/redbook-ai-4.md)
+- [华为终端 BG AI 应用技术面：RAG 评测与冲突证据](../../../interview/huawei/ai/huawei-ai-2.md)
 - [小红书 AI 后端一面：执行模式、Memory、意图与 RAG](../../../interview/redbook/ai/redbook-ai-8.md)
 - [字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)
 - [字节全栈一面：RAG、Java 与线程池](../../../interview/bytedance/base/bytedance-base-37.md)

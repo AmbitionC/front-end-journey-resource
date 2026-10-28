@@ -52,7 +52,7 @@ manifest 内容可生成不可变 build ID。查询 trace、缓存键、评测�
 
 [Elasticsearch Aliases](https://www.elastic.co/guide/en/elasticsearch/reference/current/aliases.html)说明多数 API 可用 alias 代替索引，alias 能实时改变应用使用的索引，并支持无停机 reindex。查询客户端只引用逻辑 alias，例如 `knowledge-current`。
 
-切换事务同时把读 alias 从 V1 移到 V2；若有写 alias，也要明确 `is_write_index`。发布记录包含切换前后 target、操作者、门禁报告和时间。
+把读 alias 从 V1 移到 V2 时，在同一个多动作请求中移除旧目标、添加新目标，并检查切换前置条件。当前 [Aliases 文档的多动作结果说明](https://www.elastic.co/docs/manage-data/data-store/aliases#multiple-action-results)允许某个动作失败而其他动作成功；`acknowledged: true` 不代表预期操作全部成功。按所用版本核对 `must_exist` 等条件，并检查 `errors`、各动作结果与实际目标；不要把两个独立请求之间的空窗说成原子切换。若有写 alias，也要明确 `is_write_index`。发布记录包含切换前后 target、操作者、门禁报告和时间。
 
 原子切换只保证路由指针一致，不保证所有应用缓存立即刷新。缓存键包含 indexVersion，V2 首次查询不会复用 V1 结果；旧请求仍可在短时间内完成，但 trace 显示其版本。
 
@@ -83,7 +83,7 @@ GC 前确认：回滚窗口结束、无 alias、无活跃查询/任务、构建�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-
+- [腾讯 AI 后端实习面经：编排、重试与知识库更新](../../../interview/tencent/ai/tencent-ai-19.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

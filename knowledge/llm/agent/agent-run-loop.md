@@ -97,7 +97,9 @@ Run Loop 是状态机、预算器与证据循环的组合。观察必须来自�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [小红书 Agent 算法一面：研究停止、协作与租户](../../../interview/redbook/ai/redbook-ai-15.md)
 - [蚂蚁 Agent 一面：代码验收与运行循环](../../../interview/antfin/ai/antfin-ai-9.md)
+- [快手 AI 应用开发实习二面：循环、记忆与重排](../../../interview/kuaishou/ai/kuaishou-ai-14.md)
 - [快手 AI 全栈一面：Skill 成本、Agent 链路与开发验收](../../../interview/kuaishou/ai/kuaishou-ai-9.md)
 - [阿里云 Agent 开发秋招一面](../../../interview/alibaba/ai/alibaba-ai-1.md)
 - [OPPO IT 开发一面：ReAct、MCP 与智能问数](../../../interview/oppo/ai/oppo-ai-3.md)

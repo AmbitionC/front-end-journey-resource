@@ -335,6 +335,8 @@ MySQL redo 与 binlog 的内部协调涉及特定引擎实现，不等于完整�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [腾讯 AI 应用开发实习一面：事务快照与 B+树索引](../../../interview/tencent/ai/tencent-ai-18.md)
+- [蚂蚁大模型应用秋招一面：记忆评测、事务日志与消息积压](../../../interview/antfin/ai/antfin-ai-11.md)
 - [小红书产品工程师一面：一致性、知识来源与多模态评估](../../../interview/redbook/ai/redbook-ai-6.md)
 - [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
 - [小红书与百度 Agent 面试合并记录：LangGraph 子图、Skill 与工程校验](../../../interview/redbook/ai/redbook-ai-2.md)

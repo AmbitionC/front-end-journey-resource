@@ -95,7 +95,9 @@ const delay = Math.random() * cap;
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [百度后端一面：延迟诊断、工具恢复与滑动窗口](../../../interview/baidu/ai/baidu-ai-10.md)
 - [拼多多提前批一面：Agent 超时、消息可靠性与线上排障](../../../interview/pinduoduo/ai/pinduoduo-ai-2.md)
+- [腾讯 PCG 暑期一面：检索一致性、多智能体调度与超时恢复](../../../interview/tencent/ai/tencent-ai-22.md)
 - [蚂蚁 AI 应用暑期一面：工具超时与 RAG Top-K](../../../interview/antfin/ai/antfin-ai-8.md)
 - [字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-20.md)
 - [大疆创新 AI Agent 开发面经：容错、Token 与后端基础](../../../interview/dji/ai/dji-ai-1.md)

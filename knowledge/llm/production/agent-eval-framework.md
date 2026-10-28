@@ -112,6 +112,7 @@ Agent 的改动可能影响工具选择、提示词、检索、上下文管理�
 <!-- interview-source-history:start -->
 - [小红书 AI 全栈业务交叉面与二面：MVP、运行稳定性和视频 Agent](../../../interview/redbook/ai/redbook-ai-5.md)
 - [快手 AI 应用服务端日常实习一面：协作、上下文与评测](../../../interview/kuaishou/ai/kuaishou-ai-7.md)
+- [vivo 多模态算法：重排候选与多意图评测](../../../interview/vivo/ai/vivo-ai-2.md)
 - [字节 TikTok Shop 质量方向一面：LLM Judge 与测试集覆盖](../../../interview/bytedance/base/bytedance-base-66.md)
 - [蚂蚁一面：交付门禁、准确率口径与商品问答](../../../interview/antfin/ai/antfin-ai-10.md)
 - [小红书产品工程师一面：一致性、知识来源与多模态评估](../../../interview/redbook/ai/redbook-ai-6.md)

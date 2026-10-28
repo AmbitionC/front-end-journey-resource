@@ -79,6 +79,7 @@ Key 唯一范围至少包含 principal/tenant 和 operation，防止不同用户
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [腾讯 AI 后端实习面经：编排、重试与知识库更新](../../../interview/tencent/ai/tencent-ai-19.md)
 - [阿里 Token Foundry AI 应用研发一面：Critic、上下文与幂等](../../../interview/alibaba/ai/alibaba-ai-17.md)
 - [海康威视 AI Agent 开发一面：可靠工具与任务状态](../../../interview/hikvision/ai/hikvision-ai-1.md)
 <!-- interview-source-history:end -->

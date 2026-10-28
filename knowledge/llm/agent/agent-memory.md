@@ -1,4 +1,4 @@
-![分层记忆图：当前上下文工作区位于中心，短期对话在上，长期情节与语义存储在下；箭头展示写入、索引、检索、压缩和遗忘，标出权限与时效过滤](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-memory-tiered-read-write-v1.webp)
+![记忆用途与生命周期示意：左侧为工作与情景记忆，右侧为语义与程序性记忆，中间为检索、使用、写入、校验和更新或遗忘流程，上方锁图标提示访问边界](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-memory-tiered-read-write-v1.webp)
 *图：沿图中的节点与箭头阅读，重点是区分工作上下文、情节记忆、语义记忆及检索写回，而不是把所有历史都称作长期记忆。*
 
 ---
@@ -265,9 +265,20 @@ memory_tool.execute("forget", strategy="capacity_based", threshold=policy.capaci
 
 ---
 
+## 工具结果、持久记忆与 token 节省分开验证
+
+一次 ReAct 风格执行会不断产生动作与观察，但模型当前上下文不必携带所有原始大结果。把完整工具请求、结果、时间、状态和来源保存在可授权回读的记录中，工作上下文保留继续任务需要的精确字段、摘要与引用；工具请求与结果应保持可解释的配对，不能把未确认写入压成“已经完成”。摘要是有损视图，授权、幂等键、结果未知状态等机器必需字段应独立保存，遗漏时回源或阻断。
+
+[LangGraph Persistence](https://docs.langchain.com/oss/python/langgraph/persistence)区分 thread 内图状态的 checkpointer 与跨 thread 的应用 store；这说明短期恢复状态和长期可复用信息的职责不同，不表示这些组件自动提供租户授权。长期保存事实要核对来源、有效期与允许用途，检索时按任务和权限取回；ReAct 循环本身也不规定必须用哪一种数据库或向量索引。
+
+报告“节省 token”时先固定任务集、模型/分词口径、工具与知识版本、成功判定及重试策略。分别统计输入、输出、摘要生成和重试消耗，再比较总成本、任务成功率、关键约束遗漏与延迟；压短输入却增加多轮重试，不一定更省。没有基线、样本与测量记录时，只能说明优化方法，不能把一个节省百分比当作已验证成绩。
+
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [蚂蚁大模型应用秋招一面：记忆评测、事务日志与消息积压](../../../interview/antfin/ai/antfin-ai-11.md)
+- [美团本地核心一面：缓存一致性、库存故障与 Agent 记忆](../../../interview/meituan/ai/meituan-ai-4.md)
 - [拼多多 AI Agent 岗两轮技术面：RAG、多 Agent 与系统能力](../../../interview/pinduoduo/ai/pinduoduo-ai-1.md)
 - [字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)
 - [字节 Agent 开发二面（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-7.md)
@@ -284,3 +295,4 @@ memory_tool.execute("forget", strategy="capacity_based", threshold=policy.capaci
 
 - [MemGPT: Towards LLMs as Operating Systems](https://arxiv.org/abs/2310.08560)
 - [Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/abs/2304.03442)
+- [LangGraph — Persistence：checkpointer 与 store](https://docs.langchain.com/oss/python/langgraph/persistence)

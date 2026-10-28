@@ -1,7 +1,7 @@
 分布式 ID 的难点不在于“生成一个数字”，而在于把唯一性、时间顺序、吞吐量、索引局部性、跨区域部署和故障恢复放进同一份契约。先写清业务是否真的需要有序的 64 位整数，再选择 UUID、Snowflake 或号段（segment）这类不同边界的方案。
 
 ![UUID、Snowflake 与号段策略按唯一性、顺序性、中心依赖和时钟风险划分边界；生成后的 ID 仍需在数据库唯一约束下落库](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/distributed-id-strategy-boundary-v1.svg)
-*图：选择 ID 方案是在排序能力、协调成本与故障模式之间取舍；唯一索引仍是最终防线。*
+*图：选择 ID 方案是在排序能力、协调成本与故障模式之间取舍；号段列的递增只指段内顺序，不承诺跨实例的全局发号顺序；唯一索引仍是最终防线。*
 
 ## 概览：先定义 ID 契约
 
@@ -15,7 +15,15 @@
 | --- | --- | --- | --- |
 | UUID | 128 位随机或时间有序值 | 无中心协调、跨系统易生成 | 占用更大；字符串/随机写对索引不友好 |
 | Snowflake | 时间戳 + 节点号 + 毫秒内序列 | 紧凑整数、近似时间有序、高吞吐 | 节点号和时钟是正确性依赖 |
-| 号段 | 中心表预分配 `[start, end]` | 整数递增、规则直观 | 依赖号段服务；段耗尽前需续租 |
+| 号段 | 中心表预分配 `[start, end]` | 段内递增、减少中心往返 | 跨实例不保证全局发号顺序；段耗尽前需预取 |
+
+### “递增”必须说明是哪一种顺序
+
+全局唯一、单实例递增、按时间趋势排序、全局发号递增和无空洞连续编号是不同承诺。例如实例 A 先领到 1—10，实例 B 领到 11—20；B 发出 11 后，A 仍可能发出 2。号段没有重复，却不按所有实例的实际发号先后递增；Snowflake 与 UUIDv7 的时间前缀也不能提供跨节点严格全序。
+
+如果业务要求“前一次调用已结束，后开始的调用必须取得更大号码”，需要把这一顺序写入发号服务契约，并检查协调、缓存、故障切换和持久化的保证。不能只说“数据库自增一定有序”：[PostgreSQL 18 的序列说明](https://www.postgresql.org/docs/18/sql-createsequence.html)明确举例，多会话预缓存号码时，后返回的值可能小于另一会话已经返回的值；未使用的缓存与事务回滚还可能产生空洞。
+
+严格协调的顺序分配与高并发吞吐之间存在成本取舍，不能用本地批量预取悄悄削弱承诺。生成 ID 的顺序也不是订单提交、支付或消息处理的业务顺序；需要这些顺序时，应另设业务版本、提交序号或事件顺序规则，并保留唯一约束。
 
 ### UUID：标准化格式，不等于排序承诺
 
@@ -75,12 +83,12 @@ WHERE biz_tag = :tag;
 
 ## 小结
 
-分布式 ID 的选型应从契约出发：UUIDv7 以标准化 128 位空间换取去中心化，Snowflake 以节点与时钟管理换取紧凑近似有序的整数，号段以中心预分配换取简单递增。无论哪种方案，都要把唯一索引、故障演练、跨语言表示和外部暴露风险纳入设计。
+分布式 ID 的选型应从契约出发：UUIDv7 以标准化 128 位空间换取去中心化，Snowflake 以节点与时钟管理换取紧凑近似有序的整数，号段以中心预分配换取段内顺序和较少的中心往返。无论哪种方案，都要把唯一索引、故障演练、跨语言表示和外部暴露风险纳入设计。
 
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-
+- [小红书 PE 一面：订单号、上下文摘要与执行范式](../../../interview/redbook/ai/redbook-ai-14.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
@@ -88,3 +96,4 @@ WHERE biz_tag = :tag;
 - [RFC 9562：Universally Unique IDentifiers](https://www.rfc-editor.org/rfc/rfc9562.html)
 - [Apache ShardingSphere：SnowflakeKeyGenerateAlgorithm 源码](https://shardingsphere.apache.org/statistics/staging/xref/org/apache/shardingsphere/infra/algorithm/keygen/snowflake/SnowflakeKeyGenerateAlgorithm.html)
 - [Apache ShardingSphere：Distributed Primary Key（含 clock-back）](https://shardingsphere.apache.org/document/legacy/3.x/document/en/features/sharding/other-features/key-generator/)
+- [PostgreSQL 18：序列缓存与跨会话顺序](https://www.postgresql.org/docs/18/sql-createsequence.html)

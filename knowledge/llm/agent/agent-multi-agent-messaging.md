@@ -83,6 +83,7 @@ schema 演进遵循向后兼容：新增可选字段，旧消费者忽略未知�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [小红书 Agent 算法一面：研究停止、协作与租户](../../../interview/redbook/ai/redbook-ai-15.md)
 - [快手 AI 应用服务端日常实习一面：协作、上下文与评测](../../../interview/kuaishou/ai/kuaishou-ai-7.md)
 - [快手 AI 应用服务端秋招三面：分布式 Agent、通信与 Lua](../../../interview/kuaishou/ai/kuaishou-ai-6.md)
 - [快手 Agent 面试：多智能体通信与推理模型](../../../interview/kuaishou/ai/kuaishou-ai-11.md)

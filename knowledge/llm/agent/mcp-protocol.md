@@ -105,7 +105,11 @@ CLI 通常以命令、参数、标准输入输出与退出状态提供进程接�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [美团后端暑期一面：RAG 消融、工具调用与并发一致性](../../../interview/meituan/ai/meituan-ai-2.md)
+- [腾讯云 CSIG 后台一面：Skill 边界与有序查找](../../../interview/tencent/ai/tencent-ai-23.md)
 - [蚂蚁国际 Agent 一面：跨系统 AI 交付与 MCP 工具链](../../../interview/antfin/ai/antfin-ai-7.md)
+- [美团本地核心一面：缓存一致性、库存故障与 Agent 记忆](../../../interview/meituan/ai/meituan-ai-4.md)
+- [小红书 AI 全栈实习二面：工具服务选择与开发闭环](../../../interview/redbook/ai/redbook-ai-12.md)
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
 - [字节 Agent 实习：模型选择与可信通信](../../../interview/bytedance/base/bytedance-base-54.md)
 - [字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)

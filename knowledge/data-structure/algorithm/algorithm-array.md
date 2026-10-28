@@ -344,9 +344,69 @@ function diffBounds(imageA, imageB, isDifferent) {
 
 时间复杂度为 `O(HW)`，除返回值外空间为 `O(1)`。编码前应确认逐通道精确比较还是允许误差、边界采用闭区间还是半开区间，以及多个不连通差异是共用一个总包围框还是分别求连通分量。
 
+#### 13. 无重复字符的最长子串：可变窗口
+
+子串要求连续，不能通过删除中间字符得到。维护一个不含重复字符的窗口 `[left, right]`：每读到字符，查询它上一次出现的位置；如果仍在当前窗口中，就把左边界移到上次位置之后。左边界只能前进，不能退回。例如 `abba` 处理最后一个 `a` 时，旧位置已经在窗口外，不能把 `left` 从 2 改回 1。
+
+以下教学接口返回按 Unicode 码点计的长度，不是完整原题的输入输出约定。[ECMAScript 的字符串迭代器](https://tc39.es/ecma262/multipage/text-processing.html#sec-string.prototype-@@iterator)按码点迭代；码点也不一定等于用户看到的一个字素，例如组合音标或连字 emoji。若题目按字节、UTF-16 码元或字素计数，应统一遍历与结果单位。
+
+```javascript
+function longestUniqueSubstringLength(text) {
+  const lastSeen = new Map();
+  let left = 0, right = 0, best = 0;
+  for (const char of text) {
+    const previous = lastSeen.get(char);
+    if (previous !== undefined) left = Math.max(left, previous + 1);
+    lastSeen.set(char, right);
+    best = Math.max(best, right - left + 1);
+    right += 1;
+  }
+  return best;
+}
+```
+
+空字符串返回 0，全部相同字符返回 1，`abba` 返回 2，`😀a😀` 按码点计返回 2。若需要实际子串，再记录最优区间并用同一字符单位截取。在抽象哈希表操作平均 O(1) 的模型下，时间 O(n)、空间 O(min(n, 字符种类数))；每个位置只推进一次，不需要为每个起点重新扫描。
+
+#### 14. 有序数组中 target 的首末位置：两个二分边界
+
+先确认排序方向和返回合同。下面的教学接口约定：数组按非降序排列，元素与 target 是可精确比较的有限数值；返回从0开始的闭区间索引，不存在时返回 `[-1, -1]`，不修改输入。调用期间输入不发生并发修改。它不负责先扫描验证整数组是否有序；若增加该校验，要把 O(n) 成本计入总流程。
+
+[Python bisect 官方文档](https://docs.python.org/3/library/bisect.html)把两个边界定义为插入位置：lower bound 左侧都小于 target、右侧都大于等于；upper bound 左侧都小于等于 target、右侧都大于。它们即使在 target 不存在时仍返回合法插入点，因此必须另外检查是否命中。
+
+搜索维护元素区间 `[lo, hi)`，最终插入点可以落在其端点。查 lower 时，`[0, lo)` 已知 `< target`，`[hi, n)` 已知 `>= target`；查 upper 时，分别改为 `<= target` 和 `> target`。有序性保证中点可以排除整段，且每轮区间严格缩小，最后 lo 等于 hi 就是边界。
+
+```javascript
+function orderedBound(nums, target, upper) {
+  let lo = 0, hi = nums.length;
+  while (lo < hi) {
+    const mid = lo + Math.floor((hi - lo) / 2);
+    if (nums[mid] < target || (upper && nums[mid] === target)) {
+      lo = mid + 1;
+    } else {
+      hi = mid;
+    }
+  }
+  return lo;
+}
+
+function findTargetRange(nums, target) {
+  const first = orderedBound(nums, target, false);
+  if (first === nums.length || nums[first] !== target) return [-1, -1];
+  return [first, orderedBound(nums, target, true) - 1];
+}
+
+console.log(findTargetRange([1, 2, 2, 2, 4], 2)); // [1, 3]
+console.log(findTargetRange([], 2));              // [-1, -1]
+console.log(findTargetRange([1, 3], 2));          // [-1, -1]
+```
+
+不能找到任意一个相等元素后就返回，也不要用 `target + 1` 替代 upper bound，这对最大整数或非整数合同并不可靠。中点按索引计算，避免把 JS 位运算的32位截断引入大数组索引。单次查找时间 O(log n)、额外空间 O(1)；输入无序或比较规则不稳定时，上述不变量不成立。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [百度后端一面：延迟诊断、工具恢复与滑动窗口](../../../interview/baidu/ai/baidu-ai-10.md)
+- [腾讯云 CSIG 后台一面：Skill 边界与有序查找](../../../interview/tencent/ai/tencent-ai-23.md)
 - [字节 Agent 一面：会话记忆、并发更新与算法](../../../interview/bytedance/base/bytedance-base-29.md)
 - [字节 AI 平台一面：Agent 评测、框架与数据结构](../../../interview/bytedance/base/bytedance-base-33.md)
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
@@ -358,3 +418,5 @@ function diffBounds(imageA, imageB, isDifferent) {
 - [ECMAScript Array Objects](https://tc39.es/ecma262/multipage/indexed-collections.html#sec-array-objects)
 - [Introduction to Competitive Programming — Purdue University](https://www.cs.purdue.edu/homes/ninghui/courses/390_Fall19/lectures.html)
 - [COS 226 Advanced Precept 5 Instructor Notes — Princeton University](https://www.cs.princeton.edu/courses/archive/spring26/cos226/precepts/advanced-precept5.pdf)
+- [ECMAScript：String Iterator](https://tc39.es/ecma262/multipage/text-processing.html#sec-string.prototype-@@iterator)
+- [Python：bisect 的左右插入边界](https://docs.python.org/3/library/bisect.html)

@@ -35,7 +35,7 @@
 
 ### 互斥锁 mutex
 
-最常用的互斥工具。线程进入临界区前 `lock()`,离开时 `unlock()`。若锁已被占用,后来者会被**阻塞挂起**(让出 CPU,进入睡眠),被唤醒需要内核介入,有上下文切换开销。
+最常用的互斥工具。线程进入临界区前 `lock()`，离开时 `unlock()`。具体实现可能先尝试用户态原子快路径，竞争时短暂自旋或排队等待；是否挂起、怎样唤醒以及是否进入内核，取决于 API、运行时和锁实现，不能把一次竞争等同于一次线程切换。
 
 ```c
 pthread_mutex_lock(&m);
@@ -43,7 +43,7 @@ count++;            // 临界区
 pthread_mutex_unlock(&m);
 ```
 
-适用:临界区较长、竞争可能导致较长等待的场景。代价是阻塞/唤醒的系统调用成本(通常微秒级)。
+适用：可能等待较久、希望避免持续忙等的场景。若进入阻塞路径，会产生等待管理、唤醒与调度成本；数值受机器、负载和实现影响，应测量真实竞争下的延迟与吞吐，不把“微秒级”当作固定合同。
 
 ### 自旋锁 spinlock
 
@@ -53,16 +53,16 @@ pthread_mutex_unlock(&m);
 while (test_and_set(&lock)) { /* busy wait */ }
 ```
 
-它省去了线程切换的开销,但 CPU 在等待期间被白白占用。
+纯自旋不会因为等锁而主动睡眠，短暂等待可能减少阻塞与唤醒，但线程仍可能被系统抢占。持锁者若被抢占或临界区变长，忙等会持续占用 CPU。
 
 | 维度 | 互斥锁 | 自旋锁 |
 |------|--------|--------|
-| 等待方式 | 睡眠,让出 CPU | 忙等,占用 CPU |
-| 切换开销 | 有(挂起/唤醒) | 无 |
+| 等待方式 | 可能先自旋，再排队或阻塞，按实现决定 | 纯自旋为忙等；仍可能被系统抢占 |
+| 切换开销 | 进入阻塞路径时有唤醒与调度成本 | 不主动睡眠，不代表绝无抢占或切换 |
 | 适合临界区 | 长 | 极短 |
 | 适合场景 | 用户态、可能长等待 | 内核态、多核、持锁时间确定且很短 |
 
-经验法则:**如果等待锁的时间预计比一次线程切换还短,用自旋锁划算;否则用互斥锁。** 单核 CPU 上自旋锁几乎总是错误选择——持锁者得不到 CPU,等待者却在空转。
+短临界区与较低竞争可让自旋成为候选，但是否更快要结合持锁时长、抢占、CPU 配额与实测结果，不能只比一个固定“线程切换耗时”。单核上的忙等会消耗本可供持锁者使用的时间片；抢占式调度仍可能让持锁者继续，并非它必然得不到 CPU。若关闭抢占或高优先级等待者压住低优先级持锁者，进展还可能受到严重影响，应按调度条件分析。
 
 ### 读写锁 rwlock
 
@@ -88,7 +88,7 @@ while (test_and_set(&lock)) { /* busy wait */ }
 
 它比互斥锁更通用:
 
-- **二值信号量**(初值 1):等价于互斥锁;
+- **二元信号量**：在协议将可用许可限制为0或1时，可用于互斥；通常没有所有者，不能把它与要求持有者释放的 mutex 契约等同。
 - **计数信号量**(初值 N):允许最多 N 个线程同时进入,天然适合"资源池"。
 
 比如限制数据库连接池最多 10 个并发:
@@ -102,6 +102,16 @@ sem_post(&sem);          // 归还
 ```
 
 互斥锁强调"所有权"(谁加锁谁解锁),信号量则没有所有权概念——一个线程 `wait`、另一个线程 `post` 完全合法,因此它也常用来做线程间的**事件通知**。（参见 [POSIX sem_wait](https://pubs.opengroup.org/onlinepubs/9799919799/functions/sem_wait.html)）
+
+[Java 25 Semaphore](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/concurrent/Semaphore.html)也明确区分这一点：初始化为1且使用中始终至多保留一个许可，才是这里的二元用法；其他线程可以释放许可。普通计数信号量仅设初值1不会自动阻止重复释放导致许可增加，所以应用仍须管理获取、归还与取消路径。不能从“同时只准一个进入”推导出所有权、公平性或与某种 mutex 完全相同的错误处理。
+
+## Java volatile、复合原子性与信号量实现分开
+
+[JLS 21 §17.4.4–17.4.5](https://docs.oracle.com/javase/specs/jls/se21/html/jls-17.html#jls-17.4.4)规定，volatile 写与同步顺序中后续对同一变量的读建立同步关系，并形成 happens-before 的可见性与有序性约束；这不是给任意多步代码加一把锁。[§17.7](https://docs.oracle.com/javase/specs/jls/se21/html/jls-17.html#jls-17.7)还明确 volatile long/double 的单次读写是原子的，但单次访问原子不等于复合操作原子。
+
+即便 `count` 声明为 `volatile int`，`count++` 仍需取值、加1并存回；[JLS 21 §15.14.2](https://docs.oracle.com/javase/specs/jls/se21/html/jls-15.html#jls-15.14.2)没有把整个表达式变成一个跨线程原子事务。两个线程都读到0，再各自写回1，仍会丢一次更新。单变量计数可按合同选原子 read-modify-write API 或 CAS 循环；涉及多个字段不变量时，要在统一锁或其他一致性协议下处理，不能只给每个字段加 volatile。
+
+信号量还需正确实现“检查并消耗许可”、归还许可、等待与唤醒、取消等状态转换。仅让许可计数可见，不能防止两个线程同时消费同一个许可。以 [Java 25 AbstractQueuedSynchronizer](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/concurrent/locks/AbstractQueuedSynchronizer.html)这一同步框架为例，`getState/setState` 有 volatile 读写语义，而 `compareAndSetState` 提供原子条件更新，框架另负责排队与阻塞机制。这里用它说明原子状态更新与等待协议的分工，不把特定 Semaphore 内部算法当作所有版本的公共 API 保证；公平性、释放数量和中断仍按所用 Semaphore 合同核对。
 
 ## 条件变量:生产者-消费者
 
@@ -161,7 +171,7 @@ WHERE id = 1 AND version = 5;   -- 只在版本仍是 5 时才更新成功
 
 ## CAS、原子操作与 ABA 问题
 
-乐观锁在硬件层面靠 **CAS(Compare-And-Swap)** 实现。CAS 是一条 CPU 原子指令,语义为:
+**CAS（Compare-And-Swap）** 是一种原子条件更新，常由硬件比较交换能力支持；不同 API 和架构的实现可以不同。数据库版本号等乐观并发协议也不等于必须直接使用某条 CPU 指令。其抽象语义为：
 
 ```
 CAS(addr, expected, new):
@@ -171,7 +181,7 @@ CAS(addr, expected, new):
         return false
 ```
 
-"比较并交换"作为一个不可分割的整体执行。基于它,无需操作系统锁就能实现**原子操作**和**无锁(lock-free)数据结构**。开头的计数器可以这样修:
+“比较并交换”作为一个不可分割的整体执行，是构建原子更新和某些无锁算法的基础之一；仅使用 CAS 不足以证明整个算法无锁、公平或没有重试饥饿。开头的计数器可采用下面的抽象循环，具体语言需使用其正式原子 API 并处理数值范围：
 
 ```c
 int old;
@@ -237,7 +247,25 @@ graph LR
 
 排查时问线程在等哪项条件、谁负责满足、是否有期限与取消，再选择同步协议。业务状态与线程状态也不同：一个任务排队不意味着某个线程必然 WAITING。
 
+## 三个线程按顺序打印，不变量先于唤醒
+
+教学合同是三个线程分别打印 `1/4/7`、`2/5/8`、`3/6/9`，共享变量 `next` 从1开始。在同一 monitor 下维护不变量：只有编号等于 `(next-1) mod 3` 的线程可以打印当前值；打印和递增也在该临界区完成。不是靠 sleep 猜调度时机。
+
+```text
+每个线程 i，i 为0、1、2：
+  持有同一 monitor
+  while 未取消 且 next <= 9 且 (next-1) mod 3 != i:
+      wait，并在重新取得 monitor 后重检条件
+  若已取消或 next > 9：通知等待者并退出
+  打印 next，next 加1，notifyAll，释放 monitor
+  重复
+```
+
+这段是协议伪代码，不是已编译的 Java 实现。最终一次递增后仍须通知，防止其他线程永远等在旧条件上；中断时按合同设置共享取消状态并唤醒其他等待者，不能只让一个负责某个余数的线程退出、留下另两者等待永远不会产生的值。安全性来自受锁保护的不变量，进展还依赖可运行线程最终得到调度；`notifyAll` 不保证公平。
+
+
 ## Java 有界栈：monitor 与条件重检
+
 
 下面是独立教学审查合同，不是原帖代码的还原。共享栈、容量与关闭标记由同一个 monitor 保护：push 在满且未关闭时用 `while` 等待，pop 在空且未关闭时等待；被唤醒并重新取得 monitor 后再次检查谓词。栈使用 LIFO，不能把它悄悄换成 FIFO 队列。
 
@@ -257,6 +285,8 @@ graph LR
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [美团后端暑期一面：RAG 消融、工具调用与并发一致性](../../../interview/meituan/ai/meituan-ai-2.md)
+- [快手春招多轮面经：信号量、Top-K 与实验分流](../../../interview/kuaishou/ai/kuaishou-ai-13.md)
 - [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../../interview/bytedance/base/bytedance-base-36.md)
 - [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
@@ -269,3 +299,7 @@ graph LR
 - [POSIX pthread_mutex_lock](https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_mutex_lock.html)
 - [POSIX sem_wait](https://pubs.opengroup.org/onlinepubs/9799919799/functions/sem_wait.html)
 - [Java SE 25 Object：wait / notify / notifyAll](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html)（2026-10-20 北京时间核验）
+- [JLS 21：同步顺序与 happens-before](https://docs.oracle.com/javase/specs/jls/se21/html/jls-17.html#jls-17.4.4)
+- [JLS 21：后置自增语义](https://docs.oracle.com/javase/specs/jls/se21/html/jls-15.html#jls-15.14.2)
+- [Java SE 25 AbstractQueuedSynchronizer：原子状态与等待协议](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/concurrent/locks/AbstractQueuedSynchronizer.html)
+- [Java SE 25 Semaphore：二元用法与无所有者语义](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/concurrent/Semaphore.html)（2026-10-29 核验）

@@ -143,9 +143,19 @@ while iterator.hasNext():
 
 一次 next 后最多删除该项一次，先 remove 或重复 remove 不符合迭代器状态。增强 for 隐含使用迭代器，但循环内直接 map.remove 并不是这个迭代器的 remove。多线程共享 HashMap 还需外部同步或采用具有合适契约的并发集合；“没抛异常”不是线程安全证据。
 
+## 单例服务中的 Map：并发安全与容量是两件事
+
+以 Spring Controller 为教学场景：默认 singleton 是同一容器中同一 bean 定义共享一个实例，并不是每次请求新建对象，也不是跨所有进程唯一。[Spring 7.0.5 的作用域说明](https://github.com/spring-projects/spring-framework/blob/v7.0.5/framework-docs/modules/ROOT/pages/core/beans/factory-scopes.adoc)区分 singleton 与 request 等作用域。因此实例字段中的可变 Map 可能同时被多个请求访问，须先辨认它保存请求临时数据、共享业务状态还是缓存。
+
+临时数据优先放在请求内的局部变量或明确的请求状态中；真正共享的数据应为所有相关读写选择一致的同步协议。普通 HashMap 不提供并发安全，`containsKey` 后再 `put` 的复合判断也不能只凭换一个容器就认定原子。若一个业务不变量涉及多项、外部数据库或多个服务实例，还需对应的锁、事务或权威状态合同；内存 Map 不承担跨进程事实源。
+
+容量另行设计：不断加入新 key、没有淘汰或删除的 Map 会保留可达对象；采用并发容器不等于获得 TTL、容量上限或租户隔离。缓存要明确最大条目/字节预算、过期与失效、热点和拒绝/淘汰策略，并监控条目数、内存和 GC。原始 Controller 代码未给出时，只能按这些方向审查，不能断言已经发生某个具体竞态或给出假装测试过的补丁。[JDK 25 HashMap 契约](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/HashMap.html)说明同步与 fail-fast 的范围；这里的服务设计是教学分析。
+
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [美团容器平台 JAVA 一二面：消息一致性、MCP 权限与代码审查](../../../interview/meituan/ai/meituan-ai-5.md)
 - [字节 Agent 一面：会话记忆、并发更新与算法](../../../interview/bytedance/base/bytedance-base-29.md)
 - [字节全栈一面：RAG、Java 与线程池](../../../interview/bytedance/base/bytedance-base-37.md)
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)
@@ -160,3 +170,6 @@ while iterator.hasNext():
 
 - [NIST Dictionary of Algorithms and Data Structures: hash table](https://xlinux.nist.gov/dads/HTML/hashtab.html)
 - [Python dictionary view objects and mapping types](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict)
+
+- [JDK 25 — HashMap](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/HashMap.html)
+- [Spring 7.0.5 — Bean scopes](https://github.com/spring-projects/spring-framework/blob/v7.0.5/framework-docs/modules/ROOT/pages/core/beans/factory-scopes.adoc)

@@ -12,7 +12,7 @@ Logging、Metrics、Tracing 并称可观测性三大支柱，定位各不相同�
 | 维度 | 日志 (Logging) | 指标 (Metrics) | 追踪 (Tracing) |
 |---|---|---|---|
 | 数据形态 | 离散事件文本/JSON | 时间序列数值 | 跨服务调用树（Span） |
-| 存储成本 | 高 | 低 | 中 |
+| 存储成本的影响因素 | 事件量、体积、索引与保留期 | 标签基数、采集频率与保留期 | Span 数量、采样与保留期 |
 | 适合场景 | 排查具体错误、审计 | 趋势告警、容量规划 | 定位跨服务慢链路 |
 | 代表工具 | ELK、SLS、Loki | Prometheus + Grafana | Jaeger、Zipkin、OpenTelemetry |
 | 查询方式 | 全文/字段检索 | PromQL 聚合 | TraceID 追溯 |
@@ -259,6 +259,14 @@ groups:
           summary: "工具调用错误率 > 10%"
 ```
 
+## 没有错误日志时怎样继续定位
+
+没有找到错误日志，只能说明当前查询没有观察到事件。日志级别、采样、关联标识、采集链路和业务埋点都可能存在缺口；某些业务错误也不会抛异常。先核对用户实际看到的失败，再判断是服务没有执行、执行结果错误，还是观测数据没有到达。[Google SRE 的监控章节](https://sre.google/sre-book/monitoring-distributed-systems/)区分用户视角的黑盒检测与系统内部白盒信号，两者可以相互校验。
+
+例如用户反馈“收藏成功后列表里没有笔记”，HTTP 200 与一条“请求完成”日志都不足以证明业务正确。用一个获准的代表请求沿写入确认、收藏关系、查询权限、缓存和索引逐段核对；同时查看错误率、尾延迟、队列积压、连接池与资源饱和度。请求未进入应用、数据库已提交但响应丢失、读取仍用旧版本，会留下不同的独立证据。
+
+把异常开始时间与发布、配置、数据和依赖变化放在同一时间线上，用 `traceId`、业务操作 ID 和版本关联具体样本。若已有信号不足，可在受控范围补充边界事件、使用采样剖析或用脱敏输入复现；不要仅凭时间接近宣布某次发布就是根因，也不要为了补日志长期记录完整敏感上下文。新增埋点应回答一个可验证的问题，例如“写入是否已经确认、列表使用哪个版本”，而不是把所有函数都打印一遍。
+
 ## Agent 请求完整可观测性链路
 
 ```mermaid
@@ -292,6 +300,8 @@ sequenceDiagram
 
     Note over A: 日志: INFO session completed<br/>traceId/spanId 可关联全链路
 ```
+
+图中的 `++` 只示意此处发生指标记录，不是具体 API。按上文代码，LLM 耗时应转换为秒后用直方图 `observe(durationMs / 1000)` 记录，token 计数应按实际 token 数量 `inc(count)`；工具调用次数才按每次调用增加 1。
 
 ## 阿里云 SLS 集成
 
@@ -338,21 +348,23 @@ SLS 支持通过 SQL 语法做日志分析，例如统计 LLM 调用的 P99 延�
 
 ## 日志采样策略
 
-高流量场景下（>1000 QPS），全量日志成本极高，需要采样：
+是否采样应根据事件量、单条体积、采集开销、保留期和预算测量决定，不能用一个通用 QPS 门槛判断。采样同时影响发现和追溯能力；错误、慢请求和必须留存的审计事件应按各自目的设计保留策略。下面比例仅为候选示例：
 
 | 策略 | 适用场景 | 做法 |
 |---|---|---|
 | 头部采样（Head-based） | 流量均匀 | 请求入口按比例（如 10%）决定是否采样 |
-| 尾部采样（Tail-based） | 需保留错误链路 | 先缓存所有 Span，响应完成后：错误 100% 保留，成功按比例丢弃 |
-| 优先级采样 | Agent 服务推荐 | 错误/慢请求（>5s）100% 保留；正常请求 5% 采样 |
+| 尾部采样（Tail-based） | 需要利用链路中的错误或延迟信息 | 收集同一 trace 的 Span，在有界等待后按已收到的信息决定保留；需规划缓存容量与迟到数据处理 |
+| 按错误或延迟设置保留优先级 | 需要重点追溯异常请求 | 可将错误/慢请求设为优先保留，正常请求按比例抽取；阈值与比例依据实际流量制定 |
 
 ```ts
-// 简单的尾部采样实现示例
+// 单次请求结束时的示例判定谓词；不含 trace 聚合、缓存或导出
 function shouldSample(statusCode: number, durationMs: number): boolean {
-  if (statusCode >= 500 || durationMs > 5000) return true;   // 错误/慢请求全保留
-  return Math.random() < 0.05;                                // 正常请求 5% 采样
+  if (statusCode >= 500 || durationMs > 5000) return true; // 示例：优先保留
+  return Math.random() < 0.05; // 示例比例；不是所有请求的通用配置
 }
 ```
+
+这个函数只表达单次请求的策略条件，不能独立实现分布式 trace 的尾部采样。以 OpenTelemetry Collector 的 Tail Sampling Processor 为例，同一 trace 的 Span 需汇聚到同一实例，并配置等待窗口和内存容量；数据迟到、容量不足或导出失败仍可能留下缺口。更早已被头部采样丢弃的数据不会被这一步补回，策略中的“全保留”也不等于端到端零丢失。[OpenTelemetry 采样概念](https://opentelemetry.io/docs/concepts/sampling/)、[Tail Sampling Processor](https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/processor/tailsamplingprocessor/README.md) 分别说明了决策位置与有状态收集要求。
 
 ## 常见误区 / 最佳实践 / 面试要点
 
@@ -380,7 +392,9 @@ function shouldSample(statusCode: number, durationMs: number): boolean {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [百度后端一面：延迟诊断、工具恢复与滑动窗口](../../../interview/baidu/ai/baidu-ai-10.md)
 - [拼多多提前批一面：Agent 超时、消息可靠性与线上排障](../../../interview/pinduoduo/ai/pinduoduo-ai-2.md)
+- [字节大模型应用秋招一面：日志盲区、框架选择与 BFS](../../../interview/bytedance/base/bytedance-base-71.md)
 - [阿里云 Agent Infra 一面：SGX、吞吐与日志写入](../../../interview/alibaba/ai/alibaba-ai-8.md)
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)
 - [字节 Agent 暑期实习一面：摘要、工具预算与链表](../../../interview/bytedance/base/bytedance-base-27.md)
@@ -390,8 +404,11 @@ function shouldSample(statusCode: number, durationMs: number): boolean {
 ## 参考资料
 
 - [OpenTelemetry signals](https://opentelemetry.io/docs/concepts/signals/)
+- [OpenTelemetry：采样概念](https://opentelemetry.io/docs/concepts/sampling/)
+- [OpenTelemetry Collector：Tail Sampling Processor](https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/processor/tailsamplingprocessor/README.md)
 - [OpenTelemetry semantic conventions](https://opentelemetry.io/docs/specs/semconv/)
 - [OpenTelemetry JS：升级到 2.x](https://github.com/open-telemetry/opentelemetry-js/blob/main/doc/upgrade-to-2.x.md)
 - [Prometheus：histogram_quantile](https://prometheus.io/docs/prometheus/latest/querying/functions/#histogram_quantile)
 - [Prometheus：Vector matching](https://prometheus.io/docs/prometheus/latest/querying/operators/#vector-matching)
 - [Pino API：日志级别、格式器与 timestamp](https://github.com/pinojs/pino/blob/main/docs/api.md)
+- [Google SRE：Monitoring Distributed Systems](https://sre.google/sre-book/monitoring-distributed-systems/)

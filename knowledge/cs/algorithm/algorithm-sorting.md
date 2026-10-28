@@ -53,6 +53,30 @@ function insertionSort(values, compare = (a, b) => a - b) {
 
 ## 部分排序与选择
 
+### 自定义比较器：拼接后的最大数字
+
+先声明教学合同：输入是非空数组，每项为无前导零的非负十进制整数字符串，单独的 `"0"` 合法；输出为字符串，空数组、负数、小数和其他格式拒绝。实际面试没给这些条件时先问清，不能把这里的约定当作原题完整题面。
+
+两个字符串 `a`、`b` 应比较 `a+b` 与 `b+a`，较大拼接排前。例如 `"9"` 在 `"34"` 前，`"3"` 在 `"30"` 前，不能简单按整数大小或字典序排列原字符串。交换一对相邻逆序项会让完整结果不变或变大，因此可以用该比较器排序。对非负整数值 A、B、位数 m、n，关系等价于 `A*(10^n-1) >= B*(10^m-1)`，也就是比较 `A/(10^m-1)` 与 `B/(10^n-1)`，由此可解释其传递性；实现无需计算这些可能很大的数。
+
+```javascript
+function largestConcatenation(values) {
+  if (!Array.isArray(values) || values.length === 0 ||
+      !values.every(v => typeof v === "string" && /^(0|[1-9][0-9]*)$/.test(v))) {
+    throw new TypeError("expected nonempty canonical decimal strings");
+  }
+  const ordered = [...values].sort((a, b) => {
+    const ab = a + b, ba = b + a;
+    return ab === ba ? 0 : ab > ba ? -1 : 1;
+  });
+  return ordered[0] === "0" ? "0" : ordered.join("");
+}
+```
+
+不把拼接转成 Number，避免超出数值精度；复制后排序以保留输入。[Array.sort 的比较器合同](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)约定负数表示 a 在 b 前。比较一次还要付出拼接长度成本，不能把它视为与位数无关的常数；选用 O(n log n) 比较排序时可按最大字符串长度 L 估算 O(n log n·L) 比较工作，并另计输出空间。
+
+检查 `['3','30','34','5','9']` 得到 `9534330`、全零规范为 `0`、`['12','1212']` 的等价比较，以及拒绝空数组、负号和前导零。小输入可以穷举全排列核对最大结果；这只验证此教学合同，不证明某位候选人的现场实现通过。
+
 只需最大 K 个时无需全排序：大小 K 的堆为 O(n log K)；需要第 k 小可用 quickselect，平均 O(n)。数据已按多个 runs 近似有序时，适应性排序能利用结构。先明确输出需求，往往比微调全排序更省。
 
 ## 外部归并排序
@@ -97,6 +121,7 @@ function maxSortedChunks(values) {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [阿里云 SRE 运维开发一面：部署、网络与最大拼接数](../../../interview/alibaba/ai/alibaba-ai-20.md)
 - [字节 Agent 实习：生成质量、多智能体与缓存](../../../interview/bytedance/base/bytedance-base-52.md)
 - [网易云音乐全栈一面：JavaScript、排序与 RAG](../../../interview/netease/fullstack/netease-fullstack-2.md)
 - [58同城 Agent 开发一面：MCP、数据查询与后端基础](../../../interview/58tongcheng/ai/58tongcheng-ai-1.md)
@@ -106,3 +131,4 @@ function maxSortedChunks(values) {
 
 - [MIT OCW 6.006（2008）：Lecture Notes](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2008/resources/lecture-notes/)
 - [MIT OCW 6.006（2011）：Lecture Notes](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/pages/lecture-notes/)
+- [MDN — Array.sort 比较器与原地排序](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)

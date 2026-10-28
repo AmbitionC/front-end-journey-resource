@@ -168,7 +168,19 @@ async function getSessionModel(sessionId: string): Promise<string | null> {
 
 ---
 
+### 四个分项和一个总数，原子自增够不够
+
+先定义不变量：若总数应始终等于四个分项之和，分别发送五条自增命令会暴露中间状态。单条 `HINCRBY` 原子，不代表多字段更新和分开的读取也成为同一快照。
+
+一种教学选择是只存四个分项，在一个 Hash 上用一条 `HMGET` 读取四项，再在应用侧求和，避免维护冗余总数；缺字段是否为零、整数范围和是否读副本都要事先约定。若必须保存总数，就把相关字段放在同一原子执行边界内，用受限脚本或函数先校验字段、类型、数值范围与本次增量，再同时更新分项和总数，读取时也用一次多字段读取。`HINCRBY` 的范围是有符号64位整数，不能忽略总数溢出，也不能用不精确的浮点计算悄悄改写计数。
+
+这里的原子执行指其他客户端不会插入这段执行，不是失败自动回滚：Redis 事务不回滚运行期命令错误，脚本也不能被当作通用回滚事务；应尽量在写入前排除可预见错误，并定义失败恢复。跨 key 的 Cluster 方案还要核对同槽要求。[Redis 事务](https://redis.io/docs/latest/develop/using-commands/transactions/)、[脚本执行语义](https://redis.io/docs/latest/develop/programmability/)和[HINCRBY 范围](https://redis.io/docs/latest/commands/hincrby/)分别说明这些边界。
+
+最后区分一致性与重复处理：提交成功但客户端超时后重试，仍可能重复加数。需要按稳定事件 ID 去重，并使去重与计数更新共享同一提交合同；复制延迟、持久化丢失窗口和跨系统对账也不由一条脚本消除。上述是设计选择，没有连接 Redis 验证或声称端到端恰好一次。
+
+
 ## Set（集合）——去重与关系运算
+
 
 ### 底层实现
 
@@ -422,6 +434,7 @@ B+ 树同样能实现范围查询。“不用 B+ 树”的回答不能是“它�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [美团后端暑期一面：RAG 消融、工具调用与并发一致性](../../../interview/meituan/ai/meituan-ai-2.md)
 - [网易云全栈一面：评估闭环、异步任务与数据查询](../../../interview/netease/fullstack/netease-fullstack-1.md)
 - [百度北京后端秋招一面：Agent 安全、检索与存储](../../../interview/baidu/ai/baidu-ai-3.md)
 - [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
@@ -447,3 +460,7 @@ B+ 树同样能实现范围查询。“不用 B+ 树”的回答不能是“它�
 - [事务：EXEC 不回滚运行期命令错误](https://redis.io/docs/latest/develop/using-commands/transactions/)
 - [Redis data types](https://redis.io/docs/latest/develop/data-types/)
 - [Redis commands](https://redis.io/docs/latest/commands/)
+
+- [Redis — HMGET 多字段读取](https://redis.io/docs/latest/commands/hmget/)
+- [Redis — HINCRBY 的整数范围](https://redis.io/docs/latest/commands/hincrby/)
+- [Redis — Programmability 原子执行](https://redis.io/docs/latest/develop/programmability/)

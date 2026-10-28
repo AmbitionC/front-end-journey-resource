@@ -335,6 +335,7 @@ async function answerWithRag(question: string, session: Session) {
 
 <!-- interview-source-history:start -->
 - [小红书产品工程师一面：一致性、知识来源与多模态评估](../../../interview/redbook/ai/redbook-ai-6.md)
+- [小红书 AI 全栈暑期二面：RAG 流程与 Skill 实践](../../../interview/redbook/ai/redbook-ai-10.md)
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
 - [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)
 - [字节 Agent 开发二面（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-7.md)

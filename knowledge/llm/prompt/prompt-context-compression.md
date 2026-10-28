@@ -130,6 +130,8 @@ usage 是提供商对这次调用的计量结果，tokenizer 的事前估算用�
 - [百度 AI 应用社招一面：工作区权限、工具发现与上下文](../../../interview/baidu/ai/baidu-ai-7.md)
 - [快手 AI 应用服务端日常实习一面：协作、上下文与评测](../../../interview/kuaishou/ai/kuaishou-ai-7.md)
 - [快手 AI 应用一面：沙箱中的 Skill、工具调用与记忆压缩](../../../interview/kuaishou/ai/kuaishou-ai-12.md)
+- [小红书 PE 一面：订单号、上下文摘要与执行范式](../../../interview/redbook/ai/redbook-ai-14.md)
+- [腾讯营销后端一面：Skill 加载、上下文压缩与多路归并](../../../interview/tencent/ai/tencent-ai-21.md)
 - [字节 Agent 一面：会话记忆、并发更新与算法](../../../interview/bytedance/base/bytedance-base-29.md)
 - [阿里淘天 Agent 一面：Skill、路由与灰度发布](../../../interview/alibaba/ai/alibaba-ai-13.md)
 - [字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)

@@ -114,6 +114,8 @@ $$
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [百度 Java 实习：流式工具调用、答案忠实度与记忆](../../../interview/baidu/ai/baidu-ai-11.md)
+- [华为终端 BG AI 应用技术面：RAG 评测与冲突证据](../../../interview/huawei/ai/huawei-ai-2.md)
 - [蚂蚁一面：交付门禁、准确率口径与商品问答](../../../interview/antfin/ai/antfin-ai-10.md)
 - [OPPO AI 全栈一面：Prompt 到 UI、RAG 与前端性能](../../../interview/oppo/ai/oppo-ai-2.md)
 - [字节抖音电商 Agent 一至三面：AI Coding、证据校验与长文档](../../../interview/bytedance/base/bytedance-base-63.md)
