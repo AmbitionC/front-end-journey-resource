@@ -1,0 +1,5230 @@
+{
+  "schemaVersion": 1,
+  "baselineDate": "2026-10-29",
+  "baselineContentCommit": "68db834b4cfe20c91ed9cd7fffe0fee6da8738af",
+  "policy": {
+    "processSequenceStateDataflow": "archify",
+    "architectureComponentsBoundaries": "excalidraw",
+    "defaultBatchSize": 10,
+    "preserveEditableSources": true,
+    "noRasterGenerationFallback": true
+  },
+  "baseline": {
+    "knowledgeArticles": 326,
+    "articlesWithImageOrIframe": 317,
+    "articlesWithoutImageOrIframe": 9,
+    "legacyGenerationSupportedArticles": 245,
+    "legacyGenerationSupportedAssets": 245,
+    "provenancePendingArticles": 41,
+    "provenancePendingAssets": 42,
+    "totalLegacyCandidateArticles": 286,
+    "totalLegacyCandidateAssets": 287,
+    "articlesWithArchify": 29,
+    "archifyAndLegacyMixedArticles": 4,
+    "authoredSvgArticles": 6,
+    "onlyDeterministicImageArticles": 31,
+    "currentImageOrIframeReferences": 327,
+    "uniqueCurrentAssets": 326,
+    "mermaidArticles": 68,
+    "mermaidBlocks": 100,
+    "referencedMermaidDerivativeAssets": 4,
+    "replacementsPublishedInThisTask": 0
+  },
+  "countingRule": "Article-processing history is independent. This ledger is a plan; queued or provenance_pending entries are not active batches or published replacements. Recheck exact article/current asset hashes before starting. Record merge/sync/PDF evidence before published.",
+  "records": [
+    {
+      "key": "llm-token-context",
+      "label": "Token、Context Window 与 KV Cache",
+      "articlePath": "knowledge/llm/basics/llm-token-context.md",
+      "baselineArticleSha256": "e981202e098398d315d27e3c004652f37fb3760a3cfce37a2e7c8fe3648bacc1",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/llm-token-context-kv-cache-v3.webp",
+          "sha256": "5a18139b85e5a0d40d3646368b81e42a285031045e86faf3cf74839a78c0dfb6",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-capability-boundaries",
+      "label": "大模型的能力边界、幻觉与不确定性",
+      "articlePath": "knowledge/llm/basics/llm-capability-boundaries.md",
+      "baselineArticleSha256": "9ec1ff36fe0576b517d368c75b2bb35c90fa35e47d05ea53bc7083a4153cf0e3",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/llm-capability-boundaries-relative-token-boundary-v2.png",
+          "sha256": "48071c97d48b922af87d0edfbb8f9d6ad049871fabc51733b5e1ad75a81860f5",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-training-overview",
+      "label": "大模型训练全流程概览",
+      "articlePath": "knowledge/llm/basics/llm-training-overview.md",
+      "baselineArticleSha256": "68558efd8776534b1f75d2f9fc3a93dcfc1bd4f85690e1059d144f1010145f70",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/llm-training-overview-lifecycle-v1.webp",
+          "sha256": "c10dee6b336e2cf7f765c57b154f0a2e3605a586f303ec3fea6c21a13fad0fd3",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-model-selection",
+      "label": "模型能力评估与选型",
+      "articlePath": "knowledge/llm/basics/llm-model-selection.md",
+      "baselineArticleSha256": "9ac0e583da26682a6bdecaeaa6172d6c4a60ea4c8e6e4781a5a47fc9f8c419c5",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/llm-model-selection-eval-loop-v3.webp",
+          "sha256": "99e230d7fb2047e78d0a1d50973326d5808f72809bea2ee53c4dbd85f820cd4b",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-open-source-deployment",
+      "label": "开源模型选型、推理与本地部署",
+      "articlePath": "knowledge/llm/basics/llm-open-source-deployment.md",
+      "baselineArticleSha256": "9b38d8b09222d938c192064219d6460ac2ace23eefa8ed25a01ca00c21ef3623",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/llm-open-source-deployment-serving-stack-v1.webp",
+          "sha256": "18ee18ffb7abc966cea20f6bf29aaaad2fe4d26e072c908ed5c14d2d56b924e2",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "transformer-arch",
+      "label": "Transformer 架构原理",
+      "articlePath": "knowledge/llm/basics/transformer-arch.md",
+      "baselineArticleSha256": "29fe70bcba61d40828e5c05465131bb449f725c172c482baa19a1ba13ed7f7bd",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/transformer-arch-modern-decoder-block-v4.webp",
+          "sha256": "c59eeb3e302bc3c8bab7bc46904b74e203d56f8942b535609a23ab6c1b901ba0",
+          "provenance": "legacy_raster_provenance_pending"
+        },
+        {
+          "path": "images/transformer-arch-causal-attention-v4.webp",
+          "sha256": "b0b7743741c876d09d0aec3ac8b7c3c2e1971846858d6ad55415f8fc2597faf0",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-rlhf-dpo",
+      "label": "RLHF、RLAIF 与 DPO 的差异",
+      "articlePath": "knowledge/llm/basics/llm-rlhf-dpo.md",
+      "baselineArticleSha256": "38aa9b5e752e94f82d5c8ed76b13bdf71b8b4e170346068c446ec363258e402a",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/llm-rlhf-dpo-preference-paths-v1.webp",
+          "sha256": "2031434633da3583deb90fe5e898964c6ee357e8c3049de754f2cd392e235ee0",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-long-context",
+      "label": "长上下文、注意力稀释与有效利用",
+      "articlePath": "knowledge/llm/basics/llm-long-context.md",
+      "baselineArticleSha256": "8ade6feff74f402bab5889576811ac4806372702e6eec040cf079d69660ae562",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/llm-long-context-effective-context-loop-v1.webp",
+          "sha256": "b22fb489f8d92086e4aadef2459a35a614faac332bc728856e8eaacacce50457",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-alignment",
+      "label": "模型对齐：SFT、偏好数据与安全",
+      "articlePath": "knowledge/llm/basics/llm-alignment.md",
+      "baselineArticleSha256": "779e1a8e2a5878c48f221296f870b17bbe2ee6a0c9b08cb95e3ca46b6e0e2460",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/llm-alignment-post-training-stack-v1.webp",
+          "sha256": "355a4f580df297eab446ada702329f292fc0d41bf1656426c155d3ad57c661d5",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-multimodal-basics",
+      "label": "多模态模型基础：文本 / 图像 / 音频",
+      "articlePath": "knowledge/llm/basics/llm-multimodal-basics.md",
+      "baselineArticleSha256": "2100b8bff787e89f4ef9064c30d2cec7b8bf0b7dd58e2374a45f5234e22888cc",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/llm-multimodal-basics-fusion-pipeline-v1.webp",
+          "sha256": "d284a20f1fb6aed2516a155b193e2df4857afb04161266b745b17607f7d7c286",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-reasoning-models",
+      "label": "推理模型、思考预算与使用边界",
+      "articlePath": "knowledge/llm/basics/llm-reasoning-models.md",
+      "baselineArticleSha256": "2546f4b5014d1a139663508ec488bc61f7af8d22fc83998548ce904024ddbe9c",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/llm-reasoning-models-budget-loop-v1.webp",
+          "sha256": "fc796d73e7a1f652311d5c0eee206bb584601a6698065204d1ea19345313714a",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-inference-params",
+      "label": "LLM 推理参数：Temperature / Top-P / Top-K",
+      "articlePath": "knowledge/llm/basics/llm-inference-params.md",
+      "baselineArticleSha256": "74e3b978d08ee584f1da8a82868fef13ffb1de097b8a289e67ff621ffb799991",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/llm-inference-params-sampling-v3.webp",
+          "sha256": "8e782f0cce8712aa72eb1218f6963258118208a8a7d5763b93c6de996d394529",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-tokenizer",
+      "label": "Tokenizer、词表与子词切分",
+      "articlePath": "knowledge/llm/basics/llm-tokenizer.md",
+      "baselineArticleSha256": "c39821de986b677a394ed7bcafeafea0292175a22ab3c78c4c7ed4aa91e60a80",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/llm-tokenizer-segmentation-pipeline-v1.webp",
+          "sha256": "0034adf427df9ffee0f1646391056e8616111783ddbdb44a7b1bac8cbb57bfbf",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-pretraining",
+      "label": "预训练目标、数据与 Scaling",
+      "articlePath": "knowledge/llm/basics/llm-pretraining.md",
+      "baselineArticleSha256": "7159d226b0ebd841c592efb710987da2940cd5dd56ce8c0c3434c9bfbdd3ce9e",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/llm-pretraining-scaling-triangle-v1.webp",
+          "sha256": "571ebe5f3725ac63609ca41663172b96eb8df578da2d1231ae2d6382c2400e06",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-model-compare",
+      "label": "主流模型能力与适用场景对比",
+      "articlePath": "knowledge/llm/basics/llm-model-compare.md",
+      "baselineArticleSha256": "50ae33b4d02d3ac369cf0ebe8aa73d10e6cc0d299736847c4397ac2fd35adbdb",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/llm-model-compare-selection-v3.webp",
+          "sha256": "0bd24b0e81ccbb7b06f055a29448292f5aa94bc8c1c9179a9046b22f2ef47525",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-quantization",
+      "label": "模型量化与精度权衡",
+      "articlePath": "knowledge/llm/basics/llm-quantization.md",
+      "baselineArticleSha256": "c12f93f91886a3d26a2884b3c9f366cb39ac1a8c56c137779f87d9a6776c4d2e",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/llm-quantization-memory-accuracy-v1.webp",
+          "sha256": "3d049e0ab4d20c0d9266d83cb66e544196a328b99a0436d21d6e048e6ddb33aa",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-moe",
+      "label": "MoE 混合专家模型原理",
+      "articlePath": "knowledge/llm/basics/llm-moe.md",
+      "baselineArticleSha256": "857cf8321482eaa87401d7bd3cea2167147b7ef90cf6c8a9c8051fb383412aac",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/llm-moe-routing-experts-v1.webp",
+          "sha256": "fc928cc4d6cdbff28643638c1d9a80cc3ea68304bc5aa2b4099cf7bdf2181d8f",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "on-policy-distillation",
+      "label": "在线策略蒸馏（On-Policy Distillation）",
+      "articlePath": "knowledge/llm/basics/on-policy-distillation.md",
+      "baselineArticleSha256": "0d05e89c2c45b8b98548803e2e99c68cde639fee5f423e1fde9e496f0447a85e",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/on-policy-distillation-student-distribution-v1.png",
+          "sha256": "40ebf3e767fcd345ff3580cd3ccee7725214a79198fc45688251960d3c5b48a2",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "prompt-context-compression",
+      "label": "上下文压缩、摘要与裁剪",
+      "articlePath": "knowledge/llm/prompt/prompt-context-compression.md",
+      "baselineArticleSha256": "3cf808eb6463220b4e225f047c6e3160a29d50618af7be66cdc9a838a06fc20a",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/prompt-context-compression-budget-pipeline-v1.webp",
+          "sha256": "f66c80c10e7e628c573919eda89c42f37a409f374132286f4520eb2d7471d19e",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": "archify",
+      "diagramType": "workflow",
+      "batchId": null,
+      "publishedEvidence": null,
+      "priority": 3,
+      "reason": "Explain protected content, compression options, budget and verification in order.",
+      "plannedWave": "first-10",
+      "resumeExistingDiagramMigration": false
+    },
+    {
+      "key": "context-engineering",
+      "label": "上下文工程（Context Engineering）",
+      "articlePath": "knowledge/llm/agent/context-engineering.md",
+      "baselineArticleSha256": "556bfe71b949bb257f8010d5c5db9595c85b73ba462ffe4d3fdd948f7a7ca0f1",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/context-engineering-gather-select-compress-verify-v1.webp",
+          "sha256": "fe64540be1dab8530965e4a17e3894d846ca83cdee784a5bb221735de3e4ec03",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "prompt-structured-output",
+      "label": "结构化输出与 JSON Schema",
+      "articlePath": "knowledge/llm/prompt/prompt-structured-output.md",
+      "baselineArticleSha256": "8bcb6e715d1b49ee74799bf4546688102ff303d1d76d6010fd800adc0d95a52c",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/prompt-structured-output-pipeline-v3.webp",
+          "sha256": "367d16f735bdf332f878cbf164e5c54f34f866e7c78a32f23816ddff02767940",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "prompt-cache-design",
+      "label": "Prompt Cache 与稳定前缀设计",
+      "articlePath": "knowledge/llm/prompt/prompt-cache-design.md",
+      "baselineArticleSha256": "3760263b6c6bd02fc1e79fc8b51811bb20c44db976742b3262cfc8e0f80e3b10",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/prompt-cache-design-stable-prefix-v1.webp",
+          "sha256": "450b73b1d15ba689ecb5ecc1f9dc8232e9c44c1805eb50e5f218969a2618e5f5",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "prompt-basics",
+      "label": "Prompt 设计基础与原则",
+      "articlePath": "knowledge/llm/prompt/prompt-basics.md",
+      "baselineArticleSha256": "3975fbdf5b1dabafb113fa1e0d845955d6c2217fd6ef6ebc36c66ad1e492d009",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/prompt-basics-contract-v3.webp",
+          "sha256": "eef7e8b03d39e12c23d29169c0b182c562003d064fbc440d57594ae82eb75d3f",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "prompt-system",
+      "label": "System Prompt 设计模式",
+      "articlePath": "knowledge/llm/prompt/prompt-system.md",
+      "baselineArticleSha256": "282b6570f9bfb7a58081f8a536ba46372113160b4540b4bcbfc86e9be9689b20",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/prompt-system-boundaries-v3.webp",
+          "sha256": "33fa1c5b8d730439c656fdb8857b1bfa1c3a2b0b455c02e7a4874ee599caf068",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "prompt-template-design",
+      "label": "Prompt 模板、变量与复用设计",
+      "articlePath": "knowledge/llm/prompt/prompt-template-design.md",
+      "baselineArticleSha256": "c39fe833682e26d213b6909f939dc3c9834223c843d65fb9d934071743a7a557",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/prompt-template-design-render-pipeline-v1.webp",
+          "sha256": "da4a000612587933afa2ce0eb65175a14f9694ae0702ea0dad8aefaeeaae2928",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "prompt-testing-debugging",
+      "label": "Prompt 调试、测试与回归验证",
+      "articlePath": "knowledge/llm/prompt/prompt-testing-debugging.md",
+      "baselineArticleSha256": "c5c7dbf9538a8a25fb5c453e032cf06afdf217cf69a61d966c39e70e17359478",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/prompt-testing-debugging-eval-loop-v1.webp",
+          "sha256": "f210ceff9a987fe2a4b9dbb99bd5d0820e596545341d1964bf359b50e8219829",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "prompt-few-shot",
+      "label": "Few-Shot 与 Zero-Shot 提示",
+      "articlePath": "knowledge/llm/prompt/prompt-few-shot.md",
+      "baselineArticleSha256": "19f5f69352383661335d9267676568d50425cb718bd58ce95eebcd05e96cdb24",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/prompt-few-shot-strategies-v3.webp",
+          "sha256": "193e5d97332adb7aaf37f6807c636df64a4d1bef7682e0421a4a73436a2786de",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "prompt-cot",
+      "label": "推理提示策略与适用边界",
+      "articlePath": "knowledge/llm/prompt/prompt-cot.md",
+      "baselineArticleSha256": "38f4db088132214394ead57d22972789d0cd95afdeccff7e849f37343b88fd75",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/prompt-cot-verification-v3.webp",
+          "sha256": "b8c7587f4599d3cc320d278a79a9aeb4b8316c3605334964d34e9fb6601a994c",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "prompt-versioning",
+      "label": "Prompt 版本管理与 A/B 测试",
+      "articlePath": "knowledge/llm/prompt/prompt-versioning.md",
+      "baselineArticleSha256": "5d1f50084cfec9d84075e3cfe9c866369e792310f111e4ce9e404e4a143cb14e",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/prompt-versioning-experiment-v3.webp",
+          "sha256": "8d579d1170c09f1eadc627fcf42217f538621169e2392c4fd95d29885e2dd085",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "prompt-role-boundaries",
+      "label": "System、Developer、User 消息的职责边界",
+      "articlePath": "knowledge/llm/prompt/prompt-role-boundaries.md",
+      "baselineArticleSha256": "6872314cd92cf010e038a64c03d34376cfb67a55826f446c46ee527fdba3f650",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/prompt-role-boundaries-message-layers-v1.webp",
+          "sha256": "8737f0fd3bd5583291ed70816d90587a23e3154d6c12e6a3db1f3929d4cf4cd8",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "prompt-instruction-hierarchy",
+      "label": "指令优先级与冲突处理",
+      "articlePath": "knowledge/llm/prompt/prompt-instruction-hierarchy.md",
+      "baselineArticleSha256": "12ee14e8a06d14a903cc259ae390a10cdb93afc9d1cfa4146ab8dae4fa9e19b9",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/prompt-instruction-hierarchy-conflict-resolution-v1.webp",
+          "sha256": "7f9b601d068bd701e90a3c57e01ab79283e95f12b53cbdbd96fb0c8e600d85bc",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "prompt-examples-selection",
+      "label": "示例选择、排序与动态 Few-Shot",
+      "articlePath": "knowledge/llm/prompt/prompt-examples-selection.md",
+      "baselineArticleSha256": "bf3111fdf73d5826621647d57e2f840f58b7037836862b12f2ad400b28af96b6",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/prompt-examples-selection-retrieval-ranking-v1.webp",
+          "sha256": "e574941cfbf6a91e0d58781ee44ae0b19199f6ea21f15df279b9cf20ad7f1229",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "prompt-output-validation",
+      "label": "模型输出校验与自动修复",
+      "articlePath": "knowledge/llm/prompt/prompt-output-validation.md",
+      "baselineArticleSha256": "5aced4c6bce8a15d8c9433641e2ff6cbb5ca94dcec236a005289f1d9d2aaa921",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/prompt-output-validation-repair-loop-v1.webp",
+          "sha256": "bd61b00f4b8aa175f26d849e1b6bbcc96e5f4bfa9fcafe9b84ebf605ea552d29",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-sse-streaming",
+      "label": "SSE 流式响应与增量渲染",
+      "articlePath": "knowledge/llm/dev/llm-sse-streaming.md",
+      "baselineArticleSha256": "032e7e9a8e28625d545a10a2ae9a4cf68b1d89be414ca5193a1f224e3c4180d4",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/llm-sse-streaming-boundaries-v3.webp",
+          "sha256": "159ac83228c3e9e3be1345492c7a3625764e8c32541a69cc663fa820d99e9276",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "function-calling",
+      "label": "Function Calling 与工具调用",
+      "articlePath": "knowledge/llm/dev/function-calling.md",
+      "baselineArticleSha256": "bba573cf76e3f2dd450ea0cf16a9b3bca63483b2af3f14e74cb5512970f6aa9c",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/function-calling-execution-loop-v4.png",
+          "sha256": "c14021c4ee573d4276e55138a343e17a6320c6c7d7f0319fe48937d59a49bf83",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": "archify",
+      "diagramType": "sequence",
+      "batchId": null,
+      "publishedEvidence": null,
+      "priority": 4,
+      "reason": "Keep model proposals, application authorization/execution and tool results as distinct participants.",
+      "plannedWave": "first-10",
+      "resumeExistingDiagramMigration": false
+    },
+    {
+      "key": "aigc-openai",
+      "label": "OpenAI API 调用基础",
+      "articlePath": "knowledge/fe/aigc/aigc-openai.md",
+      "baselineArticleSha256": "0fda196c98e74848dff1dbf4d11219261adb8257db22bdfa2663ed5e08d5ea1a",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/aigc-openai-responses-minimal-v3.webp",
+          "sha256": "06ee6f43505d4258adced48bed15df630256af350171cf46dc2dba7627512912",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "aigc-frontend",
+      "label": "大模型与前端产品的结合场景",
+      "articlePath": "knowledge/fe/aigc/aigc-frontend.md",
+      "baselineArticleSha256": "a14abce743324512040fa85b0b12eeab6c4eee1081ae1d476bbf7aa33fe63988",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/aigc-frontend-scenarios-v3.webp",
+          "sha256": "6e45bf23dd852319cd882fa784a5a3048e842cf69df75543d00b1dd987e37072",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-stream-cancel-resume",
+      "label": "流式请求取消、续传与状态恢复",
+      "articlePath": "knowledge/llm/dev/llm-stream-cancel-resume.md",
+      "baselineArticleSha256": "27cf8a880d984f8a185f19e7cfbb170bc48245282457edac76fa4fbd1f291308",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/llm-stream-cancel-resume-event-log-v1.webp",
+          "sha256": "5ffee3fcc8d0c1ecd51242c40b5a833d2335ffb6048014c97a6bd40640c214f0",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-token-budget",
+      "label": "Token 预算、截断与上下文分配",
+      "articlePath": "knowledge/llm/dev/llm-token-budget.md",
+      "baselineArticleSha256": "56aae1b0d71139ac7d27df61239cb6b45d25ea23206da78fa820f148c76cd5db",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/llm-token-budget-context-allocation-v1.webp",
+          "sha256": "478ba645e5701c22969cee9b5dced2eec7d8c1463473c666c4a2bb1e1a94b19c",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-api-basics",
+      "label": "大模型 API 通用模型：消息、响应与计费",
+      "articlePath": "knowledge/llm/dev/llm-api-basics.md",
+      "baselineArticleSha256": "6f558e3b649bf1269ee546c5ddea865ccffb236608c2bf84dd240298b39b626a",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/llm-api-basics-request-lifecycle-v1.webp",
+          "sha256": "68bab966cdbb7c604f28608e6e513c1e5b0c2987bf86cd8714a5e98edc428768",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-error-retry-fallback",
+      "label": "超时、重试、Fallback 与错误处理",
+      "articlePath": "knowledge/llm/dev/llm-error-retry-fallback.md",
+      "baselineArticleSha256": "afae0e97bdb870bd7c2e296440517291e753a9719139af4e8385e162e8cd2779",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/llm-error-retry-fallback-reliability-ladder-v1.webp",
+          "sha256": "865819e0de44f52c6625b6173a368a5d5cbe65c0f1f97682f02ee9e3cda09032",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-vision-app",
+      "label": "视觉理解与图像生成应用",
+      "articlePath": "knowledge/llm/dev/llm-vision-app.md",
+      "baselineArticleSha256": "b5317fe3eec4b3c4fa3c985ecd555e279e85cdc1f45bdef8c31f2628bbe3d530",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/llm-vision-app-understand-generate-loop-v1.webp",
+          "sha256": "e68ee0eb45e2eed2eb53f96645e3736804f5ac06c8cde0d6d3e57f8d3bf8f713",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-conversation-state",
+      "label": "对话状态、会话与历史管理",
+      "articlePath": "knowledge/llm/dev/llm-conversation-state.md",
+      "baselineArticleSha256": "95d1e7110a81efb9d43f5c6efc0ae14b3567b7c7b71eb83ed7b06fda46e1335f",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/llm-conversation-state-authoritative-state-v1.webp",
+          "sha256": "e8f3ed1bd165b34ab1de214cc2fa828382b95f347f0c5ff346763fa546208ed0",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-model-routing",
+      "label": "模型路由与多供应商适配",
+      "articlePath": "knowledge/llm/dev/llm-model-routing.md",
+      "baselineArticleSha256": "633b376fd238fe09923e82f7c30394e5dc4c26e40f4cc1281724c33865522532",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/llm-model-routing-policy-decision-v1.webp",
+          "sha256": "0a15e08b6597f4d16096dd646c69b770ac5964286c2a2d02bbf8acd3ecd8f19b",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-response-api-patterns",
+      "label": "Responses、Chat 与统一生成接口模式",
+      "articlePath": "knowledge/llm/dev/llm-response-api-patterns.md",
+      "baselineArticleSha256": "256b01e4b96b4ae07206674df4c3d329a55c8055ba41fa2dcc4ece3521969c66",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/llm-response-api-patterns-adapter-matrix-v1.webp",
+          "sha256": "f9c79a9dd502f54eca0e0fd20b54ff60ab3a6ac9392e606a45c4212a602cd04b",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "openai-sdk",
+      "label": "OpenAI SDK 核心使用",
+      "articlePath": "knowledge/llm/dev/openai-sdk.md",
+      "baselineArticleSha256": "ab632ce012ef263a6ad2aa8b683936ad877851b4bab8c75a122df5ec0f9a7241",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/openai-sdk-responses-lifecycle-v3.webp",
+          "sha256": "a4c368f270826620018f0ea26679c6ff720357a851b884c975375cb599eb444e",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "aigc-application",
+      "label": "将大模型集成到 Web 应用",
+      "articlePath": "knowledge/llm/dev/aigc-application.md",
+      "baselineArticleSha256": "1638f7dcfc2e8e40a20fae4fe33f0a20be1436ec7b1c89d2717869ba4621482a",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/aigc-application-bff-stream-v3.webp",
+          "sha256": "9a6d7233e5edddb0af27c08693287f297cf45783f098625c7e4fd5675499a6eb",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-multimodal-api",
+      "label": "多模态输入输出应用开发",
+      "articlePath": "knowledge/llm/dev/llm-multimodal-api.md",
+      "baselineArticleSha256": "ba5f25aa9d70d696de2fc5f8ac7da3eaabba2f3a6fa503aec9cc31c24ee64c2c",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/llm-multimodal-api-content-parts-pipeline-v1.webp",
+          "sha256": "60dfd1032e6c5c3ada2ab4a78769b380979fe9d0c974db16e7b040ca148e7e93",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-batch-api",
+      "label": "Batch 批处理与离线任务",
+      "articlePath": "knowledge/llm/dev/llm-batch-api.md",
+      "baselineArticleSha256": "a29241a3ace501fead5a21cda6c13a1cd7cd19746a08182d9341f9a828e9ed8c",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/llm-batch-api-offline-lifecycle-v1.webp",
+          "sha256": "7d4673ba5f9ae10c6633fc77f2534b39f3361b3a2a6fc455776d13753a60340b",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-file-input",
+      "label": "文件上传、解析与大文件处理",
+      "articlePath": "knowledge/llm/dev/llm-file-input.md",
+      "baselineArticleSha256": "f1f27db0fd9a8090bc350d858f49faf546816136b2f2b34677080839232ea458",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/llm-file-input-ingestion-pipeline-v1.webp",
+          "sha256": "75c3d12b4ead0b54455f7249e9aeb7232dc097d450ab605491a3e3ea88423167",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-audio-realtime",
+      "label": "语音、音频与 Realtime 应用",
+      "articlePath": "knowledge/llm/dev/llm-audio-realtime.md",
+      "baselineArticleSha256": "e34789228475c5415b6df6946eb07cf98d876dd1e2e70898c7d651e239947cdf",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/llm-audio-realtime-session-pipeline-v1.webp",
+          "sha256": "53ccdf5939e995482b9f72e589ae63a48c41bdf8504dfc7c0e75900067b18651",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-provider-abstraction",
+      "label": "模型供应商抽象层设计",
+      "articlePath": "knowledge/llm/dev/llm-provider-abstraction.md",
+      "baselineArticleSha256": "1229aa61e73585f0b476e79c4044ff4cb2314b8e855a297ecf8a31b14206d966",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/llm-provider-abstraction-capability-adapter-v1.webp",
+          "sha256": "23bb895d85b6b2c5af824c18ee7009351521b764cc1fcacc23620494c76b158b",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-api-security",
+      "label": "API Key、代理层与客户端安全",
+      "articlePath": "knowledge/llm/dev/llm-api-security.md",
+      "baselineArticleSha256": "b815eb4ad3504c7e34ec744255602f4eff25e98bc35ad4c018aa3ed8ab18701c",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/llm-api-security-trust-boundary-v1.webp",
+          "sha256": "70880b88c1aa8677ab98ad67ad462bc9d66b61b73491c1fc4e7647f8a23b12de",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-user-feedback",
+      "label": "用户反馈采集与质量闭环",
+      "articlePath": "knowledge/llm/dev/llm-user-feedback.md",
+      "baselineArticleSha256": "6f04b1f8e642b5ec8cc2cf25fb31d297f00363ab42b6888566cbba179f8f3735",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/llm-user-feedback-quality-loop-v1.webp",
+          "sha256": "b92c6654780288b093b14c13bf70877182946d5829f59564eb97892a63e357aa",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "claude-sdk",
+      "label": "Anthropic Claude SDK 核心使用",
+      "articlePath": "knowledge/llm/dev/claude-sdk.md",
+      "baselineArticleSha256": "50e491b4ca7ac674460a48ed280b3084948276f78c60caab053d00a541f58129",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/claude-sdk-messages-tools-v3.webp",
+          "sha256": "6e35952c8837f9b6a5e90ff9add94cec6fdab76311ae1e5ef4fca39b52c3bdad",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "qwen-dashscope",
+      "label": "通义千问 DashScope API 接入",
+      "articlePath": "knowledge/llm/dev/qwen-dashscope.md",
+      "baselineArticleSha256": "0c05d10db2f336bb563f8cad7a5a55f735ae0c1d6b765fd17e77f87d76a502f6",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/qwen-dashscope-integration-v3.webp",
+          "sha256": "62e8a49c0015ddbf6d8235d93c815e1ab9f5fa4a1bcfa957305677c91f447805",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "deepseek-api",
+      "label": "DeepSeek API 接入实践",
+      "articlePath": "knowledge/llm/dev/deepseek-api.md",
+      "baselineArticleSha256": "0b100c74db64194b712f833ee5ec2b5e34ff7ed2a7b4e246cdf9b6433469e0f4",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/deepseek-api-thinking-tools-v3.webp",
+          "sha256": "0cd65bf6fd9be49a05a35c3e0c6bb225b4a72886a7711ccea9cde4664905a117",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "rag-pipeline",
+      "label": "RAG 完整流程实战",
+      "articlePath": "knowledge/llm/rag/rag-pipeline.md",
+      "baselineArticleSha256": "0a660910c74c961b30d59c070b85d8ccca4b7ba890c0a525828fa8f977e9b0fd",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/rag-pipeline-production-loop-v3.webp",
+          "sha256": "fbea756d396fb8c0d720a96037d3abc8a49db01ceeaeed82d17559483c503de4",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "rag-hybrid-search",
+      "label": "Hybrid Search 混合检索",
+      "articlePath": "knowledge/llm/rag/rag-hybrid-search.md",
+      "baselineArticleSha256": "bf207f30dd58d5fee4a266121aef7d906974637981ae9ba947442c23d2fb175a",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/rag-hybrid-search-pipeline-v2.png",
+          "sha256": "8baefd23874af4a4d3a736b505d9ad6c50670acefc0daa29590d29ebe37ac7d2",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "rag-evaluation",
+      "label": "RAG 评估与优化",
+      "articlePath": "knowledge/llm/rag/rag-evaluation.md",
+      "baselineArticleSha256": "5bbe1552ed77ad050b29360f25919f9eface26d816796e679474b0807695e0e7",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/rag-evaluation-diagnostic-loop-v2.png",
+          "sha256": "065b91c3f50fd629df84b3862610cd99124efd2d226dcba3fb5178c43b8e82b6",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "rag-chunking",
+      "label": "文本分块策略（Chunking）",
+      "articlePath": "knowledge/llm/rag/rag-chunking.md",
+      "baselineArticleSha256": "e279b657d9f82d303511de1f845679c991e7051addba942de9208e3f933819d0",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/rag-chunking-strategies-v3.webp",
+          "sha256": "751bf6b84453c624055d402cb65be2a098ad72ac9e4ebdee44c5aeeef26b0b9e",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "rag-citation-grounding",
+      "label": "引用溯源、Grounding 与事实一致性",
+      "articlePath": "knowledge/llm/rag/rag-citation-grounding.md",
+      "baselineArticleSha256": "6b2b911d4e3ecc702116454e6af38fffe96d37e8f187c7fbaefe2b97b4841210",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/rag-citation-grounding-evidence-chain-v1.webp",
+          "sha256": "eebe7732884caf6f2fb2ed6dd75070b722ba8600673b97f0b77ea5b01bc55dd5",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "embedding-basics",
+      "label": "Embedding 原理与向量相似度",
+      "articlePath": "knowledge/llm/rag/embedding-basics.md",
+      "baselineArticleSha256": "2b1bb7d510c08264a90dddd2c21442aa9dedfa2b1a98d14d579a82418514aad1",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/embedding-similarity-space-v4.png",
+          "sha256": "5decca07d19585232728a10bb7bccb78af3c8ea849e3fca0f9973bd303f3496d",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "rag-cache",
+      "label": "Embedding、检索与答案缓存",
+      "articlePath": "knowledge/llm/rag/rag-cache.md",
+      "baselineArticleSha256": "c59cf6b2caf2790b87025607e71ffc7085edd02aec6007b30bb8c88a1b97df09",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/rag-cache-layered-keys-v1.webp",
+          "sha256": "fff114e2497b75707c3c29871afd9442a65698215f7995f80b7830defafb0794",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "vector-db-selection",
+      "label": "向量数据库选型",
+      "articlePath": "knowledge/llm/rag/vector-db-selection.md",
+      "baselineArticleSha256": "2df6391c15958937b4f229b713c31d963b0dc9af64aea5f930b1cd26270810f5",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/vector-db-selection-matrix-v4.png",
+          "sha256": "7c354dfd6aed6c12fd778598b5ca615cada2a65dd13bd5f038a0e14fb936f723",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "rag-loader-parser",
+      "label": "文档 Loader、Parser 与版面解析",
+      "articlePath": "knowledge/llm/rag/rag-loader-parser.md",
+      "baselineArticleSha256": "6182947262f45492190072dfe670d63963ef6ca9d294fc3055d1fd3036f39353",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/rag-loader-parser-layout-tree-v1.webp",
+          "sha256": "7a0bf5ba24b86d70827c68f4d95c7a2ae94e7c2da1ccf5f3533b3fee4b1a3f05",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "rag-routing",
+      "label": "查询路由与多索引选择",
+      "articlePath": "knowledge/llm/rag/rag-routing.md",
+      "baselineArticleSha256": "9a0b2e3932a06426de3124ca0985c1c76721fead75db94a8cf87b75afc3d754e",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/rag-routing-multi-index-v1.webp",
+          "sha256": "fa072c316eccf25dbde0b9e84862bc98d2df718ea2a232c17fc03ca82e2e083e",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "rag-image-retrieval",
+      "label": "图像、OCR 与多模态检索",
+      "articlePath": "knowledge/llm/rag/rag-image-retrieval.md",
+      "baselineArticleSha256": "78bd4726ed78ed0502f4d311294bade8489dc574cc29743fc633b2219fa9be70",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/rag-image-retrieval-multimodal-evidence-v1.webp",
+          "sha256": "bdd45561576430572074761350c9b000f6df7c8cdec0c2293c3d1a5c7523f068",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "rag-query-rewrite",
+      "label": "查询改写、分解与扩展",
+      "articlePath": "knowledge/llm/rag/rag-query-rewrite.md",
+      "baselineArticleSha256": "f2e2716e99b99e52ac8dca400888a722fb24442e0b5d67438b2ba1ad21b050e6",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/rag-query-rewrite-routing-tree-v1.webp",
+          "sha256": "ac950ae1065550201c99229e519b03846e0a0ae38425b0fd15f67162f8d3433e",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "rag-latency-cost",
+      "label": "RAG 延迟、吞吐与成本优化",
+      "articlePath": "knowledge/llm/rag/rag-latency-cost.md",
+      "baselineArticleSha256": "b98d334e5db6f172c23506972792de8e4fc8950edac68e7e38c14e05a9440e63",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/rag-latency-cost-budget-v1.webp",
+          "sha256": "84572e245d935f80792d0e3eccaa64c7be58f6f7e618a8d60a02ac7c58640434",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "rag-testing",
+      "label": "RAG 测试集、Golden Set 与回归测试",
+      "articlePath": "knowledge/llm/rag/rag-testing.md",
+      "baselineArticleSha256": "0af791b9a918c08992263cd7dab03fede1aafbaf8dd416ae6927a77e309db7ad",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/rag-testing-golden-set-pyramid-v1.webp",
+          "sha256": "d2529622904135d320b7599364f5bc74a824a71a61e4ca5d2f9e35796c8fed96",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "rag-table-retrieval",
+      "label": "表格、数据库与结构化数据检索",
+      "articlePath": "knowledge/llm/rag/rag-table-retrieval.md",
+      "baselineArticleSha256": "635350e630ea32e801f37973a12c640a52620940844f623a91adeaee58a6d5a9",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/rag-table-retrieval-query-routing-v1.webp",
+          "sha256": "a4e11d36a2d4746ec99cdfbea9ee6162322be664fd000d28428d34b018157de8",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "rag-production-ingestion",
+      "label": "生产级文档解析、索引与增量更新",
+      "articlePath": "knowledge/llm/rag/rag-production-ingestion.md",
+      "baselineArticleSha256": "fa0161ac6bf673cb14a56b5757744efd0305d97efd70fc575723403f064a74eb",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/rag-production-ingestion-versioned-pipeline-v2.png",
+          "sha256": "2eb02b9ffcdcdfbf66b61225f53169c3f1a75baaf1e46de6618915bcc47d7195",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "rag-failure-debugging",
+      "label": "RAG 失败诊断：数据、召回、排序与生成",
+      "articlePath": "knowledge/llm/rag/rag-failure-debugging.md",
+      "baselineArticleSha256": "e9d0a0c1cabf278af35b0c0f41b470ba9f9a07febff4c829b4d2ccb6bb058d94",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/rag-failure-debugging-stage-funnel-v1.webp",
+          "sha256": "c7e80971a8ca74fd3700759ae86dd72041dfceae39ba9ec68106c1f7435a8cdd",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "rag-code-retrieval",
+      "label": "代码仓库切分、索引与检索",
+      "articlePath": "knowledge/llm/rag/rag-code-retrieval.md",
+      "baselineArticleSha256": "40724dfcef4726385bb3332248deabe667c3e94d80f59f355c27be18c14a7f9d",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/rag-code-retrieval-symbol-graph-v1.webp",
+          "sha256": "8856c3dcf5a827fdee762434a4b4af73c3eaa1c1cc68cc9fbed7cd9e1cac06bc",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "rag-graph-rag",
+      "label": "GraphRAG 与知识图谱增强检索",
+      "articlePath": "knowledge/llm/rag/rag-graph-rag.md",
+      "baselineArticleSha256": "d3404c6b5e12f301915723b59b5a98a6a17b76d65b430e032f7e831cf3833191",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/rag-graph-rag-local-global-v1.webp",
+          "sha256": "7504c6f481cca89b4e992b38c9bc51f6a094a5fef06261ca5f940f86833898ae",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "rag-parent-child",
+      "label": "Parent-Child 与 Small-to-Big Retrieval",
+      "articlePath": "knowledge/llm/rag/rag-parent-child.md",
+      "baselineArticleSha256": "96beaadcaa3ba4991391bfdc34a9e97e555d216aeda9234d048beb16d7089666",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/rag-parent-child-small-big-v1.webp",
+          "sha256": "7a33f9bde9b8cbca7d124b374e7214bf242085f28c75b4af0eeb6d042689c3b7",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "rag-index-versioning",
+      "label": "索引版本、重建与回滚",
+      "articlePath": "knowledge/llm/rag/rag-index-versioning.md",
+      "baselineArticleSha256": "ddebfa216730d49d43c5cf3b60a510125d05749ff617ad6a89b8a50dd20daad5",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/rag-index-versioning-blue-green-v1.webp",
+          "sha256": "551f295f0b8de8a645764a97677675d6ec729e963dfe7395b6c418479e4a90ab",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "rag-access-control",
+      "label": "RAG 数据权限与多租户隔离",
+      "articlePath": "knowledge/llm/rag/rag-access-control.md",
+      "baselineArticleSha256": "51904bf187fef856a7fa149ed7cce626d69a2f84aaa48d3c7034cad210adb9e7",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/rag-access-control-tenant-boundary-v1.webp",
+          "sha256": "23179f666ca1e8e6a0a440aca2868f9e86457195f90d0e85438a443b454955e5",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": "excalidraw",
+      "diagramType": "architecture",
+      "batchId": null,
+      "publishedEvidence": null,
+      "priority": 10,
+      "reason": "Explain tenant/identity boundaries at indexing and retrieval.",
+      "plannedWave": "first-10",
+      "resumeExistingDiagramMigration": false
+    },
+    {
+      "key": "rag-metadata-filtering",
+      "label": "元数据过滤与结构化检索",
+      "articlePath": "knowledge/llm/rag/rag-metadata-filtering.md",
+      "baselineArticleSha256": "b6f2544370d0e1f107037b314d9931a7ed9af7a3acacce3f3d05993e5ad8c757",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/rag-metadata-filtering-pre-post-filter-v1.webp",
+          "sha256": "eb05714fcb15e590be3c8710b7323cb4709364ef8889d155801d29a28800cdb2",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "rag-multi-query",
+      "label": "Multi-Query 与多路召回",
+      "articlePath": "knowledge/llm/rag/rag-multi-query.md",
+      "baselineArticleSha256": "d6ba62de83ade041d54e4cbdf8fed1e81793a6c20ab64bc43570fc70c2a3b805",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/rag-multi-query-fusion-v1.webp",
+          "sha256": "e3fc29faa2b650634eb0807af1f53f5661e9320d799043bc68c0c4686e0e3579",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "rag-context-compression",
+      "label": "检索上下文压缩与去噪",
+      "articlePath": "knowledge/llm/rag/rag-context-compression.md",
+      "baselineArticleSha256": "fd37422e8da07b687aa2114b59aeb9722e599b65cf752acd8b447a9c54193ce2",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/rag-context-compression-evidence-filter-v1.webp",
+          "sha256": "aaefaa4463621aa253bff1436d6ebd073b81b6ef6e666e6708ca6c8bef838fc7",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "rag-deduplication",
+      "label": "文档去重、近重复检测与规范化",
+      "articlePath": "knowledge/llm/rag/rag-deduplication.md",
+      "baselineArticleSha256": "2614dcc8fe988a2468de439ba608eecebaa628bc08b3982736183ddfae257308",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/rag-deduplication-near-duplicate-v1.webp",
+          "sha256": "9f48f6272a00155ba52764bb4b64a7adbb5cc79f61f51484743f7fca8ac888c2",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-coding",
+      "label": "Coding Agent 的架构与执行循环",
+      "articlePath": "knowledge/llm/agent/agent-coding.md",
+      "baselineArticleSha256": "b24f36ec0658557e9e2f41c40fc6eba7dbd01057368c7eb2dad9cbf71bc71ee4",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-coding-repo-loop-v1.webp",
+          "sha256": "38e804eb66b11d78ece36bb33d86c456d619dc08c6a751d486f14e2b82be48c1",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": "archify",
+      "diagramType": "workflow",
+      "batchId": null,
+      "publishedEvidence": null,
+      "priority": 2,
+      "reason": "Frequent interview-linked topic; explain inspect/patch/test/review and failure return.",
+      "plannedWave": "first-10",
+      "resumeExistingDiagramMigration": false
+    },
+    {
+      "key": "mcp-protocol",
+      "label": "MCP / A2A 智能体通信协议",
+      "articlePath": "knowledge/llm/agent/mcp-protocol.md",
+      "baselineArticleSha256": "fc0eec4c19cba2a2759d883232063582d2f04e69acb59d388b3f71b043e6f1d7",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/mcp-a2a-protocol-boundaries-v1.webp",
+          "sha256": "9592ead6e6e0bb8dd2e451730be1ba8d1379a0ff20e65c0c231210568da62b74",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "multi-agent",
+      "label": "多智能体协作与适用边界",
+      "articlePath": "knowledge/llm/agent/multi-agent.md",
+      "baselineArticleSha256": "10e3e6dcda2f941bbb24255c9da66aadddf0eaa2a427bb440c810ec057e0cb64",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/multi-agent-orchestrator-worker-tradeoffs-v1.webp",
+          "sha256": "4d314dda5c7c5a1748cc0d7840f8c189c1f2a1d1ac1f5cb466204d0b782b9bc2",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "build-agent-framework",
+      "label": "从零构建 Agent 运行时",
+      "articlePath": "knowledge/llm/agent/build-agent-framework.md",
+      "baselineArticleSha256": "2cc7448ba414a1fa7a6e84ac4e61da457e0203a7ada08a02c7e642b4df2de647",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/build-agent-framework-runtime-boundaries-v1.webp",
+          "sha256": "f3da6724d4e4377470fe7db7e8035572e38b82d6e825d9487f7a217ef441d01c",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-react",
+      "label": "ReAct：推理与行动框架",
+      "articlePath": "knowledge/llm/agent/agent-react.md",
+      "baselineArticleSha256": "d3e10a3f43b8406ad8483a3fad6c2ab872ca2313da5e18533d59bd21f2d34390",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/agent-react-reason-act-observe-loop-v1.webp",
+          "sha256": "e2f1681bde8c8208a6a9af692a578b0ba2dadb3c82ceb188bc1ce8895161108b",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-memory",
+      "label": "短期记忆、长期记忆与检索",
+      "articlePath": "knowledge/llm/agent/agent-memory.md",
+      "baselineArticleSha256": "866ee9f5002121f09d88561af4158975693b63e411ba8b0587c7ac02b2205b00",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/agent-memory-tiered-read-write-v1.webp",
+          "sha256": "739c5167c61c70519d9593cbe7ad170d69d0fd76b135900d400bdc98438aadb9",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-sandbox",
+      "label": "代码执行、浏览器与文件操作沙箱",
+      "articlePath": "knowledge/llm/agent/agent-sandbox.md",
+      "baselineArticleSha256": "97118fb1045c4e2f1e4899c159076bfd482b0a64b4de848c803ca45c932ec692",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-sandbox-capability-boundary-v1.webp",
+          "sha256": "009a371dff25741cabc56834ff67d1f9d8fc39aff81d2543c537df8308df1007",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-tool-design",
+      "label": "Agent 工具契约、Schema 与错误语义",
+      "articlePath": "knowledge/llm/agent/agent-tool-design.md",
+      "baselineArticleSha256": "8f4093c8f09befe6e960e10fd694c64872f239cfa5e6a9d306a0bf4eeb011e57",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-tool-design-contract-v1.webp",
+          "sha256": "d14c4d0c555a56a56fb0bdcb792f2c9ac02b0d1048e85c49fd1b172bdf397118",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-multi-agent-messaging",
+      "label": "多智能体消息、协议与状态同步",
+      "articlePath": "knowledge/llm/agent/agent-multi-agent-messaging.md",
+      "baselineArticleSha256": "b60bbd344c531f9617684d5b379e9174163fc4175c18c89b3fd3f13a8a05d0b3",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-multi-agent-messaging-protocol-state-v1.webp",
+          "sha256": "6dc24ad719b142dbc3c8d686874b0c7e907161a85204a7fe67a3398c6c46d69f",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-tool-timeout",
+      "label": "工具超时、取消与重试",
+      "articlePath": "knowledge/llm/agent/agent-tool-timeout.md",
+      "baselineArticleSha256": "6e8791a9dd54002ca1bd6b743346b1ed6a1f034370e6226b5c78a88bb7138c12",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-tool-timeout-deadline-retry-v1.webp",
+          "sha256": "01c99f8a6c306dab23fff52fd28c471bf7af691a20d071af8abe25e430124b55",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-evaluation",
+      "label": "智能体性能评估",
+      "articlePath": "knowledge/llm/agent/agent-evaluation.md",
+      "baselineArticleSha256": "d868b190b0bfe66a159481e09876af63d32f1d614b98c4f6d2535336b9331c95",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-evaluation-metric-layers-v1.webp",
+          "sha256": "d035cdf85bd88bdb9082942b999cba50cafa75d1822f387c42c9aed3b3d34c87",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-subagents",
+      "label": "Subagent 子智能体设计",
+      "articlePath": "knowledge/llm/agent/agent-subagents.md",
+      "baselineArticleSha256": "73b6076eaf26460e9a4efa432a48452d55aa8691e2aed1826671def1ea166265",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-subagents-contract-lifecycle-v1.webp",
+          "sha256": "947d5a6574f2aa5e5f483e08dadcb9d2a340fe0adfc8c7976c98f2b513020bad",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-event-driven",
+      "label": "事件驱动 Agent 与异步编排",
+      "articlePath": "knowledge/llm/agent/agent-event-driven.md",
+      "baselineArticleSha256": "02ca0db25310843e85e2ae875d4bbfcad747474d2fdb01f7d5f4522216e8ce7b",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-event-driven-async-correlation-v1.webp",
+          "sha256": "01b916c21d7e5d0a52e06cc2861f075e5063ab7f276e7788555454db86d6637c",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-memory-forgetting",
+      "label": "遗忘策略、冲突处理与记忆更新",
+      "articlePath": "knowledge/llm/agent/agent-memory-forgetting.md",
+      "baselineArticleSha256": "6ad23ae82014db60ad386ad540ad0c13b82db032468f534b14ee412d2459e02c",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-memory-forgetting-four-actions-v2.png",
+          "sha256": "447b84a8839e13f7cf76bb426c50f9c2ed776dddc15458dde6c8f0003b7e68ba",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-workflow-state",
+      "label": "工作流状态、检查点与断点续跑",
+      "articlePath": "knowledge/llm/agent/agent-workflow-state.md",
+      "baselineArticleSha256": "ac72c6937fdc0a9087bf1002ffa845e8d05748edccc70ef2c692335f5810cb0c",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-workflow-state-checkpoint-v1.webp",
+          "sha256": "0c77067ab211d043d03b35d1e4f412366887c534fe6aeaa0ce66d64bd2a57094",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-parallel-tools",
+      "label": "并行工具调用与依赖调度",
+      "articlePath": "knowledge/llm/agent/agent-parallel-tools.md",
+      "baselineArticleSha256": "9fc14b916956aafbcf0a6a56a5540ddec8389800108e339ad169d8af0d3dde20",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-parallel-tools-dependency-dag-v2.png",
+          "sha256": "ec55f243a8722deb3af2dcb4f2f0952469f3c31b172861557885ffdbabc063fc",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": "archify",
+      "diagramType": "workflow",
+      "batchId": null,
+      "publishedEvidence": null,
+      "priority": 6,
+      "reason": "Preserve dependency gates, safe parallelism and outcome-aware retry.",
+      "plannedWave": "first-10",
+      "resumeExistingDiagramMigration": false
+    },
+    {
+      "key": "agent-computer-use",
+      "label": "Computer-use 桌面操作智能体",
+      "articlePath": "knowledge/llm/agent/agent-computer-use.md",
+      "baselineArticleSha256": "e16aafcebf254ccf607a68f35737b515ce69ae0ff4b36dbce16d0468a0d0a2a2",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-computer-use-perception-action-safety-v1.webp",
+          "sha256": "741ae7d5fc7a49dd111416abe98a7f8f6366fdfddeee0fdd1148ec1a08db8881",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-browser-use",
+      "label": "Browser-use 网页操作智能体",
+      "articlePath": "knowledge/llm/agent/agent-browser-use.md",
+      "baselineArticleSha256": "731a1799f3972231f65387c619a5308dd6a77f4cf8167e7adf1bfec09e2223ba",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-browser-use-observe-act-verify-v1.webp",
+          "sha256": "4b15d27e3a307535c9ced8fd47a8be7856bb86f2cf6a2ab8c28c9dc38b65d7c1",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-first-demo",
+      "label": "实现第一个 Thought-Action-Observation Agent",
+      "articlePath": "knowledge/llm/agent/agent-first-demo.md",
+      "baselineArticleSha256": "76e2b540ca66e524f880caa652d0577ce893115d673a48e553f3c88780503b6e",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/agent-first-demo-loop-v2.png",
+          "sha256": "dafead1ee52cd9e0773f8bbcefc071d3461735d1d4f95483e98a4275137696cf",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-history",
+      "label": "智能体发展史",
+      "articlePath": "knowledge/llm/agent/agent-history.md",
+      "baselineArticleSha256": "ada69eae1eb828c5d6bed4b0c0b580e9b9508208a653bad9c05a6cebca0eeace",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/agent-history-timeline-v2.png",
+          "sha256": "d3157bdf70a26a4ea5976857bb49700bfeefc1d121bed993b6f58c447f356426",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-deep-research",
+      "label": "深度研究智能体实战",
+      "articlePath": "knowledge/llm/agent/agent-deep-research.md",
+      "baselineArticleSha256": "11ccc90371a2e25f324d37f0b7a96cd2667adb05b6bb960d255ae4cbe8ac2cfc",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/deep-research-evidence-ledger-loop-v1.webp",
+          "sha256": "f9ea14d668700baa1236643eea689641d7abe1ea6bd6a774c2a33f5fddc6aa34",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-dynamic-workflow",
+      "label": "动态工作流生成与执行",
+      "articlePath": "knowledge/llm/agent/agent-dynamic-workflow.md",
+      "baselineArticleSha256": "9e1bf843d05b1a6d14c2337f890bfed728ddabb59740c22d93a6b6746e05302c",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-dynamic-workflow-plan-validation-v1.webp",
+          "sha256": "2261d15044964371fc6ccb8989a4a4051370c36c2ced9a6b039152ccfc9e460d",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-delegation",
+      "label": "任务委派、职责与结果合并",
+      "articlePath": "knowledge/llm/agent/agent-delegation.md",
+      "baselineArticleSha256": "827c0ec961474423bdb2dee13451a5bb068d2ea434f5b0e7493145ab6078cbff",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-delegation-responsibility-merge-v1.webp",
+          "sha256": "7d08d871dec3c46563af658990a49907e86be0f4bc53f4be13b055e8304abbc7",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-voice",
+      "label": "Voice Agent 与实时对话编排",
+      "articlePath": "knowledge/llm/agent/agent-voice.md",
+      "baselineArticleSha256": "4e6e370a4b655a648be5acea35b3f59999b5acfc00440f14d9d6e4cee096d96c",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-voice-realtime-turn-taking-v1.webp",
+          "sha256": "90bd614adc7814849a23848f2980815d74a4e20c7c5f0a1437b8be9b6096d15a",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agentic-rl",
+      "label": "Agentic RL：长时序信用分配与策略优化",
+      "articlePath": "knowledge/llm/agent/agentic-rl.md",
+      "baselineArticleSha256": "9f7c8c11cb5f3c5759bd8dc94a8f896da0806693fb36daab7d3bfe8da1d25ab8",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agentic-rl-long-horizon-credit-assignment-v2.png",
+          "sha256": "aad533311787c7a3d261b104b2c1b5bdeb1c8b9e662a477d63011c607798c72f",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-permission-model",
+      "label": "最小权限、授权与工具调用确认",
+      "articlePath": "knowledge/llm/production/agent-permission-model.md",
+      "baselineArticleSha256": "825f8989c30ca9365882a22e5b0b1a37e3e577b5f70c7bae4f1ede837e902f62",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-permission-model-capability-approval-v1.webp",
+          "sha256": "7a3903d2a0eaeb719078d7e7326fa12593db002ed24a2bd2c5ad4e40d09f68e4",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-failure-recovery",
+      "label": "失败分类、重试、补偿与恢复",
+      "articlePath": "knowledge/llm/production/agent-failure-recovery.md",
+      "baselineArticleSha256": "91ee5c5d4ed18c098eb7c4cee67eb3951f16916cd80e68459f6343745b2e77b6",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-failure-recovery-verify-outcome-v2.png",
+          "sha256": "6f0fd1b60c47a2932438de51b9fc3f3c39e69928c269046ab2d5281f29ea2949",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-quality-gates",
+      "label": "发布质量门禁与回归阻断",
+      "articlePath": "knowledge/llm/production/agent-quality-gates.md",
+      "baselineArticleSha256": "a404665dc41adbb52d18666896680425a34c076345a844b9f21a7acacfcbe34b",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-quality-gates-release-ladder-v1.webp",
+          "sha256": "9c1c03abc5d728418d10b1fd54289c53f06a76aabfb7a2c62eeb12db62f7b810",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-debugging",
+      "label": "Agent 调试方法与失败复现",
+      "articlePath": "knowledge/llm/production/agent-debugging.md",
+      "baselineArticleSha256": "0ab0bb08aa3163ab0ee7da2efa139fd75dbf128ed281455594d8ee14f5233b0d",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-debugging-reproduction-loop-v1.webp",
+          "sha256": "dc4792d49b3eb710196a1ba28f75a0ae5468ed86eab6888483b9704c343dedc2",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-identity-auth",
+      "label": "Agent 身份、用户身份与委托授权",
+      "articlePath": "knowledge/llm/production/agent-identity-auth.md",
+      "baselineArticleSha256": "108ba1a57e26c59376f63a6f66d0ab82cba49e7ed73c5d9dcf786abc4243cdf2",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-identity-auth-delegation-chain-v1.webp",
+          "sha256": "fecf1ecb43cef2414c8514bc30b63f586ce29dcac747099ed15c9146b99f6a9a",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-benchmark",
+      "label": "Agent Benchmark 的设计与解读",
+      "articlePath": "knowledge/llm/production/agent-benchmark.md",
+      "baselineArticleSha256": "8d46020f7fcc4abdba7fff0718196927f1c39cd4e8940036e0f764d49df77b17",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-benchmark-evaluation-matrix-v1.webp",
+          "sha256": "2f1706cde9c57f2ff6ffa27dc34d728e0298800f0fee2e9e897ed0f0ec156a2e",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-feedback-loop",
+      "label": "线上反馈、评估集与持续改进闭环",
+      "articlePath": "knowledge/llm/production/agent-feedback-loop.md",
+      "baselineArticleSha256": "1b5b5abdf6794901f2ce03538fad9fae17abea2990e5c02890af77533af249b5",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-feedback-loop-eval-flywheel-v1.webp",
+          "sha256": "a96ef9cd4f69fad87c44590a1cbd11341c09c1d975b12d4f42311bb1cda06e7a",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-cache",
+      "label": "模型、工具、检索与结果缓存",
+      "articlePath": "knowledge/llm/production/agent-cache.md",
+      "baselineArticleSha256": "093a5890d69076197aed672a9af2ddb02aad2ef8dbb0f62e63ee26c7f1af1e20",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-cache-layered-keys-v1.webp",
+          "sha256": "80da801bc94a189a9f4862c0dcaceac5829a78ea32150cbff10d5f55bd2fb810",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": "excalidraw",
+      "diagramType": "architecture",
+      "batchId": null,
+      "publishedEvidence": null,
+      "priority": 9,
+      "reason": "Explain distinct cache ownership and keyed isolation boundaries.",
+      "plannedWave": "first-10",
+      "resumeExistingDiagramMigration": false
+    },
+    {
+      "key": "agent-concurrency",
+      "label": "并发控制、资源隔离与公平调度",
+      "articlePath": "knowledge/llm/production/agent-concurrency.md",
+      "baselineArticleSha256": "d3fd9f75daf699b9cfb8e432e0b72b18909d2ebf866a19e673661f86f1b097bd",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-concurrency-fair-scheduler-v1.webp",
+          "sha256": "80f33718e8c1e913020817395b81773faf2b57b3c2058fdb4d215ab7928cf29e",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-trace-model",
+      "label": "Trace、Span、Run 与工具调用事件模型",
+      "articlePath": "knowledge/llm/production/agent-trace-model.md",
+      "baselineArticleSha256": "c30a36f6609b45059d224bd2cc0c2ba34b22c5c491e8f98c380933174e600073",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-trace-model-trace-waterfall-v1.webp",
+          "sha256": "e053c144d1a2e4cbdb59929bba1ece21cde758b49ca7db171024428515f1f997",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-secrets-management",
+      "label": "密钥、凭证与 Secret 生命周期",
+      "articlePath": "knowledge/llm/production/agent-secrets-management.md",
+      "baselineArticleSha256": "513e940b931ace87f3403868d6cf03b18c547fefdef7cbf0a9eec4f11db4a5db",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-secrets-management-secret-lifecycle-v1.webp",
+          "sha256": "6bd0690f17c422788ba52d041b6b52c4f6c6694ae65c118afe334e6eb97c10b1",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "ai-observability",
+      "label": "Agent 可观测性与全链路 Tracing",
+      "articlePath": "knowledge/llm/production/ai-observability.md",
+      "baselineArticleSha256": "c79a9ee5b0e140074c21ab6f8066ad685a44c69355a5390fca0c9730f3d73de8",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/ai-observability-agent-trace-tree-v1.webp",
+          "sha256": "d3b7f964526eb6936b7091166d3dd5ab08c8027afa8ebad3ac4ce5d4fa20a75f",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-queue-worker",
+      "label": "队列、Worker 与长任务执行",
+      "articlePath": "knowledge/llm/production/agent-queue-worker.md",
+      "baselineArticleSha256": "5d4055ed77ea1d1a6f168196ef5715f60f5112dc4db7d8bf95d7740ea3913166",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-queue-worker-job-lifecycle-v1.webp",
+          "sha256": "7ed2aa30af056042bd83d1aefd83f11efbbbc6ae4fd599dd2497c2c84432c1fc",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-idempotency",
+      "label": "幂等性、重复执行与副作用控制",
+      "articlePath": "knowledge/llm/production/agent-idempotency.md",
+      "baselineArticleSha256": "3860d0218619c03d3fd85c753b485792f39998902e29733229e23a4271f822ac",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-idempotency-operation-ledger-v1.webp",
+          "sha256": "7ada0c8d3b72c74a5046881de50713b94ec41b73534426ea4b9f87cf62f45d93",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "prompt-injection-defense",
+      "label": "Prompt Injection 与间接注入防御",
+      "articlePath": "knowledge/llm/production/prompt-injection-defense.md",
+      "baselineArticleSha256": "99a978d0fb36302bfa0dd9f35dd2becd676e5fafc0d416d7c5a4353512cb5f71",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/prompt-injection-defense-layers-v2.png",
+          "sha256": "c8cd6d0052e2f42ab3d50533ed34d25d1d40bb44c27d591e3ba33ae1259905fc",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "llm-cost-optimize",
+      "label": "Token、延迟与成本优化",
+      "articlePath": "knowledge/llm/production/llm-cost-optimize.md",
+      "baselineArticleSha256": "b40e3a494ebd326c9145049bc9815649d18b4fc6ba67063d6f72c06787639c7e",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/llm-cost-latency-levers-v1.webp",
+          "sha256": "5d9d6c33a061d3e4ed7da5ec3acdd910a7350d01a9a12594eb8bd1229873da2f",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-timeout-budget",
+      "label": "端到端超时预算与 Deadline 传播",
+      "articlePath": "knowledge/llm/production/agent-timeout-budget.md",
+      "baselineArticleSha256": "85f3e9478a764e925373bdf8d1e1c7028e8c08aed5e1ec07777bf56bfbd30fe0",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-timeout-budget-deadline-chain-v1.webp",
+          "sha256": "d546374c16dc13e7dfde01fb7c825cd1d5325552b831a0034b768e7e9f9d0900",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-guardrails",
+      "label": "输入、输出与工具 Guardrails",
+      "articlePath": "knowledge/llm/production/agent-guardrails.md",
+      "baselineArticleSha256": "370a63785b2c8aa670909d6fccfde9516488367e08892c42a30761c891f3b7c6",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-guardrails-layered-controls-v1.webp",
+          "sha256": "7fa3819a130c6a14adb7f35693e4272acea6c20d60515f04dcbaede68b6613eb",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-canary-release",
+      "label": "灰度、Canary 与模型版本发布",
+      "articlePath": "knowledge/llm/production/agent-canary-release.md",
+      "baselineArticleSha256": "becf8915ab1db1f7929819e906a9888807ca1f7ff1ee43dc1b22bdd92fb895a4",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-canary-release-progressive-rollout-v2.png",
+          "sha256": "1811babe215bdc63f5c62bfe7367d2ce66c17df5bf791cfa8357e73aefd07de4",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-online-eval",
+      "label": "在线评估、抽样与质量监控",
+      "articlePath": "knowledge/llm/production/agent-online-eval.md",
+      "baselineArticleSha256": "48e1816da984e9a8cefeea5a73d966ad0b9536c5ddf4254ef644cdc29d8a2528",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-online-eval-sampling-monitoring-loop-v1.webp",
+          "sha256": "85d98e5854d5393419cf135c92446217a92dbd22636fa12ec8d3a83fa696b8b7",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-test-pyramid",
+      "label": "Agent 单元、集成、场景与端到端测试",
+      "articlePath": "knowledge/llm/production/agent-test-pyramid.md",
+      "baselineArticleSha256": "05195b446687698554ab103556dd3ece8b42c42695f35f9fa91f785c665ef3a6",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-test-pyramid-layered-strategy-v1.webp",
+          "sha256": "11aebe48e43121d09b8eed400641a1cb3745f356305f41d5599da8d3daeffe34",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-model-fallback",
+      "label": "模型降级、Fallback 与熔断",
+      "articlePath": "knowledge/llm/production/agent-model-fallback.md",
+      "baselineArticleSha256": "d10f5b8d0dafd408c81cd0303e9e4292a79666b04a5f5d85512f42f08d5227f6",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-model-fallback-circuit-state-v1.webp",
+          "sha256": "296b69730c2c33904d9fd026b4b725b6de71133cb499b4e2bc69ebd7e9c5dd5c",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-data-privacy",
+      "label": "敏感数据、日志脱敏与隐私保护",
+      "articlePath": "knowledge/llm/production/agent-data-privacy.md",
+      "baselineArticleSha256": "a49c6264be0b7f89e250a5500321d9d0858905bd95348070a579a6841f888af9",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-data-privacy-data-lifecycle-v1.webp",
+          "sha256": "090db678fcec668756a9cc0399cf70b7d90fcd4d9dc8ad3913472d703b40437b",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-simulation",
+      "label": "用户模拟器与环境模拟测试",
+      "articlePath": "knowledge/llm/production/agent-simulation.md",
+      "baselineArticleSha256": "405d7aa8f35897d7bfe9245353b5f1eaf331dd269d80bc28b03ec8d81207c26d",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-simulation-dual-loop-actions-observations-temporary-v2.png",
+          "sha256": "21e038150ccd5e37abe497d4e3c26e74bfa48a802150e5183c5b2743f50e7014",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": "archify",
+      "diagramType": "sequence",
+      "batchId": null,
+      "publishedEvidence": null,
+      "priority": 1,
+      "reason": "Resume the existing temporary-diagram replacement; preserve actions/observations direction and separate simulated user/environment roles.",
+      "plannedWave": "first-10",
+      "resumeExistingDiagramMigration": true
+    },
+    {
+      "key": "agent-supply-chain",
+      "label": "模型、工具、MCP 与依赖供应链安全",
+      "articlePath": "knowledge/llm/production/agent-supply-chain.md",
+      "baselineArticleSha256": "f7856e4b9eeb943c82adaf5e997a5f1c1d1cb05bf15b1d78e2fa9599e8a98b59",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-supply-chain-provenance-map-v1.webp",
+          "sha256": "a3ead721b3b03d2f993180d71c7bae0d11aef95539f806a40e26b918ca49e750",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-deployment",
+      "label": "Agent 服务部署、扩缩容与版本发布",
+      "articlePath": "knowledge/llm/production/agent-deployment.md",
+      "baselineArticleSha256": "5a9a920ee06f74620f927dadb6266d64e70adcd3e820e876544ff73e8223a708",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-deployment-versioned-rollout-v1.webp",
+          "sha256": "d2866a4548230f36ea7119077be84aab7c4ebe44170589ed15b62c8901ef8ed6",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-prompt-regression",
+      "label": "Prompt、工具与模型升级回归测试",
+      "articlePath": "knowledge/llm/production/agent-prompt-regression.md",
+      "baselineArticleSha256": "0b769b71ab6860240258a020defa4beb35e9e4412292ef4ad51e66caf282b23a",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-prompt-regression-change-matrix-v1.webp",
+          "sha256": "40c5a7b30420129b94c7d0cae3540b4d3469c5664e931d7c5784a4f21167f70d",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-api-gateway",
+      "label": "Agent Gateway 与统一接入层",
+      "articlePath": "knowledge/llm/production/agent-api-gateway.md",
+      "baselineArticleSha256": "29e0f949404ced62963c76e691933a9da3c89fcc3095eaf2e9876954d9abd81b",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-api-gateway-policy-routing-v1.webp",
+          "sha256": "f08fe14b5432202a228887769fa8f294443beda0e24a618c892dbba60a024b6d",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": "excalidraw",
+      "diagramType": "architecture",
+      "batchId": null,
+      "publishedEvidence": null,
+      "priority": 8,
+      "reason": "Explain identity, policy and downstream service boundaries.",
+      "plannedWave": "first-10",
+      "resumeExistingDiagramMigration": false
+    },
+    {
+      "key": "agent-ab-testing",
+      "label": "Agent A/B 测试与实验设计",
+      "articlePath": "knowledge/llm/production/agent-ab-testing.md",
+      "baselineArticleSha256": "98d55b23c266df5a9984b0933e13c6c21a80aa15b6d1bae28e3d9404d97f0658",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-ab-testing-experiment-funnel-v1.webp",
+          "sha256": "48f88388cae43581dec0bad2615fa3453c89d4f73f51c1e677aff3cf829293cf",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-metrics",
+      "label": "成功率、质量、延迟、成本与业务指标",
+      "articlePath": "knowledge/llm/production/agent-metrics.md",
+      "baselineArticleSha256": "89b51cf4878947238269df684a37e052a4fbf37fc563140435b08bb4713a12a4",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-metrics-metric-stack-v1.webp",
+          "sha256": "f385bd435928b16d47651ca104f1596841ad7f7661c9b46ec2d4094737dc4030",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "ai-rate-limiting",
+      "label": "AI 应用限流、配额与背压",
+      "articlePath": "knowledge/llm/production/ai-rate-limiting.md",
+      "baselineArticleSha256": "4d93efb8e26e4e59793b91381cce504ad848e7bfb1fa71409bbcae07c85a5eb1",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/ai-rate-limit-backpressure-queue-v1.webp",
+          "sha256": "2f2cc0347ccd765c92603408a0ac3ebd7d4feb5bed4ca80417ab566e604513d1",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-audit-log",
+      "label": "不可抵赖审计日志与合规留痕",
+      "articlePath": "knowledge/llm/production/agent-audit-log.md",
+      "baselineArticleSha256": "4378a2a4c0fbdb19ce3eaa5b6468d3493ba23a906b13d6aefa8bc6914cc49ab2",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-audit-log-evidence-chain-v1.webp",
+          "sha256": "c1dd796c49321696cedb01b3f1c44c4c6fcc195219d61cc0822e565da6ebdf51",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-logs",
+      "label": "Agent 结构化日志与上下文关联",
+      "articlePath": "knowledge/llm/production/agent-logs.md",
+      "baselineArticleSha256": "65eb59e9b4276e767f9e3f99e784bba891d85e06ace17ca4dad23f6360b05ef3",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-logs-correlation-flow-v1.webp",
+          "sha256": "256b73bee65f513bb3c25ec279956cca8ec8873d3a5c3dac1d73124bcb480336",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-red-teaming",
+      "label": "Agent 红队测试与对抗样本",
+      "articlePath": "knowledge/llm/production/agent-red-teaming.md",
+      "baselineArticleSha256": "f6122e9d8cd8353a176412b59de3edcf1fe4131529e85b7ab59bef81008d5968",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-red-teaming-attack-defense-cycle-v1.webp",
+          "sha256": "5facf497609118489b08b746733f12d15011a3130e6903d9d78f2d671305656f",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-indirect-injection",
+      "label": "网页、文件与邮件中的间接 Prompt Injection",
+      "articlePath": "knowledge/llm/production/agent-indirect-injection.md",
+      "baselineArticleSha256": "64eee8b11f215e98498dc78ad15586c406613c65d0f5d90fa60ec0d7a6d223fe",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-indirect-injection-trust-boundaries-v1.webp",
+          "sha256": "6719b980acea66f8377c3186ff0bcd1b8269ef62430bef7f15fe974c90d34214",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-tool-poisoning",
+      "label": "工具描述、Schema 与返回值投毒",
+      "articlePath": "knowledge/llm/production/agent-tool-poisoning.md",
+      "baselineArticleSha256": "7cd6a94435b3229fb3e48604e4b6bf7224f61e68fdc549b89d38f02523cb079a",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-tool-poisoning-tool-contract-defense-v1.webp",
+          "sha256": "d885f4c0821985abefada67414299f80e89c24a8918ec78ac98a1f0b76d16e82",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-memory-poisoning",
+      "label": "记忆污染与持久化攻击",
+      "articlePath": "knowledge/llm/production/agent-memory-poisoning.md",
+      "baselineArticleSha256": "b50693cb1ae8cff19f19c64ce8c012ff9f869d9a4dba28cb20df4431a566bb02",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-memory-poisoning-memory-trust-lifecycle-v1.webp",
+          "sha256": "49a9347129f2cd24929dc40f09ecc923a70d9b63dcebeb1709222199ee1053fc",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-data-exfiltration",
+      "label": "数据外泄路径与阻断策略",
+      "articlePath": "knowledge/llm/production/agent-data-exfiltration.md",
+      "baselineArticleSha256": "f63723990cef5bc5a4c4f56583f1f496f5def14100391c34127cc183e01bc3e5",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-data-exfiltration-egress-control-v1.webp",
+          "sha256": "7e4f1df706166e54cab208a65f4e00922f5712ede96669f1674e4e1a759456be",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-network-egress",
+      "label": "网络出口、域名白名单与数据边界",
+      "articlePath": "knowledge/llm/production/agent-network-egress.md",
+      "baselineArticleSha256": "1670a9dbd2e7ad8ec433b4934ab6897cfdeae3f630ca0d0437a3dc4901e5715b",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-network-egress-policy-path-v1.webp",
+          "sha256": "4b75c4191f305d85fea1a8cc788141b40af9c999f9e74f8bcd768af4b3df8668",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-sandbox-escape",
+      "label": "沙箱逃逸风险与纵深防御",
+      "articlePath": "knowledge/llm/production/agent-sandbox-escape.md",
+      "baselineArticleSha256": "9719fca681e529ef76591cd3ec500cb14dbcfc5f2f66c520e731d17b41748152",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-sandbox-escape-defense-layers-v1.webp",
+          "sha256": "22bdb7510160218eb3f0b7afc14c0e451799ac0c3dd7aec9683cc2dc040c14a4",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": "excalidraw",
+      "diagramType": "architecture",
+      "batchId": null,
+      "publishedEvidence": null,
+      "priority": 7,
+      "reason": "Explain independent runtime boundaries and defense layers.",
+      "plannedWave": "first-10",
+      "resumeExistingDiagramMigration": false
+    },
+    {
+      "key": "agent-disaster-recovery",
+      "label": "状态备份、灾难恢复与任务重放",
+      "articlePath": "knowledge/llm/production/agent-disaster-recovery.md",
+      "baselineArticleSha256": "58332b8c5af3bf752d59e0927cece00e6af32447a92ddf3873df5f0f4224541d",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-disaster-recovery-checkpoint-replay-v1.webp",
+          "sha256": "d82b42beca37415a283d9545e9c0aad6ecc93e42c2a97f57b41712dcabc9e7df",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-slo",
+      "label": "Agent SLI、SLO 与错误预算",
+      "articlePath": "knowledge/llm/production/agent-slo.md",
+      "baselineArticleSha256": "ff6ae20c25527e584b0ec721d76ed1facffcd537638742196a1e78d61732d043",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-slo-error-budget-loop-v1.webp",
+          "sha256": "5a6edac7579f33996eda5c1faf33c5ef45cadc2c0702389c9afa2267791efe2c",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-incident-response",
+      "label": "Agent 线上事故响应与复盘",
+      "articlePath": "knowledge/llm/production/agent-incident-response.md",
+      "baselineArticleSha256": "2a8d1dd31683d874ba87f310ea0e2d52d4d177752bb5e5d7d367f325b8de5224",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-incident-response-detection-recovery-loop-v1.webp",
+          "sha256": "59abe933d603a3d78c1790f764d5b4c67b07b18b970a3270a9571dc2fc0556c5",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "node-event-loop-deep",
+      "label": "Node.js 事件循环与异步 I/O",
+      "articlePath": "knowledge/backend/nodejs/node-event-loop-deep.md",
+      "baselineArticleSha256": "a646e50dc27b25ce425a5fe73eeedc9608a1abe4328e4713d7c0b1d7a04f94da",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/node-event-loop-libuv-phases-v1.webp",
+          "sha256": "991560bb7f138cac13f6b0f9639cbd462bea384a5773ea34e00685ced21b1fe0",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "node-knowledge",
+      "label": "Node.js 运行时与核心模块",
+      "articlePath": "knowledge/fe/node/node-knowledge.md",
+      "baselineArticleSha256": "3c4e570efeecc9321ed799a2e6754e5b18318a0f75aca3c5e6a4ce26e74b40de",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/node-knowledge-runtime-subsystems-v1.webp",
+          "sha256": "7005347e22fe6949f47c27e70fddb5c14f48da1dc6e8c9fdf4aeced1dbca979f",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "node-stream",
+      "label": "Stream 流式处理原理与实践",
+      "articlePath": "knowledge/backend/nodejs/node-stream.md",
+      "baselineArticleSha256": "8a992116d3576264eda8372de6e229e5e4bff9e34e076d48f696cc0d694bce3d",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/node-stream-backpressure-flow-v1.webp",
+          "sha256": "992a3d3f1c90b976465c669ded6213d98407bcbdde9e56e33e84e6ae26a5cfd1",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "node-buffer",
+      "label": "Buffer、二进制与编码",
+      "articlePath": "knowledge/backend/nodejs/node-buffer.md",
+      "baselineArticleSha256": "0991a7bdb108c0a665fea1a9296c2c009c115992a0014392247a8bbafd492e3c",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/node-buffer-bytes-encoding-views-v1.webp",
+          "sha256": "5b50e9cf6ae5a3ccd5af6c04677839422f1093d97b7798965070bcc32f21dd62",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "node-worker-threads",
+      "label": "Worker Threads 与 CPU 密集任务",
+      "articlePath": "knowledge/backend/nodejs/node-worker-threads.md",
+      "baselineArticleSha256": "5b56ea67be802bea3c075d52607f6dce678313aba76f0bcfb6158f99d08c1367",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/node-worker-thread-pool-messaging-v1.webp",
+          "sha256": "5fd0eb4c7e5a38f637983e8f8873586df211a1f12968fb4b3182acba3c8a5805",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "express-core",
+      "label": "Express 核心原理与中间件",
+      "articlePath": "knowledge/backend/framework/express-core.md",
+      "baselineArticleSha256": "91615da3eb1bc8a8b1e2c1906ec97c9da1b68f99c443beff16d5ec3477b5cef4",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/express-middleware-stack-error-flow-v1.webp",
+          "sha256": "c91681ff354a7731cad5baa9532ac0107acdb0dda3981237f60d43026e0ba42f",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "nestjs-architecture",
+      "label": "NestJS 模块化服务架构",
+      "articlePath": "knowledge/backend/framework/nestjs-architecture.md",
+      "baselineArticleSha256": "4479098fdc3d226c8d0a478a5feb3314974bdfdff998defcb406c16dd8fb1b83",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/nestjs-module-di-request-pipeline-v1.webp",
+          "sha256": "00b3498823368589cd76ab0a93cbcd0d053126cd85fdc99050334f3939e26cd6",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "fastapi-basics",
+      "label": "FastAPI 构建 AI 服务",
+      "articlePath": "knowledge/data/python/fastapi-basics.md",
+      "baselineArticleSha256": "9839102065b33782888eb3a3e8da80a516a6078b238b522d0d8cbfe205a99260",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/fastapi-ai-service-request-lifecycle-v1.webp",
+          "sha256": "864ddbe80cc89db899a8a323de398849f2cd5c017e6fbfd5672de54361a565e5",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "koa-middleware",
+      "label": "请求上下文与洋葱模型",
+      "articlePath": "knowledge/backend/framework/koa-middleware.md",
+      "baselineArticleSha256": "071f49955e45a8dfe957a90eea97f03375d16630e0b6e4df2c27f19cf3c269fb",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/koa-onion-middleware-unwind-v1.webp",
+          "sha256": "8ce31a82f0eb1a43dfd2f6f014a5d318fa0133546b0be5e14067587246629c05",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "lua-host-runtime",
+      "label": "Lua 脚本与宿主运行边界",
+      "articlePath": "knowledge/backend/runtime/lua-host-runtime.md",
+      "baselineArticleSha256": "a6bb7d05490c29cd6f7856621b37a286cf6106bc9943ec28b3bf7dff4c707dc4",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/lua-host-runtime-execution-boundaries-v1.png",
+          "sha256": "18eeb2c31b1414a020605fa9ab0f8becf3b395637409849ae53667807df2c24e",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "websocket",
+      "label": "WebSocket 实时通信",
+      "articlePath": "knowledge/backend/api/websocket.md",
+      "baselineArticleSha256": "b30611b2cd4f87ecf92f7326c5f8d1209e60f92b2c394b0f214a6efb7732d128",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/websocket-handshake-frame-lifecycle-v1.webp",
+          "sha256": "3d3e741180cc1bb60b400c1166a91359d805ca753e23b04af2cc78f7cb812f63",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "file-upload-service",
+      "label": "文件上传、分片与对象存储",
+      "articlePath": "knowledge/backend/api/file-upload-service.md",
+      "baselineArticleSha256": "8fa61fcb2e68c522c750809da15ef4df0f040c83b01efc8828d5f1c6a945d8ce",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/file-upload-service-multipart-object-flow-v2.png",
+          "sha256": "c63dd16806213140ae7322aebc54348cff55174dd5da0e4d5ef9167809d40b8c",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "api-pagination-filtering",
+      "label": "分页、过滤、排序与游标设计",
+      "articlePath": "knowledge/backend/api/api-pagination-filtering.md",
+      "baselineArticleSha256": "afaa70cf5444c290578592879615f61495a5c5bf2f7ff122573a0cbdd0d95e9f",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/api-pagination-filtering-cursor-order-v1.webp",
+          "sha256": "9e81277135921efe8727e4bdfeab0250c2a99baf42357e60421efa2b559b4f34",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "api-idempotency",
+      "label": "API 幂等键与重复请求处理",
+      "articlePath": "knowledge/backend/api/api-idempotency.md",
+      "baselineArticleSha256": "ef391195a998f0769c5b39db9871443af1c599953f4e4b1c143aa450eb29ac41",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/api-idempotency-request-ledger-v1.webp",
+          "sha256": "2ceaa33bcbd9cdbc7b015517fdac77ceee35a35d9c8ce7e47eb09c711bb178bb",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "grpc-basics",
+      "label": "gRPC、Protobuf 与服务通信",
+      "articlePath": "knowledge/backend/api/grpc-basics.md",
+      "baselineArticleSha256": "14efdf430b10d81f25d9992c18aa5f00503e8ae8516a622a667ac65f9b6404ab",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/grpc-basics-protobuf-call-path-v1.webp",
+          "sha256": "2225d72291dcd3c2f610f629b328b3ea367c1cbe52909915cff2d0056be85a20",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "sse-server",
+      "label": "SSE 服务端推送与连接管理",
+      "articlePath": "knowledge/backend/api/sse-server.md",
+      "baselineArticleSha256": "cad4aea13a97953553e462976f96ad7b875560beed9bfe92bac4d250250d1405",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/sse-reconnect-event-id-flow-v1.webp",
+          "sha256": "05f23f9ce8161b07cbac3a159c4652373440c2976bd2667b2cf9c9401270803c",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "graphql-core",
+      "label": "GraphQL Schema、查询与 Resolver",
+      "articlePath": "knowledge/backend/api/graphql-core.md",
+      "baselineArticleSha256": "26d5d20a6afc8b44ac6355ace1c2ab3c55fa546497a6a26adc7d65306c91dab5",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/graphql-schema-resolver-execution-v1.webp",
+          "sha256": "ef987b3c4d00c6f6c3d6575e61140cf2a9edf7a0c154c4c1dbc306d9ad805d2f",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "api-schema-validation",
+      "label": "API Schema 校验、错误码与契约测试",
+      "articlePath": "knowledge/backend/api/api-schema-validation.md",
+      "baselineArticleSha256": "b59f3cc69166047e220e15b500bfffec0d133766f235d31d855ba55888e50b41",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/api-schema-validation-contract-pipeline-v1.webp",
+          "sha256": "ef94536c55aaf9d9b5f2d14cfcc6471114b7dad0bc00d2767f86cc7287f23fa7",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "restful-design",
+      "label": "RESTful API 设计规范",
+      "articlePath": "knowledge/backend/api/restful-design.md",
+      "baselineArticleSha256": "fbdc82fb6633223f93d3e7686cb7c685d1620e196c65217bd9fc316fb7d63128",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/rest-resource-http-semantics-v1.webp",
+          "sha256": "25bdf616ba8e9611fb759f57bd5fadc3699c99370263f5ef6f378c10d0f26bc5",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "api-versioning",
+      "label": "API 版本管理与兼容性",
+      "articlePath": "knowledge/backend/api/api-versioning.md",
+      "baselineArticleSha256": "e79bb44af3cbbcf3e72dcf2cda133a11cd51167bb4213f4664014a98d9aa90d4",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/api-versioning-deprecation-lifecycle-v1.webp",
+          "sha256": "0850151d2ba3ec0fe21dd623fbc8f81feddb1b8e18c01ad230c24036cbf2d243",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "webhook-design",
+      "label": "Webhook 签名、重试与幂等",
+      "articlePath": "knowledge/backend/api/webhook-design.md",
+      "baselineArticleSha256": "5867270006c96b12256ab2f51fe268111268576795fe2e0cd571e1cc0d33493f",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/webhook-design-signature-retry-ledger-v1.webp",
+          "sha256": "a7cc15dcf28a9ecee5c46851493a34c6cedd2d58dab11444324dc214967de8ee",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "redis-cache",
+      "label": "Redis 缓存策略与一致性",
+      "articlePath": "knowledge/backend/database/redis-cache.md",
+      "baselineArticleSha256": "feab09d8fa7c44d47afbccf8099db237f50d3cb8c2a32d6078a587266fc4dca9",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/redis-cache-aside-consistency-window-v1.webp",
+          "sha256": "2fb5f27c28f7eb9f2d50ba3134b2bac6b012824b61250bc455094f8694279847",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-state-storage",
+      "label": "Agent 会话、检查点与任务状态存储",
+      "articlePath": "knowledge/backend/storage/agent-state-storage.md",
+      "baselineArticleSha256": "ae987b097889a4c45cabee6724c41c547e3a90d8274ea43613d46197daadb2f0",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/agent-state-migration-recovery-v2.png",
+          "sha256": "4159110420e444b1dfcc215052316caa6142c3b26cea556a0f921fe8d4a62439",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "event-store",
+      "label": "事件存储、Outbox 与状态重建",
+      "articlePath": "knowledge/backend/storage/event-store.md",
+      "baselineArticleSha256": "13499174b43f4d62f89deab71e335f3db42dbfc0b118b348ee47481c9d6e1aa4",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/event-store-outbox-rebuild-flow-v1.webp",
+          "sha256": "cdda5188c76db775e0491aca5a6971ccaeb8a483c6125c3995e57c6ad7543e61",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "redis-data-structure",
+      "label": "Redis 数据结构与使用场景",
+      "articlePath": "knowledge/backend/database/redis-data-structure.md",
+      "baselineArticleSha256": "79b26fa692692f6a284b96c4494a0a74ef37f88c97211cbd60ed0b6956473fbd",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/redis-data-types-access-patterns-v1.webp",
+          "sha256": "be7f3d6c6066c7b102c248ec950d2aed669a81a02a058c716bd38da40abd7b9a",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "object-storage",
+      "label": "对象存储、预签名 URL 与生命周期",
+      "articlePath": "knowledge/backend/storage/object-storage.md",
+      "baselineArticleSha256": "072631ee77c76c5a9f09032f98af15964bcff0b79d6afd9840f79f28bd87edcf",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/object-storage-presigned-lifecycle-v1.webp",
+          "sha256": "a229164afb26a7d2df450ec74007c766f01648bb1f967571bcfc622a6bedc41a",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "database-migration",
+      "label": "数据库 Migration、回滚与兼容发布",
+      "articlePath": "knowledge/backend/storage/database-migration.md",
+      "baselineArticleSha256": "3aa79bac4b517efeb4a59114a1cd0ff460a962dc1acc26d270f74743e20d8a8e",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/database-migration-expand-contract-release-v1.webp",
+          "sha256": "01a5ff6a8d05a09aecab490a78e058c971221077d463807aa6b3910a3330fcda",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "postgresql-transaction",
+      "label": "PostgreSQL 事务、MVCC 与锁",
+      "articlePath": "knowledge/backend/storage/postgresql-transaction.md",
+      "baselineArticleSha256": "b07029368499c80169681d8acddd00e83ee4e1bcd5db8892a087697fa578396e",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/postgresql-transaction-mvcc-lock-lifecycle-v1.webp",
+          "sha256": "ac21b4daec8843ed6ca344e5de090ffc34999d7d321bb11f86f22b4dc4b57a42",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "db-sharding",
+      "label": "分库分表、读写分离与扩展",
+      "articlePath": "knowledge/backend/database/db-sharding.md",
+      "baselineArticleSha256": "6b51343dc520562681e382583cb8b8be48bbcf32d6cb8b3fa1d518db9e601bbf",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/database-sharding-routing-replication-v1.webp",
+          "sha256": "0179f3ce1d924a25fa7bd7f01fc62bcf46be314bda19ca2e075dbfb7d3e06cb4",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "typeorm-entity",
+      "label": "ORM 实体、关系与查询边界",
+      "articlePath": "knowledge/backend/database/typeorm-entity.md",
+      "baselineArticleSha256": "fadd24fb75dfe0bbce106614f12918bc3f89310788c0cee404629eac11b7a965",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/typeorm-entity-relation-query-boundaries-v1.webp",
+          "sha256": "ae9a04ab1c5a6d98bd7b0e147219d695fcc7db79ee747834041390a5af2aec18",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "jwt-auth",
+      "label": "JWT 认证机制",
+      "articlePath": "knowledge/backend/auth/jwt-auth.md",
+      "baselineArticleSha256": "8bf01d15b8c49a61c618a54173f394754374255e4d1a6cb3fd46da7d27241a45",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/jwt-validation-trust-boundary-v1.webp",
+          "sha256": "d0a3dcf51fc12007a7e6925bd8e32a2225d555c6ce4828ec34ff6b48d529ac32",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "rate-limit-circuit",
+      "label": "接口限流、熔断与降级",
+      "articlePath": "knowledge/backend/auth/rate-limit-circuit.md",
+      "baselineArticleSha256": "817a7a80ff1eb0a8ade1d7ce1f8815af99fec296f3bd3cef627e52b7b396c89a",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/rate-limit-circuit-breaker-states-v1.webp",
+          "sha256": "080df118b311ae7578fc92254d407f8fe55a108152fdc7037c27520bd9ce11f4",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "logging-monitoring",
+      "label": "日志、指标、Tracing 与告警",
+      "articlePath": "knowledge/backend/devops/logging-monitoring.md",
+      "baselineArticleSha256": "f3f45d9c9bdec5291bcf17efc90d272b1b4288a560d2bb0f522030e42e0b61e9",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/observability-signals-correlation-alerting-v1.webp",
+          "sha256": "a3c1eb614c3718a85c71a5d3d4d7150105e73fae1de28c8749a0e295b019b4f4",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "oauth2",
+      "label": "OAuth 2.0 授权流程",
+      "articlePath": "knowledge/backend/auth/oauth2.md",
+      "baselineArticleSha256": "303b0e0a18d254ee1b6065cb1fbff23295952b50a5fe777afd92a3fff216fa1e",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/oauth2-authorization-code-pkce-flow-v1.webp",
+          "sha256": "8990f696cf2dad73fa6188723bfbed6fcf6abfe9e393123bae3089aedeaddba8",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "docker-basics",
+      "label": "Docker 容器化基础",
+      "articlePath": "knowledge/backend/devops/docker-basics.md",
+      "baselineArticleSha256": "fb210190d09a8a20d4cee4bc017b0e4c5e23a6e49633fa53e87b01fadc1ebbbc",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/docker-image-container-runtime-layers-v1.webp",
+          "sha256": "362fd989ebc965e77b8e6d2d81f793ed3d082a95fb37b994fcf853be85039de3",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "docker-compose",
+      "label": "Docker Compose 多服务开发环境",
+      "articlePath": "knowledge/backend/devops/docker-compose.md",
+      "baselineArticleSha256": "29b1e5a7a51d75db1e69cfec216f249999562ac6a56ba23b7baf247ba4cdfc9b",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/docker-compose-service-dependency-network-v1.webp",
+          "sha256": "bcfd7e3338d1338f32f7dc066540dff1edc03f843757ee7609cd9bfd9881966a",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "cicd-pipeline",
+      "label": "CI/CD 流水线与安全发布",
+      "articlePath": "knowledge/backend/devops/cicd-pipeline.md",
+      "baselineArticleSha256": "b627e3dbe4057a800506fcc13741cacae2f8a54c944dd0bb98c7d170291521f8",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/cicd-secure-artifact-promotion-v1.webp",
+          "sha256": "08a5cdca3daeaa41017574a6a8b0824738f1ccd65d6b65717945b7c656d2617b",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "backup-restore",
+      "label": "数据库备份、恢复与演练",
+      "articlePath": "knowledge/backend/ops/backup-restore.md",
+      "baselineArticleSha256": "4f82b1a428fe2e26e0115584153e296fee470a80a71f8465622852113fce2601",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/backup-restore-rpo-rto-drill-v1.webp",
+          "sha256": "f0a0bd6b17881ebec33334aab97f14d33ae65403603088cf86914b93ccf87340",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "sql-injection",
+      "label": "SQL 注入与参数化查询",
+      "articlePath": "knowledge/backend/auth/sql-injection.md",
+      "baselineArticleSha256": "aca1368a48337daba5f46282a0b700de7abaa0a60ff8710d63a278b42f18edd2",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/sql-injection-data-code-separation-v1.webp",
+          "sha256": "86005fa25698707eba63103a87b4b4ef1904627188d53cb2a02ad641a6d507d2",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "password-encrypt",
+      "label": "密码哈希、Salt 与凭证存储",
+      "articlePath": "knowledge/backend/auth/password-encrypt.md",
+      "baselineArticleSha256": "60c3f782e6b7a77e4d85d5f6d5c69b105965775a8e1ecc74c2e03af7f0ab2609",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/password-hash-salt-pepper-verification-v1.webp",
+          "sha256": "6168852215a0734f1cceb7ff812ee89fa3232c0e72a96dd78a8391663e38fcd4",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "nginx-proxy",
+      "label": "Nginx 反向代理与负载均衡",
+      "articlePath": "knowledge/backend/devops/nginx-proxy.md",
+      "baselineArticleSha256": "c71afca6ced2f2fb563ea079255d9417cd472ddd0f09a384ead4ed64c54de4b0",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/nginx-reverse-proxy-upstream-routing-v1.webp",
+          "sha256": "847fbb3f02f01d0385c622293b7e2c6df4290cd798e6135f3fa9ec85dbcbd8be",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "secrets-config",
+      "label": "配置、Secret 与环境隔离",
+      "articlePath": "knowledge/backend/ops/secrets-config.md",
+      "baselineArticleSha256": "60c3c71faadfdba1906b0def4cb18c5f0d74c5adde15bf0b764a3d78392d26c9",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/secrets-config-environment-boundaries-v1.webp",
+          "sha256": "bd71a972eb2819df266d0078784f4fe501ae4a9962d62a85afbadba19a3a4356",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "health-check",
+      "label": "健康检查、优雅启停与就绪探针",
+      "articlePath": "knowledge/backend/ops/health-check.md",
+      "baselineArticleSha256": "7ee4d6318e16a12ea9b58b015525a8a895dc4cae919da7d35a1b0c3850519125",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/health-check-startup-readiness-shutdown-v1.webp",
+          "sha256": "bbcf09b54a80c829101dd3eee648c57d2124b57fb9df443fdb6c67150d8c7e25",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "python-async",
+      "label": "Python 异步编程（asyncio）",
+      "articlePath": "knowledge/data/python/python-async.md",
+      "baselineArticleSha256": "493f2e8e4e8658671279685aeffb654278cabef057596ce2acbc1e6686fc7a4d",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/python-asyncio-task-scheduling-cancel-v1.webp",
+          "sha256": "0a65c96756bee2777f520bbfc956ef71cf58c7df3bbc70d9c1f66deb20a5b76e",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "python-env",
+      "label": "Python 环境与包管理",
+      "articlePath": "knowledge/data/python/python-env.md",
+      "baselineArticleSha256": "10d5e73a4ff9f27089ada3bb887943256a34122baeef16c433ca2ad421ee061f",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/python-environment-package-resolution-v1.webp",
+          "sha256": "8ec7a3d4e49143b0db9a7893deca915676d2c8ac4a11a146ae9d5f14ba5afe68",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "python-typing",
+      "label": "Python 类型注解与 Pydantic",
+      "articlePath": "knowledge/data/python/python-typing.md",
+      "baselineArticleSha256": "f2a27bb83a30c811d3f3d4304aaa838e0ee4fde1e66f48f8932cb5771cbb408c",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/python-typing-static-runtime-validation-v1.webp",
+          "sha256": "953e03de3d09de7b990cf629bf6271b4c719e9152f17e99fe9aa473d6cf1fa66",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "python-oop",
+      "label": "Python 数据模型与面向对象",
+      "articlePath": "knowledge/data/python/python-oop.md",
+      "baselineArticleSha256": "a2565cb4e5020b9959e77552cbad658e2b54ca94c090fc23d2e8457970d92032",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/python-object-model-attribute-lookup-v1.webp",
+          "sha256": "4260316e760864306787f7d0b3e8781feaaea1b429cf5477f37d4c5d78d3ac97",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "numpy-basics",
+      "label": "NumPy 数值计算基础",
+      "articlePath": "knowledge/data/processing/numpy-basics.md",
+      "baselineArticleSha256": "729a84d52ab8450583f72e018e13f2ba5244acf3c107c78e2c0689b297e00289",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/numpy-ndarray-shape-stride-broadcast-v1.webp",
+          "sha256": "4342ecbd6cfcf0ce72ecebebbff0b4e095ffd267e5b6f8a10c9a14ba1e5ada6a",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "jupyter-practices",
+      "label": "Jupyter Notebook 工程实践",
+      "articlePath": "knowledge/data/analysis/jupyter-practices.md",
+      "baselineArticleSha256": "c1ff06f9126322f3140571a370d03878ee76cb0eb66bd3a9b1b3967cc8b4c4a7",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/jupyter-reproducible-notebook-pipeline-v1.webp",
+          "sha256": "26b0786cc1681f57742cb2d9fb0d41e5e98ff7e99a43811965797e9d9e0a5be3",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "data-schema-evolution",
+      "label": "数据 Schema 演进与兼容性",
+      "articlePath": "knowledge/data/processing/data-schema-evolution.md",
+      "baselineArticleSha256": "f73abbf828b50900605d26c412b25aa73161599596944686140f43d8f431d8b9",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/data-schema-evolution-compatibility-matrix-v1.webp",
+          "sha256": "836886a91083955256dc25ef42734bce5b2faa7933a578d2624edf0109524aa6",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "data-quality",
+      "label": "数据质量评估与异常检测",
+      "articlePath": "knowledge/data/processing/data-quality.md",
+      "baselineArticleSha256": "a242c2521d33a97e4a8d0e0a186f48b8707ac3ef5053ff93c99e736143fe6823",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/data-quality-dimensions-detection-loop-v1.webp",
+          "sha256": "72c72c334ee860b45eeacdd751c8f7c2d90179a5c515d207d5f7905fe821075a",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "data-formats",
+      "label": "JSON / CSV / Parquet 数据格式",
+      "articlePath": "knowledge/data/processing/data-formats.md",
+      "baselineArticleSha256": "0bcb11b52ff008fd23bf2599b1847418d420414d31b4a81d71e8bb782595b1fe",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/data-formats-row-column-tradeoffs-v1.webp",
+          "sha256": "d3faeac37ea683843c812429e1e9bb704762c75dca276e7a66d0ef3162e090c1",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "pandas-basics",
+      "label": "Pandas 数据清洗与分析",
+      "articlePath": "knowledge/data/processing/pandas-basics.md",
+      "baselineArticleSha256": "4b582c28ebf86de40079af89deb6a1e96e17ff306142d3804d5f4911517ece77",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/pandas-index-alignment-cleaning-flow-v1.webp",
+          "sha256": "7b161e8ca09f0ff9946ef115ed9d8b13e127beee288be3140fb5e754008c6926",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "text-preprocessing",
+      "label": "文本预处理与清洗策略",
+      "articlePath": "knowledge/data/processing/text-preprocessing.md",
+      "baselineArticleSha256": "a9fb3dda0c708231a0afe4f4fd323e3f9a4b0d5c482d967e27a556e994087e10",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/text-preprocessing-normalization-tokenization-v1.webp",
+          "sha256": "1148936238c20f098341c8963ed23063356b176ab82e74be1388d953ea0f0f9c",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "data-labeling",
+      "label": "AI 数据采集、标注与审核",
+      "articlePath": "knowledge/data/pipeline/data-labeling.md",
+      "baselineArticleSha256": "de3ce923ca1afcc3ed4100608c6e83a40a07f3655d111a7750673b0bf6fddc23",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/data-labeling-consensus-audit-flow-v1.webp",
+          "sha256": "244fa528efcd7422b0d1e6dd7cd58ece237bf8e26222b8a0a34360cf22008f8c",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "data-deduplication",
+      "label": "精确去重、近似去重与污染控制",
+      "articlePath": "knowledge/data/processing/data-deduplication.md",
+      "baselineArticleSha256": "08ca3710ce19b8683b64dbc1225b0d4faea12f6f969ac4c9398a2db1caa2440b",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/data-deduplication-exact-near-duplicate-v1.webp",
+          "sha256": "edb9cb92b7d9495a50eba33e3d363f9cf0c6c3e4a9623fcac96c9a9dc9d3e131",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "data-sampling",
+      "label": "数据采样、分层与代表性",
+      "articlePath": "knowledge/data/processing/data-sampling.md",
+      "baselineArticleSha256": "0a4775fd5846dfec3e77de85cf78163df4684f86a0e18c73eec6bd7e8e881700",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/data-sampling-stratified-representative-v1.webp",
+          "sha256": "28def8ea793cbcb6b6e34ebb9bbc5bc1bb984657bbd2e57cc364cc020004259a",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "vector-database-internals",
+      "label": "向量数据库索引、过滤与一致性",
+      "articlePath": "knowledge/data/storage/vector-database-internals.md",
+      "baselineArticleSha256": "9d7327e071be24fd0e9ecd9a9416ec066d5595e079951a74faed1ed5f1f2613d",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/vector-database-internals-filter-index-consistency-v1.webp",
+          "sha256": "9b80acc3642242e77892ee88de77be7b5ef7b8a6e22b6d7e4a83d26be0d4457f",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "ann-hnsw",
+      "label": "ANN 与 HNSW 向量检索算法",
+      "articlePath": "knowledge/data/vector/ann-hnsw.md",
+      "baselineArticleSha256": "5297b4c7d13204245816e8a40c9e6862ff8dd5e4bf79f4b6af5dd906bde55360",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/hnsw-layered-graph-search-v1.webp",
+          "sha256": "f3ef5cd42bda72b7b272b7ec4299cdbbf0c8983380351e99959215d428149b47",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "sql-index-optimize",
+      "label": "索引、执行计划与查询优化",
+      "articlePath": "knowledge/data/sql/sql-index-optimize.md",
+      "baselineArticleSha256": "453007421f77afc8af996831fbcc669d8531abe6769fb35995c28e3220d4026b",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/sql-explain-index-optimization-loop-v1.webp",
+          "sha256": "1a2a4bbfe1737317eaa0066d5e674f682b8fa1b114c3817c955700112442f4b1",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "sql-core",
+      "label": "SQL 核心语法与进阶查询",
+      "articlePath": "knowledge/data/sql/sql-core.md",
+      "baselineArticleSha256": "53a86e4bb2bd9fcd03ea090d0977ae607822424bab9d52ad58eddbf5ce6428a7",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/sql-logical-query-processing-order-v1.webp",
+          "sha256": "9eedcf2898b67de42150e9da2a07b514fc21c0af7ad8d3b8fe8dd12359302ed2",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "sql-window-function",
+      "label": "窗口函数与分析查询",
+      "articlePath": "knowledge/data/sql/sql-window-function.md",
+      "baselineArticleSha256": "4fed253dc07e53365276f4bfea912950c55957861db7ad078f049466de7f1f41",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/sql-window-partition-order-frame-v1.webp",
+          "sha256": "e9c745fc3740225399cc91fe2eee1d8b281dffa8cedf3ef44aece6e0e730b6c5",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "embedding-models",
+      "label": "Embedding 模型评估与选型",
+      "articlePath": "knowledge/data/vector/embedding-models.md",
+      "baselineArticleSha256": "b942f7551b4418cd774ee973256d64695ecbb34724f0459fd6a372031ccacaa0",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/embedding-model-evaluation-funnel-v1.webp",
+          "sha256": "51bd99ff2a29ffb233f7b533ac4dd3218752e19857896b04cf6282866b99b719",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "postgresql-features",
+      "label": "PostgreSQL 与 JSON 数据",
+      "articlePath": "knowledge/data/sql/postgresql-features.md",
+      "baselineArticleSha256": "46aad51c34fb6f1b079cf24d247f704880c5fb93af6d9e458bb1e8dadf72be9a",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/postgresql-jsonb-relational-hybrid-v1.webp",
+          "sha256": "b839a98f6274f67c1d5b62296198515a54efb73942db1c108097407d92b1e746",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "pgvector-usage",
+      "label": "pgvector 向量存储与检索",
+      "articlePath": "knowledge/data/vector/pgvector-usage.md",
+      "baselineArticleSha256": "bcd32f825363151db3efa2026c4362a4684f02cfa202e52031ad544d4670ae4b",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/pgvector-filter-ann-query-plan-v1.webp",
+          "sha256": "5091e886a7ec9216cc2f54de66bb9fbd22b0f588596c26121a41a349c693881b",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "clickhouse-intro",
+      "label": "ClickHouse 与列式分析",
+      "articlePath": "knowledge/data/sql/clickhouse-intro.md",
+      "baselineArticleSha256": "977c05fb28203dae6dccc7a9cf16bcc732fecd0f35411a46ead96d3019ed7f50",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/clickhouse-mergetree-column-parts-v1.webp",
+          "sha256": "7fd4f7e46b9fec8fd5e7350e214c6c964163e59fd3e437ec4551f05609a23530",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "recommendation-profile-graph-recall",
+      "label": "推荐系统中的动态画像与图召回",
+      "articlePath": "knowledge/data/storage/recommendation-profile-graph-recall.md",
+      "baselineArticleSha256": "4ee853f460bcae1a2f77ff0554863cdfa6d85fb6ec2894da8b8472f108693a89",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/recommendation-profile-graph-recall-pipelines-v1.png",
+          "sha256": "39b03e100d9d373482f040df0652b69def1ac95d9c78db360d60ca4bdcb00820",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "etl-design",
+      "label": "ETL / ELT 流程设计",
+      "articlePath": "knowledge/data/pipeline/etl-design.md",
+      "baselineArticleSha256": "ab7cea8a57880f67770696f5005afdbc2d2da2c0d383eb3cf3e441fdf522c053",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/etl-idempotent-staging-quality-gates-v1.webp",
+          "sha256": "6a60330076f7108f51ee6b2cc5efdd240465876c0cd834d7022259047efa9b0f",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "batch-stream-processing",
+      "label": "批处理、流处理与 Lambda/Kappa 架构",
+      "articlePath": "knowledge/data/pipeline/batch-stream-processing.md",
+      "baselineArticleSha256": "ee6695c28e794f2eecf442aaa7f7e822608f5bba9062bdbaac15775e0adf3376",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/batch-stream-processing-time-model-v1.webp",
+          "sha256": "01c6b5e3182d2752296ba734b2d1a7be82d794995ed299fb9ce26b045f3bd850",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "data-contracts",
+      "label": "Data Contract 与上下游协作",
+      "articlePath": "knowledge/data/pipeline/data-contracts.md",
+      "baselineArticleSha256": "980a8816ce01c16f075e89ec83cf35b60958f83de7d87744ca81b7dc8aa11626",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/data-contracts-producer-consumer-change-v1.webp",
+          "sha256": "01e8a47479eaa0ed790bac02291e513421e543a0d1720e684fa9f09bd8c76192",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "data-orchestration",
+      "label": "数据任务编排、依赖与重试",
+      "articlePath": "knowledge/data/pipeline/data-orchestration.md",
+      "baselineArticleSha256": "4dac5e1fe5c45d239bc54cd4930981088269d99c7a5799ecb5366b6fc2f8f62a",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/data-orchestration-dag-retry-backfill-v1.webp",
+          "sha256": "9e7aaf7a7ed02e9ef583005505807f162e5af36515b87c0ce79165790c873df8",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "data-observability",
+      "label": "数据新鲜度、完整性与管道可观测",
+      "articlePath": "knowledge/data/pipeline/data-observability.md",
+      "baselineArticleSha256": "1bd07e5757c5a8a3e1ae1c74e72137655109e1991c00dd069ee6ee4b44dcc4aa",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/data-observability-quality-signals-v1.webp",
+          "sha256": "d42aef7f83e887629f1bbb0d29a9ff7c97523fd67833c29401f3aee1a57c2a49",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "embedding-pipeline",
+      "label": "Embedding 管道自动化",
+      "articlePath": "knowledge/data/pipeline/embedding-pipeline.md",
+      "baselineArticleSha256": "204308cfde0430be50f7db328d3534ed5aad6ed5f99f2d98bd5c8dfd93fccb7c",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/embedding-pipeline-versioned-index-publish-v1.webp",
+          "sha256": "df4eca16217b92f76bc86318926d54625c715664355eb558b12e29da3e33d579",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "dvc-basics",
+      "label": "数据集与数据版本管理",
+      "articlePath": "knowledge/data/pipeline/dvc-basics.md",
+      "baselineArticleSha256": "d00de1936188620afb2e453eb7a005fd23d6fa4b168278587c94588867a2c6c8",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/dvc-data-version-pipeline-dag-v1.webp",
+          "sha256": "0b56a2850911c3327cae1ee043327abce54df75eda3b7bb73d45179abbaa912f",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "data-lineage",
+      "label": "数据血缘、元数据与可追溯性",
+      "articlePath": "knowledge/data/pipeline/data-lineage.md",
+      "baselineArticleSha256": "e63adefb39dd7461ead62a3f7aebbdf3b828bdb55463fa0604a8444e68f5de13",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/data-lineage-column-provenance-v1.webp",
+          "sha256": "4a0aeed91c5d59a0b3d027fed56f88fa25526ac55bc26daf078162307119d74b",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "feature-store",
+      "label": "特征、标签与 Feature Store 基础",
+      "articlePath": "knowledge/data/analysis/feature-store.md",
+      "baselineArticleSha256": "25c0fe1f81156629764fd5aa5a95219a7c974d6d421dca3afb0737553ee781fc",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/feature-store-offline-online-consistency-v1.webp",
+          "sha256": "2c8ea030b40d7afd455f8651a503a0cdc90a2cdce7d7ab0898bbe7e10b2f3999",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "experiment-analysis",
+      "label": "实验设计、显著性与效果分析",
+      "articlePath": "knowledge/data/analysis/experiment-analysis.md",
+      "baselineArticleSha256": "bf081f733d1c47e96e8cd7438a2f7b6c4d219a1570773acc38be9a4d21e0dd12",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/experiment-analysis-estimand-confidence-v1.webp",
+          "sha256": "a3a0a79e7e0281a5a40ef8d812c23f5cf30cc69f8f809ed394aa56ce5a91d385",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "matplotlib-seaborn",
+      "label": "Matplotlib / Seaborn 数据可视化",
+      "articlePath": "knowledge/data/analysis/matplotlib-seaborn.md",
+      "baselineArticleSha256": "e167606278b61c6e089307ae99513e517d71c09ed60a73fadbcd8e1966afb577",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/matplotlib-seaborn-layered-grammar-v1.webp",
+          "sha256": "4fd03123ac49042c89c246a2e72eb48bfde4743e8e1df51fb4c2fd4217a3279d",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "python-data-report",
+      "label": "用 Python 构建可复现数据报告",
+      "articlePath": "knowledge/data/analysis/python-data-report.md",
+      "baselineArticleSha256": "669e6bb6a88726a6e8fe0deb21ce10f5207f25a3d20e3f48e731f4d3c372c3ec",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/python-reproducible-report-build-v1.webp",
+          "sha256": "fefd6c8c21fdbec8909c6f3f79d4846a7335eb59377d661487dc3fbfce441ca8",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "tcp-handshake",
+      "label": "TCP 建连、断开与连接状态",
+      "articlePath": "knowledge/network/tcpIp/tcp-handshake.md",
+      "baselineArticleSha256": "2b2c29ff2ceec951c4781b8b84484261b5a2b94d2a49941c4e8cc7eb01394e80",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/tcp-active-close-time-wait-v3.png",
+          "sha256": "89461c451d9da6951335f975543c643b328cb46e795a7253beeb61cab9005ad3",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": "archify",
+      "diagramType": "sequence",
+      "batchId": null,
+      "publishedEvidence": null,
+      "priority": 5,
+      "reason": "Preserve active/passive close states, ACK order and TIME-WAIT ownership.",
+      "plannedWave": "first-10",
+      "resumeExistingDiagramMigration": false
+    },
+    {
+      "key": "http-message",
+      "label": "HTTP 请求、响应与报文结构",
+      "articlePath": "knowledge/network/http/http-message.md",
+      "baselineArticleSha256": "e2219ce008b1a9a40e1a7d1464794e0aea2bac9bf655ab17c85bdfdb2c20d9f2",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/http-message-semantics-framing-v1.webp",
+          "sha256": "fe892cf36e6a6555fd01a05d21394e3de9818344fde7430bb161860d71c2d46d",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "tcp-udp",
+      "label": "TCP、UDP 与传输场景",
+      "articlePath": "knowledge/network/tcpIp/tcp-udp.md",
+      "baselineArticleSha256": "d697d16af9e6e633c5aac6a8993e298ac5c1f1fd8eabde35f154c398631ab3d8",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/tcp-udp-transport-semantics-comparison-v1.webp",
+          "sha256": "a1b83d78dcd8d811f2db940bb5eab04ced98be2a5af0c66a4dcfe095ede517f0",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "dns-analysis",
+      "label": "DNS 解析、缓存与容灾",
+      "articlePath": "knowledge/network/others/dns-analysis.md",
+      "baselineArticleSha256": "3800592c6e7734376624c460ca231e258bdfbb55669d6d22ae4cd9df4e6f4acd",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/dns-analysis-resolution-cache-failover-v1.webp",
+          "sha256": "10dc7f2377ef4f1fa093753d7bd6bdd2e42ee68c0fda8d2a6304ba577b909313",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "tcpIp-model",
+      "label": "OSI、TCP/IP 与端到端通信",
+      "articlePath": "knowledge/network/tcpIp/tcpIp-model.md",
+      "baselineArticleSha256": "02ba8fab7b2e0728e4a2e8c165f936d63823059d5db01aaa3c9a3c4426f096fa",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/tcpip-model-encapsulation-path-v1.webp",
+          "sha256": "34a5bcbc0bad7283f882ad30cb412814c681f2b4d0e118dffa570e63824777d4",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "os-process-thread",
+      "label": "进程、线程与协程",
+      "articlePath": "knowledge/cs/os/os-process-thread.md",
+      "baselineArticleSha256": "272e06c9d7ae2cd4afb100f4dc6848ae78d4f568244b002c06c5315744896c8e",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/process-thread-coroutine-scheduling-v2.png",
+          "sha256": "9bfa532d5dcad48ce2f5dac99023b14fe6eace98b18b122bc70d8c98f078761c",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "os-thread-sync",
+      "label": "锁、信号量与并发同步",
+      "articlePath": "knowledge/cs/os/os-thread-sync.md",
+      "baselineArticleSha256": "568ecc910bc09969f7e8005e16669452e75a53d8c90c8438e5763f5595a14890",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/thread-synchronization-happens-before-v1.webp",
+          "sha256": "13422b0aa4efcffc661776ed3f12fa82720e9d8885196b43930a8eb82ebf86ea",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "os-deadlock",
+      "label": "死锁、检测与避免",
+      "articlePath": "knowledge/cs/os/os-deadlock.md",
+      "baselineArticleSha256": "0f88e19ca5983c5cd378d71c77bb0ca8582b5845e7352541f4eb43db76be6554",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/deadlock-wait-for-cycle-prevention-v1.webp",
+          "sha256": "cd6eb59efb2dca879c9ab4222ec555579c5a8c119902bf2142a72de03354acf7",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "os-virtual-memory",
+      "label": "内存、虚拟内存与分页",
+      "articlePath": "knowledge/cs/os/os-virtual-memory.md",
+      "baselineArticleSha256": "8656f6f0b0eddc19977ecf180746f87adf1d61e0d834119dac47bb634fcd335d",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/virtual-memory-page-table-fault-v1.webp",
+          "sha256": "b213070da0492c1eb09b0c1fc2d0f2c0ecd6eae871a5e7d234af36068948422c",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "os-user-kernel-mode",
+      "label": "操作系统的用户态、内核态与切换",
+      "articlePath": "knowledge/cs/os/os-user-kernel-mode.md",
+      "baselineArticleSha256": "21a42f303788a868ae5d36ced4913c687d9c39c99e3cdccbcc100476f31aa08a",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/os-user-kernel-mode-boundary-v1.png",
+          "sha256": "db14847b8c4c7f9a7a245ae70216022d7e869d4c0c7dbb94b1cbac446c140332",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "os-ipc",
+      "label": "进程间通信（IPC）",
+      "articlePath": "knowledge/cs/os/os-ipc.md",
+      "baselineArticleSha256": "925d61da00996cf910b244ee9a0ffdc7e558f60e3479300883d595ba8b2a3449",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/ipc-mechanisms-copy-sharing-comparison-v1.webp",
+          "sha256": "e3252b7dcbb172fb813c60db758dbe77a4ed200838928518cfbdb59f78ee7907",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "c-object-storage-duration",
+      "label": "C 对象的存储期与生命周期",
+      "articlePath": "knowledge/cs/language/c-object-storage-duration.md",
+      "baselineArticleSha256": "89d54910e80e2d8d4396f6a90e39f3e9e3cd70ed8254c99a6bd0af7614e7581d",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/c-object-storage-duration-lifetime-boundaries-v1.png",
+          "sha256": "e02aeb462d8f3998880c5ea51b9589e65e9c111be0d8883c3e51107720686d47",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "algorithm-hash",
+      "label": "哈希表、缓存与去重",
+      "articlePath": "knowledge/data-structure/algorithm/algorithm-hash.md",
+      "baselineArticleSha256": "d18a578a4c9dd4525c1b5c959c7e4f922d179115108c37133630a368380298ab",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/hash-table-bucket-collision-resize-v1.webp",
+          "sha256": "d34cd9fafd3c2ba4f80b72d6c890e5631731ff567621603cad147856f5a42a46",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "algorithm-loop",
+      "label": "递归、分治与搜索",
+      "articlePath": "knowledge/data-structure/algorithm/algorithm-loop.md",
+      "baselineArticleSha256": "804ada705f548c573f60c102f0875515f0ae14be3bcd63213aa3098c09a82f6a",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/recursion-divide-conquer-search-tree-v1.webp",
+          "sha256": "198c31deec5702dbc1c11c371a1a479bef8d777ba16866c5da0d2903ec410bc6",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "algorithm-sorting",
+      "label": "排序算法、稳定性与外部排序",
+      "articlePath": "knowledge/cs/algorithm/algorithm-sorting.md",
+      "baselineArticleSha256": "424e0c996b8d81854f18720799dbef0b6d14847a19bd99fa21de07ac07ec9728",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/algorithm-sorting-stability-external-merge-v1.webp",
+          "sha256": "a8572950055ca9516e913518f40530c9f93d07b01657ec55ea332e6f177df0fd",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "algorithm-graph",
+      "label": "BFS、DFS、最短路与拓扑排序",
+      "articlePath": "knowledge/cs/algorithm/algorithm-graph.md",
+      "baselineArticleSha256": "088665173ceb4df411fb2f91f88a44873051fd6beff57cf3d2af7fcdff2979ed",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/algorithm-graph-traversal-dependency-order-v2.png",
+          "sha256": "3c0a9628015a4dd4923abd4b806a874017eff474dc1118a628c5cb38c5be0195",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "algorithm-complexity",
+      "label": "时间复杂度、空间复杂度与性能估算",
+      "articlePath": "knowledge/cs/algorithm/algorithm-complexity.md",
+      "baselineArticleSha256": "345b37aaf077c13c910ecae60192e432b3ff9c71757dc8abd500ee8f15d12840",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/algorithm-complexity-growth-budget-v1.webp",
+          "sha256": "07aff3e5ada963323b9b317e6a1d21433a797477c108b60993e500ddcc41509a",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "algorithm-array",
+      "label": "数组、字符串与双指针",
+      "articlePath": "knowledge/data-structure/algorithm/algorithm-array.md",
+      "baselineArticleSha256": "3add66644877cf9c4cd43eebbee3fcd94f75ad6e1579bafe9323dc66fe340bc1",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/array-string-two-pointer-invariants-v1.webp",
+          "sha256": "571b3b268ade7386224b8f11e44d451337237632a3bb96ab6cfe840e3876c929",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "algorithm-tree",
+      "label": "树、图与遍历",
+      "articlePath": "knowledge/data-structure/algorithm/algorithm-tree.md",
+      "baselineArticleSha256": "895bd0c17adc5f381132a6e8097acbcd594bfe5735d2a74da4684fa49fae9106",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/tree-graph-bfs-dfs-frontiers-v1.webp",
+          "sha256": "207556764a13bc86fc5f1ad859d018e306d800769762d4605c760b12b6084b15",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "algorithm-stack-queue",
+      "label": "栈、队列与任务调度",
+      "articlePath": "knowledge/cs/algorithm/algorithm-stack-queue.md",
+      "baselineArticleSha256": "f56928ef362cb5ac7749a264c9430ec8655c6cfdd5c427fe2b81987706ce61e8",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/algorithm-stack-queue-operation-model-v1.webp",
+          "sha256": "ce3a5af12be0e2f803a54d79332aebff70a2f9298a7be71ae99816ab227de7b7",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "algorithm-backtracking",
+      "label": "回溯、剪枝与组合搜索",
+      "articlePath": "knowledge/cs/algorithm/algorithm-backtracking.md",
+      "baselineArticleSha256": "0594c8ef0d5a4132cb43a6fb4883648c35786edb42405a8f712d0c4e6e84728e",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/algorithm-backtracking-decision-tree-pruning-v1.webp",
+          "sha256": "2a24b50b4d10898bc1e9a12acb4c11fac865bb7dd0762cdd502daff49e0c1eea",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "algorithm-string",
+      "label": "字符串、匹配与文本处理",
+      "articlePath": "knowledge/data-structure/algorithm/algorithm-string.md",
+      "baselineArticleSha256": "169d80df783772b99e48c7558c9ca7a13613c5fd32b3c32adac4239eb1f2653d",
+      "status": "provenance_pending",
+      "legacyAssets": [
+        {
+          "path": "images/string-kmp-prefix-fallback-v1.webp",
+          "sha256": "8d621b2a5729c2cf1f0dbea20fdaab80b78bf99a331e1ef97bf4a7ef9c272083",
+          "provenance": "legacy_raster_provenance_pending"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "algorithm-trie",
+      "label": "Trie、前缀检索与自动补全",
+      "articlePath": "knowledge/cs/algorithm/algorithm-trie.md",
+      "baselineArticleSha256": "213be06982708b6fe07ce5bc19533a737ea4e25e9cfe7d907b64f4627e38bd3d",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/algorithm-trie-prefix-search-v1.webp",
+          "sha256": "ac08719e6dab276940214cc3fe1a9ac643306db62ce3c45abef79f27c250948f",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "probability-statistics-ai",
+      "label": "概率、分布、采样与统计估计",
+      "articlePath": "knowledge/cs/algorithm/probability-statistics-ai.md",
+      "baselineArticleSha256": "74867ab2cb4da6ee2284f9656aaea0f6ef93937d59516dab384daca3fbd8a1ad",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/probability-statistics-ai-distribution-estimation-v1.webp",
+          "sha256": "11d67cec4af43d22b82e22d8269accab22836d7ff59cacee96a0c801f3cfadcc",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "linear-algebra-ai",
+      "label": "向量、矩阵与线性代数直觉",
+      "articlePath": "knowledge/cs/algorithm/linear-algebra-ai.md",
+      "baselineArticleSha256": "a6f49d734e8fc99e6c16ea0211c10988a0816c30c1157e92c80f4f0ccddb9f7a",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/linear-algebra-ai-vector-matrix-transform-v1.webp",
+          "sha256": "538e652643bc72f145622c8c7b3a2154772e71067883e7d1fe74d939d932e1d4",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "event-loop",
+      "label": "浏览器事件循环、任务与渲染时机",
+      "articlePath": "knowledge/js-es6-ts/js/event-loop.md",
+      "baselineArticleSha256": "d568fa33d871205f046040e30e0223ee4ddcb754f8514be788d6ec465dcb6e9c",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/browser-event-loop-task-microtask-render-v1.webp",
+          "sha256": "96e4d4d3e71ce6945df8986ad18461d7e5a060cf2b8318884f17746f96419b4b",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "localStorage-sessionStorage",
+      "label": "Cookie、Storage 与浏览器状态",
+      "articlePath": "knowledge/network/others/localStorage-sessionStorage.md",
+      "baselineArticleSha256": "4a670f603dc42607075b054a5996714ce1dd06578b0699ccc78de8d3f6e6261d",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/browser-state-cookie-storage-boundaries-v1.webp",
+          "sha256": "7d1e0f624aa355351cafaa4cbab9a2e6e8299fbf13352e69de5d339f05af01d1",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "promise",
+      "label": "Promise、async/await 与异步控制流",
+      "articlePath": "knowledge/js-es6-ts/es6/promise.md",
+      "baselineArticleSha256": "7c3edf8f24dca189cf136438df156ed8d384bd180d0890fbb218832b30f22da1",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/promise-async-control-flow-v1.webp",
+          "sha256": "43627dd60a71dfd09ed1ebe7dd48694ea46c65c7bda2e6dddef6c59fc8adc4be",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "responsive-layout",
+      "label": "现代 CSS 布局与响应式设计",
+      "articlePath": "knowledge/html-css/css/responsive-layout.md",
+      "baselineArticleSha256": "37346d45a2515f029e6ce64c522decd5e7ffecb93a48692b4f23d58da5fe8d02",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/responsive-layout-container-breakpoint-v1.webp",
+          "sha256": "aa4e33db03c3a31fc4e7dd9aa2924524f3747ca78d3909fc2c37695abf8391bf",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "web-attack",
+      "label": "XSS、CSRF、CSP 与 Web 安全基础",
+      "articlePath": "knowledge/network/security/web-attack.md",
+      "baselineArticleSha256": "4c96680fbab573d92754d6e7c0785c4f8c572f186ba2950179a739a5867f9e92",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/web-security-xss-csrf-csp-boundaries-v1.webp",
+          "sha256": "9ba7eacbb74c03c3b96ee123181941a1223d58504c5504c8e7f34b59dd4fec49",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "web-semantic-accessibility",
+      "label": "语义化 HTML 与 Web 可访问性",
+      "articlePath": "knowledge/frontend/web/web-semantic-accessibility.md",
+      "baselineArticleSha256": "e464a59f1c58079c3480b7642e3322775e11f6ad988c48657b88dbb12aa99c29",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/web-semantic-accessibility-tree-v1.webp",
+          "sha256": "9e4014813ecc970442ccf4c92b998b29bef19be837a1674a6c64eabe9b75c710",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "css-script-boundaries",
+      "label": "CSS 与脚本执行的边界",
+      "articlePath": "knowledge/html-css/css/css-script-boundaries.md",
+      "baselineArticleSha256": "3d0402bc8b2c2567020da9be81145dc11b03892c7096f3c0c16c03f4fc2f9c8c",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/css-script-boundaries-build-style-js-v1.png",
+          "sha256": "8db09213c67a81c0ef82a31a712a07848ad2ade7896ac16908a8fce8a14023cb",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "type-system",
+      "label": "TypeScript 类型系统与类型建模",
+      "articlePath": "knowledge/js-es6-ts/ts/type-system.md",
+      "baselineArticleSha256": "e2e33246e34c07cdfec6927beba1d967535a0c73b9afb6d20321eb88755d5338",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/typescript-structural-narrowing-model-v1.webp",
+          "sha256": "272b2365f112e4ff6d85bfd9f08464b09450d394680248c5b2d34804bdf69d85",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "react-hooks",
+      "label": "React 函数组件、Hooks 与状态",
+      "articlePath": "knowledge/framework/react/react-hooks.md",
+      "baselineArticleSha256": "d5429ae2fa97d9e4faed11b4916ceac3b132f87d4ac4b5604ce377b8ec5a6d8a",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/react-render-state-effect-cycle-v1.webp",
+          "sha256": "dcca7b60f98f15735a4ba731d8854a73f63e729adfc84484aa13381d5c26d6b4",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "ts-generics",
+      "label": "TypeScript 泛型与可复用类型",
+      "articlePath": "knowledge/js-es6-ts/ts/ts-generics.md",
+      "baselineArticleSha256": "850f2b0a2bf08a8a03d7ae99353d42961c5a22f1966f7ab2b10dac8e73b8b8c4",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/ts-generics-type-relationship-v1.webp",
+          "sha256": "04e5aef53a841c9780878e0c38f2c1aead0ff07cb53a22ae372862218a624779",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "useCallback-useMemo",
+      "label": "React 渲染、Memo 与性能优化",
+      "articlePath": "knowledge/framework/react/useCallback-useMemo.md",
+      "baselineArticleSha256": "a5c5b8faf11a55aaa331cc96fde0a95f4fc05b9ee058d5c6e5c577feae06b55e",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/usecallback-usememo-render-dependency-v1.webp",
+          "sha256": "6a12b53f6aa2a29bf1dfb4c9e8d6480d163c4d46df53e4b7b44177586fa0ba8b",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "design-state",
+      "label": "前端状态管理与服务端状态",
+      "articlePath": "knowledge/fe/design/design-state.md",
+      "baselineArticleSha256": "926864627f972ffc621d10e9e5ee639eddc14134f81124aa07c3fe854f6e9c56",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/frontend-state-ownership-synchronization-v1.webp",
+          "sha256": "a0117b010fa6316043739cc2b5943ef6ac282e02d18f6090a33e23d249b97418",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "vite-testing",
+      "label": "Vite、前端构建与测试基础",
+      "articlePath": "knowledge/frontend/engineering/vite-testing.md",
+      "baselineArticleSha256": "57aacd4c48fbbd3ffe8cd8fa5a08a1b86066a4cc8af4bf860c49f9820bd94d04",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/vite-testing-build-test-pipeline-v1.webp",
+          "sha256": "c35b9b813272a3b8d41edf977f9c3264b61f0b9e3b350802a3f9d98d7d9add45",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "design-components",
+      "label": "可复用组件、状态与通信设计",
+      "articlePath": "knowledge/fe/design/design-components.md",
+      "baselineArticleSha256": "9823f988f593b099a500d08df422447e5b931149f5790a6ff44f25cb75293b06",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/design-components-state-ownership-v1.webp",
+          "sha256": "698e32efef352f47a0f7b1b02a319fa8e0c9bb450ad9ba99cc3435a9327cb289",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-markdown-code-ui",
+      "label": "Markdown、代码块、图表与安全渲染",
+      "articlePath": "knowledge/frontend/agent-ui/agent-markdown-code-ui.md",
+      "baselineArticleSha256": "5ffeb7960bcc6bed7281da9f4e1cb9f98186d4ca3a33e35727419c4510334595",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-markdown-code-ui-safe-render-pipeline-v1.webp",
+          "sha256": "56542074bf143f4f712010c9147faf1ca2ef46b115617b4a6a92f3cc9ce6c3d7",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-chat-ui",
+      "label": "Agent Chat UI、消息模型与会话列表",
+      "articlePath": "knowledge/frontend/agent-ui/agent-chat-ui.md",
+      "baselineArticleSha256": "71ae99d7514f59bcf1454c1c1f43161ecfd9048af9fe1df641cd8b8c8cf2f0a6",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-chat-ui-message-state-model-v1.webp",
+          "sha256": "fd8153812860d6cdf987de943cba7fd3c89e2776da4f92ff06be0b06f896d59a",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-streaming-ui",
+      "label": "流式文本、光标、取消与继续生成",
+      "articlePath": "knowledge/frontend/agent-ui/agent-streaming-ui.md",
+      "baselineArticleSha256": "269664772d10d3348a2b4aeee0219758d7ea0b39f302ad331c5398dfe7b19e8a",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-streaming-ui-event-reducer-v1.webp",
+          "sha256": "32121836319704f3d587210d88590698826f4a0bb8f657491cbb2758124d46c8",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-citation-ui",
+      "label": "引用、来源与检索证据展示",
+      "articlePath": "knowledge/frontend/agent-ui/agent-citation-ui.md",
+      "baselineArticleSha256": "7226428d90917272ccdc25f93bc8cb7884d9d07bcf8ab364fe7ad7d9ec832758",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-citation-ui-claim-source-evidence-v1.webp",
+          "sha256": "eee141b05341ef9e5bf3b4b22ad3c1235e38c25cef73bff9d6a27bc27647f77c",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-tool-approval-ui",
+      "label": "工具调用状态、参数预览与审批界面",
+      "articlePath": "knowledge/frontend/agent-ui/agent-tool-approval-ui.md",
+      "baselineArticleSha256": "5d7f49b26791f171ac7f71a3dd535e7b40c6a31189ad985e1aa420bf83f24db2",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-tool-approval-ui-risk-review-state-v1.webp",
+          "sha256": "e743aa7c07645124ba3decb86ab17fa7284bde52eecff6f47464a3496fa88e33",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-error-retry-ui",
+      "label": "错误、重试、恢复与降级交互",
+      "articlePath": "knowledge/frontend/agent-ui/agent-error-retry-ui.md",
+      "baselineArticleSha256": "f2edcdebf8d25e0af357765dc47a3a9184dc2d663cedee2f70f3bde40a88639d",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-error-retry-ui-recovery-decision-v1.webp",
+          "sha256": "e4f0f036382074382db8a10765d09700b993b8e023a08774ab9393188ea980a0",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-ui-accessibility-testing",
+      "label": "Agent UI 可访问性、测试与跨端适配",
+      "articlePath": "knowledge/frontend/agent-ui/agent-ui-accessibility-testing.md",
+      "baselineArticleSha256": "2280ecf777c8b0411aa48e1954e2cb34bbde43916c543ad466cc9e191a11ee75",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-ui-accessibility-testing-multimodal-matrix-v1.webp",
+          "sha256": "bbb37649d83a2b81eed5cdac05bac6dad487b442a873f3b5bc8d0f72b770aa64",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-resume-interview",
+      "label": "AI / Agent 岗位简历与面试",
+      "articlePath": "knowledge/career/agent-resume-interview.md",
+      "baselineArticleSha256": "a3452e69c54a505ae57e5f0f52d71cbc064d3c63464191e064e641faf47a04e9",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-resume-interview-evidence-funnel-v1.webp",
+          "sha256": "bed03dfe433714d9af608696a0264db9e1ecbaabcfbdff12e12e5343757bd4fa",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-project-portfolio",
+      "label": "Agent 项目与作品集设计",
+      "articlePath": "knowledge/career/agent-project-portfolio.md",
+      "baselineArticleSha256": "fbcd70598080e7140b607ea9995bfe438ed92ad48a628a619ecbf590457053cc",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-portfolio-evidence-stack-v1.webp",
+          "sha256": "1796aaf5cfe85cabb84d8fc34800ae2005f4d50157499971f2b3074947c5b106",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-project-requirements",
+      "label": "从真实需求定义 Agent 项目",
+      "articlePath": "knowledge/career/agent-project-requirements.md",
+      "baselineArticleSha256": "4efdf3728e7c86871c38bd4763b1e3ec57acd9e5d187d17d0b10fc6258ec5c89",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-project-requirements-value-risk-scope-v1.webp",
+          "sha256": "2c0d9e7d029e241c4067bc1a11d99d377df942ff656d6c94d1b18fd99c65f990",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-role-landscape",
+      "label": "Agent 工程师的职责与岗位方向",
+      "articlePath": "knowledge/career/agent-role-landscape.md",
+      "baselineArticleSha256": "e56e1f0d4b1b1928ec070755b92b66f658ccb7476b76b98da698cd5aea836964",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-engineer-role-landscape-v1.webp",
+          "sha256": "89f2a4d189c007b1b1f57bee3a0313863bc21bac3e3bfe0ac71967f27535bb63",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-project-evaluation",
+      "label": "用业务指标证明 Agent 项目价值",
+      "articlePath": "knowledge/career/agent-project-evaluation.md",
+      "baselineArticleSha256": "ed7e15520a8fde509331a7b8e2d3ae8415fb10590f25e186bbf66ae135e9235b",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-project-evaluation-baseline-metric-loop-v1.webp",
+          "sha256": "0fa08b3ce14c2122aa95eafde11ad5cc480a8cfa19e1a62cb1eaaf22b540bc58",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-skill-map",
+      "label": "Agent 工程师技能图谱",
+      "articlePath": "knowledge/career/agent-skill-map.md",
+      "baselineArticleSha256": "e58b0716f7c4ea11d75a66ace7c016e6e1ec5bfb224d1655de1d8839af9da920",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-engineer-skill-map-domains-v1.webp",
+          "sha256": "cc3799db1a2d4cf7a9f740eda69d8caaf1156dceb4bf5e24d2002e60fad5b537",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-learning-roadmap",
+      "label": "从零到 Agent 工程师的学习路线",
+      "articlePath": "knowledge/career/agent-learning-roadmap.md",
+      "baselineArticleSha256": "d8ca8ceca75a1e2cf0cc2bbe8ee9951c20be82d70d8f70257cf03e451d1bbce1",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-engineer-learning-dependency-roadmap-v1.webp",
+          "sha256": "9ae6354651d9bb948aa852661cb5b9ec318e627dc09666ef24e12e7b8efc003b",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-open-source-contribution",
+      "label": "参与 Agent 开源项目与技术社区",
+      "articlePath": "knowledge/career/agent-open-source-contribution.md",
+      "baselineArticleSha256": "90e6eccfd845149b7055d718595877abc7c74c77887af0b6a317d2e76290cc68",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-open-source-contribution-contribution-loop-v1.webp",
+          "sha256": "a90de8dfb9d192ff5b499298a55de7ff91b176cdd19703e19877e6fd01b00c84",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-interview-system-design",
+      "label": "Agent 系统设计面试与案例拆解",
+      "articlePath": "knowledge/career/agent-interview-system-design.md",
+      "baselineArticleSha256": "b00a8ff36aa30abe37f2a052821f3834a016005658d17fbce741d8137f9f40cd",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-interview-system-design-requirement-architecture-v1.webp",
+          "sha256": "4da04e1d9a62e21f5c1d4d571ed771dfe2d93805df69a99755924ae04e4723eb",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    },
+    {
+      "key": "agent-project-deployment",
+      "label": "将 Demo 做成可运行的线上项目",
+      "articlePath": "knowledge/career/agent-project-deployment.md",
+      "baselineArticleSha256": "ec6c2913640047b3659782e8fd2e8932c6b858369b73dcb4cdc8bfaa587bbffd",
+      "status": "queued",
+      "legacyAssets": [
+        {
+          "path": "images/agent-project-deployment-production-readiness-v1.webp",
+          "sha256": "785aacd1251dbdd10c2a61e20eb8af530d9614a80d98dfec3a86bdf02d67c59f",
+          "provenance": "legacy_generation_supported"
+        }
+      ],
+      "renderer": null,
+      "diagramType": null,
+      "batchId": null,
+      "publishedEvidence": null
+    }
+  ],
+  "verificationCompletedOn": "2026-10-30"
+}
