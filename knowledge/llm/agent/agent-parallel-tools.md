@@ -19,8 +19,8 @@ type ToolTask = {
 
 [LangGraph 的工作流文档](https://docs.langchain.com/oss/python/langgraph/workflows-agents)把 parallelization 与 orchestrator-worker 分开：前者适合预先可判断的独立子任务，后者适合运行时才确定的工作集合。这个区分比“是否使用 async”更重要。
 
-![独立工具在任务 DAG 中并行执行，存在依赖的任务等待，所有结果在 Join 后校验，失败受重试预算约束](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-parallel-tools-dependency-dag-v1.webp)
-*图：并行只发生在独立分支；Join、Validate 与 Retry Budget 共同定义完成语义。*
+![三个独立工具各自汇入 Join，等待必需结果后校验；仅符合条件的失败任务可重试，未知副作用先对账](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-parallel-tools-dependency-dag-v2.png)
+*图：三个独立分支各自汇入 Join，等待的是必需结果；Validate 后按既定策略继续。失败只重试符合条件的任务，副作用状态未知时先对账；图中的三格预算仅为示意。*
 
 ## 使用结构化并发
 
@@ -78,6 +78,7 @@ Trace 至少记录 `planVersion`、`taskId`、`parentId`、依赖集合、排队
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [飞猪秋招一面：并发任务调度与 Agent 故障定位](../../../interview/alibaba/ai/alibaba-ai-21.md)
 - [淘天供应链 AI 应用一面：失败复盘、工具并行与精确检索](../../../interview/alibaba/ai/alibaba-ai-19.md)
 <!-- interview-source-history:end -->
 

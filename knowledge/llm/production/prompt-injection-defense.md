@@ -1,5 +1,5 @@
-![分层防御图：不可信网页/文件进入内容隔离与标记，策略层做指令/数据分离，工具层做最小权限与参数校验，高风险动作进入人工审批，输出层做泄露检测；展示攻击路径被逐层截断](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/prompt-injection-defense-layers-v1.webp)
-*图：从不可信网页/文件向右读取攻击路径，观察内容隔离、指令/数据分离、参数校验、最小权限、人工审批与泄露检测如何逐层截断风险。*
+![分层防御降低提示词注入风险：来源标记、执行层授权、参数校验、高风险审查和输出检测；红色虚线展示可能残余攻击路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/prompt-injection-defense-layers-v2.png)
+*图：角色与数据标记只是来源提示；最小权限和参数授权由执行层强制检查，高风险动作进入审查，泄露检测仍可能漏检。红色虚线表示攻击可能穿过多层并留下残余风险，不是每次攻击必然通过，也不是组合防御能保证阻断。*
 
 ---
 
@@ -446,6 +446,7 @@ OWASP 将 Prompt Injection 作为 LLM 应用的核心风险之一，并建议采
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [小米 Java 一面：RRF、重排与注入防护](../../../interview/xiaomi/ai/xiaomi-ai-2.md)
 - [小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展](../../../interview/redbook/ai/redbook-ai-3.md)
 - [蚂蚁财富技术部一面：协作式 Agent、交付门禁与后端基础](../../../interview/antfin/ai/antfin-ai-4.md)
 <!-- interview-source-history:end -->

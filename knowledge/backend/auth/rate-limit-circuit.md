@@ -285,6 +285,7 @@ IP 限流无法区分正常用户和恶意用户，在 NAT 场景下多个用户
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [美团 AI 应用开发实习一面：多路检索、半开熔断与记忆](../../../interview/meituan/ai/meituan-ai-8.md)
 - [阿里淘天 AI 应用研发一面：RAG、限流 Top-K 与优惠策略](../../../interview/alibaba/ai/alibaba-ai-5.md)
 - [快手商业化效果营销一面：多 Agent 协作、Netty 与限流](../../../interview/kuaishou/ai/kuaishou-ai-4.md)
 - [腾讯职能线 AI 全栈一面：容量、安全、Worker 与限流](../../../interview/tencent/ai/tencent-ai-14.md)

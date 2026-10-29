@@ -157,8 +157,14 @@ RRF 公式与 rank 从 1 开始的约定按 Elastic 官方滚动文档核验于 
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [美团大模型应用算法一面：融合检索、重排与评测](../../../interview/meituan/ai/meituan-ai-6.md)
 - [美团后端暑期一面：RAG 消融、工具调用与并发一致性](../../../interview/meituan/ai/meituan-ai-2.md)
+- [美团 AI 应用开发实习一面：多路检索、半开熔断与记忆](../../../interview/meituan/ai/meituan-ai-8.md)
+- [小米 Java 一面：RRF、重排与注入防护](../../../interview/xiaomi/ai/xiaomi-ai-2.md)
 - [字节后端研发实习一面：向量索引与混合检索](../../../interview/bytedance/base/bytedance-base-70.md)
+- [飞书后端一面：锁粒度与混合检索](../../../interview/bytedance/base/bytedance-base-72.md)
+- [京东大模型应用开发实习：混合检索权重、向量索引与评测](../../../interview/jd/ai/jd-ai-5.md)
+- [腾讯后端一面：Embedding、召回指标与融合排序](../../../interview/tencent/ai/tencent-ai-24.md)
 - [腾讯 WXG 一面：转人工 Agent、Skill 与检索边界](../../../interview/tencent/ai/tencent-ai-16.md)
 - [淘天供应链 AI 应用一面：失败复盘、工具并行与精确检索](../../../interview/alibaba/ai/alibaba-ai-19.md)
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)

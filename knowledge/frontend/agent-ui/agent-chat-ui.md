@@ -62,6 +62,8 @@ type ContentPart =
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [小红书 AI 开发实习二面：聊天滚动、Markdown 与 Worker](../../../interview/redbook/ai/redbook-ai-17.md)
+- [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
 - [字节全栈：多智能体导购、客户端与系统评测](../../../interview/bytedance/base/bytedance-base-43.md)
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
 <!-- interview-source-history:end -->

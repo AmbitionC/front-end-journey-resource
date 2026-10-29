@@ -114,6 +114,7 @@ $$
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [京东零售后端一面：RAG 分块、证据与工具调用](../../../interview/jd/ai/jd-ai-4.md)
 - [百度 Java 实习：流式工具调用、答案忠实度与记忆](../../../interview/baidu/ai/baidu-ai-11.md)
 - [华为终端 BG AI 应用技术面：RAG 评测与冲突证据](../../../interview/huawei/ai/huawei-ai-2.md)
 - [蚂蚁一面：交付门禁、准确率口径与商品问答](../../../interview/antfin/ai/antfin-ai-10.md)

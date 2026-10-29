@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "complete": true,
-  "expectedCount": 124,
+  "expectedCount": 123,
   "entries": [
     {
       "id": "context-engineering:mermaid:45",
@@ -393,7 +393,7 @@
       "id": "agent-memory-architecture:svg:14",
       "kind": "svg",
       "articlePath": "knowledge/llm/agent/agent-memory-architecture.md",
-      "articleSha256": "dd565998c8cd4c1a1edae33ca6b934f9871bcdea7b92f1945595bcbcafc6896c",
+      "articleSha256": "98c59daacb7652eefb9f964fd2d204f3ef4e2b4985dbc0905e7aabb7920c6892",
       "line": 14,
       "sourceText": "https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-memory-write-recall-policy-v2.svg",
       "sourceSha256": "008387af2e11b87e53b1c4cf3f58110f5493f6bd5685da63b02b3ffe2a553626",
@@ -454,7 +454,7 @@
       "id": "agent-memory:mermaid:103",
       "kind": "mermaid",
       "articlePath": "knowledge/llm/agent/agent-memory.md",
-      "articleSha256": "dab8013a60649623a5b4ba53e651afb8c0b14b71f0968cae2af6dabf5c222f7d",
+      "articleSha256": "866ee9f5002121f09d88561af4158975693b63e411ba8b0587c7ac02b2205b00",
       "line": 103,
       "sourceText": "flowchart LR\n    A[输入文本] --> B[生成嵌入向量]\n    B --> C[NLP 实体提取]\n    C --> D[关系抽取]\n    D --> E[可选：写入关系/图索引]\n    B --> F[可选：写入向量索引]\n    E & F --> G[存储完成]\n",
       "sourceSha256": "59666da273aaca666df47b98b88122c5f9f0c4968efbb517b2d07e70f7e242ad",
@@ -524,7 +524,7 @@
       "id": "agent-memory:mermaid:137",
       "kind": "mermaid",
       "articlePath": "knowledge/llm/agent/agent-memory.md",
-      "articleSha256": "dab8013a60649623a5b4ba53e651afb8c0b14b71f0968cae2af6dabf5c222f7d",
+      "articleSha256": "866ee9f5002121f09d88561af4158975693b63e411ba8b0587c7ac02b2205b00",
       "line": 137,
       "sourceText": "sequenceDiagram\n    participant A as Agent\n    participant E as Embedder\n    participant V as 可选向量索引\n\n    Note over A: 存储阶段\n    A->>E: \"用户张三是 Python 开发者\"\n    E->>A: [0.12, -0.34, 0.87, ...]  模型定义的维度\n    A->>V: upsert(vector, metadata)\n\n    Note over A: 检索阶段\n    A->>E: \"张三擅长什么\"\n    E->>A: [0.11, -0.31, 0.85, ...]\n    A->>V: search_similar(query_vector, top_k=policy.top_k)\n    V->>A: 相关记忆列表 + 相似度分数\n",
       "sourceSha256": "4838c82bf252b30a207050d4e57cf5e994d94c277e1930a8f2d05890a7fde3e4",
@@ -562,7 +562,7 @@
       "id": "agent-memory:mermaid:171",
       "kind": "mermaid",
       "articlePath": "knowledge/llm/agent/agent-memory.md",
-      "articleSha256": "dab8013a60649623a5b4ba53e651afb8c0b14b71f0968cae2af6dabf5c222f7d",
+      "articleSha256": "866ee9f5002121f09d88561af4158975693b63e411ba8b0587c7ac02b2205b00",
       "line": 171,
       "sourceText": "flowchart TD\n    A[输入] -->|编码| B[提取元数据 + 可选索引表示]\n    B --> C{记忆类型路由}\n    C -->|临时| D[工作记忆\\nTTL 管理]\n    C -->|事件| E[情景记忆\\n持久存储 + 可选索引]\n    C -->|知识| F[语义记忆\\n按查询选择索引]\n    D -->|授权 + 保留政策 + 事实检查| G[整合 Consolidation]\n    G --> E\n    E -->|校验后抽象为可复用知识| F\n    D & E & F -->|定期清理| H[遗忘 Forgetting]\n    E & F -->|用户查询| I[检索 Retrieval]\n",
       "sourceSha256": "e0a724ed743ff65c7b8c82ff531574010011582050416071363885863863de83",
@@ -673,7 +673,7 @@
       "id": "agent-architecture:archify:49",
       "kind": "archify",
       "articlePath": "knowledge/llm/agent/agent-architecture.md",
-      "articleSha256": "6d3ce938d3cceacea00508fc06ebef09fe8a2210fdcfe0eff1394070ce787301",
+      "articleSha256": "9844b3d319f701ef834c1d83104c3c043c41ddd7f789c656d34ce1c48bf475c2",
       "line": 49,
       "sourceText": "<iframe\n  src=\"/archify/agent-architecture.html\"\n  title=\"PEAS 与 Agent 环境闭环交互架构图\"\n></iframe>",
       "sourceSha256": "ce094b71909006ab2edb39e713d6b1fce194b35ac5a441ce6e13b9db3e6e66a6",
@@ -965,7 +965,7 @@
       "id": "agent-deterministic-workflow:svg:29",
       "kind": "svg",
       "articlePath": "knowledge/llm/agent/agent-deterministic-workflow.md",
-      "articleSha256": "5a02d277bf7910e6ddd12d21dffa71208c31083662566dce9867a829de6b526e",
+      "articleSha256": "1fecd927c9d09cd92cc6b9cca33529bad12245bf41c4019f1f04599e7065b437",
       "line": 29,
       "sourceText": "https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-orchestration-choice-boundary-v1.svg",
       "sourceSha256": "14c008fca27f891ee00adb517dc1d2fd6687be89b2a12e5b45469df52e3dfb17",
@@ -1038,7 +1038,7 @@
       "id": "agent-run-loop:archify:34",
       "kind": "archify",
       "articlePath": "knowledge/llm/agent/agent-run-loop.md",
-      "articleSha256": "3c0d0a38316869d06eb702852e2c58c1e182260ca25ff9b29fbe73ca3aadc9fc",
+      "articleSha256": "a89c114397b21a12da31c7597aa0597dce00ab6550c409433e2e3e944b49f033",
       "line": 34,
       "sourceText": "<iframe\n  src=\"/archify/agent-run-loop.html\"\n  title=\"Agent Run Loop 单轮执行与终止交互架构图\"\n></iframe>",
       "sourceSha256": "a2caa2ea6d85b82bcb99eff07049d00199dca1a468adae77cb00d4b702143bec",
@@ -2124,7 +2124,7 @@
       "id": "prompt-injection-defense:mermaid:60",
       "kind": "mermaid",
       "articlePath": "knowledge/llm/production/prompt-injection-defense.md",
-      "articleSha256": "ec887557e670eae16b1a0072ad8bae2b9fe8c1a4b856438a2668559eec5b74be",
+      "articleSha256": "99a978d0fb36302bfa0dd9f35dd2becd676e5fafc0d416d7c5a4353512cb5f71",
       "line": 60,
       "sourceText": "flowchart TB\n    subgraph 攻击向量[\"攻击向量 Attack Vectors\"]\n        A1[直接注入\\nDirect Injection]\n        A2[间接注入\\nIndirect Injection]\n        A3[越狱\\nJailbreak]\n    end\n\n    subgraph 数据入口[\"数据入口 Data Entry Points\"]\n        D1[用户消息\\nUser Message]\n        D2[外部网页 / 文件\\nWeb / File Content]\n        D3[工具返回值\\nTool Results]\n        D4[第三方 API 响应\\n3rd-party API]\n    end\n\n    subgraph 防御层[\"防御层 Defense Layers\"]\n        L1[\"① 输入隔离\\nInput Isolation\"]\n        L2[\"② 输入校验与清洗\\nInput Validation\"]\n        L3[\"③ 最小权限\\nLeast Privilege\"]\n        L4[\"④ 输出过滤\\nOutput Filtering\"]\n        L5[\"⑤ 双重 LLM 校验\\nDual-LLM Pattern\"]\n        L6[\"⑥ 人工确认\\nHuman-in-the-Loop\"]\n    end\n\n    subgraph 资产[\"被保护资产 Protected Assets\"]\n        R1[用户数据]\n        R2[系统操作权限]\n        R3[模型行为意图]\n    end\n\n    A1 --> D1\n    A2 --> D2 & D3 & D4\n    A3 --> D1\n\n    D1 --> L1 --> L2\n    D2 & D3 & D4 --> L1 --> L2\n\n    L2 --> L3 --> L4 --> L5 --> L6\n\n    L6 --> R1 & R2 & R3\n\n    style 攻击向量 fill:#fee2e2,stroke:#ef4444\n    style 防御层 fill:#dcfce7,stroke:#22c55e\n    style 资产 fill:#dbeafe,stroke:#3b82f6\n",
       "sourceSha256": "945775458b7eacc8c4f3fbada0c44fad448ab71c09a1476a0809fed2efc722e4",
@@ -3224,79 +3224,6 @@
       "renderedVectorSha256": "dc107cea585aebd1b722ae6734c4c29d7942c6d7e4e2e4c4a3ff308490c78a5c"
     },
     {
-      "id": "agent-state-storage:svg:5",
-      "kind": "svg",
-      "articlePath": "knowledge/backend/storage/agent-state-storage.md",
-      "articleSha256": "361d326af5b0c2595aa255c0152ea9fee07517160f72d409d37d7ac734fc2698",
-      "line": 5,
-      "sourceText": "https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-state-migration-recovery-v1.svg",
-      "sourceSha256": "578c9d995283afa5d6c996eeb3b69175f4a70bd4bf4025c57a2d6f883faaf28e",
-      "url": "https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-state-migration-recovery-v1.svg",
-      "vectorPath": "images/agent-state-migration-recovery-v1.svg",
-      "vectorSha256": "300454748581277cef6544d1e38f2e9829eff03d1f3a9d8419de7baa013df7f9",
-      "alt": "Agent 容器迁移与任务恢复：旧 Worker 写入事件、检查点和制品，迁移后新 Worker 恢复快照并查询幂等账本",
-      "cacheKey": "fb47aceed4cbf9cc8a94c483614113884017bb9e21066adcb8533a56456556e9",
-      "renderer": {
-        "mermaid": "11.15.0",
-        "bundleSha256": "70137e77bb273bb2ef972b86e8b0400cca8be53cb25bfc45911a186dc98665de",
-        "puppeteer": "24.43.1",
-        "scale": 2,
-        "fontFamily": "PingFang SC, Arial, sans-serif",
-        "fonts": [
-          {
-            "name": "PingFang.ttc",
-            "sha256": "6bccdb1a967b2ae7e856927eb559591b2ce05656b0d4ad2764b9c9429f12c0b7"
-          },
-          {
-            "name": "Arial.ttf",
-            "sha256": "525979822591a3447cfc49d943d6f7683508e25543407871c0ed8fed05fd2bd9"
-          },
-          {
-            "name": "Arial Unicode.ttf",
-            "sha256": "876af2cd4854644e7f3e7feb2f688997fdb3343c6df6693611209c9dfb47ccec"
-          }
-        ],
-        "browser": "Chrome/148.0.7778.97"
-      },
-      "outputPath": "images/pdf-agent-state-storage-svg-fb47aceed4cb.png",
-      "outputSha256": "956c536d5070844359394e3de96d959684c87bf7f85ee823de563012aa892ae1",
-      "width": 2480,
-      "height": 1440,
-      "renderedVectorSha256": "48617d9ae0fddc208dde52039d64c606a9fb983da0720f720b43acb9c7f3c425",
-      "panels": [
-        {
-          "row": 1,
-          "column": 1,
-          "sourceVectorSha256": "48617d9ae0fddc208dde52039d64c606a9fb983da0720f720b43acb9c7f3c425",
-          "rect": [
-            0,
-            0,
-            1000,
-            680
-          ],
-          "outputPath": "images/pdf-agent-state-storage-svg-fb47aceed4cb-detail-1-1.png",
-          "outputSha256": "5c6785daf439a5f8ddc1b3bea15f3a30824276801d12468fe73962535d63d088",
-          "width": 2000,
-          "height": 1360
-        },
-        {
-          "row": 1,
-          "column": 2,
-          "sourceVectorSha256": "48617d9ae0fddc208dde52039d64c606a9fb983da0720f720b43acb9c7f3c425",
-          "rect": [
-            900,
-            0,
-            300,
-            680
-          ],
-          "outputPath": "images/pdf-agent-state-storage-svg-fb47aceed4cb-detail-1-2.png",
-          "outputSha256": "6e138254cce09dc9dbc5eec431afbb3be9f4fd3ca21e5e0ee01bcbb4e17af947",
-          "width": 600,
-          "height": 1360
-        }
-      ]
-    },
-    {
       "id": "mysql-index:mermaid:40",
       "kind": "mermaid",
       "articlePath": "knowledge/backend/database/mysql-index.md",
@@ -3893,7 +3820,7 @@
       "id": "rate-limit-circuit:mermaid:29",
       "kind": "mermaid",
       "articlePath": "knowledge/backend/auth/rate-limit-circuit.md",
-      "articleSha256": "62a9e8a8065c55f811a69180f590169cdc3ed37ae2afc62a6ab0f573c63d9210",
+      "articleSha256": "817a7a80ff1eb0a8ade1d7ce1f8815af99fec296f3bd3cef627e52b7b396c89a",
       "line": 29,
       "sourceText": "flowchart LR\n    Client[\"客户端 / Agent SDK\"]\n    GW[\"API Gateway\\n全局 IP 限流\"]\n    Auth[\"认证中间件\\n解析 userId / apiKey\"]\n    RL[\"限流中间件\\n用户级 / Key 级 / 模型级\"]\n    Handler[\"业务 Handler\"]\n    LLM[\"LLM Provider\\nOpenAI / Anthropic\"]\n    CB[\"熔断器\\nCircuit Breaker\"]\n\n    Client --> GW --> Auth --> RL --> Handler --> CB --> LLM\n    RL -- \"429 Too Many Requests\" --> Client\n    CB -- \"503 Service Unavailable\\n降级响应\" --> Handler\n",
       "sourceSha256": "082cda795957e6be6a0320a0577f9cd4113a5d1d2406873dc03c91cb423f03bd",
@@ -3978,7 +3905,7 @@
       "id": "rate-limit-circuit:mermaid:177",
       "kind": "mermaid",
       "articlePath": "knowledge/backend/auth/rate-limit-circuit.md",
-      "articleSha256": "62a9e8a8065c55f811a69180f590169cdc3ed37ae2afc62a6ab0f573c63d9210",
+      "articleSha256": "817a7a80ff1eb0a8ade1d7ce1f8815af99fec296f3bd3cef627e52b7b396c89a",
       "line": 185,
       "sourceText": "stateDiagram-v2\n    [*] --> Closed\n    Closed --> Open : 错误率超过阈值（如 50%）\n    Open --> HalfOpen : 等待 resetTimeout（如 30s）\n    HalfOpen --> Closed : 探测请求成功\n    HalfOpen --> Open : 探测请求失败\n",
       "sourceSha256": "1910a69dccffa06ae4ec72b11229ab939a982c28196aa885191a324ac3892f5f",
@@ -6718,7 +6645,7 @@
       "id": "agent-security-threat-model-archify-agent-security-trust-boundaries",
       "kind": "archify",
       "articlePath": "knowledge/llm/production/agent-security-threat-model.md",
-      "articleSha256": "d5475b749da34bda284a011668c6ef8db280043938640607e5750e4ff8775669",
+      "articleSha256": "2508f5a5acc4f3ad289cbb41717d1692f911504e6544b2869b5c8fb74da9bafc",
       "line": 11,
       "sourceText": "<iframe\n  src=\"https://www.agent-journey.cn/archify/agent-security-trust-boundaries.html\"\n  title=\"Agent 不可信内容与工具执行的信任边界\"\n></iframe>",
       "sourceSha256": "9e70e842125de3ac3120b45814ac92e547c5454adf974f85aaef626aba0e2202",
@@ -7075,7 +7002,7 @@
   "literals": [
     {
       "articlePath": "knowledge/llm/agent/agent-skill-design.md",
-      "articleSha256": "3000c0533278561468a008d42c9a548493abd8c74bedca253b8c1b1bf22709c9",
+      "articleSha256": "7a47b4f4b2924d4ebd998555c119dd87a86a4934b886bbd92694ba289bcfa0f3",
       "sourceText": ".agents/skills/<id>/"
     }
   ]

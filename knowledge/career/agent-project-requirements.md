@@ -59,6 +59,8 @@ Out of scope 与需求同样重要：不处理紧急投诉、不自动发送、�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [京东金融推荐算法实习一面：画像图谱与研究选题](../../interview/jd/ai/jd-ai-6.md)
+- [网易游戏 AI 实习：体验实验、问题复现与交付取舍](../../interview/netease/ai/netease-ai-2.md)
 - [京东后端一面：交付标准、Agent 选型与跨语言数据边界](../../interview/jd/ai/jd-ai-1.md)
 - [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../interview/bytedance/base/bytedance-base-36.md)
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../interview/bytedance/base/bytedance-base-48.md)

@@ -97,6 +97,7 @@ Agent 威胁模型从资产、攻击者能力、数据流和信任边界出发�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [网易云音乐后端实习两轮：RAG、向量库与 MCP 安全](../../../interview/netease/ai/netease-ai-1.md)
 - [百度北京后端秋招一面：Agent 安全、检索与存储](../../../interview/baidu/ai/baidu-ai-3.md)
 <!-- interview-source-history:end -->
 

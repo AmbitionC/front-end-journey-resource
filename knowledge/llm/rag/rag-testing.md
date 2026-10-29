@@ -101,8 +101,10 @@ RAG 测试是一座金字塔：底层确定性契约保证数据与权限，中�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 Agent 暑期实习一面：摘要、工具预算与链表](../../../interview/bytedance/base/bytedance-base-27.md)（cluster-7116079e6b23）
-- [字节 Agent 后端实习一面：LangGraph、评测集与混合检索](../../../interview/bytedance/base/bytedance-base-22.md)（cluster-a84ba0858191）
+- [美团大模型应用算法一面：融合检索、重排与评测](../../../interview/meituan/ai/meituan-ai-6.md)
+- [京东后端一面：会话存储与 RAG 评测](../../../interview/jd/ai/jd-ai-2.md)
+- [字节 Agent 暑期实习一面：摘要、工具预算与链表](../../../interview/bytedance/base/bytedance-base-27.md)
+- [字节 Agent 后端实习一面：LangGraph、评测集与混合检索](../../../interview/bytedance/base/bytedance-base-22.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

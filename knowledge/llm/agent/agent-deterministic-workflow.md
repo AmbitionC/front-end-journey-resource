@@ -110,6 +110,8 @@ trace 将 workflow/run、decision、activity、approval 和 operation ID 关联�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [携程数据工程面试：Agent ETL、数据口径与 Skill](../../../interview/ctrip/ai/ctrip-ai-2.md)
+- [腾讯企业微信测开实习一面：工作流取舍与离线评测](../../../interview/tencent/ai/tencent-ai-26.md)
 - [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)
 - [阿里云 Agent 一面：Workflow、通信与配置热更新](../../../interview/alibaba/ai/alibaba-ai-9.md)
 - [字节 Agent Infra 校招：运行时、MySQL 与 LRU](../../../interview/bytedance/base/bytedance-base-25.md)

@@ -182,6 +182,9 @@ AIMA 常用以下类型帮助理解能力递进：
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [快手后端 AI 实习一面：Agent 与幻觉控制](../../../interview/kuaishou/ai/kuaishou-ai-17.md)
+- [华为 AI 训推实习一面：模型评估、Agent 架构与记忆](../../../interview/huawei/ai/huawei-ai-3.md)
+- [小米秋招二面：Agent 项目说明与 TCP 状态](../../../interview/xiaomi/ai/xiaomi-ai-3.md)
 - [字节 Agent 开发二面（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-7.md)
 - [蚂蚁 Agent 一二面：Code Agent 与应用开发](../../../interview/antfin/ai/antfin-ai-2.md)
 - [OPPO IT 开发一面：ReAct、MCP 与智能问数](../../../interview/oppo/ai/oppo-ai-3.md)

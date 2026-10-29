@@ -47,6 +47,12 @@
 
 最终决策可以是上线、不上线、继续收集或重新设计。一个诚实的“区间仍包含有价值提升和有害下降，需要更多数据”，比把不确定结果硬解释成胜利更有价值。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [网易游戏 AI 实习：体验实验、问题复现与交付取舍](../../../interview/netease/ai/netease-ai-2.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [NIST：Confidence intervals](https://www.itl.nist.gov/div898/handbook/prc/section1/prc14.htm)

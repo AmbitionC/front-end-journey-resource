@@ -108,7 +108,7 @@ Temperature 控制分布尖锐程度，Top-K 用固定数量裁剪候选，Top-P
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-
+- [小米汽车大模型算法一二面：奖励投机、采样与线上验证](../../../interview/xiaomi/ai/xiaomi-ai-1.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

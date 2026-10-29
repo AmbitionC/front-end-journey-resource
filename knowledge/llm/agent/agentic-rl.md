@@ -1,7 +1,7 @@
 Agentic RL 不是给普通问答换一个新名字，而是把模型放进会持续变化的环境：模型要读取观察、选择动作、调用工具，再根据新观察继续决策。轨迹可能跨几十到几百步，最终奖励却只在任务结束时出现。真正的难点因此从“怎样给一段回答打分”扩展成“怎样解释一条长轨迹为什么成功或失败”。
 
-![Agent 在长时序中反复观察、行动和调用环境，稀疏终局奖励需要跨越整条轨迹完成信用分配](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agentic-rl-long-horizon-credit-assignment-v1.png)
-*图：轨迹越长，中间动作越多，终局奖励越难准确归因；训练还要面对环境随机性与部分可观测状态。*
+![可见状态输入策略，策略动作进入环境，观察更新下一状态；稀疏终局奖励需要跨长轨迹进行信用分配](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agentic-rl-long-horizon-credit-assignment-v2.png)
+*图：灰线将可见状态送入策略，蓝线 a_t 是策略发往工具或环境的动作，青色虚线 o_t 将观察带入下一状态。终局奖励 R_T 的归因要跨越长轨迹；环境随机性与部分可观测状态仍会增加难度。*
 
 ## 先定义轨迹，而不是先选算法
 
@@ -127,6 +127,7 @@ Agentic RL 的核心挑战是长轨迹上的信用分配与分布控制。PPO �
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [小米汽车大模型算法一二面：奖励投机、采样与线上验证](../../../interview/xiaomi/ai/xiaomi-ai-1.md)
 - [美团北斗大模型算法一至四面：过程监督、GRPO 与工具参数](../../../interview/meituan/ai/meituan-ai-3.md)
 - [字节抖音电商 Agent 一面：分层、上下文与 GRPO](../../../interview/bytedance/base/bytedance-base-21.md)
 - [腾讯 AI Agent 应用开发一面：上下文、强化学习与系统基础](../../../interview/tencent/ai/tencent-ai-11.md)

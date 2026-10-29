@@ -105,6 +105,7 @@ RAG 调试是一条逆向证据链：先冻结可回放 trace，从 generation �
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [百度 AI 应用实习：回答评测、重排与 Bad Case 定位](../../../interview/baidu/ai/baidu-ai-12.md)
 - [哔哩哔哩 AI 应用岗 Agent 开发一面](../../../interview/bilibili/ai/bilibili-ai-1.md)
 <!-- interview-source-history:end -->
 

@@ -1,6 +1,6 @@
 Agent 测试的难点在于：同一个“答案错误”，可能来自纯函数、Prompt、模型波动、工具契约、权限、数据状态或真实网络。若所有问题都靠端到端测试发现，反馈慢、成本高、定位困难；若只做单元测试，又无法覆盖模型与外部世界。测试金字塔的作用，是把断言放到最便宜、最稳定、又足以证伪目标契约的层级。
 
-[NIST 的 AI TEVV 说明](https://www.nist.gov/ai-test-evaluation-validation-and-verification-tevv)区分并研究测试、评估、验证和确认，强调任务、测试床、数据集、测量方法与使用情境。Agent 的金字塔不是某个标准规定的固定形状，而是把这些活动按隔离性和现实性组织起来的工程方法。
+[NIST AI RMF 附录 A 的 TEVV 职责说明](https://airc.nist.gov/airmf-resources/airmf/appendices/app-a-descriptions-of-ai-actor-tasks/)将测试、评估、验证和确认放在整个 AI 生命周期中，并说明可在设计阶段按需求规划测试，在部署阶段验证系统集成。Agent 的金字塔不是某个标准规定的固定形状，而是把这些活动按隔离性和现实性组织起来的工程方法。
 
 ![Agent 单元契约、工具集成、场景与端到端测试金字塔](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-test-pyramid-layered-strategy-v1.webp)
 
@@ -119,11 +119,12 @@ Agent 测试金字塔从单元契约、工具集成、受控场景到端到端�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [腾讯搜狗输入法后台二至四面：AI 代码可靠性与测试](../../../interview/tencent/base/tencent-base-1.md)
 - [理想汽车 IT 全栈交付培养生一面：Skill、测试与工作流](../../../interview/liauto/fullstack/liauto-fullstack-1.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
 
-- [NIST：AI Test, Evaluation, Validation and Verification](https://www.nist.gov/ai-test-evaluation-validation-and-verification-tevv)
+- [NIST AI RMF：TEVV tasks throughout the lifecycle](https://airc.nist.gov/airmf-resources/airmf/appendices/app-a-descriptions-of-ai-actor-tasks/)
 - [NIST：AI RMF Generative AI Profile](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence)
 - [OpenTelemetry：Signals](https://opentelemetry.io/docs/concepts/signals/)

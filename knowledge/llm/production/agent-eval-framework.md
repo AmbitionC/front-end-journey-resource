@@ -116,6 +116,7 @@ Agent 的改动可能影响工具选择、提示词、检索、上下文管理�
 - [字节 TikTok Shop 质量方向一面：LLM Judge 与测试集覆盖](../../../interview/bytedance/base/bytedance-base-66.md)
 - [蚂蚁一面：交付门禁、准确率口径与商品问答](../../../interview/antfin/ai/antfin-ai-10.md)
 - [小红书产品工程师一面：一致性、知识来源与多模态评估](../../../interview/redbook/ai/redbook-ai-6.md)
+- [腾讯企业微信测开实习一面：工作流取舍与离线评测](../../../interview/tencent/ai/tencent-ai-26.md)
 - [字节 AI 平台一面：Agent 评测、框架与数据结构](../../../interview/bytedance/base/bytedance-base-33.md)
 - [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)

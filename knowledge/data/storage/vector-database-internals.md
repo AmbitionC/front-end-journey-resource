@@ -50,6 +50,7 @@ IVFFlat 通常需要已有代表性数据训练。数据分布漂移或批量更
 <!-- interview-source-history:start -->
 - [腾讯 PCG 暑期一面：检索一致性、多智能体调度与超时恢复](../../../interview/tencent/ai/tencent-ai-22.md)
 - [字节后端研发实习一面：向量索引与混合检索](../../../interview/bytedance/base/bytedance-base-70.md)
+- [京东大模型应用开发实习：混合检索权重、向量索引与评测](../../../interview/jd/ai/jd-ai-5.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

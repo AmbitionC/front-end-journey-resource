@@ -334,6 +334,7 @@ async function answerWithRag(question: string, session: Session) {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [网易云音乐后端实习两轮：RAG、向量库与 MCP 安全](../../../interview/netease/ai/netease-ai-1.md)
 - [小红书产品工程师一面：一致性、知识来源与多模态评估](../../../interview/redbook/ai/redbook-ai-6.md)
 - [小红书 AI 全栈暑期二面：RAG 流程与 Skill 实践](../../../interview/redbook/ai/redbook-ai-10.md)
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)

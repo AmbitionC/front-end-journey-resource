@@ -128,8 +128,10 @@ InMemorySaver 适合内存内示范，不保证进程重启后恢复；持久 sa
 
 <!-- interview-source-history:start -->
 - [快手 AI 应用服务端日常实习一面：协作、上下文与评测](../../../interview/kuaishou/ai/kuaishou-ai-7.md)
+- [美团 AI 应用开发实习一面：多路检索、半开熔断与记忆](../../../interview/meituan/ai/meituan-ai-8.md)
 - [百度 Agent 秋招二面：执行范式与记忆压缩](../../../interview/baidu/ai/baidu-ai-6.md)
 - [小红书 AI 后端一面：执行模式、Memory、意图与 RAG](../../../interview/redbook/ai/redbook-ai-8.md)
+- [华为 AI 训推实习一面：模型评估、Agent 架构与记忆](../../../interview/huawei/ai/huawei-ai-3.md)
 - [字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)
 - [腾讯 AI 应用开发面试：跨会话记忆与多 Agent](../../../interview/tencent/ai/tencent-ai-4.md)
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../../interview/bytedance/base/bytedance-base-48.md)

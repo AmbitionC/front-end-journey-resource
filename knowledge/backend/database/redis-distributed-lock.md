@@ -103,6 +103,7 @@ Redis 主从复制通常是异步的。主节点写入锁后、复制到从节�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [飞书后端一面：锁粒度与混合检索](../../../interview/bytedance/base/bytedance-base-72.md)
 - [百度北京后端秋招一面：Agent 安全、检索与存储](../../../interview/baidu/ai/baidu-ai-3.md)
 - [字节一面：线程池、分布式锁与数字构造](../../../interview/bytedance/base/bytedance-base-58.md)
 - [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)

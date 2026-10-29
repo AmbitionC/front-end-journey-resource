@@ -188,8 +188,13 @@ RAG 评估是一套诊断系统，而不是排行榜。先用检索指标判断�
 
 <!-- interview-source-history:start -->
 - [小红书一面：检索评测、上下文压缩与任务幂等](../../../interview/redbook/ai/redbook-ai-4.md)
+- [百度 AI 应用实习：回答评测、重排与 Bad Case 定位](../../../interview/baidu/ai/baidu-ai-12.md)
+- [京东后端一面：会话存储与 RAG 评测](../../../interview/jd/ai/jd-ai-2.md)
 - [华为终端 BG AI 应用技术面：RAG 评测与冲突证据](../../../interview/huawei/ai/huawei-ai-2.md)
+- [京东大模型应用开发实习：混合检索权重、向量索引与评测](../../../interview/jd/ai/jd-ai-5.md)
 - [小红书 AI 后端一面：执行模式、Memory、意图与 RAG](../../../interview/redbook/ai/redbook-ai-8.md)
+- [腾讯后端一面：Embedding、召回指标与融合排序](../../../interview/tencent/ai/tencent-ai-24.md)
+- [快手 AI 应用实习二面：图关系、RAG 延迟与评测](../../../interview/kuaishou/ai/kuaishou-ai-15.md)
 - [字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)
 - [字节全栈一面：RAG、Java 与线程池](../../../interview/bytedance/base/bytedance-base-37.md)
 - [阿里 Agent 实习一面：图文检索、评估与微调实践](../../../interview/alibaba/ai/alibaba-ai-10.md)

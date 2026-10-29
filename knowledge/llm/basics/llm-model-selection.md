@@ -120,6 +120,7 @@ $$
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [华为 AI 训推实习一面：模型评估、Agent 架构与记忆](../../../interview/huawei/ai/huawei-ai-3.md)
 - [字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)
 - [字节 Agent：AI Coding、技能设计与模型工程](../../../interview/bytedance/base/bytedance-base-49.md)

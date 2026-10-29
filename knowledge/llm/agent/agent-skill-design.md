@@ -102,6 +102,7 @@ MCP 组织宿主与服务器的能力发现和调用，Skill 组织按需加载�
 <!-- interview-source-history:start -->
 - [小红书大模型平台全栈一面：写边界、Harness 与意图澄清](../../../interview/redbook/ai/redbook-ai-7.md)
 - [华为 Agent 实习两轮记录：TCP、C 存储期与拓扑序](../../../interview/huawei/ai/huawei-ai-1.md)
+- [携程数据工程面试：Agent ETL、数据口径与 Skill](../../../interview/ctrip/ai/ctrip-ai-2.md)
 - [腾讯 WXG 一面：转人工 Agent、Skill 与检索边界](../../../interview/tencent/ai/tencent-ai-16.md)
 - [快手 AI 全栈一面：Skill 成本、Agent 链路与开发验收](../../../interview/kuaishou/ai/kuaishou-ai-9.md)
 - [小红书 AI 全栈暑期二面：RAG 流程与 Skill 实践](../../../interview/redbook/ai/redbook-ai-10.md)

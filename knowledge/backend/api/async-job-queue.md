@@ -130,6 +130,7 @@ RabbitMQ 的 TTL 限制消息存活期，死信交换机路由过期、拒收等
 
 <!-- interview-source-history:start -->
 - [拼多多提前批一面：Agent 超时、消息可靠性与线上排障](../../../interview/pinduoduo/ai/pinduoduo-ai-2.md)
+- [美团一面：消息保序与双跑边界](../../../interview/meituan/ai/meituan-ai-10.md)
 - [蚂蚁大模型应用秋招一面：记忆评测、事务日志与消息积压](../../../interview/antfin/ai/antfin-ai-11.md)
 - [美团本地核心一面：缓存一致性、库存故障与 Agent 记忆](../../../interview/meituan/ai/meituan-ai-4.md)
 - [美团容器平台 JAVA 一二面：消息一致性、MCP 权限与代码审查](../../../interview/meituan/ai/meituan-ai-5.md)
