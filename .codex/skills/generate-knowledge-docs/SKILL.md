@@ -1,11 +1,11 @@
 ---
 name: generate-knowledge-docs
-description: Research knowledge topics from supplied titles and create, audit, or batch-update progressively structured Markdown learning documents with sourced explanations and image2-generated illustrations. Use when Codex is asked to write,整理,讲解,调研,批量生成,补齐,更新, or治理 knowledge-point articles, tutorials, technical concept documents, learning notes, or course chapters, especially the knowledge module in AmbitionC/front-end-journey-resource.
+description: Research knowledge topics from supplied titles and create, audit, or batch-update progressively structured Markdown learning documents with sourced explanations and editable technical diagrams. Use when Codex is asked to write,整理,讲解,调研,批量生成,补齐,更新, or治理 knowledge-point articles, tutorials, technical concept documents, learning notes, or course chapters, especially the knowledge module in AmbitionC/front-end-journey-resource.
 ---
 
 # Generate Knowledge Documents
 
-Turn one or many titles into accurate, teachable Markdown documents. Research before drafting, build concepts in dependency order, and use image2 only where a visual materially improves understanding.
+Turn one or many titles into accurate, teachable Markdown documents. Research before drafting, build concepts in dependency order, and use editable diagrams only where a visual materially improves understanding. For Agent Journey, use Archify for process/sequence/state/data-flow diagrams and Excalidraw for architecture/component/boundary diagrams; this routing also applies to historical refreshes.
 
 ## Inputs
 
@@ -31,7 +31,7 @@ When the request concerns FrontEnd Journey knowledge content, read and follow [r
 
 Prefer a local checkout when creating or modifying batches. A writable GitHub integration is also acceptable when it can create a branch and apply the complete article/image change atomically. Do not publish unless the user asks. In this project, “发布” means branch → pull request → merge into `master`; the configured resource-repository Action performs the actual synchronization.
 
-Exception for an explicitly authorized Data Collector end-to-end `publish` batch: keep the exact `batchId` scope, work directly on this repository’s `master` as required by the delivery contract, push the validated article/tree/image change, and wait for that commit’s `sync-content` Action. Do not mark history `published`, report online completion, or remove its local inbox evidence until the Action succeeds.
+For an explicitly authorized Data Collector end-to-end `publish` batch, follow the current Data Collector and resource release-review contracts, retaining the exact `batchId` and PR/merge scope. Do not bypass the review flow, mark history `published`, report online completion, or remove its local inbox evidence until the required synchronization succeeds.
 
 Routine knowledge publication must change only `AmbitionC/front-end-journey-resource`. Do not edit or redeploy `fe-journey-faas`, `front-end-journey`, `front-end-journey-manager`, or investment services merely to publish an article. Escalate into infrastructure only when the resource Action fails with evidence and the user authorizes that separate fix.
 
@@ -46,13 +46,13 @@ For project batches:
 
 When the user asks to publish a completed batch:
 
-1. Put the Markdown, any `_tree.json` change, every referenced image, and the updated `.codex/knowledge-update-history.json` in one resource-repository branch.
+1. Put the Markdown, any `_tree.json` change, every referenced image/source, and the applicable history ledger in one resource-repository branch. Image-only migration updates `.codex/diagram-migration-history.json` while preserving article-processing history; creation or substantive prose updates also update `.codex/knowledge-update-history.json`.
 2. Run the repository validation and review the scoped diff.
 3. Open a pull request and merge it into `master` after checks pass.
 4. Treat the configured resource Action as the publication authority. Wait for its result and report it.
 5. After a successful Action, do not open the production site or perform an additional browser smoke test unless the user explicitly requests it. This does not waive content, image-semantic, manifest, or diff validation before merge.
 
-Record each completed article by stable `key` with `label`, `filePath`, `action`, batch/date, and `status`. During publication, write the intended records with `status: "pending"`; after the resource Action succeeds, update them to `status: "published"` in the next content batch or a dedicated record-only change. Never treat the history as proof that an article exists: cross-check the tree and expected Markdown path.
+For article creation or substantive prose processing, record each completed article by stable `key` with `label`, `filePath`, `action`, batch/date, and `status` in `.codex/knowledge-update-history.json`. During publication, write those intended records with `status: "pending"`; after the resource Action succeeds, update them to `status: "published"` in the next content batch or a dedicated record-only change. An image-only replacement updates `.codex/diagram-migration-history.json` instead and preserves the existing article-processing record. Never treat either history as proof that an article exists: cross-check the tree and expected Markdown path.
 
 ### Overall progress reporting
 
@@ -134,10 +134,10 @@ For each illustration, write a specification containing:
 - elements and relationships that must be visible;
 - reading direction and layout;
 - exact labels, limited to essential terms;
-- visual style, aspect ratio, and accessibility alt text;
+- diagram type and chosen renderer, editable source filename, visual style, aspect ratio, and accessibility alt text;
 - factual constraints the image must not violate.
 
-Follow [references/image2-integration.md](references/image2-integration.md) to generate and upload images. Never invent a returned image URL. If image2 or upload configuration is unavailable, preserve the specification as a clearly marked Markdown placeholder and continue the document.
+Follow [references/diagram-integration.md](references/diagram-integration.md) for tool selection, editable source, rendering, and publication. For Agent Journey, process/sequence/state/data-flow diagrams use **Archify**; architecture/component/deployment/trust-boundary diagrams use **Excalidraw**. Split a mixed view when one diagram would obscure either meaning. Do not use image2, image2.5, or another raster image model as a diagram fallback. If the selected renderer is unavailable, keep a clearly marked `DIAGRAM_PENDING` draft and report the exact missing capability.
 
 ### 5. Draft progressively
 
@@ -173,7 +173,7 @@ For a batch, also verify:
 - every selected manifest leaf has exactly one expected Markdown file;
 - no unrelated article or `_tree.json` node changed;
 - article keys and `filePath` values are unchanged during updates;
-- generated image filenames are unique and all referenced images exist;
+- diagram source and exported image filenames are unique; every referenced image exists and matches its reviewed source;
 - the repository's `npm run validate:tree` succeeds;
 - a diff review shows no truncated articles, duplicated boilerplate, fake citations, or leaked credentials.
 
@@ -210,17 +210,19 @@ Return one Markdown document using this baseline shape when appropriate:
 - [来源名称](https://example.com)
 ```
 
-When image generation is blocked only by missing interface configuration, use this temporary form instead of a fake URL:
+When the selected diagram renderer or publication path is unavailable, keep this temporary form in a private draft:
 
 ```markdown
-<!-- IMAGE2_PENDING
+<!-- DIAGRAM_PENDING
 purpose: 这张图要帮助读者理解什么
+diagram_type: workflow | sequence | architecture
+renderer: archify | excalidraw
+source_path: 已保存或计划保存的可编辑源文件
 alt: 无障碍替代文本
-prompt: 可直接提交给 image2 的完整提示词
-upload_target: 待配置
+blocked_on: 缺失的渲染能力或发布配置
 -->
 ```
 
-Remove all `IMAGE2_PENDING` blocks after successful generation and upload.
+Remove all `DIAGRAM_PENDING` and legacy `IMAGE2_PENDING` blocks before publication. A planned or locally rendered diagram does not count as an online replacement. Track image migration separately from the existing article-update history; a historically updated article may still contain a legacy generated image.
 
 In FrontEnd Journey project mode, follow the repository's body-only convention: the article title comes from `_tree.json`, so normally start the Markdown file with a concise introduction followed by `##` sections rather than duplicating the title as `#`. Use GitHub-flavored Markdown, fenced code, KaTeX-compatible math, and ordinary image syntax supported by the site renderer.

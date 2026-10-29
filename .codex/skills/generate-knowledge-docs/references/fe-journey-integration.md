@@ -69,14 +69,14 @@ The reader UI already displays the manifest label as the page title. Keep articl
 7. concise recap;
 8. `## 参考资料` with descriptive links actually used.
 
-The renderer supports GitHub-flavored Markdown, raw HTML, KaTeX math, fenced code highlighting, Mermaid code blocks, and standard images. Prefer image2 for the important architecture or operating-principle visual requested by the user. Use Mermaid only for exact supplementary relationships when it adds value and does not duplicate the generated image.
+The renderer supports GitHub-flavored Markdown, raw HTML, KaTeX math, fenced code highlighting, Mermaid code blocks, and standard images. Use Archify for process/sequence/state/data-flow diagrams and Excalidraw for architecture/component/boundary diagrams, as specified in [diagram-integration.md](diagram-integration.md). Preserve useful existing Mermaid and deterministic SVG content; new primary diagrams follow that routing.
 
-## image2 asset flow
+## Editable diagram asset flow
 
 For batch work, prefer the Git source-of-truth flow over calling the manager's per-image endpoint:
 
-1. Generate and inspect the image with image2.
-2. Save the accepted bytes under repository root `images/`.
+1. Read the installed Archify or Excalidraw skill, author its editable source, run its actual renderer, and inspect the result. Save the source beside the article or in an existing diagram-source directory; see [diagram-integration.md](diagram-integration.md).
+2. Save the accepted static export under repository root `images/`. Use a reviewed PNG as the default Markdown/PDF asset and preserve the editable source; an optional SVG can also be retained. Referenced SVG or iframe content additionally requires an approved PNG fallback in `knowledge/pdf-static-images.json`. Keep the source, export and required fallback in the same change.
 3. Use a collision-resistant readable filename, normally `{article-key}-{concept-slug}.png`. When replacing an already-published image, use a new object name such as `{article-key}-{concept-slug}-v2.png` and update Markdown in the same change; do not rely on overwriting a cached OSS/CDN key.
 4. Reference the final OSS URL in Markdown:
 
@@ -105,7 +105,7 @@ Then review changed files and check:
 - every Markdown image URL has a corresponding `images/{filename}` file;
 - citations are reachable and support their nearby claims;
 - time-sensitive claims name a version or date when useful;
-- no secrets, local absolute paths, temporary URLs, or `IMAGE2_PENDING` blocks remain in a publishable batch.
+- no secrets, local absolute paths, temporary URLs, or `DIAGRAM_PENDING` / legacy `IMAGE2_PENDING` blocks remain in a publishable batch.
 
 Publishing the resource branch triggers asynchronous OSS and DB synchronization. Report repository validation separately from deployment synchronization; one does not prove the other.
 
@@ -115,13 +115,13 @@ Use this exact workflow for routine knowledge creates and updates:
 
 1. Inspect `knowledge/_tree.json` on the current `master` branch and resolve the leaf by exact `key` or title.
 2. Update `knowledge/{filePath}/{key}.md`. Preserve the existing leaf and path for an update; add one matching leaf only for a new article.
-3. Generate and inspect only the high-value teaching images. Add accepted bytes under `images/` and reference their final OSS object URLs from Markdown. Use a new filename when replacing a published asset.
+3. Draw high-value teaching diagrams with the selected Archify/Excalidraw skill. Preserve editable sources, inspect the static exports, add accepted bytes under `images/`, and reference their final OSS object URLs from Markdown. Use a new filename when replacing a published asset. Existing interactive Archify embeds may use their established HTML/SVG flow; adding an embed is not proof its frontend assets were deployed.
 4. Keep the article, image assets, and manifest change in one branch so readers never observe a half-published revision.
-5. Update `.codex/knowledge-update-history.json` in the same branch with stable keys, paths, action, batch/date, and `status: "pending"`; do not duplicate an existing key record.
+5. For article creation or substantive prose processing, update `.codex/knowledge-update-history.json` in the same branch with stable keys, paths, action, batch/date, and `status: "pending"`; do not duplicate an existing key record. For image-only replacement, preserve that article-processing record and update `.codex/diagram-migration-history.json` with the actual diagram state and evidence instead.
 6. Run `npm run validate:tree`, check image references, and review the scoped diff for unrelated files and secrets.
 7. Open a pull request against `master`, then merge it after checks pass. A request to “发布” authorizes this branch → PR → merge flow.
 8. Let `.github/workflows/sync.yml` call FaaS `/content/sync`, which publishes changed Markdown/images to OSS and refreshes the MySQL navigation manifest.
-9. Wait for the resource Action result. A successful Action is the default completion signal; report the merge and Action outcome without manually opening the production website. Promote the batch records to `status: "published"` in the next batch or a dedicated record-only change; failed Actions remain pending and must not be skipped as completed.
+9. Wait for the resource Action result. A successful Action is the default completion signal; report the merge and Action outcome without manually opening the production website. Promote the applicable article-processing or diagram-migration records to `status: "published"` only after their required evidence succeeds, in the next batch or a dedicated record-only change; failed Actions remain unfinished and must not be skipped as completed.
 
 Do not touch or redeploy `fe-journey-faas`, `front-end-journey`, `front-end-journey-manager`, or any investment service for a normal content release. Investigate those repositories only when the resource Action itself fails and its logs point there, or when the user explicitly requests an infrastructure change.
 
