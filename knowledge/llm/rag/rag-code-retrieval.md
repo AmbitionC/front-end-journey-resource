@@ -101,6 +101,7 @@ ACL 在任何检索和图遍历前执行。一个可见文件引用不可见实�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [美团后端 AI 一面：工具恢复、中断与代码上下文](../../../interview/meituan/ai/meituan-ai-7.md)
 - [字节抖音 Agent 一面：Skill、MCP 与记忆](../../../interview/bytedance/base/bytedance-base-39.md)
 <!-- interview-source-history:end -->
 

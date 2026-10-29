@@ -2,8 +2,8 @@ Agent 发布的行为单元不是一个容器镜像，而是模型、Prompt、�
 
 [Google SRE Workbook 的 Canarying Releases](https://sre.google/workbook/canarying-releases/)把 Canary 定义为在完整发布前，将变更部署到部分生产环境并评估结果。小流量本身不构成安全；必须有对照、观察窗口、门禁和可执行回滚。
 
-![完整发布 bundle 先固定版本，控制组与 5% Canary 在质量、安全、延迟和成本上比较，通过门禁后逐步扩至 25%、50% 和 100%，失败立即回滚](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-canary-release-progressive-rollout-v1.webp)
-*图：每一级都有绝对 SLO 与相对差异门禁，不能只看“Canary 比昨天好”。*
+![固定发布 bundle，比较 95% 控制组与 5% Canary 的质量、安全、延迟和成本；每级复核门禁后扩流至 100% 并结束本次发布，未通过则暂停或回滚](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-canary-release-progressive-rollout-v2.png)
+*图：比例仅为示例；每级都需满足本次发布的门禁和观察窗口，100% 表示本次扩流完成。模糊质量退化先暂停判断，严重且高置信故障才触发预设回滚。*
 
 ## 不可变 Release Bundle
 
@@ -73,6 +73,7 @@ Canary 是“完整行为 bundle + 代表性流量 + 可归因对照 + 绝对门
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [美团一面：消息保序与双跑边界](../../../interview/meituan/ai/meituan-ai-10.md)
 - [哔哩哔哩一面：端到端 AI Coding 与生产治理](../../../interview/bilibili/ai/bilibili-ai-2.md)
 <!-- interview-source-history:end -->
 

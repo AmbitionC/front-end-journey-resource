@@ -2,8 +2,8 @@ Agent 状态不是一段可以无限追加的聊天记录。生产系统至少�
 
 [LangGraph Persistence](https://docs.langchain.com/oss/python/langgraph/persistence)用 thread 组织连续执行，并在图步骤边界保存 checkpoint。这是一个具体框架的实现，但它清晰展示了“会话容器”和“某次执行快照”不是同一概念。
 
-![Agent 容器迁移与任务恢复：旧 Worker 写入事件、检查点和制品，迁移后新 Worker 恢复快照并查询幂等账本](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-state-migration-recovery-v1.svg)
-*图：运行时可以替换，任务身份、版本化状态和已提交副作用必须留在容器之外。*
+![Agent 容器迁移与任务恢复：旧 Worker 写入事件、检查点和制品，迁移后新 Worker 恢复快照并查询幂等账本](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-state-migration-recovery-v2.png)
+*图：运行时可以替换，任务身份、版本化状态和已提交副作用必须留在容器之外；图中的账本状态用于指导恢复，不能单独保证跨系统恰好一次。*
 
 ## 聚合与标识
 
@@ -80,6 +80,8 @@ Resume 从最新可信 checkpoint 继续未完成工作；Replay 用历史 check
 
 所有外部副作用通过 idempotency ledger。Checkpoint 保存 operationId 与结果引用；恢复时先查询 committed、not_started 或 unknown。已提交读取旧结果，not_started 才执行，unknown 对账。重放分支默认使用模拟工具或新业务意图，不能借历史 UI 按钮再次扣款。
 
+账本与外部写入若不在同一原子边界，仍可能出现外部已经提交而本地尚未记账的窗口。跨重试复用下游认可的幂等键，并核对同键参数；无法确认的结果保留为 unknown，先查询、对账或人工处理。Checkpoint、租约或本地去重记录本身都不能证明远端效果恰好一次。[AWS 的幂等 API 设计](https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/)说明，幂等标识记录与相关变更需要原子边界及明确的重复请求合同。
+
 ### 本地 Agent、云 Agent 与容器迁移
 
 本地 Agent 可以把线程、事件和 Artifact 放在用户设备，但仍要用稳定目录、原子写入、文件锁、版本与校验和；进程内消息数组只适合缓存。云 Agent 的 Worker/容器是临时执行资源，权威状态应写入独立数据库、对象存储和幂等账本，不能依赖容器磁盘或内存。
@@ -126,6 +128,7 @@ Agent 状态存储通过明确边界获得可恢复性：Thread 组织上下文�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [京东后端一面：会话存储与 RAG 评测](../../../interview/jd/ai/jd-ai-2.md)
 - [哔哩哔哩一面：端到端 AI Coding 与生产治理](../../../interview/bilibili/ai/bilibili-ai-2.md)
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../../interview/bytedance/base/bytedance-base-48.md)
 - [字节全栈：多智能体导购、客户端与系统评测](../../../interview/bytedance/base/bytedance-base-43.md)
@@ -141,3 +144,5 @@ Agent 状态存储通过明确边界获得可恢复性：Thread 组织上下文�
 - [LangGraph：Persistence](https://docs.langchain.com/oss/python/langgraph/persistence)
 - [LangGraph：Use time travel](https://docs.langchain.com/oss/python/langgraph/use-time-travel)
 - [W3C：Trace Context](https://www.w3.org/TR/trace-context/)
+
+- [AWS：Making retries safe with idempotent APIs](https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/)

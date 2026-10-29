@@ -47,6 +47,12 @@ fixture 覆盖 raw HTML、事件属性、大小写/编码协议、嵌套链接�
 
 同时测试键盘复制、代码横向滚动、图表替代说明、缩放和高对比。安全渲染的合格标准是：模型可以展示代码和图表，但无论输出什么文本，都拿不到应用脚本、会话凭据或任意网络能力。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [小红书 AI 开发实习二面：聊天滚动、Markdown 与 Worker](../../../interview/redbook/ai/redbook-ai-17.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [CommonMark Specification](https://spec.commonmark.org/current/)

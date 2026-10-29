@@ -103,6 +103,7 @@ GraphRAG 的价值在于把跨段关系与全局结构变成可检索索引：Lo
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [快手 AI 应用实习二面：图关系、RAG 延迟与评测](../../../interview/kuaishou/ai/kuaishou-ai-15.md)
 - [阿里 Agent 实习一面：图文检索、评估与微调实践](../../../interview/alibaba/ai/alibaba-ai-10.md)
 <!-- interview-source-history:end -->
 

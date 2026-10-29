@@ -50,6 +50,7 @@ Worker 隔离 CPU 计算，但不能操作 DOM；消息传输有成本。任务 
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [小红书 AI 开发实习二面：聊天滚动、Markdown 与 Worker](../../../interview/redbook/ai/redbook-ai-17.md)
 - [字节前端全栈实习一面：渲染、Worker 与认证](../../../interview/bytedance/base/bytedance-base-38.md)
 <!-- interview-source-history:end -->
 

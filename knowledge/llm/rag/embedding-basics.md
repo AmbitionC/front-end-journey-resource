@@ -14,7 +14,8 @@ $$
 
 其中 $d$ 是向量维度。实际维度可能是数百或数千；图中的二维空间只是帮助理解的投影。
 
-![Embedding 的语义空间与相似度度量](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/embedding-similarity-space-v3.webp)
+![Embedding 的语义空间与相似度度量](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/embedding-similarity-space-v4.png)
+*图：左侧展示共享编码器的示例；独立双编码器也可以检索。兼容性取决于经过验证的编码器组合、各自输入约定和检索度量，并不要求两侧权重或前缀始终相同。*
 
 Sentence-BERT 等双编码器方法的关键工程优势，是文档向量可以提前计算并存入索引。查询到来时只编码查询，再做近邻搜索，不需要把查询与每篇文档成对送入一个大模型。
 
@@ -100,12 +101,12 @@ const vectors = response.data
 
 最重要的兼容约束是：
 
-- 入库文档和在线查询使用同一个模型版本。
+- 文档编码器和查询编码器必须按已验证的兼容组合成对使用，并固定各自版本；共享编码器方案通常用同一模型，独立双编码器可以使用不同权重。
 - 向量维度与数据库列/索引一致。
-- 使用相同的预处理、前缀和归一化约定。
+- 分别遵循模型对 query 和 document 的预处理、前缀及归一化约定；两侧前缀可能有意不同，不能强行统一。
 - 相似度函数与模型建议、索引类型一致。
 
-任何一项变化都可能让新查询无法正确搜索旧向量。
+任何一项变化都可能让新查询无法正确搜索旧向量。例如 [DPR](https://aclanthology.org/2020.emnlp-main.550/) 使用独立的 query/passage 编码器共同学习检索空间；不能只检查输出维度相同，就认定任意两套编码器兼容。
 
 ## 五、文档检索中的数据模型
 
@@ -178,7 +179,7 @@ ANN 用部分召回换速度和资源。查询参数越激进，延迟可能更�
 
 ## 十、模型升级与重嵌入
 
-不同 Embedding 模型的向量空间不能直接混用。升级建议采用双写/双读迁移：
+未经验证兼容的 Embedding 模型或编码器组合不能直接混用。若升级改变了向量空间，应创建新索引或版本分区，重算相应向量，再按受控切换与回滚流程迁移：
 
 1. 创建新索引或新的版本分区。
 2. 用新模型批量重算文档向量。
@@ -211,7 +212,7 @@ ANN 用部分召回换速度和资源。查询参数越激进，延迟可能更�
 
 ## 检查清单
 
-- [ ] 文档与查询使用同一模型、维度和预处理。
+- [ ] 文档与查询使用经过验证的兼容编码器组合、一致维度，并分别遵循各自的预处理约定。
 - [ ] 距离函数与模型、索引配置一致。
 - [ ] 记录了文档、切块、Embedding 和来源版本。
 - [ ] ACL 与租户过滤在检索阶段生效。
@@ -223,16 +224,19 @@ ANN 用部分召回换速度和资源。查询参数越激进，延迟可能更�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [腾讯后端一面：Embedding、召回指标与融合排序](../../../interview/tencent/ai/tencent-ai-24.md)
+- [携程 Java 后端二面：分块、向量检索与查询改写](../../../interview/ctrip/ai/ctrip-ai-1.md)
+- [字节全栈一面：RAG、Java 与线程池](../../../interview/bytedance/base/bytedance-base-37.md)
+- [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../../interview/bytedance/base/bytedance-base-48.md)
 - [字节 Agent 暑期实习一面：摘要、工具预算与链表](../../../interview/bytedance/base/bytedance-base-27.md)
 - [阿里 Agent 开发暑期实习一面](../../../interview/alibaba/ai/alibaba-ai-2.md)
-- [字节全栈一面：RAG、Java 与线程池](../../../interview/bytedance/base/bytedance-base-37.md)
 - [字节 Agent 全栈一面：工具、评测与编码](../../../interview/bytedance/base/bytedance-base-40.md)
-- [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../../interview/bytedance/base/bytedance-base-48.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
 
 - [Sentence-BERT 论文](https://arxiv.org/abs/1908.10084)
 - [Dense Passage Retrieval 论文](https://arxiv.org/abs/2004.04906)
+- [E5 模型卡：query 与 passage 输入前缀](https://huggingface.co/intfloat/e5-large-v2#faq)
 - [OpenAI：Embeddings](https://developers.openai.com/api/docs/guides/embeddings)
 - [pgvector：Distance 与索引文档](https://github.com/pgvector/pgvector)

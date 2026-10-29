@@ -240,6 +240,8 @@ function chunkDocument(nodes: Node[], limits: ChunkLimits) {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [京东零售后端一面：RAG 分块、证据与工具调用](../../../interview/jd/ai/jd-ai-4.md)
+- [携程 Java 后端二面：分块、向量检索与查询改写](../../../interview/ctrip/ai/ctrip-ai-1.md)
 - [字节 AI 平台一面：Agent 评测、框架与数据结构](../../../interview/bytedance/base/bytedance-base-33.md)
 - [字节全栈一面：RAG、Java 与线程池](../../../interview/bytedance/base/bytedance-base-37.md)
 - [OPPO AI 全栈一面：Prompt 到 UI、RAG 与前端性能](../../../interview/oppo/ai/oppo-ai-2.md)

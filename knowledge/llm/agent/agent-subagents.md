@@ -97,7 +97,7 @@ Subagent 设计的重点是边界，而不是数量：以窄合同传入最小�
 
 [Deep Agents 官方概览](https://docs.langchain.com/oss/python/deepagents/overview)把它描述为基于 LangChain 组件与 LangGraph 运行时的 agent harness，提供文件上下文、子代理和可配置能力。当前文档说明从 v0.7 起任务规划为可选能力，不能把旧版默认计划工具当所有版本固定合同。这里解释机制，不声称候选人使用过某个版本。
 
-![子代理委派与结果归并](https://fe-static-oss.ai-fe-nexus.com/images/deep-agent-delegation-archify-v1.png)
+![子代理委派与结果归并](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/deep-agent-delegation-archify-v1.png)
 
 委派时主代理保留目标与任务所有权，把限定子任务、必要材料与工具交给子代理；子代理在自己的上下文中执行并返回可核验产物。文件可用于卸载长材料，但要明确路径权限、文件版本与产物引用，不能把共同文件系统误认为自动共享完整对话。计划列表跟踪目标与进度，不是授权机制。
 
@@ -106,6 +106,7 @@ Subagent 设计的重点是边界，而不是数量：以窄合同传入最小�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [快手 Data Agent 一面：记忆、循环与 Subagent](../../../interview/kuaishou/ai/kuaishou-ai-16.md)
 - [哔哩哔哩一面：端到端 AI Coding 与生产治理](../../../interview/bilibili/ai/bilibili-ai-2.md)
 - [阿里云 Agent 开发秋招一面](../../../interview/alibaba/ai/alibaba-ai-1.md)
 - [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)

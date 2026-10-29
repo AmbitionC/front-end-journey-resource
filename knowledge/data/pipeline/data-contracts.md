@@ -47,6 +47,12 @@ CI 验证语法、命名、owner、兼容性、敏感标记和 fixture。Consume
 
 契约的成功标准不是仓库里有多少 YAML，而是一次变更能在发布前发现不兼容，在运行时发现违约，并能快速通知真实 owner 和受影响消费者。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [携程数据工程面试：Agent ETL、数据口径与 Skill](../../../interview/ctrip/ai/ctrip-ai-2.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Confluent：Schema Registry](https://docs.confluent.io/platform/current/schema-registry/index.html)

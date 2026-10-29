@@ -82,6 +82,7 @@ Trace 记录 operation ID、attempt、错误类别、sideEffectState、backoff�
 - [百度部分（小红书与百度合并记录）：LangGraph、Skill 与工程校验](../../../interview/redbook/ai/redbook-ai-2.md)；对应合并页中已明确标出的百度部分。
 
 <!-- interview-source-history:start -->
+- [美团后端 AI 一面：工具恢复、中断与代码上下文](../../../interview/meituan/ai/meituan-ai-7.md)
 - [快手 AI 应用服务端秋招三面：分布式 Agent、通信与 Lua](../../../interview/kuaishou/ai/kuaishou-ai-6.md)
 - [小红书与百度 Agent 面试合并记录：LangGraph 子图、Skill 与工程校验](../../../interview/redbook/ai/redbook-ai-2.md)
 - [字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-20.md)

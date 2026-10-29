@@ -100,7 +100,8 @@
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../../interview/bytedance/base/bytedance-base-24.md)（cluster-78d45fa26bfd）
+- [小米汽车大模型算法一二面：奖励投机、采样与线上验证](../../../interview/xiaomi/ai/xiaomi-ai-1.md)
+- [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../../interview/bytedance/base/bytedance-base-24.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

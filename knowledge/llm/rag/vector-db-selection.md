@@ -15,7 +15,8 @@ ANN（近似最近邻）用部分召回换取速度和资源。选择数据库�
 - 数据驻留、备份、审计和合规要求。
 - 团队能承担多少运维，以及预算如何计量。
 
-![Pinecone、Chroma 与 pgvector 的选型约束](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/vector-db-selection-matrix-v3.webp)
+![按已有 PostgreSQL、本地原型或自托管、托管弹性形成起始候选；过滤、多租户、ACL、运维能力与总成本对三个候选统一评估](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/vector-db-selection-matrix-v4.png)
+*图：箭头只形成起始候选，复杂过滤与多租户不能单独决定产品，三个候选都要验证 ACL、运维与总成本。右表仅比较自行管理的 PostgreSQL、自托管 Chroma 与托管 Pinecone，不覆盖全部部署形态；联结和扩展标记是方向性示意，不是性能评分或容量保证。*
 
 ## 二、共同核心：距离、索引和过滤
 
@@ -72,7 +73,7 @@ LIMIT 10;
 
 ## 四、Chroma：快速本地与自托管实验
 
-Chroma 提供开源 SDK，也可本地、自托管或使用云服务。Collection 可以存文档、metadata 和向量，支持稠密、稀疏、混合与 metadata 过滤。
+Chroma 提供开源 SDK，也可本地、自托管或使用云服务。Collection 可以存文档、metadata 和向量；能力范围需区分部署与版本。[Search API 官方说明](https://docs.trychroma.com/cloud/search-api/overview)在本次核验（2026-10-29）将支持混合检索的 Search API 限定为 Chroma Cloud，本地支持列为后续计划。不能把云端入口或稀疏、混合检索示例直接套用到所有本地部署。
 
 它的优势是上手快，适合原型、个人工具、测试和希望控制部署环境的小团队：
 
@@ -206,6 +207,7 @@ RAG 数据会变化。建议用稳定 chunk ID 和版本化流水线：
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [网易云音乐后端实习两轮：RAG、向量库与 MCP 安全](../../../interview/netease/ai/netease-ai-1.md)
 - [百度后端一面：ReAct、规划与流式工具参数](../../../interview/baidu/ai/baidu-ai-4.md)
 - [阿里 Agent 开发暑期实习一面](../../../interview/alibaba/ai/alibaba-ai-2.md)
 - [字节 Agent 二面：RAG 分块、查询改写与随机采样](../../../interview/bytedance/base/bytedance-base-28.md)
@@ -216,4 +218,5 @@ RAG 数据会变化。建议用稳定 chunk ID 和版本化流水线：
 
 - [pgvector 官方仓库与索引说明](https://github.com/pgvector/pgvector)
 - [Chroma 官方文档](https://docs.trychroma.com/docs/overview/introduction)
+- [Chroma Search API：Cloud 可用范围](https://docs.trychroma.com/cloud/search-api/overview)
 - [Pinecone：Indexing overview](https://docs.pinecone.io/guides/index-data/indexing-overview)

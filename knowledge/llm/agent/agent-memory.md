@@ -277,6 +277,7 @@ memory_tool.execute("forget", strategy="capacity_based", threshold=policy.capaci
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [快手 Data Agent 一面：记忆、循环与 Subagent](../../../interview/kuaishou/ai/kuaishou-ai-16.md)
 - [蚂蚁大模型应用秋招一面：记忆评测、事务日志与消息积压](../../../interview/antfin/ai/antfin-ai-11.md)
 - [美团本地核心一面：缓存一致性、库存故障与 Agent 记忆](../../../interview/meituan/ai/meituan-ai-4.md)
 - [拼多多 AI Agent 岗两轮技术面：RAG、多 Agent 与系统能力](../../../interview/pinduoduo/ai/pinduoduo-ai-1.md)

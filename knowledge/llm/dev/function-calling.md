@@ -60,10 +60,11 @@ const tools = [{
 
 ## 三、用 Responses API 跑通工具循环
 
-下面以 OpenAI Node SDK 展示当前 Responses API 的基本模式。模型名通过环境变量配置，避免示例很快过时。
+下面以 OpenAI Node SDK 7.45.1 展示 Responses API 的基本模式；以下工具定义与循环片段已用 TypeScript 7.0.2 做静态类型核对，`validateWeatherArgs` 仍需由应用实现，本文未连接真实模型执行。模型名通过环境变量配置，接入时还须核对实际模型与 API 可用性。
 
 ```ts
 import OpenAI from "openai";
+import { toResponseInputItems } from "openai/lib/responses/ResponseInputItems";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -84,7 +85,7 @@ for (let round = 0; round < 4; round += 1) {
     tools,
   });
 
-  input.push(...response.output);
+  input.push(...toResponseInputItems(response.output));
   const calls = response.output.filter((item) => item.type === "function_call");
 
   if (calls.length === 0) {
@@ -109,6 +110,7 @@ for (let round = 0; round < 4; round += 1) {
 
 几个容易忽略的点：
 
+- 在这里固定的 SDK 版本中，按 [官方 Node 示例](https://developers.openai.com/api/docs/guides/function-calling#handling-function-calls)使用 `toResponseInputItems` 规范化历史输出，再加入下一轮输入；保留可回传的推理和调用项，并去除输出专用字段。辅助函数与类型应按所用 SDK 版本核对。
 - `call_id` 是工具请求与结果之间的关联键，不能用数组位置代替。
 - 一轮可能有多个调用；只有互不依赖、无冲突的调用才适合并行执行。
 - 设置最大轮数，防止模型在工具之间无限循环。
@@ -226,8 +228,10 @@ async function cancelOrder(orderId: string, session: Session) {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [京东零售后端一面：RAG 分块、证据与工具调用](../../../interview/jd/ai/jd-ai-4.md)
 - [百度 Java 实习：流式工具调用、答案忠实度与记忆](../../../interview/baidu/ai/baidu-ai-11.md)
 - [快手 AI 应用一面：沙箱中的 Skill、工具调用与记忆压缩](../../../interview/kuaishou/ai/kuaishou-ai-12.md)
+- [美团 AI 应用开发实习二面：降级、工具调用与 AI Coding](../../../interview/meituan/ai/meituan-ai-9.md)
 - [阿里云 Agent 开发秋招一面](../../../interview/alibaba/ai/alibaba-ai-1.md)
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)
 - [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)

@@ -85,8 +85,11 @@ answer = generate_from_evidence(query, evidence)
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [百度 AI 应用实习：回答评测、重排与 Bad Case 定位](../../../interview/baidu/ai/baidu-ai-12.md)
+- [美团大模型应用算法一面：融合检索、重排与评测](../../../interview/meituan/ai/meituan-ai-6.md)
 - [快手 AI 应用开发实习二面：循环、记忆与重排](../../../interview/kuaishou/ai/kuaishou-ai-14.md)
 - [蚂蚁 AI 应用暑期一面：工具超时与 RAG Top-K](../../../interview/antfin/ai/antfin-ai-8.md)
+- [小米 Java 一面：RRF、重排与注入防护](../../../interview/xiaomi/ai/xiaomi-ai-2.md)
 - [vivo 多模态算法：重排候选与多意图评测](../../../interview/vivo/ai/vivo-ai-2.md)
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
 - [字节 Agent 后端实习一面：LangGraph、评测集与混合检索](../../../interview/bytedance/base/bytedance-base-22.md)

@@ -2,8 +2,8 @@
 
 [Amazon S3 Multipart Upload Overview](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html)将流程分为 initiate、upload parts、complete 或 abort，并用 upload ID 标识一次上传。这里用 S3 作为具体实现例子，其他对象存储的限制、ETag 和校验语义需要查其官方契约。
 
-![客户端先获取受限上传会话，再将多个分片直传对象存储并维护 part 校验账本；Complete 后经过完整性、类型与恶意内容检查才进入 READY](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/file-upload-service-multipart-object-flow-v1.webp)
-*图：READY 只能由服务端验证流程写入，客户端完成上传不等于文件已经可安全使用。*
+![应用建立上传会话后，客户端分片直传并记录校验；未终止会话可恢复补缺，Abort终止旧uploadId，Complete后验证才READY](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/file-upload-service-multipart-object-flow-v2.png)
+*图：以S3分片为例，Resume只对仍有效且未Abort/Complete的uploadId对账补缺；Abort后旧会话不能恢复，重新上传需新建uploadId。上传完成仍须服务端验收，客户端不能直接设READY。*
 
 ## 领域状态与身份
 
@@ -63,7 +63,7 @@ Complete API 使用上传会话版本和幂等键。服务端先把状态从 upl
 
 Multipart 上传在 complete 或 abort 前会持续占用已上传 parts。[Multipart Upload Overview](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html)明确指出需要完成或停止上传，生命周期规则也可清理不完整 multipart。
 
-应用定时扫描 expiresAt，条件更新为 expired，再 abort；对象存储配置更长的兜底生命周期，避免扫描器故障造成永久费用。清理延迟指标与存储账单对账。客户端主动取消走同一路径，操作幂等。
+应用定时扫描 expiresAt，条件更新为 expired，再 abort；对象存储配置更长的兜底生命周期，避免扫描器故障造成永久费用。清理延迟指标与存储账单对账。客户端主动取消走同一路径，操作幂等。 以S3分片上传为例，Abort终止的是当前uploadId，不能再用该ID续传或Complete；重新上传需新建会话，不能把Abort当暂停。只有仍有效的未完成上传，才可查询已确认parts并补传缺失块。 在途分片可能与Abort发生竞争，应按供应商契约查询并确认清理完成，必要时重复停止操作。
 
 ## 下载与访问控制
 
@@ -90,10 +90,12 @@ READY 文件的下载 URL 同样短时、按主体和用途签发。敏感文件
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)（cluster-fa3a6af4ebe6）
+- [字节 AI 全栈一面：断点续传与代码回归](../../../interview/bytedance/base/bytedance-base-73.md)
+- [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
 
 - [Amazon S3：Uploading and copying objects using multipart upload](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html)
 - [Amazon S3：Checking object integrity for data uploads](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity-upload.html)
+- [Amazon S3：AbortMultipartUpload API](https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html)

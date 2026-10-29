@@ -139,6 +139,8 @@ Google Gen AI JavaScript SDK 的[官方文档](https://googleapis.github.io/js-g
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [美团后端 AI 一面：工具恢复、中断与代码上下文](../../../interview/meituan/ai/meituan-ai-7.md)
+- [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
 <!-- interview-source-history:end -->
 

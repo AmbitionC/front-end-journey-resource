@@ -75,8 +75,11 @@ $$
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [快手后端 AI 实习一面：Agent 与幻觉控制](../../../interview/kuaishou/ai/kuaishou-ai-17.md)
 - [小红书产品工程师 Agent 一面：线程池与幻觉控制](../../../interview/redbook/ai/redbook-ai-9.md)
+- [蚂蚁 AI 应用一面：响应延迟、幻觉与 AI Coding](../../../interview/antfin/ai/antfin-ai-12.md)
 - [腾讯 WXG 一面：转人工 Agent、Skill 与检索边界](../../../interview/tencent/ai/tencent-ai-16.md)
+- [腾讯搜狗输入法后台二至四面：AI 代码可靠性与测试](../../../interview/tencent/base/tencent-base-1.md)
 - [网易云全栈一面：评估闭环、异步任务与数据查询](../../../interview/netease/fullstack/netease-fullstack-1.md)
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
 - [蚂蚁智能体与大模型应用一面：幻觉、Skill 与 RAG](../../../interview/antfin/ai/antfin-ai-5.md)
