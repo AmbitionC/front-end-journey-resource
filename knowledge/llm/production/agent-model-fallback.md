@@ -81,6 +81,7 @@ known quality floors by task
 <!-- interview-source-history:start -->
 - [小红书 AI 全栈业务交叉面与二面：MVP、运行稳定性和视频 Agent](../../../interview/redbook/ai/redbook-ai-5.md)
 - [美团 AI 应用开发实习二面：降级、工具调用与 AI Coding](../../../interview/meituan/ai/meituan-ai-9.md)
+- [快手效果营销实习一面：意图路由、模型容错与业务校验](../../../interview/kuaishou/ai/kuaishou-ai-18.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

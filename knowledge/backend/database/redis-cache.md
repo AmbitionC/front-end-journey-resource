@@ -301,6 +301,14 @@ flowchart LR
 - **L1 的通知连接断开，但缓存还没过期，继续返回吗？** 按一致性合同清理或降级，不能假设断线期间没有变更。
 - **开启 AOF everysec，能把 Redis 当付款事实源吗？** 要看丢失窗口、故障切换、事务和对账要求；配置名称本身不给零丢失或跨 DB 一致保证。
 
+## 布隆过滤器重建：覆盖未确认时，阴性结果也不能拒绝
+
+[Redis 的布隆过滤器说明](https://redis.io/docs/latest/develop/data-types/probabilistic/bloom-filter/)解释了近似成员判断与容量、误判率的关系。这里的假阳性率以**实际不在集合中的查询**为分母，不能理解成“所有肯定回答中错误的比例”。标准布隆过滤器无假阴性的性质还依赖：本应存在的元素确实已按同一规则加入当前过滤器。
+
+重建时可以保留旧版本服务读取，从权威数据的已知快照与水位构造新版本，同时记录并追上构建期间的新增变化；验证覆盖范围与增量水位后，再按明确版本规则切换。具体用双写还是日志追赶，要依据已有的一致性合同设计，不能只把两个数组交换一下就声称数据完整。
+
+若新过滤器漏同步了已存在元素，其阴性结果就不能用来直接拒绝请求，应回查权威来源或使用保守路径。普通布隆过滤器不能直接删除某一元素的共享位；旧元素残留可能增加假阳性，但误删共享位会破坏正确性。哈希函数、种子、容量与编码都要随版本保持一致，原项目未公开的哈希名称和数量不能由面试记录推断。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
@@ -310,6 +318,7 @@ flowchart LR
 - [百度网盘后端二面：图生图工作流、任务管理与缓存一致性](../../../interview/baidu/ai/baidu-ai-5.md)
 - [美团本地核心一面：缓存一致性、库存故障与 Agent 记忆](../../../interview/meituan/ai/meituan-ai-4.md)
 - [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../../interview/bytedance/base/bytedance-base-36.md)
+- [蚂蚁后端一面：多级缓存、库存容灾与消息选型](../../../interview/antfin/base/antfin-base-1.md)
 - [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
 - [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)
 - [快手商业化效果营销一面：多 Agent 协作、Netty 与限流](../../../interview/kuaishou/ai/kuaishou-ai-4.md)
@@ -317,8 +326,11 @@ flowchart LR
 - [蚂蚁财富技术部一面：协作式 Agent、交付门禁与后端基础](../../../interview/antfin/ai/antfin-ai-4.md)
 - [字节 Agent 实习：生成质量、多智能体与缓存](../../../interview/bytedance/base/bytedance-base-52.md)
 - [快手主站 SRE 一二三面：Agent Skill、性能排障与数据链路](../../../interview/kuaishou/ai/kuaishou-ai-5.md)
+- [蚂蚁暑期面经：线程池、数据来源与多 Agent 评测](../../../interview/antfin/ai/antfin-ai-14.md)
+- [快手效果营销实习一面：意图路由、模型容错与业务校验](../../../interview/kuaishou/ai/kuaishou-ai-18.md)
 - [蚂蚁 Agent 实习一面：缓存、消息与 RAG](../../../interview/antfin/ai/antfin-ai-6.md)
 - [蚂蚁后端 AI 开发一面：Agent、Redis 与短链系统](../../../interview/antfin/ai/antfin-ai-3.md)
+- [腾讯后端多轮复盘：热 Key、缓存一致性与库存](../../../interview/tencent/base/tencent-base-2.md)
 - [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../../interview/bytedance/base/bytedance-base-47.md)
 <!-- interview-source-history:end -->
 

@@ -1,0 +1,222 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "DDPM：训练噪声预测，采样逐步去噪",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "diffusion-train-sample.html",
+    "legend": {
+      "mode": "auto",
+      "entries": {
+        "backend": {
+          "label": "计算步骤"
+        },
+        "database": {
+          "label": "训练样本"
+        }
+      }
+    }
+  },
+  "lanes": [
+    {
+      "id": "training",
+      "label": "训练：学习参数"
+    },
+    {
+      "id": "sampling",
+      "label": "采样：固定参数"
+    }
+  ],
+  "mainPath": [
+    "noise",
+    "estimate",
+    "step",
+    "remaining",
+    "image"
+  ],
+  "semanticChecks": {
+    "allowedRoots": [
+      "clean",
+      "noise"
+    ],
+    "allowedTerminals": [
+      "update",
+      "image"
+    ],
+    "requiredPaths": [
+      {
+        "from": "clean",
+        "to": "update"
+      },
+      {
+        "from": "noise",
+        "to": "image"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "id": "clean",
+      "lane": "training",
+      "col": 0,
+      "type": "database",
+      "label": "干净样本 x₀",
+      "sublabel": "从训练集取样",
+      "icon": "none"
+    },
+    {
+      "id": "corrupt",
+      "lane": "training",
+      "col": 1,
+      "type": "backend",
+      "label": "随机时间步加噪",
+      "sublabel": "构造 xₜ 与已知噪声",
+      "icon": "none"
+    },
+    {
+      "id": "train_pred",
+      "lane": "training",
+      "col": 2,
+      "type": "backend",
+      "label": "模型预测噪声",
+      "sublabel": "输入 xₜ 和时间步 t",
+      "icon": "none"
+    },
+    {
+      "id": "loss",
+      "lane": "training",
+      "col": 3,
+      "type": "backend",
+      "label": "比较真实噪声",
+      "sublabel": "计算训练损失",
+      "icon": "none"
+    },
+    {
+      "id": "update",
+      "lane": "training",
+      "col": 4,
+      "type": "backend",
+      "label": "更新模型参数",
+      "sublabel": "梯度优化",
+      "icon": "none"
+    },
+    {
+      "id": "noise",
+      "lane": "sampling",
+      "col": 0,
+      "type": "backend",
+      "label": "初始随机噪声",
+      "sublabel": "没有待恢复的原图",
+      "icon": "none"
+    },
+    {
+      "id": "estimate",
+      "lane": "sampling",
+      "col": 1,
+      "type": "backend",
+      "label": "使用已训练模型",
+      "sublabel": "预测当前步噪声",
+      "icon": "none"
+    },
+    {
+      "id": "step",
+      "lane": "sampling",
+      "col": 2,
+      "type": "backend",
+      "label": "调度器更新样本",
+      "sublabel": "得到下一步状态",
+      "icon": "none"
+    },
+    {
+      "id": "remaining",
+      "lane": "sampling",
+      "col": 3,
+      "type": "backend",
+      "label": "还有时间步？",
+      "sublabel": "按采样日程判断",
+      "icon": "decision"
+    },
+    {
+      "id": "image",
+      "lane": "sampling",
+      "col": 4,
+      "type": "backend",
+      "label": "输出生成样本",
+      "sublabel": "检查质量与约束",
+      "icon": "success"
+    }
+  ],
+  "edges": [
+    {
+      "id": "train_data",
+      "from": "clean",
+      "to": "corrupt"
+    },
+    {
+      "id": "train_model",
+      "from": "corrupt",
+      "to": "train_pred"
+    },
+    {
+      "id": "train_compare",
+      "from": "train_pred",
+      "to": "loss"
+    },
+    {
+      "id": "train_gradient",
+      "from": "loss",
+      "to": "update"
+    },
+    {
+      "id": "sample_start",
+      "from": "noise",
+      "to": "estimate"
+    },
+    {
+      "id": "sample_update",
+      "from": "estimate",
+      "to": "step"
+    },
+    {
+      "id": "sample_check",
+      "from": "step",
+      "to": "remaining"
+    },
+    {
+      "id": "sample_repeat",
+      "from": "remaining",
+      "to": "estimate",
+      "label": "是：继续下一步",
+      "role": "return",
+      "route": "bottom-channel",
+      "fromSide": "bottom",
+      "toSide": "bottom"
+    },
+    {
+      "id": "sample_finish",
+      "from": "remaining",
+      "to": "image",
+      "label": "否",
+      "variant": "emphasis"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "训练与生成分工不同",
+      "items": [
+        "训练随机抽取时间步构造监督，不必为每条样本完整生成一次。",
+        "采样使用固定的已训练参数，不在每一步重新训练模型。"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "本图的边界",
+      "items": [
+        "以噪声预测式 DDPM 为教学例子，不声称所有扩散模型目标相同。",
+        "潜空间扩散另有编码与解码；这里画的是加噪和去噪过程。"
+      ]
+    }
+  ]
+}

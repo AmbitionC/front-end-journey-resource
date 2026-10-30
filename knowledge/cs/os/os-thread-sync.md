@@ -282,6 +282,14 @@ graph LR
 - **把 while 换成 if，只有两个线程就安全吗？** 不能据线程数量排除虚假唤醒；重检谓词是等待协议的一部分。
 - **notifyAll 后所有线程都会依次完成操作吗？** 不保证；它们仍竞争 monitor、重新判断条件，关闭、调度与取消还会影响进展。
 
+## 可重入：同一线程再进入，不等于新的线程继承锁
+
+可重入锁允许当前持有线程再次取得同一把锁。概念上需要记录持有者和重入次数：同一线程再进入时计数增加，每次解锁对应减少，归零后才允许其他线程取得锁。裸写一个计数器并不是线程安全实现，还需要原子状态变化、等待与唤醒机制。
+
+[Java 21 ReentrantLock 合同](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/locks/ReentrantLock.html)明确了同线程重复获取、持有计数和归零释放的行为。每一层成功加锁都应在对应的异常安全路径中释放；非持有者不能替它解锁。委派给另一个线程的工作不会因为来自持锁者就自动变成“重入”。
+
+可重入解决的是同一线程嵌套调用时的再次获取，不保证公平，也不能消除两把锁的相反顺序、长临界区或跨服务死锁。描述实现时要分别说明持有者身份、重入计数、等待策略和故障边界，不能把租约式分布式锁与进程内线程锁混为一谈。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
@@ -291,6 +299,7 @@ graph LR
 - [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
 - [阿里云 AI 应用一面：并发审查、RAG 评估与海量商品](../../../interview/alibaba/ai/alibaba-ai-16.md)
+- [快手效果营销实习一面：意图路由、模型容错与业务校验](../../../interview/kuaishou/ai/kuaishou-ai-18.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)
 <!-- interview-source-history:end -->
 

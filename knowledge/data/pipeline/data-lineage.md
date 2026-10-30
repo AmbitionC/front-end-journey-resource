@@ -45,6 +45,12 @@ orchestrator 的 dagRunId、taskRunId 与 OpenLineage runId 关联，日志和 T
 
 一套可信血缘必须能从某个业务指标追到具体输出分区、运行、代码版本和输入列，也能在上游变更前列出有 owner 的下游清单。不能回答到 Run 和版本层面的图，只是漂亮的系统地图。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [蚂蚁暑期面经：线程池、数据来源与多 Agent 评测](../../../interview/antfin/ai/antfin-ai-14.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenLineage：Core Specification](https://github.com/OpenLineage/OpenLineage/blob/main/spec/OpenLineage.md)

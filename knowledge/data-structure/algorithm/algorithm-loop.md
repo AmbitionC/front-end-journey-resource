@@ -191,6 +191,40 @@ function simulateDoors(n) {
 
 按完全平方数直接列结果只需 O(√n) 次输出；模拟约有 n∑(1/r) 次切换。两者回答同一题，但前者利用结构，后者保留直观校验。
 
+## 网格最小路径：把重叠搜索转成按依赖求值
+
+若从左上到右下只能向右或向下，每格的可达前驱只有上方和左方。定义到达当前位置的最小代价为：
+
+$$
+dp[i][j]=grid[i][j]+\min(dp[i-1][j],dp[i][j-1])
+$$
+
+起点包含自身数值；首行只有左侧前驱，首列只有上方前驱。依赖图没有环，即使数值为负也不需要在同一格反复松弛；关键限制是移动方向。按行扫描时，一维数组的当前项尚表示上一行，前一项已表示本行左侧。
+
+下面的教学实现约定空矩阵返回 0，输入为矩形且数值及累加都能由 JavaScript Number 按所需精度表示；真实题目的空输入和数值合同应另行确认。
+
+```javascript
+function minPathSum(grid) {
+  if (grid.length === 0) return 0;
+  const cols = grid[0].length;
+  if (!grid.every(row => Array.isArray(row) && row.length === cols)) {
+    throw new TypeError("grid must be rectangular");
+  }
+  if (cols === 0) return 0;
+  const dp = Array(cols).fill(Infinity);
+  dp[0] = 0;
+  for (const row of grid) {
+    for (let j = 0; j < cols; j++) {
+      const left = j === 0 ? Infinity : dp[j - 1];
+      dp[j] = row[j] + Math.min(dp[j], left);
+    }
+  }
+  return dp[cols - 1];
+}
+```
+
+例如 `[[1,3,1],[1,5,1],[4,2,1]]` 的最小和为 7。时间复杂度为 $O(mn)$，额外空间为 $O(n)$；这里只返回最小值。如果题目要求路径，还需保存或重建选择信息，不能声称一维数组已经保存了完整路径。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
@@ -204,6 +238,7 @@ function simulateDoors(n) {
 - [字节财经保险 AI 全栈实习一面：项目设计、AI Coding 与 Diff](../../../interview/bytedance/base/bytedance-base-34.md)
 - [字节抖音电商 Agent 一面：分层、上下文与 GRPO](../../../interview/bytedance/base/bytedance-base-21.md)
 - [快手主站 SRE 一二三面：Agent Skill、性能排障与数据链路](../../../interview/kuaishou/ai/kuaishou-ai-5.md)
+- [字节搜广推引擎架构一面：JSON 输出、并发与系统基础](../../../interview/bytedance/base/bytedance-base-74.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

@@ -126,6 +126,14 @@ RabbitMQ 的 TTL 限制消息存活期，死信交换机路由过期、拒收等
 
 若需求是“每 30 天更新”，先确定固定时长还是按日历周期，再保存 scheduleId、nextRunAt 和已生成周期。持久调度器查到期任务，生成带 periodId 的幂等 Job；成功或按约定失败策略推进下一期。漏跑如何补、重复扫描如何去重、远端故障如何恢复，都属于周期合同。仅一条 30 天延时消息没有表达下一周期和恢复规则。
 
+## 到期是业务事实，延迟消息只是触发器
+
+优惠券等权益是否可用，应由权威状态和可信时间下的截止时间决定，而不是由“过期消息是否已被消费”决定。[RocketMQ 延迟消息文档](https://rocketmq.apache.org/docs/featureBehavior/02delaymessage/)明确说明故障重启和同一时间大量消息等因素可能导致投递延迟；这不是业务可忽略到期校验的理由。
+
+教学上可在使用权益时检查当前有效期与状态，并在真正核销的事务或条件更新中再次保护这些条件。到期消费者只对仍符合条件的状态执行幂等变更；旧版本消息不能无条件覆盖续期或已核销的新状态。时间单位、时钟来源、状态版本和并发写入边界要形成明确合同。
+
+补偿扫描可以依据权威到期索引与水位查找漏处理项，并通过同一幂等路径收敛。它不替代实时使用时的判断。积压治理则另查生产速率、消费耗时、重试与下游容量，避免为了消化过期任务继续制造无意义重试；消息已到达或已 ACK 都不能单独证明业务终态正确。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
@@ -138,6 +146,7 @@ RabbitMQ 的 TTL 限制消息存活期，死信交换机路由过期、拒收等
 - [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)
 - [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
 - [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
+- [快手效果营销实习一面：意图路由、模型容错与业务校验](../../../interview/kuaishou/ai/kuaishou-ai-18.md)
 - [蚂蚁 Agent 实习一面：缓存、消息与 RAG](../../../interview/antfin/ai/antfin-ai-6.md)
 - [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../../interview/bytedance/base/bytedance-base-47.md)
 <!-- interview-source-history:end -->

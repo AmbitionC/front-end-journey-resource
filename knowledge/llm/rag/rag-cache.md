@@ -113,6 +113,7 @@ RAG 缓存的核心是“键即契约”：每层键完整描述输入、权限�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [快手效果营销实习一面：意图路由、模型容错与业务校验](../../../interview/kuaishou/ai/kuaishou-ai-18.md)
 - [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
 <!-- interview-source-history:end -->
 

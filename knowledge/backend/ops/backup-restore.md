@@ -53,6 +53,7 @@ PITR 的目标点应在破坏性操作之前，并预留事务时间边界的不
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [蚂蚁后端一面：多级缓存、库存容灾与消息选型](../../../interview/antfin/base/antfin-base-1.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
