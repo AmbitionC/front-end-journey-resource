@@ -129,15 +129,25 @@ SFT 的关键不是简单堆数量，而是覆盖行为边界并保持示范一�
 
 回流日志不能直接等同训练标签。先按权限脱敏与隔离，再把失败归因形成可验证案例，去重、检查反馈质量和泄漏，固定版本后进入评测；确需训练时再经数据契约进入训练集。可参考[Agent反馈闭环](../production/agent-feedback-loop.md)，但原面经未披露的管线实现不能补为作者经历。
 
+## 微调数据规模：看递增实验，而不是背固定条数
+
+先固定任务和标注标准，区分有效样本数、Token 数、任务覆盖及重复与噪声，再在一致的训练与验证条件下逐步增加数据规模。把验证收益、关键错误切片、基础能力回归和计算成本画在同一比较框架中，才能判断继续收集哪类数据更有价值。[学习曲线方法](https://scikit-learn.org/stable/modules/learning_curve.html)用于观察训练数据量与泛化表现的关系；它不是给所有 SFT 任务输出一个必需样本数的公式。
+
+规模实验要说明样本怎样选取、任务族或用户怎样分组以及计算预算怎样控制。增加数据可能同时改变训练步数和任务分布，因此不能把结果变化全部归因于“条数更多”。调参验证集与最终验收集分开，反复用于选择数据配方的集合不再是独立最终测试。
+
+若主要错误来自标签冲突、目标不清或关键场景缺失，先修数据合同与覆盖，比继续加入同样的简单样本更重要。不存在普遍合适的几千或几万条阈值，也不能把统计抽样置信区间直接套成模型微调数据量要求。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
 - [阿里国际 Accio Agent 算法一面：数据合成、任务环境与 GUI Agent](../../../interview/alibaba/ai/alibaba-ai-3.md)
+- [蚂蚁数字支付 AI 应用研发二面：数据分层、迁移与微调](../../../interview/antfin/ai/antfin-ai-13.md)
 - [阿里 Agent 实习一面：图文检索、评估与微调实践](../../../interview/alibaba/ai/alibaba-ai-10.md)
 - [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)
 - [阿里淘天 Agent 算法一面：任务构造、轨迹与训练路线](../../../interview/alibaba/ai/alibaba-ai-4.md)
 - [字节 Agent 后端一面：进程线程、Transformer 与训练](../../../interview/bytedance/base/bytedance-base-31.md)
 - [阿里淘宝闪购 Agent 算法实习一面：框架、记忆与线上排障](../../../interview/alibaba/ai/alibaba-ai-6.md)
+- [OPPO 多模态暑期实习二面：RAG 项目复盘](../../../interview/oppo/ai/oppo-ai-4.md)
 - [美团 Keeta Agent 一面：客服流程、偏好数据与链表](../../../interview/meituan/ai/meituan-ai-1.md)
 <!-- interview-source-history:end -->
 

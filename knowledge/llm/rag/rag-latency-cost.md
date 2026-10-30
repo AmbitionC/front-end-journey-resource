@@ -102,6 +102,7 @@ RAG 性能工程先分阶段计量：离线看 freshness/吞吐，在线看 rout
 - [快手 AI 应用实习二面：图关系、RAG 延迟与评测](../../../interview/kuaishou/ai/kuaishou-ai-15.md)
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
 - [字节 Agent 二面：RAG 分块、查询改写与随机采样](../../../interview/bytedance/base/bytedance-base-28.md)
+- [快手效果营销实习一面：意图路由、模型容错与业务校验](../../../interview/kuaishou/ai/kuaishou-ai-18.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)
 <!-- interview-source-history:end -->
 

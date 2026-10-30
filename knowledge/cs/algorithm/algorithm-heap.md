@@ -180,6 +180,7 @@ function trapRainGrid(grid) {
 - [腾讯营销后端一面：Skill 加载、上下文压缩与多路归并](../../../interview/tencent/ai/tencent-ai-21.md)
 - [阿里淘天 AI 应用研发一面：RAG、限流 Top-K 与优惠策略](../../../interview/alibaba/ai/alibaba-ai-5.md)
 - [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
+- [字节搜广推引擎架构一面：JSON 输出、并发与系统基础](../../../interview/bytedance/base/bytedance-base-74.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

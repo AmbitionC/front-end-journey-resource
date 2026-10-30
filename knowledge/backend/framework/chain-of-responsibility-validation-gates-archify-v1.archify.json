@@ -1,0 +1,187 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "业务校验链：先判断，后产生副作用",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "validation-chain.html",
+    "legend": {
+      "mode": "auto",
+      "entries": {
+        "backend": {
+          "label": "业务步骤"
+        }
+      }
+    }
+  },
+  "lanes": [
+    {
+      "id": "checks",
+      "label": "只读校验"
+    },
+    {
+      "id": "write",
+      "label": "权威写入"
+    },
+    {
+      "id": "failure",
+      "label": "明确失败结果",
+      "variant": "exception"
+    }
+  ],
+  "mainPath": [
+    "context",
+    "shape",
+    "rules",
+    "commit",
+    "success"
+  ],
+  "semanticChecks": {
+    "allowedRoots": [
+      "context"
+    ],
+    "allowedTerminals": [
+      "success",
+      "reject"
+    ],
+    "requiredPaths": [
+      {
+        "from": "context",
+        "to": "success"
+      },
+      {
+        "from": "shape",
+        "to": "reject"
+      },
+      {
+        "from": "rules",
+        "to": "reject"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "id": "context",
+      "lane": "checks",
+      "col": 0,
+      "type": "backend",
+      "label": "准备请求上下文",
+      "sublabel": "可信身份与规则版本",
+      "icon": "none"
+    },
+    {
+      "id": "shape",
+      "lane": "checks",
+      "col": 1,
+      "type": "backend",
+      "label": "输入与格式校验",
+      "sublabel": "不写业务状态",
+      "icon": "none"
+    },
+    {
+      "id": "rules",
+      "lane": "checks",
+      "col": 2,
+      "type": "backend",
+      "label": "按顺序检查规则",
+      "sublabel": "资格与有效期等示例",
+      "icon": "none"
+    },
+    {
+      "id": "commit",
+      "lane": "write",
+      "col": 3,
+      "type": "backend",
+      "label": "事务内重新核对",
+      "sublabel": "条件更新与幂等写入",
+      "icon": "none"
+    },
+    {
+      "id": "success",
+      "lane": "write",
+      "col": 4,
+      "type": "backend",
+      "label": "提交业务结果",
+      "sublabel": "记录可追踪终态",
+      "icon": "success"
+    },
+    {
+      "id": "reject",
+      "lane": "failure",
+      "col": 2,
+      "type": "backend",
+      "label": "返回稳定错误",
+      "sublabel": "不继续后续写入",
+      "icon": "stop"
+    }
+  ],
+  "edges": [
+    {
+      "id": "prepare",
+      "from": "context",
+      "to": "shape"
+    },
+    {
+      "id": "shape_pass",
+      "from": "shape",
+      "to": "rules",
+      "label": "通过"
+    },
+    {
+      "id": "shape_fail",
+      "from": "shape",
+      "to": "reject",
+      "label": "不通过",
+      "role": "error",
+      "variant": "security"
+    },
+    {
+      "id": "rules_pass",
+      "from": "rules",
+      "to": "commit",
+      "label": "全部通过"
+    },
+    {
+      "id": "rules_fail",
+      "from": "rules",
+      "to": "reject",
+      "label": "不通过",
+      "role": "error",
+      "variant": "security"
+    },
+    {
+      "id": "commit_success",
+      "from": "commit",
+      "to": "success",
+      "label": "条件成立",
+      "variant": "emphasis"
+    },
+    {
+      "id": "commit_conflict",
+      "from": "commit",
+      "to": "reject",
+      "label": "状态已变化",
+      "role": "error",
+      "variant": "security"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "一种责任链变体",
+      "items": [
+        "本图是“所有规则都通过”的短路校验管线。",
+        "节点与顺序为教学示例，不能冒充原项目配置。"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "校验不是并发保证",
+      "items": [
+        "读取后的状态可能变化；真正写入仍要保护业务不变量。",
+        "业务截止时间决定是否可用，消息触发时机不能代替到期判断。"
+      ]
+    }
+  ]
+}

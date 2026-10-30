@@ -88,6 +88,12 @@ canonical 文档是检索展示的首选代表，但簇内每个来源都保留 
 
 生产去重是一条证据保守的分层管线：规范化和 hash 处理确定性相同，MinHash/SimHash/embedding 只生成近重复候选，语义复核才决定合并。Canonical 用于检索代表，不删除来源血缘；持续监控 false merge 与 false split，才能减少噪声而不抹平真实版本差异。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [快手效果营销实习一面：意图路由、模型容错与业务校验](../../../interview/kuaishou/ai/kuaishou-ai-18.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Broder — On the Resemblance and Containment of Documents](https://www.cs.princeton.edu/courses/archive/spr05/cos598E/bib/broder97resemblance.pdf)

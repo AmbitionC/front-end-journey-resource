@@ -1003,6 +1003,23 @@
             ],
             "updatedAt": "2026-10-29",
             "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "字节搜广推引擎架构一面：JSON 输出、并发与系统基础",
+            "key": "bytedance-base-74",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "department": "其他",
+            "roleCategory": "后端工程",
+            "tags": [
+              "系统设计",
+              "结构化输出",
+              "HNSW",
+              "并发",
+              "算法"
+            ],
+            "updatedAt": "2026-10-31",
+            "contentFormat": "short-qa-v2"
           }
         ]
       },
@@ -1397,6 +1414,23 @@
               "大模型的能力边界、幻觉与不确定性"
             ],
             "updatedAt": "2026-10-29",
+            "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "腾讯后端多轮复盘：热 Key、缓存一致性与库存",
+            "key": "tencent-base-2",
+            "isLeaf": true,
+            "filePath": "tencent/base",
+            "department": "其他",
+            "roleCategory": "后端工程",
+            "tags": [
+              "Redis",
+              "缓存",
+              "并发",
+              "库存",
+              "JVM"
+            ],
+            "updatedAt": "2026-10-31",
             "contentFormat": "short-qa-v2"
           }
         ]
@@ -2287,6 +2321,38 @@
             ],
             "updatedAt": "2026-10-29",
             "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "快手效果营销实习一面：意图路由、模型容错与业务校验",
+            "key": "kuaishou-ai-18",
+            "isLeaf": true,
+            "filePath": "kuaishou/ai",
+            "department": "其他",
+            "roleCategory": "AI 与 Agent 工程",
+            "tags": [
+              "RAG",
+              "意图识别",
+              "缓存",
+              "熔断",
+              "责任链"
+            ],
+            "updatedAt": "2026-10-31",
+            "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "快手大模型应用算法社招一面：Diffusion 与二分基础",
+            "key": "kuaishou-ai-19",
+            "isLeaf": true,
+            "filePath": "kuaishou/ai",
+            "department": "其他",
+            "roleCategory": "AI 与 Agent 工程",
+            "tags": [
+              "Diffusion",
+              "算法",
+              "大模型"
+            ],
+            "updatedAt": "2026-10-31",
+            "contentFormat": "short-qa-v2"
           }
         ]
       }
@@ -2351,6 +2417,21 @@
             "department": "其他",
             "roleCategory": "AI 全栈",
             "role": "AI全栈",
+            "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "OPPO 多模态暑期实习二面：RAG 项目复盘",
+            "key": "oppo-ai-4",
+            "isLeaf": true,
+            "filePath": "oppo/ai",
+            "department": "其他",
+            "roleCategory": "AI 与 Agent 工程",
+            "tags": [
+              "RAG",
+              "项目复盘",
+              "数据处理"
+            ],
+            "updatedAt": "2026-10-31",
             "contentFormat": "short-qa-v2"
           }
         ]
@@ -2566,6 +2647,56 @@
               "大模型的能力边界、幻觉与不确定性"
             ],
             "updatedAt": "2026-10-29",
+            "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "蚂蚁数字支付 AI 应用研发二面：数据分层、迁移与微调",
+            "key": "antfin-ai-13",
+            "isLeaf": true,
+            "filePath": "antfin/ai",
+            "department": "其他",
+            "roleCategory": "AI 与 Agent 工程",
+            "tags": [
+              "系统设计",
+              "数据迁移",
+              "LoRA",
+              "Agent"
+            ],
+            "updatedAt": "2026-10-31",
+            "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "蚂蚁后端一面：多级缓存、库存容灾与消息选型",
+            "key": "antfin-base-1",
+            "isLeaf": true,
+            "filePath": "antfin/base",
+            "department": "其他",
+            "roleCategory": "后端工程",
+            "tags": [
+              "Redis",
+              "消息队列",
+              "容灾",
+              "布隆过滤器",
+              "集合"
+            ],
+            "updatedAt": "2026-10-31",
+            "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "蚂蚁暑期面经：线程池、数据来源与多 Agent 评测",
+            "key": "antfin-ai-14",
+            "isLeaf": true,
+            "filePath": "antfin/ai",
+            "department": "其他",
+            "roleCategory": "AI 与 Agent 工程",
+            "tags": [
+              "Java",
+              "Agent",
+              "多智能体",
+              "评测",
+              "数据质量"
+            ],
+            "updatedAt": "2026-10-31",
             "contentFormat": "short-qa-v2"
           }
         ]
