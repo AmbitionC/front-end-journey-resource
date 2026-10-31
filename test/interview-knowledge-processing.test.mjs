@@ -1,10 +1,10 @@
 import assert from 'node:assert/strict';
-import { readFile, writeFile } from 'node:fs/promises';
+import { readFile, stat, symlink, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import test from 'node:test';
 import { reviewFixture, freezeFixtureReview } from './release-review-fixture.mjs';
-import { validateContentReview } from '../scripts/content-review.mjs';
+import { sha256, validateContentReview } from '../scripts/content-review.mjs';
 
 const check = f => validateContentReview(f.root, f.historyPath, f.reviewPath, f.options.reviewSha256);
 const persist = async f => {
@@ -23,6 +23,32 @@ test('read-only preparation exposes the actual skill and inventory without claim
   assert.equal(plan.targets[0].key, 'real-key');
   assert.match(plan.skill.sha256, /^[a-f0-9]{64}$/u);
   assert.deepEqual(await readFile(join(f.root, 'knowledge/_tree.json')), before);
+}));
+
+test('compact preparation writes the complete needs_execution packet privately with an exact hash', () => reviewFixture(async f => {
+  const out = join(f.folder, 'private-plan.json');
+  await writeFile(out, '{"older":true}', { mode: 0o644 });
+  const result = spawnSync(process.execPath, [resolve(import.meta.dirname, '../scripts/interview-knowledge-processing.mjs'), f.root, '--keys', 'real-key', '--out', out], { encoding: 'utf8' });
+  assert.equal(result.status, 0, result.stderr);
+  const summary = JSON.parse(result.stdout), bytes = await readFile(out), packet = JSON.parse(bytes);
+  assert.equal(summary.path, out); assert.equal(summary.sha256, sha256(bytes));
+  assert.equal(summary.targetCount, 1); assert.equal(summary.inventoryCount, 1);
+  assert.equal(summary.targets, undefined); assert.equal(summary.inventory, undefined);
+  assert.equal(packet.status, 'needs_execution'); assert.equal(packet.stage, 'processing');
+  assert.equal(packet.targets[0].key, 'real-key'); assert.equal(packet.inventory.length, 1);
+  assert.equal((await stat(out)).mode & 0o777, 0o600);
+  assert.doesNotMatch(bytes.toString(), /skillExecution|"completed"|"approved"/u);
+}));
+
+test('compact preparation rejects repository destinations, relative paths and symlink redirection', () => reviewFixture(async f => {
+  const protectedPath = join(f.root, 'knowledge/topic/real-key.md'), before = await readFile(protectedPath);
+  const alias = join(f.folder, 'redirect.json'); await symlink(protectedPath, alias);
+  for (const out of [protectedPath, 'relative-plan.json', alias]) {
+    const result = spawnSync(process.execPath, [resolve(import.meta.dirname, '../scripts/interview-knowledge-processing.mjs'), f.root, '--keys', 'real-key', '--out', out], { encoding: 'utf8' });
+    assert.notEqual(result.status, 0);
+    assert.equal(result.stdout, '');
+    assert.deepEqual(await readFile(protectedPath), before);
+  }
 }));
 
 test('missing per-question semantic association evidence blocks final publication review', () => reviewFixture(async f => {

@@ -1,9 +1,9 @@
-import { createHash } from 'node:crypto';
-import { readFile, realpath, lstat } from 'node:fs/promises';
-import { spawnSync } from 'node:child_process';
-import { resolve } from 'node:path';
+import { createHash, randomUUID } from 'node:crypto';
+import { readFile, realpath, lstat, open, rename, rm } from 'node:fs/promises';
+import { resolve, dirname, basename, relative, isAbsolute, sep } from 'node:path';
 import { isDirectExecution, leafPath, readBounded } from './resource-paths.mjs';
 import { leaves } from './validate-tree.mjs';
+import { createImmutableGitReader } from './git-immutable.mjs';
 
 export const KNOWLEDGE_SKILL_PATH = '.codex/skills/generate-knowledge-docs/SKILL.md';
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -41,7 +41,27 @@ export async function prepareInterviewKnowledgeProcessing(root, keys) {
   return { schemaVersion: 1, kind: 'interview-knowledge-processing-plan', stage: 'processing', status: 'needs_execution', skill, targets, inventory };
 }
 
-export async function requireKnowledgeAssociation(root, { question, articleKey, questionIndex, snapshot, baselineFiles, baseCommit, knowledgeLeaves, quality }) {
+async function writePrivatePacket(root, packet, requested) {
+  if (!isAbsolute(requested ?? '')) throw new Error('准备输出必须指定仓库外绝对路径');
+  const base = await realpath(root), parent = await realpath(dirname(requested)), target = resolve(parent, basename(requested));
+  const location = relative(base, target);
+  if (location !== '..' && !location.startsWith(`..${sep}`) && !isAbsolute(location)) throw new Error('准备输出必须位于公开仓库外');
+  try {
+    const existing = await lstat(target);
+    if (existing.isSymbolicLink() || !existing.isFile()) throw new Error('准备输出必须是普通文件，不得使用符号链接');
+  } catch (error) { if (error.code !== 'ENOENT') throw error; }
+  const bytes = Buffer.from(`${JSON.stringify(packet, null, 2)}\n`);
+  const temporary = resolve(parent, `.knowledge-packet-${randomUUID()}.tmp`);
+  try {
+    const handle = await open(temporary, 'wx', 0o600);
+    try { await handle.chmod(0o600); await handle.writeFile(bytes); }
+    finally { await handle.close(); }
+    await rename(temporary, target);
+  } finally { await rm(temporary, { force: true }); }
+  return { stage: packet.stage, status: packet.status, targetCount: packet.targets.length, inventoryCount: packet.inventory.length, path: requested, sha256: hash(bytes) };
+}
+
+export async function requireKnowledgeAssociation(root, { question, articleKey, questionIndex, snapshot, baselineFiles, baseCommit, knowledgeLeaves, quality, gitReader = createImmutableGitReader(root) }) {
   const { readPrivatePinned } = await import('./content-review.mjs');
   const association = question.knowledgeAssociation;
   if (!association || !['reuse', 'update', 'create'].includes(association.action)
@@ -54,8 +74,8 @@ export async function requireKnowledgeAssociation(root, { question, articleKey, 
   if (association.action !== 'create' && !baseline) throw new Error('新知识必须记录 create 并明确零面经基线');
   if (!baseline && leaf.interviewBaseHeat !== 0) throw new Error('新面经知识必须显式 interviewBaseHeat=0，避免首次来源双计');
   if (association.action === 'reuse') {
-    const before = spawnSync('git', ['show', `${baseCommit}:${path}`], { cwd: root, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
-    if (before.status !== 0 || teachingBody(before.stdout) !== teachingBody((await readBounded(root, path, 'knowledge')).toString())) throw new Error('reuse 知识正文变化必须改为 update 并审查新角度');
+    const before = gitReader.readFile(baseCommit, path).toString();
+    if (teachingBody(before) !== teachingBody((await readBounded(root, path, 'knowledge')).toString())) throw new Error('reuse 知识正文变化必须改为 update 并审查新角度');
   }
   const existingArticles = baselineFiles.filter(file => file.path.startsWith('knowledge/') && file.path.endsWith('.md'));
   if (existingArticles.length && !association.candidates.length) throw new Error('知识关联证据缺实际已读相近候选');
@@ -84,6 +104,8 @@ export async function requireKnowledgeAssociation(root, { question, articleKey, 
 if (isDirectExecution(import.meta.url)) {
   try {
     const keysAt = process.argv.indexOf('--keys');
-    console.log(JSON.stringify(await prepareInterviewKnowledgeProcessing(resolve(process.argv[2] ?? '.'), keysAt < 0 ? [] : process.argv[keysAt + 1]?.split(',').filter(Boolean)), null, 2));
+    const root = resolve(process.argv[2] ?? '.'), outAt = process.argv.indexOf('--out');
+    const packet = await prepareInterviewKnowledgeProcessing(root, keysAt < 0 ? [] : process.argv[keysAt + 1]?.split(',').filter(Boolean));
+    console.log(JSON.stringify(outAt < 0 ? packet : await writePrivatePacket(root, packet, process.argv[outAt + 1]), null, 2));
   } catch (error) { console.error(error.message); process.exitCode = 1; }
 }

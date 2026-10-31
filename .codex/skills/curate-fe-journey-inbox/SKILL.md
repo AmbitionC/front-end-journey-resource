@@ -34,7 +34,7 @@ description: Use when a front-end-journey-resource `_inbox/` batch contains `met
    - `operation`：使用同一脚本写 `_inbox/_reports/operation-topics-YYYY-MM-DD.md`，再人工核验观点、事实和时效。
    - `project`：写 `_inbox/_reports/project-candidates.md`，按 `projectScore` 降序，保留许可证、可运行性和维护证据缺口。
 5. 每个输入 cluster 必须有且只有一个主处置结论；允许附带多个合法分流。把 batchId、处理状态和公开文件写入 `_inbox/_reports/processed.json`，并将规范来源 URL、真实正文指纹、证据等级、过程标识、公开 key 和知识 key upsert 到显式仓外私账。频次按去重证据 cluster 累计；同 URL、同完整正文与转载只计一次，流程标识用于公开页复用；新私账不提交公开 Git。
-6. 按 [消费契约](references/consumption-contract.md) 生成报告、复核隐私与来源，运行 `npm run validate:tree` 和 `git diff --check`，再按 [最终版本发布审核](../curate-interview-posts/references/release-review.md) 冻结并独立审核。私有报告不提交。
+6. 按 [消费契约](references/consumption-contract.md) 生成报告、复核隐私与来源，并按 [知识加工证据契约](../curate-interview-posts/references/interview-knowledge-processing.md) 先完成本批唯一主题处理、图解与 `--prepare` 草稿热度/反链/导航，再绑定真实逐题执行、运行 `npm run validate:tree` 和 `git diff --check`，最后按 [最终版本发布审核](../curate-interview-posts/references/release-review.md) 冻结并独立审核。私有报告不提交；交接用路径/SHA/计数与阻断，保留推理档位。
 7. `publish` 模式按已授权 PR 流程提交公开内容和所需仓库元数据；取得最终快照的可信 GitHub 发布审查并合并后，等待该合并 SHA 的 `sync-content` Action 成功。成功后只删除 inspector 清单中状态为 `processed` 且确已发布的本地条目；Action 失败、阻塞、跳过和待确认条目全部保留。
 
 ## 快速检查

@@ -1,5 +1,6 @@
 import { isDirectExecution } from './resource-paths.mjs';
 import { access } from 'node:fs/promises';
+import { spawnSync } from 'node:child_process';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { validateTree } from './validate-tree.mjs';
@@ -8,6 +9,13 @@ import { validateGithubRelease, requireSuccessfulSync, validateGithubPrivateRevi
 
 export async function requireReviewedRelease(root, before, after, options={}) {
   if (process.env.GITHUB_ACTIONS==='true' && after!==process.env.GITHUB_SHA) throw new Error('正式发布必须使用当前 Action 的最终 SHA，不支持跨提交重放');
+  // Reject invalid immutable inputs before scanning every public article.
+  // validateGithubRelease repeats HEAD/range checks after the scan as before.
+  const sha = /^[a-f0-9]{40}$/u;
+  if (!sha.test(before ?? '') || !sha.test(after ?? '')) throw new Error('发布范围必须是完整 commit SHA');
+  const head = spawnSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'});
+  if (head.status!==0 || head.stdout.trim()!==after) throw new Error('工作区未检出待发布最终提交');
+  if (spawnSync('git',['merge-base','--is-ancestor',before,after],{cwd:root}).status!==0) throw new Error('发布范围非有效祖先链');
   // Keep legacy provenance outside Git's current public tree. Removing it from
   // this candidate does not erase earlier public commits.
   let legacy = false;
