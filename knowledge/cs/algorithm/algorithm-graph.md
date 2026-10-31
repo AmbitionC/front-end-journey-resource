@@ -45,6 +45,37 @@ DFS 的完成时间可用于拓扑排序和强连通算法，但遍历结果依�
 
 Bellman–Ford 对所有边重复松弛 V−1 轮，可处理负边；第 V 轮仍能降低则存在从源可达的负环。DAG 即使有负边，也可按拓扑序一次松弛 O(V+E)。全源最短路则根据图规模和权重选择 Floyd–Warshall 或多次单源算法。
 
+## 最小体力路径：路径代价取最大边，而不是边权之和
+
+把矩形网格每格视为顶点，上下左右相邻格之间的边权为高度差绝对值。这里明确采用教学合同：至少一格、只能走四邻格，路径代价是经过边权的最大值，目标是最小化这个最大值。它不是前述普通最短路的累加目标，也不是只能向右、向下的网格 DP。
+
+令 `effort[v]` 为当前已发现的最小瓶颈代价。由 u 延伸到 v 的候选是：
+
+$$
+\operatorname{candidate}=\max(\operatorname{effort}[u],|h_u-h_v|)
+$$
+
+候选更小时才更新。下面为使用最小优先队列的伪代码，`popMin` 按第一项代价排序；只在弹出当前有效最小条目后判断终点：
+
+```text
+effort[*] = infinity
+effort[start] = 0
+pq.push((0, start))
+while pq is not empty:
+    (d, u) = pq.popMin()
+    if d != effort[u]: continue
+    if u == target: return d
+    for each four-neighbor v of u:
+        candidate = max(d, abs(height[u] - height[v]))
+        if candidate < effort[v]:
+            effort[v] = candidate
+            pq.push((candidate, v))
+```
+
+Dijkstra 的贪心步骤仍成立，因为延伸路径的最大边权不会小于此前代价；较大的未确定前缀无法经延伸变成更小候选。这是对松弛运算的明确改变，不能只把普通最短路代码中的 `+` 留着。允许重复入队时要跳过过时条目，不能在首次入队时就宣布最优。
+
+四邻网格 $V=mn$、$E=O(V)$，二叉堆实现时间 $O(mn\log(mn+1))$、额外空间 $O(mn)$；数值差必须可精确表示。单格没有边，结果为 0。例子 `[[1,2,2],[3,8,2],[5,3,5]]` 的答案为 2：沿左侧到底再向右可达，且只允许高度差不超过 1 的边时起终点不连通。独立验证可枚举边权阈值，在每个阈值下用 BFS 检查连通；“阈值越大，可达性不下降”正是这种对照方法的依据。
+
 ## 松弛与溢出
 
 松弛判断 `dist[u] + w < dist[v]`，前提是 u 可达。整数溢出会把大正数变负数，使用足够宽类型并先检查 infinity。浮点边权需考虑精度和比较容差，但随意容差可能破坏传递性。
@@ -103,6 +134,7 @@ function dependencyBatches(ids, edges) {
 <!-- interview-source-history:start -->
 - [字节大模型应用秋招一面：日志盲区、框架选择与 BFS](../../../interview/bytedance/base/bytedance-base-71.md)
 - [华为 Agent 实习两轮记录：TCP、C 存储期与拓扑序](../../../interview/huawei/ai/huawei-ai-1.md)
+- [腾讯 WXG 一面：跨语言 RAG、消息幂等与算法](../../../interview/tencent/base/tencent-base-3.md)
 - [字节前端全栈实习一面：渲染、Worker 与认证](../../../interview/bytedance/base/bytedance-base-38.md)
 <!-- interview-source-history:end -->
 

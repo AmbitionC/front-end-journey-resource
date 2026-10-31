@@ -120,6 +120,7 @@ Agent 测试金字塔从单元契约、工具集成、受控场景到端到端�
 
 <!-- interview-source-history:start -->
 - [腾讯搜狗输入法后台二至四面：AI 代码可靠性与测试](../../../interview/tencent/base/tencent-base-1.md)
+- [百度 AI 测开一面：LLM 评测、压测与有序链表](../../../interview/baidu/ai/baidu-ai-13.md)
 - [理想汽车 IT 全栈交付培养生一面：Skill、测试与工作流](../../../interview/liauto/fullstack/liauto-fullstack-1.md)
 <!-- interview-source-history:end -->
 

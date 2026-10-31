@@ -659,7 +659,7 @@ RLHF 在训练阶段利用人类偏好信号更新模型；这些权重变化会
 
 <!-- interview-source-history:start -->
 - [字节抖音研发一面：Agent 执行范式与缓存恢复](../../../interview/bytedance/base/bytedance-base-69.md)
-- [百度 Agent 秋招二面：执行范式与记忆压缩](../../../interview/baidu/ai/baidu-ai-6.md)
+- [百度 Agent 秋招二三面：记忆、工具可靠性与运行循环](../../../interview/baidu/ai/baidu-ai-6.md)
 - [字节 AI 应用开发一、二面：规划、结构化输出与部署取舍](../../../interview/bytedance/base/bytedance-base-65.md)
 - [阿里 Token Foundry AI 应用研发一面：Critic、上下文与幂等](../../../interview/alibaba/ai/alibaba-ai-17.md)
 - [小红书 AI 后端一面：执行模式、Memory、意图与 RAG](../../../interview/redbook/ai/redbook-ai-8.md)

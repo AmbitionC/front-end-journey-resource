@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "不平衡分类的数据与验收",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "classification-evaluation-dataflow.html",
+    "legend": {
+      "mode": "hidden"
+    }
+  },
+  "stages": [
+    {
+      "label": "准备与验收"
+    },
+    {
+      "label": "训练与选择"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "define_split",
+      "type": "backend",
+      "label": "1 定义标签与切分",
+      "stage": 0,
+      "row": 0
+    },
+    {
+      "id": "train",
+      "type": "backend",
+      "label": "2 仅在训练集拟合",
+      "stage": 1,
+      "row": 0
+    },
+    {
+      "id": "validate",
+      "type": "backend",
+      "label": "3 验证集选择方案",
+      "stage": 1,
+      "row": 1
+    },
+    {
+      "id": "frozen_test",
+      "type": "security",
+      "label": "4 冻结后独立测试",
+      "stage": 0,
+      "row": 1
+    },
+    {
+      "id": "monitor",
+      "type": "backend",
+      "label": "5 验收后上线监控",
+      "stage": 0,
+      "row": 2
+    }
+  ],
+  "flows": [
+    {
+      "id": "data-train",
+      "from": "define_split",
+      "to": "train",
+      "label": "仅训练数据"
+    },
+    {
+      "id": "train-validate",
+      "from": "train",
+      "to": "validate",
+      "label": "已拟合模型"
+    },
+    {
+      "id": "choice-test",
+      "from": "validate",
+      "to": "frozen_test",
+      "label": "冻结方案"
+    },
+    {
+      "id": "test-monitor",
+      "from": "frozen_test",
+      "to": "monitor",
+      "label": "通过预设验收"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "训练边界",
+      "items": [
+        "预处理与采样只在训练折拟合"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "选择边界",
+      "items": [
+        "验证集用于选择指标、特征和阈值"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "验收边界",
+      "items": [
+        "独立测试验冻结方案，不反馈反复调参"
+      ]
+    }
+  ]
+}

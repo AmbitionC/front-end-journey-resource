@@ -226,6 +226,12 @@ type PublicToolEvent = {
 - [ ] request ID、usage、首字延迟和错误分类可观测。
 - [ ] 核心任务有固定评测集，模型或提示升级后会回归。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [快手 AI 应用实习面试：模型服务、RAG 与分类评估](../../../interview/kuaishou/ai/kuaishou-ai-15.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenAI：Text generation](https://developers.openai.com/api/docs/guides/text)

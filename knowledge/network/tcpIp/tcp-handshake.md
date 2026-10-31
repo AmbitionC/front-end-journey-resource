@@ -74,6 +74,14 @@ TCP 只能根据收到的报文和本地定时器更新状态。若对端突然�
 
 这是一套经典基线，不代表现代系统只使用 Reno 或所有实现参数完全相同。CUBIC、BBR、SACK 与恢复扩展应按实际栈核对。三次握手建立连接、可靠传输处理确认与重传、拥塞控制约束发包规模，三个机制回答不同问题。
 
+## “窗口倍增”指慢启动的特定增长阶段
+
+先区分接收方通告的 `rwnd` 与发送方维护的 `cwnd`。前者保护接收缓存，后者约束网络中的未确认数据；实际在途发送受到两者较小值等条件限制。因此，不能把“接收窗口”“拥塞窗口”和应用写入缓冲统称为一个始终倍增的发送窗口。[RFC 5681 §2–3.1](https://www.rfc-editor.org/rfc/rfc5681.html#section-3.1)定义了这些边界和经典慢启动增长规则。
+
+在经典慢启动中，确认新数据的 ACK 促使 cwnd 增长，每次增长有上限。若一轮发送的各完整段都及时分别被确认，下一 RTT 可发送的数据量便可能近似翻倍：增长来自一轮内多次 ACK 的累计，**不是每收到一个 ACK 就把整个 cwnd 乘二**。延迟 ACK、应用供数不足、接收窗口、丢包与实现算法都可能改变这个近似。
+
+从小窗口探测能够避免一开始就向未知路径注入过量数据，较快增长又能减少长期低估容量的时间；达到阈值或观察到拥塞后，增长与回退规则随阶段改变。RFC 5681 的经典拥塞避免通常每 RTT 约增一个完整段，不能把慢启动近似外推为所有连接、全部传输时刻或 CUBIC/BBR 的统一行为。
+
 ## HTTP、TLS 与 TCP：先确定是哪一层握手
 
 [RFC 9110 §4.2.2](https://www.rfc-editor.org/rfc/rfc9110.html#section-4.2.2)中的 HTTPS 使用受保护的 HTTP 通信，TLS 提供对端身份验证、机密性与完整性。对使用 TCP 的 HTTPS 连接，TCP 建连、TLS 协商和 HTTP 请求是不同阶段；HTTP/3 使用 QUIC，不能把所有 HTTPS 都套进 TCP 三次握手。
@@ -89,6 +97,7 @@ TCP 只能根据收到的报文和本地定时器更新状态。若对端突然�
 - [华为 Agent 实习两轮记录：TCP、C 存储期与拓扑序](../../../interview/huawei/ai/huawei-ai-1.md)
 - [小米秋招二面：Agent 项目说明与 TCP 状态](../../../interview/xiaomi/ai/xiaomi-ai-3.md)
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
+- [腾讯 WXG 一面：跨语言 RAG、消息幂等与算法](../../../interview/tencent/base/tencent-base-3.md)
 - [蚂蚁智能体与大模型应用一面：幻觉、Skill 与 RAG](../../../interview/antfin/ai/antfin-ai-5.md)
 - [字节 AML / 火山方舟 AI Infra 一面：Agent Runtime、OS 与网络（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-17.md)
 - [字节搜广推引擎架构一面：JSON 输出、并发与系统基础](../../../interview/bytedance/base/bytedance-base-74.md)

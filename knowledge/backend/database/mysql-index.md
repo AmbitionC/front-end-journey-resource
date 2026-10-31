@@ -29,6 +29,12 @@ B+ 树是多路平衡搜索树，与 B 树的核心区别在于：
         ↔    ↔    ↔    ↔    ↔   ← 叶子页按键顺序连接
 ```
 
+### B 树与 B+ 树：比较页布局，而不下绝对优劣结论
+
+教科书中的一种 B 树模型允许内部节点保存记录或记录引用，点查可能在内部节点命中；B+ 树把记录入口集中在叶子，内部页主要用于导航。后者在**同样页大小、键宽及引用布局**下，可能容纳更多导航项、降低树高，叶子有序连接也便于范围遍历。这里比较的是具体布局，不是仅凭树名就能算出固定 I/O 次数。[NIST：B 树与 B+ 树](https://www.nist.gov/dads/HTML/bplustree.html)
+
+真实代价还受键宽、页填充率、缓存命中、范围大小、回表与读写负载影响。宽主键会使 InnoDB 二级索引的叶子记录变大；缓存中的上层页也不一定产生物理磁盘读取。因此不能说“B 树必然更慢”或“B+ 树所有查询都走固定三次磁盘”。MySQL 8.4 文档把 InnoDB 普通索引称为 B-tree，并说明记录位于叶子页；本文沿用 B+ 树的教学说法解释这种布局，不把所有存储引擎和索引类型混为一谈。[InnoDB 索引物理结构](https://dev.mysql.com/doc/refman/8.4/en/innodb-physical-structure.html)
+
 ### 聚簇索引 vs 二级索引
 
 这是 InnoDB 中最重要的概念对，必须透彻理解。
@@ -102,6 +108,26 @@ SELECT name, age, email FROM users WHERE name = 'Alice';
 ```
 
 **高频接口优化技巧**：对 Agent 对话历史表（`session_id, user_id, created_at, content`）中，若频繁按 `session_id` 分页拉取 `user_id` 和 `created_at`，可评估 `INDEX(session_id, created_at, user_id)` 覆盖索引，减少获取这些字段的聚簇记录访问；仍须考虑 MVCC、实际扫描量及索引写入成本。
+
+## 深分页：先固定排序，再比较 OFFSET 与游标
+
+`LIMIT 20 OFFSET 100000` 表示跳过前十万条符合结果顺序的行，再取二十条，不代表引擎能直接定位第十万条。若采用有序索引扫描，仍可能需要经过大量被跳过的索引项；若还需过滤、回表或排序，成本会进一步变化。先看实际扫描行数、过滤、排序及回表，而不是仅比较最终返回的二十行。[MySQL 8.4：SELECT 的 LIMIT 合同](https://dev.mysql.com/doc/refman/8.4/en/select.html)
+
+分页必须有稳定且唯一的顺序。只按可能重复的 `created_at` 排序，同时间行的先后没有保证；可以用唯一 `id` 作为第二排序键。接续本文的租户订单例，下面是**升序向后翻页的教学 SQL，未在数据库执行**，假设时间与 id 非空且排序字段在翻页期间不可变，候选索引为 `(tenant_id,status,created_at,id)`：
+
+```sql
+SELECT id, created_at
+FROM orders
+WHERE tenant_id = :tenant AND status = :status
+  AND (created_at > :last_time
+       OR (created_at = :last_time AND id > :last_id))
+ORDER BY created_at ASC, id ASC
+LIMIT 20;
+```
+
+首屏省去游标条件；下一屏带回上屏最后一行的时间与 id。游标还应绑定同一租户、过滤条件、排序方向及字段编码，服务端仍要独立授权和校验，不能信任客户端随意替换的值。用两个排序字段定位一个连续后续范围，是减少重复跳过前文的候选方案；是否选用相应范围及其实际收益，仍须用真实数据和执行计划验证。[MySQL：非唯一排序与 LIMIT](https://dev.mysql.com/doc/refman/8.4/en/limit-optimization.html)
+
+游标并不自动提供跨请求的一致快照。并发插入、删除、状态变化或排序字段更新，都可能影响用户能看到的集合；产品需约定按实时列表继续、固定上界，还是使用服务端维护的快照/结果集。游标适合顺序接续，不能免费跳到任意第 N 页。随机页码、总数、向前翻页与长期保存游标各有额外合同；数据量和跳页需求可接受时，OFFSET 仍可能是更简单的选择，没有跨场景的固定提速倍数。
 
 ## EXPLAIN 执行计划解读
 
@@ -337,10 +363,13 @@ MySQL 5.6+ 支持 `ALTER TABLE ... ADD INDEX` 的在线 DDL（Online DDL），�
 - [字节全栈二、三面：幂等、索引与字符串匹配](../../../interview/bytedance/base/bytedance-base-32.md)
 - [字节 Agent Infra 校招：运行时、MySQL 与 LRU](../../../interview/bytedance/base/bytedance-base-25.md)
 - [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../../interview/bytedance/base/bytedance-base-24.md)
+- [字节二面：MySQL 索引、最大乘积子数组与推送重连](../../../interview/bytedance/base/bytedance-base-75.md)
 - [百度大模型研发一面：Context、Harness 与 RAG](../../../interview/baidu/ai/baidu-ai-1.md)
 - [蚂蚁财富技术部一面：协作式 Agent、交付门禁与后端基础](../../../interview/antfin/ai/antfin-ai-4.md)
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
+- [腾讯云智武汉多轮：运行时、索引、锁与消息消费](../../../interview/tencent/base/tencent-base-4.md)
 - [蚂蚁暑期面经：线程池、数据来源与多 Agent 评测](../../../interview/antfin/ai/antfin-ai-14.md)
+- [小红书 AI 研发一面：观测回放、多智能体与数据库](../../../interview/redbook/ai/redbook-ai-21.md)
 - [字节 Agent 全栈一面：工具、评测与编码](../../../interview/bytedance/base/bytedance-base-40.md)
 - [58同城 Agent 开发一面：MCP、数据查询与后端基础](../../../interview/58tongcheng/ai/58tongcheng-ai-1.md)
 - [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../../interview/bytedance/base/bytedance-base-47.md)
@@ -362,3 +391,6 @@ MySQL 5.6+ 支持 `ALTER TABLE ... ADD INDEX` 的在线 DDL（Online DDL），�
 - [MySQL8.4：Range optimization / skip scan](https://dev.mysql.com/doc/refman/8.4/en/range-optimization.html)
 - [MySQL8.4：CREATE INDEX与唯一NULL](https://dev.mysql.com/doc/refman/8.4/en/create-index.html)
 - [MySQL8.4：Online DDL limitations](https://dev.mysql.com/doc/refman/8.4/en/innodb-online-ddl-limitations.html)
+- [NIST：B+ 树定义](https://www.nist.gov/dads/HTML/bplustree.html)
+- [MySQL 8.4：LIMIT 与确定性排序](https://dev.mysql.com/doc/refman/8.4/en/limit-optimization.html)
+- [MySQL 8.4：SELECT 与 LIMIT/OFFSET](https://dev.mysql.com/doc/refman/8.4/en/select.html)

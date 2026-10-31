@@ -101,6 +101,7 @@ API Schema 治理是一条闭环：固定规范版本，设计时 lint 与兼容
 
 <!-- interview-source-history:start -->
 - [京东后端一面：交付标准、Agent 选型与跨语言数据边界](../../../interview/jd/ai/jd-ai-1.md)
+- [百度 AI 测开一面：LLM 评测、压测与有序链表](../../../interview/baidu/ai/baidu-ai-13.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

@@ -301,6 +301,12 @@ flowchart LR
 - **L1 的通知连接断开，但缓存还没过期，继续返回吗？** 按一致性合同清理或降级，不能假设断线期间没有变更。
 - **开启 AOF everysec，能把 Redis 当付款事实源吗？** 要看丢失窗口、故障切换、事务和对账要求；配置名称本身不给零丢失或跨 DB 一致保证。
 
+## 过期删除与内存淘汰是两套机制
+
+TTL 决定一个 key 到何时不再有效；物理清理不意味着为每个 key 配一只到点必然执行的定时器。[Redis `EXPIRE` 的官方说明](https://redis.io/docs/latest/commands/expire/#how-redis-expires-keys)区分被动过期与主动过期：客户端访问已超时的 key 时识别并删除；对带过期时间的键，服务端还会周期性抽样检查并清理，避免从不再被访问的过期键一直残留。清理工作和资源预算有关，不能把设置 TTL 理解为每个 key 的内存都在某一毫秒准时释放。
+
+内存淘汰则是在配置的容量压力与 `maxmemory-policy` 下选择牺牲对象，可能处理尚未到 TTL 的 key；它不等同于过期扫描。排查时分别看逻辑有效期、实际访问与过期清理、内存水位和淘汰策略。业务优惠券截止时间等权威规则仍应在使用时校验，不能用 Redis 清理事件代替业务到期判断。
+
 ## 布隆过滤器重建：覆盖未确认时，阴性结果也不能拒绝
 
 [Redis 的布隆过滤器说明](https://redis.io/docs/latest/develop/data-types/probabilistic/bloom-filter/)解释了近似成员判断与容量、误判率的关系。这里的假阳性率以**实际不在集合中的查询**为分母，不能理解成“所有肯定回答中错误的比例”。标准布隆过滤器无假阴性的性质还依赖：本应存在的元素确实已按同一规则加入当前过滤器。
@@ -320,8 +326,10 @@ flowchart LR
 - [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../../interview/bytedance/base/bytedance-base-36.md)
 - [蚂蚁后端一面：多级缓存、库存容灾与消息选型](../../../interview/antfin/base/antfin-base-1.md)
 - [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
+- [腾讯 WXG 一面：跨语言 RAG、消息幂等与算法](../../../interview/tencent/base/tencent-base-3.md)
 - [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)
 - [快手商业化效果营销一面：多 Agent 协作、Netty 与限流](../../../interview/kuaishou/ai/kuaishou-ai-4.md)
+- [快手 AI 应用实习面试：模型服务、RAG 与分类评估](../../../interview/kuaishou/ai/kuaishou-ai-15.md)
 - [字节 Agent Infra 校招：运行时、MySQL 与 LRU](../../../interview/bytedance/base/bytedance-base-25.md)
 - [蚂蚁财富技术部一面：协作式 Agent、交付门禁与后端基础](../../../interview/antfin/ai/antfin-ai-4.md)
 - [字节 Agent 实习：生成质量、多智能体与缓存](../../../interview/bytedance/base/bytedance-base-52.md)

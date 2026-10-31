@@ -1,25 +1,20 @@
-### 百度 Agent 秋招二面：执行范式与记忆压缩
+### 百度 Agent 秋招二三面：记忆、工具可靠性与运行循环
 
-公司为百度，方向为 Agent 开发，秋招二面。标题只给 8 月 7 日下午，未注明面试年份；作者自述本轮约 20 分钟。原记录的面试官评价和后续通知均仅视为作者自述，不推断最终结果或具体部门。
+两份记录发表于 2026 年 8 月，分别自述百度 Agent 秋招二面与后续三面，标题给出 8 月 7 日和 18 日但未注明面试年份。此处复用同一流程页面，保留原有执行范式与记忆问题，并补充三面的可确认追问；具体部门、模型和配置未披露。
 
-以下问题根据候选人公开自述选录，经历未获外部认证。原帖未提供完整现场答案；短答与例子均为编辑教学补充，不代表候选人实际作答、项目实现或企业标准答案。
+面试经历为个人自述，未经企业独立确认。以下短答为编辑整理的回答思路，不代表现场回答或实际系统实现。
 
-选录旅游助手相关追问中的执行范式、记忆与压缩两组。进程线程协程、Go 调度和并发可见性均已明确出现但本页未选；不把作者对优化的设想写成已经完成的项目能力。
-
-<details data-knowledge-key="agent-paradigms">
-<summary>（1）已有助手怎样从提示推理扩展为规划与行动？</summary>
-</details>
-
+<details data-knowledge-key="agent-paradigms"><summary><strong>（1）已有助手怎样从提示推理扩展为规划与行动？</strong></summary></details>
 <p>先分清纯提示推理与真正执行外部动作。任务结构较稳定时可显式规划再执行；下一步依赖工具观察时可采用 ReAct，或在大计划中嵌入局部循环和受控重规划。先比较同任务的成功率、延迟与成本，并保留权限、状态和停止条件；换范式名称不等于效果提高。</p>
-<p>教学例子：旅行助手先列出需要核实的交通与开放时间，再依据查询结果调整行程；若关键数据不可得，保留未知或澄清，而非继续编造。原文仅谈优化设想，没有证明已经接入这些工具。</p>
 
-知识导航：[Reflection、Plan-and-Execute 与 Tool-Use](../../../knowledge/llm/agent/agent-paradigms.md)。
-
-<details data-knowledge-key="agent-memory-architecture">
-<summary>（2）短期记忆、长期记忆与上下文压缩怎样配合？</summary>
-</details>
-
+<details data-knowledge-key="agent-memory-architecture"><summary><strong>（2）短期记忆、长期记忆与上下文压缩怎样配合？</strong></summary></details>
 <p>短期状态保存当前任务和近期对话，长期记忆保存经核验、有用途和作用域的跨会话事实。模型输入只是从这些数据中选择的有限工作视图；压缩保留目标、约束、来源和未完成动作，原始记录可追溯。摘要更短不代表已成为长期事实，也不能覆盖用户的新指令。</p>
-<p>教学例子：本次行程限定步行，并不自动成为用户永久出行偏好；压缩时保留本次约束，跨会话保存则另查用途与有效性。这个规则是编辑补充，不代表作者现场给出的实现。</p>
 
-知识导航：[Agent 记忆系统架构设计](../../../knowledge/llm/agent/agent-memory-architecture.md)。
+<details data-knowledge-key="agent-tool-design"><summary><strong>（3）怎样提高大模型工具调用的准确性？</strong></summary></details>
+<p>先定义清楚工具职责、参数 Schema、权限和错误语义，再用代表性任务检验选择及参数是否正确。执行前校验、执行后验证真实结果，并区分格式合规与任务完成，不能靠模型自述保证准确。</p>
+
+<details data-knowledge-key="agent-coding"><summary><strong>（4）使用编程助手时，怎样组织自己的工作流程？</strong></summary></details>
+<p>用真实任务说明如何提供上下文、拆分改动、限制工具范围并验证结果。保留测试、代码复核和可恢复的版本记录，原帖没有披露具体配置，不能补造个人使用习惯。</p>
+
+<details data-knowledge-key="agent-timeout-budget"><summary><strong>（5）Agent Loop 响应慢时怎样优化？</strong></summary></details>
+<p>先沿运行轨迹分解模型、工具、检索、排队和重复循环的耗时，再优化实际关键路径。比较缩短上下文、独立任务并行及减少无效轮次的收益，同时检查质量、并发上限和尾延迟。</p>

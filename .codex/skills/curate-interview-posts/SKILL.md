@@ -28,7 +28,13 @@ description: Turn raw collected interview experiences (牛客/nowcoder 面经) f
    - **判断归属**：
      - **公司面经**（能对应到某公司某岗某轮）：归到已有公司分组（见 `interview/_tree.json`，如 腾讯/`Tencent`、阿里/`alibaba`、字节/`bytedance`、美团/`meituan` …）；查不到合适公司分组时新建一个顶层公司节点。
      - **专题/题集面经**（无具体公司，如「AI 面试题合集」「手写题合集」这类按主题聚合、常带 `#…题解#` 标签的帖子）：归到一个「综合/专题」顶层分组（如 `common`，label「综合面经」），按主题建子分组；这类帖子往往更适合把重点放在**知识点提炼**（第 5 步），面经贴本身作为题目索引。
-   - 用仓库既有面经贴风格：按题目分节（`#### （1）…`），每题给出清晰、准确、可教学的解答，而非照抄口水话。必要时补充标准答案与易错点。原帖只有问题没有答案时，由你补齐高质量解答。
+   - **问题为主、短答概括思路**：每道题用真实 HTML `details` 的首个 `summary` 显示完整问题（`（1）…？`），保留原题条件和有证据的追问；紧接 `details` 的独立 `<p>` 只写一段简明回答思路，通常两到四句，说明切入点、关键步骤和必要边界。原帖只有问题时，可以补编辑整理的思路，但须与当事人的现场回答区分。题目缺条件或关键词时明确待补，不猜题。
+   - 面经页的答案保持这一段概述；完整推导、长代码、分点详解与图解放在关联知识点中，由 `data-knowledge-key` 连接。沿用 `short-qa-v2` 及 [公开结构契约](references/release-review.md)，不把答案塞进 `summary`，不通过样式改变问题可见性。示例：
+
+     ```html
+     <details data-knowledge-key="rag-pipeline"><summary>（1）怎样介绍 RAG 的检索与回答链路？</summary></details>
+     <p>先沿数据处理、索引、查询召回和证据装配说明链路，再用评测解释每一步的效果。回答时保留权限与出处，区分检索失败和生成失败，最后说明证据不足时的处理方式。</p>
+     ```
    - 保留公司、岗位、轮次、面试月份等必要背景，以及面经贴与知识点之间的导航链接；公开正文不得出现 `## 来源` 模块，也不得包含 `nowcoder.com` 原始链接。
    - 在 `interview/_tree.json` 对应分组下 upsert 叶子 `{ label, key, isLeaf: true, filePath, tags }`（`filePath` 为目录，`key` 为文件名去掉 `.md`，全库唯一；`tags` 用考点如 `JavaScript`/`React`/`手写题`/`系统设计`/`Agent`；`updatedAt` 设为当天日期，驱动站点「NEW」标记）。
 5. **提炼知识点（去重 + 热度加权）** → `knowledge/<子路径>/<key>.md`：**严格按 [references/dedup-and-heat.md](references/dedup-and-heat.md) 执行**，核心是「同一考点只留一条、越高频越靠前」：
@@ -39,7 +45,7 @@ description: Turn raw collected interview experiences (牛客/nowcoder 面经) f
    - 每次改动后把受影响父节点下 `knowledge/_tree.json` 兄弟叶子**按 `heat` 降序稳定重排**，使目录树热点→冷门（网站索引默认已按热度排序、无需改前端）。
    - 面经贴↔知识点互链。
 6. **记录与出队**：来源、原文和逐题映射只保存在仓库外的私有历史与审核证据中；规范 URL、A/B 证据、实际正文 `normalizedBodySha256`、独立过程 `processUnitId`、公开 key 和知识 key 均需与冻结原文对应。独立审核冻结所有公开正文、目录、速读、图片及图片补同步清单，审核回执的 SHA-256 由审核方在私账外交付。执行 `npm run validate:release -- /absolute/private/history.json /absolute/private/review.json <review-sha256>`，不得从账本中的 approved 字段推断通过。详情见 [最终版本发布审核](references/release-review.md)。变更任何冻结输入都须重新审核；热度草稿写入后也必须重新冻结。未证实关键词的原题组保持明确待补，不猜题、不计热度。同过程不同轮次的独立页面例外须有已审证据；补充既有流程优先复用稳定 key。只有 PR 合并、该最终 SHA 同步与发布端核验成功后才把私有状态记为 `published` 并清理本批成功消费的本地候选，失败与待补项保留。
-7. **图片**：面经贴/知识点若要用采集到的图，按 [references/fe-journey-integration.md](references/fe-journey-integration.md) 放到 `images/` 由同步流程发布；不要外链 `_inbox/assets`。
+7. **图片与格式复核**：逐题确认问题突出、下方仅一段回答思路，详细教材留在关联知识点。知识点新图遵循 generate-knowledge-docs 的 Archify / Excalidraw 路由；若知识点确需使用采集到的图，按 [references/fe-journey-integration.md](references/fe-journey-integration.md) 放到 `images/` 由同步流程发布，不外链 `_inbox/assets`。本格式适用于新加工面经，不因 Skill 更新批量改写历史面经。
 
 ## 发布
 

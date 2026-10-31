@@ -34,7 +34,7 @@ npm run validate:release -- /absolute/private/history.json /absolute/private/rev
 
 ## 公开结构
 
-真实问题采用实际 HTML `details`，其第一个元素是唯一非空 `summary`，之后紧邻独立非空短答段落。已绑定问题使用稳定 `data-knowledge-key`；对应知识正文必须存在、目录具有非空单段 `quickRead.text`，并在实际非代码、非隐藏链接中反向导航到面经。代码示例、注释、脚本字符串、属性里的伪 HTML、重复属性或嵌套 details 不能充当问题或关联。
+真实问题采用实际 HTML `details`，其第一个元素是唯一非空 `summary`，之后紧邻独立非空短答段落。新加工面经每题仅有这一段简明回答思路，问题保留完整条件；详细推导、代码、列表详解和图解放在关联知识点，审核时逐题检查。已绑定问题使用稳定 `data-knowledge-key`；对应知识正文必须存在、目录具有非空单段 `quickRead.text`，并在实际非代码、非隐藏链接中反向导航到面经。代码示例、注释、脚本字符串、属性里的伪 HTML、重复属性或嵌套 details 不能充当问题或关联。
 
 路径不得使用绝对路径、点段、反斜杠或符号链接。公开面经禁止原帖 URL、来源标题和能改变问题可见性的样式注入。隐藏容器或 SVG 内的 style/link 样式也按实际 DOM 检查。问题/短答及反链节点与其祖先不能带无法证明可见的 style/class/隐藏属性，反链须有可见文字。HTML 静态检查不替代生产阅读端交互验收。
 
