@@ -248,7 +248,7 @@ export async function validateInterviewSourceHistory(resourceRoot, history, opti
   return errors;
 }
 
-export function topicFrequencies(history) {
+function frequencyGroups(history) {
   if (!isObject(history?.records)) return [];
   // processUnitId identifies page reuse, not frequency. Join evidence aliases
   // before counting topics so a repost with conflicting metadata counts once.
@@ -273,8 +273,16 @@ export function topicFrequencies(history) {
     group.records.push(record);
     for (const identity of identities) { group.identities.add(identity); aliases.set(identity, group); }
   }
+  return groups.filter(group => group.records.some(record => record.status === 'published'));
+}
+
+export function activeFrequencySources(history) {
+  return frequencyGroups(history).flatMap(group => group.records);
+}
+
+export function topicFrequencies(history) {
   const topics = new Map();
-  for (const group of groups) {
+  for (const group of frequencyGroups(history)) {
     const published = group.records.filter(record => record.status === 'published');
     // A merged alias cannot revive a retired/skipped representative.
     if (!published.length) continue;

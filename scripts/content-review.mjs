@@ -1,7 +1,7 @@
 import { readFile, realpath, lstat } from 'node:fs/promises';
 import { resolve, relative, isAbsolute, sep } from 'node:path';
 import { createHash } from 'node:crypto';
-import { spawnSync } from 'node:child_process';
+import { createImmutableGitReader } from './git-immutable.mjs';
 import { boundedFiles, readBounded, safeRelativePath, leafPath } from './resource-paths.mjs';
 import { validateTree, leaves } from './validate-tree.mjs';
 import { isCanonicalNowcoderUrl, verifiedHistoricalFingerprint, normalizedSourceBody } from './interview-source-history.mjs';
@@ -10,21 +10,7 @@ export const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 export const normalizedOriginal = normalizedSourceBody;
 
 export function gitPublicationFiles(root, commit) {
-  if (!/^[a-f0-9]{40}$/u.test(commit ?? '')) throw new Error('审核基线必须是完整 commit SHA');
-  const type = spawnSync('git', ['cat-file','-t',commit], {cwd:root,encoding:'utf8'});
-  if (type.status !== 0 || type.stdout.trim() !== 'commit') throw new Error('审核 commit 不可读');
-  const list = spawnSync('git', ['ls-tree','-rz',commit,'--','interview','knowledge','images','class','.codex/image-resync.txt'], {cwd:root,encoding:'utf8'});
-  if (list.status !== 0) throw new Error('审核基线资源不可读');
-  const files = [];
-  for (const line of list.stdout.split('\0').filter(Boolean)) {
-    const [metadata,path] = line.split('\t'), [mode,kind,oid] = metadata.split(' ');
-    safeRelativePath(path);
-    if (mode !== '100644' && mode !== '100755' || kind !== 'blob') throw new Error('审核基线包含非普通资源');
-    const blob = spawnSync('git',['cat-file','blob',oid],{cwd:root,maxBuffer:64*1024*1024});
-    if (blob.status !== 0) throw new Error('审核基线文件不可读');
-    files.push({path,sha256:sha256(blob.stdout)});
-  }
-  return files.sort((a,b)=>a.path.localeCompare(b.path,'en'));
+  return createImmutableGitReader(root).publicationFiles(commit);
 }
 
 export function changedPublicationPaths(before, after) {
@@ -70,7 +56,8 @@ export async function validateContentReview(root, historyPath, reviewPath, revie
     const history = JSON.parse(checkedHistory.bytes);
     const snapshot = await publicInventory(root);
     if (review.publicationDigest !== snapshot.digest || JSON.stringify(review.publicFiles) !== JSON.stringify(snapshot.files)) throw new Error('面经、知识、速读目录或图片与最终审核版本不一致');
-    const baselineFiles=gitPublicationFiles(root,review.baseCommit);
+    const gitReader = createImmutableGitReader(root);
+    const baselineFiles = gitReader.publicationFiles(review.baseCommit);
     const changed = changedPublicationPaths(baselineFiles,snapshot.files);
     if(review.deletedPublicPaths!==undefined && (!Array.isArray(review.deletedPublicPaths)
         || new Set(review.deletedPublicPaths).size!==review.deletedPublicPaths.length)) throw new Error('审核删除范围无效');
@@ -88,9 +75,7 @@ export async function validateContentReview(root, historyPath, reviewPath, revie
     if (!Array.isArray(review.articleKeys) || new Set(review.articleKeys).size !== review.articleKeys.length || !Array.isArray(review.sourceEvidence)) throw new Error('审核批次范围不完整');
     const tree = leaves(JSON.parse((await readBounded(root, 'interview/_tree.json', 'interview')).toString()));
     const byKey = new Map(tree.map(n=>[n.key,n]));
-    const baselineTree=spawnSync('git',['show',`${review.baseCommit}:interview/_tree.json`],{cwd:root,encoding:'utf8'});
-    if(baselineTree.status!==0) throw new Error('审核基线面经目录不可读');
-    const previousLeaves=new Map(leaves(JSON.parse(baselineTree.stdout)).map(n=>[n.key,n]));
+    const previousLeaves=new Map(leaves(JSON.parse(gitReader.readFile(review.baseCommit, 'interview/_tree.json'))).map(n=>[n.key,n]));
     for(const leaf of tree) {
       const previous=previousLeaves.get(leaf.key);
       if((!previous || previous.filePath!==leaf.filePath) && !review.articleKeys.includes(leaf.key)) throw new Error('新增或迁移面经目录叶子缺本批原文审核');
@@ -190,7 +175,7 @@ export async function validateContentReview(root, historyPath, reviewPath, revie
             && actual[i].bindingStatus !== expected.bindingStatus) throw new Error('实际待核实状态与审核映射不一致');
         if (expected.knowledgeKey !== null) await requireKnowledgeAssociation(root, {
           question: expected, articleKey: key, questionIndex: i, snapshot, baselineFiles, baseCommit: review.baseCommit, knowledgeLeaves,
-          quality: independent.knowledgeQuality,
+          quality: independent.knowledgeQuality, gitReader,
         });
       }
       for (const [sourceId, record] of Object.entries(history.records ?? {}).filter(([,record])=>record.articleKey===key
