@@ -27,7 +27,7 @@ When the request concerns FrontEnd Journey knowledge content, read and follow [r
 
 **去重与热度**：创建或更新知识点前，先做语义去重（同一考点只留一条，哪怕表述不同），并维护叶子的 `heat`/`currRank`（复现越多越靠前）与 `updatedAt`（新增/实质更新设为当天，驱动站点「NEW」标记）——规则见 [`../curate-interview-posts/references/dedup-and-heat.md`](../curate-interview-posts/references/dedup-and-heat.md)。宁可给既有知识点加权 / 补内容，也不要造语义重复的新条目。
 
-**面经加工集成**：在原文采集完成后的加工阶段实际执行本 skill，复用既有知识也需完成语义检索与教学质量审查。按 [知识加工证据契约](../curate-interview-posts/references/interview-knowledge-processing.md) 留存逐题关联、实际执行转录及独立质量结论；准备命令仅返回 `needs_execution`，不能替代技能执行。新面经知识显式 `interviewBaseHeat: 0`；计数按去重证据 cluster，规范 URL/完整正文别名只算一次，保存存量基线并按 heat 稳定重排受影响分类。不在浏览器采集阶段自动生成，也不因缺审查而发布。
+**面经加工集成**：在原文采集完成后的加工阶段实际执行本 skill，复用既有知识也需完成语义检索与教学质量审查。按 [知识加工证据契约](../curate-interview-posts/references/interview-knowledge-processing.md) 的批次顺序，共享唯一主题的真实研究与转录，逐题保留关联、执行绑定和独立质量结论。先完成正文/图解/目录/草稿热度，再核验最终输出、绑定真实回执并冻结独审；仓外 `--out` 准备包仅返回 `needs_execution`，不能替代技能执行。新面经知识显式 `interviewBaseHeat: 0`；计数按去重证据 cluster，规范 URL/完整正文别名只算一次，保存存量基线并按 heat 稳定重排受影响分类。不在浏览器采集阶段自动生成，也不因缺审查而发布。
 
 Prefer a local checkout when creating or modifying batches. A writable GitHub integration is also acceptable when it can create a branch and apply the complete article/image change atomically. Do not publish unless the user asks. In this project, “发布” means branch → pull request → merge into `master`; the configured resource-repository Action performs the actual synchronization.
 

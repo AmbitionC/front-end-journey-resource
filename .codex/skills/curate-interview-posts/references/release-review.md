@@ -30,7 +30,7 @@ npm run validate:release -- /absolute/private/history.json /absolute/private/rev
 
 实际原文先去掉采集器 frontmatter，再以 NFKC 去空白后计算完整 SHA-256；私账的 `normalizedBodySha256` 必须与它一致。跨 URL 同正文不得重复公开建页或增加独立过程频次。历史已存的完整正文指纹必须由仓外冻结 `originalBodyEvidenceFile/originalBodySha256` 重新读取核对（采集 JSON 标 `originalBodyDocumentJson: true`）；缺证据时不得将该指纹用于去重。缺 normalizedBodySha256 时仍从冻结原文复算，不跳过历史记录；既有公开叶子删除整条历史记录也会阻断。基线目录移除旧叶子不能使未变的旧正文退出历史去重；目录/正文删除须在独立审核中明确，去重仍读取已知基线来源证据。旧未回填来源不能当作完整历史覆盖证明，自动去重所涉及的既有公开来源须先补充原文证据。这是来源校验，不能借此重写全库文章。对照最新已发布目录与私账复用稳定 key，不能仅凭本地旧分支证明线上不存在重复页。
 
-任一正文、知识文章、quickRead、目录、图片或原文证据改变，旧回执失效。`sync-interview-topic-weights` 的写入是草稿更新，必须重新冻结并审核再发布。保留正确既有内容，限定本批 keys。
+任一正文、知识文章、quickRead、目录、图片或原文证据改变，旧回执失效。按 [加工证据契约](interview-knowledge-processing.md) 在正式冻结前用 `sync-interview-topic-weights --prepare` 完成草稿热度和反链；它不产生审核或发布授权。正式同步仍需当前完整审核，预期零差异；有写入则重新冻结审核，不自动重签通过回执。保留正确既有内容，限定本批 keys。
 
 ## 公开结构
 
