@@ -1020,6 +1020,22 @@
             ],
             "updatedAt": "2026-10-31",
             "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "字节二面：MySQL 索引、最大乘积子数组与推送重连",
+            "key": "bytedance-base-75",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "department": "其他",
+            "roleCategory": "后端工程",
+            "tags": [
+              "MySQL",
+              "索引",
+              "算法",
+              "推送"
+            ],
+            "updatedAt": "2026-10-31",
+            "contentFormat": "short-qa-v2"
           }
         ]
       },
@@ -1164,6 +1180,22 @@
             "department": "WXG",
             "originalLabel": "腾讯 WXG 一面：转人工 Agent、Skill 与检索边界",
             "roleCategory": "AI 与 Agent 工程"
+          },
+          {
+            "label": "腾讯 WXG 一面：跨语言 RAG、消息幂等与算法",
+            "key": "tencent-base-3",
+            "isLeaf": true,
+            "filePath": "tencent/base",
+            "department": "WXG",
+            "roleCategory": "后端工程",
+            "tags": [
+              "RAG",
+              "幂等",
+              "TCP",
+              "算法"
+            ],
+            "updatedAt": "2026-10-31",
+            "contentFormat": "short-qa-v2"
           }
         ]
       },
@@ -1476,6 +1508,31 @@
             ],
             "updatedAt": "2026-10-29",
             "contentFormat": "short-qa-v2"
+          }
+        ]
+      },
+      {
+        "key": "tencent-department-smart-mobility",
+        "label": "智慧出行",
+        "nodeType": "department",
+        "children": [
+          {
+            "label": "腾讯云智武汉多轮：运行时、索引、锁与消息消费",
+            "key": "tencent-base-4",
+            "isLeaf": true,
+            "filePath": "tencent/base",
+            "department": "智慧出行",
+            "roleCategory": "后端工程",
+            "tags": [
+              "MySQL",
+              "Redis",
+              "Go",
+              "消息队列",
+              "TLS"
+            ],
+            "updatedAt": "2026-10-31",
+            "contentFormat": "short-qa-v2",
+            "role": "后台开发"
           }
         ]
       }
@@ -1826,6 +1883,30 @@
             "contentFormat": "short-qa-v2"
           }
         ]
+      },
+      {
+        "key": "alibaba-department-eleme",
+        "label": "饿了么",
+        "nodeType": "department",
+        "children": [
+          {
+            "label": "饿了么 AIGC 实习一面：Attention、训练与扩散模型",
+            "key": "alibaba-ai-23",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "department": "饿了么",
+            "roleCategory": "AI 与 Agent 工程",
+            "tags": [
+              "Transformer",
+              "训练",
+              "RLHF",
+              "Diffusion"
+            ],
+            "updatedAt": "2026-10-31",
+            "contentFormat": "short-qa-v2",
+            "role": "AIGC 暑期实习"
+          }
+        ]
       }
     ],
     "nodeType": "company"
@@ -1937,15 +2018,18 @@
             "contentFormat": "short-qa-v2"
           },
           {
-            "label": "百度 Agent 秋招二面：执行范式与记忆压缩",
+            "label": "百度 Agent 秋招二三面：记忆、工具可靠性与运行循环",
             "key": "baidu-ai-6",
             "isLeaf": true,
             "filePath": "baidu/ai",
             "tags": [
               "Agent",
-              "工程实践"
+              "工程实践",
+              "工具调用",
+              "Coding Agent",
+              "性能"
             ],
-            "updatedAt": "2026-10-28",
+            "updatedAt": "2026-10-31",
             "contentFormat": "short-qa-v2",
             "department": "其他",
             "originalLabel": "百度 Agent 秋招二面：执行范式与记忆压缩",
@@ -2037,6 +2121,23 @@
             "updatedAt": "2026-10-29",
             "contentFormat": "short-qa-v2",
             "role": "AI 应用开发实习（标题自述）"
+          },
+          {
+            "label": "百度 AI 测开一面：LLM 评测、压测与有序链表",
+            "key": "baidu-ai-13",
+            "isLeaf": true,
+            "filePath": "baidu/ai",
+            "department": "其他",
+            "roleCategory": "测试开发",
+            "tags": [
+              "评测",
+              "测试",
+              "压测",
+              "算法"
+            ],
+            "updatedAt": "2026-10-31",
+            "contentFormat": "short-qa-v2",
+            "role": "AI 测试开发"
           }
         ]
       }
@@ -2283,16 +2384,20 @@
             "contentFormat": "short-qa-v2"
           },
           {
-            "label": "快手 AI 应用实习二面：图关系、RAG 延迟与评测",
+            "label": "快手 AI 应用实习面试：模型服务、RAG 与分类评估",
             "key": "kuaishou-ai-15",
             "isLeaf": true,
             "filePath": "kuaishou/ai",
             "department": "其他",
             "roleCategory": "AI 与 Agent 工程",
             "tags": [
-              "RAG"
+              "RAG",
+              "模型部署",
+              "Python",
+              "Redis",
+              "分类评估"
             ],
-            "updatedAt": "2026-10-29",
+            "updatedAt": "2026-10-31",
             "contentFormat": "short-qa-v2"
           },
           {
@@ -2698,6 +2803,23 @@
             ],
             "updatedAt": "2026-10-31",
             "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "蚂蚁机器学习实习一面：RAG 数据、幻觉与热点识别",
+            "key": "antfin-ai-15",
+            "isLeaf": true,
+            "filePath": "antfin/ai",
+            "department": "其他",
+            "roleCategory": "AI 与 Agent 工程",
+            "tags": [
+              "RAG",
+              "数据集",
+              "幻觉",
+              "算法"
+            ],
+            "updatedAt": "2026-10-31",
+            "contentFormat": "short-qa-v2",
+            "role": "机器学习算法实习"
           }
         ]
       }
@@ -3082,6 +3204,41 @@
             "updatedAt": "2026-10-29",
             "contentFormat": "short-qa-v2",
             "role": "AI 开发实习（标题自述；题目偏前端，未据此推断正式岗位名称）"
+          },
+          {
+            "label": "小红书 AI 应用一面：RAG 评测、Skill 与平方根",
+            "key": "redbook-ai-20",
+            "isLeaf": true,
+            "filePath": "redbook/ai",
+            "department": "其他",
+            "roleCategory": "AI 与 Agent 工程",
+            "tags": [
+              "RAG",
+              "Skill",
+              "多智能体",
+              "算法"
+            ],
+            "updatedAt": "2026-10-31",
+            "contentFormat": "short-qa-v2",
+            "role": "AI 应用研发"
+          },
+          {
+            "label": "小红书 AI 研发一面：观测回放、多智能体与数据库",
+            "key": "redbook-ai-21",
+            "isLeaf": true,
+            "filePath": "redbook/ai",
+            "department": "其他",
+            "roleCategory": "AI 与 Agent 工程",
+            "tags": [
+              "Agent",
+              "可观测性",
+              "回放",
+              "Redis",
+              "MySQL"
+            ],
+            "updatedAt": "2026-10-31",
+            "contentFormat": "short-qa-v2",
+            "role": "AI 研发工程师"
           }
         ]
       }
@@ -3817,6 +3974,68 @@
             ],
             "updatedAt": "2026-10-29",
             "contentFormat": "short-qa-v2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "MiniMax",
+    "key": "MiniMax",
+    "nodeType": "company",
+    "children": [
+      {
+        "key": "minimax-department-other",
+        "label": "其他",
+        "nodeType": "department",
+        "children": [
+          {
+            "label": "MiniMax 平台研发一面：数据可靠性、反馈闭环与 GMP",
+            "key": "minimax-ai-1",
+            "isLeaf": true,
+            "filePath": "minimax/ai",
+            "department": "其他",
+            "roleCategory": "AI 与 Agent 工程",
+            "tags": [
+              "Agent",
+              "可靠采集",
+              "反馈闭环",
+              "Go",
+              "LRU"
+            ],
+            "updatedAt": "2026-10-31",
+            "contentFormat": "short-qa-v2",
+            "role": "平台研发工程师"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "滴滴",
+    "key": "Didi",
+    "nodeType": "company",
+    "children": [
+      {
+        "key": "didi-department-other",
+        "label": "其他",
+        "nodeType": "department",
+        "children": [
+          {
+            "label": "滴滴后端二面：CR Agent、Spec 与 AI Coding 场景",
+            "key": "didi-ai-1",
+            "isLeaf": true,
+            "filePath": "didi/ai",
+            "department": "其他",
+            "roleCategory": "后端工程",
+            "tags": [
+              "Agent",
+              "Spec",
+              "AI Coding"
+            ],
+            "updatedAt": "2026-10-31",
+            "contentFormat": "short-qa-v2",
+            "role": "后端开发"
           }
         ]
       }

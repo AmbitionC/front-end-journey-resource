@@ -191,6 +191,36 @@ function simulateDoors(n) {
 
 按完全平方数直接列结果只需 O(√n) 次输出；模拟约有 n∑(1/r) 次切换。两者回答同一题，但前者利用结构，后者保留直观校验。
 
+## 最大乘积连续子数组：同时保留最大与最小结尾状态
+
+连续子数组不能跳过中间元素。若只保存“到上一项为止的最大乘积”，乘上负数时会漏掉答案：此前最小的负乘积可能变成最大的正乘积。定义 `high`、`low` 为**恰好在当前位置结尾**的非空连续子数组乘积最大值、最小值；它们不是全局最优。
+
+读到当前值 $x$，合法候选只有从 $x$ 重新开始、接在旧最大乘积后、接在旧最小乘积后。因此：
+
+$$
+H_i=\max(x_i,x_iH_{i-1},x_iL_{i-1}),\qquad
+L_i=\min(x_i,x_iH_{i-1},x_iL_{i-1})
+$$
+
+两式必须使用同一轮的旧状态。全局答案再取所有 $H_i$ 的最大值；零会使延伸乘积归零，下一项仍可独立开始，不需要把零当数组边界另切一遍。
+
+```javascript
+function maxProductSubarray(nums) {
+  if (nums.length === 0) throw new RangeError('non-empty input required');
+  let high = nums[0], low = nums[0], best = nums[0];
+  for (let i = 1; i < nums.length; i++) {
+    const x = nums[i];
+    const fromHigh = x * high, fromLow = x * low;
+    high = Math.max(x, fromHigh, fromLow);
+    low = Math.min(x, fromHigh, fromLow);
+    best = Math.max(best, high);
+  }
+  return best;
+}
+```
+
+教学合同为非空有限数值数组，乘积与比较须能由当前数值类型按要求的精度表示；极大整数不能直接依赖 JavaScript Number。`[-2,3,-4]` 得 24，`[-2,0,-1]` 得 0，单项 `[-2]` 得 -2。时间 $O(n)$、额外空间 $O(1)$；这里只返回值，若要返回区间，还需随候选保留起点。递推的正确性来自上述三种末尾构造的穷尽，而不是“用了 DP”这个名称。
+
 ## 网格最小路径：把重叠搜索转成按依赖求值
 
 若从左上到右下只能向右或向下，每格的可达前驱只有上方和左方。定义到达当前位置的最小代价为：
@@ -235,9 +265,12 @@ function minPathSum(grid) {
 - [快手商业化效果营销一面：多 Agent 协作、Netty 与限流](../../../interview/kuaishou/ai/kuaishou-ai-4.md)
 - [字节全栈二、三面：幂等、索引与字符串匹配](../../../interview/bytedance/base/bytedance-base-32.md)
 - [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)
+- [字节二面：MySQL 索引、最大乘积子数组与推送重连](../../../interview/bytedance/base/bytedance-base-75.md)
 - [字节财经保险 AI 全栈实习一面：项目设计、AI Coding 与 Diff](../../../interview/bytedance/base/bytedance-base-34.md)
 - [字节抖音电商 Agent 一面：分层、上下文与 GRPO](../../../interview/bytedance/base/bytedance-base-21.md)
+- [腾讯云智武汉多轮：运行时、索引、锁与消息消费](../../../interview/tencent/base/tencent-base-4.md)
 - [快手主站 SRE 一二三面：Agent Skill、性能排障与数据链路](../../../interview/kuaishou/ai/kuaishou-ai-5.md)
+- [小红书 AI 研发一面：观测回放、多智能体与数据库](../../../interview/redbook/ai/redbook-ai-21.md)
 - [字节搜广推引擎架构一面：JSON 输出、并发与系统基础](../../../interview/bytedance/base/bytedance-base-74.md)
 <!-- interview-source-history:end -->
 

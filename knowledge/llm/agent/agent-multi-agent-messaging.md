@@ -93,6 +93,7 @@ schema 演进遵循向后兼容：新增可选字段，旧消费者忽略未知�
 - [字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-20.md)
 - [快手商业化效果营销一面：多 Agent 协作、Netty 与限流](../../../interview/kuaishou/ai/kuaishou-ai-4.md)
 - [百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测](../../../interview/baidu/ai/baidu-ai-2.md)
+- [小红书 AI 研发一面：观测回放、多智能体与数据库](../../../interview/redbook/ai/redbook-ai-21.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

@@ -18,7 +18,7 @@
 - 导航清单：`interview/_tree.json`、`knowledge/_tree.json`
 - 图片：`images/<name>`（发布时同步到 OSS；正文用 OSS URL 引用，不外链 `_inbox/assets`）
 
-文章正文 **不带 frontmatter**（标题等元信息在 `_tree.json` 的叶子里）；面经贴正文用「按题目分节」的既有风格。公开面经保留公司、岗位、轮次、面试月份等背景和知识点导航，但不得包含标题为 `## 来源` 的模块或任何 `nowcoder.com` 原始链接。
+文章正文 **不带 frontmatter**（标题等元信息在 `_tree.json` 的叶子里）；新加工面经以真实 `details/summary` 突出问题，每题紧接一个独立 `<p>`，仅用一段话概括回答思路；详细讲解、代码和图解进入关联知识点。保留 `short-qa-v2`、知识绑定及公开结构契约。公开面经保留公司、岗位、轮次、面试月份等背景和知识点导航，但不得包含标题为 `## 来源` 的模块或任何 `nowcoder.com` 原始链接。
 
 ## 来源与公开边界
 

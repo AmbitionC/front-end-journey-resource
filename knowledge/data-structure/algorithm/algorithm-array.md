@@ -367,6 +367,36 @@ function longestUniqueSubstringLength(text) {
 
 空字符串返回 0，全部相同字符返回 1，`abba` 返回 2，`😀a😀` 按码点计返回 2。若需要实际子串，再记录最优区间并用同一字符单位截取。在抽象哈希表操作平均 O(1) 的模型下，时间 O(n)、空间 O(min(n, 字符种类数))；每个位置只推进一次，不需要为每个起点重新扫描。
 
+#### 13.1 至多 K 个不同字符：维护频次，而不只是上次位置
+
+“没有重复字符”与“至多 K 种字符”是不同约束。后者允许同一字符出现多次，需要知道移走左端字符后，它是否仍存在于窗口中。用频次表维护窗口 `[left,right]`，每次扩张后，只要不同字符数超过 K 就继续收缩；频次降为零时删除该键。
+
+```javascript
+function longestAtMostKDistinct(text, k) {
+  if (!Number.isInteger(k) || k < 0) throw new RangeError('k must be non-negative');
+  if (k === 0) return 0;
+  const chars = Array.from(text);
+  const counts = new Map();
+  let left = 0, best = 0;
+  for (let right = 0; right < chars.length; right++) {
+    const ch = chars[right];
+    counts.set(ch, (counts.get(ch) ?? 0) + 1);
+    while (counts.size > k) {
+      const leaving = chars[left++];
+      const remaining = counts.get(leaving) - 1;
+      if (remaining === 0) counts.delete(leaving);
+      else counts.set(leaving, remaining);
+    }
+    best = Math.max(best, right - left + 1);
+  }
+  return best;
+}
+```
+
+在固定右端点下，收缩结束后的左端点是维持合法性所需的最小位置，因此得到以该右端结尾的最长合法窗口。左右指针都只前进，抽象哈希操作平均 $O(1)$ 时总时间 $O(n)$；频次表最多暂存 K+1 种字符。代码为统一 Unicode 码点而显式生成 `chars`，**整体额外空间为 $O(n)$**，不能只按频次表宣称 $O(K)$。码点仍不等于字素，字符单位须与题目一致。
+
+`eceba`、K=2 得 3，`aa`、K=1 得 2；空串或 K=0 得 0。要求“恰好 K 种”时，还需只在种类数等于 K 时更新答案，不能直接把两种题意混成一个返回合同。
+
 #### 14. 有序数组中 target 的首末位置：两个二分边界
 
 先确认排序方向和返回合同。下面的教学接口约定：数组按非降序排列，元素与 target 是可精确比较的有限数值；返回从0开始的闭区间索引，不存在时返回 `[-1, -1]`，不修改输入。调用期间输入不发生并发修改。它不负责先扫描验证整数组是否有序；若增加该校验，要把 O(n) 成本计入总流程。
@@ -402,16 +432,59 @@ console.log(findTargetRange([1, 3], 2));          // [-1, -1]
 
 不能找到任意一个相等元素后就返回，也不要用 `target + 1` 替代 upper bound，这对最大整数或非整数合同并不可靠。中点按索引计算，避免把 JS 位运算的32位截断引入大数组索引。单次查找时间 O(log n)、额外空间 O(1)；输入无序或比较规则不稳定时，上述不变量不成立。
 
+#### 14.1 平方根保留两位：先规定舍入，再规定搜索精度
+
+对实数近似求根时，非负输入可以从 `[0,max(1,x)]` 二分：中点平方小于 x 就抬高下界，否则降低上界。不能总把上界设成 x，因为 `0<x<1` 时平方根反而大于 x。负数在实数合同中应拒绝，零单独处理。
+
+“两位小数”还需要区分截断、四舍五入与只要求绝对误差。搜索到区间宽度小于 0.001，再对任意端点调用 `toFixed(2)`，并不能保证所有舍入分界附近都得到正确的两位结果。下面选一个明确合同：**输入为非负十进制字符串，输出平方根按十进制四舍五入（中点向上）保留两位**；使用 BigInt 精确比较，避免把字符串先转成浮点数而改变输入值。
+
+设输入是 $u/10^s$。先求整数 $c=\lfloor100\sqrt{x}\rfloor$，等价于找最大的非负整数使 $c^2 10^s\le10000u$。再比较真值与相邻“分”之间的中点：当 $40000u\ge(2c+1)^2 10^s$ 时向上舍入。负数、科学计数法、前导零等不属于下面接口；长度上限用于限制大整数计算规模。
+
+```javascript
+function sqrtTwoDecimals(decimal) {
+  if (typeof decimal !== 'string' || decimal.length > 80 ||
+      !/^(0|[1-9]\d*)(\.\d+)?$/.test(decimal)) {
+    throw new RangeError('non-negative plain decimal string required');
+  }
+  const [whole, fraction = ''] = decimal.split('.');
+  const u = BigInt(whole + fraction);
+  const scale = 10n ** BigInt(fraction.length);
+  const numerator = 10000n * u;
+  const n = numerator / scale;
+  // 不变量：lo^2 <= n，hi^2 > n；最终 lo 是整数平方根。
+  let lo = 0n, hi = n + 1n;
+  while (hi - lo > 1n) {
+    const mid = lo + (hi - lo) / 2n;
+    if (mid * mid <= n) lo = mid;
+    else hi = mid;
+  }
+  let cents = lo;
+  const midpoint = 2n * cents + 1n;
+  if (4n * numerator >= midpoint * midpoint * scale) cents++;
+  return `${cents / 100n}.${(cents % 100n).toString().padStart(2, '0')}`;
+}
+
+console.log(sqrtTwoDecimals('2'));        // '1.41'
+console.log(sqrtTwoDecimals('0.25'));     // '0.50'
+console.log(sqrtTwoDecimals('0.000025')); // '0.01'，真值恰为 0.005
+console.log(sqrtTwoDecimals('0'));        // '0.00'
+```
+
+对 `n` 的二分需要 $O(\log(n+1))$ 次比较；每次大整数乘除的成本随位数增长，不能把它们当无限精度的常数时间操作。若题目明确只要求浮点绝对误差，可以使用前述实数区间法，并返回误差界；不要把近似误差合同和精确十进制舍入合同混在一起。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
 - [百度后端一面：延迟诊断、工具恢复与滑动窗口](../../../interview/baidu/ai/baidu-ai-10.md)
 - [腾讯云 CSIG 后台一面：Skill 边界与有序查找](../../../interview/tencent/ai/tencent-ai-23.md)
 - [字节 Agent 一面：会话记忆、并发更新与算法](../../../interview/bytedance/base/bytedance-base-29.md)
+- [小红书 AI 应用一面：RAG 评测、Skill 与平方根](../../../interview/redbook/ai/redbook-ai-20.md)
 - [字节 AI 平台一面：Agent 评测、框架与数据结构](../../../interview/bytedance/base/bytedance-base-33.md)
+- [腾讯 WXG 一面：跨语言 RAG、消息幂等与算法](../../../interview/tencent/base/tencent-base-3.md)
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
 - [快手大模型应用算法社招一面：Diffusion 与二分基础](../../../interview/kuaishou/ai/kuaishou-ai-19.md)
 - [字节全栈二、三面：幂等、索引与字符串匹配](../../../interview/bytedance/base/bytedance-base-32.md)
+- [蚂蚁机器学习实习一面：RAG 数据、幻觉与热点识别](../../../interview/antfin/ai/antfin-ai-15.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

@@ -59,6 +59,7 @@ result = decode_if_needed(x)
 
 <!-- interview-source-history:start -->
 - [快手大模型应用算法社招一面：Diffusion 与二分基础](../../../interview/kuaishou/ai/kuaishou-ai-19.md)
+- [饿了么 AIGC 实习一面：Attention、训练与扩散模型](../../../interview/alibaba/ai/alibaba-ai-23.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

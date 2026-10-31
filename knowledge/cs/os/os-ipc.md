@@ -197,6 +197,7 @@ flowchart LR
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [腾讯 WXG 一面：跨语言 RAG、消息幂等与算法](../../../interview/tencent/base/tencent-base-3.md)
 - [阿里云 Agent 一面：Workflow、通信与配置热更新](../../../interview/alibaba/ai/alibaba-ai-9.md)
 <!-- interview-source-history:end -->
 

@@ -92,7 +92,9 @@ AI/Agent 岗位面试通常覆盖以下几个方向。学长不列具体题目�
 <!-- interview-source-history:start -->
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../interview/bytedance/base/bytedance-base-53.md)
 - [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../interview/bytedance/base/bytedance-base-36.md)
+- [小红书 AI 应用一面：RAG 评测、Skill 与平方根](../../interview/redbook/ai/redbook-ai-20.md)
 - [蚂蚁 Agent 一二面：Code Agent 与应用开发](../../interview/antfin/ai/antfin-ai-2.md)
+- [MiniMax 平台研发一面：数据可靠性、反馈闭环与 GMP](../../interview/minimax/ai/minimax-ai-1.md)
 - [字节全栈一面：RAG、Java 与线程池](../../interview/bytedance/base/bytedance-base-37.md)
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../interview/bytedance/base/bytedance-base-48.md)
 - [字节全栈：多智能体导购、客户端与系统评测](../../interview/bytedance/base/bytedance-base-43.md)
@@ -110,6 +112,7 @@ AI/Agent 岗位面试通常覆盖以下几个方向。学长不列具体题目�
 - [字节 Agent：任务取消、Spring 配置与并发执行](../../interview/bytedance/base/bytedance-base-45.md)
 - [蚂蚁 Agent 实习一面：缓存、消息与 RAG](../../interview/antfin/ai/antfin-ai-6.md)
 - [字节前端全栈实习一面：渲染、Worker 与认证](../../interview/bytedance/base/bytedance-base-38.md)
+- [滴滴后端二面：CR Agent、Spec 与 AI Coding 场景](../../interview/didi/ai/didi-ai-1.md)
 - [字节 Agent 全栈一面：工具、评测与编码](../../interview/bytedance/base/bytedance-base-40.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信](../../interview/tencent/ai/tencent-ai-10.md)
 - [字节 Agent：AI Coding、技能设计与模型工程](../../interview/bytedance/base/bytedance-base-49.md)
