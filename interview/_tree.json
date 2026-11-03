@@ -1084,7 +1084,8 @@
             "updatedAt": "2026-11-04",
             "contentFormat": "short-qa-v2"
           }
-        ]
+        ],
+        "nodeType": "department"
       }
     ],
     "nodeType": "company"
@@ -1599,11 +1600,12 @@
             "updatedAt": "2026-11-04",
             "contentFormat": "short-qa-v2"
           }
-        ]
+        ],
+        "nodeType": "department"
       },
       {
         "key": "tencent-department-cdg",
-        "label": "CDG",
+        "label": "CDG 金融科技",
         "children": [
           {
             "label": "腾讯 CDG 金融科技二面：Agent 评估、协程与存储基础",
@@ -1622,7 +1624,8 @@
             "updatedAt": "2026-11-04",
             "contentFormat": "short-qa-v2"
           }
-        ]
+        ],
+        "nodeType": "department"
       }
     ],
     "nodeType": "company"
