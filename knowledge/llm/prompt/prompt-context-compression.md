@@ -42,6 +42,22 @@
 
 保留最近若干原始轮次用于局部语境，更早内容进入结构化状态或分段摘要。用户纠正旧信息时，不只在摘要后追加一句，还要更新对应状态并记录旧值已失效，避免模型同时看到两个“当前值”。
 
+## OpenClaw 怎样控制长会话的上下文增长
+
+回答具体框架时，要把“缩小下一次请求”与“长期保存信息”分开。以下按 2026-11-04 核验的 OpenClaw 官方文档解释内置路径；模型提供商、上下文引擎、插件和版本可能改变具体行为，不能从框架名推断所有部署都使用相同策略。
+
+| 机制 | 改变什么 | 保存在哪里 |
+|---|---|---|
+| Compaction | 将较早会话压成摘要，保留近期消息；划分边界时保持工具调用与结果配对 | 摘要写入会话 transcript，后续请求使用摘要与保留的尾部 |
+| Session pruning | 为当前模型请求裁剪较旧的工具结果 | 仅改变请求中的工作视图，不因此改写磁盘 transcript |
+| Memory flush | 在压缩前给 Agent 一次保存持久信息的机会 | Memory Core 写入工作区笔记；其他插件可通过自己的持久化工具保存 |
+
+[Compaction 文档](https://docs.openclaw.ai/concepts/compaction)说明前两者的区别，也说明压缩可以在接近窗口上限或溢出恢复时发生。它们没有扩大模型的硬窗口：即使旧记录还在磁盘，也不代表下一次调用已读取这些记录。提供商原生压缩与内置摘要的路径还需分别核对，不能把一条初始化配置当成所有后端的共同保证。
+
+[Memory 文档](https://docs.openclaw.ai/concepts/memory#automatic-memory-flush)把 flush 定义为可选维护。Memory Core 的文件写入需要可写工作区；插件持久化工具仍受原会话的访问范围和策略限制。该步骤可能跳过或失败，因此“启用了 flush”不能证明每条重要事实都已保存；要检查实际笔记或记录，再决定是否需要回读原文。长期文件、索引与召回的分工见[短期记忆、长期记忆与检索](../agent/agent-memory.md)。
+
+例如，旧轮次曾撤回发布许可，后续搜索又产生大量工具输出。裁剪工具结果能减少体积，摘要能缩短旧对话，但验收仍要检查撤回决定、精确标识符和未完成动作是否保留。官方文档也明确说明质量降级或部分超时兜底可能使旧细节离开活跃上下文；应结合 `/status`、持久记录和继续任务的结果验证，而不能把“聊天还能继续”当作无损压缩的证据。
+
 ## 文档与检索结果怎样压缩
 
 先检索再压缩，通常比先对整个语料做一个总摘要更可控。对每个候选片段保留文档 ID、段落位置、时间与权限标签；相似片段可以去重，但相互冲突的来源必须并列。
@@ -141,6 +157,7 @@ usage 是提供商对这次调用的计量结果，tokenizer 的事前估算用�
 - [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)
 - [百度大模型研发一面：Context、Harness 与 RAG](../../../interview/baidu/ai/baidu-ai-1.md)
 - [字节 Agent 开发一面：评分、Harness 与任务可靠性](../../../interview/bytedance/base/bytedance-base-57.md)
+- [腾讯混元 AI 后台开发暑期实习一面：数据安全、OpenClaw 与并发手写](../../../interview/tencent/ai/tencent-ai-27.md)
 - [腾讯微信支付后台开发日常实习一面](../../../interview/tencent/ai/tencent-ai-5.md)
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
 - [字节剪映 AI 前端一面：Agent 运行时、MCP 与性能](../../../interview/bytedance/base/bytedance-base-30.md)
@@ -157,3 +174,5 @@ usage 是提供商对这次调用的计量结果，tokenizer 的事前估算用�
 - [LongBench: A Bilingual, Multitask Benchmark for Long Context Understanding](https://arxiv.org/abs/2308.14508)
 - [Google Gen AI Python SDK：GenerateContentResponseUsageMetadata](https://googleapis.github.io/python-genai/genai.html)
 - [LangGraph：Memory，Summarize messages](https://docs.langchain.com/oss/python/langgraph/add-memory)
+- [OpenClaw：Compaction，持久摘要、请求裁剪与降级边界](https://docs.openclaw.ai/concepts/compaction)（滚动文档，2026-11-04 核验）。
+- [OpenClaw：Memory，压缩前的可选持久化](https://docs.openclaw.ai/concepts/memory#automatic-memory-flush)（滚动文档，2026-11-04 核验）。

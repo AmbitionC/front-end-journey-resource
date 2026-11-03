@@ -1,6 +1,6 @@
-GPT、Claude、Qwen 和 DeepSeek 都不是一个固定模型，而是持续演进的模型家族。真正可靠的选型方法不是背“谁最强”，而是先明确任务和约束，再用自己的数据评测当前可用版本。
+主流大模型品牌通常同时包含模型家族、API 服务与面向用户的应用。比较定位时先明确这一层次，再确定任务和约束，用可复核的发布版本与自己的任务数据作判断。
 
-> 本文的产品状态以 **2026-07-13** 的官方文档为准。模型名称、上下文、价格和参数支持会变化；上线前应重新查询官方模型列表。
+> 下述国内产品案例核验于 **2026-11-04**，明确标注发布或模型版本。它们用于说明定位与能力边界，没有统一横评数据；功能、区域与账号可用性仍应按实际使用时的官方说明核对。
 
 ## 先比较“产品线”，再比较具体版本
 
@@ -15,31 +15,23 @@ $$
 ![从任务需求、候选模型、统一评测集到生产路由策略的模型选型流程](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-model-compare-selection-v3.webp)
 *图：先用统一评测集测量具体工作负载，再决定主模型、降级模型与版本锁定，而不是做品牌排名。*
 
-## 四个模型家族的工程定位
+## Kimi、DeepSeek、千问：从产品层看定位
 
-### GPT：统一 API 与多模态工具生态
+下面选三个可定位到官方材料的案例。第二列是官方发布所述，第三列是据此提出的产品分析问题，不是实测能力排名，也不声称覆盖各品牌的全部产品。
 
-OpenAI 当前模型文档将 GPT-5.6 系列划分为旗舰、平衡和高吞吐档位，并推荐新项目使用 Responses API。其工程优势通常在于统一的文本/图像输入、结构化输出、内置工具与成熟 SDK 组合。
+| 比较对象与发布范围 | 官方材料能确认什么 | 对具体场景可以追问什么 |
+| --- | --- | --- |
+| Kimi K2.5 发布页中的 Web／App 与 Agent 模式 | 官方列出 Instant、Thinking、Agent 与 Agent Swarm 模式，并展示代码、视觉和文档、表格、幻灯片等任务；发布页对 Agent Swarm 注明了 Beta 与访问范围。[Kimi 官方发布](https://www.kimi.com/en/blog/kimi-k2-5) | 对资料处理或办公交付，能否完成多步任务、提供可复核依据，并让用户检查最终文件？不要把发布示例当普遍成功率。 |
+| DeepSeek V4.1-Flash-1017（2026-10-17 更新） | 官方变更日志说明 Web 与 App 已更新到该版本，API 通过 `deepseek-flash` 调用；同页的 9 月发布记录说明 V4.1 Flash 的视觉理解能力。[DeepSeek 变更日志](https://api-docs.deepseek.com/updates/) | 对同一文本或图像任务，分别记录对话产品体验和 API 接入条件；名称相同不能证明两种入口的工具、状态管理和交付方式完全一致。 |
+| 千问 App 2026-01-15 公布的升级 | 官方发布强调连接淘宝、支付宝、飞猪、高德等服务，覆盖生活服务与多步任务；部分功能当时在中国公测，Task Assistant 为邀请制 Beta，支付须明确用户确认。[阿里巴巴官方发布](https://www.alibabagroup.com/en-US/document-1948497434959151104) | 对购物、出行或跨服务流程，检查授权范围、确认步骤、任务完成状态及失败恢复；不能把 App 的服务连接直接算作某个 Qwen API 模型自带的功能。 |
 
-选择时重点检查：目标模型是否支持所需工具、结构化输出、推理强度参数、区域与数据治理要求，以及别名是否适合生产版本锁定。
+这些案例提供了不同切入点：知识工作与文件交付、通用对话及开发接入、连接既有服务完成任务。三者有重叠；某个场景出现在发布页，不表示其他产品不能做，也不表示该场景质量已经得到独立证明。对同一资料问答或任务完成场景，应比较证据支持、可编辑输出、交互控制、失败体验和完成成本，再决定适用对象。
 
-### Claude：长程任务、工具使用与明确的模型迁移规则
+### App、API 与开放权重不要混成一张能力表
 
-Anthropic 当前产品线包含 Opus、Sonnet 等档位，并持续调整 thinking、effort、上下文和采样参数。官方迁移文档明确指出，部分新模型不再接受非默认的 `temperature`、`top_p`、`top_k`，说明“API 字段存在”不等于“每个模型都支持”。
+应用体验由模型、检索与工具、会话状态、界面、权限和运营配置共同决定。API 提供哪些能力要读该接口与具体版本的合同；开放权重部署还要确认许可证、推理实现、硬件和自行搭建的工具链。不能因为 App 能订行程，就推断同名模型 API 已提供预订服务；也不能用一个订阅档位的体验代表所有账号和部署。
 
-选择时重点检查：长上下文与最大输出、工具调用行为、提示缓存、thinking/effort 配置，以及迁移文档中的不兼容项。
-
-### Qwen：云 API 与开放权重生态并行
-
-Qwen 同时提供阿里云 Model Studio / DashScope API 和多个开放权重版本，适合需要国内云接入、OpenAI 兼容接口或自托管评估的团队。Qwen3.7 等新版本继续强化多模态与智能体方向。
-
-选择时要区分：云端商业模型 ID、开放权重仓库、量化版本和第三方托管版本。它们的上下文、工具调用、吞吐、许可证与运维责任可能不同。
-
-### DeepSeek：统一模型的思考/非思考模式与兼容接口
-
-DeepSeek API 提供 OpenAI 兼容调用方式，并在当前文档中把思考模式与非思考模式纳入新的模型体系。官方已公告旧别名 `deepseek-chat`、`deepseek-reasoner` 将在 2026-07-24 停用，当前分别映射到 `deepseek-v4-flash` 的非思考与思考模式。
-
-这类临近弃用信息说明：生产代码不能只写一个字符串后永久不管，必须把模型弃用检查纳入发布流程。
+因此，应用端比较记录平台、发布范围、可用功能和完整用户任务；API 比较继续记录模型 ID、版本、接口、区域和参数支持。两组结果可以共同辅助选型，但应分别保留证据。
 
 ## 用六个维度建立候选表
 
@@ -51,6 +43,8 @@ DeepSeek API 提供 OpenAI 兼容调用方式，并在当前文档中把思考�
 | 成本 | 输入、输出、缓存、推理 Token 与失败重试 | 标价不是完整单次任务成本 |
 | 合规与部署 | 数据区域、保留策略、私有化、许可证 | 可能直接排除候选项 |
 | 运维稳定性 | 版本快照、弃用周期、限流、降级路径 | 决定生产可控性 |
+
+读取每个候选版本的接口与迁移说明，另行核对上下文窗口和最大输出的各自限制、提示缓存的启用与失效条件、thinking／effort 等推理配置，以及升级中的参数不兼容项。把支持、限制和实际配置记入候选表，不预设同名字段在不同模型或入口中有相同含义。
 
 不要把“中文”“代码”“推理”等能力写成永久的品牌标签。应用层表现取决于具体版本、提示、上下文、工具、解码和评测集。
 
@@ -81,7 +75,7 @@ DeepSeek API 提供 OpenAI 兼容调用方式，并在当前文档中把思考�
 假设任务需要输出固定 JSON，并在置信度低时调用知识库：
 
 1. 先排除无法满足数据区域要求的部署。
-2. 对四家当前候选版本运行同一批历史工单。
+2. 对当前候选版本运行同一批历史工单。
 3. 统计 JSON 解析成功率、分类 F1、错误工具调用率、P95 延迟和每个成功工单成本。
 4. 用失败样本而不是平均分分析差异。
 5. 选择主模型与降级模型，并锁定快照。
@@ -98,15 +92,16 @@ DeepSeek API 提供 OpenAI 兼容调用方式，并在当前文档中把思考�
 
 ## 小结
 
-GPT、Claude、Qwen、DeepSeek 的差异应被转化为可测量的工程问题。先按合规和能力筛选，再用统一评测集比较具体版本，最后配套版本锁定、路由、降级和持续回归，才能形成可维护的模型选择。
+产品定位与模型能力应转化为可检查的问题：先分清应用、API 与部署形态，按约束筛选，再用同一任务比较具体版本。配套版本记录、路由、降级和持续回归，才能让选择长期可维护。
+
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [阿里云 AI 产品一面：模型基础、需求优先级与产品定位](../../../interview/alibaba/ai/alibaba-ai-27.md)
+<!-- interview-source-history:end -->
 
 ## 参考资料
 
-- [OpenAI API：Models](https://developers.openai.com/api/docs/models)
-- [OpenAI API：Model guidance](https://developers.openai.com/api/docs/guides/latest-model)
-- [Anthropic：What's new in Claude Opus 4.8](https://docs.anthropic.com/en/docs/about-claude/models/whats-new-claude-4-8)
-- [Anthropic：What's new in Claude Sonnet 5](https://docs.anthropic.com/en/docs/about-claude/models/whats-new-sonnet-5)
-- [Alibaba Cloud Model Studio：DashScope API Reference](https://www.alibabacloud.com/help/en/model-studio/qwen-api-via-dashscope)
-- [Qwen：Qwen3.7](https://qwen.ai/blog?id=qwen3.7)
-- [DeepSeek API Docs](https://api-docs.deepseek.com/)
-- [DeepSeek：Models & Pricing](https://api-docs.deepseek.com/quick_start/pricing/)
+- [Kimi：Kimi K2.5 — Visual Agentic Intelligence](https://www.kimi.com/en/blog/kimi-k2-5)
+- [DeepSeek API：Change Log](https://api-docs.deepseek.com/updates/)（2026-10-17 与 2026-09-10 条目，核验于 2026-11-04）
+- [Alibaba Group：Qwen App 的生态服务与 Agent 能力升级](https://www.alibabagroup.com/en-US/document-1948497434959151104)（2026-01-15 发布范围）

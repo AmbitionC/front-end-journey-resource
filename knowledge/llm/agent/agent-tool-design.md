@@ -36,7 +36,7 @@ Schema 提供类型、必填、枚举、范围和额外字段策略。[JSON Sche
 
 ## 副作用语义必须显式
 
-每个工具标注：read-only、idempotent、destructive、open-world，以及是否需要确认。MCP 当前 [Tools 规范](https://modelcontextprotocol.io/specification/2025-06-18/server/tools)定义工具名、描述、inputSchema、可选 outputSchema，并区分协议错误与执行错误；它也要求服务器验证输入、实施访问控制、限流和清理输出。
+每个工具标注：read-only、idempotent、destructive、open-world，以及是否需要确认。以 [MCP 2025-06-18 Tools 规范](https://modelcontextprotocol.io/specification/2025-06-18/server/tools)为例，该版本定义工具名、描述、inputSchema、可选 outputSchema，并区分协议错误与执行错误；它也要求服务器验证输入、实施访问控制、限流和清理输出。
 
 写工具接受 idempotency key：相同 key 与相同参数返回原结果；相同 key 参数不同则冲突。取消本地等待不等于外部操作回滚，结果要支持后续查询。
 
@@ -122,6 +122,7 @@ MCP 解决发现与调用协议，不替代工具本身的生产契约。把一�
 - [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)
 - [字节 Agent 开发一面：评分、Harness 与任务可靠性](../../../interview/bytedance/base/bytedance-base-57.md)
 - [海康威视 AI Agent 开发一面：可靠工具与任务状态](../../../interview/hikvision/ai/hikvision-ai-1.md)
+- [字节 TRAE 后端秋招二面：项目逻辑、工具与编辑距离](../../../interview/bytedance/base/bytedance-base-76.md)
 - [淘天 Agent 一面：工具调用、上下文与记忆更新](../../../interview/alibaba/ai/alibaba-ai-11.md)
 - [快手大模型应用 Java 实习一面：Agent、SkillHub 与 Vibe Coding](../../../interview/kuaishou/ai/kuaishou-ai-1.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)

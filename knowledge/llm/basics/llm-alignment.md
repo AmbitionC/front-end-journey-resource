@@ -25,6 +25,14 @@ SFT 使用“输入—理想输出”示范继续训练模型。它适合教授�
 
 [InstructGPT](https://arxiv.org/abs/2203.02155) 先用标注者示范训练监督策略，再收集输出排序进行偏好优化。研究说明指令遵循可以显著改善，但也明确保留了简单错误和未解决风险。
 
+### 从失败类型选择训练阶段与损失
+
+项目使用 Qwen 或其他模型，并不能直接决定该用哪种 Loss。先区分问题来自事实资料过期、指令格式不稳、偏好不符，还是可验证任务的推理/行动失败：事实更新可先评估检索；SFT 用示范教授行为；离线偏好对可用 DPO；在线奖励优化则要求可校准的奖励和受控采样。选择应在同一保留任务上比较，不能用训练损失下降替代真实效果。
+
+对自回归语言模型，SFT 常以指定目标 Token 的下一 Token 交叉熵训练，但哪些位置参与损失由数据格式、标签掩码与实现共同决定。应实际查看模板渲染和 labels，确认用户输入、系统指令、工具结果及助手回答的角色边界，而不是以为整段对话都会自动被当成正确答案。
+
+[TRL 1.16.0 的 SFT 文档](https://github.com/huggingface/trl/blob/v1.16.0/docs/source/sft_trainer.md)区分 prompt-completion 的 completion-only loss 与 conversational 数据的 assistant-only loss；后者还依赖能产生助手掩码的聊天模板。这里限定该版本的约定，不把参数默认值推广到其他训练器。构造训练集时保留任务来源、拒答与工具失败等困难样本，做语义去重并隔离同源评测材料；训练前后的任务质量、过度拒答和失败切片都要复核。
+
 ## 第二层：偏好优化
 
 很多问题没有唯一标准答案，示范难以覆盖所有风格。偏好数据让评价者比较两个回答，表达哪一个更有帮助、更真实或更安全。
@@ -81,6 +89,8 @@ SFT 使用“输入—理想输出”示范继续训练模型。它适合教授�
 
 <!-- interview-source-history:start -->
 - [阿里国际 Accio Agent 算法一面：数据合成、任务环境与 GUI Agent](../../../interview/alibaba/ai/alibaba-ai-3.md)
+- [阿里大模型算法校招：Attention、后训练与 Agent 评测](../../../interview/alibaba/ai/alibaba-ai-24.md)
+- [阿里国际 Java 二面：RAG 数据评测、微调与代码生成](../../../interview/alibaba/ai/alibaba-ai-26.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
@@ -88,3 +98,5 @@ SFT 使用“输入—理想输出”示范继续训练模型。它适合教授�
 - [Training language models to follow instructions with human feedback](https://arxiv.org/abs/2203.02155)
 - [Constitutional AI: Harmlessness from AI Feedback](https://arxiv.org/abs/2212.08073)
 - [The Llama 3 Herd of Models](https://arxiv.org/abs/2407.21783)
+
+- [TRL 1.16.0：SFT 数据与目标位置](https://github.com/huggingface/trl/blob/v1.16.0/docs/source/sft_trainer.md)

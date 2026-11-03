@@ -56,6 +56,16 @@ AsyncAPI 文档描述 submit、started、progress、completed、failed 和 cance
 
 ## ACK 不是 exactly-once
 
+### RabbitMQ 可靠性沿发布、路由、保存与消费分别检查
+
+先区分两个方向：**publisher confirm** 告诉生产者 Broker 对发布承担了什么责任；**consumer ACK** 告诉 Broker 这次投递已处理。两者不能互相代替，发布端拿到确认并不表示业务已经消费完成。业务数据库与发布之间的缺口先由前述同库 outbox 和可恢复发布器衔接，消息携带稳定的业务事件 ID。
+
+发布器还要检查消息是否进入预期队列。[RabbitMQ 的确认时机](https://www.rabbitmq.com/docs/confirms#when-publishes-are-confirmed)说明，无法路由到任何队列的消息也可能收到发布确认；使用 AMQP 0-9-1 的 `mandatory` 发布时，应同时处理 `basic.return`，不能只见 `basic.ack` 就把任务记作已入队。权限、交换机和绑定配置同样需要验证；发送 API 返回或写入客户端缓冲区也不是 Broker 确认。
+
+如果目标是跨重启保存消息，要核对队列的持久属性与消息的 persistent 发布方式，并等待对应发布确认。对路由到 durable 队列的 persistent 消息，官方确认合同涉及落盘；对 quorum 队列，确认涉及法定数量副本接受。是否采用复制队列要根据节点故障目标决定，“部署了多个集群节点”不能单独证明队列内容已复制。[Reliability Guide](https://www.rabbitmq.com/docs/reliability#clustering)把拓扑冗余和消息内容复制分别说明。[TTL](https://www.rabbitmq.com/docs/ttl)、[队列长度与溢出策略](https://www.rabbitmq.com/docs/maxlength)也可能按配置移除或拒绝消息，可靠性合同必须同时说明这些边界。
+
+消费端关闭自动确认，校验消息并完成受约束的业务处理，在业务结果与幂等记录持久提交之后再 ACK。比如事件 `job42` 已在队列中，但发布确认在网络中丢失，发布器可能重发；如果业务已提交而消费 ACK 丢失，也可能重投。两个窗口都需要稳定事件身份与幂等，不可把新重试 ID 当作新的业务事件。失败按可恢复性有限重试或隔离，断连后恢复消费；“不丢失”须以已约定的保存、复制、重试和故障范围说明，不能承诺任意故障下端到端恰好一次。
+
 ### Redis 已预扣，发消息前崩溃怎么办
 
 不能把“Redis Lua 扣减成功”直接写成“业务已可靠受理”。若随后应用崩溃、尚未发送 MQ，消费者看不到这次操作；事后在数据库写 outbox 也不能回头让 Redis 与数据库成为同一事务。先定义库存事实源、预占状态与唯一操作 ID，再选择恢复路径。
@@ -148,6 +158,7 @@ RabbitMQ 的 TTL 限制消息存活期，死信交换机路由过期、拒收等
 - [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)
 - [快手 AI 应用实习面试：模型服务、RAG 与分类评估](../../../interview/kuaishou/ai/kuaishou-ai-15.md)
 - [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
+- [阿里国际 AI 应用研发一面：JDK 8、消息可靠性与 RAG](../../../interview/alibaba/ai/alibaba-ai-25.md)
 - [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
 - [快手效果营销实习一面：意图路由、模型容错与业务校验](../../../interview/kuaishou/ai/kuaishou-ai-18.md)
 - [蚂蚁 Agent 实习一面：缓存、消息与 RAG](../../../interview/antfin/ai/antfin-ai-6.md)
@@ -161,6 +172,8 @@ RabbitMQ 的 TTL 限制消息存活期，死信交换机路由过期、拒收等
 - [AsyncAPI Specification 3.0.0](https://www.asyncapi.com/docs/reference/specification/v3.0.0)
 - [RabbitMQ：Reliability Guide](https://www.rabbitmq.com/docs/reliability)
 - [RabbitMQ：Consumer Acknowledgements and Publisher Confirms](https://www.rabbitmq.com/docs/confirms)
+- [RabbitMQ：消息与队列 TTL](https://www.rabbitmq.com/docs/ttl)
+- [RabbitMQ：队列长度与溢出策略](https://www.rabbitmq.com/docs/maxlength)
 - [SLS：消费组与 shard 消费](https://help.aliyun.com/en/sls/developer-reference/use-consumer-groups-to-consume-data)
 - [SLS：更新消费进度](https://help.aliyun.com/en/sls/developer-reference/update-consumption-progress-sls)
 

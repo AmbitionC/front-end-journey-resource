@@ -52,6 +52,23 @@ flowchart LR
 
 通过二级索引定位后再访问聚簇记录，会增加查找与可能的页访问。覆盖索引可以减少为获取额外列而做的回表，但不保证省去 MVCC 可见性检查所需的聚簇记录访问。
 
+## LSM Tree 与 B+ 树：以 RocksDB 作比较实例
+
+两者都能组织有序键并支持等值与范围查询，区别主要在怎样吸收更新、组织持久数据和支付维护成本。这里用 **RocksDB 的 LSM 实现**与本文 MySQL 8.4 InnoDB 普通有序索引比较，不把所有 LSM 引擎或全部数据库都当作同一实现。[RocksDB 维护者概览](https://github.com/facebook/rocksdb/wiki/RocksDB-Overview)说明了 MemTable、WAL、SST 与 compaction 的职责。
+
+启用 WAL 的常规 RocksDB 写路径中，同一批写先追加 WAL，再更新 MemTable；追加日志不等于日志已经同步到持久介质。是否在返回前等待同步需核对 `WriteOptions::sync`，`manual_wal_flush` 等设置还会影响日志所处的缓冲层；关闭 WAL 的写入没有对应的日志恢复保证。流水线可以让不同批次的 WAL 与 MemTable 阶段重叠，不能倒置同一批次的基本顺序。[维护者：Pipelined Write](https://github.com/facebook/rocksdb/wiki/Pipelined-Write)、[Basic Operations：同步与非同步写](https://github.com/facebook/rocksdb/wiki/Basic-Operations#synchronous-writes)
+
+MemTable 满后可转为不可变表，由后台 flush 生成有序 SST 文件。Compaction 再合并文件、处理被覆盖或可清理的版本。这样可以批量组织持久写入，却把一部分成本推到后台重写、临时空间与查询合并；后台维护赶不上写入时，前台也可能停顿。InnoDB 则围绕页式有序树更新缓冲页，必要时维护分裂、合并与页布局，再按其日志和刷盘协议持久化；**B+ 树并不等于每次修改都立即随机写磁盘**。[InnoDB 索引物理结构](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/innodb-physical-structure.html)
+
+| 比较点 | RocksDB LSM 实例 | InnoDB 页式 B+ 树实例 |
+| --- | --- | --- |
+| 更新组织 | 内存缓冲后生成 SST，并持续 compaction | 定位和修改树页，维护页内与页间结构 |
+| 读取路径 | 可能查 MemTable 与多个有序文件；索引、过滤器和缓存减少无用访问 | 沿树导航到叶页；二级索引可能再访问聚簇记录 |
+| 范围输出 | 合并相关有序来源，并处理版本与删除标记 | 定位起点后沿有序叶页扫描，仍受过滤与回表影响 |
+| 维护代价 | 关注读、写、空间放大与后台积压 | 关注页访问、填充率、树维护、缓冲与日志成本 |
+
+“放大”应说明测量口径：读了多少候选数据才能满足逻辑读取，写了多少持久字节才能完成逻辑更新，以及物理占用相对存活数据多了多少。Compaction 策略会在这些维度间取舍，不能直接说“LSM 写一定快、B+ 树读一定快”。例如反复更新同一批键，需同时看前台确认条件、后台压缩能否跟上、查询尾延迟与峰值磁盘空间；比较还须固定数据、缓存、读写比例和持久性要求，本文没有运行性能实验。
+
 ## 索引类型对比
 
 | 类型 | 英文 | 唯一性 | 允许 NULL | 说明 |
@@ -366,6 +383,7 @@ MySQL 5.6+ 支持 `ALTER TABLE ... ADD INDEX` 的在线 DDL（Online DDL），�
 - [字节二面：MySQL 索引、最大乘积子数组与推送重连](../../../interview/bytedance/base/bytedance-base-75.md)
 - [百度大模型研发一面：Context、Harness 与 RAG](../../../interview/baidu/ai/baidu-ai-1.md)
 - [蚂蚁财富技术部一面：协作式 Agent、交付门禁与后端基础](../../../interview/antfin/ai/antfin-ai-4.md)
+- [腾讯 CDG 金融科技二面：Agent 评估、协程与存储基础](../../../interview/tencent/ai/tencent-ai-29.md)
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
 - [腾讯云智武汉多轮：运行时、索引、锁与消息消费](../../../interview/tencent/base/tencent-base-4.md)
 - [蚂蚁暑期面经：线程池、数据来源与多 Agent 评测](../../../interview/antfin/ai/antfin-ai-14.md)
@@ -381,6 +399,10 @@ MySQL 5.6+ 支持 `ALTER TABLE ... ADD INDEX` 的在线 DDL（Online DDL），�
 
 本次对普通索引页结构、跳表比较、skip scan、唯一键NULL、在线DDL限制、慢日志与VECTOR限制重新核验于2026-10-16，机制基准MySQL8.4。既有MySQL9.7 VECTOR边界只用于区分产品/版本，不作为本例部署假设；迁移SQL未在数据库运行，不用于证明性能或DDL无阻塞。
 
+- [RocksDB: WAL life cycle and configuration](https://github.com/facebook/rocksdb/wiki/Write-Ahead-Log-%28WAL%29)
+- [RocksDB: pipelined write ordering](https://github.com/facebook/rocksdb/wiki/Pipelined-Write)
+- [RocksDB: synchronous and non-sync writes](https://github.com/facebook/rocksdb/wiki/Basic-Operations#synchronous-writes)
+- [RocksDB 维护者：存储结构、持久化与 Compaction](https://github.com/facebook/rocksdb/wiki/RocksDB-Overview)
 - [MySQL 8.4 Reference: InnoDB Multi-Versioning — Secondary Indexes](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/innodb-multi-versioning.html)
 - [MySQL 8.4 Reference: InnoDB Index Types](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/innodb-index-types.html)
 - [MySQL 8.4 Reference: EXPLAIN](https://docs.oracle.com/cd/E17952_01/mysql-8.4-en/explain.html)

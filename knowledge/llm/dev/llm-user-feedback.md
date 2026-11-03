@@ -96,6 +96,12 @@ type FeedbackEvent = {
 
 有效反馈闭环把“一个按钮”扩展成可治理系统：结构化采集信号，控制隐私，分层抽样，人工确认问题，冻结评测，验证候选修复，再灰度、监控和回滚。反馈告诉团队去哪里调查，评测和实验才负责证明修复真的更好。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [阿里云 AI 产品一面：模型基础、需求优先级与产品定位](../../../interview/alibaba/ai/alibaba-ai-27.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenAI — Evals](https://developers.openai.com/api/docs/guides/evals)

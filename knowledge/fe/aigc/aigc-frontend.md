@@ -115,6 +115,14 @@ Schema 只保证结构，不能证明字段事实正确。前端应把提取结�
 
 组合会增加失败路径。每一步都要有可观察状态、明确输入输出和人工接管点，不能把整个流程藏在一个无限旋转的“思考中”。
 
+## 教育实例：备课草稿与引导式辅导
+
+教育可以作为上述内容生成、问答与可编辑结果的一个垂直实例，而不是所有行业应用的替代。Khan Academy 的 [Khanmigo 官方介绍](https://www.khanmigo.ai/)将其定位为辅导与教学助手，说明学习者交互以引导其自己找到答案为目标；[官方备课示例](https://blog.khanacademy.org/discover-how-to-create-lesson-plans-with-khanmigo-kt/)展示教案、学习目标、课堂引入、课末检测问题与评价量规的生成能力。这里引用的是产品公开能力，没有据此推断任何学校已经采用或学生成绩得到改善。
+
+从前端产品角度分析，这类场景的价值在于把生成放入完整任务：明确教学目标与可用材料，展示候选内容，允许教师修改，再保存可使用的版本。若设计类似产品，教师审核、学生回应、逐步提示以及停止和纠错入口应成为具体交互要求；这是设计建议，不代表上述产品逐项采用了同样实现。
+
+验收也要分层：先检查材料与题目是否正确、是否符合课程目标及年龄，教师需要修改多少，再单独研究是否改善真实学习。一次流畅演示不能证明教学效果，自动给出完整答案也未必符合辅导目标。不同垂直领域都要重新确认用户、资料权限、失败代价与结果判据。
+
 ## 九、通用前端架构
 
 无论选择哪种场景，都建议使用浏览器 → 自有 BFF → 模型/工具的边界：
@@ -176,6 +184,12 @@ Schema 只保证结构，不能证明字段事实正确。前端应把提取结�
 - [ ] 隐私、版权、可访问性和数据保存策略已明确。
 - [ ] 有真实评测集衡量质量、延迟、成本和用户修改率。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [阿里云 AI 产品一面：模型基础、需求优先级与产品定位](../../../interview/alibaba/ai/alibaba-ai-27.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenAI：Images and vision](https://developers.openai.com/api/docs/guides/images-vision)
@@ -183,3 +197,6 @@ Schema 只保证结构，不能证明字段事实正确。前端应把提取结�
 - [OpenAI：Realtime API with WebRTC](https://developers.openai.com/api/docs/guides/realtime-webrtc)
 - [OpenAI：Function calling](https://developers.openai.com/api/docs/guides/function-calling)
 - [OpenAI：Safety best practices](https://developers.openai.com/api/docs/guides/safety-best-practices)
+
+- [Khan Academy：Khanmigo 官方介绍](https://www.khanmigo.ai/)（产品公开能力，核验于 2026-11-04）。
+- [Khan Academy：Discover How to Create Lesson Plans with Khanmigo](https://blog.khanacademy.org/discover-how-to-create-lesson-plans-with-khanmigo-kt/)（官方备课能力示例）。

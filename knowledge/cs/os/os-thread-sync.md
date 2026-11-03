@@ -1,5 +1,5 @@
 ![两个线程访问 shared state：mutex 临界区建立互斥，condition variable 用 while predicate 等待并通知，semaphore 控制有限资源槽；箭头标出 happens-before，未加锁路径显示 data race](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/thread-synchronization-happens-before-v1.webp)
-*图：左栏是互斥锁的解锁与后续加锁，中栏是 while 谓词和条件变量，右栏是有限资源信号量。中栏允许 unlock 后通知、左下“数据竞争为未定义行为”采用通用/C++ 示例语境；Java Object.notify/notifyAll 必须持有同一对象的 monitor，Java 数据竞争后果应按 JMM 分析，不能照搬图中的通知顺序或未定义行为结论。*
+*图：左栏蓝虚线应按 unlock(m) → 随后成功获取同一锁的 lock(m) 理解，读写框之间只有结合线程内顺序推导的 happens-before，读写本身不建立 synchronizes-with；绘制起点不能当作同步事件。中栏是 while 谓词和条件变量，右栏是有限资源信号量。中栏允许 unlock 后通知、左下“数据竞争为未定义行为”采用通用/C++ 示例语境；Java Object.notify/notifyAll 必须持有同一对象的 monitor，Java 数据竞争后果应按 JMM 分析，不能照搬图中的通知顺序或未定义行为结论。*
 
 ---
 
@@ -105,13 +105,29 @@ sem_post(&sem);          // 归还
 
 [Java 25 Semaphore](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/concurrent/Semaphore.html)也明确区分这一点：初始化为1且使用中始终至多保留一个许可，才是这里的二元用法；其他线程可以释放许可。普通计数信号量仅设初值1不会自动阻止重复释放导致许可增加，所以应用仍须管理获取、归还与取消路径。不能从“同时只准一个进入”推导出所有权、公平性或与某种 mutex 完全相同的错误处理。
 
-## Java volatile、复合原子性与信号量实现分开
+## Java synchronized 与 volatile：可见性不等于互斥
+
+`synchronized` 让使用**同一对象 monitor** 的临界区互斥，且允许持有线程重入；退出代码块时，无论正常结束还是抛出异常，都会释放对应的这次锁获取。实例同步方法锁 `this`，静态同步方法锁声明类的 `Class` 对象，两者不自动互斥。同一 monitor 的解锁与后续加锁建立 happens-before；所以它既协调访问顺序，也提供内存可见性，而不是仅仅“让代码一次执行一个线程”。这些是 [JLS 25 §17.1、§17.4](https://docs.oracle.com/javase/specs/jls/se25/html/jls-17.html#jls-17.1)的语言合同，不依赖某代 HotSpot 的锁优化。
+
+`volatile` 针对字段读写建立可见性与有序性约束，不让某段任意代码独占执行。共享的 `count++` 若要用 synchronized 保护，所有相关读改写必须遵守同一锁协议；只给写入路径加锁、其他路径仍无同步地读写，并不能保护完整不变量。volatile 引用也不会把它指向对象中的全部可变字段自动变成线程安全。二者都不承诺线程获取执行机会的 FIFO 公平性。
 
 [JLS 21 §17.4.4–17.4.5](https://docs.oracle.com/javase/specs/jls/se21/html/jls-17.html#jls-17.4.4)规定，volatile 写与同步顺序中后续对同一变量的读建立同步关系，并形成 happens-before 的可见性与有序性约束；这不是给任意多步代码加一把锁。[§17.7](https://docs.oracle.com/javase/specs/jls/se21/html/jls-17.html#jls-17.7)还明确 volatile long/double 的单次读写是原子的，但单次访问原子不等于复合操作原子。
 
 即便 `count` 声明为 `volatile int`，`count++` 仍需取值、加1并存回；[JLS 21 §15.14.2](https://docs.oracle.com/javase/specs/jls/se21/html/jls-15.html#jls-15.14.2)没有把整个表达式变成一个跨线程原子事务。两个线程都读到0，再各自写回1，仍会丢一次更新。单变量计数可按合同选原子 read-modify-write API 或 CAS 循环；涉及多个字段不变量时，要在统一锁或其他一致性协议下处理，不能只给每个字段加 volatile。
 
 信号量还需正确实现“检查并消耗许可”、归还许可、等待与唤醒、取消等状态转换。仅让许可计数可见，不能防止两个线程同时消费同一个许可。以 [Java 25 AbstractQueuedSynchronizer](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/concurrent/locks/AbstractQueuedSynchronizer.html)这一同步框架为例，`getState/setState` 有 volatile 读写语义，而 `compareAndSetState` 提供原子条件更新，框架另负责排队与阻塞机制。这里用它说明原子状态更新与等待协议的分工，不把特定 Semaphore 内部算法当作所有版本的公共 API 保证；公平性、释放数量和中断仍按所用 Semaphore 合同核对。
+
+## HotSpot 的“锁升级”：版本和触发条件先于术语
+
+偏向锁、栈锁、轻量锁和 `ObjectMonitor` 是虚拟机的实现策略，不是 JLS 为 synchronized 规定的四段固定流程。口述前先确认 JDK 版本、虚拟机和相关启动选项，再说明在该实现中如何从低竞争快路径进入需要更多协调的路径。
+
+| 限定版本 | 可据此说明的行为 |
+|---|---|
+| OpenJDK 8u402-b06 HotSpot，启用偏向锁时 | 偏向处理可重偏向或撤销；栈锁路径尝试对象头 CAS，慢路径可膨胀为 ObjectMonitor，wait 也会走膨胀路径 |
+| JDK 15 | 偏向锁默认禁用，相关选项被弃用，不能默认仍从偏向阶段开始 |
+| JDK 23 | 默认 LockingMode 从 LM_LEGACY 改为 LM_LIGHTWEIGHT；这里的轻量实现不能与旧栈锁布局直接等同 |
+
+第一行可直接核对 [8u402 的 synchronizer.cpp](https://github.com/openjdk/jdk8u/blob/jdk8u402-b06/hotspot/src/share/vm/runtime/synchronizer.cpp)；后两行分别由 [JDK 15 发布说明](https://www.oracle.com/java/technologies/javase/15all-relnotes.html)和 [JDK 23 发布说明](https://www.oracle.com/java/technologies/javase/23-relnote-issues.html)限定。作为更新版本的例子，[OpenJDK 25 GA 的 LightweightSynchronizer](https://github.com/openjdk/jdk/blob/jdk-25-ga/src/hotspot/share/runtime/lightweightSynchronizer.cpp)仍有快锁向 monitor 膨胀的具体分支，触发原因还包括锁栈空间等实现条件。因此不能断言“每次竞争都依次经过三个阶段”或“固定自旋若干次后一定升级”；也不能把实现名直接换算成固定延迟、每次都进入内核或线程调度公平性。
 
 ## 条件变量:生产者-消费者
 
@@ -149,6 +165,46 @@ pthread_cond_signal(&not_empty);
 2. `wait` 内部"释放锁 + 睡眠"是原子的,否则会出现"刚判断完条件、还没睡下,信号就来了"的丢失唤醒(lost wakeup)。
 
 > 对 Agent 工程的意义:Agent 里的流式输出队列、待执行工具调用队列,本质都是生产者-消费者模型。模型生成 token 是生产者,前端推送是消费者;用条件变量(或其高级封装 BlockingQueue / Channel)解耦,既不空转 CPU,又不会丢消息。
+
+## 基于互斥锁实现读写锁：保护准入状态
+
+先确认题目是否允许条件变量，以及是否要求可重入、超时、读写锁升级和公平。下面选择一个明确的教学合同：**一把 mutex 加一个 condition variable，非重入、写者优先，不支持读转写或取消**。mutex 只保护准入状态，不贯穿整个读操作，因此多个获得逻辑读锁的线程仍可同时读共享数据。
+
+状态为活跃读者数 `readers`、是否有活跃写者 `writer`、等待写者数 `waitingWriters`，初始均为 0/false。每次检查和修改状态都持有同一 mutex；不变量是 `readers≥0`，并且 `writer=true` 时 `readers=0`。`wait(changed,mu)` 必须原子释放 mu 后阻塞，并在返回时重新持有 mu；被唤醒后仍用 while 检查条件。[Python Condition 的官方合同](https://docs.python.org/3.14/library/threading.html#condition-objects)展示了这种锁与等待谓词的配合，下面是语言无关协议伪代码。
+
+```text
+read_lock:
+  lock(mu)
+  while writer or waitingWriters > 0: wait(changed, mu)
+  readers += 1
+  unlock(mu)
+
+read_unlock:
+  lock(mu)
+  readers -= 1
+  if readers == 0: broadcast(changed)
+  unlock(mu)
+
+write_lock:
+  lock(mu)
+  waitingWriters += 1
+  while writer or readers > 0: wait(changed, mu)
+  waitingWriters -= 1
+  writer = true
+  unlock(mu)
+
+write_unlock:
+  lock(mu)
+  writer = false
+  broadcast(changed)
+  unlock(mu)
+```
+
+读者进入前排除活跃写者，写者进入前排除所有活跃读者和写者；这些检查与登记在同一 mutex 下完成，所以不会同时批准冲突访问。有写者排队后，新读者也等待，避免持续到来的新读者反复抢在该写者之前；这仍不保证写者之间 FIFO，持续写流还可能让读者饥饿。广播只是让等待者重新竞争 mu，不是直接把锁交给某个线程。
+
+不要直接套“第一个读者锁住资源 mutex，最后一个读者替它解锁”：两个读者可能是不同线程，而 [POSIX mutex 的所有者合同](https://man7.org/linux/man-pages/man3/pthread_mutex_lock.3p.html)不允许把跨线程解锁当作通用操作，其后果依类型可能是未定义行为或错误。上面的每次 mu 加解锁都由同一线程配对，逻辑读写权限通过受保护状态协调。
+
+这份协议假定调用方正确配对释放、读操作不修改受保护数据，且 wait 不抛出取消异常。工程实现还需在异常路径释放逻辑锁；若增加中断、超时或取消，等待写者退出时须回滚 `waitingWriters`，并在准入谓词变化时通知等待者，否则新读者可能永久被挡住。若题目真的只准 mutex 而不准任何等待原语，应先说明忙等与阻塞方式的约束，不能暗中把循环重试说成无 CPU 成本的阻塞实现。
 
 ## 乐观锁 vs 悲观锁
 
@@ -297,6 +353,8 @@ graph LR
 - [快手春招多轮面经：信号量、Top-K 与实验分流](../../../interview/kuaishou/ai/kuaishou-ai-13.md)
 - [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../../interview/bytedance/base/bytedance-base-36.md)
 - [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)
+- [腾讯混元后台一面：Java 并发、限流与 Agent 工程](../../../interview/tencent/ai/tencent-ai-28.md)
+- [腾讯混元 AI 后台开发暑期实习一面：数据安全、OpenClaw 与并发手写](../../../interview/tencent/ai/tencent-ai-27.md)
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
 - [阿里云 AI 应用一面：并发审查、RAG 评估与海量商品](../../../interview/alibaba/ai/alibaba-ai-16.md)
 - [快手效果营销实习一面：意图路由、模型容错与业务校验](../../../interview/kuaishou/ai/kuaishou-ai-18.md)
@@ -306,6 +364,13 @@ graph LR
 ## 参考资料
 
 - [POSIX pthread_mutex_lock](https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_mutex_lock.html)
+- [POSIX Programmer's Manual：mutex 所有者与非所有者解锁的类型差异](https://man7.org/linux/man-pages/man3/pthread_mutex_lock.3p.html)
+- [Python 3.14：Condition 与锁、等待谓词](https://docs.python.org/3.14/library/threading.html#condition-objects)
+- [JLS 25：monitor、synchronized 与 happens-before](https://docs.oracle.com/javase/specs/jls/se25/html/jls-17.html)
+- [OpenJDK 8u402-b06 HotSpot：synchronizer.cpp](https://github.com/openjdk/jdk8u/blob/jdk8u402-b06/hotspot/src/share/vm/runtime/synchronizer.cpp)
+- [JDK 15 发布说明：默认禁用偏向锁](https://www.oracle.com/java/technologies/javase/15all-relnotes.html)
+- [JDK 23 发布说明：默认启用新的轻量锁机制](https://www.oracle.com/java/technologies/javase/23-relnote-issues.html)
+- [OpenJDK 25 GA HotSpot：LightweightSynchronizer](https://github.com/openjdk/jdk/blob/jdk-25-ga/src/hotspot/share/runtime/lightweightSynchronizer.cpp)
 - [POSIX sem_wait](https://pubs.opengroup.org/onlinepubs/9799919799/functions/sem_wait.html)
 - [Java SE 25 Object：wait / notify / notifyAll](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html)（2026-10-20 北京时间核验）
 - [JLS 21：同步顺序与 happens-before](https://docs.oracle.com/javase/specs/jls/se21/html/jls-17.html#jls-17.4.4)

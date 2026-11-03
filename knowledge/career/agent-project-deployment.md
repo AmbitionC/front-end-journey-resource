@@ -69,6 +69,7 @@ SLO 面向用户：例如“99% 合格交互在 30 秒内获得可用草稿”�
 
 <!-- interview-source-history:start -->
 - [阿里云 SRE 运维开发一面：部署、网络与最大拼接数](../../interview/alibaba/ai/alibaba-ai-20.md)
+- [字节 TRAE 后端秋招二面：项目逻辑、工具与编辑距离](../../interview/bytedance/base/bytedance-base-76.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

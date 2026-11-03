@@ -3,6 +3,23 @@
 
 ---
 
+## 算法之前：先确认数组容器与视图的合同
+
+只问“vector 与 slice 有什么区别”还不足以确定语言、库和版本；`slice` 可能是类型、视图或操作名，不能自动把它认作 C++ `span`、Go slice 或 Rust slice。应先澄清，再比较存储所有权、是否复制、可变性、长度/容量、扩容、生命周期和越界合同。下面**仅以 C++20 `std::vector<int>` 与 `std::span<int>` 作为教学假设**，并非替未说明语言的题目补出定义；后文 JavaScript 数组算法仍按各自接口阅读。
+
+`vector<int>` 是管理自身元素存储的连续序列容器，可以增删元素；其末尾插入具有摊还常数复杂度，中间插入/删除一般需要线性移动。`span<int>` 是对其他对象所拥有连续序列的非拥有视图，复制视图不复制整批元素，也不会延长底层存储的生命周期。`span` 自身不提供容器式扩容，且可写视图能修改原元素；`span<const int>` 则通过该视图限制元素修改。[C++20 vector 概览](https://timsong-cpp.github.io/cppwp/n4861/vector.overview)、[span 概览](https://timsong-cpp.github.io/cppwp/n4861/span.overview)
+
+| 要确认的问题 | C++20 `vector<int>` 示例 | C++20 `span<int>` 示例 |
+| --- | --- | --- |
+| 谁管理元素存储 | 容器管理分配、元素与释放 | 底层拥有者负责，视图借用一个有效范围 |
+| 长度与容量 | `size()` 是现有元素数，`capacity()` 是无需重分配可容纳的数量 | 表示固定的当前视图范围，没有 vector 式的可增长容量 |
+| 复制意味着什么 | 普通复制产生另一份元素存储 | 复制同一底层范围的视图，修改元素可能影响其他使用者 |
+| 失效与越界 | 重分配、插入/删除等各有失效规则；访问须满足接口前提 | 拥有者销毁或底层范围失效后不可继续访问；视图不自动兜底生命周期 |
+
+举一个不运行越界访问的教学过程：先在存活的 `vector<int>` 上建立可写 `span<int>`，通过视图修改首元素时，容器看到的是同一个元素。随后若 `vector` 成功重分配，其旧元素地址、引用与迭代器失效，原视图也不能继续指向旧存储；应在新存储上重新建立有效视图。`reserve` 只调整容量安排、不增加 `size()`，不能预留容量后就索引尚不存在的元素，也不能假定扩容倍数由标准固定。[C++20：vector capacity 与失效规则](https://timsong-cpp.github.io/cppwp/n4861/vector.capacity)
+
+使用标准库时，把需求写成合同：数据是否必须独立保存，函数是否只借用输入，是否跨异步边界保存引用，能否接受重分配、复制和分配失败，以及是否会并发修改。算法的不变量还依赖有序性、索引范围与元素稳定性；即使复杂度合适，悬空视图或无保护并发读写仍会破坏正确性。先按实际语言和版本核对这些保证，再用代表性输入测量性能；“标准库”不是自动线程安全或所有输入都更快的承诺。
+
 #### 1. 查找数组中的最大值
 
 [ECMAScript Array Objects](https://tc39.es/ecma262/multipage/indexed-collections.html#sec-array-objects) 定义数组索引属性、`length` 与数组方法的标准语义；算法复杂度仍取决于具体操作和输入规模。
@@ -484,11 +501,15 @@ console.log(sqrtTwoDecimals('0'));        // '0.00'
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
 - [快手大模型应用算法社招一面：Diffusion 与二分基础](../../../interview/kuaishou/ai/kuaishou-ai-19.md)
 - [字节全栈二、三面：幂等、索引与字符串匹配](../../../interview/bytedance/base/bytedance-base-32.md)
+- [腾讯 CDG 金融科技二面：Agent 评估、协程与存储基础](../../../interview/tencent/ai/tencent-ai-29.md)
 - [蚂蚁机器学习实习一面：RAG 数据、幻觉与热点识别](../../../interview/antfin/ai/antfin-ai-15.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
 
+- [C++20 N4861：vector overview](https://timsong-cpp.github.io/cppwp/n4861/vector.overview)
+- [C++20 N4861：vector capacity](https://timsong-cpp.github.io/cppwp/n4861/vector.capacity)
+- [C++20 N4861：span overview](https://timsong-cpp.github.io/cppwp/n4861/span.overview)
 - [ECMAScript Array Objects](https://tc39.es/ecma262/multipage/indexed-collections.html#sec-array-objects)
 - [Introduction to Competitive Programming — Purdue University](https://www.cs.purdue.edu/homes/ninghui/courses/390_Fall19/lectures.html)
 - [COS 226 Advanced Precept 5 Instructor Notes — Princeton University](https://www.cs.princeton.edu/courses/archive/spring26/cos226/precepts/advanced-precept5.pdf)

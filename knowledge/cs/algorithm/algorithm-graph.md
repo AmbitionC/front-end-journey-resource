@@ -33,6 +33,53 @@ DFS 使用递归或显式栈，适合连通性、路径枚举和结构分析。�
 
 DFS 的完成时间可用于拓扑排序和强连通算法，但遍历结果依赖邻接顺序。若结果要可复现，先固定邻居排序或稳定输入。
 
+## 岛屿数量：把网格看成连通分量
+
+只有“岛屿数量”这个题名时，还要确认相邻规则、输入形式与是否允许修改网格。下面的教学版本约定：输入为稠密的矩形二维数组，数字 `1` 是陆地、`0` 是水；只有上下左右四邻格相连，空网格返回 0，函数保留原输入。如果改成八邻接，斜对角也会连通，答案可能改变。
+
+把陆地格看作顶点，相邻陆地之间连边，一座岛就是这个无向图的一个连通分量。[Princeton 的连通分量实现](https://algs4.cs.princeton.edu/41graph/CC.java.html)采用“扫描未访问点，再遍历整个分量”的方法；网格不必显式建邻接表，按坐标生成邻居即可。
+
+外层扫描遇到未访问陆地时，岛屿数加一，再用 DFS 或 BFS 标记与它连通的全部陆地。下面使用显式栈，避免长条岛屿导致递归栈过深；格子在入栈时就标记，保证同一格不会重复进入栈。
+
+```javascript
+function countIslands(grid) {
+  const rows = grid.length;
+  if (rows === 0) return 0;
+  const cols = grid[0].length;
+  if (!grid.every(row => Array.isArray(row) && row.length === cols &&
+      row.every(cell => cell === 0 || cell === 1))) {
+    throw new TypeError('Expected a rectangular 0/1 grid');
+  }
+  const seen = Array.from({ length: rows }, () => Array(cols).fill(false));
+  const directions = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+  let islands = 0;
+
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      if (grid[r][c] !== 1 || seen[r][c]) continue;
+      islands += 1;
+      seen[r][c] = true;
+      const stack = [[r, c]];
+      while (stack.length > 0) {
+        const [x, y] = stack.pop();
+        for (const [dx, dy] of directions) {
+          const nx = x + dx, ny = y + dy;
+          if (nx < 0 || nx >= rows || ny < 0 || ny >= cols ||
+              grid[nx][ny] !== 1 || seen[nx][ny]) continue;
+          seen[nx][ny] = true;
+          stack.push([nx, ny]);
+        }
+      }
+    }
+  }
+  return islands;
+}
+```
+
+例如 `[[1,0],[0,1]]` 在四邻接下是 2 座岛，八邻接下则是 1 座；`[[1,1],[1,1]]` 为 1，全部是水时为 0。一次遍历只能进入同一分量，又会访问其中所有可达陆地，因此之后只会在另一个分量首次加一，不会漏数或重复计数。
+
+对非空的 $m\times n$ 网格，每格至多入栈一次、检查四个方向，时间为 $O(mn)$；访问表和栈的额外空间为 $O(mn)$。允许原地把陆地改成水时可省去访问表，但显式栈仍可能占 $O(mn)$，且调用后输入已改变，不能宣称整个算法变成常数额外空间。
+
 ## 拓扑排序只属于 DAG
 
 拓扑序让每条有向边 u→v 中 u 都出现在 v 前。Kahn 算法维护入度为 0 的队列，每取一个点就删除其出边；最终输出少于 V，说明存在环。DFS 逆完成序也可得到拓扑序，但必须检测回边。
@@ -135,9 +182,11 @@ function dependencyBatches(ids, edges) {
 - [字节大模型应用秋招一面：日志盲区、框架选择与 BFS](../../../interview/bytedance/base/bytedance-base-71.md)
 - [华为 Agent 实习两轮记录：TCP、C 存储期与拓扑序](../../../interview/huawei/ai/huawei-ai-1.md)
 - [腾讯 WXG 一面：跨语言 RAG、消息幂等与算法](../../../interview/tencent/base/tencent-base-3.md)
+- [阿里大模型算法校招：Attention、后训练与 Agent 评测](../../../interview/alibaba/ai/alibaba-ai-24.md)
 - [字节前端全栈实习一面：渲染、Worker 与认证](../../../interview/bytedance/base/bytedance-base-38.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
 
 - [MIT OCW 6.006：Lecture Notes](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2008/resources/lecture-notes/)
+- [Princeton Algorithms：用 DFS 求无向图连通分量](https://algs4.cs.princeton.edu/41graph/CC.java.html)

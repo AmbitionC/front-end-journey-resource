@@ -128,6 +128,24 @@ def retrieve(self, query: str, limit: int) -> list:
 
 ---
 
+## OpenClaw：持久笔记、检索索引与当前上下文
+
+具体产品的记忆可以用文件保存，而不是必须另建向量数据库。以 2026-11-04 核验的 [OpenClaw Memory 文档](https://docs.openclaw.ai/concepts/memory)为例，工作区的 `MEMORY.md` 保存经过整理的持久事实与决定，`memory/YYYY-MM-DD.md` 保存较详细的每日观察和上下文；当前文档另用可选的 `USER.md` 管理稳定偏好等用户资料。这是该产品的约定，不是所有 Agent 的标准文件布局。
+
+| 层次 | 在这个例子中的职责 | 不能据此推断什么 |
+|---|---|---|
+| 持久笔记 | 保存可回读的事实、决定和日常记录 | 磁盘上有文件，不等于内容已经进入本轮模型输入 |
+| 检索索引 | 为笔记切块，建立关键词与可选的向量表示，按查询找候选 | 相似度高不等于事实正确，也不代替访问权限 |
+| 当前上下文 | 使用受预算约束的已加载笔记、召回片段和近期消息 | 没有加载的历史不能被当成模型此刻已知的信息 |
+
+[内置记忆引擎文档](https://docs.openclaw.ai/concepts/memory-builtin)说明默认索引采用每个 Agent 的 SQLite 数据库，也可按 Agent 的存储配置使用 PostgreSQL。向量检索取决于嵌入能力和配置，文件本身与向量索引并不是二选一。`memory_search` 用于找相关笔记，`memory_get` 用于读取具体记忆文件或行范围；先召回再按需读取，不必把所有每日记录重新塞回提示词。索引、提供商或模型变化后，还要核对索引兼容性与重建状态。
+
+压缩前的 memory flush 只是给持久化增加一次机会。文件型 Memory Core 需要可写工作区，其他插件可能使用自己的持久化工具；跳过或失败不能证明事实已经保存。会话 transcript、压缩摘要与长期笔记各有职责，具体压缩机制见[上下文压缩、摘要与裁剪](../prompt/prompt-context-compression.md)。
+
+教学上可以用“本次只整理材料，不发布”检查这套分工：先把它作为当前任务约束保留，不把临时要求误写成永久偏好；压缩后检查约束与来源是否仍可回读。跨会话需要使用某条事实时，再检查其有效期、来源和授权。若文件超过启动加载预算，OpenClaw 可能只截短注入上下文的副本；原文件仍在，并不代表模型已经看到了被省略的部分。
+
+---
+
 ## 向量检索在 Agent 记忆中的应用
 
 向量检索（Vector Retrieval）是长期记忆的一种可选索引。它将文本转换为稠密向量，再按相似度产生候选；候选仍要经过租户、权限、时效和业务规则过滤。对精确标识符、否定、数字或权限敏感查询，稀疏词法检索和结构化过滤可能更合适。
@@ -288,6 +306,7 @@ memory_tool.execute("forget", strategy="capacity_based", threshold=policy.capaci
 - [小红书 Agent 开发一面：多智能体、Memory 与广告投放优化](../../../interview/redbook/ai/redbook-ai-1.md)
 - [字节 Agent Infra 校招：运行时、MySQL 与 LRU](../../../interview/bytedance/base/bytedance-base-25.md)
 - [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../../interview/bytedance/base/bytedance-base-24.md)
+- [腾讯混元 AI 后台开发暑期实习一面：数据安全、OpenClaw 与并发手写](../../../interview/tencent/ai/tencent-ai-27.md)
 - [阿里 Agent 开发暑期实习一面](../../../interview/alibaba/ai/alibaba-ai-2.md)
 - [海康威视 AI Agent 开发一面：可靠工具与任务状态](../../../interview/hikvision/ai/hikvision-ai-1.md)
 <!-- interview-source-history:end -->
@@ -297,3 +316,5 @@ memory_tool.execute("forget", strategy="capacity_based", threshold=policy.capaci
 - [MemGPT: Towards LLMs as Operating Systems](https://arxiv.org/abs/2310.08560)
 - [Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/abs/2304.03442)
 - [LangGraph — Persistence：checkpointer 与 store](https://docs.langchain.com/oss/python/langgraph/persistence)
+- [OpenClaw — Memory：笔记、加载预算与记忆工具](https://docs.openclaw.ai/concepts/memory)（滚动文档，2026-11-04 核验）。
+- [OpenClaw — Builtin memory engine：文件索引与存储后端](https://docs.openclaw.ai/concepts/memory-builtin)（滚动文档，2026-11-04 核验）。

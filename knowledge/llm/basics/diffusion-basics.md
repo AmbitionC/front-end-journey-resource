@@ -58,6 +58,7 @@ result = decode_if_needed(x)
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [阿里云 AI 产品一面：模型基础、需求优先级与产品定位](../../../interview/alibaba/ai/alibaba-ai-27.md)
 - [快手大模型应用算法社招一面：Diffusion 与二分基础](../../../interview/kuaishou/ai/kuaishou-ai-19.md)
 - [饿了么 AIGC 实习一面：Attention、训练与扩散模型](../../../interview/alibaba/ai/alibaba-ai-23.md)
 <!-- interview-source-history:end -->

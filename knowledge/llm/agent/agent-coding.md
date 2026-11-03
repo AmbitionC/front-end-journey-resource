@@ -36,6 +36,18 @@ DAG 的权威状态不属于聊天窗口，也不应只放在某个子 Agent 的
 
 比较不同 Coding Agent 产品时，不宜用单次演示判断“谁更强”。应固定同一仓库快照和任务集，比较任务成功率、测试质量、补丁范围、恢复能力、权限模型、人工修订、延迟和成本；模型、工具和 Harness 都要锁定版本。产品名只是实现样本，能力合同和评测证据才可迁移。
 
+## 类似 Copilot 的编辑器补全，怎样提高准确度
+
+先限定要做的产品行为：本节讨论在编辑器里生成代码候选、由用户检查后采纳的补全；需要自主修改多文件和运行工具时，再进入前面的 Coding Agent 执行循环。GitHub 的 [Copilot inline suggestions 应用说明](https://docs.github.com/en/copilot/responsible-use/inline-suggestions#6-performance)披露了周围代码与编辑器上下文进入模型、结果作为候选展示并由用户采纳的基本过程。下面是一种类似工具的教学设计，不代表复原其私有模型或完整架构。
+
+一次请求先固定文档身份与版本、语言、光标或选择范围，以及光标前后的必要代码。再按任务取回相关类型、函数签名、调用方、测试和依赖版本，保留路径与版本关系；精确符号适合定义或词法检索，跨文件概念可辅以语义检索，具体方法见[代码仓库切分、索引与检索](../rag/rag-code-retrieval.md)。当前未保存的编辑缓冲区与仓库索引可能不同，装配时要明确谁覆盖谁；多塞无关文件会挤掉关键约束，注释中的指令也不获得执行权限。
+
+编辑器可以在用户停止输入后发起请求，继续输入时取消旧请求。VS Code 的[内联补全接口](https://code.visualstudio.com/api/language-extensions/programmatic-language-features#show-inline-completions)接收文档、位置、上下文与取消信号；应用仍须设计自己的过期结果保护，例如返回时核对请求序号、文档版本和替换范围。仅发送取消不证明远端已停止生成，也不能让迟到候选覆盖新编辑。补全先显示为可检查建议，涉及大范围修改或执行工具时另走明确的变更与权限合同。
+
+准确度首先看“是否符合当前仓库的接口与任务”，再看文本是否流畅。例如教学仓库中的 `saveOrder` 返回 `Promise<SaveResult>`，模型却按 `boolean` 使用；把真实签名纳入上下文可能帮助修复，但仍需类型检查与行为验证。补全响应先做低延迟的范围、格式和结构检查，采纳后按风险运行类型检查、受影响测试和 Diff 审查；不必在每次敲键时跑全仓测试，也不能把编译通过当成业务正确。
+
+离线评测按语言、任务、长短上下文、跨文件依赖和错误恢复分组，固定仓库与依赖快照，并让同源代码或任务变体在训练、调参与最终测试之间隔离。分别记录语法/类型有效、测试与任务成功、回归、人工修订、延迟和成本；真实使用中再看展示、采纳与后续修改。GitHub 的[质量评测说明](https://docs.github.com/en/copilot/responsible-use/inline-suggestions#performance-and-quality-evaluation-methods)同样区分离线正确性与上下文相关性、线上使用指标及运行开销。采纳率是使用信号，不能单独证明候选正确，更不能给没有实测的工具补造“准确率”。
+
 ## 隔离工作区
 
 [Git worktree](https://git-scm.com/docs/git-worktree)允许同一仓库拥有多个关联工作目录，适合把 Agent 变更与用户主工作区隔离。隔离不等于随意：仍从明确 base 创建分支，避免两个 Agent 写同一 worktree，结束前确认没有遗漏的未跟踪文件。
@@ -127,6 +139,7 @@ Trace 记录搜索、读取、编辑、命令、退出码、diff 统计和验证
 - [字节全栈实习：Session、权限与前端基础](../../../interview/bytedance/base/bytedance-base-46.md)
 - [字节财经保险 AI 全栈实习一面：项目设计、AI Coding 与 Diff](../../../interview/bytedance/base/bytedance-base-34.md)
 - [百度大模型研发一面：Context、Harness 与 RAG](../../../interview/baidu/ai/baidu-ai-1.md)
+- [阿里国际 AI 应用研发一面：JDK 8、消息可靠性与 RAG](../../../interview/alibaba/ai/alibaba-ai-25.md)
 - [字节 Agent 开发一面：评分、Harness 与任务可靠性](../../../interview/bytedance/base/bytedance-base-57.md)
 - [字节生活服务 AI 全栈二面：AI 作业、接口幂等与树题](../../../interview/bytedance/base/bytedance-base-64.md)
 - [字节抖音电商 Agent 一至三面：AI Coding、证据校验与长文档](../../../interview/bytedance/base/bytedance-base-63.md)
@@ -134,6 +147,7 @@ Trace 记录搜索、读取、编辑、命令、退出码、diff 统计和验证
 - [腾讯 AI Agent 应用开发一面：上下文、强化学习与系统基础](../../../interview/tencent/ai/tencent-ai-11.md)
 - [OPPO AI 全栈一面：AI Coding、Skill 与数据结构](../../../interview/oppo/ai/oppo-ai-1.md)
 - [蚂蚁暑期面经：线程池、数据来源与多 Agent 评测](../../../interview/antfin/ai/antfin-ai-14.md)
+- [阿里国际 Java 二面：RAG 数据评测、微调与代码生成](../../../interview/alibaba/ai/alibaba-ai-26.md)
 - [滴滴后端二面：CR Agent、Spec 与 AI Coding 场景](../../../interview/didi/ai/didi-ai-1.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)
 - [字节 Agent：AI Coding、技能设计与模型工程](../../../interview/bytedance/base/bytedance-base-49.md)
@@ -146,3 +160,5 @@ Trace 记录搜索、读取、编辑、命令、退出码、diff 统计和验证
 - [Git — git-worktree](https://git-scm.com/docs/git-worktree)
 - [Git — git-diff](https://git-scm.com/docs/git-diff)
 - [Git — git-status](https://git-scm.com/docs/git-status)
+- [GitHub：Copilot inline suggestions 的过程、局限与评测](https://docs.github.com/en/copilot/responsible-use/inline-suggestions)
+- [VS Code：内联补全的文档、位置、上下文与取消接口](https://code.visualstudio.com/api/language-extensions/programmatic-language-features#show-inline-completions)

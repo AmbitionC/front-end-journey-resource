@@ -61,6 +61,7 @@ PR 合并后关注回归、回复后续问题并参与 release。逐步从小修
 
 <!-- interview-source-history:start -->
 - [蚂蚁 Agent 一二面：Code Agent 与应用开发](../../interview/antfin/ai/antfin-ai-2.md)
+- [腾讯 CDG 金融科技二面：Agent 评估、协程与存储基础](../../interview/tencent/ai/tencent-ai-29.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

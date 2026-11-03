@@ -105,6 +105,7 @@ RAG 测试是一座金字塔：底层确定性契约保证数据与权限，中�
 - [京东后端一面：会话存储与 RAG 评测](../../../interview/jd/ai/jd-ai-2.md)
 - [字节 Agent 暑期实习一面：摘要、工具预算与链表](../../../interview/bytedance/base/bytedance-base-27.md)
 - [字节 Agent 后端实习一面：LangGraph、评测集与混合检索](../../../interview/bytedance/base/bytedance-base-22.md)
+- [阿里国际 Java 二面：RAG 数据评测、微调与代码生成](../../../interview/alibaba/ai/alibaba-ai-26.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
