@@ -59,6 +59,14 @@ RLAIF 用模型生成、批评或比较回答，减少部分人工排序成本�
 
 DPO 的流水线更简单，但不是“免费 RLHF”：它仍需高质量偏好对、参考策略、合适的采样分布和评估。若 rejected 太容易、偏好对覆盖狭窄，模型可能只学到表面格式；离线数据也难以及时暴露当前策略的新失败模式。
 
+## 面试中怎样把 PPO、DPO 与 GRPO 放在同一张图景里
+
+先分开“偏好来自哪里”和“怎样更新策略”。经典 PPO 式 RLHF 通常先训练奖励模型，再从当前策略采样并结合价值估计更新；经典离线 DPO 直接使用同一输入的 chosen/rejected 对与参考策略构造损失。DPO 的简化在于不必在这条训练链路中拟合显式奖励模型和运行 PPO rollout，不表示不需要数据治理，也不覆盖 Online DPO 等不同变体。
+
+GRPO 是在线奖励优化的另一条路线：为同一提示生成一组回答，用组内相对奖励形成优势，从而省去独立 Critic。组内奖励全相同时，相对信号没有区分度；数值保护能防除零，却不能创造高低比较。仍可能有其他损失项产生梯度，不能据此断言整个训练完全停止。
+
+[TRL 1.16.0 的 GRPO 文档](https://github.com/huggingface/trl/blob/v1.16.0/docs/source/grpo_trainer.md)还区分奖励缩放、长度归约和不同 Loss 变体。因此回答时先报所指算法/训练器版本，再谈奖励、数据、采样与独立任务效果；未实际训练过就说明理解范围，不编造调参成绩。长轨迹与信用分配细节可继续读[Agentic RL](../agent/agentic-rl.md)。
+
 ## 怎样选择
 
 | 维度 | RLHF | RLAIF | DPO |
@@ -89,6 +97,7 @@ RLHF、RLAIF 与 DPO 是三种把偏好变成模型行为的路径。RLHF 用奖
 
 <!-- interview-source-history:start -->
 - [阿里 Agent 实习一面：图文检索、评估与微调实践](../../../interview/alibaba/ai/alibaba-ai-10.md)
+- [阿里大模型算法校招：Attention、后训练与 Agent 评测](../../../interview/alibaba/ai/alibaba-ai-24.md)
 - [饿了么 AIGC 实习一面：Attention、训练与扩散模型](../../../interview/alibaba/ai/alibaba-ai-23.md)
 - [美团 Keeta Agent 一面：客服流程、偏好数据与链表](../../../interview/meituan/ai/meituan-ai-1.md)
 <!-- interview-source-history:end -->
@@ -105,3 +114,7 @@ RLHF、RLAIF 与 DPO 是三种把偏好变成模型行为的路径。RLHF 用奖
 - [Training language models to follow instructions with human feedback](https://arxiv.org/abs/2203.02155)
 - [Constitutional AI: Harmlessness from AI Feedback](https://arxiv.org/abs/2212.08073)
 - [Direct Preference Optimization: Your Language Model is Secretly a Reward Model](https://arxiv.org/abs/2305.18290)
+
+- [TRL 1.16.0：DPO 数据与损失](https://github.com/huggingface/trl/blob/v1.16.0/docs/source/dpo_trainer.md)
+
+- [TRL 1.16.0：GRPO 组采样与优势](https://github.com/huggingface/trl/blob/v1.16.0/docs/source/grpo_trainer.md)

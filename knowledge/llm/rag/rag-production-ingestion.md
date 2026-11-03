@@ -27,6 +27,24 @@ operation ∈ {UPSERT, DELETE}
 
 消费者按 event_id 建立待处理状态，再执行可重试的幂等阶段；只有阶段产物与完成标记满足约定的持久化边界后，才记为完成并确认消息。不能先写“已处理”就跳过尚未落地的副作用。消息“至少投递一次”时，重复执行不应产生重复 chunk；任务在中途崩溃时，从已验证完成的阶段继续，而不是重建整个语料。
 
+## 资料来自哪里，怎样证明适合进入知识库
+
+先围绕要回答的业务问题登记资料：由谁产生和维护，来自哪个获准入口，覆盖哪些产品、时间和用户范围，当前应采用哪一版。公开文档、内部工单、数据库记录或合成材料是不同的候选来源，不是放进向量库后就自动成为可信事实。[W3C PROV Primer](https://www.w3.org/TR/prov-primer/)用实体、活动与责任主体描述信息怎样产生和变化；这样的血缘支持追查与判断，是否适用和可信仍需根据任务验收。
+
+一种资料准入合同可以分别检查以下条件，不能只用“下载成功”或文档长度打一个总分：
+
+| 检查对象 | 应保留的依据与验收方式 |
+| --- | --- |
+| 来源与适用性 | 维护责任方、原件、发布状态、使用权限；核对是不是当前业务所需的规则或事实 |
+| 业务覆盖 | 以代表性问题与关键实体列出需要的证据，检查缺失场景；文档数量多不代表覆盖完整 |
+| 时效与冲突 | 生效范围、来源版本与替代关系；冲突交由明确的业务权威核对，不能仅按上传时间取最新 |
+| 解析完整性 | 对照原件抽样检查标题、表格行列、单位、否定和限定条件，记录空文本、缺页、乱码与截断 |
+| 检索可用性 | 在固定查询—证据集上检查正确资料是否可召回、引用能否支持答案，并保留失败切片 |
+
+例如当前售后政策需要新版本条款，旧版即使解析完整、向量相似度很高，也不能作为当前答案依据；新条款尚未核验时，应明确证据不足或按约定转交复核。解析器升级后，chunk 总数不变也可能丢掉表格单位，因此数量检查不能替代语义抽验。[Apache Tika 3.3.2 的 Parser 接口](https://tika.apache.org/3.3.2/parser.html)能返回结构化文本与元数据，但接口成功不替应用证明这些内容足够回答业务问题。
+
+这些是可选择的工程验收条件，并非 PROV 或 Tika 自动授予的质量保证。不合格材料保存原件、原因与处理版本后进入隔离；修复、补齐或确认冲突后产生新版本，再通过后面的构建门禁。原始来源质量、解析正确性、检索质量和最终答案质量应分别报告，便于确定下一步该修数据还是修系统。
+
 ## 版本属于产物，而不只属于代码
 
 一个索引条目至少受四类版本影响：来源版本、解析器版本、分块策略版本、embedding 模型版本。建议把它们写进不可变 build manifest：
@@ -116,7 +134,7 @@ chunk_id = hash(tenant_id, source_id, source_version,
 - 各版本的解析成功率、空文本率和 chunk 分布；
 - 影子评测与当前生产版的质量差异。
 
-[Apache Tika](https://tika.apache.org/2.6.0/parser.html) 的 Parser 接口能以流式方式输出结构化内容与元数据，这说明“解析结果”本身就应是一等产物，而不是只保留一串纯文本。生产系统还应保存原始来源指针和解析版本，使未来可以重新解析而不丢失血缘。
+[Apache Tika 3.3.2](https://tika.apache.org/3.3.2/parser.html) 的 Parser 接口能以流式方式输出结构化内容与元数据，这说明“解析结果”本身就应是一等产物，而不是只保留一串纯文本。生产系统还应保存原始来源指针和解析版本，使未来可以重新解析而不丢失血缘。
 
 ## 发布前检查清单
 
@@ -137,6 +155,7 @@ chunk_id = hash(tenant_id, source_id, source_version,
 <!-- interview-source-history:start -->
 - [美团容器平台 JAVA 一二面：消息一致性、MCP 权限与代码审查](../../../interview/meituan/ai/meituan-ai-5.md)
 - [字节 Agent 后端实习一面：LangGraph、评测集与混合检索](../../../interview/bytedance/base/bytedance-base-22.md)
+- [阿里国际 Java 二面：RAG 数据评测、微调与代码生成](../../../interview/alibaba/ai/alibaba-ai-26.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)
 <!-- interview-source-history:end -->
 
@@ -146,7 +165,8 @@ chunk_id = hash(tenant_id, source_id, source_version,
 
 ## 参考资料
 
-- [Apache Tika — The Parser interface](https://tika.apache.org/2.6.0/parser.html)
+- [Apache Tika 3.3.2 — The Parser interface](https://tika.apache.org/3.3.2/parser.html)
+- [W3C — PROV Model Primer](https://www.w3.org/TR/prov-primer/)
 - [Elastic — Reindex documents](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-reindex)
 - [Elastic — Aliases](https://www.elastic.co/guide/en/elasticsearch/reference/current/aliases.html)
 - [Elastic — Multiple alias action results](https://www.elastic.co/docs/manage-data/data-store/aliases#multiple-action-results)

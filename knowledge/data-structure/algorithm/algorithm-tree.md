@@ -215,6 +215,50 @@ function postorderTraversal(root) {
 }
 ```
 
+## 前序与中序还原二叉树：先确认节点标识唯一
+
+前序按“根、左、右”访问，中序按“左、根、右”访问。先确认两个序列描述同一棵树，以及节点能否用值唯一识别；[LeetCode 105 的标准题面](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/)明确保证值唯一，但不能把这个保证补成所有面试原题的条件。若只有重复值，前序和中序都为 `[1,1]` 时，根只有左孩子或只有右孩子都符合，不能承诺唯一还原。
+
+值唯一时，当前前序区间的首项确定根；根在当前中序区间的位置确定左右子树的节点集合和大小。设前序起点为 `p`、中序起点为 `l`、节点数为 `size`，根在中序的位置为 `k`，则左子树有 `k-l` 个节点：左子树前序从 `p+1` 开始，右子树从 `p+1+(k-l)` 开始。对两个更小区间重复即可，空区间返回空树。这是由遍历顺序推导的分治方法。
+
+例如前序 `[4,2,1,3,6]`、中序 `[1,2,3,4,6]`：根是 4，中序左侧 3 个节点对应前序紧随其后的 `[2,1,3]`，剩下 `[6]` 属于右子树。中序左侧的首项 1 并不因此成为左子树根；左子树根仍由它的前序首项 2 决定。
+
+下面的 JavaScript 教学合同接受值互异的安全整数数组，空输入返回 `null`；拒绝长度、值集合或区间关系不一致的输入，不修改原数组。预先建立中序位置表，避免每层重新查找和复制切片。
+
+```javascript
+function buildTreeFromTraversals(preorder, inorder) {
+  if (!Array.isArray(preorder) || !Array.isArray(inorder)) {
+    throw new TypeError('Expected safe integer arrays');
+  }
+  for (const values of [preorder, inorder]) {
+    for (const value of values) {
+      if (!Number.isSafeInteger(value)) throw new TypeError('Expected safe integers');
+    }
+  }
+  const n = preorder.length;
+  if (inorder.length !== n) throw new RangeError('Length mismatch');
+  const position = new Map(inorder.map((value, index) => [value, index]));
+  if (position.size !== n || new Set(preorder).size !== n ||
+      preorder.some(value => !position.has(value))) {
+    throw new RangeError('Expected the same distinct values');
+  }
+  function build(p, l, size) {
+    if (size === 0) return null;
+    const val = preorder[p], k = position.get(val);
+    if (k < l || k >= l + size) throw new RangeError('Inconsistent traversals');
+    const leftSize = k - l;
+    return {
+      val,
+      left: build(p + 1, l, leftSize),
+      right: build(p + 1 + leftSize, k + 1, size - leftSize - 1)
+    };
+  }
+  return build(0, 0, n);
+}
+```
+
+每层划分都由唯一根位置确定，归纳到空区间便得到唯一结构。若位置表访问按期望 O(1) 计，n 个节点总时间 O(n)，位置表 O(n)，递归栈 O(h)，另有输出树 O(n)。偏斜树的 h 可达 n，递归实现受运行时栈深限制；大规模深链应改用显式栈。值集合相同仍不足以证明输入有效，例如前序 `[1,2,3]`、中序 `[3,1,2]` 会在子区间检查时被拒绝。
+
 ## 二叉树子结构：候选根与局部匹配
 
 子结构与整棵子树相等是两个条件。本文约定：B 的节点值和左右关系须出现在 A 的某个根下，但 A 可以有 B 未要求的额外节点；公开接口把空 B 判为不是子结构。若题目要求整棵子树相等，双空与单空的判定必须另写。
@@ -335,11 +379,13 @@ function maximumIndependentSetSize(n, edges) {
 - [字节 Agent 一面：会话记忆、并发更新与算法](../../../interview/bytedance/base/bytedance-base-29.md)
 - [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
 - [百度大模型研发一面：Context、Harness 与 RAG](../../../interview/baidu/ai/baidu-ai-1.md)
+- [腾讯混元 AI 后台开发暑期实习一面：数据安全、OpenClaw 与并发手写](../../../interview/tencent/ai/tencent-ai-27.md)
 - [字节生活服务 AI 全栈二面：AI 作业、接口幂等与树题](../../../interview/bytedance/base/bytedance-base-64.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
 
+- [LeetCode 105：前序与中序构造二叉树的标准规格与唯一值条件](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/)
 - [Boost Graph Library breadth-first search](https://www.boost.org/doc/libs/latest/libs/graph/doc/breadth_first_search.html)
 - [Boost Graph Library depth-first search](https://www.boost.org/doc/libs/latest/libs/graph/doc/depth_first_search.html)
 - [CMU 15-451 Fall 2024：Dynamic Programming，第 3 节树独立集](https://www.cs.cmu.edu/~15451-f24/lectures/lecture09-dp.pdf)（稳定算法讲义；2026-10-20 北京时间核验）

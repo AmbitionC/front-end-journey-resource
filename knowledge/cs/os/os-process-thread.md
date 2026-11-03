@@ -102,6 +102,20 @@ sequenceDiagram
 
 **同一个内核线程同一时刻只运行一个任务，不等于所有协程都不能并行。**多个运行线程可以在多核上并行执行可并行的工作，仍受语言锁、任务依赖与运行时限制。异步调用也不自动消除竞态：即使只有一个事件循环，任务在检查条件后挂起，另一个任务也可能改变该条件，因此跨等待点的共享状态仍需协议。
 
+### 用 C++ 实现协程时，语言机制与调度器分别做什么
+
+先确认所说的是 C++20 标准协程，还是需要独立栈、保存寄存器的库级协程。下文仅以 **C++20 无栈协程**作教学实例：编译器为跨挂起点保留的参数、局部对象及 promise 等状态建立协程状态；不应把每个协程理解为独占一个线程或一整条独立调用栈。状态存储可能需要分配，也可能在标准允许的条件下省略该分配。[C++20 N4861：协程定义与状态](https://timsong-cpp.github.io/cppwp/n4861/dcl.fct.def.coroutine)
+
+实现思路可以沿四项责任展开：返回类型的 `promise_type` 定义结果、异常及初始/最终挂起行为；awaiter 的 `await_ready`、`await_suspend`、`await_resume` 决定等待协议；`coroutine_handle` 用于引用并在合法状态下恢复或销毁协程；事件循环或其他执行器再决定谁在何时、哪个线程上恢复它。`co_await` 并不保证一定挂起，标准语言机制也没有替应用提供完整的 I/O 事件循环、线程池或 Go GMP 调度器。[C++20 N4861：await 协议](https://timsong-cpp.github.io/cppwp/n4861/expr.await)
+
+例如，一个自定义 I/O awaiter 可以在等待时登记恢复句柄，I/O 就绪后由执行器安排恢复；这是应用/库的设计，不能只添加 `co_await` 就宣称普通阻塞调用变成非阻塞。还要明确句柄和状态的所有者、引用对象是否跨挂起点仍存活，以及取消、异常、完成和销毁如何衔接；恢复已完成的协程、并发无保护地恢复同一个协程，或访问已销毁状态都可能违反调用前提。若面试问的是手写有栈协程，应另讲栈、寄存器保存与平台 ABI，不能拿 C++20 的编译器转换或 Go GMP 概念直接代替。
+
+### 协程太多时，先区分等待与就绪积压
+
+大量协程等待 I/O 时，先控制任务状态内存、连接、定时器和在途请求；大量协程已经就绪时，再看 CPU 饱和、单次执行过长与运行队列等待。对自己实现的协作调度器，可以把有界就绪队列、轮转/分级队列与避免饥饿作为候选设计；多个工作线程负载不均时再评估工作窃取，窃取本身不保证严格公平。这里是基于负载与约束的工程取舍，不是 C++20 规定的唯一调度算法。
+
+“时间片”还要说清由谁执行。协作式 C++20 协程没有因为时间到了就自动在任意指令处挂起：长计算需要拆分并在合适位置交还执行权，或放到受控的工作线程；阻塞调用也会占住所在线程。结合队列长度、等待分布、CPU、内存和下游容量测量，再设置背压、超时与取消。Go 运行时的抢占、P 与工作窃取属于另一套具体实现，可另读 [Go GMP 调度](../../backend/runtime/go-gmp-scheduling.md)，不把作者提及 GMP 当成 C++ 标准协程的答案。
+
 ## 五、三者对比
 
 | 维度 | 进程 | 线程 | 协程 |
@@ -154,6 +168,7 @@ sequenceDiagram
 - [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)
 - [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../../interview/bytedance/base/bytedance-base-24.md)
 - [字节 Agent 后端一面：进程线程、Transformer 与训练](../../../interview/bytedance/base/bytedance-base-31.md)
+- [腾讯 CDG 金融科技二面：Agent 评估、协程与存储基础](../../../interview/tencent/ai/tencent-ai-29.md)
 - [腾讯云智武汉多轮：运行时、索引、锁与消息消费](../../../interview/tencent/base/tencent-base-4.md)
 - [蚂蚁暑期面经：线程池、数据来源与多 Agent 评测](../../../interview/antfin/ai/antfin-ai-14.md)
 - [蚂蚁 Agent 实习一面：缓存、消息与 RAG](../../../interview/antfin/ai/antfin-ai-6.md)
@@ -164,6 +179,8 @@ sequenceDiagram
 
 ## 参考资料
 
+- [C++20 N4861：Coroutine definitions](https://timsong-cpp.github.io/cppwp/n4861/dcl.fct.def.coroutine)
+- [C++20 N4861：Await expressions](https://timsong-cpp.github.io/cppwp/n4861/expr.await)
 - [POSIX General Concepts: Threads](https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap02.html#tag_02_09)
 - [PEP 3156: Asynchronous IO Support Rebooted](https://peps.python.org/pep-3156/)
 - [Linux man-pages：POSIX threads共享与独有属性](https://man7.org/linux/man-pages/man7/pthreads.7.html)

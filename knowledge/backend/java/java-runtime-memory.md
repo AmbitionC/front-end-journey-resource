@@ -2,6 +2,8 @@
 
 ## 为什么先划分内存区域
 
+面试里“JVM 内存模型有哪些区域”容易混用两个概念。**运行时数据区**回答线程执行、对象和类结构由哪些逻辑区域承载；**Java 内存模型（JMM）**约束执行中一次读取可以观察到哪次写入，以及同步与执行顺序等规则。前者不是堆栈名称版的 JMM；共享堆的两个线程怎样正确发布和读取对象，应另按 [JLS §17.4 的内存模型](https://docs.oracle.com/javase/specs/jls/se8/html/jls-17.html#jls-17.4)讨论。
+
 对象生命周期、方法执行与类加载使用不同结构。JVMS 21 定义共享的堆、方法区，以及线程私有的 PC 和 JVM 栈等逻辑区域，具体布局由实现决定。[JVMS §2.5](https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-2.html#jvms-2.5)没有规定所有实现必须采用同一种物理分区。
 
 ![对象分配由共享堆承载，类加载与执行需要类结构和线程栈；本地资源另有边界，异常应按区域定位](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/java-runtime-memory-archify-v1.png)
@@ -10,8 +12,12 @@
 |---|---|---|
 | 堆 | 实例、数组的逻辑分配空间 | GC 趋势、存活对象、堆快照引用链 |
 | 方法区及运行时常量池 | 类结构、字段与方法信息等 | 类数量、类加载器生命周期、实现的元数据指标 |
+| 程序计数器（PC） | 每线程当前执行的 JVM 指令位置；执行 native 方法时其值未定义 | 执行位置的规范概念，不当作对象分配区 |
 | 线程栈 | 调用帧、局部变量与操作数等 | 线程栈、调用深度、线程数量 |
+| 本地方法栈（实现可选） | 支持 native 方法或解释器内部的本地调用 | 按具体 JVM、线程与本地调用链取证 |
 | 本地与直接内存 | VM 内部、直接缓冲区及其他本地分配 | 进程内存与对应分配器指标 |
+
+[JVMS 8 §2.5.1](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.1)说明每个线程有自己的 PC；[§2.5.6](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5.6)允许实现按需提供本地方法栈，提供时通常按线程分配，不能要求所有 JVM 都有独立的某种物理“本地栈”。运行时常量池属于方法区的逻辑组成；直接缓冲区等进程资源则应与规范列出的运行时数据区区分，不能因为也占内存就新增为统一的规范区域。
 
 HotSpot 的元空间是实现类元数据的一种机制，不能把“方法区”这个规范概念与某一实现名称完全等同。堆使用量也不等于 RSS；映射、保留与实际提交内存须分别理解。
 
@@ -49,14 +55,17 @@ jcmd <pid> VM.native_memory summary.diff
 
 <!-- interview-source-history:start -->
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
+- [阿里国际 AI 应用研发一面：JDK 8、消息可靠性与 RAG](../../../interview/alibaba/ai/alibaba-ai-25.md)
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
 - [58同城 Agent 开发一面：MCP、数据查询与后端基础](../../../interview/58tongcheng/ai/58tongcheng-ai-1.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
 
-核验于 2026-10-04；规范与工具说明采用 Java 21，HotSpot 细节不代表所有 JVM。
+原有区域与诊断说明采用 Java 21；程序计数器、本地方法栈及 JMM 的补充另按下列 Java 8 规范核对。HotSpot 细节不代表所有 JVM。
 
 - [JVMS 21：运行时数据区域](https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-2.html#jvms-2.5)
+- [JVMS 8：程序计数器与本地方法栈](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5)
+- [JLS 8：Java 内存模型](https://docs.oracle.com/javase/specs/jls/se8/html/jls-17.html#jls-17.4)
 - [JVMS 21：加载、链接与初始化](https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-5.html)
 - [Java 21：Native Memory Tracking](https://docs.oracle.com/en/java/javase/21/vm/native-memory-tracking.html)

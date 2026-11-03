@@ -101,6 +101,49 @@ function indexOfKmp(text, pattern) {
 
 文本指针 i 不因失配回退，构建 lps 为 O(m)，搜索为 O(n)。示例按 UTF-16 code unit 匹配，适合明确的代码单元模式；自然语言等价还可能涉及 normalization、case folding 与 locale。
 
+## 最小编辑距离：比较两个前缀的三种结尾
+
+编辑距离先要约定允许的操作及其代价。这里采用 Levenshtein 距离的教学版本：把字符串 A 变成 B，只允许插入、删除、替换一个字符，每次代价为 1，相同字符保留时为 0；交换两个相邻字符不算一次操作。[NIST 的定义](https://xlinux.nist.gov/dads/HTML/Levenshtein.html)给出这三类编辑；仅有“最小编辑距离”题名时，不能推定字符范围、加权代价或交换规则。
+
+令 `dp[i][j]` 表示 A 的前 i 个字符变成 B 的前 j 个字符的最少编辑次数，前缀长度包含 0。空串变成长为 j 的前缀要插入 j 次，所以 `dp[0][j] = j`；长为 i 的前缀变成空串要删除 i 次，所以 `dp[i][0] = i`。
+
+接下来考察末尾如何对应。删除 A 的末字符，依赖上方 `dp[i-1][j] + 1`；插入 B 的末字符，依赖左方 `dp[i][j-1] + 1`；替换或保留双方末字符，依赖左上方 `dp[i-1][j-1] + cost`，其中相同字符的 cost 为 0，否则为 1。三者取最小，不能只因末字符不同就贪心地选替换。这是 [MIT 6.006 的前缀子问题思路](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/487dc976eabd0f9bcd6a3c385203ea27_MIT6_006S20_r16.pdf)；下表以 `cat` 变成 `cut` 为例，行、列分别表示两串的前缀：
+
+| A 前缀 \ B 前缀 | 空串 | c | cu | cut |
+|---|---:|---:|---:|---:|
+| 空串 | 0 | 1 | 2 | 3 |
+| c | 1 | 0 | 1 | 2 |
+| ca | 2 | 1 | 1 | 2 |
+| cat | 3 | 2 | 2 | 1 |
+
+`ca` 到 `cu` 的左上方为 0，替换 a 为 u 后得到 1；最后两个 t 相同，沿左上方保留该值，右下角答案就是 1。每个状态只依赖更短前缀，按行填表时依赖都已求出。
+
+```javascript
+function editDistance(source, target) {
+  const a = Array.from(source), b = Array.from(target);
+  const n = a.length, m = b.length;
+  const dp = Array.from({ length: n + 1 }, () => Array(m + 1).fill(0));
+  for (let i = 0; i <= n; i++) dp[i][0] = i;
+  for (let j = 0; j <= m; j++) dp[0][j] = j;
+
+  for (let i = 1; i <= n; i++) {
+    for (let j = 1; j <= m; j++) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      dp[i][j] = Math.min(
+        dp[i - 1][j] + 1,
+        dp[i][j - 1] + 1,
+        dp[i - 1][j - 1] + cost
+      );
+    }
+  }
+  return dp[n][m];
+}
+```
+
+本例用 `Array.from` 按 Unicode code point 迭代，避免把 `😀` 的 surrogate pair 拆成两次删除，但仍可能拆开组合字素或家庭 emoji；[字符串迭代器文档](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Symbol.iterator)与前述 Unicode 分段规则说明了这个区别。这里逐 code point 精确比较，不自动归一化：`editDistance('é', 'e\u0301')` 为 2。若产品要求按用户感知字符计费或比较，应先约定归一化与 grapheme 分段，再对分段数组应用相同递推。
+
+空串到空串为 0，空串到 `abc` 为 3，`ab` 到 `ba` 为 2，不能把交换当成一次编辑。字符长度为 n、m 时，完整表的时间和空间为 $O((n+1)(m+1))$，非空时通常写为 $O(nm)$。只求距离可压缩 DP 工作空间为 $O(\min(n,m)+1)$，字符数组仍占 $O(n+m)$；本例保留完整表以展示状态，但只返回距离，恢复具体操作还需回溯最优前驱。
+
 ## 设计与测试边界
 
 先写清返回第一个位置、所有位置还是布尔值；是否允许重叠匹配；空模式如何处理；大小写与 normalization 是否敏感。测试至少包括空串、完全相同、找不到、模式比文本长、重复前后缀、重叠命中、surrogate pair 与组合字符。
@@ -135,9 +178,13 @@ function compareVersions(a, b) {
 <!-- interview-source-history:start -->
 - [字节全栈实习：Session、权限与前端基础](../../../interview/bytedance/base/bytedance-base-46.md)
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
+- [字节 TRAE 后端秋招二面：项目逻辑、工具与编辑距离](../../../interview/bytedance/base/bytedance-base-76.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
 
 - [Fast Pattern Matching in Strings](https://www.cs.jhu.edu/~misha/ReadingSeminar/Papers/Knuth77.pdf)
 - [Unicode Standard Annex #29: Text Segmentation](https://unicode.org/reports/tr29/)
+- [NIST：Levenshtein distance](https://xlinux.nist.gov/dads/HTML/Levenshtein.html)
+- [MIT 6.006：动态规划练习中的编辑距离](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/487dc976eabd0f9bcd6a3c385203ea27_MIT6_006S20_r16.pdf)
+- [MDN：String.prototype[Symbol.iterator]()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Symbol.iterator)

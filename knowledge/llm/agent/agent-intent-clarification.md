@@ -92,6 +92,14 @@ function nextStep(
 
 保存意图集合及依赖图版本，用户改需求时撤销过期计划并对已发生动作对账。这是把前述澄清与策略模型扩展到请求集合的工程方法，应以多意图、冲突约束、重复动作和取消场景评测。
 
+## 意图识别与查询改写是否需要两个模型
+
+先分别定义输出合同：意图识别提取目标、槽位和候选路由；查询改写把已确认的问题变成适合检索的表达。例如“查上周 A 版本退款失败的原因”需要保留时间、版本和失败条件，不能在改写时变成执行退款。租户与权限过滤仍由可信业务状态构造，模型生成的查询不能扩大授权。改写策略和保真检查见[查询改写](../rag/rag-query-rewrite.md)。
+
+这两项职责可以由同一模型承担，例如一次结构化输出分别提供意图与查询，或以两个任务调用同一模型；也可以使用分类器与独立改写模型。选择取决于任务质量、延迟、资源成本、独立升级与错误隔离需求，而不是模块名称。[Query Rewriting 的原始研究](https://aclanthology.org/2023.emnlp-main.322/)提供了可独立训练的改写器配合检索和黑盒阅读模型的实例；它不规定意图识别必须使用另一模型，也不证明某一种拆分对所有任务更好。
+
+即使共用一次模型调用，也要分别校验意图枚举、必填槽位与改写结果，保护实体、数字、否定、时间和版本。信息仍有歧义时先澄清，不让改写器以猜测填成用户事实。比较同模与分模方案时，先看路由和槽位是否正确、原问约束是否保留，再看检索证据及最终任务结果；保留相同任务切片，不能只按一个分类准确率或查询相似度决定架构。
+
 ## 失败边界：不确定时不要伪装确定
 
 - **置信度校准失真**：模型说“很确定”不等于正确。用分桶校准图和按任务类型的错误样本调阈值，不把单一全局阈值用于所有动作。
@@ -119,6 +127,7 @@ function nextStep(
 - [小红书 AI 后端一面：执行模式、Memory、意图与 RAG](../../../interview/redbook/ai/redbook-ai-8.md)
 - [网易云全栈一面：评估闭环、异步任务与数据查询](../../../interview/netease/fullstack/netease-fullstack-1.md)
 - [字节全栈：多智能体导购、客户端与系统评测](../../../interview/bytedance/base/bytedance-base-43.md)
+- [腾讯混元后台一面：Java 并发、限流与 Agent 工程](../../../interview/tencent/ai/tencent-ai-28.md)
 - [字节 Agent 后端实习一面：LangGraph、评测集与混合检索](../../../interview/bytedance/base/bytedance-base-22.md)
 - [快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理](../../../interview/kuaishou/ai/kuaishou-ai-3.md)
 - [快手效果营销实习一面：意图路由、模型容错与业务校验](../../../interview/kuaishou/ai/kuaishou-ai-18.md)
@@ -129,3 +138,4 @@ function nextStep(
 - [OpenAI Agents SDK：Tracing](https://openai.github.io/openai-agents-python/tracing/)
 - [OpenAI Agents SDK：Running agents](https://openai.github.io/openai-agents-python/running_agents/)
 - [OpenAI Agents SDK：Testing](https://openai.github.io/openai-agents-python/testing/)
+- [Ma et al.：Query Rewriting in Retrieval-Augmented Large Language Models](https://aclanthology.org/2023.emnlp-main.322/)

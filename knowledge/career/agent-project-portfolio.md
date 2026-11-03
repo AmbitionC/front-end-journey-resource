@@ -30,7 +30,7 @@ RAG 项目的核心挑战在于检索质量和回答质量的协同。你需要�
 | 评估体系 | "感觉回答还不错" | 建立 QA 测试集，计算 Faithfulness、Context Precision |
 | 难例分析 | 没有 | 整理出哪类问题效果差，给出改进方案 |
 
-真正有说服力的项目，一定要有**评估数据**。手工构造 50~100 个问答对，跑 RAGAS 评估，把数字写进项目文档。"Faithfulness 从 0.61 优化到 0.84"这一句话，比任何描述性语言都有力量。
+项目需要能复核的评估证据：先按真实任务与失败切片建立问答集，记录样本来源、规模、标注依据、基线和指标计算方法，再选择 RAGAS 等工具或人工判据。样本数量应由覆盖范围决定，不能把 50~100 题当作通用验收门槛；“Faithfulness 从 0.61 优化到 0.84”只是虚构的写法示例，不代表任何项目的实测结果。没有可核验数字时，可以展示可复现用例、失败分析和人工复核记录，不能为了简历好看补造收益。
 
 **知识库参考**：知识库 → RAG 全部内容，包括 Hybrid Search 实现、评估指标详解。
 
@@ -60,11 +60,11 @@ graph TD
     G --> H[附带引用来源输出]
 ```
 
-工具链至少应包含 Web Search、URL 内容抓取、结果摘要三个工具，工具的参数设计和错误处理质量直接影响 Agent 稳定性。
+按任务需要选择职责清晰的工具接口，例如搜索、正文读取或证据整理；是否拆成独立工具，取决于权限、可测试性和失败边界，不要求固定数量。每个接口都应说明输入、输出、来源定位和错误语义，避免把“接了几个工具”当作系统能力的证明。
 
 **如何让项目出彩**
 
-保存并展示 Agent 的中间推理链，体现"它是怎么一步步缩小问题范围的"。做到每个关键论断都有对应 URL 和原文片段支撑，并在前端实现引用高亮体验。如果还加上流式输出，演示时的冲击力会强很多。
+保存并展示可观察的执行轨迹，例如任务计划、搜索请求、工具结果、状态变化与引用证据，说明系统怎样缩小问题范围；不要求模型提供未公开的隐式思维链。轨迹先脱敏，每个关键论断回连对应 URL 与原文片段，并可在前端展示引用高亮和进度。演示还应说明检索不足、证据冲突或工具失败时怎样退出，流式展示本身不证明研究质量。
 
 **知识库参考**：知识库 → AI 智能体 → `agent-deep-research`、`agent-react`、`context-engineering`。
 
@@ -104,12 +104,12 @@ Orchestrator 解析 PR diff，分发给各专项 Agent，收集结果后合并�
 
 [Anthropic 的 Agent eval 指南](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) 将 task、trial、grader、结果聚合和轨迹审读作为可复现评估的组成部分；作品集应公开数据集边界和失败切片，而不只展示最佳样例。
 
-[OpenAI Agents SDK Tracing](https://openai.github.io/openai-agents-python/tracing/) 可以记录一次 run 中的模型生成、工具调用、handoff 和 guardrail；展示 trace 时应脱敏输入输出并说明采样策略。
+[OpenAI Agents SDK 的观测文档](https://developers.openai.com/api/docs/guides/agents/integrations-observability)说明 trace 可记录模型调用、工具调用及结果、handoff、guardrail 与自定义 span；这些是可观察事件，不等于模型的全部内部推理。展示 trace 时应脱敏输入输出并说明采样策略。
 
 
 不管做哪类项目，以下几点是"能打"作品集的标配：
 
-**① 评估指标（Eval）** — 没有数字就没有说服力。"优化前 xx，优化后 xx"是最有力的表述。
+**① 评估证据（Eval）** — 展示可复现任务、判断标准、基线和失败切片；报告数字时同时给出样本范围、分母与计算方法，让“优化前后”可以被复核。
 
 **② 错误处理** — 工具调用失败怎么重试？LLM 输出格式不对怎么解析？边界情况的处理体现工程成熟度。
 
@@ -123,12 +123,12 @@ Orchestrator 解析 PR diff，分发给各专项 Agent，收集结果后合并�
 
 ## 三个会让作品集"掉分"的常见误区
 
-[OpenAI Agents SDK Guardrails](https://openai.github.io/openai-agents-python/guardrails/) 区分输入、输出与工具 guardrail 的执行边界；作品集应说明哪些动作被校验或阻断，以及 guardrail 没有覆盖什么。
+[OpenAI Agents SDK 的 Guardrails 与人工审核文档](https://developers.openai.com/api/docs/guides/agents/guardrails-approvals)区分输入、输出与工具 guardrail 的执行边界；作品集应说明哪些动作被校验或阻断，以及 guardrail 没有覆盖什么。
 
 
 **只有 Happy Path** — 演示全程顺风顺水，一换奇怪的问题就崩了。你需要对边界情况有答案。
 
-**没有 Eval** — "这个项目效果很好"在高段位面试里几乎没有说服力。哪怕 20 个手工测试用例，也要有数字。
+**没有 Eval** — 只有“这个项目效果很好”无法复核。先提供能复现的任务与判据，再按业务范围补充失败切片、重复试验和必要的人工复核；小样本可以作为起点，但应说明覆盖不足，不能用固定题数代替充分性判断。
 
 **堆工具不如深一个** — 接了七八个工具浅尝辄止，不如把一个工具的参数设计、错误处理、输出格式吃透。深度永远比广度更有价值。
 
@@ -139,25 +139,28 @@ Orchestrator 解析 PR diff，分发给各专项 Agent，收集结果后合并�
 ## 参考资料
 
 - [Demystifying evals for AI agents — Anthropic](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents)
-- [Tracing — OpenAI Agents SDK](https://openai.github.io/openai-agents-python/tracing/)
-- [Guardrails — OpenAI Agents SDK](https://openai.github.io/openai-agents-python/guardrails/)
+- [Integrations and observability — OpenAI Agents SDK](https://developers.openai.com/api/docs/guides/agents/integrations-observability)
+- [Guardrails and human review — OpenAI Agents SDK](https://developers.openai.com/api/docs/guides/agents/guardrails-approvals)
 
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节全栈一二面：调度器、流式恢复与浏览器网络](../../interview/bytedance/base/bytedance-base-53.md)
 - [字节 AI 平台一面：Agent 评测、框架与数据结构](../../interview/bytedance/base/bytedance-base-33.md)
 - [字节全栈一面：RAG、Java 与线程池](../../interview/bytedance/base/bytedance-base-37.md)
-- [字节前端全栈实习一面：渲染、Worker 与认证](../../interview/bytedance/base/bytedance-base-38.md)
-- [字节抖音 Agent 一面：Skill、MCP 与记忆](../../interview/bytedance/base/bytedance-base-39.md)
-- [字节 Agent 实习：异步消息、上下文与容器隔离](../../interview/bytedance/base/bytedance-base-41.md)
-- [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../interview/bytedance/base/bytedance-base-42.md)
-- [字节全栈：多智能体导购、客户端与系统评测](../../interview/bytedance/base/bytedance-base-43.md)
-- [字节全栈：预请求、列表复用与 ThreadLocal](../../interview/bytedance/base/bytedance-base-44.md)
-- [字节全栈实习：Session、权限与前端基础](../../interview/bytedance/base/bytedance-base-46.md)
-- [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../interview/bytedance/base/bytedance-base-47.md)
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../interview/bytedance/base/bytedance-base-48.md)
-- [字节 Agent：幻觉、任务恢复与 Java 基础](../../interview/bytedance/base/bytedance-base-50.md)
-- [字节 Agent 实习：推理、微调与工具编排](../../interview/bytedance/base/bytedance-base-51.md)
-- [字节全栈一二面：调度器、流式恢复与浏览器网络](../../interview/bytedance/base/bytedance-base-53.md)
 - [字节后端与 Agent：运行链路、数据库与网络](../../interview/bytedance/base/bytedance-base-55.md)
+- [字节全栈：多智能体导购、客户端与系统评测](../../interview/bytedance/base/bytedance-base-43.md)
+- [京东 AI 应用开发日常实习二面：项目表达与产品场景](../../interview/jd/ai/jd-ai-7.md)
+- [字节 Agent：幻觉、任务恢复与 Java 基础](../../interview/bytedance/base/bytedance-base-50.md)
+- [字节 Agent 实习：异步消息、上下文与容器隔离](../../interview/bytedance/base/bytedance-base-41.md)
+- [字节 Agent 实习：推理、微调与工具编排](../../interview/bytedance/base/bytedance-base-51.md)
+- [字节全栈实习：Session、权限与前端基础](../../interview/bytedance/base/bytedance-base-46.md)
+- [字节抖音 Agent 一面：Skill、MCP 与记忆](../../interview/bytedance/base/bytedance-base-39.md)
+- [字节全栈一二面：调度器、流式恢复与浏览器网络](../../interview/bytedance/base/bytedance-base-53.md)
+- [字节 TRAE 后端秋招二面：项目逻辑、工具与编辑距离](../../interview/bytedance/base/bytedance-base-76.md)
+- [字节前端全栈实习一面：渲染、Worker 与认证](../../interview/bytedance/base/bytedance-base-38.md)
+- [字节全栈：预请求、列表复用与 ThreadLocal](../../interview/bytedance/base/bytedance-base-44.md)
+- [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../interview/bytedance/base/bytedance-base-47.md)
+- [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../interview/bytedance/base/bytedance-base-42.md)
 <!-- interview-source-history:end -->

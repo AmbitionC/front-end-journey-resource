@@ -1062,6 +1062,29 @@
             "contentFormat": "short-qa-v2"
           }
         ]
+      },
+      {
+        "key": "bytedance-department-trae",
+        "label": "TRAE",
+        "children": [
+          {
+            "label": "字节 TRAE 后端秋招二面：项目逻辑、工具与编辑距离",
+            "key": "bytedance-base-76",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "department": "TRAE",
+            "roleCategory": "AI 与 Agent 工程",
+            "role": "后端开发工程师",
+            "tags": [
+              "Agent",
+              "项目",
+              "工具",
+              "算法"
+            ],
+            "updatedAt": "2026-11-04",
+            "contentFormat": "short-qa-v2"
+          }
+        ]
       }
     ],
     "nodeType": "company"
@@ -1535,6 +1558,71 @@
             "role": "后台开发"
           }
         ]
+      },
+      {
+        "key": "tencent-department-hunyuan",
+        "label": "混元",
+        "children": [
+          {
+            "label": "腾讯混元 AI 后台开发暑期实习一面：数据安全、OpenClaw 与并发手写",
+            "key": "tencent-ai-27",
+            "isLeaf": true,
+            "filePath": "tencent/ai",
+            "department": "混元",
+            "roleCategory": "AI 与 Agent 工程",
+            "role": "AI 后台开发（暑期实习）",
+            "tags": [
+              "Agent",
+              "OpenClaw",
+              "数据安全",
+              "并发",
+              "算法"
+            ],
+            "updatedAt": "2026-11-04",
+            "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "腾讯混元后台一面：Java 并发、限流与 Agent 工程",
+            "key": "tencent-ai-28",
+            "isLeaf": true,
+            "filePath": "tencent/ai",
+            "department": "混元",
+            "roleCategory": "AI 与 Agent 工程",
+            "role": "后台（标题自述；具体正式岗位未说明）",
+            "tags": [
+              "Java",
+              "并发",
+              "限流",
+              "RAG",
+              "MCP"
+            ],
+            "updatedAt": "2026-11-04",
+            "contentFormat": "short-qa-v2"
+          }
+        ]
+      },
+      {
+        "key": "tencent-department-cdg",
+        "label": "CDG",
+        "children": [
+          {
+            "label": "腾讯 CDG 金融科技二面：Agent 评估、协程与存储基础",
+            "key": "tencent-ai-29",
+            "isLeaf": true,
+            "filePath": "tencent/ai",
+            "department": "CDG 金融科技",
+            "roleCategory": "AI 与 Agent 工程",
+            "tags": [
+              "Agent",
+              "C++",
+              "协程",
+              "存储",
+              "排障"
+            ],
+            "updatedAt": "2026-11-04",
+            "contentFormat": "short-qa-v2"
+          }
+        ]
       }
     ],
     "nodeType": "company"
@@ -1661,6 +1749,24 @@
             ],
             "updatedAt": "2026-10-29",
             "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "阿里云 AI 产品一面：模型基础、需求优先级与产品定位",
+            "key": "alibaba-ai-27",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "department": "阿里云",
+            "roleCategory": "AI 与 Agent 工程",
+            "role": "AI 产品",
+            "tags": [
+              "大模型",
+              "产品",
+              "需求",
+              "RAG",
+              "评测"
+            ],
+            "updatedAt": "2026-11-04",
+            "contentFormat": "short-qa-v2"
           }
         ]
       },
@@ -1684,6 +1790,41 @@
             "department": "阿里国际",
             "roleCategory": "Agent 与 AI 应用",
             "role": "Agent算法",
+            "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "阿里国际 AI 应用研发一面：JDK 8、消息可靠性与 RAG",
+            "key": "alibaba-ai-25",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "department": "阿里国际",
+            "roleCategory": "AI 与 Agent 工程",
+            "role": "AI 应用研发",
+            "tags": [
+              "Java",
+              "RabbitMQ",
+              "Redis",
+              "RAG",
+              "并发"
+            ],
+            "updatedAt": "2026-11-04",
+            "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "阿里国际 Java 二面：RAG 数据评测、微调与代码生成",
+            "key": "alibaba-ai-26",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "department": "阿里国际",
+            "roleCategory": "AI 与 Agent 工程",
+            "role": "Java 开发",
+            "tags": [
+              "Java",
+              "RAG",
+              "微调",
+              "AI Coding"
+            ],
+            "updatedAt": "2026-11-04",
             "contentFormat": "short-qa-v2"
           }
         ]
@@ -1880,6 +2021,24 @@
               "Agent"
             ],
             "updatedAt": "2026-10-29",
+            "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "阿里大模型算法校招：Attention、后训练与 Agent 评测",
+            "key": "alibaba-ai-24",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "department": "其他",
+            "roleCategory": "AI 与 Agent 工程",
+            "role": "大模型算法（校招）",
+            "tags": [
+              "大模型",
+              "Agent",
+              "后训练",
+              "评测",
+              "算法"
+            ],
+            "updatedAt": "2026-11-04",
             "contentFormat": "short-qa-v2"
           }
         ]
@@ -3373,6 +3532,24 @@
             ],
             "updatedAt": "2026-10-29",
             "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "网易后端开发秋招一面：缓存一致性、死锁与分布式锁",
+            "key": "netease-base-1",
+            "isLeaf": true,
+            "filePath": "netease/base",
+            "department": "其他",
+            "roleCategory": "服务端工程",
+            "role": "后端开发",
+            "tags": [
+              "缓存",
+              "Redis",
+              "MySQL",
+              "死锁",
+              "分布式锁"
+            ],
+            "updatedAt": "2026-11-04",
+            "contentFormat": "short-qa-v2"
           }
         ]
       },
@@ -3821,6 +3998,23 @@
               "Agent"
             ],
             "updatedAt": "2026-10-29",
+            "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "京东 AI 应用开发日常实习二面：项目表达与产品场景",
+            "key": "jd-ai-7",
+            "isLeaf": true,
+            "filePath": "jd/ai",
+            "department": "其他",
+            "roleCategory": "AI 与 Agent 工程",
+            "role": "AI 应用开发",
+            "tags": [
+              "Agent",
+              "项目",
+              "产品",
+              "隐私"
+            ],
+            "updatedAt": "2026-11-04",
             "contentFormat": "short-qa-v2"
           }
         ]

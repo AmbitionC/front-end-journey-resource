@@ -173,10 +173,11 @@
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [vivo Agent 秋招线下面：Harness 与工程诊断](../../interview/vivo/ai/vivo-ai-1.md)
-- [字节全栈：多智能体导购、客户端与系统评测](../../interview/bytedance/base/bytedance-base-43.md)
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../interview/bytedance/base/bytedance-base-48.md)
+- [字节全栈：多智能体导购、客户端与系统评测](../../interview/bytedance/base/bytedance-base-43.md)
+- [vivo Agent 秋招线下面：Harness 与工程诊断](../../interview/vivo/ai/vivo-ai-1.md)
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../interview/bytedance/base/bytedance-base-53.md)
+- [阿里国际 Java 二面：RAG 数据评测、微调与代码生成](../../interview/alibaba/ai/alibaba-ai-26.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

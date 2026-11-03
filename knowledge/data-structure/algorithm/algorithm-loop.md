@@ -255,6 +255,49 @@ function minPathSum(grid) {
 
 例如 `[[1,3,1],[1,5,1],[4,2,1]]` 的最小和为 7。时间复杂度为 $O(mn)$，额外空间为 $O(n)$；这里只返回最小值。如果题目要求路径，还需保存或重建选择信息，不能声称一维数组已经保存了完整路径。
 
+## 苹果分盘：可区分条件决定计数对象
+
+“m 个苹果放入 n 个盘子，允许空盘”还不能确定唯一答案。必须先问：苹果是否可区分、盘子是否有编号，以及是否只关心每盘放了哪些苹果、不考虑盘内顺序。下面列出没有额外容量限制时的条件式模型；它们不是对缺失原题条件的还原。
+
+| 苹果 | 盘子 | 计数模型（n≥1） |
+|---|---|---|
+| 不可区分 | 不可区分 | m 的至多 n 个正整数部分的划分，空盘不额外计数 |
+| 不可区分 | 可区分 | 非负整数向量的和为 m，隔板法得 $\binom{m+n-1}{n-1}$ |
+| 可区分 | 可区分 | 每个苹果独立选择盘子，共 $n^m$ |
+| 可区分 | 不可区分 | 划成至多 n 个非空集合，共 $\sum_{k=0}^{\min(m,n)}S(m,k)$ |
+
+[NIST DLMF §26.9](https://dlmf.nist.gov/26.9)定义至多若干部分的整数划分，[§26.8](https://dlmf.nist.gov/26.8)定义第二类 Stirling 数 $S(m,k)$ 的集合划分语义。对于有编号盘子、相同苹果，把 m 个星号与 n−1 个隔板排列可直接推导第二行；也可把一份分配唯一编码成非递减的盘子编号序列，对应 [Python combinations_with_replacement 的计数公式](https://docs.python.org/3.14/library/itertools.html#itertools.combinations_with_replacement)。例如 m=4、n=2，四种合同分别得到 3、5、16、8，不能混用。
+
+只讨论“相同苹果、相同盘子”时，令 `f(a,b)` 表示 a 个苹果放进至多 b 个非空盘子的方案数。a=0 时有一种空安排；a>0、b=0 时无解。b>a 时最多也只用 a 个非空盘，可缩为 `f(a,a)`。其余情况按是否用满 b 个非空盘分成互斥且穷尽的两类：少用一个盘得到 `f(a,b-1)`；每盘至少一个时先各拿走一个，剩余得到 `f(a-b,b)`。后者允许拿走后出现空盘，逆操作是补齐到 b 盘后每盘加一个，因而不会漏计或重复。
+
+$$
+f(a,b)=f(a,b-1)+f(a-b,b)\quad(a\ge b>0)
+$$
+
+下面是 Python 3.9+ 的记忆化教学实现；[functools.cache](https://docs.python.org/3.14/library/functools.html#functools.cache)按完整参数缓存子问题，避免重复展开。返回方案数，不输出每一种分配。
+
+```python
+from functools import cache
+
+def count_identical_placements(m, n):
+    if type(m) is not int or type(n) is not int or m < 0 or n < 0:
+        raise ValueError("m and n must be nonnegative integers")
+
+    @cache
+    def count(a, b):
+        if a == 0:
+            return 1
+        if b == 0:
+            return 0
+        if b > a:
+            return count(a, a)
+        return count(a, b - 1) + count(a - b, b)
+
+    return count(m, min(m, n))
+```
+
+`count_identical_placements(4,2)` 为 3，对应 `[4,0]`、`[3,1]`、`[2,2]`；`(7,3)` 为 8。这里把 `(0,0)` 定义为一种空安排，零盘但有苹果则为 0。状态数至多 O(m·min(m,n))，缓存空间同阶；加法成本还取决于方案数的位数。递归深度随参数增长，受 [Python 解释器递归上限](https://docs.python.org/3.14/library/sys.html#sys.getrecursionlimit)约束，大输入可按同一依赖改写为迭代表，不能只增加缓存就宣称没有栈风险。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
@@ -267,6 +310,7 @@ function minPathSum(grid) {
 - [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)
 - [字节二面：MySQL 索引、最大乘积子数组与推送重连](../../../interview/bytedance/base/bytedance-base-75.md)
 - [字节财经保险 AI 全栈实习一面：项目设计、AI Coding 与 Diff](../../../interview/bytedance/base/bytedance-base-34.md)
+- [腾讯混元 AI 后台开发暑期实习一面：数据安全、OpenClaw 与并发手写](../../../interview/tencent/ai/tencent-ai-27.md)
 - [字节抖音电商 Agent 一面：分层、上下文与 GRPO](../../../interview/bytedance/base/bytedance-base-21.md)
 - [腾讯云智武汉多轮：运行时、索引、锁与消息消费](../../../interview/tencent/base/tencent-base-4.md)
 - [快手主站 SRE 一二三面：Agent Skill、性能排障与数据链路](../../../interview/kuaishou/ai/kuaishou-ai-5.md)
@@ -279,3 +323,8 @@ function minPathSum(grid) {
 - [NIST Dictionary of Algorithms and Data Structures: recursion](https://xlinux.nist.gov/dads/HTML/recursion.html)
 - [NIST Dictionary of Algorithms and Data Structures: backtracking](https://xlinux.nist.gov/dads/HTML/backtrack.html)
 - [NIST Dictionary of Algorithms and Data Structures: memoization](https://xlinux.nist.gov/dads/HTML/memoize.html)
+- [NIST DLMF §26.9：限制部分个数的整数划分](https://dlmf.nist.gov/26.9)
+- [NIST DLMF §26.8：集合划分与第二类 Stirling 数](https://dlmf.nist.gov/26.8)
+- [Python 3.14：combinations_with_replacement](https://docs.python.org/3.14/library/itertools.html#itertools.combinations_with_replacement)
+- [Python 3.14：functools.cache](https://docs.python.org/3.14/library/functools.html#functools.cache)
+- [Python 3.14：解释器递归上限](https://docs.python.org/3.14/library/sys.html#sys.getrecursionlimit)

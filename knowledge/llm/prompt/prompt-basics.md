@@ -107,6 +107,21 @@ Prompt Engineering 的目标不是找到一句“咒语”，而是把任务需�
 
 Prompt 优化应与模型版本、参数、检索和工具变更一起记录。只保留“看起来不错”的最新文本，无法解释回归。
 
+## 何时先改提示，何时评估微调
+
+提示词工程在推理时改变指令、示例和上下文，通常不更新模型参数。[GPT-3 的 few-shot 研究](https://arxiv.org/abs/2005.14165)明确以文本提供任务和示例，不做梯度更新；监督微调则用示范数据继续训练模型，[InstructGPT](https://arxiv.org/abs/2203.02155)是这一做法的原始研究实例。微调也可以只训练适配器等增量参数，具体边界见[模型对齐](../basics/llm-alignment.md)和[LoRA 与参数高效微调](../basics/llm-lora-peft.md)。
+
+先按失败发生在哪一层选择实验，避免把所有问题都归结成“模型需要再训练”：
+
+| 观察到的缺口 | 优先验证的路径 |
+| --- | --- |
+| 目标、输出格式或示例不清 | 澄清提示、补充正确示例与输出校验，建立可复现基线 |
+| 回答依赖最新政策、私有资料或精确出处 | 提供经过授权的检索或业务工具，核实证据，而非依靠参数记忆 |
+| 任务稳定，反复出现同类行为偏差，已有可靠示范 | 在提示基线之上评估 SFT，并检查数据覆盖、成本和能力回归 |
+| 工具越权、重复写入或计算结果错误 | 先修应用权限、幂等或验证器；训练不能代替确定性控制 |
+
+这张表是一种工程诊断顺序，不是保证某种方案必胜的公式。比较提示方案和微调候选时，固定任务、基座、允许资料及验收标准，隔离训练、调参验证与最终测试，分别记录质量、拒答、延迟和总成本。微调后仍然需要提示与上下文，RAG 也可以同时使用；变化快的事实与希望长期稳定的行为应分开治理。
+
 ## Prompt Injection 的现实边界
 
 分隔符、角色声明和“忽略用户指令”可以降低混淆，但不能构成完整防御。生产系统还需要：
@@ -136,6 +151,7 @@ Prompt 优化应与模型版本、参数、检索和工具变更一起记录。�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [阿里云 AI 产品一面：模型基础、需求优先级与产品定位](../../../interview/alibaba/ai/alibaba-ai-27.md)
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../../interview/bytedance/base/bytedance-base-48.md)
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
 - [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)
@@ -148,3 +164,6 @@ Prompt 优化应与模型版本、参数、检索和工具变更一起记录。�
 - [Anthropic：Prompt engineering overview](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview)
 - [Anthropic：Prompting best practices](https://docs.anthropic.com/claude/prompt-library)
 - [OWASP：LLM Prompt Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html)
+
+- [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165)（提示内示例与不更新参数的原始研究）。
+- [Training language models to follow instructions with human feedback](https://arxiv.org/abs/2203.02155)（示范数据监督微调的原始研究）。

@@ -1,7 +1,7 @@
 哈希表把“按 key 查找”转化为“计算桶位置，再解决冲突”。平均 O(1) 不是魔法，也不是无条件保证；它依赖哈希函数、负载因子、冲突策略和扩容行为。
 
 ![键经过哈希函数进入桶，碰撞由链或探测序列解决，负载因子升高后扩容并重新分布](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/hash-table-bucket-collision-resize-v1.webp)
-*图：两个 key 落入同一 bucket 形成 collision；resize 增加桶数后必须 rehash，不能只复制旧下标。*
+*图：两个标注 index=5 的 key 都进入高亮的 5 号桶形成碰撞，上方箭头的绘制高度不表示进入 2/3 号桶。扩容后需按新容量重新确定位置，不能直接沿用旧下标；具体实现可以利用已存哈希拆分桶，不一定重新计算原始 hash。*
 
 ---
 
@@ -127,6 +127,26 @@ JavaScript 的 Map 支持任意值作为 key，并提供明确的 `has`、`size`
 
 如果任务只需要几十个固定字段，数组或对象可能更简单；需要有序范围查询时，树结构更合适。哈希表擅长精确 key lookup，不天然支持前缀、最小值或区间扫描。
 
+## JDK 8 的 HashMap：结构、树化与扩容分别回答
+
+题目明确问 JDK 8 时，应单独核对该版本，不能拿较新 JDK 的实现当历史证据。以下限定 **OpenJDK 8u402-b06**：`HashMap` 用桶数组保存映射，普通桶以链表连接冲突节点，满足条件的桶可改用红黑树。JDK 8 的 [JEP 180](https://openjdk.org/jeps/180)将高冲突桶转为平衡树作为实现改进，目的是缓解长冲突链的查找代价；它没有改变 `Map` 接口，也没有承诺迭代顺序或并发安全。
+
+沿该版本的 [`hash`、`putVal`、`resize` 和 `treeifyBin` 源码](https://github.com/openjdk/jdk8u/blob/jdk8u402-b06/jdk/src/share/classes/java/util/HashMap.java)可以把回答分成三步。非空 key 先计算 `h ^ (h >>> 16)`，再用 `(capacity - 1) & hash` 定位桶，容量为 2 的幂；同桶仍须检查 key 相等性。插入新映射后，条目数超过扩容阈值会触发扩容；桶内链长也可能触发树化判断，但 `TREEIFY_THRESHOLD = 8` 与 `MIN_TREEIFY_CAPACITY = 64` 共同参与，表太小时先扩容。因此不能背成“插入第八个节点一定树化”，更新已有 key 的值也不是新增一个节点。
+
+容量翻倍时，旧桶中的普通链表按 `(node.hash & oldCapacity)` 分为两组，分别留在原下标或移动到“原下标 + 旧容量”，并保留各组相对次序。例如旧容量为 16，扰动后的哈希值 3 与 19 原来都落在桶 3；扩为 32 后分别落在 3 和 19。这里重新确定的是桶位置，不需要为这些节点重新调用 key 的 `hashCode()`；树桶另走拆分逻辑。这个示例解释扩容机制，不是并发正确性证明。
+
+## Java 底层实现：先限定 JDK，再比较并发控制
+
+下面以 **OpenJDK 25 GA** 源码为例，区分实现细节与公共 API 合同。`HashMap` 使用桶数组，容量为 2 的幂，非空 key 的 `hashCode` 与其高 16 位异或后参与 `(capacity-1) & hash` 定位；同桶还要用 key 相等性判定映射。桶通常是链表，也可转为红黑树；`putVal`、`treeifyBin` 使用链长阈值与最小表容量共同决定树化，源码常量分别为 8 和 64，容量不足时优先扩容，不能简化成“第 8 项一定树化”。扩容按新容量重新分布桶，2 倍扩容时可依据旧容量对应的哈希位把同桶节点分开。参见 [OpenJDK 25 HashMap 源码](https://github.com/openjdk/jdk/blob/jdk-25-ga/src/java.base/share/classes/java/util/HashMap.java)。
+
+这些结构没有自动提供同步。`HashMap` 的 [Java SE 25 合同](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/HashMap.html)允许 null key/value，但共享的结构修改需要外部同步；树化也不是并发安全开关。容量、负载因子和碰撞质量影响性能，`hashCode`/`equals` 本身的代价也不能忽略。
+
+同版本 `ConcurrentHashMap` 仍是分桶哈希结构，但增加了并发访问协议：空桶首次插入可用 CAS 发布；已有普通链表桶的更新以桶首节点作为 `synchronized` 锁，并在持锁后重新确认它仍是当前桶首；长桶可用专门的树桶结构。扩容通过迁移标记 `ForwardingNode` 指向新表，其他线程可以帮助搬迁，而非无条件把全表操作都串行化。这些是 [OpenJDK 25 ConcurrentHashMap 源码](https://github.com/openjdk/jdk/blob/jdk-25-ga/src/java.base/share/classes/java/util/concurrent/ConcurrentHashMap.java)的具体设计，不能总结成“所有操作都只用 CAS”。
+
+[ConcurrentHashMap 的公共合同](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/concurrent/ConcurrentHashMap.html)说明，get 等读取通常不阻塞；对某个 key 的更新与读到该更新结果的非 null 读取之间有 happens-before 关系。它不允许 null key/value，迭代不是全表某一时刻的一致快照，多个方法的组合也不自动原子：先 `containsKey` 再 `put` 应按意图改用 `putIfAbsent`、`compute` 等对应原子 API，多 key 不变量另定协议。容器线程安全也不会自动保护 value 对象内部的任意修改。
+
+历史上，[OpenJDK 7u80 的 ConcurrentHashMap](https://github.com/openjdk/jdk7u/blob/jdk7u80-b15/jdk/src/share/classes/java/util/concurrent/ConcurrentHashMap.java)由多个 `Segment` 管理各自的桶表，`Segment` 继承 `ReentrantLock` 来协调更新。面试中“分段锁”可用于解释这个版本，不能用它替代上述 25 GA 的分桶、CAS、桶级锁和协助扩容机制；先报实现版本，再沿定位、冲突、扩容和并发合同展开即可。
+
 ## Java HashMap：遍历删除不是并发协议
 
 HashMap 的集合视图迭代器对结构变化执行尽力而为的 fail-fast 检查；在迭代器建立后直接增删 map，可能触发 ConcurrentModificationException。单线程正确删除应通过迭代器自身 remove，或让集合视图 removeIf 按其契约处理；仅更新已有 key 的 value 与增删映射不是同一类结构修改。[JDK 21 HashMap 契约](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/HashMap.html)同时指出，不能依赖该异常证明程序并发正确。
@@ -161,7 +181,9 @@ while iterator.hasNext():
 - [字节全栈一面：RAG、Java 与线程池](../../../interview/bytedance/base/bytedance-base-37.md)
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)
 - [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)
+- [腾讯混元后台一面：Java 并发、限流与 Agent 工程](../../../interview/tencent/ai/tencent-ai-28.md)
 - [字节 Agent Infra 校招：运行时、MySQL 与 LRU](../../../interview/bytedance/base/bytedance-base-25.md)
+- [阿里国际 AI 应用研发一面：JDK 8、消息可靠性与 RAG](../../../interview/alibaba/ai/alibaba-ai-25.md)
 - [腾讯 AI Agent 应用开发一面：上下文、强化学习与系统基础](../../../interview/tencent/ai/tencent-ai-11.md)
 - [海康威视 AI Agent 开发一面：可靠工具与任务状态](../../../interview/hikvision/ai/hikvision-ai-1.md)
 - [字节 AML / 火山方舟 AI Infra 一面：Agent Runtime、OS 与网络（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-17.md)
@@ -171,6 +193,12 @@ while iterator.hasNext():
 
 - [NIST Dictionary of Algorithms and Data Structures: hash table](https://xlinux.nist.gov/dads/HTML/hashtab.html)
 - [Python dictionary view objects and mapping types](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict)
+- [JEP 180：JDK 8 高冲突 HashMap 桶的平衡树改进](https://openjdk.org/jeps/180)
+- [OpenJDK 8u402-b06：HashMap 的哈希、插入、树化与扩容](https://github.com/openjdk/jdk8u/blob/jdk8u402-b06/jdk/src/share/classes/java/util/HashMap.java)
 
 - [JDK 25 — HashMap](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/HashMap.html)
+- [JDK 25 — ConcurrentHashMap](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/concurrent/ConcurrentHashMap.html)
+- [OpenJDK 25 GA — HashMap 实现](https://github.com/openjdk/jdk/blob/jdk-25-ga/src/java.base/share/classes/java/util/HashMap.java)
+- [OpenJDK 25 GA — ConcurrentHashMap 实现](https://github.com/openjdk/jdk/blob/jdk-25-ga/src/java.base/share/classes/java/util/concurrent/ConcurrentHashMap.java)
+- [OpenJDK 7u80-b15 — Segment 历史实现](https://github.com/openjdk/jdk7u/blob/jdk7u80-b15/jdk/src/share/classes/java/util/concurrent/ConcurrentHashMap.java)
 - [Spring 7.0.5 — Bean scopes](https://github.com/spring-projects/spring-framework/blob/v7.0.5/framework-docs/modules/ROOT/pages/core/beans/factory-scopes.adoc)

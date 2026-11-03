@@ -16,10 +16,18 @@ Few-Shot 的价值不在“示例越多越好”，而在当前请求能看到�
 
 **规则/任务过滤**：先按产品、租户、语言、模型版本、合规等级等硬条件筛选，再做相似度与多样性排序。生产系统通常是这几种策略的组合。
 
+## 推荐 Prompt、压缩 Prompt 与学习 Soft Prompt 是不同操作
+
+如果“自动推荐”的对象是已审核模板或示例，Embedding 用于在候选池中找相似内容，之后仍要恢复文本并按权限、任务、质量和预算组装。推荐分数只是候选信号，不能替代下游任务正确性。讨论方案时先澄清推荐对象，不把“用向量检索示例”说成已经学习出一个新 Prompt。
+
+文本压缩减少送入生成模型的上下文。[LLMLingua 的原始实现说明](https://github.com/microsoft/LLMLingua)给出按重要性保留或删除提示 Token 的方法；应用仍需保护否定条件、实体、数值和输出契约，并用相同任务比较压缩前后。压缩率、向量相似度与任务质量是不同指标，不能只优化输入长度。
+
+Soft Prompt Tuning 则是在冻结模型条件下通过反向传播学习连续提示向量，见[原始研究](https://aclanthology.org/2021.emnlp-main.243/)。它需要相应训练和模型输入路径，不能把检索得到的一串 Embedding 数字直接当成普通文本接口的等价提示。实际选型先对比零示例、固定模板、动态检索与压缩版本，记录模板/示例版本、失败类型和完整任务结果。
+
 ## 动态 Few-Shot 流水线
 
 ![示例池经资格过滤、向量检索、相关性多样性平衡和 token 预算形成 Few-Shot Prompt](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/prompt-examples-selection-retrieval-ranking-v1.webp)
-*图：敏感或错误标签样例先被拒绝；相关性、多样性与标签平衡在预算内共同决定最终集合。*
+*图：敏感或错误标签样例先被拒绝；相关性、多样性与标签平衡在预算内共同决定最终集合。图内 Token 数只是示意，准确性、泛化与稳健性属于优化目标，是否改善必须用同一任务评测；收益措辞和“自动平衡”不表示通用效果或无需实现的能力。*
 
 推荐顺序：
 
@@ -88,8 +96,18 @@ OpenAI 的[Prompt engineering 指南](https://developers.openai.com/api/docs/gui
 
 动态 Few-Shot 是一个受约束的检索与排序系统：先过滤不合格样例，再在相关性、多样性、标签覆盖和 token 成本之间平衡，最后用任务评估而非相似度分数验收。示例库、选择器和顺序都要版本化，才能让效果可解释、可回归。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [阿里大模型算法校招：Attention、后训练与 Agent 评测](../../../interview/alibaba/ai/alibaba-ai-24.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [Learning To Retrieve Prompts for In-Context Learning](https://aclanthology.org/2022.naacl-main.191/)
 - [Sentence Transformers — Semantic Search](https://www.sbert.net/examples/sentence_transformer/applications/semantic-search/README.html)
 - [OpenAI — Prompt engineering](https://developers.openai.com/api/docs/guides/prompt-engineering)
+
+- [Microsoft LLMLingua：文本提示压缩](https://github.com/microsoft/LLMLingua)
+
+- [Lester et al.：The Power of Scale for Parameter-Efficient Prompt Tuning](https://aclanthology.org/2021.emnlp-main.243/)

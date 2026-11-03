@@ -80,6 +80,7 @@ Trace 至少记录 `planVersion`、`taskId`、`parentId`、依赖集合、排队
 <!-- interview-source-history:start -->
 - [飞猪秋招一面：并发任务调度与 Agent 故障定位](../../../interview/alibaba/ai/alibaba-ai-21.md)
 - [淘天供应链 AI 应用一面：失败复盘、工具并行与精确检索](../../../interview/alibaba/ai/alibaba-ai-19.md)
+- [阿里大模型算法校招：Attention、后训练与 Agent 评测](../../../interview/alibaba/ai/alibaba-ai-24.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

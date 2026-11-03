@@ -267,6 +267,24 @@ groups:
 
 把异常开始时间与发布、配置、数据和依赖变化放在同一时间线上，用 `traceId`、业务操作 ID 和版本关联具体样本。若已有信号不足，可在受控范围补充边界事件、使用采样剖析或用脱敏输入复现；不要仅凭时间接近宣布某次发布就是根因，也不要为了补日志长期记录完整敏感上下文。新增埋点应回答一个可验证的问题，例如“写入是否已经确认、列表使用哪个版本”，而不是把所有函数都打印一遍。
 
+## 经授权的容器只读排查
+
+先确认具体运行时、目标容器和已有查看权限；下面仅以 Docker 为教学例，未连接真实容器执行。沿异常时间线先收集有限日志、状态字段和一次资源快照，避免把整份配置、环境变量或无关容器信息导出：
+
+```bash
+docker logs --since 10m --tail 200 --timestamps CONTAINER
+docker inspect --type container \
+  --format 'status={{.State.Status}} exit={{.State.ExitCode}} oom={{.State.OOMKilled}}' \
+  CONTAINER
+docker stats --no-stream CONTAINER
+```
+
+`10m` 和 `200` 只是教学窗口，应按故障时间调整；日志是否可读取决于实际采集和日志驱动，没看到日志不证明没有故障。不加 `--details`，也不输出完整 inspect JSON 或 `Config.Env`；额外日志属性可能含环境变量与标签。[Docker logs](https://docs.docker.com/reference/cli/docker/container/logs/)、[Docker inspect 的选字段格式](https://docs.docker.com/reference/cli/docker/inspect/)
+
+需要时同样只选择 `.State.StartedAt` / `.State.FinishedAt`，将启动/退出时间与发布、请求和宿主事件对齐；`OOMKilled` 与退出码是调查线索，不能仅凭退出码 137 认定 OOM 或根因。一次 stats 只提供一次资源观测，不能证明历史峰值或内存泄漏；Linux CLI 的内存显示还会扣除特定缓存，不能与不同口径的监控值直接比较。[Docker stats 的快照与统计口径](https://docs.docker.com/reference/cli/docker/container/stats/)
+
+已有观察不足时再评估是否需要进入容器。`docker exec` 会在运行中的容器内启动新进程，查看权限不自动包含执行授权；取得相应授权后也应选明确不改状态、范围受限的检查，镜像中还可能没有 shell 或诊断程序。不要顺手安装工具、重启或改配置，并如实区分自己实际做过的操作和仅了解的方法。[Docker exec 的执行与运行状态前提](https://docs.docker.com/reference/cli/docker/container/exec/)
+
 ## Agent 请求完整可观测性链路
 
 ```mermaid
@@ -399,12 +417,17 @@ function shouldSample(statusCode: number, durationMs: number): boolean {
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)
 - [字节 Agent 暑期实习一面：摘要、工具预算与链表](../../../interview/bytedance/base/bytedance-base-27.md)
 - [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../../interview/bytedance/base/bytedance-base-24.md)
+- [腾讯 CDG 金融科技二面：Agent 评估、协程与存储基础](../../../interview/tencent/ai/tencent-ai-29.md)
 - [腾讯云智武汉多轮：运行时、索引、锁与消息消费](../../../interview/tencent/base/tencent-base-4.md)
 - [腾讯后端多轮复盘：热 Key、缓存一致性与库存](../../../interview/tencent/base/tencent-base-2.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
 
+- [Docker CLI: logs and bounded output](https://docs.docker.com/reference/cli/docker/container/logs/)
+- [Docker CLI: inspect and format](https://docs.docker.com/reference/cli/docker/inspect/)
+- [Docker CLI: one-shot stats and memory accounting](https://docs.docker.com/reference/cli/docker/container/stats/)
+- [Docker CLI: exec starts an executable in a running container](https://docs.docker.com/reference/cli/docker/container/exec/)
 - [OpenTelemetry signals](https://opentelemetry.io/docs/concepts/signals/)
 - [OpenTelemetry：采样概念](https://opentelemetry.io/docs/concepts/sampling/)
 - [OpenTelemetry Collector：Tail Sampling Processor](https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/processor/tailsamplingprocessor/README.md)
