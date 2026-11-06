@@ -1,0 +1,259 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Agent 项目：全部门槛通过才扩大上线",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "agent-project-evaluation-gates-v2.html"
+  },
+  "lanes": [
+    {
+      "id": "quality_lane",
+      "label": "01 · 基线与离线质量"
+    },
+    {
+      "id": "safety_lane",
+      "label": "02 · 安全硬门槛"
+    },
+    {
+      "id": "outcome_lane",
+      "label": "03 · Shadow / Canary 与业务结果"
+    },
+    {
+      "id": "economics_lane",
+      "label": "04 · SLO 与全流程成本"
+    },
+    {
+      "id": "release_lane",
+      "label": "05 · 决策与持续监控"
+    }
+  ],
+  "mainPath": [
+    "baseline",
+    "quality",
+    "safety",
+    "outcome",
+    "economics",
+    "rollout"
+  ],
+  "semanticChecks": {
+    "allowedRoots": [
+      "baseline"
+    ],
+    "allowedTerminals": [
+      "rollout",
+      "hold_quality",
+      "hold_safety",
+      "hold_outcome",
+      "hold_economics"
+    ],
+    "requiredPaths": [
+      {
+        "from": "baseline",
+        "to": "rollout"
+      }
+    ],
+    "requiredEdges": [
+      {
+        "from": "quality",
+        "to": "hold_quality"
+      },
+      {
+        "from": "safety",
+        "to": "hold_safety"
+      },
+      {
+        "from": "outcome",
+        "to": "hold_outcome"
+      },
+      {
+        "from": "economics",
+        "to": "hold_economics"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "id": "baseline",
+      "lane": "quality_lane",
+      "col": 0,
+      "type": "database",
+      "icon": "start",
+      "label": "固定比较基线",
+      "sublabel": "同任务 · 同标准",
+      "tag": "记录版本"
+    },
+    {
+      "id": "quality",
+      "lane": "quality_lane",
+      "col": 1,
+      "type": "security",
+      "icon": "decision",
+      "label": "质量优于基线？",
+      "sublabel": "离线集 · 切片 · 区间"
+    },
+    {
+      "id": "safety",
+      "lane": "safety_lane",
+      "col": 1,
+      "type": "security",
+      "icon": "decision",
+      "label": "安全门槛通过？",
+      "sublabel": "越权 · 注入 · 副作用"
+    },
+    {
+      "id": "outcome",
+      "lane": "outcome_lane",
+      "col": 1,
+      "type": "security",
+      "icon": "decision",
+      "label": "业务结果改善？",
+      "sublabel": "Shadow · Canary 证据"
+    },
+    {
+      "id": "economics",
+      "lane": "economics_lane",
+      "col": 1,
+      "type": "security",
+      "icon": "decision",
+      "label": "净收益成立？",
+      "sublabel": "SLO · 全流程成本"
+    },
+    {
+      "id": "rollout",
+      "lane": "release_lane",
+      "col": 1,
+      "type": "backend",
+      "icon": "success",
+      "label": "逐步扩大上线",
+      "sublabel": "持续监控 · 越线回滚",
+      "tag": "仅全部通过"
+    },
+    {
+      "id": "hold_quality",
+      "lane": "quality_lane",
+      "col": 2,
+      "type": "security",
+      "icon": "stop",
+      "label": "暂停扩量",
+      "sublabel": "保留失败 · 修订重评"
+    },
+    {
+      "id": "hold_safety",
+      "lane": "safety_lane",
+      "col": 2,
+      "type": "security",
+      "icon": "stop",
+      "label": "暂停扩量",
+      "sublabel": "保留失败 · 修订重评"
+    },
+    {
+      "id": "hold_outcome",
+      "lane": "outcome_lane",
+      "col": 2,
+      "type": "security",
+      "icon": "stop",
+      "label": "暂停扩量",
+      "sublabel": "保留失败 · 修订重评"
+    },
+    {
+      "id": "hold_economics",
+      "lane": "economics_lane",
+      "col": 2,
+      "type": "security",
+      "icon": "stop",
+      "label": "暂停扩量",
+      "sublabel": "保留失败 · 修订重评"
+    }
+  ],
+  "edges": [
+    {
+      "id": "start-evaluation",
+      "from": "baseline",
+      "to": "quality",
+      "label": "比较",
+      "role": "main"
+    },
+    {
+      "id": "quality-pass",
+      "from": "quality",
+      "to": "safety",
+      "label": "通过",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "safety-pass",
+      "from": "safety",
+      "to": "outcome",
+      "label": "通过",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "outcome-pass",
+      "from": "outcome",
+      "to": "economics",
+      "label": "通过",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "economics-pass",
+      "from": "economics",
+      "to": "rollout",
+      "label": "通过",
+      "variant": "emphasis",
+      "role": "main"
+    },
+    {
+      "id": "quality-hold",
+      "from": "quality",
+      "to": "hold_quality",
+      "label": "未通过",
+      "variant": "security",
+      "role": "error"
+    },
+    {
+      "id": "safety-hold",
+      "from": "safety",
+      "to": "hold_safety",
+      "label": "未通过",
+      "variant": "security",
+      "role": "error"
+    },
+    {
+      "id": "outcome-hold",
+      "from": "outcome",
+      "to": "hold_outcome",
+      "label": "未通过",
+      "variant": "security",
+      "role": "error"
+    },
+    {
+      "id": "economics-hold",
+      "from": "economics",
+      "to": "hold_economics",
+      "label": "未通过",
+      "variant": "security",
+      "role": "error"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "rose",
+      "title": "硬门槛不能被平均分抵消",
+      "items": [
+        "关键安全违反可直接阻止上线；证据不足也不进入扩大上线。"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "评价持续进行",
+      "items": [
+        "各阶段对照基线；放量后继续监控，越线即停止或回滚。"
+      ]
+    }
+  ]
+}

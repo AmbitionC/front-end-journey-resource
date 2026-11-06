@@ -1,7 +1,7 @@
 证明 Agent 项目价值需要把技术轨迹与业务结果连接起来。离线任务集回答“在可控案例上会不会做”，shadow/canary 回答“在真实流量与系统中怎样表现”，上线监控回答“长期是否持续创造价值”。任何阶段都要与 baseline 比，并同时测质量、安全、延迟和成本。
 
-![Agent 项目从 Baseline、离线评测、Shadow、Canary 到业务指标与持续监控的评价闭环](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-project-evaluation-baseline-metric-loop-v1.webp)
-*图：每一阶段回答不同问题；评测集、发布 bundle 与线上反馈通过版本和决策门槛连接。*
+![固定基线后依次判断质量、安全、业务结果和净收益；任一未通过都暂停扩量并修订重评，全部通过后才逐步扩大上线并监控](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-project-evaluation-gates-archify-v2.png)
+*图：聚焦是否扩大上线的决策。四项门槛必须全部通过；证据不足或任一未通过都暂停扩量，修订后重新评测。放量后仍须持续监控，越线即停止或回滚。*
 
 ## 建立可复现 Baseline
 
