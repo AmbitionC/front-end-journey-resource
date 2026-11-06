@@ -1036,6 +1036,23 @@
             ],
             "updatedAt": "2026-10-31",
             "contentFormat": "short-qa-v2"
+          },
+          {
+            "key": "bytedance-base-77",
+            "label": "字节后端 Agent 二面：Python 实现、文本聚类与缓存",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "department": "其他",
+            "role": "后端 Agent",
+            "roleCategory": "Agent 与后端工程",
+            "tags": [
+              "Agent",
+              "Python",
+              "Embedding",
+              "缓存"
+            ],
+            "updatedAt": "2026-11-06",
+            "contentFormat": "short-qa-v2"
           }
         ]
       },
@@ -3079,6 +3096,23 @@
             ],
             "updatedAt": "2026-11-06",
             "contentFormat": "short-qa-v2"
+          },
+          {
+            "key": "pinduoduo-ai-5",
+            "label": "拼多多 Agent 复活赛二面：变更发布、业务提效与权限",
+            "isLeaf": true,
+            "filePath": "pinduoduo/ai",
+            "department": "其他",
+            "role": "Agent 开发方向",
+            "roleCategory": "Agent 与后端工程",
+            "tags": [
+              "Agent",
+              "灰度发布",
+              "业务评估",
+              "权限"
+            ],
+            "updatedAt": "2026-11-06",
+            "contentFormat": "short-qa-v2"
           }
         ]
       }
@@ -4329,6 +4363,37 @@
               "幂等",
               "并发",
               "消息队列"
+            ],
+            "updatedAt": "2026-11-06",
+            "contentFormat": "short-qa-v2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "VAST",
+    "key": "VAST",
+    "nodeType": "company",
+    "children": [
+      {
+        "key": "vast-department-other",
+        "label": "其他",
+        "nodeType": "department",
+        "children": [
+          {
+            "key": "vast-ai-1",
+            "label": "VAST 后端一面：可观测性、AI Coding 与节点调度",
+            "isLeaf": true,
+            "filePath": "vast/ai",
+            "department": "其他",
+            "role": "后端开发",
+            "roleCategory": "Agent 与后端工程",
+            "tags": [
+              "Agent",
+              "可观测性",
+              "Go",
+              "Kubernetes"
             ],
             "updatedAt": "2026-11-06",
             "contentFormat": "short-qa-v2"

@@ -78,6 +78,25 @@ function cosine(a: number[], b: number[]) {
 
 这个函数适合教学与小规模测试；海量向量应使用经过优化的向量索引。
 
+## 文本向量进入聚类：表示与分组是两步
+
+Embedding 为每段文本提供数值表示，聚类算法才根据特定几何规则形成分组。先固定模型与文本预处理，保留原文 ID 和版本，再选择与模型、数据及任务相符的距离和算法；不能因为都生成了向量，就认为任意聚类方法都会得到正确主题。Sentence-Transformers 的官方聚类说明列出了 K-Means、层次聚类和按相似度寻找局部社区等不同路径；这些是不同的技术选择，不能仅从“做了向量化”推断实际采用哪一种。[Sentence-Transformers：Clustering](https://www.sbert.net/examples/sentence_transformer/applications/clustering/README.html)
+
+以编辑选择的K-Means为概念示例：先约定簇数k，初始化中心，交替把点分到最近中心、按分组均值更新中心，直到满足停止条件。通常讨论的是到中心的平方欧氏距离之和（inertia）；初始化与停止条件影响结果，也可能停在局部最优，不保证各簇人数相等。不能把K-Means的这个目标、余弦相似度阈值和层次聚类的合并距离当成同一套规则。[scikit-learn：KMeans参数、inertia与收敛说明](https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html)
+
+下面只是手工构造的二维点，并非某个文本模型的输出或原项目数据。取k=2，初始中心为(0,0)和(8,0)，点(0,0)、(0,2)归第一簇，(8,0)、(8,2)归第二簇；均值更新为(0,1)、(8,1)，这四个点到各自新中心的平方距离和为4。这个小例子说明“分配—更新”，不证明真实语料的主题质量或任意初始化都得到同样结果。
+
+| 要回答的问题 | 需要的检查 |
+|---|---|
+| 表示能否比较 | 模型/版本、预处理、维度与归一化/距离约定是否一致 |
+| 分组规则是什么 | 簇数还是距离/相似度阈值、初始化、停止和异常样本策略是否明确 |
+| 分组有没有业务意义 | 回读代表原文，检查簇内混杂、相近主题被拆开及业务关键差异 |
+| 方案是否值得引入 | 与未聚类或原检索流程在相同任务和数据下比较质量、延迟、成本与遗漏 |
+
+轮廓系数可以描述当前距离度量下的紧密与分离程度，但不是语义正确率。它以样本的簇内平均距离a和最近其他簇平均距离b计算(b-a)/max(a,b)，仅在2≤簇标签数≤样本数−1时有定义；不同度量、样本和标签合同不能直接横比。[scikit-learn：silhouette_score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.silhouette_score.html) 仍需用代表性原文和业务结果检查是否把矛盾事实、不同权限或重要版本混成一组。聚类后选代表文本或摘要是另一步信息压缩，也要检查关键信息是否丢失，不能从“分了组”直接推出更适合给模型。
+
+上述流程、K-Means演示与检查表是概念教学。实际方案还要固定所用模型、算法、簇数或阈值、停止条件和评估口径，不能仅凭“用了向量”证明分组有效。
+
 ## 四、生成向量的基本流程
 
 以 OpenAI Embeddings API 为例，模型名应由环境配置，避免散落在代码里：
@@ -241,3 +260,7 @@ ANN 用部分召回换速度和资源。查询参数越激进，延迟可能更�
 - [E5 模型卡：query 与 passage 输入前缀](https://huggingface.co/intfloat/e5-large-v2#faq)
 - [OpenAI：Embeddings](https://developers.openai.com/api/docs/guides/embeddings)
 - [pgvector：Distance 与索引文档](https://github.com/pgvector/pgvector)
+
+- [Sentence-Transformers：Clustering](https://www.sbert.net/examples/sentence_transformer/applications/clustering/README.html)
+- [scikit-learn：KMeans](https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html)
+- [scikit-learn：silhouette_score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.silhouette_score.html)

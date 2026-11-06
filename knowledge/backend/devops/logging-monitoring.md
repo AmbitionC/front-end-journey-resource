@@ -160,6 +160,20 @@ const sdk = new NodeSDK({
 sdk.start();
 ```
 
+## Go 插桩：覆盖范围与上下文要一起核对
+
+Go 并非不能做链路追踪。先区分应用侧 SDK、库侧 API 和已有库插桩：应用初始化实际 Provider、Exporter 等组件，库通常依赖 API；只调用 API 不会自动得到可导出的完整业务链路。[OpenTelemetry Go 的库插桩说明](https://opentelemetry.io/docs/languages/go/libraries/)列出原生支持与外部插桩两种路径，例如 net/http 库可产生 HTTP Span 与指标，具体包、版本和激活方式仍要按真实依赖核对。
+
+库插桩不能自动解释自定义业务。以“解析告警—读取 Trace—生成诊断建议”为教学场景，在已有 HTTP 边界之外，为业务阶段补充手工 Span；创建子 Span 后，把返回的 context.Context 传给后续操作，并在全部结束路径结束 Span。跨进程还需要明确的传播与接收，不能认为用了 goroutine 或日志库就自然保持父子关系。[OpenTelemetry Go 手工插桩](https://opentelemetry.io/docs/languages/go/instrumentation/)说明了 Tracer、context 与嵌套 Span 的关系。
+
+| 边界 | 上下文从哪里来 | 要核对什么 |
+|---|---|---|
+| HTTP 入站 | 例如请求的 r.Context()，可能已有库创建的父 Span | 入站插桩与应用 SDK 是否实际启用 |
+| 自定义业务步骤 | tracer.Start 返回的新 context | 下游收到新 context，结束时关闭对应 Span |
+| 跨服务调用 | 由已配置的传播器与出站/入站插桩传递 | 两端是否保留同一 Trace 的关联，而非只写一条同名日志 |
+
+排查缺链时逐项核对 SDK 初始化、第三方依赖覆盖、ctx 传递、业务 Span、采样、导出与关闭。错误事件记录和 Span 错误状态也要分别处理，不能假定记录异常就自动改变状态。教学例子中“读取 Trace”没有 Span，可能是根本没插业务边界，也可能是上下文或采集链路缺口；这些都只是待验证假设，原问未给真实断链位置时，不能反推作者遇到的原因。
+
 ## Agent 服务监控专项
 
 ### LLM 调用追踪
@@ -410,13 +424,14 @@ function shouldSample(statusCode: number, durationMs: number): boolean {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [百度后端一面：延迟诊断、工具恢复与滑动窗口](../../../interview/baidu/ai/baidu-ai-10.md)
-- [拼多多提前批一面：Agent 超时、消息可靠性与线上排障](../../../interview/pinduoduo/ai/pinduoduo-ai-2.md)
 - [字节大模型应用秋招一面：日志盲区、框架选择与 BFS](../../../interview/bytedance/base/bytedance-base-71.md)
 - [阿里云 Agent Infra 一面：SGX、吞吐与日志写入](../../../interview/alibaba/ai/alibaba-ai-8.md)
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)
+- [VAST 后端一面：可观测性、AI Coding 与节点调度](../../../interview/vast/ai/vast-ai-1.md)
 - [字节 Agent 暑期实习一面：摘要、工具预算与链表](../../../interview/bytedance/base/bytedance-base-27.md)
 - [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../../interview/bytedance/base/bytedance-base-24.md)
+- [拼多多提前批一面：Agent 超时、消息可靠性与线上排障](../../../interview/pinduoduo/ai/pinduoduo-ai-2.md)
+- [百度后端一面：延迟诊断、工具恢复与滑动窗口](../../../interview/baidu/ai/baidu-ai-10.md)
 - [腾讯 CDG 金融科技二面：Agent 评估、协程与存储基础](../../../interview/tencent/ai/tencent-ai-29.md)
 - [腾讯云智武汉多轮：运行时、索引、锁与消息消费](../../../interview/tencent/base/tencent-base-4.md)
 - [腾讯后端多轮复盘：热 Key、缓存一致性与库存](../../../interview/tencent/base/tencent-base-2.md)
@@ -437,3 +452,6 @@ function shouldSample(statusCode: number, durationMs: number): boolean {
 - [Prometheus：Vector matching](https://prometheus.io/docs/prometheus/latest/querying/operators/#vector-matching)
 - [Pino API：日志级别、格式器与 timestamp](https://github.com/pinojs/pino/blob/main/docs/api.md)
 - [Google SRE：Monitoring Distributed Systems](https://sre.google/sre-book/monitoring-distributed-systems/)
+
+- [OpenTelemetry Go：Using instrumentation libraries](https://opentelemetry.io/docs/languages/go/libraries/)
+- [OpenTelemetry Go：Manual instrumentation](https://opentelemetry.io/docs/languages/go/instrumentation/)

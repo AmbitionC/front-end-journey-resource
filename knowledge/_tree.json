@@ -136,6 +136,21 @@
             }
           },
           {
+            "label": "主流模型能力与适用场景对比",
+            "key": "llm-model-compare",
+            "isLeaf": true,
+            "filePath": "llm/basics",
+            "contentStatus": "published",
+            "heat": 8,
+            "currRank": 5,
+            "updatedAt": "2026-11-04",
+            "quickRead": {
+              "text": "先分清 App、API 与开放权重，再比较具体版本与任务。Kimi K2.5、DeepSeek V4.1-Flash-1017 和千问 App 的官方发布可说明定位侧重点；用同一任务核验结果、交互与成本，不从功能示例推出永久排名。"
+            },
+            "interviewBaseHeat": 6,
+            "interviewCount": 2
+          },
+          {
             "label": "长上下文、注意力稀释与有效利用",
             "key": "llm-long-context",
             "isLeaf": true,
@@ -196,21 +211,6 @@
             "quickRead": {
               "text": "Temperature 改变候选 Token 的概率分布，Top-K 保留固定数量的最高概率候选，Top-P 保留累计概率达到阈值的动态候选集合。过滤后重新归一化采样；具体参数支持和执行顺序以模型 API 为准。低温不保证事实正确，固定版本并用任务评测选择参数。"
             }
-          },
-          {
-            "label": "主流模型能力与适用场景对比",
-            "key": "llm-model-compare",
-            "isLeaf": true,
-            "filePath": "llm/basics",
-            "contentStatus": "published",
-            "heat": 7,
-            "currRank": 4,
-            "updatedAt": "2026-11-04",
-            "quickRead": {
-              "text": "先分清 App、API 与开放权重，再比较具体版本与任务。Kimi K2.5、DeepSeek V4.1-Flash-1017 和千问 App 的官方发布可说明定位侧重点；用同一任务核验结果、交互与成本，不从功能示例推出永久排名。"
-            },
-            "interviewBaseHeat": 6,
-            "interviewCount": 1
           },
           {
             "label": "Tokenizer、词表与子词切分",
@@ -337,14 +337,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 19,
+            "heat": 20,
             "currRank": 5,
             "updatedAt": "2026-10-14",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "上下文工程决定模型此刻能看到哪些指令、工具、历史、记忆和检索证据。按任务与预算选择内容，保留来源与权限，压缩后做回归；提供更多文本并不自动让回答更可靠。"
             },
-            "interviewCount": 13,
+            "interviewCount": 14,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -947,10 +947,10 @@
             "contentStatus": "published",
             "heat": 14,
             "currRank": 5,
-            "updatedAt": "2026-10-29",
+            "updatedAt": "2026-11-06",
             "interviewBaseHeat": 6,
             "quickRead": {
-              "text": "Embedding 将文档和查询映射到经验证兼容的向量空间，用约定距离支持检索。维度相同不代表编码器兼容，相似不等于事实正确；模型、预处理、索引与版本一起管理，并用查询—证据集测召回。"
+              "text": "Embedding 将文档和查询映射到经验证兼容的向量空间，用约定距离支持检索；维度相同不等于编码器兼容，相似不等于事实正确。聚类另需明确算法、簇数或阈值并回读原文，几何分离指标不能代替语义和业务评估。"
             },
             "interviewCount": 8,
             "interviewCountBasis": "verified-public-posts"
@@ -1283,14 +1283,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 56,
+            "heat": 57,
             "currRank": 5,
             "updatedAt": "2026-11-04",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Coding Agent 围绕仓库事实完成检索、补丁和验证闭环；编辑器补全则可从光标前后文与相关代码生成候选，并处理取消和文档版本变化。两者都需用任务、静态检查、测试与人工审查检验正确性，采纳率或生成代码量不能代替交付质量。"
             },
-            "interviewCount": 50,
+            "interviewCount": 51,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1905,14 +1905,14 @@
             "isLeaf": true,
             "filePath": "llm/production",
             "contentStatus": "published",
-            "heat": 18,
+            "heat": 19,
             "currRank": 5,
             "updatedAt": "2026-07-16",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "按资源与操作授予最小必要权限，宿主和工具共同落实，默认拒绝越界动作。描述、角色或技能不自动授予执行权，授权变化、审批范围与审计要有明确生命周期。"
             },
-            "interviewCount": 12,
+            "interviewCount": 13,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -2082,11 +2082,11 @@
             "isLeaf": true,
             "filePath": "llm/production",
             "contentStatus": "published",
-            "heat": 9,
+            "heat": 10,
             "currRank": 5,
             "updatedAt": "2026-10-28",
             "interviewBaseHeat": 6,
-            "interviewCount": 3,
+            "interviewCount": 4,
             "interviewCountBasis": "verified-public-posts",
             "quickRead": {
               "text": "Trace关联一次任务中的多个Span，根Span只是入口操作；按模型、检索、工具与状态迁移拆耗时、错误、版本和用量。跨服务传播上下文，脱敏并验证采样与导出，日志成功不等于任务目标完成。"
@@ -2185,6 +2185,22 @@
             }
           },
           {
+            "label": "Agent 服务部署、扩缩容与版本发布",
+            "key": "agent-deployment",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "published",
+            "heat": 9,
+            "currRank": 5,
+            "updatedAt": "2026-11-06",
+            "interviewBaseHeat": 6,
+            "quickRead": {
+              "text": "Agent 发布应固定代码、模型、Prompt、工具、策略与评测集的版本包，通过离线、影子和灰度验证，长任务保留版本与撤权边界。Kubernetes 中 requests、limits、节点亲和性和污点容忍各管不同约束，扩副本不能代替资源验证或权限隔离。"
+            },
+            "interviewCount": 3,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
             "label": "Token、延迟与成本优化",
             "key": "llm-cost-optimize",
             "isLeaf": true,
@@ -2280,22 +2296,6 @@
             }
           },
           {
-            "label": "Agent 服务部署、扩缩容与版本发布",
-            "key": "agent-deployment",
-            "isLeaf": true,
-            "filePath": "llm/production",
-            "contentStatus": "published",
-            "heat": 8,
-            "currRank": 5,
-            "updatedAt": "2026-10-28",
-            "interviewBaseHeat": 6,
-            "quickRead": {
-              "text": "Agent 发布应固定代码、模型、Prompt、工具、策略与评测集的版本包，通过离线、影子和灰度验证。端云多设备还需按数据位置与权限选择执行地，处理离线、幂等、撤权和版本兼容；扩容不能突破下游配额。"
-            },
-            "interviewCount": 2,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
             "label": "Agent Gateway 与统一接入层",
             "key": "agent-api-gateway",
             "isLeaf": true,
@@ -2306,6 +2306,21 @@
             "updatedAt": "2026-07-17",
             "quickRead": {
               "text": "Agent网关在昂贵处理前校验身份、资源权限、正文与并发预算，再按能力和健康路由。长任务状态留在持久执行服务，网关不无限排队；过载、流中失败与未知副作用须分别表达。"
+            },
+            "interviewBaseHeat": 6,
+            "interviewCount": 2
+          },
+          {
+            "label": "Agent A/B 测试与实验设计",
+            "key": "agent-ab-testing",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "published",
+            "heat": 8,
+            "currRank": 5,
+            "updatedAt": "2026-10-29",
+            "quickRead": {
+              "text": "Agent A/B 测试通过预先随机分组，估计方案对真实任务结果的平均影响。先固定假设、随机化单位、指标、观察窗口与停止规则，记录分配和曝光，保持版本与分桶稳定。分析需说明缺失、干扰和不确定性，安全护栏独立判断；显著提升仍需灰度与回滚准备。"
             },
             "interviewBaseHeat": 6,
             "interviewCount": 2
@@ -2357,21 +2372,6 @@
             "interviewBaseHeat": 6,
             "interviewCount": 1,
             "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "Agent A/B 测试与实验设计",
-            "key": "agent-ab-testing",
-            "isLeaf": true,
-            "filePath": "llm/production",
-            "contentStatus": "published",
-            "heat": 7,
-            "currRank": 4,
-            "updatedAt": "2026-10-29",
-            "quickRead": {
-              "text": "Agent A/B 测试通过预先随机分组，估计方案对真实任务结果的平均影响。先固定假设、随机化单位、指标、观察窗口与停止规则，记录分配和曝光，保持版本与分桶稳定。分析需说明缺失、干扰和不确定性，安全护栏独立判断；显著提升仍需灰度与回滚准备。"
-            },
-            "interviewBaseHeat": 6,
-            "interviewCount": 1
           },
           {
             "label": "成功率、质量、延迟、成本与业务指标",
@@ -3227,14 +3227,14 @@
             "isLeaf": true,
             "filePath": "backend/devops",
             "contentStatus": "published",
-            "heat": 11,
+            "heat": 12,
             "currRank": 5,
-            "updatedAt": "2026-11-04",
+            "updatedAt": "2026-11-06",
             "interviewBaseHeat": 1,
-            "interviewCount": 10,
+            "interviewCount": 11,
             "interviewCountBasis": "verified-public-posts",
             "quickRead": {
-              "text": "排障从用户可见故障、时间线和请求标识入手，将日志、指标、追踪及资源信号互相核对。容器场景先在获准范围读取限定窗口日志、选定State字段和一次资源快照；退出码与OOM标记是线索，不是完整根因。exec会新建进程，需对应授权与不改状态的检查，不能把进入容器当作定位成功。"
+              "text": "排障从用户可见故障、时间线和请求标识入手，交叉核对日志、指标、追踪及资源信号；退出码与 OOM 标记只是线索。Go 链路还需核对 SDK 初始化、库插桩覆盖、业务 Span、context 传递和导出，不能把加了日志当成全链路可观测。"
             }
           },
           {
@@ -4806,14 +4806,14 @@
             "isLeaf": true,
             "filePath": "career",
             "contentStatus": "published",
-            "heat": 20,
+            "heat": 21,
             "currRank": 5,
             "updatedAt": "2026-11-04",
             "quickRead": {
               "text": "从具体用户流程、痛点、基线和风险收敛最小可验收产品。KANO 分析功能满足与满意的关系，四象限须先定义两轴，再结合成本、依赖与证据验证排序；员工反馈报告还需防小群体与自由文本重新识别。"
             },
             "interviewBaseHeat": 6,
-            "interviewCount": 14,
+            "interviewCount": 15,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -4838,14 +4838,14 @@
             "isLeaf": true,
             "filePath": "career",
             "contentStatus": "published",
-            "heat": 16,
+            "heat": 17,
             "currRank": 5,
             "updatedAt": "2026-07-17",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "项目价值应在可比较任务和基线下衡量真实完成质量、风险、延迟、成本与使用负担。离线、shadow、canary和持续监控各自回答不同问题，不把演示成功或未校准总分当收益证明。"
             },
-            "interviewCount": 10,
+            "interviewCount": 11,
             "interviewCountBasis": "verified-public-posts"
           },
           {

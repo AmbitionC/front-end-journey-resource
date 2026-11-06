@@ -5122,7 +5122,7 @@
       "label": "用业务指标证明 Agent 项目价值",
       "articlePath": "knowledge/career/agent-project-evaluation.md",
       "baselineArticleSha256": "ed7e15520a8fde509331a7b8e2d3ae8415fb10590f25e186bbf66ae135e9235b",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-project-evaluation-baseline-metric-loop-v1.webp",
@@ -5130,10 +5130,31 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "archify",
+      "diagramType": "workflow",
+      "batchId": "agent-project-evaluation-gates-20261106",
+      "publishedEvidence": null,
+      "rendererVersion": "3.2.0",
+      "editableSources": [
+        {
+          "path": "knowledge/career/agent-project-evaluation-gates-v2.archify.json",
+          "sha256": "b28b5526bebf9680e16ec0d20458f959e3eb1be5101fc00d3439b06ad0de8efd"
+        },
+        {
+          "path": "knowledge/career/agent-project-evaluation-gates-v2.svg",
+          "sha256": "97e73e4d64cfe86ab935d12dbf8766ffb36e1c7621f4fca4f0d79e2602969585"
+        }
+      ],
+      "staticExports": [
+        {
+          "path": "images/agent-project-evaluation-gates-archify-v2.png",
+          "sha256": "d54830d5f23ed61f661af1b646eef322287d924f40465e09b3c774f28bc9a619",
+          "width": 912,
+          "height": 1400
+        }
+      ],
+      "replacementReason": "Any failed quality, safety, business-outcome or value gate must hold expansion; only all-pass reaches rollout. Print export trims unused lane background without changing semantic nodes or paths.",
+      "reviewStatus": "independent_review_pending"
     },
     {
       "key": "agent-skill-map",

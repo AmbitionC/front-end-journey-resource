@@ -1,7 +1,7 @@
 证明 Agent 项目价值需要把技术轨迹与业务结果连接起来。离线任务集回答“在可控案例上会不会做”，shadow/canary 回答“在真实流量与系统中怎样表现”，上线监控回答“长期是否持续创造价值”。任何阶段都要与 baseline 比，并同时测质量、安全、延迟和成本。
 
-![Agent 项目从 Baseline、离线评测、Shadow、Canary 到业务指标与持续监控的评价闭环](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-project-evaluation-baseline-metric-loop-v1.webp)
-*图：每一阶段回答不同问题；评测集、发布 bundle 与线上反馈通过版本和决策门槛连接。*
+![固定基线后依次判断质量、安全、业务结果和净收益；任一未通过都暂停扩量并修订重评，全部通过后才逐步扩大上线并监控](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-project-evaluation-gates-archify-v2.png)
+*图：聚焦是否扩大上线的决策。四项门槛必须全部通过；证据不足或任一未通过都暂停扩量，修订后重新评测。放量后仍须持续监控，越线即停止或回滚。*
 
 ## 建立可复现 Baseline
 
@@ -69,6 +69,7 @@ Canary 让少量合格用户真实使用，限制工具和预算，设置自动�
 - [阿里国际 AI 应用研发一面：JDK 8、消息可靠性与 RAG](../../interview/alibaba/ai/alibaba-ai-25.md)
 - [字节 Agent 后端实习一面：LangGraph、评测集与混合检索](../../interview/bytedance/base/bytedance-base-22.md)
 - [字节 TRAE 后端秋招二面：项目逻辑、工具与编辑距离](../../interview/bytedance/base/bytedance-base-76.md)
+- [拼多多 Agent 复活赛二面：变更发布、业务提效与权限](../../interview/pinduoduo/ai/pinduoduo-ai-5.md)
 - [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../interview/bytedance/base/bytedance-base-42.md)
 <!-- interview-source-history:end -->
 
