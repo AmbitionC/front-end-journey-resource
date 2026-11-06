@@ -79,6 +79,17 @@ TTL 至少覆盖客户端最大重试、队列延迟和对账窗口。过短会�
 
 删除需要考虑业务资源仍存在时的语义。高价值操作可长期保留轻量 operationId 去重墓碑，即使完整响应已删除。TTL 到期后客户端是否允许复用 key，应写进文档。
 
+### 释放 Redis 锁，不等于删除幂等结果
+
+先区分两个生命周期：锁的租约限制谁现在可以执行；业务幂等记录说明这个事件以前是否已经产生效果。假设事件 `e17` 已完成扣减，消费者随后释放 Redis 锁；迟到的同一事件又取得锁，仍可能再扣一次。把解锁改成“比较 owner 后删除”只能防止误删别人的锁，不能吸收这种串行重复。[Redis 的锁实现说明](https://redis.io/docs/latest/develop/clients/patterns/distributed-locks/#correct-implementation-with-a-single-instance)明确区分了锁有效期与安全释放。
+
+| 需要回答的问题 | 应保留的依据 |
+|---|---|
+| 当前执行者还能否提交？ | 有限租约、所有者，以及提交端实际校验的版本或 fencing token |
+| 同一个事件是否已处理？ | 在业务事务内原子保存的事件身份、处理状态和结果，或等价的下游幂等合同 |
+
+因此不能只给 `SET NX` 选一个很大的 TTL，就宣称消息消费具备业务幂等。锁过期时旧执行者可能仍在运行；处理完成后清掉唯一的去重标记，又会重新开放重放窗口。把执行租约与结果保留期分别建模：前者用于有界接管，后者覆盖约定的迟到、重投与对账范围；超过范围的请求也要有明确处理规则。将幂等标识和业务变更放进一致的原子边界，以及按资源生命周期考虑迟到请求，是 [AWS 幂等 API 设计](https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/)讨论的核心约束；跨系统时仍需对账，不能由 Redis 解锁成功推断业务只执行一次。
+
 ## Header 标准状态
 
 IETF 的 [Idempotency-Key HTTP Header Field](https://datatracker.ietf.org/doc/draft-ietf-httpapi-idempotency-key-header/)在 2026-07-17 的调研截止点仍是 Internet-Draft，而非 RFC。可以采用该字段名和草案思想，但应注明工作进展并固定本系统契约，不能声称已经是最终互联网标准。
@@ -96,12 +107,13 @@ API 幂等需要一个原子账本，而不只是 Header。key 在明确作用�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [快手 Agent 岗一面：CSS 能力边界与插入幂等](../../../interview/kuaishou/ai/kuaishou-ai-10.md)
 - [字节 Agent 一面：会话记忆、并发更新与算法](../../../interview/bytedance/base/bytedance-base-29.md)
 - [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)
 - [字节全栈二、三面：幂等、索引与字符串匹配](../../../interview/bytedance/base/bytedance-base-32.md)
+- [商盟支付 Java 开发实习一面：交易去重、并发与消息](../../../interview/shangmeng/ai/shangmeng-ai-1.md)
 - [字节生活服务 AI 全栈二面：AI 作业、接口幂等与树题](../../../interview/bytedance/base/bytedance-base-64.md)
 - [蚂蚁 Agent 实习一面：缓存、消息与 RAG](../../../interview/antfin/ai/antfin-ai-6.md)
+- [快手 Agent 岗一面：CSS 能力边界与插入幂等](../../../interview/kuaishou/ai/kuaishou-ai-10.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
@@ -109,3 +121,5 @@ API 幂等需要一个原子账本，而不只是 Header。key 在明确作用�
 - [RFC 9110：HTTP Semantics](https://www.rfc-editor.org/rfc/rfc9110.html)
 - [Stripe Docs：Idempotent requests](https://docs.stripe.com/api/idempotent_requests)
 - [IETF Internet-Draft：The Idempotency-Key HTTP Header Field](https://datatracker.ietf.org/doc/draft-ietf-httpapi-idempotency-key-header/)
+- [Redis：单实例锁的有效期与安全释放](https://redis.io/docs/latest/develop/clients/patterns/distributed-locks/#correct-implementation-with-a-single-instance)
+- [AWS Builders' Library：Making retries safe with idempotent APIs](https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/)

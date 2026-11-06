@@ -71,6 +71,12 @@ type Delegation = {
 
 有效委派是一份可以验收和合并的责任合同。主 Agent 冻结目标与范围，执行者在最小权限内产出结构化证据，reducer 处理覆盖、去重与冲突，最终 owner 对交付负责。这样并行工作才能积累成一个可信结果，而不是二十份互不相干的回答。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [拼多多 Agent 复活赛一面：检索权限、上下文与流式协议](../../../interview/pinduoduo/ai/pinduoduo-ai-3.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OpenAI — Orchestrating multiple agents](https://developers.openai.com/api/docs/guides/agents/orchestration)

@@ -82,6 +82,7 @@ Agent 发布以版本包为原子单位，把代码、模型、prompt、工具�
 
 <!-- interview-source-history:start -->
 - [小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展](../../../interview/redbook/ai/redbook-ai-3.md)
+- [拼多多服务器开发一面：模型网关、动态鉴权与 Tool 授权](../../../interview/pinduoduo/ai/pinduoduo-ai-4.md)
 <!-- interview-source-history:end -->
 
 ## 学习阅读（不计专题频次）

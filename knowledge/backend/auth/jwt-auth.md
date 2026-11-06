@@ -189,6 +189,7 @@ AI Agent 服务有其特殊性：一次任务调用可能耗时数十秒乃至�
 
 <!-- interview-source-history:start -->
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)
+- [拼多多服务器开发一面：模型网关、动态鉴权与 Tool 授权](../../../interview/pinduoduo/ai/pinduoduo-ai-4.md)
 - [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
 - [字节全栈实习：Session、权限与前端基础](../../../interview/bytedance/base/bytedance-base-46.md)
 - [字节前端全栈实习一面：渲染、Worker 与认证](../../../interview/bytedance/base/bytedance-base-38.md)

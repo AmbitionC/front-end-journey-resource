@@ -65,6 +65,27 @@
 
 许多运行时提供“兼容某 API”的接口，但兼容通常只覆盖部分字段。工具调用、结构化输出、usage 统计、流式事件、错误码和聊天模板都可能不同。应用侧应通过适配层隔离供应商语义，并用契约测试确认真正依赖的字段。
 
+## 把 Prefill 与 Decode 分开：分别看请求、KV 和故障
+
+Prefill 处理整段输入并生成后续推理需要的 KV Cache；Decode 利用已有上下文逐步生成后续 token。前者通常更偏计算密集，后者通常更受内存访问与 KV 管理影响。统一引擎里，新来的长输入可能干扰正在解码的请求；PD 分离让两类工作分别调度和扩容。[SGLang 的 PD 文档](https://docs.sglang.ai/advanced_features/pd_disaggregation.html)说明了这类干扰及其分离方案。
+
+分离也增加了缓存握手、槽位安排与传输成本。模型版本、KV 布局、并行配置和传输后端必须兼容；网络慢或输入短时，这些成本可能抵消调度收益。不能仅因“用了 PD”就宣称吞吐提高。
+
+![请求网关分别派发预填充和解码请求，P 与 D 完成握手并传递 KV，D 在缓存就绪后返回输出](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-open-source-deployment-pd-request-v1.png)
+*图：一次正常 PD 请求的逻辑阶段。具体的 D 节点选择、KV 槽位预留与并行时机依运行时版本和策略；此图不是某个面试项目的实际架构还原。*
+
+以 SGLang 的网关/Router 为例，入口按模型与请求属性找到可用实例组，再结合负载、前缀亲和、会话约束和准入上限选择实例。PD 模式关联 P、D 两侧的请求，P 侧计算得到 KV，D 侧在必要缓存可用后继续解码；网关处理元数据与输出，向调用方返回结果。[网关说明](https://github.com/sgl-project/sglang/blob/main/sgl-model-gateway/README.md)与[路由生命周期](https://github.com/sgl-project/sglang/blob/main/sgl-router/ARCHITECTURE.md)给出了这些阶段，具体命令、策略和兼容能力应锁定部署版本再核对。
+
+选择上游路由时，不能只轮询“请求数最少”的实例：一个长输入可能占用很多 P 侧计算，等待 KV 的请求也可能占住 D 侧容量。分别观察 P 的排队/未缓存输入量、D 的排队与 KV 容量，并用首 token 时延、逐 token 时延、拒绝率和超时率验收。Trace 要区分排队、P 计算、KV 握手/传输和首个 Decode；部分阶段可重叠，不把指标机械相加当作端到端耗时。
+
+| 卡在哪一段 | 应观察的证据 | 当前请求的处理边界 |
+| --- | --- | --- |
+| P 不可用或一直排队 | 实例健康、排队长度、阶段进展与请求截止点 | 从新请求的可选集合移除故障实例；当前请求按有界错误或重试策略收敛 |
+| KV 握手/传输未完成 | 两侧请求关联、传输状态、缓存就绪与等待超时 | 不把“P 算完”当成 D 已可用；失败时释放本次请求占用的状态 |
+| D 故障或输出停滞 | 实例健康、已输出片段、进展与剩余预算 | 已输出后不能悄悄换一个生成结果拼接；明确结束错误或由上游决定重新开始 |
+
+健康检查只说明实例是否可选，不证明某个请求成功。超时、取消和清理协议需按具体实现验证，不能把文档中的某个默认秒数当成业务总预算。推理未对外输出前，可在总预算内做有限重试；如果推理链还调用了有副作用的工具，工具结果未知时应查询原操作，不能随着模型重试再执行一次。一个请求失败也不应永久占住其他独立请求的队列。
+
 ## 安全边界
 
 优先加载无需执行远程自定义代码的权重格式；对模型文件校验来源与哈希；在低权限容器或账户下运行服务；限制外网、文件系统和设备访问；不要把模型生成的工具参数直接执行。
@@ -106,6 +127,7 @@
 - [字节 AI 应用开发一、二面：规划、结构化输出与部署取舍](../../../interview/bytedance/base/bytedance-base-65.md)
 - [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)
 - [腾讯混元 AI 后台开发暑期实习一面：数据安全、OpenClaw 与并发手写](../../../interview/tencent/ai/tencent-ai-27.md)
+- [腾讯混元后台开发二面：推理调度、队列与缓存故障](../../../interview/tencent/ai/tencent-ai-30.md)
 - [字节 Agent：AI Coding、技能设计与模型工程](../../../interview/bytedance/base/bytedance-base-49.md)
 <!-- interview-source-history:end -->
 
@@ -117,3 +139,6 @@
 - [vLLM Benchmark CLI](https://docs.vllm.ai/en/stable/benchmarking/cli.html)
 - [llama.cpp](https://github.com/ggml-org/llama.cpp)
 - [llama.cpp HTTP Server](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md)
+- [SGLang：PD Disaggregation](https://docs.sglang.ai/advanced_features/pd_disaggregation.html)
+- [SGLang Model Gateway](https://github.com/sgl-project/sglang/blob/main/sgl-model-gateway/README.md)
+- [SGLang Router Architecture](https://github.com/sgl-project/sglang/blob/main/sgl-router/ARCHITECTURE.md)

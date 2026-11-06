@@ -75,14 +75,16 @@ Agent 权限来自受信任策略，而不是提示词。把每次动作建模�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [小红书 Agent 算法一面：研究停止、协作与租户](../../../interview/redbook/ai/redbook-ai-15.md)
-- [百度 AI 应用社招一面：工作区权限、工具发现与上下文](../../../interview/baidu/ai/baidu-ai-7.md)
-- [小红书大模型平台全栈一面：写边界、Harness 与意图澄清](../../../interview/redbook/ai/redbook-ai-7.md)
-- [小红书 AI 全栈暑期二面：MCP 更新安全与 JSON 验收](../../../interview/redbook/ai/redbook-ai-11.md)
-- [美团容器平台 JAVA 一二面：消息一致性、MCP 权限与代码审查](../../../interview/meituan/ai/meituan-ai-5.md)
 - [小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展](../../../interview/redbook/ai/redbook-ai-3.md)
+- [美团容器平台 JAVA 一二面：消息一致性、MCP 权限与代码审查](../../../interview/meituan/ai/meituan-ai-5.md)
+- [拼多多服务器开发一面：模型网关、动态鉴权与 Tool 授权](../../../interview/pinduoduo/ai/pinduoduo-ai-4.md)
+- [拼多多 Agent 复活赛一面：检索权限、上下文与流式协议](../../../interview/pinduoduo/ai/pinduoduo-ai-3.md)
 - [字节全栈实习：Session、权限与前端基础](../../../interview/bytedance/base/bytedance-base-46.md)
+- [百度 AI 应用社招一面：工作区权限、工具发现与上下文](../../../interview/baidu/ai/baidu-ai-7.md)
 - [百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测](../../../interview/baidu/ai/baidu-ai-2.md)
+- [小红书 AI 全栈暑期二面：MCP 更新安全与 JSON 验收](../../../interview/redbook/ai/redbook-ai-11.md)
+- [小红书 Agent 算法一面：研究停止、协作与租户](../../../interview/redbook/ai/redbook-ai-15.md)
+- [小红书大模型平台全栈一面：写边界、Harness 与意图澄清](../../../interview/redbook/ai/redbook-ai-7.md)
 - [阿里淘宝闪购 Agent 算法实习一面：框架、记忆与线上排障](../../../interview/alibaba/ai/alibaba-ai-6.md)
 - [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
 <!-- interview-source-history:end -->

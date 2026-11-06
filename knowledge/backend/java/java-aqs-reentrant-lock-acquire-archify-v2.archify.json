@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "OpenJDK 25：获取与等待分支",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "java-aqs-acquire-revision-002.html",
+    "legend": {
+      "mode": "hidden"
+    }
+  },
+  "participants": [
+    {
+      "id": "thread",
+      "type": "backend",
+      "label": "调用线程"
+    },
+    {
+      "id": "sync",
+      "type": "backend",
+      "label": "Sync 策略"
+    },
+    {
+      "id": "aqs",
+      "type": "backend",
+      "label": "AQS 框架"
+    }
+  ],
+  "messages": [
+    {
+      "id": "invoke",
+      "from": "thread",
+      "to": "sync",
+      "y": 160,
+      "label": "lock → initialTryLock"
+    },
+    {
+      "id": "fast-success",
+      "from": "sync",
+      "to": "thread",
+      "y": 230,
+      "label": "初试成功：返回并持有",
+      "variant": "return"
+    },
+    {
+      "id": "slow-entry",
+      "from": "sync",
+      "to": "aqs",
+      "y": 285,
+      "label": "仅初试失败：acquire(1)"
+    },
+    {
+      "id": "policy",
+      "from": "aqs",
+      "to": "sync",
+      "y": 340,
+      "label": "调用 tryAcquire"
+    },
+    {
+      "id": "acquired",
+      "from": "sync",
+      "to": "thread",
+      "y": 395,
+      "label": "获取成功：返回并持有",
+      "variant": "return"
+    },
+    {
+      "id": "park",
+      "from": "aqs",
+      "to": "thread",
+      "y": 450,
+      "label": "失败：排队，必要时 park"
+    },
+    {
+      "id": "retry",
+      "from": "aqs",
+      "to": "sync",
+      "y": 505,
+      "label": "等待路径：重试 tryAcquire"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "amber",
+      "title": "限定 OpenJDK 25 GA 的实现路径",
+      "items": [
+        "AQS 的 FIFO 等待队列不自动等于公平获取。",
+        "一次 unlock 后计数仍大于零时，原线程继续持有锁。"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "实现角色，不是额外执行线程",
+      "items": [
+        "Sync 与 AQS 是同一锁实现中的策略和框架角色，不是独立网络服务。",
+        "带条件的消息展示备选路径；成功分支返回后不继续执行失败分支。"
+      ]
+    }
+  ]
+}

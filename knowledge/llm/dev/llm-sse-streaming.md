@@ -23,9 +23,9 @@ data: {"usage":{"output_tokens":12}}
 四个常用字段：
 
 - `data`：事件内容；多个 `data` 行会用换行符拼接。
-- `event`：事件类型；省略时默认为 `message`。
-- `id`：事件 ID，可用于断线续传。
-- `retry`：建议客户端重连等待的毫秒数。
+- `event`：事件类型；省略或值为空时默认为 `message`。
+- `id`：事件 ID；原生 `EventSource` 保留最后合法值供续传使用，服务端仍须提供对应的回放能力。
+- `retry`：纯 ASCII 数字表示的重连等待毫秒数；原生 `EventSource` 处理它，后文的 `fetch` 示例不实现重连调度。
 
 以 `:` 开头的行是注释，常用作心跳。字段名区分大小写，未知字段会被忽略。行尾可能是 `LF`、`CRLF` 或 `CR`，健壮解析器不能只假设一种形式。
 
@@ -116,55 +116,92 @@ export async function POST(request: Request) {
 
 这是最容易写错的地方：一次 `reader.read()` 得到的是网络字节块，不是完整 SSE 事件。一个 UTF-8 字符、字段行甚至空行都可能被拆到两个 chunk 中；一个 chunk 也可能包含多个事件。
 
-因此必须：增量解码 → 保留未完成缓冲 → 按空行取完整帧 → 逐行解析字段。
+因此先增量解码，再跨 chunk 保留当前行，逐行处理字段，读到空行才派发。`CRLF` 算一个行尾，单独的 `CR` 或 `LF` 也算行尾；不能只寻找 `\n\n`、`\r\r`、`\r\n\r\n` 三种整帧分隔串，因为相邻两行可以使用不同的结束符。
+
+下面是已经建立的 `fetch` 响应的教学解析器，返回普通 `{ event, data, id }` 对象。它保留同一连接内最后的合法 `id`，但不是完整 `EventSource` 客户端。
 
 ```ts
-type ParsedEvent = { event: string; data: string; id?: string };
-
-function parseFrame(frame: string): ParsedEvent | null {
-  let event = "message";
-  let id: string | undefined;
-  const data: string[] = [];
-
-  for (const line of frame.split(/\r\n|\r|\n/)) {
-    if (line.startsWith(":")) continue;
-    const colon = line.indexOf(":");
-    const field = colon === -1 ? line : line.slice(0, colon);
-    let value = colon === -1 ? "" : line.slice(colon + 1);
-    if (value.startsWith(" ")) value = value.slice(1);
-
-    if (field === "event") event = value;
-    else if (field === "data") data.push(value);
-    else if (field === "id" && !value.includes("\0")) id = value;
-  }
-
-  return data.length ? { event, data: data.join("\n"), id } : null;
-}
+type ParsedEvent = { event: string; data: string; id: string };
 
 async function consumeSSE(response: Response, onEvent: (e: ParsedEvent) => void) {
-  if (!response.ok || !response.body) throw new Error(`HTTP ${response.status}`);
+  if (!response.ok || !response.body) throw new Error("HTTP " + response.status);
 
   const reader = response.body.getReader();
   const decoder = new TextDecoder("utf-8");
-  let buffer = "";
+  let line = "";
+  let afterCR = false;
+  let eventType = "";
+  let lastEventId = "";
+  const data: string[] = [];
 
-  while (true) {
-    const { value, done } = await reader.read();
-    if (done) break;
-    buffer += decoder.decode(value, { stream: true });
+  function processLine(current: string) {
+    if (current === "") {
+      const parsed = data.length
+        ? { event: eventType || "message", data: data.join("\n"), id: lastEventId }
+        : null;
+      data.length = 0;
+      eventType = "";
+      if (parsed) onEvent(parsed);
+      return;
+    }
+    if (current.startsWith(":")) return;
 
-    const frames = buffer.split(/\r\n\r\n|\r\r|\n\n/);
-    buffer = frames.pop() ?? "";
-    for (const frame of frames) {
-      const event = parseFrame(frame);
-      if (event) onEvent(event);
+    const colon = current.indexOf(":");
+    const field = colon === -1 ? current : current.slice(0, colon);
+    let value = colon === -1 ? "" : current.slice(colon + 1);
+    if (value.startsWith(" ")) value = value.slice(1);
+
+    if (field === "data") data.push(value);
+    else if (field === "event") eventType = value;
+    else if (field === "id" && !value.includes("\0")) lastEventId = value;
+    // 本例忽略 retry；不会据此启动重连。
+  }
+
+  function feed(text: string) {
+    for (const char of text) {
+      if (afterCR) {
+        afterCR = false;
+        if (char === "\n") continue; // 跨 chunk 的 CRLF 也只算一个行尾。
+      }
+      if (char === "\r" || char === "\n") {
+        const current = line;
+        line = "";
+        afterCR = char === "\r";
+        processLine(current);
+      } else {
+        line += char;
+      }
     }
   }
 
-  buffer += decoder.decode();
-  // 按 SSE 规范，没有以空行结束的残缺事件不应被派发。
+  try {
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      feed(decoder.decode(value, { stream: true }));
+    }
+    feed(decoder.decode());
+    // EOF 不补空行；未以空行结束的 line/data/eventType 就此丢弃。
+  } finally {
+    reader.releaseLock();
+  }
 }
 ```
+
+本例按 [WHATWG 的逐行解释规则](https://html.spec.whatwg.org/multipage/server-sent-events.html#event-stream-interpretation)区分以下情况：
+
+| 输入或状态 | 本例的合同 |
+|---|---|
+| 多条 `data` 行 | 用一个 `\n` 连接；`data:` 或无冒号的 `data` 仍会产生一条内容为空的事件，完全没有 `data` 的块则不派发 |
+| `event:` 为空或省略 | 派发类型为 `message`；每次空行都清空本块的类型，即使该块没有数据 |
+| `id` | 跨事件保留最后合法值；空值清空它，含 NUL 的值被忽略；结果中的 `id` 是本连接当前值，不保证业务已消费或已保存 |
+| `retry` 和其他未知字段 | 本例忽略；不设置重连定时器，也不自动发送 `Last-Event-ID` |
+| UTF-8 与行尾 | 使用同一个增量 `TextDecoder`；忽略一个流首 BOM，保留跨块字符及 CRLF 状态，支持混合 LF/CRLF/CR |
+| EOF | 不把 EOF 当作额外空行，丢弃未结束事件；若空行已由末尾的 CR 完成，则当时已经派发 |
+
+字段按第一个冒号分割，只移除值开头的一个 ASCII 空格，不会顺手 `trim()` 掉其他空白。SSE 的 `data` 可以是空串或普通文本；后面的聊天示例要求 BFF 另行约定每条数据都是完整 JSON，不能把这个业务约定推广到任意 SSE 服务。
+
+调用方还须校验响应媒体类型，并为行长、事件大小、总时长和应用错误设置边界。本例在结束或抛错后释放 reader 锁；这不等于取消网络请求或上游模型，取消仍须通过调用方的 `AbortController` 传递。重连、服务端回放、请求幂等以及浏览器事件任务调度等完整生命周期也不在此函数内。
 
 不能在每个 chunk 上直接 `split("\n")` 后解析；那会在弱网、中文多字节字符或代理重新分块时随机失败。
 
@@ -272,7 +309,9 @@ class ToolArguments {
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
 - [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)
 - [百度后端一面：ReAct、规划与流式工具参数](../../../interview/baidu/ai/baidu-ai-4.md)
+- [拼多多服务器开发一面：模型网关、动态鉴权与 Tool 授权](../../../interview/pinduoduo/ai/pinduoduo-ai-4.md)
 - [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
+- [拼多多 Agent 复活赛一面：检索权限、上下文与流式协议](../../../interview/pinduoduo/ai/pinduoduo-ai-3.md)
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
 - [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
 <!-- interview-source-history:end -->

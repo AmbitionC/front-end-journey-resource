@@ -1,0 +1,102 @@
+{
+  "schema_version": 3,
+  "diagram_type": "lifecycle",
+  "meta": {
+    "title": "集合选型：Map 不继承 Collection",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "java-collections-selection-revision-002.html",
+    "legend": {
+      "mode": "hidden"
+    }
+  },
+  "mainPath": [
+    "need",
+    "bykey",
+    "map"
+  ],
+  "states": [
+    {
+      "id": "need",
+      "type": "start",
+      "label": "说明需求"
+    },
+    {
+      "id": "bykey",
+      "type": "decision",
+      "label": "按 key 查值？"
+    },
+    {
+      "id": "map",
+      "type": "success",
+      "label": "选择 Map"
+    },
+    {
+      "id": "elements",
+      "type": "decision",
+      "label": "核对元素访问"
+    },
+    {
+      "id": "set",
+      "type": "success",
+      "label": "选择 Set"
+    },
+    {
+      "id": "list",
+      "type": "success",
+      "label": "选择 List"
+    },
+    {
+      "id": "queue",
+      "type": "success",
+      "label": "选 Queue / Deque"
+    }
+  ],
+  "transitions": [
+    {
+      "id": "need-bykey",
+      "from": "need",
+      "to": "bykey"
+    },
+    {
+      "id": "bykey-map",
+      "from": "bykey",
+      "to": "map",
+      "label": "是"
+    },
+    {
+      "id": "bykey-elements",
+      "from": "bykey",
+      "to": "elements",
+      "label": "否"
+    },
+    {
+      "id": "elements-set",
+      "from": "elements",
+      "to": "set",
+      "label": "去重"
+    },
+    {
+      "id": "elements-list",
+      "from": "elements",
+      "to": "list",
+      "label": "按位置"
+    },
+    {
+      "id": "elements-queue",
+      "from": "elements",
+      "to": "queue",
+      "label": "待处理"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "接口角色，不是完整继承图",
+      "items": [
+        "Map 不继承 Collection；List、Set、Queue 属于元素集合角色。",
+        "Queue 不必是 FIFO；实现类决定排序、null 与并发合同。"
+      ]
+    }
+  ]
+}

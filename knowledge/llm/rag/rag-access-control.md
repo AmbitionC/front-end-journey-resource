@@ -100,6 +100,7 @@ RAG 权限是一项端到端不变量：可信身份产生服务端策略，策�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [拼多多 Agent 复活赛一面：检索权限、上下文与流式协议](../../../interview/pinduoduo/ai/pinduoduo-ai-3.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

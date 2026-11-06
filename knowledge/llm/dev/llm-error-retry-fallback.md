@@ -127,6 +127,7 @@ OpenAI 官方 Node SDK 的[仓库文档](https://github.com/openai/openai-node)�
 <!-- interview-source-history:start -->
 - [哔哩哔哩一面：端到端 AI Coding 与生产治理](../../../interview/bilibili/ai/bilibili-ai-2.md)
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
+- [拼多多服务器开发一面：模型网关、动态鉴权与 Tool 授权](../../../interview/pinduoduo/ai/pinduoduo-ai-4.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

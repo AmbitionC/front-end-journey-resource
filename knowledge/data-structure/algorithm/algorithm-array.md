@@ -134,7 +134,7 @@ console.log(quickSelect(arr, k)); // 5
 
 #### 5. 判断数组是否为子数组
 **问题**：判断一个数组是否为另一个数组的子数组。  
-**解法**：使用双指针。
+**解法**：枚举起点，逐项比较候选片段。
 
 ```javascript
 const isSubArray = (mainArr, subArr) => {
@@ -155,6 +155,7 @@ const arr2 = [2, 3];
 console.log(isSubArray(arr1, arr2)); // true
 ```
 
+这里判断的是连续子数组。设两个长度分别为 n、m，代码会为每个起点复制并比较最多 m 项，最坏时间为 O((n-m+1)m)、临时空间 O(m)；它不是指针只单向移动一次的线性算法。空候选按空连续片段处理，返回 true。
 
 
 #### 6. 旋转数组
@@ -489,18 +490,74 @@ console.log(sqrtTwoDecimals('0'));        // '0.00'
 
 对 `n` 的二分需要 $O(\log(n+1))$ 次比较；每次大整数乘除的成本随位数增长，不能把它们当无限精度的常数时间操作。若题目明确只要求浮点绝对误差，可以使用前述实数区间法，并返回误差界；不要把近似误差合同和精确十进制舍入合同混在一起。
 
+#### 15. 每项替换为右侧最大值：先写结果，再纳入当前项
+
+要求右侧不含当前位置，最后一项固定填 -1。下面的教学接口接受有限整数数组、返回新数组，不修改输入；负数也允许，因此不能把运行中的最大值初始化为 -1。
+
+从右向左维护 `rightMax`，在处理 i 之前，它恰好等于严格右侧后缀的最大值。先把它写入结果，再用原来的 `nums[i]` 更新后缀状态，避免把当前值误算进答案。
+
+```javascript
+function replaceWithRightMaximum(nums) {
+  const result = new Array(nums.length);
+  let rightMax = -Infinity;
+  for (let i = nums.length - 1; i >= 0; i--) {
+    result[i] = i === nums.length - 1 ? -1 : rightMax;
+    rightMax = Math.max(rightMax, nums[i]);
+  }
+  return result;
+}
+
+console.log(replaceWithRightMaximum([17, 18, 5, 4, 6, 1])); // [18, 6, 6, 6, 1, -1]
+console.log(replaceWithRightMaximum([-3, -5]));              // [-5, -1]
+console.log(replaceWithRightMaximum([]));                    // []
+```
+
+| 处理 `[-3,-5]` 的位置 | 写入前的严格右侧最大值 | 输出 | 纳入原值后的状态 |
+| --- | --- | --- | --- |
+| i=1，原值 -5 | 右侧为空 | 题目约定的 -1 | -5 |
+| i=0，原值 -3 | -5 | -5 | -3 |
+
+每个元素只扫描一次，时间 O(n)；除返回数组外仅用常数状态。若改为原地写入，必须先暂存原元素，不能拿已经替换后的值更新后缀最大值。这里的 -1 是末项的输出合同，不是所有后缀最大值的下界。
+
+#### 16. 根据 I/D 构造排列：保留一个连续的未使用区间
+
+给定长度 N 的 I/D 字符串，用 `0..N` 每个整数恰好一次构造排列；I 要求当前位置小于下一项，D 要求大于下一项。这里只求任意合法解，**没有额外要求字典序最小**。
+
+维护尚未使用的整数区间 `[low,high]`。遇 I 就取当前最小值 low，因为之后任意未使用值都更大；遇 D 就取最大值 high，因为之后任意未使用值都更小。取走一个端点后，未用集合仍是连续区间，最后只剩一个值。
+
+```javascript
+function constructIDPermutation(pattern) {
+  let low = 0, high = pattern.length;
+  const result = [];
+  for (const relation of pattern) {
+    if (relation === 'I') result.push(low++);
+    else if (relation === 'D') result.push(high--);
+    else throw new RangeError('pattern must contain only I or D');
+  }
+  result.push(low);
+  return result;
+}
+
+console.log(constructIDPermutation('IDID')); // [0, 4, 1, 3, 2]
+console.log(constructIDPermutation('DDD'));  // [3, 2, 1, 0]
+console.log(constructIDPermutation(''));     // [0]
+```
+
+例如 `IDID` 的未用区间依次为 `[0,4] → [1,4] → [1,3] → [2,3] → [2,2]`。每步只取一个尚未使用的端点，保证无重复；当前端点与下一步任何可选值的关系又保证相邻不等式。时间 O(N)，除输出外空间 O(1)。若另加字典序最小等目标，需要重新设计和证明，不能把本解法的任意合法解冒称最优解。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [百度后端一面：延迟诊断、工具恢复与滑动窗口](../../../interview/baidu/ai/baidu-ai-10.md)
-- [腾讯云 CSIG 后台一面：Skill 边界与有序查找](../../../interview/tencent/ai/tencent-ai-23.md)
 - [字节 Agent 一面：会话记忆、并发更新与算法](../../../interview/bytedance/base/bytedance-base-29.md)
 - [小红书 AI 应用一面：RAG 评测、Skill 与平方根](../../../interview/redbook/ai/redbook-ai-20.md)
 - [字节 AI 平台一面：Agent 评测、框架与数据结构](../../../interview/bytedance/base/bytedance-base-33.md)
 - [腾讯 WXG 一面：跨语言 RAG、消息幂等与算法](../../../interview/tencent/base/tencent-base-3.md)
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
 - [快手大模型应用算法社招一面：Diffusion 与二分基础](../../../interview/kuaishou/ai/kuaishou-ai-19.md)
+- [拼多多服务器开发一面：模型网关、动态鉴权与 Tool 授权](../../../interview/pinduoduo/ai/pinduoduo-ai-4.md)
 - [字节全栈二、三面：幂等、索引与字符串匹配](../../../interview/bytedance/base/bytedance-base-32.md)
+- [腾讯云 CSIG 后台一面：Skill 边界与有序查找](../../../interview/tencent/ai/tencent-ai-23.md)
+- [百度后端一面：延迟诊断、工具恢复与滑动窗口](../../../interview/baidu/ai/baidu-ai-10.md)
 - [腾讯 CDG 金融科技二面：Agent 评估、协程与存储基础](../../../interview/tencent/ai/tencent-ai-29.md)
 - [蚂蚁机器学习实习一面：RAG 数据、幻觉与热点识别](../../../interview/antfin/ai/antfin-ai-15.md)
 <!-- interview-source-history:end -->

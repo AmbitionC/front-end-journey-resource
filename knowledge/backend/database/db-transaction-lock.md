@@ -335,15 +335,16 @@ MySQL redo 与 binlog 的内部协调涉及特定引擎实现，不等于完整�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [腾讯 AI 应用开发实习一面：事务快照与 B+树索引](../../../interview/tencent/ai/tencent-ai-18.md)
-- [蚂蚁大模型应用秋招一面：记忆评测、事务日志与消息积压](../../../interview/antfin/ai/antfin-ai-11.md)
 - [小红书产品工程师一面：一致性、知识来源与多模态评估](../../../interview/redbook/ai/redbook-ai-6.md)
 - [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
 - [小红书与百度 Agent 面试合并记录：LangGraph 子图、Skill 与工程校验](../../../interview/redbook/ai/redbook-ai-2.md)
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
 - [字节 Agent Infra 校招：运行时、MySQL 与 LRU](../../../interview/bytedance/base/bytedance-base-25.md)
 - [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../../interview/bytedance/base/bytedance-base-24.md)
+- [腾讯 AI 应用开发实习一面：事务快照与 B+树索引](../../../interview/tencent/ai/tencent-ai-18.md)
+- [商盟支付 Java 开发实习一面：交易去重、并发与消息](../../../interview/shangmeng/ai/shangmeng-ai-1.md)
 - [蚂蚁财富技术部一面：协作式 Agent、交付门禁与后端基础](../../../interview/antfin/ai/antfin-ai-4.md)
+- [蚂蚁大模型应用秋招一面：记忆评测、事务日志与消息积压](../../../interview/antfin/ai/antfin-ai-11.md)
 - [网易后端开发秋招一面：缓存一致性、死锁与分布式锁](../../../interview/netease/base/netease-base-1.md)
 - [蚂蚁 Agent 实习一面：缓存、消息与 RAG](../../../interview/antfin/ai/antfin-ai-6.md)
 - [腾讯后端多轮复盘：热 Key、缓存一致性与库存](../../../interview/tencent/base/tencent-base-2.md)

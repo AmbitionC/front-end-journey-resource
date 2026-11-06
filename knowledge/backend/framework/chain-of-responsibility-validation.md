@@ -63,13 +63,32 @@ Schema 校验主要说明输入的形状、类型及契约；业务规则还可�
 
 测试应覆盖每个规则、顺序依赖、失败后不继续、全部通过、状态变化以及真实写入的并发与幂等。一个规则单测通过，不代表整条业务链在生产环境中正确。
 
+## 工厂、策略与责任链：先识别变化的职责
+
+介绍模式时，先说明希望隔离什么变化，再说明对象或函数怎样协作。三种常见职责可以放在同一个业务例子里比较，但不必为了凑齐模式把简单流程拆成许多层。
+
+| 关注的变化 | 选择思路 | 导出业务的教学例子 | 需要守住的边界 |
+|---|---|---|---|
+| 创建哪种对象、如何配置它 | 工厂：分开对象创建与使用 | 按获准格式创建并配置 PDF 或 CSV 导出器 | 工厂负责创建，不自动定义业务步骤的先后 |
+| 同一职责有多套可替换算法 | 策略：通过共同合同选择一种行为 | 选用一套已授权的脱敏策略 | 一次选用一种策略，不等于必须遍历所有策略 |
+| 一个请求经过哪些处理器、何时停止 | 责任链或规则管线：明确传递与终止 | 按格式、权限、资源状态逐项校验，失败短路 | 有的链由一个处理器接管，有的要求全部通过，应先说明控制合同 |
+
+JDK 21 的 [`DocumentBuilderFactory.newInstance()`](https://docs.oracle.com/en/java/javase/21/docs/api/java.xml/javax/xml/parsers/DocumentBuilderFactory.html#newInstance())通过查找机制得到工厂实现，调用方再用工厂配置并取得解析器。这可以说明创建与使用的分离；这里使用“工厂”这个职责概念，不把所有工厂 API 都直接归成同一个具体的 GoF 创建型模式。
+
+JDK 21 的 [`Comparator`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Comparator.html)允许把比较规则传给排序方法，以控制排序顺序。这可作为可替换行为的策略式教学例子；规则仍须满足比较合同，不是只要写了接口或 lambda 就自动形成一个合适的策略设计。责任链的具体调用例子则是前述 Servlet `FilterChain.doFilter`：是否调用下一环节，直接影响流程是否继续。
+
+三者可以组合：工厂创建选定的策略对象，规则链在明确位置使用它；但“创建对象”“选择一种算法”“让请求按合同传递”解决的是不同问题。普通条件判断在规则少且稳定时仍很合适。描述真实项目时，还应给出实际变化点、调用路径和替换成本，不能仅根据类名含 Factory、Strategy 或 Handler 就认定实现已经符合相应模式。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [商盟支付 Java 开发实习一面：交易去重、并发与消息](../../../interview/shangmeng/ai/shangmeng-ai-1.md)
 - [快手效果营销实习一面：意图路由、模型容错与业务校验](../../../interview/kuaishou/ai/kuaishou-ai-18.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
 
 - [Jakarta Servlet 6.1：FilterChain 的下一处理器调用合同](https://jakarta.ee/specifications/servlet/6.1/apidocs/jakarta.servlet/jakarta/servlet/FilterChain.html)。
+- [JDK 21：DocumentBuilderFactory 的创建、查找与解析器配置](https://docs.oracle.com/en/java/javase/21/docs/api/java.xml/javax/xml/parsers/DocumentBuilderFactory.html)
+- [JDK 21：Comparator 的可替换比较合同](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Comparator.html)
 

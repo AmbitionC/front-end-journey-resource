@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "OpenJDK 25：归零后才通知等待者",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "java-aqs-release-revision-002.html",
+    "legend": {
+      "mode": "hidden"
+    }
+  },
+  "participants": [
+    {
+      "id": "holder",
+      "type": "backend",
+      "label": "持有者"
+    },
+    {
+      "id": "aqs",
+      "type": "backend",
+      "label": "锁 / AQS"
+    },
+    {
+      "id": "waiter",
+      "type": "backend",
+      "label": "等待线程"
+    }
+  ],
+  "messages": [
+    {
+      "id": "unlock",
+      "from": "holder",
+      "to": "aqs",
+      "y": 160,
+      "label": "unlock → release → tryRelease"
+    },
+    {
+      "id": "still-held",
+      "from": "aqs",
+      "to": "holder",
+      "y": 230,
+      "label": "未归零：仍持有锁",
+      "variant": "return"
+    },
+    {
+      "id": "signal",
+      "from": "aqs",
+      "to": "waiter",
+      "y": 290,
+      "label": "归零：unpark 等待者"
+    },
+    {
+      "id": "retry-entry",
+      "from": "waiter",
+      "to": "aqs",
+      "y": 350,
+      "label": "醒来后重试获取"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "amber",
+      "title": "限定 OpenJDK 25 GA 的实现路径",
+      "items": [
+        "AQS 的 FIFO 等待队列不自动等于公平获取。",
+        "一次 unlock 后计数仍大于零时，原线程继续持有锁。"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "实现角色，不是额外执行线程",
+      "items": [
+        "Sync 与 AQS 是同一锁实现中的策略和框架角色，不是独立网络服务。",
+        "带条件的消息展示备选路径；成功分支返回后不继续执行失败分支。"
+      ]
+    }
+  ]
+}

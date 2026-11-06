@@ -55,6 +55,56 @@ function insertAfter(head, node) {
 
 哨兵不是免费魔法：size 只统计真实节点，遍历到 tail 停止，不能把哨兵暴露给调用方。
 
+## 合并两个有序链表：按两路表头稳定重连
+
+给定两条按值非降序排列的单链表，将它们合成一条非降序链表。这里采用明确的教学合同：节点是普通可写对象，字段为有限数值 `val` 和指向下一节点或 `null` 的 `next`；输入有限、无环、互不共享节点，允许改写原节点的 `next`。空表以 `null` 表示。代码不负责扫描验证这些前提，也不接受并发修改输入。
+
+“复用节点”指结果包含同一批原节点对象，不是复制值后新建一批节点。[ECMAScript 的对象属性定义](https://tc39.es/ecma262/multipage/ecmascript-data-types-and-values.html#sec-object-type)可用于核对这里对对象字段读写的语言语义；下述算法、不变量和复杂度是独立推导。原头引用仍指向原节点，但它沿 `next` 看到的链可能已经改变；调用方不能再依赖两个输入各自保留原拓扑。
+
+先建一个不承载输入值的哑节点，再用 `tail` 指向已合并前缀的最后一个节点。比较两路当前表头，把较小者连到 `tail.next`，只推进被选中的那一路，再移动 `tail`。相等时先选第一条链的节点，这样既保持每条输入内部的相对顺序，也给跨链相等值一个确定的先后规则。
+
+```javascript
+function mergeTwoLists(a, b) {
+  const dummy = { next: null };
+  let tail = dummy;
+  while (a !== null && b !== null) {
+    if (a.val <= b.val) {
+      tail.next = a;
+      a = a.next;
+    } else {
+      tail.next = b;
+      b = b.next;
+    }
+    tail = tail.next;
+  }
+  tail.next = a !== null ? a : b;
+  return dummy.next;
+}
+```
+
+这里把“已合并前缀”限定为 `dummy.next` 到 `tail`，不把 `tail.next` 暂时保留的旧后继算作已消费节点。不变量是：这个前缀有序，恰好包含已经取出的原节点，每个一次；非空时，其末值不大于任一尚未消费的表头。两条剩余链仍各自有序，所以选出较小表头后，不变量继续成立；节点总数有限，每轮又至少取走一个，循环必然结束。一路耗尽后，另一条剩余链整体有序，且不小于当前前缀末值，直接接上即可。若合并前缀一直为空，则直接返回另一条原链或 `null`。
+
+下标字母只用于观察身份，例如 `1a` 是第一条链中的值 1，不是实际数值的一部分：
+
+| 当前两路表头 | 本轮选择 | 合并前缀 |
+|---|---|---|
+| `1a`、`1b` | 相等先取 `1a` | `1a` |
+| `2a`、`1b` | `1b` | `1a → 1b` |
+| `2a`、`3b` | `2a` | `1a → 1b → 2a` |
+
+完整示例 `[1a,2a,4a]` 与 `[1b,3b,4b]` 得到 `[1a,1b,2a,3b,4a,4b]`。因此它是稳定的两路合并：若把第一条输入放在第二条输入之前作为相等值的原始次序，结果保留该次序。把 `<=` 改成 `<` 会让第二条链的相等表头优先，数值仍有序，却改变了这条稳定性约定。
+
+最坏时间 O(m+n)，迭代实现只用常数个引用和一个不进入结果的哑节点，额外空间 O(1)，不会新增结果数据节点。若要求两条输入的连接完全不变，应另建结果节点并承担 O(m+n) 的输出空间；递归实现也不能忽略最坏 O(m+n) 的调用栈。
+
+| 边界 | 本实现的合同 |
+|---|---|
+| 两路都为空 | 返回 `null` |
+| 一路为空 | 返回另一路原头，不复制节点 |
+| 负数、重复值、长度不等 | 按同一规则合并；每个原节点保留一次 |
+| 同一头或共享尾段、环、无序输入 | 不满足前提；不能承诺正确结果或终止 |
+
+验证时除了比较输出值，还要检查原节点身份集合、无环、值未改写和相等值的身份顺序。只比较 `[1,1,2,3,4,4]`，无法发现错误地复制节点、丢掉身份或破坏稳定性的实现。
+
 ## 反转、环与双指针
 
 反转单链表需要同时保存 `next`，再把当前节点指向 previous；若先覆盖 next 而未保存，剩余链条会丢失。时间 O(n)、额外空间 O(1)。
@@ -228,6 +278,7 @@ function reverseKGroup(head, k) {
 - [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../../interview/bytedance/base/bytedance-base-36.md)
 - [MiniMax 平台研发一面：数据可靠性、反馈闭环与 GMP](../../../interview/minimax/ai/minimax-ai-1.md)
 - [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
+- [美团 AI 全栈日常实习一面：记忆、Skill 与链表合并](../../../interview/meituan/ai/meituan-ai-11.md)
 - [快手 AI 应用实习面试：模型服务、RAG 与分类评估](../../../interview/kuaishou/ai/kuaishou-ai-15.md)
 - [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)
 - [字节 Agent 暑期实习一面：摘要、工具预算与链表](../../../interview/bytedance/base/bytedance-base-27.md)
@@ -248,3 +299,4 @@ Redis 文档为滚动文档，本文仅引用通用 LRU、WATCH 条件校验与�
 - [Redis：Transactions 与 WATCH 条件更新](https://redis.io/docs/latest/develop/using-commands/transactions/)
 - [Redis：Key eviction 与近似 LRU](https://redis.io/docs/latest/develop/reference/eviction/)
 - [LeetCode 142：Linked List Cycle II（独立教学题规格）](https://leetcode.com/problems/linked-list-cycle-ii/)
+- [ECMAScript：The Object Type 与属性读写](https://tc39.es/ecma262/multipage/ecmascript-data-types-and-values.html#sec-object-type)（用于合并示例的对象字段语义；合并不变量与复杂度独立推导）
