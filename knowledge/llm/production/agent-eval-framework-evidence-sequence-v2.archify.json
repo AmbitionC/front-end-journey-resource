@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "② 独立采集两类证据",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "compact-evidence.html"
+  },
+  "participants": [
+    {
+      "id": "interaction",
+      "type": "external",
+      "label": "模型与工具交互"
+    },
+    {
+      "id": "outcome",
+      "type": "external",
+      "label": "环境终态"
+    },
+    {
+      "id": "collector",
+      "type": "backend",
+      "label": "外部评测系统"
+    }
+  ],
+  "messages": [
+    {
+      "id": "trace",
+      "from": "interaction",
+      "to": "collector",
+      "y": 160,
+      "label": "记录执行轨迹"
+    },
+    {
+      "id": "snapshot",
+      "from": "outcome",
+      "to": "collector",
+      "y": 208,
+      "label": "读取状态快照"
+    }
+  ]
+}

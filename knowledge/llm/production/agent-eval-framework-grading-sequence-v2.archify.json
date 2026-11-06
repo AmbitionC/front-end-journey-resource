@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "③ 按成功规则独立验收",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "compact-grading.html"
+  },
+  "participants": [
+    {
+      "id": "inputs",
+      "type": "external",
+      "label": "验收输入"
+    },
+    {
+      "id": "grader",
+      "type": "backend",
+      "label": "评分器"
+    },
+    {
+      "id": "report",
+      "type": "external",
+      "label": "评测报告"
+    }
+  ],
+  "messages": [
+    {
+      "id": "criteria",
+      "from": "inputs",
+      "to": "grader",
+      "y": 160,
+      "label": "成功规则"
+    },
+    {
+      "id": "trace",
+      "from": "inputs",
+      "to": "grader",
+      "y": 192,
+      "label": "执行轨迹"
+    },
+    {
+      "id": "snapshot",
+      "from": "inputs",
+      "to": "grader",
+      "y": 224,
+      "label": "状态快照"
+    },
+    {
+      "id": "report_result",
+      "from": "grader",
+      "to": "report",
+      "y": 256,
+      "label": "评分与理由"
+    }
+  ]
+}

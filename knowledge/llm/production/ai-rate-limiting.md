@@ -365,6 +365,7 @@ Redis Cluster 按 Key 的 hash slot 分片；一个热点桶 Key 仍由一个 sl
 - [阿里淘天 AI 应用研发一面：RAG、限流 Top-K 与优惠策略](../../../interview/alibaba/ai/alibaba-ai-5.md)
 - [腾讯混元后台一面：Java 并发、限流与 Agent 工程](../../../interview/tencent/ai/tencent-ai-28.md)
 - [阿里国际 AI 应用研发一面：JDK 8、消息可靠性与 RAG](../../../interview/alibaba/ai/alibaba-ai-25.md)
+- [美团 AI 全栈一面：索引、限流与分片边界](../../../interview/meituan/ai/meituan-ai-12.md)
 <!-- interview-source-history:end -->
 
 ## 学习阅读（不计专题频次）

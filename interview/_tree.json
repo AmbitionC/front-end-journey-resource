@@ -2334,6 +2334,24 @@
             "updatedAt": "2026-10-31",
             "contentFormat": "short-qa-v2",
             "role": "AI 测试开发"
+          },
+          {
+            "label": "百度搜索框架 Agent 日常实习一二面：上下文、工程选型与评测",
+            "key": "baidu-ai-14",
+            "isLeaf": true,
+            "filePath": "baidu/ai",
+            "tags": [
+              "Agent",
+              "上下文工程",
+              "缓存",
+              "评测",
+              "RAG"
+            ],
+            "updatedAt": "2026-11-06",
+            "department": "搜索框架",
+            "role": "Agent 智能体研发日常实习（标题自述）",
+            "roleCategory": "Agent 与 AI 应用",
+            "contentFormat": "short-qa-v2"
           }
         ]
       }
@@ -3890,6 +3908,23 @@
               "链表"
             ],
             "updatedAt": "2026-11-06",
+            "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "美团 AI 全栈一面：索引、限流与分片边界",
+            "key": "meituan-ai-12",
+            "isLeaf": true,
+            "filePath": "meituan/ai",
+            "tags": [
+              "MySQL",
+              "限流",
+              "分库分表",
+              "RAG"
+            ],
+            "updatedAt": "2026-11-06",
+            "department": "其他",
+            "role": "AI 全栈（标题自述）",
+            "roleCategory": "AI 与 Agent 工程",
             "contentFormat": "short-qa-v2"
           }
         ]

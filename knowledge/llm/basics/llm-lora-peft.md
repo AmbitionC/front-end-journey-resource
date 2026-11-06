@@ -62,6 +62,7 @@ $$
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [百度搜索框架 Agent 日常实习一二面：上下文、工程选型与评测](../../../interview/baidu/ai/baidu-ai-14.md)
 - [蚂蚁数字支付 AI 应用研发二面：数据分层、迁移与微调](../../../interview/antfin/ai/antfin-ai-13.md)
 <!-- interview-source-history:end -->
 

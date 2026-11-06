@@ -5245,6 +5245,89 @@
       "diagramType": null,
       "batchId": null,
       "publishedEvidence": null
+    },
+    {
+      "key": "agent-eval-framework",
+      "label": "Agent 评测原理：任务、轨迹与环境结果",
+      "articlePath": "knowledge/llm/production/agent-eval-framework.md",
+      "baselineArticleSha256": "172a2bd7e0944062c8cd159070d2b5a5838c4686b9e2b5989030cef523e2ba8e",
+      "status": "rendered",
+      "legacyAssets": [
+        {
+          "path": "images/agent-eval-framework-task-trace-outcome-archify-v1.png",
+          "sha256": "cf9904e0d16ace1abdb0182f0e17c62481d43c2c6bb9a8e2d7990a629bae545e",
+          "provenance": "existing_archify_static_export_source_not_found_in_current_tree"
+        }
+      ],
+      "renderer": "archify",
+      "diagramType": "sequence",
+      "batchId": null,
+      "publishedEvidence": null,
+      "rendererVersion": "3.2.0",
+      "repairId": "agent-eval-framework-readability-20261106",
+      "migrationKind": "deterministic_diagram_readability_repair",
+      "editableSources": [
+        {
+          "path": "knowledge/llm/production/agent-eval-framework-run-sequence-v2.archify.json",
+          "sha256": "b079c7bbf4326120bb65031230208da61db322b3bd3f9863319594dfb1d30cff"
+        },
+        {
+          "path": "knowledge/llm/production/agent-eval-framework-run-sequence-v2.svg",
+          "sha256": "5091a9074b31a410810d5994fbb2b75b43ebea7a161643ad50f0ab8159e4669b"
+        },
+        {
+          "path": "knowledge/llm/production/agent-eval-framework-evidence-sequence-v2.archify.json",
+          "sha256": "a0d7c7e2984c374bc1f3d2028c52c3440fcc10df50d9efe1d4c34f8a33ca8841"
+        },
+        {
+          "path": "knowledge/llm/production/agent-eval-framework-evidence-sequence-v2.svg",
+          "sha256": "8907a51c484b6f568bfc7c56337544ba56a03aa42ba69bd6ffa794b6253afaa5"
+        },
+        {
+          "path": "knowledge/llm/production/agent-eval-framework-grading-sequence-v2.archify.json",
+          "sha256": "72a00e46e7ac1e102b4686a838262ce59c067cdcd41e9a6cc0aebada226a567a"
+        },
+        {
+          "path": "knowledge/llm/production/agent-eval-framework-grading-sequence-v2.svg",
+          "sha256": "64246ae21018a7695c84d0d2fa993b7a6605c15fc11785b7bfc9f60db16ccdb0"
+        }
+      ],
+      "staticExports": [
+        {
+          "path": "images/agent-eval-framework-run-sequence-v2.png",
+          "sha256": "481fe205e1788e7f0f28fc2ff365a776511570585e119ef239b5549485d4c629",
+          "width": 1120,
+          "height": 720
+        },
+        {
+          "path": "images/agent-eval-framework-evidence-sequence-v2.png",
+          "sha256": "024f9a287ca90a8d8c4086ea0fba442bf8607d483a966bfece1df4ac4cc79740",
+          "width": 1120,
+          "height": 654
+        },
+        {
+          "path": "images/agent-eval-framework-grading-sequence-v2.png",
+          "sha256": "f2b112473258c088fd087e8cc46d0087586e3cd28235cc9857de775263045843",
+          "width": 1120,
+          "height": 720
+        }
+      ],
+      "repairedArticleSha256": "e6d3f33d3bffbd6ca0b5e7ab69f5f4db90814b744afebc8dd3e258178e38c626",
+      "replacementReason": "Split one 4800px-wide overview into three compact native message views. Full canonical SVGs are rendered unchanged at 2x; essential labels project to about 12.2px at 620px and 13.8px at 700px. Preserve all correct teaching prose and the old image.",
+      "reviewStatus": "independent_review_pending",
+      "authorStaticReview": {
+        "status": "passed",
+        "widths": [
+          620,
+          700
+        ],
+        "pdfWidthSample": 620,
+        "evidenceFile": "agent-eval-readability-review.private.json",
+        "evidenceSha256": "a59a5d8ef54fdbd922703c90c0f356548d9b2444ae71ac230d379fbd9a0ad7a9"
+      },
+      "recordedAt": "2026-11-06",
+      "authorRenderedArticleSha256": "9be879c9dcd7451b1faa6208567d40be3e6ade0e4b21f64fa3889f2730c1b27c",
+      "finalBytePreparation": "Shared source backlinks appended after image-only author rendering; figure source/output hashes unchanged."
     }
   ],
   "verificationCompletedOn": "2026-10-30"

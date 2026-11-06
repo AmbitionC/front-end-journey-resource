@@ -243,14 +243,15 @@ ANN 用部分召回换速度和资源。查询参数越激进，延迟可能更�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [腾讯后端一面：Embedding、召回指标与融合排序](../../../interview/tencent/ai/tencent-ai-24.md)
-- [携程 Java 后端二面：分块、向量检索与查询改写](../../../interview/ctrip/ai/ctrip-ai-1.md)
+- [百度搜索框架 Agent 日常实习一二面：上下文、工程选型与评测](../../../interview/baidu/ai/baidu-ai-14.md)
 - [字节全栈一面：RAG、Java 与线程池](../../../interview/bytedance/base/bytedance-base-37.md)
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../../interview/bytedance/base/bytedance-base-48.md)
 - [字节 Agent 暑期实习一面：摘要、工具预算与链表](../../../interview/bytedance/base/bytedance-base-27.md)
 - [阿里 Agent 开发暑期实习一面](../../../interview/alibaba/ai/alibaba-ai-2.md)
+- [腾讯后端一面：Embedding、召回指标与融合排序](../../../interview/tencent/ai/tencent-ai-24.md)
 - [阿里国际 Java 二面：RAG 数据评测、微调与代码生成](../../../interview/alibaba/ai/alibaba-ai-26.md)
 - [字节 Agent 全栈一面：工具、评测与编码](../../../interview/bytedance/base/bytedance-base-40.md)
+- [携程 Java 后端二面：分块、向量检索与查询改写](../../../interview/ctrip/ai/ctrip-ai-1.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
