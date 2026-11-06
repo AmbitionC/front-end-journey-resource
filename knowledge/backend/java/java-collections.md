@@ -20,8 +20,8 @@ List 的“有序”主要指元素位置和遍历顺序，不等于按数值自
 
 先选择接口角色，再检查顺序、可修改性、null、并发与规模等约束。下面是选型过程，不是完整继承图；同一个业务可能同时需要序列和索引，而不是强行只选一个容器。
 
-![先判断是否按 key 查 value；映射选择 Map，元素集合再按去重、位置访问或待处理操作选择 Set、List、Queue 或 Deque](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/java-collections-selection-archify-v1.png)
-*图：接口先说明允许怎样操作，具体实现再承担性能和行为约束。*
+![选型过程先检查是否按 key 查值；是则选择不继承 Collection 的 Map，否则按去重、位置或待处理需求选择 Set、List、Queue 或 Deque](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/java-collections-selection-archify-v2.png)
+*图：这是逐步选定接口合同的过程，不表示 List、Set、Map 在运行中相互转化。*
 
 ArrayList 是可变长数组实现的 List；LinkedList 同时实现 List 和 Deque。因此“它是链表”与“它提供 List 或 Deque 接口”是两个维度。HashSet 用哈希结构实现成员集合；LinkedHashSet 提供明确遍历顺序；HashMap 与 LinkedHashMap 同样要区分映射能力和遍历顺序。[Java 21 java.util 包说明](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/package-summary.html)列出了这些接口与实现的职责。
 

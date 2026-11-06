@@ -219,13 +219,23 @@
       "key": "llm-sse-streaming",
       "label": "SSE 流式响应与增量渲染",
       "filePath": "llm/dev",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004",
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+      "recordedAt": "2026-11-06",
+      "batch": "daily-content-20261106",
+      "reason": "Actual SSE line-state parser fixes mixed line endings, connection-level event ID and empty event defaults; independently tested private candidate. Final head review and online synchronization remain pending.",
+      "previousRecord": {
+        "key": "llm-sse-streaming",
+        "label": "SSE 流式响应与增量渲染",
+        "filePath": "llm/dev",
+        "status": "published",
+        "action": "updated",
+        "recordedAt": "2026-10-04",
+        "batch": "next-twenty-source-increments-20261004",
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     },
     {
       "key": "function-calling",

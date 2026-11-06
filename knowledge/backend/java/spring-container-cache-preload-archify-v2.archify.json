@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "Spring：回调先后与 Boot 就绪",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "spring-preload-revision-002.html",
+    "legend": {
+      "mode": "hidden"
+    }
+  },
+  "participants": [
+    {
+      "id": "container",
+      "type": "backend",
+      "label": "Spring 容器"
+    },
+    {
+      "id": "beans",
+      "type": "backend",
+      "label": "Bean / 回调"
+    },
+    {
+      "id": "boot",
+      "type": "backend",
+      "label": "Boot 应用"
+    }
+  ],
+  "messages": [
+    {
+      "id": "construct",
+      "from": "container",
+      "to": "beans",
+      "y": 160,
+      "label": "构造与依赖注入"
+    },
+    {
+      "id": "localinit",
+      "from": "container",
+      "to": "beans",
+      "y": 212,
+      "label": "本地初始化回调"
+    },
+    {
+      "id": "post",
+      "from": "container",
+      "to": "beans",
+      "y": 264,
+      "label": "适用后处理"
+    },
+    {
+      "id": "all-singletons",
+      "from": "container",
+      "to": "beans",
+      "y": 316,
+      "label": "常规单例全部完成后"
+    },
+    {
+      "id": "refresh",
+      "from": "container",
+      "to": "beans",
+      "y": 368,
+      "label": "发布上下文刷新事件"
+    },
+    {
+      "id": "boot-only",
+      "from": "container",
+      "to": "boot",
+      "y": 420,
+      "label": "若使用 Boot：继续启动"
+    },
+    {
+      "id": "run",
+      "from": "boot",
+      "to": "beans",
+      "y": 472,
+      "label": "执行 Runner"
+    },
+    {
+      "id": "runner-return",
+      "from": "beans",
+      "to": "boot",
+      "y": 524,
+      "label": "Runner 成功返回",
+      "variant": "return"
+    },
+    {
+      "id": "ready",
+      "from": "boot",
+      "to": "beans",
+      "y": 576,
+      "label": "就绪事件与可接流量"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "教学主路径：Framework 6.2 / Boot 3.5",
+      "items": [
+        "回调是可选扩展点，不要求把一次预热挂到每个节点。",
+        "异步发出任务不等于缓存已就绪；流量入口须遵守 readiness。"
+      ]
+    }
+  ]
+}

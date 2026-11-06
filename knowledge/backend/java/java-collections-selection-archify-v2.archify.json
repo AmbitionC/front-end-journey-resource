@@ -1,85 +1,58 @@
 {
-  "schema_version": 2,
-  "diagram_type": "workflow",
+  "schema_version": 3,
+  "diagram_type": "lifecycle",
   "meta": {
-    "title": "Java 集合：先按操作选接口",
+    "title": "集合选型：Map 不继承 Collection",
     "locale": "zh-CN",
     "quality_profile": "showcase",
-    "output": "java-collections-selection-archify-v1.html",
+    "output": "java-collections-selection-revision-002.html",
     "legend": {
       "mode": "hidden"
     }
   },
-  "lanes": [
-    {
-      "id": "mapping",
-      "label": "键值映射"
-    },
-    {
-      "id": "member",
-      "label": "成员关系"
-    },
-    {
-      "id": "sequence",
-      "label": "位置访问"
-    },
-    {
-      "id": "pending",
-      "label": "待处理元素"
-    }
+  "mainPath": [
+    "need",
+    "bykey",
+    "map"
   ],
-  "nodes": [
+  "states": [
     {
       "id": "need",
-      "lane": "mapping",
-      "col": 0,
-      "type": "external",
+      "type": "start",
       "label": "说明需求"
     },
     {
       "id": "bykey",
-      "lane": "mapping",
-      "col": 1,
-      "type": "backend",
+      "type": "decision",
       "label": "按 key 查值？"
     },
     {
       "id": "map",
-      "lane": "mapping",
-      "col": 2,
-      "type": "backend",
-      "label": "Map"
+      "type": "success",
+      "label": "选择 Map"
     },
     {
       "id": "elements",
-      "lane": "member",
-      "col": 1,
-      "type": "backend",
-      "label": "只保存元素"
+      "type": "decision",
+      "label": "核对元素访问"
     },
     {
       "id": "set",
-      "lane": "member",
-      "col": 2,
-      "type": "backend",
-      "label": "Set"
+      "type": "success",
+      "label": "选择 Set"
     },
     {
       "id": "list",
-      "lane": "sequence",
-      "col": 2,
-      "type": "backend",
-      "label": "List"
+      "type": "success",
+      "label": "选择 List"
     },
     {
       "id": "queue",
-      "lane": "pending",
-      "col": 2,
-      "type": "backend",
-      "label": "Queue / Deque"
+      "type": "success",
+      "label": "选 Queue / Deque"
     }
   ],
-  "edges": [
+  "transitions": [
     {
       "id": "need-bykey",
       "from": "need",

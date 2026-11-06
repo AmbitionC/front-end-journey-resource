@@ -34,8 +34,11 @@ AQS 同时支持独占与共享模式。ReentrantLock 走独占模式；共享�
 
 下面画的是 OpenJDK 25 GA 的正常独占获取路径，省略内存分配失败等低层分支。**只有实际获取成功，lock 才返回到临界区；unpark 只是让等待线程有机会继续竞争。**
 
-![lock 先调用 Sync 的 initialTryLock，失败后进入 AQS acquire 和 tryAcquire；仍失败时入队重试并可能 park；持有者释放至零后通知等待者继续竞争](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/java-aqs-reentrant-lock-acquire-archify-v1.png)
-*图：等待队列保存竞争顺序，获取策略决定能否成功；唤醒箭头不表示转交所有权。*
+![调用线程通过 Sync 策略初试获取；初试失败才进入 AQS acquire，获取失败后排队并可能 park，等待路径仍须重试 tryAcquire](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/java-aqs-reentrant-lock-acquire-archify-v2.png)
+*图 1：Sync 与 AQS 是同一锁实现的策略和框架职责，不是独立线程或网络服务。各消息按标出的条件选择，成功返回后不会继续失败分支。*
+
+![持有者业务结束调用 unlock，其内部经 release 和 tryRelease 减少持有次数；未归零时仍持有，归零后才 unpark 等待线程，醒来仍须重新获取](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/java-aqs-reentrant-lock-release-archify-v2.png)
+*图 2：只有持有者负责释放；计数归零才通知等待者。通知不转移所有权，等待线程醒来后仍须重新获取。*
 
 1. `ReentrantLock.lock()` 委派给 Sync.lock。该版本先运行公平或非公平子类的 `initialTryLock()`，检查快速获取或同线程重入。
 2. 初试失败后调用 AQS 的 `acquire(1)`。AQS 先调用子类 `tryAcquire(1)`；成功就返回，失败才继续等待管理，因此“CAS 失败一次便立即睡眠”并不准确。

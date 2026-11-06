@@ -544,7 +544,7 @@
             "contentStatus": "published",
             "heat": 18,
             "currRank": 5,
-            "updatedAt": "2026-07-14",
+            "updatedAt": "2026-11-06",
             "interviewBaseHeat": 10,
             "quickRead": {
               "text": "网络 chunk 不等于 SSE 事件，完整事件也可能只含工具参数 delta。先增量解码和分帧，再按调用标识累计参数，完成后解析、校验和授权；断流与重复事件不能导致错误执行。"

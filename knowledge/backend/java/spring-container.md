@@ -41,8 +41,8 @@ prototype 的完整销毁责任不由容器自动接管，使用方必须释放�
 
 下图按常规 singleton 的正常启动路径说明回调位置，最后一段仅在使用 Boot 时适用。一次预热选择合适的扩展点即可，不应把相同查询挂到图中的每个节点。
 
-![单个 Bean 先构造注入并执行本地初始化与适用后处理，常规单例完成后可触发 SmartInitializingSingleton 和上下文刷新事件，Boot 再运行 Runner 并进入就绪状态](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/spring-container-cache-preload-archify-v1.png)
-*图：Bean 完成、容器刷新和应用可接流量是不同边界；异步任务的提交不表示缓存已准备好。*
+![容器先对 Bean 构造注入、本地初始化和后处理，常规单例预实例化完成后进入刷新事件阶段；若使用 Boot，Runner 成功返回后才发布就绪事件和可接流量状态](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/spring-container-cache-preload-archify-v2.png)
+*图：这些是容器、Bean 回调和 Boot 的职责角色与正常先后。回调按需求选择，Boot 分支有明确前提；不能把异步任务已提交当成预热完成。*
 
 在 [Spring Boot 3.5.16 的启动合同](https://github.com/spring-projects/spring-boot/blob/v3.5.16/spring-boot-project/spring-boot-docs/src/docs/antora/modules/reference/pages/features/spring-application.adoc)中，ApplicationStartedEvent 位于上下文刷新后、Runner 前；ApplicationReadyEvent 在 Runner 执行后，随后发布 ACCEPTING_TRAFFIC 就绪状态。必需缓存可选择 Runner 中有界等待并传播失败。仍须让实际流量入口遵守 readiness：不能仅因端口已经监听就断言业务准备完成，也不能把所有缓存都认定为必须阻塞启动。
 
