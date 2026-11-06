@@ -1,0 +1,129 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Java 集合：先按操作选接口",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "java-collections-selection-archify-v1.html",
+    "legend": {
+      "mode": "hidden"
+    }
+  },
+  "lanes": [
+    {
+      "id": "mapping",
+      "label": "键值映射"
+    },
+    {
+      "id": "member",
+      "label": "成员关系"
+    },
+    {
+      "id": "sequence",
+      "label": "位置访问"
+    },
+    {
+      "id": "pending",
+      "label": "待处理元素"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "need",
+      "lane": "mapping",
+      "col": 0,
+      "type": "external",
+      "label": "说明需求"
+    },
+    {
+      "id": "bykey",
+      "lane": "mapping",
+      "col": 1,
+      "type": "backend",
+      "label": "按 key 查值？"
+    },
+    {
+      "id": "map",
+      "lane": "mapping",
+      "col": 2,
+      "type": "backend",
+      "label": "Map"
+    },
+    {
+      "id": "elements",
+      "lane": "member",
+      "col": 1,
+      "type": "backend",
+      "label": "只保存元素"
+    },
+    {
+      "id": "set",
+      "lane": "member",
+      "col": 2,
+      "type": "backend",
+      "label": "Set"
+    },
+    {
+      "id": "list",
+      "lane": "sequence",
+      "col": 2,
+      "type": "backend",
+      "label": "List"
+    },
+    {
+      "id": "queue",
+      "lane": "pending",
+      "col": 2,
+      "type": "backend",
+      "label": "Queue / Deque"
+    }
+  ],
+  "edges": [
+    {
+      "id": "need-bykey",
+      "from": "need",
+      "to": "bykey"
+    },
+    {
+      "id": "bykey-map",
+      "from": "bykey",
+      "to": "map",
+      "label": "是"
+    },
+    {
+      "id": "bykey-elements",
+      "from": "bykey",
+      "to": "elements",
+      "label": "否"
+    },
+    {
+      "id": "elements-set",
+      "from": "elements",
+      "to": "set",
+      "label": "去重"
+    },
+    {
+      "id": "elements-list",
+      "from": "elements",
+      "to": "list",
+      "label": "按位置"
+    },
+    {
+      "id": "elements-queue",
+      "from": "elements",
+      "to": "queue",
+      "label": "待处理"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "接口角色，不是完整继承图",
+      "items": [
+        "Map 不继承 Collection；List、Set、Queue 属于元素集合角色。",
+        "Queue 不必是 FIFO；实现类决定排序、null 与并发合同。"
+      ]
+    }
+  ]
+}

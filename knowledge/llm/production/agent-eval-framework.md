@@ -110,19 +110,17 @@ Agent 的改动可能影响工具选择、提示词、检索、上下文管理�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [小红书 AI 全栈业务交叉面与二面：MVP、运行稳定性和视频 Agent](../../../interview/redbook/ai/redbook-ai-5.md)
-- [快手 AI 应用服务端日常实习一面：协作、上下文与评测](../../../interview/kuaishou/ai/kuaishou-ai-7.md)
-- [vivo 多模态算法：重排候选与多意图评测](../../../interview/vivo/ai/vivo-ai-2.md)
-- [字节 TikTok Shop 质量方向一面：LLM Judge 与测试集覆盖](../../../interview/bytedance/base/bytedance-base-66.md)
-- [蚂蚁一面：交付门禁、准确率口径与商品问答](../../../interview/antfin/ai/antfin-ai-10.md)
 - [小红书产品工程师一面：一致性、知识来源与多模态评估](../../../interview/redbook/ai/redbook-ai-6.md)
-- [腾讯企业微信测开实习一面：工作流取舍与离线评测](../../../interview/tencent/ai/tencent-ai-26.md)
+- [快手 AI 应用服务端日常实习一面：协作、上下文与评测](../../../interview/kuaishou/ai/kuaishou-ai-7.md)
 - [字节 AI 平台一面：Agent 评测、框架与数据结构](../../../interview/bytedance/base/bytedance-base-33.md)
 - [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)
 - [阿里大模型算法校招：Attention、后训练与 Agent 评测](../../../interview/alibaba/ai/alibaba-ai-24.md)
+- [小红书 AI 全栈业务交叉面与二面：MVP、运行稳定性和视频 Agent](../../../interview/redbook/ai/redbook-ai-5.md)
 - [字节 Agent 暑期实习一面：摘要、工具预算与链表](../../../interview/bytedance/base/bytedance-base-27.md)
+- [蚂蚁一面：交付门禁、准确率口径与商品问答](../../../interview/antfin/ai/antfin-ai-10.md)
 - [百度 AI 测开一面：LLM 评测、压测与有序链表](../../../interview/baidu/ai/baidu-ai-13.md)
+- [拼多多 Agent 复活赛一面：检索权限、上下文与流式协议](../../../interview/pinduoduo/ai/pinduoduo-ai-3.md)
 - [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../../interview/bytedance/base/bytedance-base-24.md)
 - [vivo Agent 秋招线下面：Harness 与工程诊断](../../../interview/vivo/ai/vivo-ai-1.md)
 - [字节 Agent 后端实习一面：LangGraph、评测集与混合检索](../../../interview/bytedance/base/bytedance-base-22.md)
@@ -131,8 +129,11 @@ Agent 的改动可能影响工具选择、提示词、检索、上下文管理�
 - [字节 Agent 开发实习一面：自进化与评测](../../../interview/bytedance/base/bytedance-base-8.md)
 - [字节抖音电商 Agent 一面：分层、上下文与 GRPO](../../../interview/bytedance/base/bytedance-base-21.md)
 - [腾讯 CSIG 元宝内容安全日常实习：评测集、输出校验与问题归因](../../../interview/tencent/ai/tencent-ai-15.md)
+- [字节 TikTok Shop 质量方向一面：LLM Judge 与测试集覆盖](../../../interview/bytedance/base/bytedance-base-66.md)
+- [腾讯企业微信测开实习一面：工作流取舍与离线评测](../../../interview/tencent/ai/tencent-ai-26.md)
 - [字节 Agent 全栈一面：工具、评测与编码](../../../interview/bytedance/base/bytedance-base-40.md)
 - [字节 Agent：AI Coding、技能设计与模型工程](../../../interview/bytedance/base/bytedance-base-49.md)
+- [vivo 多模态算法：重排候选与多意图评测](../../../interview/vivo/ai/vivo-ai-2.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

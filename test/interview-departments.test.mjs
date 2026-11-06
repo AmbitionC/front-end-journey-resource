@@ -65,8 +65,11 @@ test('general enterprise RAG question uses the full pipeline and does not count 
   const collect=nodes=>nodes.flatMap(n=>n.isLeaf?[n]:collect(n.children??[]));
   const knowledge=collect(JSON.parse(await readFile(resolve(root,'knowledge/_tree.json'),'utf8')));
   const topic=knowledge.find(n=>n.key==='rag-access-control');
-  assert.equal(topic.interviewCount,0);
-  assert.equal(topic.heat,topic.interviewBaseHeat);
+  const aclSource=await readFile(resolve(root,'interview/pinduoduo/ai/pinduoduo-ai-3.md'),'utf8');
+  assert.equal(questionStructure(aclSource).questions.filter(q=>q.key==='rag-access-control').length,2);
+  assert.match(acl,/\/pinduoduo-ai-3\.md\)/);
+  assert.equal(topic.interviewCount,1);
+  assert.equal(topic.heat,topic.interviewBaseHeat+1);
 });
 
 test('role and stack words cannot silently become company departments',()=>{

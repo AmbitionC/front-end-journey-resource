@@ -365,13 +365,11 @@ MySQL 5.6+ 支持 `ALTER TABLE ... ADD INDEX` 的在线 DDL（Online DDL），�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [腾讯 AI 应用开发实习一面：事务快照与 B+树索引](../../../interview/tencent/ai/tencent-ai-18.md)
-- [百度后端二面：Agent 风险、缓存与索引](../../../interview/baidu/ai/baidu-ai-9.md)
-- [腾讯 AI 应用开发日常实习二面：并发模型与索引设计](../../../interview/tencent/ai/tencent-ai-17.md)
 - [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../../interview/bytedance/base/bytedance-base-36.md)
 - [字节 Agent 一面：会话记忆、并发更新与算法](../../../interview/bytedance/base/bytedance-base-29.md)
 - [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)
 - [网易云全栈一面：评估闭环、异步任务与数据查询](../../../interview/netease/fullstack/netease-fullstack-1.md)
+- [腾讯 AI 应用开发日常实习二面：并发模型与索引设计](../../../interview/tencent/ai/tencent-ai-17.md)
 - [百度北京后端秋招一面：Agent 安全、检索与存储](../../../interview/baidu/ai/baidu-ai-3.md)
 - [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
 - [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)
@@ -382,7 +380,10 @@ MySQL 5.6+ 支持 `ALTER TABLE ... ADD INDEX` 的在线 DDL（Online DDL），�
 - [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../../interview/bytedance/base/bytedance-base-24.md)
 - [字节二面：MySQL 索引、最大乘积子数组与推送重连](../../../interview/bytedance/base/bytedance-base-75.md)
 - [百度大模型研发一面：Context、Harness 与 RAG](../../../interview/baidu/ai/baidu-ai-1.md)
+- [腾讯 AI 应用开发实习一面：事务快照与 B+树索引](../../../interview/tencent/ai/tencent-ai-18.md)
+- [商盟支付 Java 开发实习一面：交易去重、并发与消息](../../../interview/shangmeng/ai/shangmeng-ai-1.md)
 - [蚂蚁财富技术部一面：协作式 Agent、交付门禁与后端基础](../../../interview/antfin/ai/antfin-ai-4.md)
+- [百度后端二面：Agent 风险、缓存与索引](../../../interview/baidu/ai/baidu-ai-9.md)
 - [腾讯 CDG 金融科技二面：Agent 评估、协程与存储基础](../../../interview/tencent/ai/tencent-ai-29.md)
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
 - [腾讯云智武汉多轮：运行时、索引、锁与消息消费](../../../interview/tencent/base/tencent-base-4.md)

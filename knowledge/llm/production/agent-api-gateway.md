@@ -72,4 +72,5 @@ Agent Gateway 的价值是形成一个可审计的统一边界：正确保留 HT
 
 <!-- interview-source-history:start -->
 - [腾讯职能线 AI 全栈一面：容量、安全、Worker 与限流](../../../interview/tencent/ai/tencent-ai-14.md)
+- [拼多多服务器开发一面：模型网关、动态鉴权与 Tool 授权](../../../interview/pinduoduo/ai/pinduoduo-ai-4.md)
 <!-- interview-source-history:end -->

@@ -109,6 +109,7 @@ drain(key, s):
 <!-- interview-source-history:start -->
 - [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)
 - [字节 Agent 实习：生成质量、多智能体与缓存](../../../interview/bytedance/base/bytedance-base-52.md)
+- [腾讯混元后台开发二面：推理调度、队列与缓存故障](../../../interview/tencent/ai/tencent-ai-30.md)
 - [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
 - [蚂蚁 Agent 开发一面：多 Agent 并发与质量保障](../../../interview/antfin/ai/antfin-ai-1.md)
 - [字节搜广推引擎架构一面：JSON 输出、并发与系统基础](../../../interview/bytedance/base/bytedance-base-74.md)

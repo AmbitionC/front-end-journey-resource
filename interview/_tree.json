@@ -1599,6 +1599,23 @@
             ],
             "updatedAt": "2026-11-04",
             "contentFormat": "short-qa-v2"
+          },
+          {
+            "key": "tencent-ai-30",
+            "label": "腾讯混元后台开发二面：推理调度、队列与缓存故障",
+            "isLeaf": true,
+            "filePath": "tencent/ai",
+            "department": "混元",
+            "role": "后台开发",
+            "roleCategory": "AI 与 Agent 工程",
+            "tags": [
+              "推理调度",
+              "消息队列",
+              "RAG",
+              "Redis"
+            ],
+            "updatedAt": "2026-11-06",
+            "contentFormat": "short-qa-v2"
           }
         ],
         "nodeType": "department"
@@ -3028,6 +3045,40 @@
             "department": "其他",
             "originalLabel": "拼多多提前批一面：Agent 超时、消息可靠性与线上排障",
             "roleCategory": "AI 与 Agent 工程"
+          },
+          {
+            "key": "pinduoduo-ai-3",
+            "label": "拼多多 Agent 复活赛一面：检索权限、上下文与流式协议",
+            "isLeaf": true,
+            "filePath": "pinduoduo/ai",
+            "department": "其他",
+            "role": "Agent 岗",
+            "roleCategory": "AI 与 Agent 工程",
+            "tags": [
+              "Agent",
+              "RAG",
+              "权限",
+              "上下文"
+            ],
+            "updatedAt": "2026-11-06",
+            "contentFormat": "short-qa-v2"
+          },
+          {
+            "key": "pinduoduo-ai-4",
+            "label": "拼多多服务器开发一面：模型网关、动态鉴权与 Tool 授权",
+            "isLeaf": true,
+            "filePath": "pinduoduo/ai",
+            "department": "其他",
+            "role": "服务器开发",
+            "roleCategory": "Agent 与后端工程",
+            "tags": [
+              "Java",
+              "模型网关",
+              "鉴权",
+              "流式传输"
+            ],
+            "updatedAt": "2026-11-06",
+            "contentFormat": "short-qa-v2"
           }
         ]
       }
@@ -3789,6 +3840,23 @@
             ],
             "updatedAt": "2026-10-29",
             "contentFormat": "short-qa-v2"
+          },
+          {
+            "key": "meituan-ai-11",
+            "label": "美团 AI 全栈日常实习一面：记忆、Skill 与链表合并",
+            "isLeaf": true,
+            "filePath": "meituan/ai",
+            "department": "其他",
+            "role": "AI 全栈开发（日常实习）",
+            "roleCategory": "AI 与 Agent 工程",
+            "tags": [
+              "记忆",
+              "Skill",
+              "MCP",
+              "链表"
+            ],
+            "updatedAt": "2026-11-06",
+            "contentFormat": "short-qa-v2"
           }
         ]
       },
@@ -4233,6 +4301,37 @@
             "updatedAt": "2026-10-31",
             "contentFormat": "short-qa-v2",
             "role": "后端开发"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "Shangmeng",
+    "label": "商盟支付",
+    "nodeType": "company",
+    "children": [
+      {
+        "key": "shangmeng-department-other",
+        "label": "其他",
+        "nodeType": "department",
+        "children": [
+          {
+            "key": "shangmeng-ai-1",
+            "label": "商盟支付 Java 开发实习一面：交易去重、并发与消息",
+            "isLeaf": true,
+            "filePath": "shangmeng/ai",
+            "department": "其他",
+            "role": "Java 开发实习",
+            "roleCategory": "Agent 与后端工程",
+            "tags": [
+              "Java",
+              "幂等",
+              "并发",
+              "消息队列"
+            ],
+            "updatedAt": "2026-11-06",
+            "contentFormat": "short-qa-v2"
           }
         ]
       }

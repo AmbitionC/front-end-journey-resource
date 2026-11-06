@@ -88,6 +88,45 @@ AsyncAPI 文档描述 submit、started、progress、completed、failed 和 cance
 
 重试队列、DLQ 重放与分区迁移也要遵守相同范围。前一事件失败时，是阻塞该实体、核对权威状态后跳过，还是补偿后继续，应有明确规则；把失败事件移走后立即执行后续事件，可能破坏依赖。保序、幂等与防丢失分别解决不同问题，只有在约定的范围内一起验证，才能说明业务效果符合要求。
 
+## RocketMQ 5.x：消息类型与组内顺序
+
+### 先说明消息要表达哪种合同
+
+[RocketMQ 5.x 的 Topic 领域模型](https://rocketmq.apache.org/docs/domainModel/02topic/)区分以下四类消息。它们表达的投递或一致性要求不同，不能把“异步发送”“广播消费”等调用方式或消费模式混进同一张消息类型清单。
+
+| 类型 | 主要合同 | 需要另行保证的事 |
+|---|---|---|
+| Normal，普通消息 | 普通异步通知，不附加 FIFO 或指定时刻可见的语义 | 业务幂等、失败恢复与保存范围 |
+| FIFO，顺序消息 | 在满足生产与消费条件时保证同一 MessageGroup 内的顺序 | 业务顺序来源、同组串行处理和失败后的处置 |
+| Delay，定时/延时消息 | 在有效的指定时间到达后变为消费者可见 | 到期业务校验；可见不等于立即执行，也不自动生成下一周期 |
+| Transaction，事务消息 | 协调消息发布与生产端本地事务的最终一致性 | 下游正确处理、重试与幂等，不提供任意下游数据库的全局原子提交 |
+
+事务消息先保存暂不可投递的半消息，再根据本地事务结果提交或回滚；结果不明时由事务检查器回查本地事务事实。[官方事务消息流程与使用限制](https://rocketmq.apache.org/docs/featureBehavior/04transactionmessage/)明确区分生产与本地事务的一致性、下游消费结果以及异步中间状态。不能因为使用 Transaction 类型，就跳过本地事务状态记录或消费者幂等。
+
+5.x 按 Topic 规划消息类型，发送消息与 Topic 类型应一致，FIFO 消息应发往 FIFO Topic。还应核对 Broker 的 `enableTopicMessageTypeCheck`、实际 SDK 和部署版本，不能只凭文档名称推断运行中的类型校验开关。下面讨论的是 5.x 的 MessageGroup 合同，不能直接套成旧版客户端的选队列代码。
+
+### FIFO 要让生产顺序、存储顺序与处理完成顺序接起来
+
+[官方顺序消息文档](https://rocketmq.apache.org/docs/featureBehavior/03fifomessage/)以 MessageGroup 确定保序范围。同组消息进入同一队列；多个组可以共用一条队列，但跨组没有全局先后保证。把 `orderId` 作为组标识，是“同一订单有序、不同订单可并行”的教学选择，不意味着所有订单共用一个串行组。
+
+1. **生产端先有确定的顺序。** 官方生产顺序条件是单生产者串行发送。同一个组名无法替多个进程或多个竞争线程判断“创建、支付、取消”哪个业务事件先发生。若来源本身并发，应用须先建立顺序来源，不能靠到达 Broker 后再猜。
+2. **消费组使用有序投递，处理后才提交结果。** 只配 FIFO Topic 和 MessageGroup，却使用并发乱序消费，仍不足以保证效果顺序。PushConsumer 应在监听处理完成后返回结果；SimpleConsumer 即使一次取得多条，也要遵守同组的接收、处理、确认顺序。收到后马上确认，再把业务丢给无序线程池，会让后一个事件先提交。
+3. **失败与重投仍有业务边界。** 顺序消息重试可能阻塞后继，重试也有上限。前一事件被隔离或重试耗尽后，不能把“后继可以继续”理解为前一业务变化已经成功；应按实体版本、缺口复核或补偿合同决定是否继续。同一事件重投仍需幂等。
+
+教学例子是订单 A 的 `A1 创建 → A2 支付 → A3 发货` 使用一个组，订单 B 使用另一个组。A2 失败时，不能为了加速直接让 A3 完成；B 的工作则可在可用队列、Worker 和下游容量允许时并行。这里的业务状态约束需要应用实现，消息类型不会替业务做校验。
+
+### 保序会约束并行度，具体吞吐仍要测量
+
+同组串行处理减少了可同时执行的工作，慢消息、反复重试和热点组会增加后续等待；把所有事件塞进一个组，往往把本可并行的业务也串行化。细分为真正需要共同顺序的实体组可扩大并行空间，但扩容消费者不能消除某一个热组内部的顺序依赖。官方也建议避免把大量消息集中到一个组。
+
+| 分组方式 | 可以保住的顺序 | 并行与等待的代价 |
+|---|---|---|
+| 所有订单同一组 | 在生产、消费条件都满足时覆盖整个组 | 全组受同一串行路径和慢事件影响 |
+| 每个订单一组 | 各订单内部；订单之间没有全局顺序 | 可跨组并行，仍受队列分布、热订单和下游容量限制 |
+| 把同一订单随意拆成多个组 | 只能各组内部有序 | 增加并行会失去原先要求的订单内顺序 |
+
+例如每条消息持久处理需 10 ms，且某组只能串行完成、没有重试时，该路径理想上限约为每秒 100 条；这是忽略网络和调度成本的教学估算，不是 RocketMQ 基准测试。实际应比较组分布、队列数量、消费者模式、处理耗时和重试率，再观察吞吐与尾延迟，不能承诺固定的性能下降比例，也不能说顺序消息只能有一个消费者。
+
 ## 租约、重试与 DLQ
 
 Worker 用 leaseOwner、leaseUntil 和 fencingToken 表示执行权。心跳延长租约，旧 token 不能写新状态。进程崩溃后租约过期，消息被重投或扫描器重新调度。
@@ -147,18 +186,20 @@ RabbitMQ 的 TTL 限制消息存活期，死信交换机路由过期、拒收等
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [拼多多提前批一面：Agent 超时、消息可靠性与线上排障](../../../interview/pinduoduo/ai/pinduoduo-ai-2.md)
-- [美团一面：消息保序与双跑边界](../../../interview/meituan/ai/meituan-ai-10.md)
-- [蚂蚁大模型应用秋招一面：记忆评测、事务日志与消息积压](../../../interview/antfin/ai/antfin-ai-11.md)
-- [美团本地核心一面：缓存一致性、库存故障与 Agent 记忆](../../../interview/meituan/ai/meituan-ai-4.md)
 - [美团容器平台 JAVA 一二面：消息一致性、MCP 权限与代码审查](../../../interview/meituan/ai/meituan-ai-5.md)
 - [阿里云 Agent Infra 一面：SGX、吞吐与日志写入](../../../interview/alibaba/ai/alibaba-ai-8.md)
 - [MiniMax 平台研发一面：数据可靠性、反馈闭环与 GMP](../../../interview/minimax/ai/minimax-ai-1.md)
+- [美团一面：消息保序与双跑边界](../../../interview/meituan/ai/meituan-ai-10.md)
 - [腾讯 WXG 一面：跨语言 RAG、消息幂等与算法](../../../interview/tencent/base/tencent-base-3.md)
 - [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)
 - [快手 AI 应用实习面试：模型服务、RAG 与分类评估](../../../interview/kuaishou/ai/kuaishou-ai-15.md)
 - [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
+- [拼多多提前批一面：Agent 超时、消息可靠性与线上排障](../../../interview/pinduoduo/ai/pinduoduo-ai-2.md)
+- [商盟支付 Java 开发实习一面：交易去重、并发与消息](../../../interview/shangmeng/ai/shangmeng-ai-1.md)
 - [阿里国际 AI 应用研发一面：JDK 8、消息可靠性与 RAG](../../../interview/alibaba/ai/alibaba-ai-25.md)
+- [美团本地核心一面：缓存一致性、库存故障与 Agent 记忆](../../../interview/meituan/ai/meituan-ai-4.md)
+- [蚂蚁大模型应用秋招一面：记忆评测、事务日志与消息积压](../../../interview/antfin/ai/antfin-ai-11.md)
+- [腾讯混元后台开发二面：推理调度、队列与缓存故障](../../../interview/tencent/ai/tencent-ai-30.md)
 - [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
 - [快手效果营销实习一面：意图路由、模型容错与业务校验](../../../interview/kuaishou/ai/kuaishou-ai-18.md)
 - [蚂蚁 Agent 实习一面：缓存、消息与 RAG](../../../interview/antfin/ai/antfin-ai-6.md)
@@ -182,3 +223,6 @@ RabbitMQ 的 TTL 限制消息存活期，死信交换机路由过期、拒收等
 
 - [Redis — Programmability](https://redis.io/docs/latest/develop/programmability/)
 - [Redis — Streams](https://redis.io/docs/latest/develop/data-types/streams/)
+- [RocketMQ 5.x：Topic 消息类型与类型校验](https://rocketmq.apache.org/docs/domainModel/02topic/)（消息类型和 FIFO 补充核验于 2026-11-06；运行配置需单独核对）
+- [RocketMQ 5.x：Ordered Message 与 MessageGroup](https://rocketmq.apache.org/docs/featureBehavior/03fifomessage/)
+- [RocketMQ 5.x：Transaction Message 的流程与边界](https://rocketmq.apache.org/docs/featureBehavior/04transactionmessage/)

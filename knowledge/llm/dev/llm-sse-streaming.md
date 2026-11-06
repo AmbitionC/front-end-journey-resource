@@ -272,7 +272,9 @@ class ToolArguments {
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
 - [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)
 - [百度后端一面：ReAct、规划与流式工具参数](../../../interview/baidu/ai/baidu-ai-4.md)
+- [拼多多服务器开发一面：模型网关、动态鉴权与 Tool 授权](../../../interview/pinduoduo/ai/pinduoduo-ai-4.md)
 - [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
+- [拼多多 Agent 复活赛一面：检索权限、上下文与流式协议](../../../interview/pinduoduo/ai/pinduoduo-ai-3.md)
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
 - [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
 <!-- interview-source-history:end -->

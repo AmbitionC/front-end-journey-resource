@@ -77,9 +77,10 @@ Worker 取到消息后用条件更新获取租约：只有 queued、retrying 或
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [小红书一面：检索评测、上下文压缩与任务幂等](../../../interview/redbook/ai/redbook-ai-4.md)
 - [百度网盘后端二面：图生图工作流、任务管理与缓存一致性](../../../interview/baidu/ai/baidu-ai-5.md)
 - [腾讯职能线 AI 全栈一面：容量、安全、Worker 与限流](../../../interview/tencent/ai/tencent-ai-14.md)
+- [腾讯混元后台开发二面：推理调度、队列与缓存故障](../../../interview/tencent/ai/tencent-ai-30.md)
+- [小红书一面：检索评测、上下文压缩与任务幂等](../../../interview/redbook/ai/redbook-ai-4.md)
 <!-- interview-source-history:end -->
 
 ## 相关机制阅读（不计专题频次）

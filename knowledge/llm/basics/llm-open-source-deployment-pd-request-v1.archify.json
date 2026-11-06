@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "PD 请求：预填充、KV 与解码",
+    "locale": "zh-CN",
+    "output": "sglang-pd-request.html",
+    "quality_profile": "showcase",
+    "legend": {
+      "mode": "hidden"
+    }
+  },
+  "participants": [
+    {
+      "id": "gateway",
+      "type": "backend",
+      "label": "请求网关"
+    },
+    {
+      "id": "prefill",
+      "type": "backend",
+      "label": "预填充 P"
+    },
+    {
+      "id": "decode",
+      "type": "backend",
+      "label": "解码 D"
+    }
+  ],
+  "messages": [
+    {
+      "id": "prefill-dispatch",
+      "from": "gateway",
+      "to": "prefill",
+      "y": 160,
+      "label": "准入后计算输入"
+    },
+    {
+      "id": "decode-dispatch",
+      "from": "gateway",
+      "to": "decode",
+      "y": 220,
+      "label": "建立解码请求"
+    },
+    {
+      "id": "transfer",
+      "from": "prefill",
+      "to": "decode",
+      "y": 280,
+      "label": "握手后传输 KV"
+    },
+    {
+      "id": "output",
+      "from": "decode",
+      "to": "gateway",
+      "y": 340,
+      "label": "KV 就绪后输出",
+      "variant": "return"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "教学范围",
+      "items": [
+        "图示一次正常请求的逻辑顺序",
+        "不承诺固定选路时机或真实并行时长"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "故障边界",
+      "items": [
+        "分开观察 P 排队、KV 传输与 D 解码",
+        "超时或输出中断只处置该请求，不无限等待"
+      ]
+    },
+    {
+      "dot": "orange",
+      "title": "性能取舍",
+      "items": [
+        "分离减少 P/D 干扰，但增加缓存传输成本",
+        "按目标负载测首 token、逐 token 时延及容量"
+      ]
+    }
+  ]
+}

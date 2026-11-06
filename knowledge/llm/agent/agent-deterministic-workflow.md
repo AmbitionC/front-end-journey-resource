@@ -111,15 +111,16 @@ trace 将 workflow/run、decision、activity、approval 和 operation ID 关联�
 
 <!-- interview-source-history:start -->
 - [携程数据工程面试：Agent ETL、数据口径与 Skill](../../../interview/ctrip/ai/ctrip-ai-2.md)
-- [腾讯企业微信测开实习一面：工作流取舍与离线评测](../../../interview/tencent/ai/tencent-ai-26.md)
 - [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)
 - [阿里云 Agent 一面：Workflow、通信与配置热更新](../../../interview/alibaba/ai/alibaba-ai-9.md)
 - [字节 Agent Infra 校招：运行时、MySQL 与 LRU](../../../interview/bytedance/base/bytedance-base-25.md)
 - [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)
+- [拼多多 Agent 复活赛一面：检索权限、上下文与流式协议](../../../interview/pinduoduo/ai/pinduoduo-ai-3.md)
 - [vivo Agent 秋招线下面：Harness 与工程诊断](../../../interview/vivo/ai/vivo-ai-1.md)
 - [理想汽车 IT 全栈交付培养生一面：Skill、测试与工作流](../../../interview/liauto/fullstack/liauto-fullstack-1.md)
 - [字节 Agent 后端实习一面：LangGraph、评测集与混合检索](../../../interview/bytedance/base/bytedance-base-22.md)
 - [海康威视 AI Agent 开发一面：可靠工具与任务状态](../../../interview/hikvision/ai/hikvision-ai-1.md)
+- [腾讯企业微信测开实习一面：工作流取舍与离线评测](../../../interview/tencent/ai/tencent-ai-26.md)
 - [美团 Keeta Agent 一面：客服流程、偏好数据与链表](../../../interview/meituan/ai/meituan-ai-1.md)
 - [58同城 Agent 开发一面：MCP、数据查询与后端基础](../../../interview/58tongcheng/ai/58tongcheng-ai-1.md)
 - [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
