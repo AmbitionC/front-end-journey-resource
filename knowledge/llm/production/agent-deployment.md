@@ -46,6 +46,63 @@ Canary 先给小比例真实流量，按用户/会话粘性路由，防止同一
 
 模型/外部工具可能有冷启动和连接预热。滚动期间旧/新版本都存在，状态必须外置或版本兼容。长任务绑定 bundle version；不要在执行中途悄悄换 prompt/工具策略。
 
+## 容器资源需求与专用节点池分别控制什么
+
+先看两个独立合同。resources.requests 告诉调度器这份工作需要多少可分配资源，不是应用的硬使用上限；resources.limits 约束运行时使用。对常见 Linux 容器，CPU limit 通过节流控制，内存超限可能引发 OOM 终止，不是 CPU 式平滑限速。容器可以在节点条件允许时使用超过 request 的资源；不能从 request 数值推断实际负载、性能或物理内存已预分配。本文只讨论常见容器级配置，参见 [Kubernetes 容器资源合同](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)，不推广未核对的集群特性开关。
+
+Deployment 中通常在 spec.template.spec.containers[].resources 声明这些容器字段。先以真实任务的资源和延迟观测选择候选值，再验证调度、节流、重启和任务完成；不要把示例 CPU/memory 数值当线上默认。副本数、Pod 可调度和业务结果是不同检查，Pod Pending 或反复 OOM 时扩副本不能自动解决不合理请求/上限。
+
+专用节点池还需要双向约束：
+
+| 目标 | 机制 | 单独使用时的缺口 |
+| --- | --- | --- |
+| 本服务只能进入指定池 | 为池设置受控节点标签，Pod 用 nodeSelector 或 requiredDuringSchedulingIgnoredDuringExecution 节点亲和性 | 不会阻止别的 Pod 也进入该池 |
+| 指定池拒绝不获准的新 Pod | 节点加 dedicated=agent:NoSchedule 等专用污点，只给获准 Pod 匹配 toleration | 有容忍度的 Pod 仍可调度到其他池，不会被吸引/锁定到专用池 |
+
+所以通常组合必需标签匹配与污点/容忍度。[Dedicated Nodes 的官方说明](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/#example-use-cases)同样组合这两个方向。容忍只表示该污点不再阻挡，不保证调度成功；仍受资源、其他规则和可用节点影响。NoSchedule 不驱逐已经运行的 Pod，必需亲和性的 IgnoredDuringExecution 也不因后来标签变化自动搬迁现有 Pod，见[节点亲和性合同](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity)。
+
+排他性还依赖管理边界：限制谁能修改节点标签/污点、谁能给 Pod 加容忍度，以及准入策略怎样约束广泛 Exists 容忍或直接指定 nodeName。官方文档说明 nodeName 可绕过调度器的 NoSchedule 选择，因此不能把常规调度配置称为不受权限影响的安全隔离。已有工作负载和系统组件的特殊容忍需单独检查。调度可行、业务隔离和权限隔离因此需要分别验证。
+
+### 一个容器级教学配置
+
+下面展示字段如何组合，数值、标签和镜像都只是示例，不是业务默认或原项目配置。节点需由受权管理者预先具有 example.com/pool=agent 标签与 dedicated=agent:NoSchedule 污点；Pod 的 selector 限制“去哪里”，toleration 只解除对应污点的阻挡，仍可能因资源或其他规则而 Pending。
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agent-worker-example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: agent-worker-example
+  template:
+    metadata:
+      labels:
+        app: agent-worker-example
+    spec:
+      nodeSelector:
+        example.com/pool: agent
+      tolerations:
+        - key: dedicated
+          operator: Equal
+          value: agent
+          effect: NoSchedule
+      containers:
+        - name: worker
+          image: registry.example.com/agent-worker:teaching
+          resources:
+            requests:
+              cpu: 250m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+```
+
+单容器例子避免把 init 容器、开销或未核对的 Pod 级资源特性混入容量计算。验证时既看 Pod 的调度原因，也看运行中的 CPU 节流、内存/重启和任务结果；不要把配置可解析当成已验证真实集群策略。
+
 ## Startup、Readiness、Liveness
 
 [Kubernetes probes](https://kubernetes.io/docs/concepts/workloads/pods/probes/)区分：startup 允许慢启动完成；readiness 决定是否接流量；liveness 判断是否需要重启。把“下游模型暂时慢”写进 liveness 会在高负载时集体重启，造成级联故障。
@@ -82,6 +139,7 @@ Agent 发布以版本包为原子单位，把代码、模型、prompt、工具�
 
 <!-- interview-source-history:start -->
 - [小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展](../../../interview/redbook/ai/redbook-ai-3.md)
+- [VAST 后端一面：可观测性、AI Coding 与节点调度](../../../interview/vast/ai/vast-ai-1.md)
 - [拼多多服务器开发一面：模型网关、动态鉴权与 Tool 授权](../../../interview/pinduoduo/ai/pinduoduo-ai-4.md)
 <!-- interview-source-history:end -->
 
@@ -99,3 +157,7 @@ Agent 发布以版本包为原子单位，把代码、模型、prompt、工具�
 - [Kubernetes — Update a Deployment](https://kubernetes.io/docs/tasks/run-application/update-deployment-rolling/)
 - [Kubernetes — Liveness, Readiness and Startup Probes](https://kubernetes.io/docs/concepts/workloads/pods/probes/)
 - [OpenTelemetry — Traces](https://opentelemetry.io/docs/concepts/signals/traces/)
+
+- [Kubernetes：容器 resources.requests 与 resources.limits](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)
+- [Kubernetes：Node selector 与 Node affinity](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/)
+- [Kubernetes：Taints、Tolerations 与 Dedicated Nodes](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/)

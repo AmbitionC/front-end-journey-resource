@@ -86,6 +86,7 @@ Agent 权限来自受信任策略，而不是提示词。把每次动作建模�
 - [小红书 Agent 算法一面：研究停止、协作与租户](../../../interview/redbook/ai/redbook-ai-15.md)
 - [小红书大模型平台全栈一面：写边界、Harness 与意图澄清](../../../interview/redbook/ai/redbook-ai-7.md)
 - [阿里淘宝闪购 Agent 算法实习一面：框架、记忆与线上排障](../../../interview/alibaba/ai/alibaba-ai-6.md)
+- [拼多多 Agent 复活赛二面：变更发布、业务提效与权限](../../../interview/pinduoduo/ai/pinduoduo-ai-5.md)
 - [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
 <!-- interview-source-history:end -->
 

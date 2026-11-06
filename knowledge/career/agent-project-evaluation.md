@@ -69,6 +69,7 @@ Canary 让少量合格用户真实使用，限制工具和预算，设置自动�
 - [阿里国际 AI 应用研发一面：JDK 8、消息可靠性与 RAG](../../interview/alibaba/ai/alibaba-ai-25.md)
 - [字节 Agent 后端实习一面：LangGraph、评测集与混合检索](../../interview/bytedance/base/bytedance-base-22.md)
 - [字节 TRAE 后端秋招二面：项目逻辑、工具与编辑距离](../../interview/bytedance/base/bytedance-base-76.md)
+- [拼多多 Agent 复活赛二面：变更发布、业务提效与权限](../../interview/pinduoduo/ai/pinduoduo-ai-5.md)
 - [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../interview/bytedance/base/bytedance-base-42.md)
 <!-- interview-source-history:end -->
 

@@ -98,6 +98,7 @@ $$
 
 <!-- interview-source-history:start -->
 - [阿里云 AI 产品一面：模型基础、需求优先级与产品定位](../../../interview/alibaba/ai/alibaba-ai-27.md)
+- [VAST 后端一面：可观测性、AI Coding 与节点调度](../../../interview/vast/ai/vast-ai-1.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

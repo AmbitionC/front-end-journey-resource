@@ -219,11 +219,11 @@
       "key": "llm-sse-streaming",
       "label": "SSE 流式响应与增量渲染",
       "filePath": "llm/dev",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-11-06",
       "batch": "daily-content-20261106",
-      "reason": "Actual SSE line-state parser fixes mixed line endings, connection-level event ID and empty event defaults; independently tested private candidate. Final head review and online synchronization remain pending.",
+      "reason": "Actual PR74 exact-SHA synchronization, formal PDF, database/body readback and production consumer acceptance completed.",
       "previousRecord": {
         "key": "llm-sse-streaming",
         "label": "SSE 流式响应与增量渲染",
@@ -235,7 +235,10 @@
         "publishedAt": "2026-10-05T09:27:13Z",
         "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
         "publishedBySyncRun": 37289136872
-      }
+      },
+      "publishedByCommit": "2b0f25335fec61de41d99f1cae4e29bc498b3743",
+      "publishedByPr": 74,
+      "publishedAt": "2026-11-06T08:36:18.082Z"
     },
     {
       "key": "function-calling",
@@ -324,17 +327,27 @@
       "filePath": "llm/rag",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-29",
-      "batch": "agentjourney-plus-thirty-175-20261029",
-      "reason": "Actual source-question processing; final independent review and online release are pending.",
+      "recordedAt": "2026-11-06",
+      "batch": "daily-content-20261106-second-publication",
+      "reason": "Bounded source-driven teaching additions actually completed; final independent review and exact-SHA online acceptance remain pending.",
       "previousRecord": {
         "key": "embedding-basics",
         "label": "Embedding 原理与向量相似度",
         "filePath": "llm/rag",
-        "status": "published",
+        "status": "pending",
         "action": "updated",
-        "recordedAt": "2026-07-14",
-        "batch": "frontend-scenarios-and-rag-foundations-2026-07-14"
+        "recordedAt": "2026-10-29",
+        "batch": "agentjourney-plus-thirty-175-20261029",
+        "reason": "Actual source-question processing; final independent review and online release are pending.",
+        "previousRecord": {
+          "key": "embedding-basics",
+          "label": "Embedding 原理与向量相似度",
+          "filePath": "llm/rag",
+          "status": "published",
+          "action": "updated",
+          "recordedAt": "2026-07-14",
+          "batch": "frontend-scenarios-and-rag-foundations-2026-07-14"
+        }
       }
     },
     {
@@ -800,11 +813,11 @@
       "key": "llm-open-source-deployment",
       "label": "开源模型选型、推理与本地部署",
       "filePath": "llm/basics",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-11-06",
       "batch": "daily-content-20261106",
-      "reason": "Actual source-question semantic processing completed; final independent review and online synchronization remain pending.",
+      "reason": "Actual PR74 exact-SHA synchronization, formal PDF, database/body readback and production consumer acceptance completed.",
       "previousRecord": {
         "key": "llm-open-source-deployment",
         "label": "开源模型选型、推理与本地部署",
@@ -826,7 +839,10 @@
           "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
           "publishedBySyncRun": 37289136872
         }
-      }
+      },
+      "publishedByCommit": "2b0f25335fec61de41d99f1cae4e29bc498b3743",
+      "publishedByPr": 74,
+      "publishedAt": "2026-11-06T08:36:18.082Z"
     },
     {
       "key": "prompt-testing-debugging",
@@ -2323,12 +2339,22 @@
       "filePath": "llm/production",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
-      "previousPublication": {
-        "status": "published",
-        "batch": "agent-multi-production-next-20-2026-07-16",
-        "recordedAt": "2026-07-16"
+      "recordedAt": "2026-11-06",
+      "batch": "daily-content-20261106-second-publication",
+      "reason": "Bounded source-driven teaching additions actually completed; final independent review and exact-SHA online acceptance remain pending.",
+      "previousRecord": {
+        "key": "agent-deployment",
+        "label": "Agent 服务部署、扩缩容与版本发布",
+        "filePath": "llm/production",
+        "status": "pending",
+        "action": "updated",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "previousPublication": {
+          "status": "published",
+          "batch": "agent-multi-production-next-20-2026-07-16",
+          "recordedAt": "2026-07-16"
+        }
       }
     },
     {
@@ -2872,11 +2898,11 @@
       "key": "async-job-queue",
       "label": "消息队列、异步任务与后台 Job",
       "filePath": "backend/api",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-11-06",
       "batch": "daily-content-20261106",
-      "reason": "Actual source-question semantic processing completed; final independent review and online synchronization remain pending.",
+      "reason": "Actual PR74 exact-SHA synchronization, formal PDF, database/body readback and production consumer acceptance completed.",
       "previousRecord": {
         "key": "async-job-queue",
         "label": "消息队列、异步任务与后台 Job",
@@ -2959,7 +2985,10 @@
             "syncRunId": 41111246573
           }
         }
-      }
+      },
+      "publishedByCommit": "2b0f25335fec61de41d99f1cae4e29bc498b3743",
+      "publishedByPr": 74,
+      "publishedAt": "2026-11-06T08:36:18.082Z"
     },
     {
       "key": "grpc-basics",
@@ -3019,11 +3048,11 @@
       "key": "api-idempotency",
       "label": "API 幂等键与重复请求处理",
       "filePath": "backend/api",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-11-06",
       "batch": "daily-content-20261106",
-      "reason": "Actual source-question semantic processing completed; final independent review and online synchronization remain pending.",
+      "reason": "Actual PR74 exact-SHA synchronization, formal PDF, database/body readback and production consumer acceptance completed.",
       "previousRecord": {
         "key": "api-idempotency",
         "label": "API 幂等键与重复请求处理",
@@ -3042,7 +3071,10 @@
           "recordedAt": "2026-07-17",
           "batch": "agent-platform-backend-next-20-2026-07-17"
         }
-      }
+      },
+      "publishedByCommit": "2b0f25335fec61de41d99f1cae4e29bc498b3743",
+      "publishedByPr": 74,
+      "publishedAt": "2026-11-06T08:36:18.082Z"
     },
     {
       "key": "agent-state-storage",
@@ -3377,11 +3409,11 @@
       "key": "algorithm-linked-list",
       "label": "链表、指针与 LRU",
       "filePath": "cs/algorithm",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-11-06",
       "batch": "daily-content-20261106",
-      "reason": "Actual source-question semantic processing completed; final independent review and online synchronization remain pending.",
+      "reason": "Actual PR74 exact-SHA synchronization, formal PDF, database/body readback and production consumer acceptance completed.",
       "previousRecord": {
         "key": "algorithm-linked-list",
         "label": "链表、指针与 LRU",
@@ -3438,7 +3470,10 @@
           "batch": "interview-next-three-20261020",
           "recordedAt": "2026-10-19"
         }
-      }
+      },
+      "publishedByCommit": "2b0f25335fec61de41d99f1cae4e29bc498b3743",
+      "publishedByPr": 74,
+      "publishedAt": "2026-11-06T08:36:18.082Z"
     },
     {
       "key": "algorithm-trie",
@@ -4927,27 +4962,27 @@
       "filePath": "backend/devops",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-11-04",
-      "batch": "daily-content-20261104",
-      "reason": "Actual interview-question driven teaching additions or accuracy corrections; final release and synchronization pending.",
+      "recordedAt": "2026-11-06",
+      "batch": "daily-content-20261106-second-publication",
+      "reason": "Bounded source-driven teaching additions actually completed; final independent review and exact-SHA online acceptance remain pending.",
       "previousRecord": {
         "key": "logging-monitoring",
         "label": "日志、指标、Tracing 与告警",
         "filePath": "backend/devops",
         "status": "pending",
         "action": "updated",
-        "recordedAt": "2026-10-29",
-        "batch": "agentjourney-next-thirty-20261029",
-        "reason": "Actual source-question processing; final independent review and online release are pending.",
+        "recordedAt": "2026-11-04",
+        "batch": "daily-content-20261104",
+        "reason": "Actual interview-question driven teaching additions or accuracy corrections; final release and synchronization pending.",
         "previousRecord": {
           "key": "logging-monitoring",
           "label": "日志、指标、Tracing 与告警",
           "filePath": "backend/devops",
           "status": "pending",
           "action": "updated",
-          "recordedAt": "2026-10-28",
-          "batch": "agentjourney-thirty-20261028",
-          "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+          "recordedAt": "2026-10-29",
+          "batch": "agentjourney-next-thirty-20261029",
+          "reason": "Actual source-question processing; final independent review and online release are pending.",
           "previousRecord": {
             "key": "logging-monitoring",
             "label": "日志、指标、Tracing 与告警",
@@ -4955,11 +4990,21 @@
             "status": "pending",
             "action": "updated",
             "recordedAt": "2026-10-28",
-            "batch": "historical-source-bindings-20261028",
-            "previousPublication": {
+            "batch": "agentjourney-thirty-20261028",
+            "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+            "previousRecord": {
+              "key": "logging-monitoring",
+              "label": "日志、指标、Tracing 与告警",
+              "filePath": "backend/devops",
               "status": "pending",
-              "batch": "complete-remaining-91-2026-07-18",
-              "recordedAt": "2026-07-18"
+              "action": "updated",
+              "recordedAt": "2026-10-28",
+              "batch": "historical-source-bindings-20261028",
+              "previousPublication": {
+                "status": "pending",
+                "batch": "complete-remaining-91-2026-07-18",
+                "recordedAt": "2026-07-18"
+              }
             }
           }
         }
@@ -5457,11 +5502,11 @@
       "key": "algorithm-array",
       "label": "数组、字符串与双指针",
       "filePath": "data-structure/algorithm",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-11-06",
       "batch": "daily-content-20261106",
-      "reason": "Actual source-question semantic processing completed; final independent review and online synchronization remain pending.",
+      "reason": "Actual PR74 exact-SHA synchronization, formal PDF, database/body readback and production consumer acceptance completed.",
       "previousRecord": {
         "key": "algorithm-array",
         "label": "数组、字符串与双指针",
@@ -5503,7 +5548,10 @@
             }
           }
         }
-      }
+      },
+      "publishedByCommit": "2b0f25335fec61de41d99f1cae4e29bc498b3743",
+      "publishedByPr": 74,
+      "publishedAt": "2026-11-06T08:36:18.082Z"
     },
     {
       "key": "algorithm-hash",
@@ -6243,11 +6291,11 @@
       "key": "spring-container",
       "label": "Spring 容器：BeanFactory 与 ApplicationContext",
       "filePath": "backend/java",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-11-06",
       "batch": "daily-content-20261106",
-      "reason": "Actual source-question semantic processing completed; final independent review and online synchronization remain pending.",
+      "reason": "Actual PR74 exact-SHA synchronization, formal PDF, database/body readback and production consumer acceptance completed.",
       "previousRecord": {
         "key": "spring-container",
         "label": "Spring 容器：BeanFactory 与 ApplicationContext",
@@ -6259,7 +6307,10 @@
         "publishedAt": "2026-10-05T09:27:13Z",
         "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
         "publishedBySyncRun": 37289136872
-      }
+      },
+      "publishedByCommit": "2b0f25335fec61de41d99f1cae4e29bc498b3743",
+      "publishedByPr": 74,
+      "publishedAt": "2026-11-06T08:36:18.082Z"
     },
     {
       "key": "spring-external-config",
@@ -6369,11 +6420,11 @@
       "key": "chain-of-responsibility-validation",
       "label": "责任链与业务校验：顺序、短路和副作用",
       "filePath": "backend/framework",
-      "status": "pending",
+      "status": "published",
       "action": "updated",
       "recordedAt": "2026-11-06",
       "batch": "daily-content-20261106",
-      "reason": "Actual source-question semantic processing completed; final independent review and online synchronization remain pending.",
+      "reason": "Actual PR74 exact-SHA synchronization, formal PDF, database/body readback and production consumer acceptance completed.",
       "previousRecord": {
         "key": "chain-of-responsibility-validation",
         "label": "责任链与业务校验：顺序、短路和副作用",
@@ -6388,7 +6439,10 @@
           "pullRequest": 70,
           "syncRunId": 41111246573
         }
-      }
+      },
+      "publishedByCommit": "2b0f25335fec61de41d99f1cae4e29bc498b3743",
+      "publishedByPr": 74,
+      "publishedAt": "2026-11-06T08:36:18.082Z"
     },
     {
       "key": "python-model-serving-workers",
@@ -6424,21 +6478,27 @@
       "key": "java-collections",
       "label": "Java 集合：接口分类与选型",
       "filePath": "backend/java",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-11-06",
       "batch": "daily-content-20261106",
-      "reason": "Actual source-question semantic processing completed; final independent review and online synchronization remain pending."
+      "reason": "Actual PR74 exact-SHA synchronization, formal PDF, database/body readback and production consumer acceptance completed.",
+      "publishedByCommit": "2b0f25335fec61de41d99f1cae4e29bc498b3743",
+      "publishedByPr": 74,
+      "publishedAt": "2026-11-06T08:36:18.082Z"
     },
     {
       "key": "java-aqs-reentrant-lock",
       "label": "AQS 与 ReentrantLock：获取、等待与公平性",
       "filePath": "backend/java",
-      "status": "pending",
+      "status": "published",
       "action": "created",
       "recordedAt": "2026-11-06",
       "batch": "daily-content-20261106",
-      "reason": "Actual source-question semantic processing completed; final independent review and online synchronization remain pending."
+      "reason": "Actual PR74 exact-SHA synchronization, formal PDF, database/body readback and production consumer acceptance completed.",
+      "publishedByCommit": "2b0f25335fec61de41d99f1cae4e29bc498b3743",
+      "publishedByPr": 74,
+      "publishedAt": "2026-11-06T08:36:18.082Z"
     }
   ],
   "deliveryEvidence": {

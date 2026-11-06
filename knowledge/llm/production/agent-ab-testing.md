@@ -107,6 +107,7 @@ owner: agent-experimentation
 
 <!-- interview-source-history:start -->
 - [快手春招多轮面经：信号量、Top-K 与实验分流](../../../interview/kuaishou/ai/kuaishou-ai-13.md)
+- [拼多多 Agent 复活赛二面：变更发布、业务提效与权限](../../../interview/pinduoduo/ai/pinduoduo-ai-5.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

@@ -103,15 +103,16 @@ AI 功能还要计入检索和模型费用、人工复核、失败处理与维�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [京东金融推荐算法实习一面：画像图谱与研究选题](../../interview/jd/ai/jd-ai-6.md)
-- [网易游戏 AI 实习：体验实验、问题复现与交付取舍](../../interview/netease/ai/netease-ai-2.md)
-- [京东后端一面：交付标准、Agent 选型与跨语言数据边界](../../interview/jd/ai/jd-ai-1.md)
 - [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../interview/bytedance/base/bytedance-base-36.md)
 - [阿里云 AI 产品一面：模型基础、需求优先级与产品定位](../../interview/alibaba/ai/alibaba-ai-27.md)
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../interview/bytedance/base/bytedance-base-48.md)
 - [京东 AI 应用开发日常实习二面：项目表达与产品场景](../../interview/jd/ai/jd-ai-7.md)
+- [VAST 后端一面：可观测性、AI Coding 与节点调度](../../interview/vast/ai/vast-ai-1.md)
 - [字节全栈实习：Session、权限与前端基础](../../interview/bytedance/base/bytedance-base-46.md)
 - [字节财经保险 AI 全栈实习一面：项目设计、AI Coding 与 Diff](../../interview/bytedance/base/bytedance-base-34.md)
+- [京东后端一面：交付标准、Agent 选型与跨语言数据边界](../../interview/jd/ai/jd-ai-1.md)
+- [网易游戏 AI 实习：体验实验、问题复现与交付取舍](../../interview/netease/ai/netease-ai-2.md)
+- [京东金融推荐算法实习一面：画像图谱与研究选题](../../interview/jd/ai/jd-ai-6.md)
 - [阿里国际 Java 二面：RAG 数据评测、微调与代码生成](../../interview/alibaba/ai/alibaba-ai-26.md)
 - [字节前端全栈实习一面：渲染、Worker 与认证](../../interview/bytedance/base/bytedance-base-38.md)
 - [字节全栈：预请求、列表复用与 ThreadLocal](../../interview/bytedance/base/bytedance-base-44.md)
