@@ -1,0 +1,1516 @@
+{
+  "schemaVersion": 1,
+  "batchId": "soe-cs-batch1-20261107",
+  "date": "2026-11-07",
+  "branch": "codex/soe-cs-batch1",
+  "baseCommit": "e6e1ca3c47db7c60ff419c11a2fcb2cfd67fb050",
+  "scope": {
+    "module": "soe",
+    "topLevelLabel": "银行·国企科技岗笔试",
+    "articleCount": 5,
+    "mergeAuthorized": false,
+    "otherRepositoriesAuthorized": false,
+    "gitMutationAuthorized": false,
+    "gitSubmissionAndPrOwner": "external"
+  },
+  "workflow": ".codex/skills/generate-knowledge-docs/SKILL.md",
+  "status": "content-ready-for-external-review-assets-not-published",
+  "items": [
+    {
+      "key": "soe-bank-tech-exam-overview",
+      "label": "银行科技岗笔试考什么：结构、题型与分值",
+      "filePath": "bank-tech",
+      "outputPath": "soe/bank-tech/soe-bank-tech-exam-overview.md",
+      "action": "create",
+      "reason": "用户精确指定首批文章；与 knowledge 的交集链接复用，只补本批学习入口与计算练习。",
+      "learningOutcome": "识别特定官方招聘批次已公开的模块、题型、分值与未知项，不把模拟练习当作真实考试结构。",
+      "status": "ready-for-external-review",
+      "sourceReview": {
+        "status": "verified",
+        "sourceIds": [
+          "soe-batch1-source-01",
+          "soe-batch1-source-02"
+        ]
+      },
+      "bytes": 10412,
+      "sha256": "0052d407af6f972f90d032fc3095eb93ccbc3e4832ad71fc77b97ec348a02ed5"
+    },
+    {
+      "key": "soe-computer-organization",
+      "label": "计算机组成原理速览：数制与编码、CPU、存储层次、指令系统",
+      "filePath": "bank-tech",
+      "outputPath": "soe/bank-tech/soe-computer-organization.md",
+      "action": "create",
+      "reason": "用户精确指定首批文章；与 knowledge 的交集链接复用，只补本批学习入口与计算练习。",
+      "learningOutcome": "在给定字长、寻址单位、指令条件下完成编码、容量、CPU 时间和地址字段计算。",
+      "status": "ready-for-external-review",
+      "sourceReview": {
+        "status": "verified",
+        "sourceIds": [
+          "soe-batch1-source-03",
+          "soe-batch1-source-04",
+          "soe-batch1-source-05",
+          "soe-batch1-source-06",
+          "soe-batch1-source-07",
+          "soe-batch1-source-08",
+          "soe-batch1-source-09"
+        ]
+      },
+      "bytes": 13284,
+      "sha256": "63b95bc92631c74b3d467c2bfcdf53db10fda3f816ccf94cf5c12b5580d87507"
+    },
+    {
+      "key": "soe-database-theory",
+      "label": "数据库理论：范式、ER 图、关系代数与事务隔离级别（选择题考法）",
+      "filePath": "bank-tech",
+      "outputPath": "soe/bank-tech/soe-database-theory.md",
+      "action": "create",
+      "reason": "用户精确指定首批文章；与 knowledge 的交集链接复用，只补本批学习入口与计算练习。",
+      "learningOutcome": "依据明确的函数依赖判断候选键与范式，完成 ER 映射和关系代数，并区分隔离标准与产品实现。",
+      "status": "ready-for-external-review",
+      "sourceReview": {
+        "status": "verified",
+        "sourceIds": [
+          "soe-batch1-source-10",
+          "soe-batch1-source-11",
+          "soe-batch1-source-12",
+          "soe-batch1-source-13",
+          "soe-batch1-source-14",
+          "soe-batch1-source-23"
+        ]
+      },
+      "bytes": 16107,
+      "sha256": "2e298e3622a825a699a91ee029add6c67c8874bed1366b62952f8ecc0b26bcc9"
+    },
+    {
+      "key": "soe-os-mcq",
+      "label": "操作系统选择题高频考点",
+      "filePath": "bank-tech",
+      "outputPath": "soe/bank-tech/soe-os-mcq.md",
+      "action": "create",
+      "reason": "用户精确指定首批文章；与 knowledge 的交集链接复用，只补本批学习入口与计算练习。",
+      "learningOutcome": "复用已有操作系统概念文章，以到达时刻和页面访问序列为依据手算调度指标及置换缺页数。",
+      "status": "ready-for-external-review",
+      "sourceReview": {
+        "status": "verified",
+        "sourceIds": [
+          "soe-batch1-source-20",
+          "soe-batch1-source-21",
+          "soe-batch1-source-22"
+        ]
+      },
+      "bytes": 11301,
+      "sha256": "d1a6539d4cded0ab80673e6c4bfc6d8d968958e634a9f12b035ff1111469f18b"
+    },
+    {
+      "key": "soe-network-mcq",
+      "label": "计算机网络选择题高频考点",
+      "filePath": "bank-tech",
+      "outputPath": "soe/bank-tech/soe-network-mcq.md",
+      "action": "create",
+      "reason": "用户精确指定首批文章；与 knowledge 的交集链接复用，只补本批学习入口与计算练习。",
+      "learningOutcome": "复用已有协议文章，根据前缀长度算 IPv4 子网范围、容量与分配，不套用无条件减二规则。",
+      "status": "ready-for-external-review",
+      "sourceReview": {
+        "status": "verified",
+        "sourceIds": [
+          "soe-batch1-source-15",
+          "soe-batch1-source-16",
+          "soe-batch1-source-17",
+          "soe-batch1-source-18",
+          "soe-batch1-source-19"
+        ]
+      },
+      "bytes": 11096,
+      "sha256": "f86bb4d53957bfa6635da409eb9aee2586ba27da7a456b3da4419d187011f9f7"
+    }
+  ],
+  "deduplication": {
+    "inventory": {
+      "leaves": 334,
+      "existing": 334,
+      "missing": 0,
+      "duplicateKeys": 0,
+      "unrelatedOrphans": 2
+    },
+    "unrelatedOrphansUntouched": [
+      "knowledge/fe/aigc/aigc-application.md",
+      "knowledge/intro/pdf.md"
+    ],
+    "reuseWithoutEdits": [
+      "knowledge/cs/os/os-process-thread.md",
+      "knowledge/cs/os/os-deadlock.md",
+      "knowledge/cs/os/os-virtual-memory.md",
+      "knowledge/network/tcpIp/tcp-handshake.md",
+      "knowledge/network/tcpIp/tcp-udp.md",
+      "knowledge/network/http/http-message.md",
+      "knowledge/network/others/dns-analysis.md",
+      "knowledge/backend/database/db-transaction-lock.md",
+      "knowledge/backend/storage/postgresql-transaction.md"
+    ]
+  },
+  "originality": {
+    "body": "原创编写；依据技术标准和一手官方事实概括，不复制来源段落。",
+    "questions": "全部自拟数据、情境、选项和解析；逐题标注“原创模拟题”。",
+    "examClaims": "仅纳入实际核验的官方来源；题量、分值、权重、满分未公开则明确写未公开。"
+  },
+  "research": {
+    "status": "completed",
+    "verifiedAt": "2026-11-07T06:34:49Z",
+    "authorization": "User explicitly authorized built-in web search and public-page Lightpanda CLI access in the follow-up; recruitment employer names are allowed. Training/material provider content is excluded.",
+    "method": "Search was used only to locate original sources. Facts were checked in employer-origin HTML/PDF, textbook-author/university material, specifications, and fixed-version official documentation. Lightpanda CLI read public HTML; the built-in reader parsed PDFs. Independent HTTP checks covered every external URL in the five articles.",
+    "noSearchSnippetUsedAsExamEvidence": true,
+    "noTrainingProviderOrForumUsedAsSource": true,
+    "sources": [
+      {
+        "id": "soe-batch1-source-01",
+        "title": "中国银行股份有限公司2027年全球校园招聘公告",
+        "url": "https://www.boc.cn/aboutboc/bi4/202609/t20260903_25689311.html",
+        "articles": [
+          "soe-bank-tech-exam-overview"
+        ],
+        "verifiedAt": "2026-11-07T06:34:49Z",
+        "status": "verified-primary-content",
+        "access": {
+          "httpStatus": 200,
+          "contentType": "text/html",
+          "effectiveUrl": "https://www.boc.cn/aboutboc/bi4/202609/t20260903_25689311.html",
+          "method": "GET plus Lightpanda CLI rendered-text read",
+          "bodyDownloadComplete": true,
+          "receivedBytes": 37544,
+          "receivedBytesSha256": "f25a31fcd98c70b00691206bde3e7a99ac18ffcae7313fe900f88c210ac39ba6",
+          "transportNote": null,
+          "pdfPages": null
+        }
+      },
+      {
+        "id": "soe-batch1-source-02",
+        "title": "上海农商银行2027校园招聘在线测评通知",
+        "url": "https://www.shrcb.com/shrcb/articleFileDir/2026-10/29/98f65e32509d44918198b85a5b326a8d/%E4%B8%8A%E6%B5%B7%E5%86%9C%E5%95%86%E9%93%B6%E8%A1%8C2027%E6%A0%A1%E5%9B%AD%E6%8B%9B%E8%81%98%E5%9C%A8%E7%BA%BF%E6%B5%8B%E8%AF%84%E9%80%9A%E7%9F%A5.pdf?aisite-article-file=shrcb%2C98f65e32509d44918198b85a5b326a8d%2C2026-10-29+10%3A19%3A36",
+        "articles": [
+          "soe-bank-tech-exam-overview"
+        ],
+        "verifiedAt": "2026-11-07T06:34:49Z",
+        "status": "verified-primary-content",
+        "access": {
+          "httpStatus": 200,
+          "contentType": "application/pdf",
+          "effectiveUrl": "https://www.shrcb.com/shrcb/articleFileDir/2026-10/29/98f65e32509d44918198b85a5b326a8d/%E4%B8%8A%E6%B5%B7%E5%86%9C%E5%95%86%E9%93%B6%E8%A1%8C2027%E6%A0%A1%E5%9B%AD%E6%8B%9B%E8%81%98%E5%9C%A8%E7%BA%BF%E6%B5%8B%E8%AF%84%E9%80%9A%E7%9F%A5.pdf?aisite-article-file=shrcb%2C98f65e32509d44918198b85a5b326a8d%2C2026-10-29+10%3A19%3A36",
+          "method": "GET plus built-in PDF text read",
+          "bodyDownloadComplete": true,
+          "receivedBytes": 89895,
+          "receivedBytesSha256": "d73ff4a794d1eb8fbfba0ae35bc67ffd2e67a82842dc4f34eaa9ac9a2501e60f",
+          "transportNote": null,
+          "pdfPages": 3
+        }
+      },
+      {
+        "id": "soe-batch1-source-03",
+        "title": "Computation Structures: Information",
+        "url": "https://computationstructures.org/notes/information/notes.html",
+        "articles": [
+          "soe-computer-organization"
+        ],
+        "verifiedAt": "2026-11-07T06:34:49Z",
+        "status": "verified-primary-content",
+        "access": {
+          "httpStatus": 200,
+          "contentType": "text/html; charset=utf-8",
+          "effectiveUrl": "https://computationstructures.org/notes/information/notes.html",
+          "method": "GET plus Lightpanda CLI rendered-text read",
+          "bodyDownloadComplete": true,
+          "receivedBytes": 62358,
+          "receivedBytesSha256": "3048360d196895d1fa19782e959e724246f6a08452783341c9eae347361cdea3",
+          "transportNote": null,
+          "pdfPages": null
+        }
+      },
+      {
+        "id": "soe-batch1-source-04",
+        "title": "Computation Structures: L01 Basics of Information",
+        "url": "https://computationstructures.org/lectures/info/info.html",
+        "articles": [
+          "soe-computer-organization"
+        ],
+        "verifiedAt": "2026-11-07T06:34:49Z",
+        "status": "verified-primary-content",
+        "access": {
+          "httpStatus": 200,
+          "contentType": "text/html; charset=utf-8",
+          "effectiveUrl": "https://computationstructures.org/lectures/info/info.html",
+          "method": "GET plus Lightpanda CLI rendered-text read",
+          "bodyDownloadComplete": true,
+          "receivedBytes": 45743,
+          "receivedBytesSha256": "eebde05af6e007111812eb0fb1bc3546899bee8cdfd0a8f0048c2cbae75aecbd",
+          "transportNote": null,
+          "pdfPages": null
+        }
+      },
+      {
+        "id": "soe-batch1-source-05",
+        "title": "RISC-V Unprivileged ISA Manual, version 20240411",
+        "url": "https://docs.riscv.org/reference/isa/v20240411/_attachments/riscv-unprivileged.pdf",
+        "articles": [
+          "soe-computer-organization"
+        ],
+        "verifiedAt": "2026-11-07T06:34:49Z",
+        "status": "verified-primary-content",
+        "access": {
+          "httpStatus": 200,
+          "contentType": "application/pdf",
+          "effectiveUrl": "https://docs.riscv.org/reference/isa/v20240411/_attachments/riscv-unprivileged.pdf",
+          "method": "GET plus built-in PDF text read",
+          "bodyDownloadComplete": false,
+          "receivedBytes": 729664,
+          "receivedBytesSha256": "750bfd8e9adec06a84f825b56c3fbd83f3bc9921c12833fc1193e6948603b868",
+          "transportNote": "The bounded CLI download timed out after a partial PDF response. The built-in web PDF reader successfully parsed the full document and the relevant sections; the URL is reachable. The byte hash is a partial-response hash, not a complete-file hash.",
+          "pdfPages": 670
+        }
+      },
+      {
+        "id": "soe-batch1-source-06",
+        "title": "Computation Structures: Instruction Set Architectures",
+        "url": "https://computationstructures.org/notes/isas/notes.html",
+        "articles": [
+          "soe-computer-organization"
+        ],
+        "verifiedAt": "2026-11-07T06:34:49Z",
+        "status": "verified-primary-content",
+        "access": {
+          "httpStatus": 200,
+          "contentType": "text/html; charset=utf-8",
+          "effectiveUrl": "https://computationstructures.org/notes/isas/notes.html",
+          "method": "GET plus Lightpanda CLI rendered-text read",
+          "bodyDownloadComplete": true,
+          "receivedBytes": 92044,
+          "receivedBytesSha256": "33ba758f32c1f4c9530478469c7c68e35994d37e6eb7c26bcb9438038e87c9cf",
+          "transportNote": null,
+          "pdfPages": null
+        }
+      },
+      {
+        "id": "soe-batch1-source-07",
+        "title": "University at Buffalo: CPU Performance Equation",
+        "url": "https://cse.buffalo.edu/faculty/bina/cs506/lec1/tsld021.htm",
+        "articles": [
+          "soe-computer-organization"
+        ],
+        "verifiedAt": "2026-11-07T06:34:49Z",
+        "status": "verified-primary-content",
+        "access": {
+          "httpStatus": 200,
+          "contentType": "text/html",
+          "effectiveUrl": "https://cse.buffalo.edu/faculty/bina/cs506/lec1/tsld021.htm",
+          "method": "GET plus Lightpanda CLI rendered-text read",
+          "bodyDownloadComplete": true,
+          "receivedBytes": 1123,
+          "receivedBytesSha256": "dabffb1a39ae0c09308382c5b67f626f1dc9ab31b57be6401a5f0d3c8d094f8d",
+          "transportNote": null,
+          "pdfPages": null
+        }
+      },
+      {
+        "id": "soe-batch1-source-08",
+        "title": "Computation Structures: Performance Measures",
+        "url": "https://computationstructures.org/lectures/performance/performance.html",
+        "articles": [
+          "soe-computer-organization"
+        ],
+        "verifiedAt": "2026-11-07T06:34:49Z",
+        "status": "verified-primary-content",
+        "access": {
+          "httpStatus": 200,
+          "contentType": "text/html; charset=utf-8",
+          "effectiveUrl": "https://computationstructures.org/lectures/performance/performance.html",
+          "method": "GET plus Lightpanda CLI rendered-text read",
+          "bodyDownloadComplete": true,
+          "receivedBytes": 41312,
+          "receivedBytesSha256": "b4484316d840560c7da61a6c59b228fb150d2e911bf4505df7f87e165201f33d",
+          "transportNote": null,
+          "pdfPages": null
+        }
+      },
+      {
+        "id": "soe-batch1-source-09",
+        "title": "Computation Structures: The Memory Hierarchy",
+        "url": "https://computationstructures.org/lectures/caches/caches.html",
+        "articles": [
+          "soe-computer-organization"
+        ],
+        "verifiedAt": "2026-11-07T06:34:49Z",
+        "status": "verified-primary-content",
+        "access": {
+          "httpStatus": 200,
+          "contentType": "text/html; charset=utf-8",
+          "effectiveUrl": "https://computationstructures.org/lectures/caches/caches.html",
+          "method": "GET plus Lightpanda CLI rendered-text read",
+          "bodyDownloadComplete": true,
+          "receivedBytes": 70171,
+          "receivedBytesSha256": "5ec5e23fa0700d1d5d42707c18663c97de2d6b5fe74b87d89d1c75df09a92c31",
+          "transportNote": null,
+          "pdfPages": null
+        }
+      },
+      {
+        "id": "soe-batch1-source-10",
+        "title": "Database System Concepts, 7th edition, Chapter 7: Normalization",
+        "url": "https://www.db-book.com/slides-dir/PDF-dir/ch7.pdf",
+        "articles": [
+          "soe-database-theory"
+        ],
+        "verifiedAt": "2026-11-07T06:34:49Z",
+        "status": "verified-primary-content",
+        "access": {
+          "httpStatus": 200,
+          "contentType": "application/pdf",
+          "effectiveUrl": "https://www.db-book.com/slides-dir/PDF-dir/ch7.pdf",
+          "method": "GET plus built-in PDF text read",
+          "bodyDownloadComplete": false,
+          "receivedBytes": 311296,
+          "receivedBytesSha256": "1697c1e332067d48a5049f30acceb8a9f87a9ba8103c98be087cb7dc889f0720",
+          "transportNote": "The bounded CLI download timed out after a partial PDF response. The built-in web PDF reader successfully parsed the full document and the relevant sections; the URL is reachable. The byte hash is a partial-response hash, not a complete-file hash.",
+          "pdfPages": 93
+        }
+      },
+      {
+        "id": "soe-batch1-source-11",
+        "title": "Database System Concepts, 7th edition, Chapter 2: Intro to Relational Model",
+        "url": "https://www.db-book.com/slides-dir/PDF-dir/ch2.pdf",
+        "articles": [
+          "soe-database-theory"
+        ],
+        "verifiedAt": "2026-11-07T06:34:49Z",
+        "status": "verified-primary-content",
+        "access": {
+          "httpStatus": 200,
+          "contentType": "application/pdf",
+          "effectiveUrl": "https://www.db-book.com/slides-dir/PDF-dir/ch2.pdf",
+          "method": "GET plus built-in PDF text read",
+          "bodyDownloadComplete": false,
+          "receivedBytes": 327680,
+          "receivedBytesSha256": "e61758f15a1b4bbd1a7a8a7f2d465247efd33887ca9e5ab4f187c09060c9c864",
+          "transportNote": "The bounded CLI download timed out after a partial PDF response. The built-in web PDF reader successfully parsed the full document and the relevant sections; the URL is reachable. The byte hash is a partial-response hash, not a complete-file hash.",
+          "pdfPages": 32
+        }
+      },
+      {
+        "id": "soe-batch1-source-12",
+        "title": "Database System Concepts, 7th edition, Chapter 6: Database Design Using the E-R Model",
+        "url": "https://www.db-book.com/slides-dir/PDF-dir/ch6.pdf",
+        "articles": [
+          "soe-database-theory"
+        ],
+        "verifiedAt": "2026-11-07T06:34:49Z",
+        "status": "verified-primary-content",
+        "access": {
+          "httpStatus": 200,
+          "contentType": "application/pdf",
+          "effectiveUrl": "https://www.db-book.com/slides-dir/PDF-dir/ch6.pdf",
+          "method": "GET plus built-in PDF text read",
+          "bodyDownloadComplete": false,
+          "receivedBytes": 294912,
+          "receivedBytesSha256": "4ef9720984fd659d721552e59ac8435a0196cbe2c04f2afeb0d37048041f771f",
+          "transportNote": "The bounded CLI download timed out after a partial PDF response. The built-in web PDF reader successfully parsed the full document and the relevant sections; the URL is reachable. The byte hash is a partial-response hash, not a complete-file hash.",
+          "pdfPages": 80
+        }
+      },
+      {
+        "id": "soe-batch1-source-13",
+        "title": "PostgreSQL historical documentation: Operations in the Relational Data Model (mathematical background only)",
+        "url": "https://www.postgresql.org/docs/7.1/relmodel-oper.html",
+        "articles": [
+          "soe-database-theory"
+        ],
+        "verifiedAt": "2026-11-07T06:34:49Z",
+        "status": "verified-primary-content",
+        "access": {
+          "httpStatus": 200,
+          "contentType": "text/html; charset=utf-8",
+          "effectiveUrl": "https://www.postgresql.org/docs/7.1/relmodel-oper.html",
+          "method": "GET plus Lightpanda CLI rendered-text read",
+          "bodyDownloadComplete": true,
+          "receivedBytes": 21798,
+          "receivedBytesSha256": "21cd2b813a1f4e9a14efa54fa77ebd181efd6f1d920bc1febd21b2df808fd7fa",
+          "transportNote": null,
+          "pdfPages": null
+        }
+      },
+      {
+        "id": "soe-batch1-source-14",
+        "title": "PostgreSQL 18: Transaction Isolation",
+        "url": "https://www.postgresql.org/docs/18/transaction-iso.html",
+        "articles": [
+          "soe-database-theory"
+        ],
+        "verifiedAt": "2026-11-07T06:34:49Z",
+        "status": "verified-primary-content",
+        "access": {
+          "httpStatus": 200,
+          "contentType": "text/html; charset=utf-8",
+          "effectiveUrl": "https://www.postgresql.org/docs/18/transaction-iso.html",
+          "method": "GET plus Lightpanda CLI rendered-text read",
+          "bodyDownloadComplete": true,
+          "receivedBytes": 47642,
+          "receivedBytesSha256": "26a5c19a4171ae6f86b591ab7025c6e38f4094d98fdeb252c762208e25e9032a",
+          "transportNote": null,
+          "pdfPages": null
+        }
+      },
+      {
+        "id": "soe-batch1-source-15",
+        "title": "RFC 5737: IPv4 documentation address blocks",
+        "url": "https://www.rfc-editor.org/rfc/rfc5737.html",
+        "articles": [
+          "soe-network-mcq"
+        ],
+        "verifiedAt": "2026-11-07T06:34:49Z",
+        "status": "verified-primary-content",
+        "access": {
+          "httpStatus": 200,
+          "contentType": "text/html",
+          "effectiveUrl": "https://www.rfc-editor.org/rfc/rfc5737.html",
+          "method": "GET plus Lightpanda CLI rendered-text read",
+          "bodyDownloadComplete": true,
+          "receivedBytes": 9955,
+          "receivedBytesSha256": "6bfa8be9b520ead136553655afdd402d0ea0c4108c2cb0184c307bacdedbdc60",
+          "transportNote": null,
+          "pdfPages": null
+        }
+      },
+      {
+        "id": "soe-batch1-source-16",
+        "title": "RFC 4632: CIDR prefix notation and aggregation",
+        "url": "https://www.rfc-editor.org/rfc/rfc4632.html",
+        "articles": [
+          "soe-network-mcq"
+        ],
+        "verifiedAt": "2026-11-07T06:34:49Z",
+        "status": "verified-primary-content",
+        "access": {
+          "httpStatus": 200,
+          "contentType": "text/html",
+          "effectiveUrl": "https://www.rfc-editor.org/rfc/rfc4632.html",
+          "method": "GET plus Lightpanda CLI rendered-text read",
+          "bodyDownloadComplete": true,
+          "receivedBytes": 79592,
+          "receivedBytesSha256": "cffb9d6a65ea8ee67ac63e6af32bd1589c28396a43ba2a4eecae977536ccf734",
+          "transportNote": null,
+          "pdfPages": null
+        }
+      },
+      {
+        "id": "soe-batch1-source-17",
+        "title": "RFC 3021: 31-bit IPv4 prefixes on point-to-point links",
+        "url": "https://www.rfc-editor.org/rfc/rfc3021.html",
+        "articles": [
+          "soe-network-mcq"
+        ],
+        "verifiedAt": "2026-11-07T06:34:49Z",
+        "status": "verified-primary-content",
+        "access": {
+          "httpStatus": 200,
+          "contentType": "text/html",
+          "effectiveUrl": "https://www.rfc-editor.org/rfc/rfc3021.html",
+          "method": "GET plus Lightpanda CLI rendered-text read",
+          "bodyDownloadComplete": true,
+          "receivedBytes": 25441,
+          "receivedBytesSha256": "6f737ced83d0eea917362499d232130bccbefd0ebca560488d7e2aca952ea743",
+          "transportNote": null,
+          "pdfPages": null
+        }
+      },
+      {
+        "id": "soe-batch1-source-18",
+        "title": "RFC 1918: Private IPv4 address space",
+        "url": "https://www.rfc-editor.org/rfc/rfc1918.html",
+        "articles": [
+          "soe-network-mcq"
+        ],
+        "verifiedAt": "2026-11-07T06:34:49Z",
+        "status": "verified-primary-content",
+        "access": {
+          "httpStatus": 200,
+          "contentType": "text/html",
+          "effectiveUrl": "https://www.rfc-editor.org/rfc/rfc1918.html",
+          "method": "GET plus Lightpanda CLI rendered-text read",
+          "bodyDownloadComplete": true,
+          "receivedBytes": 24972,
+          "receivedBytesSha256": "6274a18cf7241f2a106dd7b937e5a729f5d3546b4df711028c6ad368618eabea",
+          "transportNote": null,
+          "pdfPages": null
+        }
+      },
+      {
+        "id": "soe-batch1-source-19",
+        "title": "RFC 1878: IPv4 subnet masks, including all definable subnets",
+        "url": "https://www.rfc-editor.org/rfc/rfc1878.html",
+        "articles": [
+          "soe-network-mcq"
+        ],
+        "verifiedAt": "2026-11-07T06:34:49Z",
+        "status": "verified-primary-content",
+        "access": {
+          "httpStatus": 200,
+          "contentType": "text/html",
+          "effectiveUrl": "https://www.rfc-editor.org/rfc/rfc1878.html",
+          "method": "GET plus Lightpanda CLI rendered-text read",
+          "bodyDownloadComplete": true,
+          "receivedBytes": 25993,
+          "receivedBytesSha256": "55b5e0a9723e262f934a35bd62d6a21b0bf9003b690c0d8a2e289b8e0d3cab8b",
+          "transportNote": null,
+          "pdfPages": null
+        }
+      },
+      {
+        "id": "soe-batch1-source-20",
+        "title": "OSTEP Chapter 7: Scheduling: Introduction",
+        "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf",
+        "articles": [
+          "soe-os-mcq"
+        ],
+        "verifiedAt": "2026-11-07T06:34:49Z",
+        "status": "verified-primary-content",
+        "access": {
+          "httpStatus": 200,
+          "contentType": "application/pdf",
+          "effectiveUrl": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf",
+          "method": "GET plus built-in PDF text read",
+          "bodyDownloadComplete": true,
+          "receivedBytes": 118326,
+          "receivedBytesSha256": "0912b1a34977a70704b921ecfdf0dd65300e038a3eb4e5e57b2d9c38f66b63c3",
+          "transportNote": null,
+          "pdfPages": 13
+        }
+      },
+      {
+        "id": "soe-batch1-source-21",
+        "title": "UC Davis ECS 150: Process Scheduling Algorithms",
+        "url": "https://nob.cs.ucdavis.edu/classes/ecs150-2022-02/handouts/sched1.html",
+        "articles": [
+          "soe-os-mcq"
+        ],
+        "verifiedAt": "2026-11-07T06:34:49Z",
+        "status": "verified-primary-content",
+        "access": {
+          "httpStatus": 200,
+          "contentType": "text/html",
+          "effectiveUrl": "https://nob.cs.ucdavis.edu/classes/ecs150-2022-02/handouts/sched1.html",
+          "method": "GET plus Lightpanda CLI rendered-text read",
+          "bodyDownloadComplete": true,
+          "receivedBytes": 16571,
+          "receivedBytesSha256": "7e7caea76af60fa273ba03d9da9f3c37cd3de8dd7efe6e893bb5d41ca551865e",
+          "transportNote": null,
+          "pdfPages": null
+        }
+      },
+      {
+        "id": "soe-batch1-source-22",
+        "title": "OSTEP Chapter 22: Beyond Physical Memory: Policies",
+        "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-beyondphys-policy.pdf",
+        "articles": [
+          "soe-os-mcq"
+        ],
+        "verifiedAt": "2026-11-07T06:34:49Z",
+        "status": "verified-primary-content",
+        "access": {
+          "httpStatus": 200,
+          "contentType": "application/pdf",
+          "effectiveUrl": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-beyondphys-policy.pdf",
+          "method": "GET plus built-in PDF text read",
+          "bodyDownloadComplete": true,
+          "receivedBytes": 199152,
+          "receivedBytesSha256": "a6f13af44cae11965876f652e836a1a40603be3e8dfd5336568b69a6007ca4c3",
+          "transportNote": null,
+          "pdfPages": 18
+        }
+      },
+      {
+        "id": "soe-batch1-source-23",
+        "title": "Ron McFadyen: Relational Databases and Microsoft Access, section 10.3",
+        "url": "https://acs.uwinnipeg.ca/rmcfadyen/CreativeCommons/Relational%20Databases%20and%20Microsoft%20Access%20.pdf",
+        "articles": [
+          "soe-database-theory"
+        ],
+        "verifiedAt": "2026-11-07T06:34:49Z",
+        "status": "verified-primary-content",
+        "access": {
+          "httpStatus": 200,
+          "contentType": "application/pdf",
+          "effectiveUrl": "https://acs.uwinnipeg.ca/rmcfadyen/CreativeCommons/Relational%20Databases%20and%20Microsoft%20Access%20.pdf",
+          "method": "HEAD plus built-in PDF text read",
+          "bodyDownloadComplete": null,
+          "receivedBytes": null,
+          "receivedBytesSha256": null,
+          "transportNote": null,
+          "pdfPages": 199
+        }
+      }
+    ],
+    "officialExamEvidence": [
+      {
+        "sourceId": "soe-batch1-source-01",
+        "employer": "中国银行",
+        "batch": "2027年全球校园招聘",
+        "publishedAt": "2026-09-03",
+        "applicableRoles": [
+          "信息科技运营中心信息科技岗位",
+          "软件中心信息科技岗位",
+          "境内分行信息科技岗位"
+        ],
+        "publishedExamFacts": [
+          "统一笔试的初步时间为10月中下旬，具体安排通过邮件或95566短信通知"
+        ],
+        "notDisclosedByThisSource": [
+          "科技岗位卷内模块",
+          "题型",
+          "题量",
+          "单次答题时长及模块时长",
+          "每题分值",
+          "模块权重与满分",
+          "错选漏选及折算规则"
+        ]
+      },
+      {
+        "sourceId": "soe-batch1-source-02",
+        "employer": "上海农商银行",
+        "batch": "2027校园招聘在线测评",
+        "publishedAt": "2026-10-28",
+        "applicableRoles": [
+          "AI+FINTECH培训生"
+        ],
+        "publishedExamFacts": [
+          "整体测评包含技术笔试、AI面试、认知能力测评、职业性格测评",
+          "线上测评，专属网址以邮件和短信通知",
+          "测评日期范围为11月3日至11月4日"
+        ],
+        "notDisclosedByThisSource": [
+          "技术笔试内部模块",
+          "技术笔试题型",
+          "技术笔试题量",
+          "单次答题时长及模块时长",
+          "每题分值",
+          "模块权重与满分",
+          "错选漏选及折算规则"
+        ]
+      }
+    ],
+    "excludedCandidates": [
+      {
+        "url": "https://wealth.ccb.com/cn/job/announcement.html?annoId=20261020092404778535",
+        "employer": "中国建设银行",
+        "status": "not-used",
+        "attempts": [
+          "Lightpanda DOMContentLoaded read",
+          "One bounded network-idle retry",
+          "Built-in direct page read"
+        ],
+        "httpStatus": 200,
+        "reason": "Only the announcement template was readable; no original announcement text. Search results contained detail but were not used as evidence."
+      },
+      {
+        "url": "https://job2.ccb.com/cn/job/announcement.html?annoId=20260903144455718976&planType=XY",
+        "employer": "中国建设银行",
+        "status": "not-used",
+        "attempts": [
+          "Lightpanda DOMContentLoaded read",
+          "One bounded network-idle retry",
+          "Built-in direct page read"
+        ],
+        "httpStatus": 200,
+        "reason": "Only the announcement template was readable; no original announcement text."
+      },
+      {
+        "url": "https://job2.ccb.com/tran/WCCMainPlatV5?CCB_IBSVersion=V5&isAjaxRequest=true&SERVLET_NAME=WCCMainPlatV5&TXCODE=NHR106&annoId=20261020092404778535",
+        "status": "not-used",
+        "httpStatus": 200,
+        "bytes": 0,
+        "reason": "Public announcement-detail URL observed in the official page JavaScript; both Lightpanda and an unauthenticated GET returned empty content. No credentials or altered security settings were used."
+      },
+      {
+        "url": "https://job2.ccb.com/tran/WCCMainPlatV5?CCB_IBSVersion=V5&isAjaxRequest=true&SERVLET_NAME=WCCMainPlatV5&TXCODE=NHR106&annoId=20260903144455718976",
+        "status": "not-used",
+        "httpStatus": 200,
+        "bytes": 0,
+        "reason": "Public announcement-detail URL observed in the official page JavaScript; both Lightpanda and an unauthenticated GET returned empty content. No credentials or altered security settings were used."
+      }
+    ],
+    "browserInventory": {
+      "status": "unavailable",
+      "reason": "Connected browser access host unavailable; no login/account action attempted."
+    },
+    "unresolvedReferenceSources": 0,
+    "referencedSourceUrlCount": 23,
+    "allSourceUrlsHttp200AndContentVerified": true,
+    "allExternalUrlsAccessible": false,
+    "externalImagePublicationPending": 3,
+    "unknownExamFieldsPolicy": "Every missing real-exam field is written as “该来源未公开”; no inferred question counts, durations, scoring weights or marks."
+  },
+  "evidenceMap": [
+    {
+      "article": "soe-bank-tech-exam-overview",
+      "claim": "Only the two employer/batch/role scopes and facts listed in officialExamEvidence; unspecified exam details remain explicitly undisclosed.",
+      "sourceIds": [
+        "soe-batch1-source-01",
+        "soe-batch1-source-02"
+      ],
+      "confidence": "verified-official-originals",
+      "timeSensitive": true
+    },
+    {
+      "article": "soe-computer-organization",
+      "claim": "Integer encoding, ISA abstraction, load/store and byte ordering, CPU performance equation, memory hierarchy and cache address fields.",
+      "sourceIds": [
+        "soe-batch1-source-03",
+        "soe-batch1-source-04",
+        "soe-batch1-source-05",
+        "soe-batch1-source-06",
+        "soe-batch1-source-07",
+        "soe-batch1-source-08",
+        "soe-batch1-source-09"
+      ],
+      "confidence": "primary-definitions-verified; original-calculations-preserved",
+      "timeSensitive": false
+    },
+    {
+      "article": "soe-database-theory",
+      "claim": "Keys, dependencies, 2NF/3NF/BCNF, ER mapping, relational algebra and division; PostgreSQL 18 isolation guarantees distinguished from the standard lower bounds and historical mathematical background.",
+      "sourceIds": [
+        "soe-batch1-source-10",
+        "soe-batch1-source-11",
+        "soe-batch1-source-12",
+        "soe-batch1-source-13",
+        "soe-batch1-source-14",
+        "soe-batch1-source-23"
+      ],
+      "confidence": "author-textbook-and-official-product-docs-verified",
+      "timeSensitive": false
+    },
+    {
+      "article": "soe-os-mcq",
+      "claim": "Classical FCFS/SJF/SRTF/RR and HRRN rules, turnaround/response definitions and OPT/FIFO/LRU behavior.",
+      "sourceIds": [
+        "soe-batch1-source-20",
+        "soe-batch1-source-21",
+        "soe-batch1-source-22"
+      ],
+      "confidence": "primary-textbook-and-university-notes-verified; original-calculations-preserved",
+      "timeSensitive": false
+    },
+    {
+      "article": "soe-network-mcq",
+      "claim": "CIDR range/aggregation, subnet counts, /31 and /32 exceptions, private and documentation IPv4 ranges.",
+      "sourceIds": [
+        "soe-batch1-source-15",
+        "soe-batch1-source-16",
+        "soe-batch1-source-17",
+        "soe-batch1-source-18",
+        "soe-batch1-source-19"
+      ],
+      "confidence": "RFC-originals-verified; entire-article-byte-identical",
+      "timeSensitive": false
+    }
+  ],
+  "diagramSpecifications": [
+    {
+      "article": "soe-computer-organization",
+      "purpose": "存储层次的容量、访问延迟与成本取舍",
+      "elementsAndConstraints": "寄存器、Cache、DRAM 主存、SSD/HDD 外存；不规定物理芯片边界或固定速度",
+      "readingDirectionAndLayout": "纵向层次，顶部通常更小更快；宽度仅示意容量趋势",
+      "diagramType": "storage-hierarchy",
+      "renderer": "excalidraw",
+      "version": "2.1.2",
+      "source": "soe/bank-tech/soe-computer-organization-memory-hierarchy-v1.excalidraw",
+      "output": "images/soe-computer-organization-memory-hierarchy-v1.png",
+      "sourceSha256": "ac77d046b5b881674602eee1cf48b0aaed5e44d7413f883b425b5385fcd7bb60",
+      "outputSha256": "2fe2a4aa6aec25f50d7a2ebf84b7fa98463f1a52b1adb27befef152da477a416",
+      "visualStyle": "white background, soft semantic fills, native text and explicit connector geometry",
+      "font": "native fontFamily 2; system CJK fallback required for rerender; included PNG visually verified",
+      "altTextPresent": true,
+      "renderStatus": "rendered",
+      "reviewStatus": "visually-reviewed",
+      "publicationStatus": "not-published",
+      "factualSourceReview": "verified",
+      "sourceEvidenceIds": [
+        "soe-batch1-source-03",
+        "soe-batch1-source-04",
+        "soe-batch1-source-05",
+        "soe-batch1-source-06",
+        "soe-batch1-source-07",
+        "soe-batch1-source-08",
+        "soe-batch1-source-09"
+      ],
+      "remoteHttpStatus": 404
+    },
+    {
+      "article": "soe-database-theory",
+      "purpose": "M:N 联系通过联系表映射为两个 1:N 联系，复合主键与外键分别约束什么",
+      "elementsAndConstraints": "每条选课记录恰有学生和课程；(sid,cid) 是联合主键，两列不是独立主键；不含学期重修",
+      "readingDirectionAndLayout": "从学生到选课再到课程；两侧 1，联系表侧 0..N",
+      "diagramType": "entity-relationship",
+      "renderer": "excalidraw",
+      "version": "2.1.2",
+      "source": "soe/bank-tech/soe-database-theory-enrollment-er-v1.excalidraw",
+      "output": "images/soe-database-theory-enrollment-er-v1.png",
+      "sourceSha256": "3fd60ff2c1c2c8525a672574463ab595171c1601a7e54a873bda6e6db9035ee0",
+      "outputSha256": "5a85e93028fd99b1a872f49fef0398d89a15b87ef6792a135b7a5f079927ad7c",
+      "visualStyle": "white background, soft semantic fills, native text and explicit connector geometry",
+      "font": "native fontFamily 2; system CJK fallback required for rerender; included PNG visually verified",
+      "altTextPresent": true,
+      "renderStatus": "rendered",
+      "reviewStatus": "visually-reviewed",
+      "publicationStatus": "not-published",
+      "factualSourceReview": "verified",
+      "sourceEvidenceIds": [
+        "soe-batch1-source-10",
+        "soe-batch1-source-11",
+        "soe-batch1-source-12",
+        "soe-batch1-source-13",
+        "soe-batch1-source-14",
+        "soe-batch1-source-23"
+      ],
+      "remoteHttpStatus": 404
+    },
+    {
+      "article": "soe-network-mcq",
+      "purpose": "IPv4 /27 前缀位和主机位，以及普通广播子网的两端保留地址",
+      "elementsAndConstraints": "192.0.2.173/27 位串末段10101101，网络160、广播191，30个通常可分配地址；不把普通减二规则用于/31",
+      "readingDirectionAndLayout": "从左到右分位段，下方展示地址范围",
+      "diagramType": "address-field-boundaries",
+      "renderer": "excalidraw",
+      "version": "2.1.2",
+      "source": "soe/bank-tech/soe-network-mcq-ipv4-prefix-v1.excalidraw",
+      "output": "images/soe-network-mcq-ipv4-prefix-v1.png",
+      "sourceSha256": "d539aa0066e2bdbcd187c32f0a16659c8dd139a156bbf84828455ec745d9d088",
+      "outputSha256": "f2ba10a8d14d26e3203974800cfd3624c4455a967b85d58a7baf3412b267cac3",
+      "visualStyle": "white background, soft semantic fills, native text and explicit connector geometry",
+      "font": "native fontFamily 2; system CJK fallback required for rerender; included PNG visually verified",
+      "altTextPresent": true,
+      "renderStatus": "rendered",
+      "reviewStatus": "visually-reviewed",
+      "publicationStatus": "not-published",
+      "factualSourceReview": "verified",
+      "sourceEvidenceIds": [
+        "soe-batch1-source-15",
+        "soe-batch1-source-16",
+        "soe-batch1-source-17",
+        "soe-batch1-source-18",
+        "soe-batch1-source-19"
+      ],
+      "remoteHttpStatus": 404
+    }
+  ],
+  "validation": {
+    "structure": {
+      "status": "passed",
+      "details": {
+        "leaves": 5,
+        "articles": 5,
+        "originalQuestions": 30,
+        "articlesChecked": [
+          {
+            "key": "soe-bank-tech-exam-overview",
+            "path": "soe/bank-tech/soe-bank-tech-exam-overview.md",
+            "bytes": 10412,
+            "originalQuestions": 3,
+            "imageCount": 0,
+            "localLinks": 4,
+            "sha256": "0052d407af6f972f90d032fc3095eb93ccbc3e4832ad71fc77b97ec348a02ed5"
+          },
+          {
+            "key": "soe-computer-organization",
+            "path": "soe/bank-tech/soe-computer-organization.md",
+            "bytes": 13284,
+            "originalQuestions": 7,
+            "imageCount": 1,
+            "localLinks": 0,
+            "sha256": "63b95bc92631c74b3d467c2bfcdf53db10fda3f816ccf94cf5c12b5580d87507"
+          },
+          {
+            "key": "soe-database-theory",
+            "path": "soe/bank-tech/soe-database-theory.md",
+            "bytes": 16107,
+            "originalQuestions": 8,
+            "imageCount": 1,
+            "localLinks": 2,
+            "sha256": "2e298e3622a825a699a91ee029add6c67c8874bed1366b62952f8ecc0b26bcc9"
+          },
+          {
+            "key": "soe-os-mcq",
+            "path": "soe/bank-tech/soe-os-mcq.md",
+            "bytes": 11301,
+            "originalQuestions": 5,
+            "imageCount": 0,
+            "localLinks": 3,
+            "sha256": "d1a6539d4cded0ab80673e6c4bfc6d8d968958e634a9f12b035ff1111469f18b"
+          },
+          {
+            "key": "soe-network-mcq",
+            "path": "soe/bank-tech/soe-network-mcq.md",
+            "bytes": 11096,
+            "originalQuestions": 7,
+            "imageCount": 1,
+            "localLinks": 4,
+            "sha256": "f86bb4d53957bfa6635da409eb9aee2586ba27da7a456b3da4419d187011f9f7"
+          }
+        ]
+      }
+    },
+    "arithmetic": {
+      "status": "passed",
+      "method": "Independent simulation/closure/set/address calculations; exact scheduler timelines, example key sets, selections/division, integer/CPI/cache fields, VLSM and /31 verified.",
+      "scriptSha256": "66d12befa20d38b7ef9f0c647848772ce1db9fe7b7e62ab24bbd767c570a7726"
+    },
+    "pageReplacement": {
+      "status": "passed",
+      "referenceSequence": [
+        2,
+        1,
+        3,
+        2,
+        4,
+        1,
+        5,
+        2,
+        1,
+        3
+      ],
+      "frames": 3,
+      "initialState": "empty",
+      "faults": {
+        "FIFO": 8,
+        "LRU": 8,
+        "OPT": 6
+      },
+      "evictions": {
+        "FIFO": 5,
+        "LRU": 5,
+        "OPT": 3
+      }
+    },
+    "existingKnowledgeUntouched": true,
+    "existingMasterRefUntouched": true,
+    "remoteCitations": {
+      "status": "verified",
+      "sourceUrlCount": 23,
+      "http200SourceUrlCount": 23,
+      "checkedAt": "2026-11-07T06:34:49Z"
+    },
+    "repositoryTreeValidation": {
+      "status": "passed",
+      "command": "npm run validate:tree",
+      "errors": 0,
+      "warnings": 2,
+      "counts": {
+        "interview": 241,
+        "knowledge": 334
+      },
+      "scope": "Existing validator covers interview and knowledge only; SOE receives the independent structural validation recorded below."
+    },
+    "publication": "Not performed. User assigns staging, commit, push and PR to external work; merge remains forbidden.",
+    "revisionPreservation": {
+      "status": "passed",
+      "articles": 5,
+      "questionsPreserved": 30,
+      "networkArticleUnchanged": true,
+      "diagramSourcesAndExportsUnchanged": true,
+      "keysAndFilePathsUnchanged": true,
+      "articleFingerprints": [
+        {
+          "path": "soe/bank-tech/soe-bank-tech-exam-overview.md",
+          "originalQuestionsUnchanged": 3,
+          "bytes": 10412,
+          "sha256": "0052d407af6f972f90d032fc3095eb93ccbc3e4832ad71fc77b97ec348a02ed5"
+        },
+        {
+          "path": "soe/bank-tech/soe-computer-organization.md",
+          "originalQuestionsUnchanged": 7,
+          "bytes": 13284,
+          "sha256": "63b95bc92631c74b3d467c2bfcdf53db10fda3f816ccf94cf5c12b5580d87507"
+        },
+        {
+          "path": "soe/bank-tech/soe-database-theory.md",
+          "originalQuestionsUnchanged": 8,
+          "bytes": 16107,
+          "sha256": "2e298e3622a825a699a91ee029add6c67c8874bed1366b62952f8ecc0b26bcc9"
+        },
+        {
+          "path": "soe/bank-tech/soe-network-mcq.md",
+          "originalQuestionsUnchanged": 7,
+          "bytes": 11096,
+          "sha256": "f86bb4d53957bfa6635da409eb9aee2586ba27da7a456b3da4419d187011f9f7"
+        },
+        {
+          "path": "soe/bank-tech/soe-os-mcq.md",
+          "originalQuestionsUnchanged": 5,
+          "bytes": 11301,
+          "sha256": "d1a6539d4cded0ab80673e6c4bfc6d8d968958e634a9f12b035ff1111469f18b"
+        }
+      ]
+    },
+    "externalLinks": [
+      {
+        "url": "https://www.boc.cn/aboutboc/bi4/202609/t20260903_25689311.html",
+        "articleKeys": [
+          "soe-bank-tech-exam-overview"
+        ],
+        "httpStatus": 200,
+        "contentType": "text/html",
+        "status": "source-readable",
+        "checkedAt": "2026-11-07T06:34:49Z",
+        "downloadComplete": true,
+        "nativePdfParsed": false,
+        "transportWarning": null
+      },
+      {
+        "url": "https://www.shrcb.com/shrcb/articleFileDir/2026-10/29/98f65e32509d44918198b85a5b326a8d/%E4%B8%8A%E6%B5%B7%E5%86%9C%E5%95%86%E9%93%B6%E8%A1%8C2027%E6%A0%A1%E5%9B%AD%E6%8B%9B%E8%81%98%E5%9C%A8%E7%BA%BF%E6%B5%8B%E8%AF%84%E9%80%9A%E7%9F%A5.pdf?aisite-article-file=shrcb%2C98f65e32509d44918198b85a5b326a8d%2C2026-10-29+10%3A19%3A36",
+        "articleKeys": [
+          "soe-bank-tech-exam-overview"
+        ],
+        "httpStatus": 200,
+        "contentType": "application/pdf",
+        "status": "source-readable",
+        "checkedAt": "2026-11-07T06:34:49Z",
+        "downloadComplete": true,
+        "nativePdfParsed": true,
+        "transportWarning": null
+      },
+      {
+        "url": "https://computationstructures.org/notes/information/notes.html",
+        "articleKeys": [
+          "soe-computer-organization"
+        ],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "status": "source-readable",
+        "checkedAt": "2026-11-07T06:34:49Z",
+        "downloadComplete": true,
+        "nativePdfParsed": false,
+        "transportWarning": null
+      },
+      {
+        "url": "https://computationstructures.org/lectures/info/info.html",
+        "articleKeys": [
+          "soe-computer-organization"
+        ],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "status": "source-readable",
+        "checkedAt": "2026-11-07T06:34:49Z",
+        "downloadComplete": true,
+        "nativePdfParsed": false,
+        "transportWarning": null
+      },
+      {
+        "url": "https://docs.riscv.org/reference/isa/v20240411/_attachments/riscv-unprivileged.pdf",
+        "articleKeys": [
+          "soe-computer-organization"
+        ],
+        "httpStatus": 200,
+        "contentType": "application/pdf",
+        "status": "source-readable",
+        "checkedAt": "2026-11-07T06:34:49Z",
+        "downloadComplete": false,
+        "nativePdfParsed": true,
+        "transportWarning": "curl: (28) Operation timed out after 25007 milliseconds with 729664 out of 4667447 bytes received"
+      },
+      {
+        "url": "https://computationstructures.org/notes/isas/notes.html",
+        "articleKeys": [
+          "soe-computer-organization"
+        ],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "status": "source-readable",
+        "checkedAt": "2026-11-07T06:34:49Z",
+        "downloadComplete": true,
+        "nativePdfParsed": false,
+        "transportWarning": null
+      },
+      {
+        "url": "https://cse.buffalo.edu/faculty/bina/cs506/lec1/tsld021.htm",
+        "articleKeys": [
+          "soe-computer-organization"
+        ],
+        "httpStatus": 200,
+        "contentType": "text/html",
+        "status": "source-readable",
+        "checkedAt": "2026-11-07T06:34:49Z",
+        "downloadComplete": true,
+        "nativePdfParsed": false,
+        "transportWarning": null
+      },
+      {
+        "url": "https://computationstructures.org/lectures/performance/performance.html",
+        "articleKeys": [
+          "soe-computer-organization"
+        ],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "status": "source-readable",
+        "checkedAt": "2026-11-07T06:34:49Z",
+        "downloadComplete": true,
+        "nativePdfParsed": false,
+        "transportWarning": null
+      },
+      {
+        "url": "https://computationstructures.org/lectures/caches/caches.html",
+        "articleKeys": [
+          "soe-computer-organization"
+        ],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "status": "source-readable",
+        "checkedAt": "2026-11-07T06:34:49Z",
+        "downloadComplete": true,
+        "nativePdfParsed": false,
+        "transportWarning": null
+      },
+      {
+        "url": "https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/soe-computer-organization-memory-hierarchy-v1.png",
+        "articleKeys": [
+          "soe-computer-organization"
+        ],
+        "httpStatus": 404,
+        "contentType": "application/xml",
+        "status": "not-published-local-asset-present",
+        "checkedAt": "2026-11-07T06:34:49Z",
+        "downloadComplete": true,
+        "nativePdfParsed": false,
+        "transportWarning": null
+      },
+      {
+        "url": "https://www.db-book.com/slides-dir/PDF-dir/ch7.pdf",
+        "articleKeys": [
+          "soe-database-theory"
+        ],
+        "httpStatus": 200,
+        "contentType": "application/pdf",
+        "status": "source-readable",
+        "checkedAt": "2026-11-07T06:34:49Z",
+        "downloadComplete": false,
+        "nativePdfParsed": true,
+        "transportWarning": "curl: (28) Operation timed out after 25001 milliseconds with 311296 out of 8567465 bytes received"
+      },
+      {
+        "url": "https://www.db-book.com/slides-dir/PDF-dir/ch2.pdf",
+        "articleKeys": [
+          "soe-database-theory"
+        ],
+        "httpStatus": 200,
+        "contentType": "application/pdf",
+        "status": "source-readable",
+        "checkedAt": "2026-11-07T06:34:49Z",
+        "downloadComplete": false,
+        "nativePdfParsed": true,
+        "transportWarning": "curl: (28) Operation timed out after 25008 milliseconds with 327680 out of 7926038 bytes received"
+      },
+      {
+        "url": "https://www.db-book.com/slides-dir/PDF-dir/ch6.pdf",
+        "articleKeys": [
+          "soe-database-theory"
+        ],
+        "httpStatus": 200,
+        "contentType": "application/pdf",
+        "status": "source-readable",
+        "checkedAt": "2026-11-07T06:34:49Z",
+        "downloadComplete": false,
+        "nativePdfParsed": true,
+        "transportWarning": "curl: (28) Operation timed out after 25007 milliseconds with 294912 out of 2598724 bytes received"
+      },
+      {
+        "url": "https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/soe-database-theory-enrollment-er-v1.png",
+        "articleKeys": [
+          "soe-database-theory"
+        ],
+        "httpStatus": 404,
+        "contentType": "application/xml",
+        "status": "not-published-local-asset-present",
+        "checkedAt": "2026-11-07T06:34:49Z",
+        "downloadComplete": true,
+        "nativePdfParsed": false,
+        "transportWarning": null
+      },
+      {
+        "url": "https://www.postgresql.org/docs/7.1/relmodel-oper.html",
+        "articleKeys": [
+          "soe-database-theory"
+        ],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "status": "source-readable",
+        "checkedAt": "2026-11-07T06:34:49Z",
+        "downloadComplete": true,
+        "nativePdfParsed": false,
+        "transportWarning": null
+      },
+      {
+        "url": "https://www.postgresql.org/docs/18/transaction-iso.html",
+        "articleKeys": [
+          "soe-database-theory"
+        ],
+        "httpStatus": 200,
+        "contentType": "text/html; charset=utf-8",
+        "status": "source-readable",
+        "checkedAt": "2026-11-07T06:34:49Z",
+        "downloadComplete": true,
+        "nativePdfParsed": false,
+        "transportWarning": null
+      },
+      {
+        "url": "https://www.rfc-editor.org/rfc/rfc5737.html",
+        "articleKeys": [
+          "soe-network-mcq"
+        ],
+        "httpStatus": 200,
+        "contentType": "text/html",
+        "status": "source-readable",
+        "checkedAt": "2026-11-07T06:34:49Z",
+        "downloadComplete": true,
+        "nativePdfParsed": false,
+        "transportWarning": null
+      },
+      {
+        "url": "https://www.rfc-editor.org/rfc/rfc4632.html",
+        "articleKeys": [
+          "soe-network-mcq"
+        ],
+        "httpStatus": 200,
+        "contentType": "text/html",
+        "status": "source-readable",
+        "checkedAt": "2026-11-07T06:34:49Z",
+        "downloadComplete": true,
+        "nativePdfParsed": false,
+        "transportWarning": null
+      },
+      {
+        "url": "https://www.rfc-editor.org/rfc/rfc3021.html",
+        "articleKeys": [
+          "soe-network-mcq"
+        ],
+        "httpStatus": 200,
+        "contentType": "text/html",
+        "status": "source-readable",
+        "checkedAt": "2026-11-07T06:34:49Z",
+        "downloadComplete": true,
+        "nativePdfParsed": false,
+        "transportWarning": null
+      },
+      {
+        "url": "https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/soe-network-mcq-ipv4-prefix-v1.png",
+        "articleKeys": [
+          "soe-network-mcq"
+        ],
+        "httpStatus": 404,
+        "contentType": "application/xml",
+        "status": "not-published-local-asset-present",
+        "checkedAt": "2026-11-07T06:34:49Z",
+        "downloadComplete": true,
+        "nativePdfParsed": false,
+        "transportWarning": null
+      },
+      {
+        "url": "https://www.rfc-editor.org/rfc/rfc1918.html",
+        "articleKeys": [
+          "soe-network-mcq"
+        ],
+        "httpStatus": 200,
+        "contentType": "text/html",
+        "status": "source-readable",
+        "checkedAt": "2026-11-07T06:34:49Z",
+        "downloadComplete": true,
+        "nativePdfParsed": false,
+        "transportWarning": null
+      },
+      {
+        "url": "https://www.rfc-editor.org/rfc/rfc1878.html",
+        "articleKeys": [
+          "soe-network-mcq"
+        ],
+        "httpStatus": 200,
+        "contentType": "text/html",
+        "status": "source-readable",
+        "checkedAt": "2026-11-07T06:34:49Z",
+        "downloadComplete": true,
+        "nativePdfParsed": false,
+        "transportWarning": null
+      },
+      {
+        "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf",
+        "articleKeys": [
+          "soe-os-mcq"
+        ],
+        "httpStatus": 200,
+        "contentType": "application/pdf",
+        "status": "source-readable",
+        "checkedAt": "2026-11-07T06:34:49Z",
+        "downloadComplete": true,
+        "nativePdfParsed": true,
+        "transportWarning": null
+      },
+      {
+        "url": "https://nob.cs.ucdavis.edu/classes/ecs150-2022-02/handouts/sched1.html",
+        "articleKeys": [
+          "soe-os-mcq"
+        ],
+        "httpStatus": 200,
+        "contentType": "text/html",
+        "status": "source-readable",
+        "checkedAt": "2026-11-07T06:34:49Z",
+        "downloadComplete": true,
+        "nativePdfParsed": false,
+        "transportWarning": null
+      },
+      {
+        "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-beyondphys-policy.pdf",
+        "articleKeys": [
+          "soe-os-mcq"
+        ],
+        "httpStatus": 200,
+        "contentType": "application/pdf",
+        "status": "source-readable",
+        "checkedAt": "2026-11-07T06:34:49Z",
+        "downloadComplete": true,
+        "nativePdfParsed": true,
+        "transportWarning": null
+      },
+      {
+        "url": "https://acs.uwinnipeg.ca/rmcfadyen/CreativeCommons/Relational%20Databases%20and%20Microsoft%20Access%20.pdf",
+        "articleKeys": [
+          "soe-database-theory"
+        ],
+        "httpStatus": 200,
+        "contentType": "application/pdf",
+        "status": "source-readable",
+        "checkedAt": "2026-11-07T06:34:49Z",
+        "downloadComplete": null,
+        "nativePdfParsed": true,
+        "transportWarning": null
+      }
+    ],
+    "externalLinkSummary": {
+      "uniqueUrls": 26,
+      "verifiedSources": 23,
+      "http404UnpublishedImages": 3
+    },
+    "articleAndTreeMarkdownStatus": "passed"
+  },
+  "historyLedger": {
+    "target": ".codex/knowledge-update-history.json",
+    "writable": false,
+    "reason": "The environment marks .codex read-only; attempted batch-manifest write was denied. Existing ledger is untouched; pending SOE records are retained with this batch for review.",
+    "pendingRecords": [
+      {
+        "module": "soe",
+        "key": "soe-bank-tech-exam-overview",
+        "label": "银行科技岗笔试考什么：结构、题型与分值",
+        "filePath": "bank-tech",
+        "action": "created",
+        "batch": "soe-cs-batch1-20261107",
+        "recordedAt": "2026-11-07",
+        "status": "pending",
+        "reason": "Local content, original exercises, citations and source access verified. Awaiting external submission/review and any eventual authorized publication; not counted as published.",
+        "sourceVerification": "complete"
+      },
+      {
+        "module": "soe",
+        "key": "soe-computer-organization",
+        "label": "计算机组成原理速览：数制与编码、CPU、存储层次、指令系统",
+        "filePath": "bank-tech",
+        "action": "created",
+        "batch": "soe-cs-batch1-20261107",
+        "recordedAt": "2026-11-07",
+        "status": "pending",
+        "reason": "Local content, original exercises, citations and source access verified. Awaiting external submission/review and any eventual authorized publication; not counted as published.",
+        "sourceVerification": "complete"
+      },
+      {
+        "module": "soe",
+        "key": "soe-database-theory",
+        "label": "数据库理论：范式、ER 图、关系代数与事务隔离级别（选择题考法）",
+        "filePath": "bank-tech",
+        "action": "created",
+        "batch": "soe-cs-batch1-20261107",
+        "recordedAt": "2026-11-07",
+        "status": "pending",
+        "reason": "Local content, original exercises, citations and source access verified. Awaiting external submission/review and any eventual authorized publication; not counted as published.",
+        "sourceVerification": "complete"
+      },
+      {
+        "module": "soe",
+        "key": "soe-os-mcq",
+        "label": "操作系统选择题高频考点",
+        "filePath": "bank-tech",
+        "action": "created",
+        "batch": "soe-cs-batch1-20261107",
+        "recordedAt": "2026-11-07",
+        "status": "pending",
+        "reason": "Local content, original exercises, citations and source access verified. Awaiting external submission/review and any eventual authorized publication; not counted as published.",
+        "sourceVerification": "complete"
+      },
+      {
+        "module": "soe",
+        "key": "soe-network-mcq",
+        "label": "计算机网络选择题高频考点",
+        "filePath": "bank-tech",
+        "action": "created",
+        "batch": "soe-cs-batch1-20261107",
+        "recordedAt": "2026-11-07",
+        "status": "pending",
+        "reason": "Local content, original exercises, citations and source access verified. Awaiting external submission/review and any eventual authorized publication; not counted as published.",
+        "sourceVerification": "complete"
+      }
+    ]
+  },
+  "summary": {
+    "createdDrafts": 0,
+    "createdReady": 5,
+    "updatedExistingKnowledge": 0,
+    "failedArticles": 0,
+    "pendingSource": 0,
+    "pendingImages": 0,
+    "pendingImagePublication": 3,
+    "originalQuestions": 30,
+    "reviewedArticles": 5
+  },
+  "gitHandoff": {
+    "branch": "codex/soe-cs-batch1",
+    "status": "external-submission-per-user-instruction",
+    "gitMutationsThisRevision": [],
+    "commitCreated": false,
+    "pushed": false,
+    "pullRequestCreated": false,
+    "merged": false,
+    "masterModified": false,
+    "workPreserved": true,
+    "previousStagingFailure": {
+      "from": "previous turn only",
+      "exitCode": 128,
+      "reason": "Unable to create .git/index.lock: Operation not permitted"
+    },
+    "submissionOwner": "external",
+    "suggestedCommitMessage": "docs(soe): add five original bank technology exam study articles",
+    "remainingExternalWork": [
+      "Externally stage/commit the five articles, tree, batch evidence, and the three existing PNG/editable source pairs on codex/soe-cs-batch1",
+      "Open a PR if desired; do not merge or change master",
+      "An eventual separately authorized publication must upload the three referenced images and verify SOE module integration; no site/backend changes are part of this content revision"
+    ]
+  },
+  "lastReviewedAt": "2026-11-07T06:34:49Z",
+  "unresolvedIssues": [
+    {
+      "type": "unpublished-image-urls",
+      "count": 3,
+      "severity": "blocks-online-image-rendering-only",
+      "detail": "All three canonical OSS image URLs returned HTTP 404. Their local PNGs and editable sources exist, match the previously reviewed hashes, and are unchanged. Upload/publication is outside this user-owned submission step."
+    },
+    {
+      "type": "excluded-employer-source",
+      "employer": "中国建设银行",
+      "detail": "Could not obtain readable original text from the two candidate official announcement pages; public detail responses were empty and connected-browser inventory was unavailable. These candidates are excluded from the article rather than completed from search summaries."
+    },
+    {
+      "type": "soe-module-integration-not-verified",
+      "detail": "The existing repository validator only covers interview/knowledge. Independent SOE structure checks passed. Website/backend integration and production synchronization were not changed or asserted."
+    }
+  ]
+}

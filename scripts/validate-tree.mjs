@@ -1,6 +1,7 @@
 import { resolve } from 'node:path';
+import { lstat } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
-import { isDirectExecution, boundedFiles, leafPath, readBounded, safeKey } from './resource-paths.mjs';
+import { isDirectExecution, boundedFiles, leafPath, readBounded, safeKey, CONTENT_MODULES } from './resource-paths.mjs';
 import { publicInterviewDisclosures, validatePublicKnowledgeRelations } from './public-interview-contract.mjs';
 
 export function leaves(nodes) {
@@ -10,7 +11,9 @@ export function leaves(nodes) {
 
 export async function validateTree(root) {
   const errors = [], warnings = [], trees = {};
-  for (const module of ['interview', 'knowledge']) {
+  for (const module of CONTENT_MODULES) {
+    // soe is a newer optional module; older checkouts and fixtures may not have it yet.
+    if (module === 'soe') { try { await lstat(resolve(root, module)); } catch (error) { if (error.code === 'ENOENT') continue; throw error; } }
     try {
       const tree = JSON.parse((await readBounded(root, `${module}/_tree.json`, module)).toString());
       const ls = leaves(tree), expected = new Set(), seen = new Set();

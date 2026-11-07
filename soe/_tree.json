@@ -1,0 +1,68 @@
+[
+  {
+    "label": "银行·国企科技岗笔试",
+    "key": "soe-bank-state-tech",
+    "children": [
+      {
+        "label": "银行科技岗笔试考什么：结构、题型与分值",
+        "key": "soe-bank-tech-exam-overview",
+        "isLeaf": true,
+        "filePath": "bank-tech",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-07",
+        "quickRead": {
+          "text": "按特定官方招聘批次核对模块、题型与分值，明确公开信息的适用范围和缺项。"
+        }
+      },
+      {
+        "label": "计算机组成原理速览：数制与编码、CPU、存储层次、指令系统",
+        "key": "soe-computer-organization",
+        "isLeaf": true,
+        "filePath": "bank-tech",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-07",
+        "quickRead": {
+          "text": "用位宽、寻址单位和字段预算理解数制、补码、CPU 时间与 Cache 地址划分，配原创计算练习。"
+        }
+      },
+      {
+        "label": "数据库理论：范式、ER 图、关系代数与事务隔离级别（选择题考法）",
+        "key": "soe-database-theory",
+        "isLeaf": true,
+        "filePath": "bank-tech",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-07",
+        "quickRead": {
+          "text": "从函数依赖求候选键与范式，把 ER 联系映射为约束，用集合语义求关系代数，并区分隔离标准与产品保证。"
+        }
+      },
+      {
+        "label": "操作系统选择题高频考点",
+        "key": "soe-os-mcq",
+        "isLeaf": true,
+        "filePath": "bank-tech",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-07",
+        "quickRead": {
+          "text": "链接现有进程、分页和死锁文章，新增 FCFS、SJF、SRTF、RR、HRRN 及 FIFO、LRU、OPT 的原创计算练习。"
+        }
+      },
+      {
+        "label": "计算机网络选择题高频考点",
+        "key": "soe-network-mcq",
+        "isLeaf": true,
+        "filePath": "bank-tech",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-07",
+        "quickRead": {
+          "text": "链接现有 TCP、HTTP、DNS 文章，练习 IPv4 前缀、地址范围、等长及可变长子网，并辨别 /31 与 /32 边界。"
+        }
+      }
+    ]
+  }
+]
