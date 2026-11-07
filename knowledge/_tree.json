@@ -291,9 +291,9 @@
             },
             "isLeaf": true,
             "interviewBaseHeat": 0,
-            "interviewCount": 1,
-            "heat": 1,
-            "currRank": 1,
+            "interviewCount": 2,
+            "heat": 2,
+            "currRank": 2,
             "updatedAt": "2026-10-31"
           },
           {
@@ -321,14 +321,14 @@
             "isLeaf": true,
             "filePath": "llm/prompt",
             "contentStatus": "published",
-            "heat": 29,
+            "heat": 30,
             "currRank": 5,
             "updatedAt": "2026-11-04",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "上下文压缩先保护目标、约束、事实与出处，再通过裁剪、抽取或摘要控制预算。OpenClaw 示例区分持久摘要、请求内工具结果裁剪与可选记忆写入；磁盘保留不等于本轮已读，压缩仍需验证保真和继续任务的效果。"
             },
-            "interviewCount": 23,
+            "interviewCount": 24,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -865,14 +865,14 @@
             "isLeaf": true,
             "filePath": "llm/rag",
             "contentStatus": "published",
-            "heat": 36,
+            "heat": 37,
             "currRank": 5,
             "updatedAt": "2026-07-14",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "RAG 分离离线资料解析、分块和索引，与在线授权、召回、排序、上下文装配和生成。证据必须保留来源和版本；检索不等于训练，有引用也不证明结论成立，需要分层评测和失败追踪。"
             },
-            "interviewCount": 30,
+            "interviewCount": 31,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -945,14 +945,14 @@
             "isLeaf": true,
             "filePath": "llm/rag",
             "contentStatus": "published",
-            "heat": 14,
+            "heat": 15,
             "currRank": 5,
             "updatedAt": "2026-11-06",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Embedding 将文档和查询映射到经验证兼容的向量空间，用约定距离支持检索；维度相同不等于编码器兼容，相似不等于事实正确。聚类另需明确算法、簇数或阈值并回读原文，几何分离指标不能代替语义和业务评估。"
             },
-            "interviewCount": 8,
+            "interviewCount": 9,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1283,14 +1283,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 57,
+            "heat": 58,
             "currRank": 5,
             "updatedAt": "2026-11-04",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Coding Agent 围绕仓库事实完成检索、补丁和验证闭环；编辑器补全则可从光标前后文与相关代码生成候选，并处理取消和文档版本变化。两者都需用任务、静态检查、测试与人工审查检验正确性，采纳率或生成代码量不能代替交付质量。"
             },
-            "interviewCount": 51,
+            "interviewCount": 52,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1331,14 +1331,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 29,
+            "heat": 30,
             "currRank": 5,
             "updatedAt": "2026-10-02",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "多Agent让执行者分别持有上下文、工具与证据，由协调者合并。是否值得分工要用同一任务、数据、权限和预算与单Agent或普通代码比较；角色增多不保证正确，通信、共享状态和合并失败都需要验证。"
             },
-            "interviewCount": 23,
+            "interviewCount": 24,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1363,14 +1363,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 25,
+            "heat": 26,
             "currRank": 5,
             "updatedAt": "2026-10-28",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Agent记忆按用途管理当前状态、可恢复checkpoint、长期事实和证据，写入与检索都有来源和权限边界。LangGraph按super-step提交完整快照，并保存步内成功节点写入；挂checkpointer不会自动写入任意变量。Claude Code持久文件仅在加载后进入当前上下文，文件格式不等于通用记忆架构。"
             },
-            "interviewCount": 19,
+            "interviewCount": 20,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1889,14 +1889,14 @@
             "isLeaf": true,
             "filePath": "llm/production",
             "contentStatus": "published",
-            "heat": 30,
+            "heat": 31,
             "currRank": 5,
             "updatedAt": "2026-10-28",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Agent 验收分开读取任务要求、执行轨迹和实际环境结果。确定条件用程序，开放质量用经校准的模型或人工判断；固定初始状态、版本和统计分母，不能只相信最终回复中的成功声明。"
             },
-            "interviewCount": 24,
+            "interviewCount": 25,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1937,14 +1937,14 @@
             "isLeaf": true,
             "filePath": "llm/production",
             "contentStatus": "published",
-            "heat": 13,
+            "heat": 14,
             "currRank": 5,
             "updatedAt": "2026-10-20",
             "quickRead": {
               "text": "Agent调试先冻结失败输入、版本、状态与Trace，再隔离重放并修复最早可控原因。自动归因只产生待验证候选，证据不足保留未知；分类相关性不能代替因果，修复还需同条件回归与人工校准。"
             },
             "interviewBaseHeat": 6,
-            "interviewCount": 7,
+            "interviewCount": 8,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -2093,6 +2093,22 @@
             }
           },
           {
+            "label": "AI 应用限流、配额与背压",
+            "key": "ai-rate-limiting",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "published",
+            "heat": 10,
+            "currRank": 5,
+            "updatedAt": "2026-11-04",
+            "interviewBaseHeat": 6,
+            "interviewCount": 4,
+            "interviewCountBasis": "verified-public-posts",
+            "quickRead": {
+              "text": "突发流量须分别约束请求或 Token 速率、在途并发和队列积压，并按租户分配容量。下游饱和要背压、有限等待、显式降级或拒绝，重试共享预算；提升并发前先用排队、成功吞吐和尾延迟定位瓶颈。"
+            }
+          },
+          {
             "label": "幂等性、重复执行与副作用控制",
             "key": "agent-idempotency",
             "isLeaf": true,
@@ -2167,22 +2183,6 @@
             },
             "interviewBaseHeat": 6,
             "interviewCount": 3
-          },
-          {
-            "label": "AI 应用限流、配额与背压",
-            "key": "ai-rate-limiting",
-            "isLeaf": true,
-            "filePath": "llm/production",
-            "contentStatus": "published",
-            "heat": 9,
-            "currRank": 5,
-            "updatedAt": "2026-11-04",
-            "interviewBaseHeat": 6,
-            "interviewCount": 3,
-            "interviewCountBasis": "verified-public-posts",
-            "quickRead": {
-              "text": "突发流量须分别约束请求或 Token 速率、在途并发和队列积压，并按租户分配容量。下游饱和要背压、有限等待、显式降级或拒绝，重试共享预算；提升并发前先用排队、成功吞吐和尾延迟定位瓶颈。"
-            }
           },
           {
             "label": "Agent 服务部署、扩缩容与版本发布",
@@ -2842,14 +2842,14 @@
             "isLeaf": true,
             "filePath": "backend/api",
             "contentStatus": "published",
-            "heat": 19,
+            "heat": 20,
             "currRank": 5,
             "updatedAt": "2026-11-06",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "异步 Job 把持久业务状态、消息通知和 Worker 执行分开：发布确认与路由结果、持久与复制策略、提交后 ACK 各保护一段责任。断连和重投仍要求幂等、恢复与对账，队列缓冲、消费确认或持久化都不自动提供端到端恰好一次。"
             },
-            "interviewCount": 18,
+            "interviewCount": 19,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -3015,14 +3015,14 @@
             "isLeaf": true,
             "filePath": "backend/database",
             "contentStatus": "published",
-            "heat": 34,
+            "heat": 35,
             "currRank": 5,
             "updatedAt": "2026-10-31",
             "interviewBaseHeat": 10,
             "quickRead": {
               "text": "Cache-aside 以数据库为权威，读缓存未命中后回填，写数据库后失效缓存。TTL、失效通知和并发请求合并分别约束旧值、传播与负载，却不能保证跨层强一致或阻止旧请求回填；关键决策仍须在权威数据上校验，并设计失效失败的恢复路径。"
             },
-            "interviewCount": 24,
+            "interviewCount": 25,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -3031,14 +3031,14 @@
             "isLeaf": true,
             "filePath": "backend/database",
             "contentStatus": "published",
-            "heat": 28,
+            "heat": 30,
             "currRank": 5,
             "updatedAt": "2026-11-04",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "索引按键与页布局减少定位工作，是否更快须看扫描、回表、缓存和写维护。InnoDB普通有序索引以页式树组织，RocksDB的LSM把更新缓冲后生成SST并以compaction维护，二者在读取、写入、空间与后台成本间取舍。固定查询、持久性和负载后比较，不能只凭树名下性能结论。"
             },
-            "interviewCount": 27,
+            "interviewCount": 29,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -3163,14 +3163,14 @@
             "isLeaf": true,
             "filePath": "backend/database",
             "contentStatus": "published",
-            "heat": 5,
+            "heat": 6,
             "currRank": 4,
             "updatedAt": "2026-10-31",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "先按容量、访问模式和一致性目标实测，再比较索引、归档、副本与分片。普通InnoDB表分区不自动获得跨节点写能力；跨节点分片还要对象定位、迁移和跨片事务，固定行数与优化顺序不能替代容量证据。"
             },
-            "interviewCount": 4,
+            "interviewCount": 5,
             "interviewCountBasis": "verified-public-posts"
           },
           {

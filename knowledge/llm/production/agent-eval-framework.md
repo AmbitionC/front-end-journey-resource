@@ -14,8 +14,14 @@ Agent 会选择工具、改变外部状态并持续执行。评测因此要回�
 
 ## 一次评测如何运行
 
-![Agent 评测结构：执行器恢复隔离环境并启动 Agent，轨迹和实际状态分别送入评分器，成功规则直接约束评分，最后形成结果报告。](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-eval-framework-task-trace-outcome-archify-v1.png)
-*图：使用 Archify v2.16.0 绘制；验收同时读取运行轨迹和环境终态，成功规则由评分器检查。*
+![运行顺序：评测执行器先恢复初始状态，再输入任务并启动 Agent；Agent 调用工具并接收结果。](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-eval-framework-run-sequence-v2.png)
+*图 1：先恢复环境，再运行任务；被测 Agent 与工具在隔离环境内执行。*
+
+![外部评测系统分别记录模型与工具交互形成执行轨迹、读取环境终态形成状态快照。](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-eval-framework-evidence-sequence-v2.png)
+*图 2：轨迹与环境终态分别取证，采集由被测 Agent 之外的评测系统完成。*
+
+![成功规则、执行轨迹和状态快照分别送入评分器，评分器输出评分与理由形成评测报告。](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-eval-framework-grading-sequence-v2.png)
+*图 3：评分器按规则验收两类证据；隐藏验收条件不额外提示给被测 Agent。图中输入的排列不限定到达顺序。*
 
 图中的任务用例提供输入、初始状态和成功规则。评测执行器（Eval Runner）恢复隔离环境后启动 Agent；Agent 调用工具，环境返回结果并保存实际变化。运行结束后，轨迹记录（Trace Log）与状态快照（State Snapshot）分别进入评分器（Graders），再汇总为带理由和场景分类的报告。
 
@@ -113,6 +119,7 @@ Agent 的改动可能影响工具选择、提示词、检索、上下文管理�
 - [小红书产品工程师一面：一致性、知识来源与多模态评估](../../../interview/redbook/ai/redbook-ai-6.md)
 - [快手 AI 应用服务端日常实习一面：协作、上下文与评测](../../../interview/kuaishou/ai/kuaishou-ai-7.md)
 - [字节 AI 平台一面：Agent 评测、框架与数据结构](../../../interview/bytedance/base/bytedance-base-33.md)
+- [百度搜索框架 Agent 日常实习一二面：上下文、工程选型与评测](../../../interview/baidu/ai/baidu-ai-14.md)
 - [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)
 - [阿里大模型算法校招：Attention、后训练与 Agent 评测](../../../interview/alibaba/ai/alibaba-ai-24.md)

@@ -5245,6 +5245,125 @@
       "diagramType": null,
       "batchId": null,
       "publishedEvidence": null
+    },
+    {
+      "key": "agent-eval-framework",
+      "label": "Agent 评测原理：任务、轨迹与环境结果",
+      "articlePath": "knowledge/llm/production/agent-eval-framework.md",
+      "baselineArticleSha256": "172a2bd7e0944062c8cd159070d2b5a5838c4686b9e2b5989030cef523e2ba8e",
+      "status": "rendered",
+      "legacyAssets": [
+        {
+          "path": "images/agent-eval-framework-task-trace-outcome-archify-v1.png",
+          "sha256": "cf9904e0d16ace1abdb0182f0e17c62481d43c2c6bb9a8e2d7990a629bae545e",
+          "provenance": "existing_archify_static_export_source_not_found_in_current_tree"
+        }
+      ],
+      "renderer": "archify",
+      "diagramType": "sequence",
+      "batchId": null,
+      "publishedEvidence": null,
+      "rendererVersion": "3.2.0",
+      "repairId": "agent-eval-framework-readability-20261106",
+      "migrationKind": "deterministic_diagram_readability_repair",
+      "editableSources": [
+        {
+          "path": "knowledge/llm/production/agent-eval-framework-run-sequence-v2.archify.json",
+          "sha256": "b079c7bbf4326120bb65031230208da61db322b3bd3f9863319594dfb1d30cff"
+        },
+        {
+          "path": "knowledge/llm/production/agent-eval-framework-run-sequence-v2.svg",
+          "sha256": "27e7a1fb8d49470bf1248f3a697628fcc50e11e45f1dd24b75cb3d53393095ac"
+        },
+        {
+          "path": "knowledge/llm/production/agent-eval-framework-evidence-sequence-v2.archify.json",
+          "sha256": "a0d7c7e2984c374bc1f3d2028c52c3440fcc10df50d9efe1d4c34f8a33ca8841"
+        },
+        {
+          "path": "knowledge/llm/production/agent-eval-framework-evidence-sequence-v2.svg",
+          "sha256": "28be50b3e3987ff33ec1816e7da10bdfb3b8e7173a3ee5ef38665d84a34299f3"
+        },
+        {
+          "path": "knowledge/llm/production/agent-eval-framework-grading-sequence-v2.archify.json",
+          "sha256": "72a00e46e7ac1e102b4686a838262ce59c067cdcd41e9a6cc0aebada226a567a"
+        },
+        {
+          "path": "knowledge/llm/production/agent-eval-framework-grading-sequence-v2.svg",
+          "sha256": "412dd4f828c71ee43ec82ebf2cf112f2fc71542807a1810f4a9d8ff089c021cc"
+        }
+      ],
+      "staticExports": [
+        {
+          "path": "images/agent-eval-framework-run-sequence-v2.png",
+          "sha256": "481fe205e1788e7f0f28fc2ff365a776511570585e119ef239b5549485d4c629",
+          "width": 1120,
+          "height": 720
+        },
+        {
+          "path": "images/agent-eval-framework-evidence-sequence-v2.png",
+          "sha256": "024f9a287ca90a8d8c4086ea0fba442bf8607d483a966bfece1df4ac4cc79740",
+          "width": 1120,
+          "height": 654
+        },
+        {
+          "path": "images/agent-eval-framework-grading-sequence-v2.png",
+          "sha256": "f2b112473258c088fd087e8cc46d0087586e3cd28235cc9857de775263045843",
+          "width": 1120,
+          "height": 720
+        }
+      ],
+      "repairedArticleSha256": "e6d3f33d3bffbd6ca0b5e7ab69f5f4db90814b744afebc8dd3e258178e38c626",
+      "replacementReason": "Split one 4800px-wide overview into three compact native message views. Full canonical SVGs are rendered unchanged at 2x; essential labels project to about 12.2px at 620px and 13.8px at 700px. Preserve all correct teaching prose and the old image.",
+      "reviewStatus": "independent_review_pending",
+      "authorStaticReview": {
+        "status": "passed",
+        "widths": [
+          620,
+          700
+        ],
+        "pdfWidthSample": 620,
+        "evidenceFile": "agent-eval-readability-review.private.json",
+        "evidenceSha256": "a59a5d8ef54fdbd922703c90c0f356548d9b2444ae71ac230d379fbd9a0ad7a9",
+        "sourceBinding": "Historical review binds the archived pre-normalization SVG bytes; current normalized SVG bindings and pixel-equivalence proof are recorded in svgNormalization."
+      },
+      "recordedAt": "2026-11-06",
+      "authorRenderedArticleSha256": "9be879c9dcd7451b1faa6208567d40be3e6ade0e4b21f64fa3889f2730c1b27c",
+      "finalBytePreparation": "Shared source backlinks appended after image-only author rendering; Archify JSON and reviewed PNG hashes remain unchanged. SVG source hashes were subsequently updated by trailing-whitespace normalization with explicit bindings in svgNormalization.",
+      "svgNormalization": {
+        "performedOn": "2026-11-07",
+        "operation": "Remove ASCII spaces/tabs only at line ends; preserve all other SVG bytes and line endings.",
+        "affectedLines": 86,
+        "removedBytes": 89,
+        "archiveManifestFile": "svg-normalization/archive-manifest.private.json",
+        "archiveManifestSha256": "e2639ca4f1aa0e88a4a66ee51752f5e42dfc702b8d8099a46e8762ee320354b7",
+        "evidenceFile": "svg-normalization/normalization-proof.private.json",
+        "evidenceSha256": "b458f3cf6b1aab47fb2dd3258cb1a6e720885f97adf3678c7646adeb25a804b3",
+        "sourceBindings": [
+          {
+            "path": "knowledge/llm/production/agent-eval-framework-evidence-sequence-v2.svg",
+            "beforeSha256": "8907a51c484b6f568bfc7c56337544ba56a03aa42ba69bd6ffa794b6253afaa5",
+            "afterSha256": "28be50b3e3987ff33ec1816e7da10bdfb3b8e7173a3ee5ef38665d84a34299f3",
+            "originalArchiveFile": "svg-normalization/originals/agent-eval-framework-evidence-sequence-v2.svg"
+          },
+          {
+            "path": "knowledge/llm/production/agent-eval-framework-grading-sequence-v2.svg",
+            "beforeSha256": "64246ae21018a7695c84d0d2fa993b7a6605c15fc11785b7bfc9f60db16ccdb0",
+            "afterSha256": "412dd4f828c71ee43ec82ebf2cf112f2fc71542807a1810f4a9d8ff089c021cc",
+            "originalArchiveFile": "svg-normalization/originals/agent-eval-framework-grading-sequence-v2.svg"
+          },
+          {
+            "path": "knowledge/llm/production/agent-eval-framework-run-sequence-v2.svg",
+            "beforeSha256": "5091a9074b31a410810d5994fbb2b75b43ebea7a161643ad50f0ab8159e4669b",
+            "afterSha256": "27e7a1fb8d49470bf1248f3a697628fcc50e11e45f1dd24b75cb3d53393095ac",
+            "originalArchiveFile": "svg-normalization/originals/agent-eval-framework-run-sequence-v2.svg"
+          }
+        ],
+        "structureComparison": "All DOM attributes, CSS rules and computed text/layout match.",
+        "rasterComparison": "Real Chromium before/after renders and unchanged reviewed PNGs are RGBA pixel-identical in all nine comparisons; zero differing pixels.",
+        "historicalEvidenceBinding": "Prior diagram-fix reports and old source hashes are retained as historical bindings to the archived original SVG bytes. Current normalized SVG bytes are bound by this new proof.",
+        "archifyJsonUnchanged": true,
+        "reviewedPngUnchanged": true
+      }
     }
   ],
   "verificationCompletedOn": "2026-10-30"
