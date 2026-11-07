@@ -8,6 +8,12 @@ export function isDirectExecution(url) {
   catch { return false; }
 }
 
+/**
+ * 目录式内容模块：`{module}/_tree.json` + `{module}/{filePath}/{key}.md`。
+ * soe = 央国企科技岗目标（2026-11-07 接入，站点侧默认关闭，见 front-end-journey 的 TRACKS_PREVIEW）。
+ */
+export const CONTENT_MODULES = ['interview', 'knowledge', 'soe'];
+
 export function safeRelativePath(value) {
   if (value === '.codex/image-resync.txt') return value;
   if (typeof value !== 'string' || !value || value.includes('\\') || isAbsolute(value)
@@ -18,7 +24,7 @@ export function safeRelativePath(value) {
 }
 
 export function leafPath(module, leaf) {
-  if (!['interview', 'knowledge'].includes(module)) throw new Error('不支持的内容模块');
+  if (!CONTENT_MODULES.includes(module)) throw new Error('不支持的内容模块');
   safeRelativePath(leaf.key);
   if (leaf.key.includes('/')) throw new Error('key 必须是单个路径组件');
   safeRelativePath(leaf.filePath);

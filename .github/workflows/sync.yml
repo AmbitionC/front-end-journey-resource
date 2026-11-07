@@ -10,6 +10,7 @@ on:
     paths:
       - 'interview/**'
       - 'knowledge/**'
+      - 'soe/**'
       - 'images/**'
       - 'class/**'
       - '.codex/image-resync.txt'

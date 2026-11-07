@@ -43,8 +43,8 @@ export async function expectedPinnedSync(root,before,after) {
       }
       continue;
     }
-    if(path.startsWith('images/') || /^(interview|knowledge|class)\/.*\.md$/u.test(path)
-        || /^(interview|knowledge|class)\/_tree\.json$/u.test(path)) {
+    if(path.startsWith('images/') || /^(interview|knowledge|soe|class)\/.*\.md$/u.test(path)
+        || /^(interview|knowledge|soe|class)\/_tree\.json$/u.test(path)) {
       if(committed.has(path)) paths.add(path); else counts.deleted++;
     }
   }
