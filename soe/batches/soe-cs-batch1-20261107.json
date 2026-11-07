@@ -32,8 +32,8 @@
           "soe-batch1-source-02"
         ]
       },
-      "bytes": 13009,
-      "sha256": "e922b0742f43ff2553d6fdd5ef9a6fb79ca1d55776e534f3c9a9b9ca944ecef8"
+      "bytes": 10412,
+      "sha256": "0052d407af6f972f90d032fc3095eb93ccbc3e4832ad71fc77b97ec348a02ed5"
     },
     {
       "key": "soe-computer-organization",
@@ -910,11 +910,11 @@
           {
             "key": "soe-bank-tech-exam-overview",
             "path": "soe/bank-tech/soe-bank-tech-exam-overview.md",
-            "bytes": 13009,
+            "bytes": 10412,
             "originalQuestions": 3,
             "imageCount": 0,
             "localLinks": 4,
-            "sha256": "e922b0742f43ff2553d6fdd5ef9a6fb79ca1d55776e534f3c9a9b9ca944ecef8"
+            "sha256": "0052d407af6f972f90d032fc3095eb93ccbc3e4832ad71fc77b97ec348a02ed5"
           },
           {
             "key": "soe-computer-organization",
@@ -1018,8 +1018,8 @@
         {
           "path": "soe/bank-tech/soe-bank-tech-exam-overview.md",
           "originalQuestionsUnchanged": 3,
-          "bytes": 13009,
-          "sha256": "e922b0742f43ff2553d6fdd5ef9a6fb79ca1d55776e534f3c9a9b9ca944ecef8"
+          "bytes": 10412,
+          "sha256": "0052d407af6f972f90d032fc3095eb93ccbc3e4832ad71fc77b97ec348a02ed5"
         },
         {
           "path": "soe/bank-tech/soe-computer-organization.md",
