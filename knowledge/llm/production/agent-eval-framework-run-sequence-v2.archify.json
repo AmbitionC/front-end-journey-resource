@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "① 先恢复，再运行",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "compact-run.html"
+  },
+  "participants": [
+    {
+      "id": "runner",
+      "type": "backend",
+      "label": "评测执行器"
+    },
+    {
+      "id": "agent",
+      "type": "backend",
+      "label": "被测 Agent"
+    },
+    {
+      "id": "tools",
+      "type": "backend",
+      "label": "工具与状态"
+    }
+  ],
+  "messages": [
+    {
+      "id": "restore",
+      "from": "runner",
+      "to": "tools",
+      "y": 160,
+      "label": "恢复初始状态"
+    },
+    {
+      "id": "start",
+      "from": "runner",
+      "to": "agent",
+      "y": 192,
+      "label": "输入任务，启动"
+    },
+    {
+      "id": "call",
+      "from": "agent",
+      "to": "tools",
+      "y": 224,
+      "label": "工具调用"
+    },
+    {
+      "id": "result",
+      "from": "tools",
+      "to": "agent",
+      "y": 256,
+      "label": "结果返回",
+      "variant": "return"
+    }
+  ]
+}

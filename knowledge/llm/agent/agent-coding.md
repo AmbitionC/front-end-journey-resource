@@ -118,6 +118,7 @@ Trace 记录搜索、读取、编辑、命令、退出码、diff 统计和验证
 - [阿里云 Agent 开发秋招一面](../../../interview/alibaba/ai/alibaba-ai-1.md)
 - [快手 AI 全栈一二面：Harness、沙箱与需求交付](../../../interview/kuaishou/ai/kuaishou-ai-8.md)
 - [蚂蚁 Agent 一二面：Code Agent 与应用开发](../../../interview/antfin/ai/antfin-ai-2.md)
+- [百度搜索框架 Agent 日常实习一二面：上下文、工程选型与评测](../../../interview/baidu/ai/baidu-ai-14.md)
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../../interview/bytedance/base/bytedance-base-48.md)
 - [OPPO IT 开发一面：ReAct、MCP 与智能问数](../../../interview/oppo/ai/oppo-ai-3.md)
 - [字节全栈：多智能体导购、客户端与系统评测](../../../interview/bytedance/base/bytedance-base-43.md)
