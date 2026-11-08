@@ -12,8 +12,8 @@ export function leaves(nodes) {
 export async function validateTree(root) {
   const errors = [], warnings = [], trees = {};
   for (const module of CONTENT_MODULES) {
-    // soe is a newer optional module; older checkouts and fixtures may not have it yet.
-    if (module === 'soe') { try { await lstat(resolve(root, module)); } catch (error) { if (error.code === 'ENOENT') continue; throw error; } }
+    // soe / civil are newer optional modules; older checkouts and fixtures may not have them yet.
+    if (module === 'soe' || module === 'civil') { try { await lstat(resolve(root, module)); } catch (error) { if (error.code === 'ENOENT') continue; throw error; } }
     try {
       const tree = JSON.parse((await readBounded(root, `${module}/_tree.json`, module)).toString());
       const ls = leaves(tree), expected = new Set(), seen = new Set();

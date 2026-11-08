@@ -38,9 +38,9 @@ export async function recoveryBaseline(root,before,after,{read=githubRead}={}) {
 export async function buildSyncBatches(root,before,after) {
   if(!SHA.test(before??'') || !SHA.test(after??''))throw new Error('同步范围必须是完整提交');
   const expected=await expectedPinnedSync(root,before,after);
-  const deleted=spawnSync('git',['diff','--name-only','--diff-filter=D','-z',before,after,'--','images','interview','knowledge','soe','class'],{cwd:root,encoding:'utf8'});
+  const deleted=spawnSync('git',['diff','--name-only','--diff-filter=D','-z',before,after,'--','images','interview','knowledge','soe','civil','class'],{cwd:root,encoding:'utf8'});
   if(deleted.status!==0)throw new Error('无法读取真实删除范围');
-  const removed=deleted.stdout.split('\0').filter(Boolean).filter(p=>p.startsWith('images/') || /^(interview|knowledge|soe|class)\/.*\.md$/u.test(p) || /^(interview|knowledge|soe|class)\/_tree\.json$/u.test(p));
+  const removed=deleted.stdout.split('\0').filter(Boolean).filter(p=>p.startsWith('images/') || /^(interview|knowledge|soe|civil|class)\/.*\.md$/u.test(p) || /^(interview|knowledge|soe|civil|class)\/_tree\.json$/u.test(p));
   for(const p of removed)safeRelativePath(p);
   const byPath=new Map(expected.inputs.map(x=>[x.path,x])),queued=new Set(),groups=[];
   const resync=byPath.get('.codex/image-resync.txt');

@@ -5,7 +5,7 @@ import { safeRelativePath } from './resource-paths.mjs';
 
 const MAX_BLOB_BYTES = 64 * 1024 * 1024;
 const MAX_BATCH_BYTES = 64 * 1024 * 1024;
-const PUBLIC_PATHS = ['interview', 'knowledge', 'soe', 'images', 'class', '.codex/image-resync.txt'];
+const PUBLIC_PATHS = ['interview', 'knowledge', 'soe', 'civil', 'images', 'class', '.codex/image-resync.txt'];
 
 // One reader belongs to one invocation and one real repository. Only immutable
 // commit/blob data is memoized; callers never put working files or decisions here.

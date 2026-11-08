@@ -11,6 +11,7 @@ on:
       - 'interview/**'
       - 'knowledge/**'
       - 'soe/**'
+      - 'civil/**'
       - 'images/**'
       - 'class/**'
       - '.codex/image-resync.txt'

@@ -1,0 +1,32 @@
+[
+  {
+    "label": "考公选岗指南",
+    "key": "civil-guokao",
+    "children": [
+      {
+        "label": "2027 国考里的计算机类岗位：在哪、招多少、门槛卡在哪",
+        "key": "civil-guokao-2027-tech-positions",
+        "isLeaf": true,
+        "filePath": "guokao",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-08",
+        "quickRead": {
+          "text": "按官方职位表逐行统计：技术类职位 4754 个、招 8581 人，七成在税务系统、多数在区县；应届身份比政治面貌更决定可报范围。"
+        }
+      },
+      {
+        "label": "国考报考条件与时间线逐条读（2027 年度）",
+        "key": "civil-guokao-2027-rules",
+        "isLeaf": true,
+        "filePath": "guokao",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-08",
+        "quickRead": {
+          "text": "公告统一条件、职位表各列的读法、笔试科目与成绩合成、调剂规则，以及一张报名自查表。"
+        }
+      }
+    ]
+  }
+]
