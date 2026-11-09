@@ -146,6 +146,36 @@
         "quickRead": {
           "text": "区分安全目标、身份鉴别与访问控制，为给定威胁匹配有条件的密码与应用防御措施。"
         }
+      },
+      {
+        "label": "计算机专业综合练习",
+        "key": "soe-cs-practice",
+        "children": [
+          {
+            "label": "计算机专业综合自测 A 卷",
+            "key": "soe-cs-self-test-a",
+            "isLeaf": true,
+            "filePath": "practice",
+            "heat": 0,
+            "currRank": 0,
+            "updatedAt": "2026-11-09",
+            "quickRead": {
+              "text": "30道原创模拟题：九个计算机基础模块25题，金融科技与分布式常识5题，逐题附答案、解析和复习链接。"
+            }
+          },
+          {
+            "label": "计算机专业综合自测 B 卷",
+            "key": "soe-cs-self-test-b",
+            "isLeaf": true,
+            "filePath": "practice",
+            "heat": 0,
+            "currRank": 0,
+            "updatedAt": "2026-11-09",
+            "quickRead": {
+              "text": "30道原创模拟题：九个计算机基础模块25题，金融科技与分布式常识5题，逐题附答案、解析和复习链接。"
+            }
+          }
+        ]
       }
     ]
   }

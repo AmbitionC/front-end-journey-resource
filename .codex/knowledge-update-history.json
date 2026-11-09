@@ -6583,6 +6583,32 @@
       "status": "pending",
       "reason": "Local article, diagram and source review complete; user requested uncommitted local delivery. Not published and not counted as new published knowledge.",
       "sourceVerification": "verified"
+    },
+    {
+      "module": "soe",
+      "key": "soe-cs-self-test-a",
+      "label": "计算机专业综合自测 A 卷",
+      "filePath": "practice",
+      "action": "created",
+      "batch": "soe-cs-batch2-20261109",
+      "recordedAt": "2026-11-09",
+      "status": "pending",
+      "reason": "Second-part original paper completed locally; no commit, push, PR or publication in this run. Background-only article links explicitly disclosed; all 26 computational questions across both papers independently recomputed.",
+      "sourceVerification": "verified-primary-content",
+      "originalQuestions": 30
+    },
+    {
+      "module": "soe",
+      "key": "soe-cs-self-test-b",
+      "label": "计算机专业综合自测 B 卷",
+      "filePath": "practice",
+      "action": "created",
+      "batch": "soe-cs-batch2-20261109",
+      "recordedAt": "2026-11-09",
+      "status": "pending",
+      "reason": "Second-part original paper completed locally; no commit, push, PR or publication in this run. Background-only article links explicitly disclosed; all 26 computational questions across both papers independently recomputed.",
+      "sourceVerification": "verified-primary-content",
+      "originalQuestions": 30
     }
   ],
   "deliveryEvidence": {
