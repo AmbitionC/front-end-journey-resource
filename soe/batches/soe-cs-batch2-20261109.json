@@ -25,27 +25,30 @@
       "outputPath": "soe/grid/soe-grid-tech-exam-overview.md",
       "action": "create",
       "reason": "用户精确指定第二批第一部分；已有概念按语义去重链接复用，专业篇补原创选择题考法。",
-      "learningOutcome": "读者能按电网公司、招聘年度、批次及岗位核对考试安排，区分已公开字段与仍待岗位大纲或通知核实的字段。",
+      "learningOutcome": "读者能按电网公司、招聘年度、批次及岗位核对安排，查阅国网2027计算机类与通信类完整大纲方向和知识点，区分已公开范围与仍待岗位通知核实的作答规则。",
       "status": "ready-for-user-review-with-disclosed-source-gaps",
       "sourceReview": {
         "status": "verified-with-explicit-gaps",
         "sourceIds": [
-          "soe-batch2-grid-sgcc-2026-batch3",
+          "soe-batch2-grid-sgcc-2027",
+          "soe-batch2-grid-sgcc-computer-2027",
+          "soe-batch2-grid-sgcc-telecom-2027",
           "soe-batch2-grid-csg-2026"
-        ]
+        ],
+        "verifiedAt": "2026-11-09",
+        "refreshReason": "按2027年度官方公告及两类2027版大纲更新国家电网部分；公告要点来自用户提供的摘要，大纲全文逐点核对；南方电网章节保持原样。"
       },
-      "bytes": 8435,
-      "sha256": "4cf094070d85496f9708945c198f00a5bae500b6b026230d48aba2096abb2f48",
+      "bytes": 19108,
+      "sha256": "46ca717f0ce09413f0f5126f000cd50089e47b6a21dfb248c0b5d6eb880fef01",
       "originalQuestions": 0,
       "unpublishedFields": {
         "sgcc": [
-          "信通岗位对应科目",
-          "专业细目",
+          "本人岗位适用科目（需岗位公告或笔试通知确认）",
           "线上线下及机考纸笔形式",
           "题型",
           "题量",
           "答题时长",
-          "各模块占比",
+          "各专业方向在专业知识80%内的细分占比",
           "每题分值",
           "满分",
           "错漏选规则",
@@ -65,26 +68,35 @@
       },
       "omittedTopics": [
         {
-          "topic": "国网计算机类、通信类的具体知识点及20%/80%等比例",
-          "reason": "本次实际读取的2026第三批总公告未公开；不拿机构资料或未读取附件补证"
-        },
-        {
           "topic": "南网信息通信类详细考点及细分权重",
           "reason": "官方2026大纲附件访问403，未成功读取，停止后不绕过"
         },
         {
-          "topic": "2027年度电网考情更新",
-          "reason": "正文固定于两份已经完整核实的2026招聘材料；2027公告仅作研究发现，没有拿不完整读取的材料更新事实"
-        },
-        {
-          "topic": "行测、银行综合、企业清单与网申时间表",
-          "reason": "用户排除范围"
+          "topic": "行测专项讲解、银行综合、企业清单与网申时间表",
+          "reason": "只列大纲公共模块构成及国网四批次公告、笔试初定时间，不扩写专项教程或其他企业网申安排。"
         },
         {
           "topic": "原创模拟题和图解",
           "reason": "考情稿无需模拟题；字段对照表已足够，没有需要图解的高认知负荷关系"
         }
-      ]
+      ],
+      "coverageFollowUp": {
+        "status": "not-audited-or-edited-in-other-articles",
+        "topics": [
+          "备份和恢复",
+          "数据库应用系统设计与开发",
+          "数据库安全",
+          "无线网络与移动网络",
+          "操作系统安全与保护",
+          "并行计算与异构计算",
+          "软件交付与维护"
+        ],
+        "missingDedicatedEntries": [
+          "信息新技术（人工智能、物联网、云计算、大数据）",
+          "通信类四个专业方向"
+        ],
+        "note": "在本文提示补核，不宣称现有文章已覆盖或确实缺失；本次没有修改其他文章。"
+      }
     },
     {
       "key": "soe-telecom-tech-exam-overview",
@@ -494,32 +506,119 @@
     "noTrainingProviderOrForumUsedAsSource": true,
     "sources": [
       {
-        "id": "soe-batch2-grid-sgcc-2026-batch3",
-        "title": "国家电网有限公司2026年第三批招聘高校毕业生公告",
-        "url": "http://www.sasac.gov.cn/n2588035/n2588325/c35416969/content.html",
+        "id": "soe-batch2-grid-sgcc-2027",
+        "title": "国家电网有限公司2027年招聘高校毕业生公告",
+        "url": "https://zhaopin.sgcc.com.cn/sgcchr/static/unitPart.html?bullet_id=dcefb56d04714dc4b488d0a7a204bf76",
         "articles": [
           "soe-grid-tech-exam-overview"
         ],
         "verifiedAt": "2026-11-09",
-        "status": "verified-primary-content",
+        "status": "verified-user-supplied-official-summary",
         "primary": true,
-        "publisher": "国务院国资委网站",
-        "attributedAuthor": "国家电网有限公司",
-        "publishedAt": "2026-04-29",
-        "recruitmentCycle": "2026年第三批高校毕业生招聘",
+        "publisher": "国家电网有限公司",
+        "publishedAt": "2026-10-17",
+        "recruitmentCycle": "2027年高校毕业生招聘",
         "access": {
           "date": "2026-11-09",
-          "method": "Lightpanda CLI：Markdown 全文，networkidle，8秒有界等待，15秒硬期限",
-          "httpStatus": 200,
-          "bodyRead": true,
+          "method": "用户提供的官方公告要点摘要；本次Lightpanda读取指定公告页返回HTTP412，未取得正文，未重试或绕过访问限制。",
+          "httpStatus": 412,
+          "bodyRead": false,
+          "summaryRead": true,
+          "suppliedSummary": {
+            "name": "summary.md",
+            "bytes": 8797,
+            "sha256": "0c14d8957dddfaf772594b522b833e3c5385b53b75774ff3b7365137334793bb"
+          },
           "searchExcerptUsedAsEvidence": false
         },
         "usedClaims": [
-          "按批次组织统一笔试",
-          "范围指向各科目考试大纲，正文未逐项列信通岗位科目",
-          "多人收到多个单位通知时只能选择一家参加，成绩在各单位之间通用",
-          "公告初定考试时间2026-05-17，调整以平台考试公告为准",
-          "各单位该批招聘公告发布时间2026-04-27，与国资委刊载日期2026-04-29不同"
+          "2026-10-17发布，面向2027年高校毕业生招聘",
+          "四批次：国调网调及北京电力交易中心提前批、第一批、第二批、第三批",
+          "公告时间分别为2026-10-17、2026年11月中旬、2027年3月前、2027年5月前",
+          "笔试初定2026-10-31、2026-12-06、2027年3月、2027年5月，以考试公告为准",
+          "按批次统一笔试，范围见各科目考试大纲",
+          "收到多家单位笔试通知时只能选择一家参加，成绩在各单位之间通用"
+        ]
+      },
+      {
+        "id": "soe-batch2-grid-sgcc-computer-2027",
+        "title": "考试大纲-计算机类（2027版）",
+        "url": "https://zhaopin.sgcc.com.cn/sgcchr/static/unitPart.html?bullet_id=dcefb56d04714dc4b488d0a7a204bf76",
+        "attachmentName": "考试大纲-计算机类（2027版）",
+        "documentTitle": "国家电网有限公司高校毕业生招聘考试大纲（计算机类专业2027版）",
+        "articles": [
+          "soe-grid-tech-exam-overview"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-user-supplied-official-full-text",
+        "primary": true,
+        "publisher": "国家电网有限公司",
+        "recruitmentCycle": "2027年高校毕业生招聘",
+        "access": {
+          "date": "2026-11-09",
+          "method": "读取用户提供的官方PDF全文抽取，按专业方向和序号逐点核对；URL指向公告页，以附件名称定位，不虚构附件直链。",
+          "bodyRead": true,
+          "pages": 3,
+          "suppliedText": {
+            "name": "computer.txt",
+            "bytes": 2937,
+            "sha256": "e31ca6f094efa0152ab784e9f9c0f4aa476aa5e6784c2940ed4e07fb0472c01c"
+          },
+          "suppliedPdf": {
+            "name": "computer.pdf",
+            "bytes": 840297,
+            "sha256": "8446d58940ee274cd675f5b389ce9dee9d65d3bb9ad92df11a1b2e966ea00bb4"
+          },
+          "searchExcerptUsedAsEvidence": false
+        },
+        "usedClaims": [
+          "公共与行业知识20%、专业知识80%，未给出专业方向内部细分占比",
+          "公共部分含一般能力4项、企业文化、电力与能源战略、形势与政策",
+          "大纲明确指向公共与行业知识题库；本文只说明存在与用途，不摘录题目",
+          "题型、题量、作答时长、每题分值、满分在所引大纲中未公开",
+          "7个专业方向、48个知识点，按原方向与序号完整列出",
+          "信息新技术包括人工智能、物联网、云计算、大数据",
+          "信息安全分散在数据库系统、计算机网络、操作系统等方向，非单独专业方向"
+        ]
+      },
+      {
+        "id": "soe-batch2-grid-sgcc-telecom-2027",
+        "title": "考试大纲-通信类（2027版）",
+        "url": "https://zhaopin.sgcc.com.cn/sgcchr/static/unitPart.html?bullet_id=dcefb56d04714dc4b488d0a7a204bf76",
+        "attachmentName": "考试大纲-通信类（2027版）",
+        "documentTitle": "国家电网有限公司高校毕业生招聘考试大纲（通信类专业2027版）",
+        "articles": [
+          "soe-grid-tech-exam-overview"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-user-supplied-official-full-text",
+        "primary": true,
+        "publisher": "国家电网有限公司",
+        "recruitmentCycle": "2027年高校毕业生招聘",
+        "access": {
+          "date": "2026-11-09",
+          "method": "读取用户提供的官方PDF全文抽取，按专业方向和序号逐点核对；URL指向公告页，以附件名称定位，不虚构附件直链。",
+          "bodyRead": true,
+          "pages": 3,
+          "suppliedText": {
+            "name": "telecom.txt",
+            "bytes": 2715,
+            "sha256": "8e2a00f5c0e04a901dc26bec2bfb2d7a8f9130ba950615a2a14b367d5e92a264"
+          },
+          "suppliedPdf": {
+            "name": "telecom.pdf",
+            "bytes": 860025,
+            "sha256": "cd0f1b63cec564dde8bb8646e4f7ffe48244255d0210a3f73eae088881e0a852"
+          },
+          "searchExcerptUsedAsEvidence": false
+        },
+        "usedClaims": [
+          "公共与行业知识20%、专业知识80%，未给出专业方向内部细分占比",
+          "公共部分含一般能力4项、企业文化、电力与能源战略、形势与政策",
+          "大纲明确指向公共与行业知识题库；本文只说明存在与用途，不摘录题目",
+          "题型、题量、作答时长、每题分值、满分在所引大纲中未公开",
+          "4个专业方向、32个知识点，按原方向与序号完整列出",
+          "第15点保留原文EOPN，并注明疑为EPON"
         ]
       },
       {
@@ -2095,8 +2194,8 @@
     ],
     "accessBoundaryNotes": [
       {
-        "url": "https://zhaopin.sgcc.com.cn/",
-        "result": "Lightpanda HTTP400且正文为空，未声称读到大纲，未绕过；改用国资委独立刊载的国家电网2026第三批公告正文作来源"
+        "url": "https://zhaopin.sgcc.com.cn/sgcchr/static/unitPart.html?bullet_id=dcefb56d04714dc4b488d0a7a204bf76",
+        "result": "2026-11-09本次Lightpanda读取公告页返回HTTP412，未取得正文；未重试或切换浏览器绕过。公告要点采用用户已提供的摘要，两类大纲采用用户已提供的官方PDF全文抽取，分别记录证据。"
       },
       {
         "url": "https://www.chinatelecom.com.cn/ct/zp/",
@@ -2153,12 +2252,13 @@
         "key": "soe-grid-tech-exam-overview",
         "verifiableFields": {
           "sgcc": [
-            "招聘年度及批次",
-            "国资委刊载日期和文内各单位公告日期",
-            "统一笔试",
-            "范围以各科目大纲为准",
-            "成绩使用规则",
-            "初定考试日期及调整限定"
+            "2027招聘年度及2026-10-17公告日期",
+            "四批次公告时间与笔试初定时间，以考试公告为准",
+            "统一笔试及成绩通用规则",
+            "两类大纲20%/80%模块占比",
+            "公共与行业知识构成及官方题库指引",
+            "计算机类7方向48点",
+            "通信类4方向32点及EOPN原文"
           ],
           "csg": [
             "公告日期及招聘年度",
@@ -2171,13 +2271,12 @@
         },
         "unpublishedFields": {
           "sgcc": [
-            "信通岗位对应科目",
-            "专业细目",
+            "本人岗位适用科目（需岗位公告或笔试通知确认）",
             "线上线下及机考纸笔形式",
             "题型",
             "题量",
             "答题时长",
-            "各模块占比",
+            "各专业方向在专业知识80%内的细分占比",
             "每题分值",
             "满分",
             "错漏选规则",
@@ -2197,20 +2296,12 @@
         },
         "omittedTopics": [
           {
-            "topic": "国网计算机类、通信类的具体知识点及20%/80%等比例",
-            "reason": "本次实际读取的2026第三批总公告未公开；不拿机构资料或未读取附件补证"
-          },
-          {
             "topic": "南网信息通信类详细考点及细分权重",
             "reason": "官方2026大纲附件访问403，未成功读取，停止后不绕过"
           },
           {
-            "topic": "2027年度电网考情更新",
-            "reason": "正文固定于两份已经完整核实的2026招聘材料；2027公告仅作研究发现，没有拿不完整读取的材料更新事实"
-          },
-          {
-            "topic": "行测、银行综合、企业清单与网申时间表",
-            "reason": "用户排除范围"
+            "topic": "行测专项讲解、银行综合、企业清单与网申时间表",
+            "reason": "只列大纲公共模块构成及国网四批次公告、笔试初定时间，不扩写专项教程或其他企业网申安排。"
           },
           {
             "topic": "原创模拟题和图解",
@@ -2336,10 +2427,66 @@
   "evidenceMap": [
     {
       "article": "soe-grid-tech-exam-overview",
-      "claim": "国网本文仅适用于2026第三批，统一笔试范围指向科目大纲，信通细目未公开",
+      "claim": "国家电网部分仅依据2027年招聘公告及计算机类、通信类2027版大纲；公告2026-10-17发布。",
       "confidence": "high",
       "sourceIds": [
-        "soe-batch2-grid-sgcc-2026-batch3"
+        "soe-batch2-grid-sgcc-2027",
+        "soe-batch2-grid-sgcc-computer-2027",
+        "soe-batch2-grid-sgcc-telecom-2027"
+      ]
+    },
+    {
+      "article": "soe-grid-tech-exam-overview",
+      "claim": "两类均为公共与行业知识20%、专业知识80%；计算机类7方向48点，通信类4方向32点，专业方向细分占比未公开。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-grid-sgcc-computer-2027",
+        "soe-batch2-grid-sgcc-telecom-2027"
+      ]
+    },
+    {
+      "article": "soe-grid-tech-exam-overview",
+      "claim": "公共部分含一般能力4项、企业文化、电力与能源战略、形势与政策；两类大纲指向公共与行业知识题库，不摘录题目。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-grid-sgcc-computer-2027",
+        "soe-batch2-grid-sgcc-telecom-2027"
+      ]
+    },
+    {
+      "article": "soe-grid-tech-exam-overview",
+      "claim": "四批公告时间为2026-10-17、2026年11月中旬、2027年3月前、2027年5月前；笔试初定2026-10-31、2026-12-06、2027年3月、2027年5月，以考试公告为准。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-grid-sgcc-2027"
+      ]
+    },
+    {
+      "article": "soe-grid-tech-exam-overview",
+      "claim": "题型、题量、时长、每题分值、满分仍标该来源未公开，不推导固定试卷结构。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-grid-sgcc-2027",
+        "soe-batch2-grid-sgcc-computer-2027",
+        "soe-batch2-grid-sgcc-telecom-2027"
+      ]
+    },
+    {
+      "article": "soe-grid-tech-exam-overview",
+      "claim": "通信类第15点保留官方EOPN原文，疑为EPON属于明确标注的编辑提示。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-grid-sgcc-telecom-2027"
+      ]
+    },
+    {
+      "article": "soe-grid-tech-exam-overview",
+      "claim": "站内入口按计算机类方向映射，补数据结构链接；安全为跨方向补充；信息新技术及通信类专业方向缺专门入口；7项覆盖仅待补核，不改其他文章。",
+      "confidence": "high",
+      "kind": "基于大纲的站内映射与覆盖边界",
+      "sourceIds": [
+        "soe-batch2-grid-sgcc-computer-2027",
+        "soe-batch2-grid-sgcc-telecom-2027"
       ]
     },
     {
@@ -2356,7 +2503,7 @@
       "confidence": "high",
       "kind": "阅读方法及来源边界",
       "sourceIds": [
-        "soe-batch2-grid-sgcc-2026-batch3",
+        "soe-batch2-grid-sgcc-2027",
         "soe-batch2-grid-csg-2026"
       ]
     },
@@ -3474,16 +3621,17 @@
           {
             "key": "soe-grid-tech-exam-overview",
             "path": "soe/grid/soe-grid-tech-exam-overview.md",
-            "bytes": 8435,
-            "sha256": "4cf094070d85496f9708945c198f00a5bae500b6b026230d48aba2096abb2f48",
+            "bytes": 19108,
+            "sha256": "46ca717f0ce09413f0f5126f000cd50089e47b6a21dfb248c0b5d6eb880fef01",
             "originalQuestions": 0,
             "imageCount": 0,
             "localLinks": [
-              "soe/bank-tech/soe-computer-organization.md",
-              "soe/bank-tech/soe-os-mcq.md",
+              "soe/bank-tech/soe-data-structures-mcq.md",
               "soe/bank-tech/soe-database-theory.md",
-              "soe/bank-tech/soe-software-engineering-mcq.md",
               "soe/bank-tech/soe-network-mcq.md",
+              "soe/bank-tech/soe-os-mcq.md",
+              "soe/bank-tech/soe-computer-organization.md",
+              "soe/bank-tech/soe-software-engineering-mcq.md",
               "soe/bank-tech/soe-information-security-mcq.md",
               "knowledge/network/tcpIp/tcp-udp.md",
               "knowledge/network/tcpIp/tcp-handshake.md"
@@ -3894,7 +4042,7 @@
     {
       "type": "declared-source-limit",
       "key": "soe-grid-tech-exam-overview",
-      "details": "信通岗位的具体大纲细目未从所引正文核实；南网2026附件403后停止，不以机构材料补齐。"
+      "details": "国网2027两类大纲及20%/80%范围已据用户提供的官方全文核对；题型、题量、时长、每题分值、满分未公开。公告页本次HTTP412，公告安排据用户摘要；南网2026附件403后的边界保持不变。"
     },
     {
       "type": "declared-source-limit",
@@ -3921,7 +4069,7 @@
     "percentage": "100.00",
     "unresolved": []
   },
-  "lastReviewedAt": "2026-11-09T11:01:13.335Z",
+  "lastReviewedAt": "2026-11-09T14:31:41Z",
   "defaultBranchInspection": {
     "name": "master",
     "verifiedRemoteTip": "96658617d065dde5efc1a9221d7759fda3545ff7",
@@ -4103,8 +4251,8 @@
       },
       {
         "path": "soe/grid/soe-grid-tech-exam-overview.md",
-        "bytes": 8435,
-        "sha256": "4cf094070d85496f9708945c198f00a5bae500b6b026230d48aba2096abb2f48"
+        "bytes": 19108,
+        "sha256": "46ca717f0ce09413f0f5126f000cd50089e47b6a21dfb248c0b5d6eb880fef01"
       },
       {
         "path": "soe/telecom/soe-telecom-tech-exam-overview.md",
@@ -4132,13 +4280,13 @@
         "sha256": "a53795ef8c2a4fd713f27b8d57738a9e94546cc88205c90f8090b16484dc8969"
       }
     ],
-    "treeSha256": "32fa2f5dc72024915bbed265c7aef9a258d753ae541254e4cc7ad405d1ef63fd",
+    "treeSha256": "6671fd74525ea2ef3af10e254fa8aac609c968cfa0b1b4cbb123ac97f2b15b63",
     "manifestSelfHashExcluded": true,
     "modifiedFingerprints": [
       {
         "path": "soe/_tree.json",
-        "bytes": 6448,
-        "sha256": "32fa2f5dc72024915bbed265c7aef9a258d753ae541254e4cc7ad405d1ef63fd"
+        "bytes": 6475,
+        "sha256": "6671fd74525ea2ef3af10e254fa8aac609c968cfa0b1b4cbb123ac97f2b15b63"
       },
       {
         "path": ".codex/knowledge-update-history.json",
