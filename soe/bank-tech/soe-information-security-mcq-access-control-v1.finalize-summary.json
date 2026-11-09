@@ -6,14 +6,14 @@
   "type": "workflow",
   "quality": "showcase",
   "specification": {
-    "path": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-information-security-mcq-access-control-v1.archify.json",
+    "path": "soe/bank-tech/soe-information-security-mcq-access-control-v1.archify.json",
     "sha256": "fcd3221720d56411c550dc363b06b95d9c84f775bf7d4ef5fed96d2cfb968af9",
     "bytes": 2998
   },
   "artifact": {
-    "path": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
-    "sha256": "f89e49c3e81cdad272211f75d45d0544d99e625dcd0fff1524075639bb7d9a8f",
-    "bytes": 812903
+    "path": "soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
+    "sha256": "d0467686389641a1cf1cdc85ac2ed343543c8c8143c1be076d650145d1e124b8",
+    "bytes": 812813
   },
   "gates": {
     "validate": "pass",
@@ -28,9 +28,9 @@
     "truncated": false
   },
   "evidence": {
-    "receipt": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-information-security-mcq-access-control-v1.finalize.json",
-    "summaryReceipt": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-information-security-mcq-access-control-v1.finalize-summary.json",
-    "browserCheckReceipt": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-information-security-mcq-access-control-v1.browser-check.json"
+    "receipt": "soe/bank-tech/soe-information-security-mcq-access-control-v1.finalize.json",
+    "summaryReceipt": "soe/bank-tech/soe-information-security-mcq-access-control-v1.finalize-summary.json",
+    "browserCheckReceipt": "soe/bank-tech/soe-information-security-mcq-access-control-v1.browser-check.json"
   },
   "update": {
     "status": "current",
@@ -47,5 +47,23 @@
   "browserCheck": {
     "requested": true,
     "ran": true
+  },
+  "publicationCopy": {
+    "kind": "portable-sanitized-copy",
+    "pathBase": "repository-root",
+    "originalReceipt": {
+      "sha256": "b6b2f3fee1a788f06b7a57d3602559d4fc0a2d2dd23988baffe0fc08224e6d1a",
+      "bytes": 1716,
+      "storage": "private-out-of-repository"
+    },
+    "originalArtifact": {
+      "sha256": "f89e49c3e81cdad272211f75d45d0544d99e625dcd0fff1524075639bb7d9a8f",
+      "bytes": 812903
+    },
+    "changes": [
+      "Local paths replaced with repository-relative paths or executable names.",
+      "HTML artifact fingerprints refreshed after removing trailing whitespace from blank CSS lines."
+    ],
+    "gateEvidence": "Recorded gate results belong to the original run and originalArtifact; no Archify or browser rerun is claimed."
   }
 }

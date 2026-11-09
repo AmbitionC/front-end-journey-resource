@@ -6,14 +6,14 @@
   "type": "workflow",
   "quality": "showcase",
   "specification": {
-    "path": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-software-engineering-mcq-v-model-v1.archify.json",
+    "path": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.archify.json",
     "sha256": "501972c29980c054d32f1dbdb5ab8d4ca45a972c23e8bd2b3328d28f0ca3567e",
     "bytes": 4051
   },
   "artifact": {
-    "path": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-software-engineering-mcq-v-model-v1.html",
-    "sha256": "bae721a5b941c0bdefe3a9f9cdaf85f78df2fd146d944131df9906e632d31ea6",
-    "bytes": 816843
+    "path": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.html",
+    "sha256": "97eb380e29f5f033eef226fa131f6b876aab75d6bf005dc396769b205f8ad9c4",
+    "bytes": 816753
   },
   "gates": {
     "validate": "pass",
@@ -28,9 +28,9 @@
     "truncated": false
   },
   "evidence": {
-    "receipt": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-software-engineering-mcq-v-model-v1.finalize.json",
-    "summaryReceipt": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-software-engineering-mcq-v-model-v1.finalize-summary.json",
-    "browserCheckReceipt": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-software-engineering-mcq-v-model-v1.browser-check.json"
+    "receipt": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.finalize.json",
+    "summaryReceipt": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.finalize-summary.json",
+    "browserCheckReceipt": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.browser-check.json"
   },
   "update": {
     "status": "current",
@@ -47,5 +47,23 @@
   "browserCheck": {
     "requested": true,
     "ran": true
+  },
+  "publicationCopy": {
+    "kind": "portable-sanitized-copy",
+    "pathBase": "repository-root",
+    "originalReceipt": {
+      "sha256": "d5d8f53410b1c39a81032bb49d7ab5e9ec1ce49aec53181ce51755822bf3c8a9",
+      "bytes": 1678,
+      "storage": "private-out-of-repository"
+    },
+    "originalArtifact": {
+      "sha256": "bae721a5b941c0bdefe3a9f9cdaf85f78df2fd146d944131df9906e632d31ea6",
+      "bytes": 816843
+    },
+    "changes": [
+      "Local paths replaced with repository-relative paths or executable names.",
+      "HTML artifact fingerprints refreshed after removing trailing whitespace from blank CSS lines."
+    ],
+    "gateEvidence": "Recorded gate results belong to the original run and originalArtifact; no Archify or browser rerun is claimed."
   }
 }

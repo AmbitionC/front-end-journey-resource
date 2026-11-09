@@ -4,14 +4,32 @@
   "status": "current",
   "command": "deliver",
   "type": "workflow",
-  "input": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-information-security-mcq-access-control-v1.archify.json",
-  "output": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
+  "input": "soe/bank-tech/soe-information-security-mcq-access-control-v1.archify.json",
+  "output": "soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
   "specification": {
     "sha256": "fcd3221720d56411c550dc363b06b95d9c84f775bf7d4ef5fed96d2cfb968af9",
     "bytes": 2998
   },
   "artifact": {
-    "sha256": "f89e49c3e81cdad272211f75d45d0544d99e625dcd0fff1524075639bb7d9a8f",
-    "bytes": 812903
+    "sha256": "d0467686389641a1cf1cdc85ac2ed343543c8c8143c1be076d650145d1e124b8",
+    "bytes": 812813
+  },
+  "publicationCopy": {
+    "kind": "portable-sanitized-copy",
+    "pathBase": "repository-root",
+    "originalReceipt": {
+      "sha256": "5807665a369fe7a51c13468669db4944e2e2eeb6e2f04b16cb43e1a589dbae19",
+      "bytes": 661,
+      "storage": "private-out-of-repository"
+    },
+    "originalArtifact": {
+      "sha256": "f89e49c3e81cdad272211f75d45d0544d99e625dcd0fff1524075639bb7d9a8f",
+      "bytes": 812903
+    },
+    "changes": [
+      "Local paths replaced with repository-relative paths or executable names.",
+      "HTML artifact fingerprints refreshed after removing trailing whitespace from blank CSS lines."
+    ],
+    "gateEvidence": "Recorded gate results belong to the original run and originalArtifact; no Archify or browser rerun is claimed."
   }
 }

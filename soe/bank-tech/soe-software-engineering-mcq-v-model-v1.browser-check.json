@@ -8,9 +8,9 @@
   "provenance": "current",
   "deliveryReceiptId": "68847f7f-254a-4c9f-a9b0-7411ae686dbf",
   "artifact": {
-    "path": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-software-engineering-mcq-v-model-v1.html",
-    "sha256": "bae721a5b941c0bdefe3a9f9cdaf85f78df2fd146d944131df9906e632d31ea6",
-    "bytes": 816843
+    "path": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.html",
+    "sha256": "97eb380e29f5f033eef226fa131f6b876aab75d6bf005dc396769b205f8ad9c4",
+    "bytes": 816753
   },
   "state": {
     "detail": "read",
@@ -18,7 +18,7 @@
   },
   "chrome": {
     "status": "available",
-    "executable": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+    "executable": "Google Chrome"
   },
   "diagnostics": [],
   "containment": {
@@ -1449,5 +1449,23 @@
   "sidecars": {
     "receipt": "soe-software-engineering-mcq-v-model-v1.browser-check.json",
     "files": []
+  },
+  "publicationCopy": {
+    "kind": "portable-sanitized-copy",
+    "pathBase": "repository-root",
+    "originalReceipt": {
+      "sha256": "d9dffb2a6dd632d656d2b0a2213f2b0dbe7990994d7a84f592ce00a21c3d3ab6",
+      "bytes": 40232,
+      "storage": "private-out-of-repository"
+    },
+    "originalArtifact": {
+      "sha256": "bae721a5b941c0bdefe3a9f9cdaf85f78df2fd146d944131df9906e632d31ea6",
+      "bytes": 816843
+    },
+    "changes": [
+      "Local paths replaced with repository-relative paths or executable names.",
+      "HTML artifact fingerprints refreshed after removing trailing whitespace from blank CSS lines."
+    ],
+    "gateEvidence": "Recorded gate results belong to the original run and originalArtifact; no Archify or browser rerun is claimed."
   }
 }

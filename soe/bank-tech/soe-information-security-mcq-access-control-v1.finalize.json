@@ -7,14 +7,14 @@
   "quality": "showcase",
   "startedAt": "2026-11-09T10:25:31.263Z",
   "specification": {
-    "path": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-information-security-mcq-access-control-v1.archify.json",
+    "path": "soe/bank-tech/soe-information-security-mcq-access-control-v1.archify.json",
     "sha256": "fcd3221720d56411c550dc363b06b95d9c84f775bf7d4ef5fed96d2cfb968af9",
     "bytes": 2998
   },
   "artifact": {
-    "path": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
-    "sha256": "f89e49c3e81cdad272211f75d45d0544d99e625dcd0fff1524075639bb7d9a8f",
-    "bytes": 812903
+    "path": "soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
+    "sha256": "d0467686389641a1cf1cdc85ac2ed343543c8c8143c1be076d650145d1e124b8",
+    "bytes": 812813
   },
   "stages": {
     "validate": {
@@ -23,12 +23,12 @@
       "durationMs": null,
       "execution": "embedded-in-deliver",
       "command": [
-        "/Users/chenhao/.nvm/versions/node/v22.22.3/bin/node",
-        "/Users/chenhao/.codex/skills/archify/bin/archify.mjs",
+        "node",
+        "archify.mjs",
         "deliver",
         "workflow",
-        "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-information-security-mcq-access-control-v1.archify.json",
-        "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
+        "soe/bank-tech/soe-information-security-mcq-access-control-v1.archify.json",
+        "soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
         "--quality",
         "showcase",
         "--json"
@@ -56,12 +56,12 @@
       "exitCode": 0,
       "durationMs": 778,
       "command": [
-        "/Users/chenhao/.nvm/versions/node/v22.22.3/bin/node",
-        "/Users/chenhao/.codex/skills/archify/bin/archify.mjs",
+        "node",
+        "archify.mjs",
         "deliver",
         "workflow",
-        "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-information-security-mcq-access-control-v1.archify.json",
-        "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
+        "soe/bank-tech/soe-information-security-mcq-access-control-v1.archify.json",
+        "soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
         "--quality",
         "showcase",
         "--json"
@@ -72,15 +72,15 @@
         "ok": true,
         "command": "deliver",
         "type": "workflow",
-        "input": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-information-security-mcq-access-control-v1.archify.json",
-        "output": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
+        "input": "soe/bank-tech/soe-information-security-mcq-access-control-v1.archify.json",
+        "output": "soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
         "specification": {
           "sha256": "fcd3221720d56411c550dc363b06b95d9c84f775bf7d4ef5fed96d2cfb968af9",
           "bytes": 2998
         },
         "artifact": {
-          "sha256": "f89e49c3e81cdad272211f75d45d0544d99e625dcd0fff1524075639bb7d9a8f",
-          "bytes": 812903
+          "sha256": "d0467686389641a1cf1cdc85ac2ed343543c8c8143c1be076d650145d1e124b8",
+          "bytes": 812813
         },
         "validation": {
           "checksPassed": 9,
@@ -108,18 +108,18 @@
       "exitCode": 0,
       "durationMs": 314,
       "command": [
-        "/Users/chenhao/.nvm/versions/node/v22.22.3/bin/node",
-        "/Users/chenhao/.codex/skills/archify/bin/archify.mjs",
+        "node",
+        "archify.mjs",
         "check",
-        "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
+        "soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
         "--require-provenance"
       ],
       "receipt": {
         "ok": true,
-        "file": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
+        "file": "soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
         "artifact": {
-          "sha256": "f89e49c3e81cdad272211f75d45d0544d99e625dcd0fff1524075639bb7d9a8f",
-          "bytes": 812903
+          "sha256": "d0467686389641a1cf1cdc85ac2ed343543c8c8143c1be076d650145d1e124b8",
+          "bytes": 812813
         },
         "checks": [
           {
@@ -244,10 +244,10 @@
       "exitCode": 0,
       "durationMs": 14261,
       "command": [
-        "/Users/chenhao/.nvm/versions/node/v22.22.3/bin/node",
-        "/Users/chenhao/.codex/skills/archify/bin/archify.mjs",
+        "node",
+        "archify.mjs",
         "browser-check",
-        "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
+        "soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
         "--json",
         "--require-provenance"
       ],
@@ -262,9 +262,9 @@
         "provenance": "current",
         "deliveryReceiptId": "b1624f47-bbfa-447c-8f67-da9e049e479d",
         "artifact": {
-          "path": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
-          "sha256": "f89e49c3e81cdad272211f75d45d0544d99e625dcd0fff1524075639bb7d9a8f",
-          "bytes": 812903
+          "path": "soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
+          "sha256": "d0467686389641a1cf1cdc85ac2ed343543c8c8143c1be076d650145d1e124b8",
+          "bytes": 812813
         },
         "state": {
           "detail": "read",
@@ -272,7 +272,7 @@
         },
         "chrome": {
           "status": "available",
-          "executable": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+          "executable": "Google Chrome"
         },
         "diagnostics": [],
         "containment": {
@@ -1293,9 +1293,9 @@
   },
   "diagnostics": [],
   "evidence": {
-    "receipt": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-information-security-mcq-access-control-v1.finalize.json",
-    "summaryReceipt": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-information-security-mcq-access-control-v1.finalize-summary.json",
-    "browserCheckReceipt": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-information-security-mcq-access-control-v1.browser-check.json"
+    "receipt": "soe/bank-tech/soe-information-security-mcq-access-control-v1.finalize.json",
+    "summaryReceipt": "soe/bank-tech/soe-information-security-mcq-access-control-v1.finalize-summary.json",
+    "browserCheckReceipt": "soe/bank-tech/soe-information-security-mcq-access-control-v1.browser-check.json"
   },
   "visualReview": "not-requested",
   "finishedAt": "2026-11-09T10:25:47.017Z",
@@ -1309,5 +1309,23 @@
     "source": "network",
     "noticeRequired": false,
     "noticeText": null
+  },
+  "publicationCopy": {
+    "kind": "portable-sanitized-copy",
+    "pathBase": "repository-root",
+    "originalReceipt": {
+      "sha256": "a10d77245dce9806fcba4682cfbdbf4a61ad137289e1cc4fc4d52f6d47ec5457",
+      "bytes": 45050,
+      "storage": "private-out-of-repository"
+    },
+    "originalArtifact": {
+      "sha256": "f89e49c3e81cdad272211f75d45d0544d99e625dcd0fff1524075639bb7d9a8f",
+      "bytes": 812903
+    },
+    "changes": [
+      "Local paths replaced with repository-relative paths or executable names.",
+      "HTML artifact fingerprints refreshed after removing trailing whitespace from blank CSS lines."
+    ],
+    "gateEvidence": "Recorded gate results belong to the original run and originalArtifact; no Archify or browser rerun is claimed."
   }
 }

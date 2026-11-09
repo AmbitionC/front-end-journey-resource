@@ -7,14 +7,14 @@
   "quality": "showcase",
   "startedAt": "2026-11-09T10:26:44.816Z",
   "specification": {
-    "path": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-software-engineering-mcq-v-model-v1.archify.json",
+    "path": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.archify.json",
     "sha256": "501972c29980c054d32f1dbdb5ab8d4ca45a972c23e8bd2b3328d28f0ca3567e",
     "bytes": 4051
   },
   "artifact": {
-    "path": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-software-engineering-mcq-v-model-v1.html",
-    "sha256": "bae721a5b941c0bdefe3a9f9cdaf85f78df2fd146d944131df9906e632d31ea6",
-    "bytes": 816843
+    "path": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.html",
+    "sha256": "97eb380e29f5f033eef226fa131f6b876aab75d6bf005dc396769b205f8ad9c4",
+    "bytes": 816753
   },
   "stages": {
     "validate": {
@@ -23,12 +23,12 @@
       "durationMs": null,
       "execution": "embedded-in-deliver",
       "command": [
-        "/Users/chenhao/.nvm/versions/node/v22.22.3/bin/node",
-        "/Users/chenhao/.codex/skills/archify/bin/archify.mjs",
+        "node",
+        "archify.mjs",
         "deliver",
         "workflow",
-        "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-software-engineering-mcq-v-model-v1.archify.json",
-        "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-software-engineering-mcq-v-model-v1.html",
+        "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.archify.json",
+        "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.html",
         "--quality",
         "showcase",
         "--json"
@@ -56,12 +56,12 @@
       "exitCode": 0,
       "durationMs": 1048,
       "command": [
-        "/Users/chenhao/.nvm/versions/node/v22.22.3/bin/node",
-        "/Users/chenhao/.codex/skills/archify/bin/archify.mjs",
+        "node",
+        "archify.mjs",
         "deliver",
         "workflow",
-        "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-software-engineering-mcq-v-model-v1.archify.json",
-        "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-software-engineering-mcq-v-model-v1.html",
+        "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.archify.json",
+        "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.html",
         "--quality",
         "showcase",
         "--json"
@@ -72,15 +72,15 @@
         "ok": true,
         "command": "deliver",
         "type": "workflow",
-        "input": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-software-engineering-mcq-v-model-v1.archify.json",
-        "output": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-software-engineering-mcq-v-model-v1.html",
+        "input": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.archify.json",
+        "output": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.html",
         "specification": {
           "sha256": "501972c29980c054d32f1dbdb5ab8d4ca45a972c23e8bd2b3328d28f0ca3567e",
           "bytes": 4051
         },
         "artifact": {
-          "sha256": "bae721a5b941c0bdefe3a9f9cdaf85f78df2fd146d944131df9906e632d31ea6",
-          "bytes": 816843
+          "sha256": "97eb380e29f5f033eef226fa131f6b876aab75d6bf005dc396769b205f8ad9c4",
+          "bytes": 816753
         },
         "validation": {
           "checksPassed": 9,
@@ -108,18 +108,18 @@
       "exitCode": 0,
       "durationMs": 385,
       "command": [
-        "/Users/chenhao/.nvm/versions/node/v22.22.3/bin/node",
-        "/Users/chenhao/.codex/skills/archify/bin/archify.mjs",
+        "node",
+        "archify.mjs",
         "check",
-        "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-software-engineering-mcq-v-model-v1.html",
+        "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.html",
         "--require-provenance"
       ],
       "receipt": {
         "ok": true,
-        "file": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-software-engineering-mcq-v-model-v1.html",
+        "file": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.html",
         "artifact": {
-          "sha256": "bae721a5b941c0bdefe3a9f9cdaf85f78df2fd146d944131df9906e632d31ea6",
-          "bytes": 816843
+          "sha256": "97eb380e29f5f033eef226fa131f6b876aab75d6bf005dc396769b205f8ad9c4",
+          "bytes": 816753
         },
         "checks": [
           {
@@ -246,10 +246,10 @@
       "exitCode": 0,
       "durationMs": 4821,
       "command": [
-        "/Users/chenhao/.nvm/versions/node/v22.22.3/bin/node",
-        "/Users/chenhao/.codex/skills/archify/bin/archify.mjs",
+        "node",
+        "archify.mjs",
         "browser-check",
-        "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-software-engineering-mcq-v-model-v1.html",
+        "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.html",
         "--json",
         "--require-provenance"
       ],
@@ -264,9 +264,9 @@
         "provenance": "current",
         "deliveryReceiptId": "68847f7f-254a-4c9f-a9b0-7411ae686dbf",
         "artifact": {
-          "path": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-software-engineering-mcq-v-model-v1.html",
-          "sha256": "bae721a5b941c0bdefe3a9f9cdaf85f78df2fd146d944131df9906e632d31ea6",
-          "bytes": 816843
+          "path": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.html",
+          "sha256": "97eb380e29f5f033eef226fa131f6b876aab75d6bf005dc396769b205f8ad9c4",
+          "bytes": 816753
         },
         "state": {
           "detail": "read",
@@ -274,7 +274,7 @@
         },
         "chrome": {
           "status": "available",
-          "executable": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+          "executable": "Google Chrome"
         },
         "diagnostics": [],
         "containment": {
@@ -1715,9 +1715,9 @@
   },
   "diagnostics": [],
   "evidence": {
-    "receipt": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-software-engineering-mcq-v-model-v1.finalize.json",
-    "summaryReceipt": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-software-engineering-mcq-v-model-v1.finalize-summary.json",
-    "browserCheckReceipt": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-software-engineering-mcq-v-model-v1.browser-check.json"
+    "receipt": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.finalize.json",
+    "summaryReceipt": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.finalize-summary.json",
+    "browserCheckReceipt": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.browser-check.json"
   },
   "visualReview": "not-requested",
   "finishedAt": "2026-11-09T10:26:51.685Z",
@@ -1731,5 +1731,23 @@
     "source": "cache",
     "noticeRequired": false,
     "noticeText": null
+  },
+  "publicationCopy": {
+    "kind": "portable-sanitized-copy",
+    "pathBase": "repository-root",
+    "originalReceipt": {
+      "sha256": "9bb10ad3a276880ff576a022349da33ec9c8b22078d36b099030756a13b797d0",
+      "bytes": 58111,
+      "storage": "private-out-of-repository"
+    },
+    "originalArtifact": {
+      "sha256": "bae721a5b941c0bdefe3a9f9cdaf85f78df2fd146d944131df9906e632d31ea6",
+      "bytes": 816843
+    },
+    "changes": [
+      "Local paths replaced with repository-relative paths or executable names.",
+      "HTML artifact fingerprints refreshed after removing trailing whitespace from blank CSS lines."
+    ],
+    "gateEvidence": "Recorded gate results belong to the original run and originalArtifact; no Archify or browser rerun is claimed."
   }
 }

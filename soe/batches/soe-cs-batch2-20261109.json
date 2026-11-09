@@ -3380,7 +3380,7 @@
       ],
       "factualSourceReview": "verified",
       "html": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.html",
-      "htmlSha256": "bae721a5b941c0bdefe3a9f9cdaf85f78df2fd146d944131df9906e632d31ea6",
+      "htmlSha256": "97eb380e29f5f033eef226fa131f6b876aab75d6bf005dc396769b205f8ad9c4",
       "automatedGates": {
         "validate": "pass",
         "deliver": "pass",
@@ -3434,7 +3434,7 @@
       ],
       "factualSourceReview": "verified",
       "html": "soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
-      "htmlSha256": "f89e49c3e81cdad272211f75d45d0544d99e625dcd0fff1524075639bb7d9a8f",
+      "htmlSha256": "d0467686389641a1cf1cdc85ac2ed343543c8c8143c1be076d650145d1e124b8",
       "automatedGates": {
         "validate": "pass",
         "deliver": "pass",
@@ -3707,7 +3707,7 @@
           "1269 binary publication paths are hashed exactly with one real batched blob process",
           "large valid inventories split into bounded batches without losing binary hashes"
         ],
-        "resolution": "Verified the same read-only Git command produces Trace2 with existing /usr/bin/git and not legacy /usr/local/bin/git. Prepend /usr/bin for this test command only; no repository, global configuration or test change."
+        "resolution": "Verified the same read-only Git command produces Trace2 with existing system Git and not legacy default Git. Prepend the system Git executable directory for this test command only; no repository, global configuration or test change."
       },
       "finalLogSha256": "909eae9035207d6380b0ad3cc1ce336293989cac9ba97ac96976339f7a148455",
       "rerunAfterHistoryAppend": true
@@ -4028,28 +4028,28 @@
       },
       {
         "path": "soe/bank-tech/soe-information-security-mcq-access-control-v1.browser-check.json",
-        "bytes": 29647,
-        "sha256": "7f2b26d12befbf296dde77b6c54e4c725f036ad1a284b42df8e82fdc04e2f7f1"
+        "bytes": 30318,
+        "sha256": "e06bc4648eaaa09f87aad0c8105c306ab755c84e3c55ce78ff43d030da8e41be"
       },
       {
         "path": "soe/bank-tech/soe-information-security-mcq-access-control-v1.delivery.json",
-        "bytes": 661,
-        "sha256": "5807665a369fe7a51c13468669db4944e2e2eeb6e2f04b16cb43e1a589dbae19"
+        "bytes": 1330,
+        "sha256": "a11ec284249ef6d8df67fe81139c68c01aca4d21893ff62e096ed976581b643e"
       },
       {
         "path": "soe/bank-tech/soe-information-security-mcq-access-control-v1.finalize-summary.json",
-        "bytes": 1716,
-        "sha256": "b6b2f3fee1a788f06b7a57d3602559d4fc0a2d2dd23988baffe0fc08224e6d1a"
+        "bytes": 2245,
+        "sha256": "13a484133f7def9abdc6e18c158058831402d2f85981fc88c076d99b2d12a087"
       },
       {
         "path": "soe/bank-tech/soe-information-security-mcq-access-control-v1.finalize.json",
-        "bytes": 45050,
-        "sha256": "a10d77245dce9806fcba4682cfbdbf4a61ad137289e1cc4fc4d52f6d47ec5457"
+        "bytes": 44711,
+        "sha256": "e15a819560d42df9809ed5382cfaefd356421c02b61f66eec2b95635d597d022"
       },
       {
         "path": "soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
-        "bytes": 812903,
-        "sha256": "f89e49c3e81cdad272211f75d45d0544d99e625dcd0fff1524075639bb7d9a8f"
+        "bytes": 812813,
+        "sha256": "d0467686389641a1cf1cdc85ac2ed343543c8c8143c1be076d650145d1e124b8"
       },
       {
         "path": "soe/bank-tech/soe-information-security-mcq.md",
@@ -4073,28 +4073,28 @@
       },
       {
         "path": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.browser-check.json",
-        "bytes": 40232,
-        "sha256": "d9dffb2a6dd632d656d2b0a2213f2b0dbe7990994d7a84f592ce00a21c3d3ab6"
+        "bytes": 40903,
+        "sha256": "ab99df269ffa628a9ac1a0cc51d03014ad00262f3789bb4d53b3db388434d632"
       },
       {
         "path": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.delivery.json",
-        "bytes": 647,
-        "sha256": "3980695316b851d1c368e3a660b61b96eb2916b263a88c59138c09e05d6b5810"
+        "bytes": 1316,
+        "sha256": "29bba9c4fdd5013dc86ac7ff4a212f372cd73d5be66421de52bad4c93ae688db"
       },
       {
         "path": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.finalize-summary.json",
-        "bytes": 1678,
-        "sha256": "d5d8f53410b1c39a81032bb49d7ab5e9ec1ce49aec53181ce51755822bf3c8a9"
+        "bytes": 2207,
+        "sha256": "66049eef20c0e8e603fee70955473250c6569dd5a1a1155332cc550c958f8a36"
       },
       {
         "path": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.finalize.json",
-        "bytes": 58111,
-        "sha256": "9bb10ad3a276880ff576a022349da33ec9c8b22078d36b099030756a13b797d0"
+        "bytes": 57772,
+        "sha256": "f8b113e0f3e06cba33835679286602572dfc7c2ee4934b8fb7d199a93c34c609"
       },
       {
         "path": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.html",
-        "bytes": 816843,
-        "sha256": "bae721a5b941c0bdefe3a9f9cdaf85f78df2fd146d944131df9906e632d31ea6"
+        "bytes": 816753,
+        "sha256": "97eb380e29f5f033eef226fa131f6b876aab75d6bf005dc396769b205f8ad9c4"
       },
       {
         "path": "soe/bank-tech/soe-software-engineering-mcq.md",
@@ -4726,7 +4726,7 @@
         "cancelled": 0,
         "skipped": 0,
         "gitVersion": "git version 2.39.5 (Apple Git-154)",
-        "environmentReason": "System Git 2.39.5 supplies Trace2 required by existing tests; legacy default /usr/local/bin/git is 2.15.0. Only the child test command PATH was adjusted; no test, repository configuration or global configuration was changed.",
+        "environmentReason": "System Git 2.39.5 supplies Trace2 required by existing tests; legacy default Git is 2.15.0. Only the child test command PATH was adjusted; no test, repository configuration or global configuration was changed.",
         "logSha256": "979587dd3193934edceedc7f3e06602ea6141e44080ed701ff7e0fede9c16d12"
       },
       "diffWhitespace": "git diff --check passed",

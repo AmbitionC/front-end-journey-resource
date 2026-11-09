@@ -8,9 +8,9 @@
   "provenance": "current",
   "deliveryReceiptId": "b1624f47-bbfa-447c-8f67-da9e049e479d",
   "artifact": {
-    "path": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
-    "sha256": "f89e49c3e81cdad272211f75d45d0544d99e625dcd0fff1524075639bb7d9a8f",
-    "bytes": 812903
+    "path": "soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
+    "sha256": "d0467686389641a1cf1cdc85ac2ed343543c8c8143c1be076d650145d1e124b8",
+    "bytes": 812813
   },
   "state": {
     "detail": "read",
@@ -18,7 +18,7 @@
   },
   "chrome": {
     "status": "available",
-    "executable": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+    "executable": "Google Chrome"
   },
   "diagnostics": [],
   "containment": {
@@ -1029,5 +1029,23 @@
   "sidecars": {
     "receipt": "soe-information-security-mcq-access-control-v1.browser-check.json",
     "files": []
+  },
+  "publicationCopy": {
+    "kind": "portable-sanitized-copy",
+    "pathBase": "repository-root",
+    "originalReceipt": {
+      "sha256": "7f2b26d12befbf296dde77b6c54e4c725f036ad1a284b42df8e82fdc04e2f7f1",
+      "bytes": 29647,
+      "storage": "private-out-of-repository"
+    },
+    "originalArtifact": {
+      "sha256": "f89e49c3e81cdad272211f75d45d0544d99e625dcd0fff1524075639bb7d9a8f",
+      "bytes": 812903
+    },
+    "changes": [
+      "Local paths replaced with repository-relative paths or executable names.",
+      "HTML artifact fingerprints refreshed after removing trailing whitespace from blank CSS lines."
+    ],
+    "gateEvidence": "Recorded gate results belong to the original run and originalArtifact; no Archify or browser rerun is claimed."
   }
 }
