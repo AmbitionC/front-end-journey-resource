@@ -4812,8 +4812,8 @@
       "modifiedFingerprints": [
         {
           "path": "soe/_tree.json",
-          "bytes": 6448,
-          "sha256": "32fa2f5dc72024915bbed265c7aef9a258d753ae541254e4cc7ad405d1ef63fd"
+          "bytes": 6475,
+          "sha256": "6671fd74525ea2ef3af10e254fa8aac609c968cfa0b1b4cbb123ac97f2b15b63"
         },
         {
           "path": ".codex/knowledge-update-history.json",
