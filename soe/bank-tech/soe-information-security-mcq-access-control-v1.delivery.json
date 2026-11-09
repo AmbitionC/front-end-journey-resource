@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "b1624f47-bbfa-447c-8f67-da9e049e479d",
+  "status": "current",
+  "command": "deliver",
+  "type": "workflow",
+  "input": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-information-security-mcq-access-control-v1.archify.json",
+  "output": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
+  "specification": {
+    "sha256": "fcd3221720d56411c550dc363b06b95d9c84f775bf7d4ef5fed96d2cfb968af9",
+    "bytes": 2998
+  },
+  "artifact": {
+    "sha256": "f89e49c3e81cdad272211f75d45d0544d99e625dcd0fff1524075639bb7d9a8f",
+    "bytes": 812903
+  }
+}

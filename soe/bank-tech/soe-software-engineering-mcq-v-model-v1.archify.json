@@ -1,0 +1,213 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "V 模型：开发产物与测试依据对应",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.html",
+    "legend": {
+      "mode": "hidden"
+    }
+  },
+  "lanes": [
+    {
+      "id": "level0",
+      "label": "业务目标"
+    },
+    {
+      "id": "level1",
+      "label": "系统行为"
+    },
+    {
+      "id": "level2",
+      "label": "系统结构"
+    },
+    {
+      "id": "level3",
+      "label": "模块逻辑"
+    },
+    {
+      "id": "level4",
+      "label": "编码实现"
+    }
+  ],
+  "mainPath": [
+    "needs",
+    "spec",
+    "arch",
+    "module",
+    "code",
+    "unit",
+    "integration",
+    "system",
+    "accept"
+  ],
+  "nodes": [
+    {
+      "id": "needs",
+      "lane": "level0",
+      "col": 0,
+      "type": "backend",
+      "label": "业务需求"
+    },
+    {
+      "id": "accept",
+      "lane": "level0",
+      "col": 4,
+      "type": "backend",
+      "label": "验收测试"
+    },
+    {
+      "id": "spec",
+      "lane": "level1",
+      "col": 0,
+      "type": "backend",
+      "label": "系统规格"
+    },
+    {
+      "id": "system",
+      "lane": "level1",
+      "col": 4,
+      "type": "backend",
+      "label": "系统测试"
+    },
+    {
+      "id": "arch",
+      "lane": "level2",
+      "col": 0,
+      "type": "backend",
+      "label": "架构设计"
+    },
+    {
+      "id": "integration",
+      "lane": "level2",
+      "col": 4,
+      "type": "backend",
+      "label": "集成测试"
+    },
+    {
+      "id": "module",
+      "lane": "level3",
+      "col": 0,
+      "type": "backend",
+      "label": "模块设计"
+    },
+    {
+      "id": "unit",
+      "lane": "level3",
+      "col": 4,
+      "type": "backend",
+      "label": "单元测试"
+    },
+    {
+      "id": "code",
+      "lane": "level4",
+      "col": 2,
+      "type": "backend",
+      "label": "编码实现"
+    }
+  ],
+  "edges": [
+    {
+      "id": "basis-needs",
+      "from": "needs",
+      "to": "accept",
+      "label": "测试依据",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "basis-spec",
+      "from": "spec",
+      "to": "system",
+      "label": "测试依据",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "basis-arch",
+      "from": "arch",
+      "to": "integration",
+      "label": "测试依据",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "basis-module",
+      "from": "module",
+      "to": "unit",
+      "label": "测试依据",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "progress-0",
+      "from": "needs",
+      "to": "spec",
+      "variant": "emphasis"
+    },
+    {
+      "id": "progress-1",
+      "from": "spec",
+      "to": "arch",
+      "variant": "emphasis"
+    },
+    {
+      "id": "progress-2",
+      "from": "arch",
+      "to": "module",
+      "variant": "emphasis"
+    },
+    {
+      "id": "progress-3",
+      "from": "module",
+      "to": "code",
+      "variant": "emphasis"
+    },
+    {
+      "id": "progress-4",
+      "from": "code",
+      "to": "unit",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "bottom"
+    },
+    {
+      "id": "progress-5",
+      "from": "unit",
+      "to": "integration",
+      "variant": "emphasis"
+    },
+    {
+      "id": "progress-6",
+      "from": "integration",
+      "to": "system",
+      "variant": "emphasis"
+    },
+    {
+      "id": "progress-7",
+      "from": "system",
+      "to": "accept",
+      "variant": "emphasis"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "两类连线",
+      "items": [
+        "实线：开发与测试的教学展开顺序。",
+        "虚线：相应层次的测试设计依据。"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "教学简化的边界",
+      "items": [
+        "测试分析和设计可以在编码前开始。",
+        "实际项目可能另分系统集成测试。"
+      ]
+    }
+  ]
+}

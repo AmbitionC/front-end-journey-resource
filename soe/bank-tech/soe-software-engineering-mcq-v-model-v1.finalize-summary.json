@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-software-engineering-mcq-v-model-v1.archify.json",
+    "sha256": "501972c29980c054d32f1dbdb5ab8d4ca45a972c23e8bd2b3328d28f0ca3567e",
+    "bytes": 4051
+  },
+  "artifact": {
+    "path": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-software-engineering-mcq-v-model-v1.html",
+    "sha256": "bae721a5b941c0bdefe3a9f9cdaf85f78df2fd146d944131df9906e632d31ea6",
+    "bytes": 816843
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-software-engineering-mcq-v-model-v1.finalize.json",
+    "summaryReceipt": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-software-engineering-mcq-v-model-v1.finalize-summary.json",
+    "browserCheckReceipt": "/Users/chenhao/code/front-end-journey-resource/soe/bank-tech/soe-software-engineering-mcq-v-model-v1.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-09T10:25:31.444Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 6869,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}
