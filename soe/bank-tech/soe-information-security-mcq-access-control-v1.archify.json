@@ -1,0 +1,140 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "身份鉴别通过后，仍需逐次检查权限",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
+    "legend": {
+      "mode": "hidden"
+    }
+  },
+  "lanes": [
+    {
+      "id": "request",
+      "label": "每次资源请求"
+    },
+    {
+      "id": "deny",
+      "label": "拒绝路径",
+      "variant": "exception"
+    }
+  ],
+  "mainPath": [
+    "incoming",
+    "authenticate",
+    "authorize",
+    "execute"
+  ],
+  "nodes": [
+    {
+      "id": "incoming",
+      "lane": "request",
+      "col": 0,
+      "type": "external",
+      "label": "资源请求",
+      "sublabel": "资源 + 动作"
+    },
+    {
+      "id": "authenticate",
+      "lane": "request",
+      "col": 1,
+      "type": "security",
+      "icon": "decision",
+      "label": "身份鉴别",
+      "sublabel": "验证凭据或会话"
+    },
+    {
+      "id": "authorize",
+      "lane": "request",
+      "col": 2,
+      "type": "security",
+      "icon": "decision",
+      "label": "权限校验",
+      "sublabel": "主体 + 资源 + 动作"
+    },
+    {
+      "id": "execute",
+      "lane": "request",
+      "col": 3,
+      "type": "backend",
+      "icon": "success",
+      "label": "执行操作",
+      "sublabel": "只在获准后"
+    },
+    {
+      "id": "badidentity",
+      "lane": "deny",
+      "col": 1,
+      "type": "security",
+      "icon": "stop",
+      "label": "拒绝请求",
+      "sublabel": "身份未成立"
+    },
+    {
+      "id": "badpermission",
+      "lane": "deny",
+      "col": 2,
+      "type": "security",
+      "icon": "stop",
+      "label": "拒绝请求",
+      "sublabel": "权限不满足"
+    }
+  ],
+  "edges": [
+    {
+      "id": "entry",
+      "from": "incoming",
+      "to": "authenticate"
+    },
+    {
+      "id": "identity-ok",
+      "from": "authenticate",
+      "to": "authorize",
+      "label": "身份成立",
+      "variant": "emphasis"
+    },
+    {
+      "id": "permission-ok",
+      "from": "authorize",
+      "to": "execute",
+      "label": "权限满足",
+      "variant": "emphasis"
+    },
+    {
+      "id": "identity-fail",
+      "from": "authenticate",
+      "to": "badidentity",
+      "label": "无效凭据",
+      "variant": "security",
+      "role": "error"
+    },
+    {
+      "id": "permission-fail",
+      "from": "authorize",
+      "to": "badpermission",
+      "label": "无权限",
+      "variant": "security",
+      "role": "error"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "amber",
+      "title": "权限检查的输入",
+      "items": [
+        "同时核对资源所属租户与 owner。",
+        "主体身份来自可信会话，不信任请求自报身份。"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "默认拒绝",
+      "items": [
+        "已登录不等于获准访问任意对象。",
+        "拒绝路径不能继续执行受保护操作。"
+      ]
+    }
+  ]
+}

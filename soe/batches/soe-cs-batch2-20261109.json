@@ -1,0 +1,5214 @@
+{
+  "schemaVersion": 1,
+  "batchId": "soe-cs-batch2-20261109",
+  "date": "2026-11-09",
+  "branch": "codex/soe-batch2-20261109",
+  "baseCommit": "96658617d065dde5efc1a9221d7759fda3545ff7",
+  "scope": {
+    "module": "soe",
+    "topLevelLabel": "银行·国企科技岗笔试",
+    "articleCount": 9,
+    "requestedPart": "A 考情2篇 + B 专业考点5篇（HEAD已提交）；本次续做 C 综合练习 A/B 卷各30道。",
+    "mergeAuthorized": false,
+    "otherRepositoriesAuthorized": false,
+    "gitMutationAuthorized": false,
+    "gitSubmissionAndPrOwner": "user",
+    "existingArticlesOutsideSoeWritable": false
+  },
+  "workflow": ".codex/skills/generate-knowledge-docs/SKILL.md",
+  "status": "content-ready-first-part-committed-second-part-validated-local-uncommitted-not-published",
+  "items": [
+    {
+      "key": "soe-grid-tech-exam-overview",
+      "label": "国家电网 / 南方电网信通岗笔试考什么",
+      "filePath": "grid",
+      "outputPath": "soe/grid/soe-grid-tech-exam-overview.md",
+      "action": "create",
+      "reason": "用户精确指定第二批第一部分；已有概念按语义去重链接复用，专业篇补原创选择题考法。",
+      "learningOutcome": "读者能按电网公司、招聘年度、批次及岗位核对安排，查阅国网2027计算机类与通信类完整大纲方向和知识点，区分已公开范围与仍待岗位通知核实的作答规则。",
+      "status": "ready-for-user-review-with-disclosed-source-gaps",
+      "sourceReview": {
+        "status": "verified-with-explicit-gaps",
+        "sourceIds": [
+          "soe-batch2-grid-sgcc-2027",
+          "soe-batch2-grid-sgcc-computer-2027",
+          "soe-batch2-grid-sgcc-telecom-2027",
+          "soe-batch2-grid-csg-2026"
+        ],
+        "verifiedAt": "2026-11-09",
+        "refreshReason": "按2027年度官方公告及两类2027版大纲更新国家电网部分；公告要点来自用户提供的摘要，大纲全文逐点核对；南方电网章节保持原样。"
+      },
+      "bytes": 19108,
+      "sha256": "46ca717f0ce09413f0f5126f000cd50089e47b6a21dfb248c0b5d6eb880fef01",
+      "originalQuestions": 0,
+      "unpublishedFields": {
+        "sgcc": [
+          "本人岗位适用科目（需岗位公告或笔试通知确认）",
+          "线上线下及机考纸笔形式",
+          "题型",
+          "题量",
+          "答题时长",
+          "各专业方向在专业知识80%内的细分占比",
+          "每题分值",
+          "满分",
+          "错漏选规则",
+          "成绩折算"
+        ],
+        "csg": [
+          "正文中的信通岗位对应具体类别及细目",
+          "题型",
+          "题量",
+          "答题时长",
+          "60%/40%的题数或分值计算口径",
+          "单题分值",
+          "满分",
+          "错漏选规则",
+          "笔面试成绩折算"
+        ]
+      },
+      "omittedTopics": [
+        {
+          "topic": "南网信息通信类详细考点及细分权重",
+          "reason": "官方2026大纲附件访问403，未成功读取，停止后不绕过"
+        },
+        {
+          "topic": "行测专项讲解、银行综合、企业清单与网申时间表",
+          "reason": "只列大纲公共模块构成及国网四批次公告、笔试初定时间，不扩写专项教程或其他企业网申安排。"
+        },
+        {
+          "topic": "原创模拟题和图解",
+          "reason": "考情稿无需模拟题；字段对照表已足够，没有需要图解的高认知负荷关系"
+        }
+      ],
+      "coverageFollowUp": {
+        "status": "not-audited-or-edited-in-other-articles",
+        "topics": [
+          "备份和恢复",
+          "数据库应用系统设计与开发",
+          "数据库安全",
+          "无线网络与移动网络",
+          "操作系统安全与保护",
+          "并行计算与异构计算",
+          "软件交付与维护"
+        ],
+        "missingDedicatedEntries": [
+          "信息新技术（人工智能、物联网、云计算、大数据）",
+          "通信类四个专业方向"
+        ],
+        "note": "在本文提示补核，不宣称现有文章已覆盖或确实缺失；本次没有修改其他文章。"
+      }
+    },
+    {
+      "key": "soe-telecom-tech-exam-overview",
+      "label": "三大运营商技术岗笔试考什么",
+      "filePath": "telecom",
+      "outputPath": "soe/telecom/soe-telecom-tech-exam-overview.md",
+      "action": "create",
+      "reason": "用户精确指定第二批第一部分；已有概念按语义去重链接复用，专业篇补原创选择题考法。",
+      "learningOutcome": "读者能分别核对三家运营商的公开考核安排及适用范围，避免从技术岗位名称推断考试模块、题型或分值。",
+      "status": "ready-for-user-review-with-disclosed-source-gaps",
+      "sourceReview": {
+        "status": "verified-with-explicit-gaps",
+        "sourceIds": [
+          "soe-batch2-telecom-mobile-2027",
+          "soe-batch2-telecom-ct-2027",
+          "soe-batch2-telecom-ct-notice-current",
+          "soe-batch2-telecom-unicom-entry"
+        ]
+      },
+      "bytes": 9416,
+      "sha256": "e7cd617156ec05241da0961a840448a77fb2657db7d6ae605461eaace4010276",
+      "originalQuestions": 0,
+      "unpublishedFields": {
+        "mobile": [
+          "技术岗卷内模块及知识点",
+          "题型",
+          "题量",
+          "作答时长",
+          "每题分值",
+          "模块占比",
+          "满分",
+          "错漏选规则",
+          "成绩折算",
+          "是否另有岗位技术笔试或编程测评"
+        ],
+        "telecom": [
+          "岗位卷内模块和专业细目",
+          "题型",
+          "题量",
+          "作答时长",
+          "具体考试日期",
+          "每题分值",
+          "模块占比",
+          "满分",
+          "错漏选规则",
+          "成绩折算",
+          "招聘须知独立发布日期"
+        ],
+        "unicom": [
+          "入口发布日期",
+          "具体统一或单位笔试安排",
+          "考试形式",
+          "技术模块",
+          "专业细目",
+          "考试日期",
+          "题型",
+          "题量",
+          "作答时长",
+          "每题分值",
+          "模块占比",
+          "满分",
+          "错漏选规则",
+          "成绩折算"
+        ]
+      },
+      "omittedTopics": [
+        {
+          "topic": "三大运营商统一技术试卷、大纲或固定技术题题数",
+          "reason": "没有官方证据支持三家统一考试；各家公司所引来源均未公开这些具体字段"
+        },
+        {
+          "topic": "联通2025–2026具体笔试安排",
+          "reason": "官方入口无发布日期，海报406；高校转载仅作研究线索，不作考试结构证据；未绕过限制"
+        },
+        {
+          "topic": "移动额外技术笔试、编程题结构",
+          "reason": "所引集团公告未公开，不从个别单位的第三方摘要外推"
+        },
+        {
+          "topic": "电信所有单位一律参加集团统笔试",
+          "reason": "与招聘须知的部分单位参与限定不符，未写为事实"
+        },
+        {
+          "topic": "行测题、银行综合、企业清单、网申时间表和模拟题",
+          "reason": "用户范围限制，且考情稿无需模拟题"
+        }
+      ]
+    },
+    {
+      "key": "soe-c-language-mcq",
+      "label": "C 语言常考点：指针、数组、结构体与内存",
+      "filePath": "bank-tech",
+      "outputPath": "soe/bank-tech/soe-c-language-mcq.md",
+      "action": "create",
+      "reason": "用户精确指定第二批第一部分；已有概念按语义去重链接复用，专业篇补原创选择题考法。",
+      "learningOutcome": "依据表达式类型、数组边界及明确 ABI 假设计算指针、数组和结构体题目。",
+      "status": "ready-for-user-review",
+      "sourceReview": {
+        "status": "verified",
+        "sourceIds": [
+          "soe-batch2-c-standard",
+          "soe-batch2-c-pointer-arithmetic",
+          "soe-batch2-c-multidimensional",
+          "soe-batch2-c-structure-layout",
+          "soe-batch2-c-allocation",
+          "soe-batch2-c-bounds"
+        ]
+      },
+      "bytes": 14535,
+      "sha256": "8a7cc54178cc77d4535b03a58b976f9153887dec1746ae110eecd4cd80a49528",
+      "originalQuestions": 8,
+      "omittedTopics": [
+        {
+          "topic": "C23 new features, flexible array members, bit-field layouts, extended alignment",
+          "reason": "Fixed C11 introductory MCQ scope; these require separate version or ABI assumptions."
+        }
+      ]
+    },
+    {
+      "key": "soe-java-mcq",
+      "label": "Java 基础常考点：面向对象、异常、集合与常见陷阱",
+      "filePath": "bank-tech",
+      "outputPath": "soe/bank-tech/soe-java-mcq.md",
+      "action": "create",
+      "reason": "用户精确指定第二批第一部分；已有概念按语义去重链接复用，专业篇补原创选择题考法。",
+      "learningOutcome": "读者能够先判编译合同，再推演方法分派、引用值复制、异常完成、集合操作和版本相关类元数据故障，并按题设解释对象命名。",
+      "status": "ready-for-user-review",
+      "sourceReview": {
+        "status": "verified",
+        "sourceIds": [
+          "soe-batch2-jls8",
+          "soe-batch2-jls11",
+          "soe-batch2-jls14",
+          "soe-batch2-jls15",
+          "soe-batch2-jls12",
+          "soe-batch2-string",
+          "soe-batch2-list",
+          "soe-batch2-arrays",
+          "soe-batch2-arraylist",
+          "soe-batch2-hashset",
+          "soe-batch2-hashmap",
+          "soe-batch2-jep122",
+          "soe-batch2-java7-oom",
+          "soe-batch2-javaoom",
+          "soe-batch2-naming-conventions",
+          "soe-batch2-fowler-value"
+        ]
+      },
+      "bytes": 19659,
+      "sha256": "3963ce2404580861ded5ac8a32ceb2201ca61d4d71281a6442f9f4bb01aac646",
+      "originalQuestions": 8,
+      "omittedTopics": {
+        "article": "soe-java-mcq",
+        "items": [
+          "JVM字节码/GC调参长教程",
+          "实际动态类生成/OOM复现实验",
+          "并发容器内部实现/完整Java并发",
+          "框架专属DTO映射和序列化机制"
+        ],
+        "reason": "本批限基础选择题考法；相关机制复用知识文章，避免8题扩成长教程。"
+      }
+    },
+    {
+      "key": "soe-data-structures-mcq",
+      "label": "数据结构选择题高频考点",
+      "filePath": "bank-tech",
+      "outputPath": "soe/bank-tech/soe-data-structures-mcq.md",
+      "action": "create",
+      "reason": "用户精确指定第二批第一部分；已有概念按语义去重链接复用，专业篇补原创选择题考法。",
+      "learningOutcome": "Given explicit assumptions, derive traversal, Huffman, MST, search/sort and recurrence MCQ answers using intermediate states and exact count definitions.",
+      "status": "ready-for-user-review",
+      "sourceReview": {
+        "status": "verified",
+        "sourceIds": [
+          "soe-batch2-mit-tree",
+          "soe-batch2-princeton-huffman",
+          "soe-batch2-princeton-mst",
+          "soe-batch2-princeton-binary",
+          "soe-batch2-princeton-merge",
+          "soe-batch2-uw-recurrences"
+        ]
+      },
+      "bytes": 18390,
+      "sha256": "667fdcc6915e395d41edd799765fdc568e4c1b932e5a1a9131902afa89aa0af4",
+      "originalQuestions": 9,
+      "omittedTopics": [
+        {
+          "topic": "Complete search/sorting implementations, external-sort tutorial, general Big-O tutorial, general tree reconstruction implementation",
+          "reason": "Already present in knowledge and linked; batch explicitly requires reuse."
+        },
+        {
+          "topic": "B-tree/AVL/graph shortest-path algorithm tutorials, formal Master theorem proof",
+          "reason": "Outside this bounded MCQ brief; avoid expanding scope."
+        }
+      ]
+    },
+    {
+      "key": "soe-software-engineering-mcq",
+      "label": "软件工程基础：生命周期模型、UML、测试方法",
+      "filePath": "bank-tech",
+      "outputPath": "soe/bank-tech/soe-software-engineering-mcq.md",
+      "action": "create",
+      "reason": "用户精确指定第二批第一部分；已有概念按语义去重链接复用，专业篇补原创选择题考法。",
+      "learningOutcome": "Distinguish lifecycle models, select UML views and relation direction, and compute/test coverage while separating test technique, level and purpose.",
+      "status": "ready-for-user-review",
+      "sourceReview": {
+        "status": "verified",
+        "sourceIds": [
+          "soe-batch2-cmu-process",
+          "soe-batch2-cmu-spiral",
+          "soe-batch2-cmu-vmodel",
+          "soe-batch2-omg-uml",
+          "soe-batch2-mit-testing",
+          "soe-batch2-istqb-ctfl",
+          "soe-batch2-istqb-tta"
+        ]
+      },
+      "bytes": 23309,
+      "sha256": "6e2a7544729e338292e7a2fd37beeb00e747dc0e95ab6760771853b5ab37efe0",
+      "originalQuestions": 8,
+      "omittedTopics": [
+        {
+          "topic": "Formal UML metamodel/OCL and all diagram drawing syntax; advanced MC/DC construction; test management/cost estimation/CMMI",
+          "reason": "Beyond foundation MCQ brief; keep the article focused and avoid unverified detail."
+        }
+      ]
+    },
+    {
+      "key": "soe-information-security-mcq",
+      "label": "信息安全基础：加密、认证、常见攻击与防护",
+      "filePath": "bank-tech",
+      "outputPath": "soe/bank-tech/soe-information-security-mcq.md",
+      "action": "create",
+      "reason": "用户精确指定第二批第一部分；已有概念按语义去重链接复用，专业篇补原创选择题考法。",
+      "learningOutcome": "读者能够区分CIA、密码学用途、身份鉴别、资源授权和Web攻击边界，选出符合题设的控制并解释局限。",
+      "status": "ready-for-user-review",
+      "sourceReview": {
+        "status": "verified",
+        "sourceIds": [
+          "soe-batch2-owasp-crypto",
+          "soe-batch2-owasp-key",
+          "soe-batch2-owasp-authz",
+          "soe-batch2-owasp-sqli",
+          "soe-batch2-owasp-xss",
+          "soe-batch2-owasp-csrf",
+          "soe-batch2-owasp-password",
+          "soe-batch2-nist-fips199",
+          "soe-batch2-nist-hash",
+          "soe-batch2-nist-signature"
+        ]
+      },
+      "bytes": 16326,
+      "sha256": "b5c19eecdb6381869f7b8b3a06493f20685a50cc0607594119d7a928d801ad31",
+      "originalQuestions": 7,
+      "omittedTopics": {
+        "article": "soe-information-security-mcq",
+        "items": [
+          "算法内部数学推导和密钥长度选型",
+          "完整OAuth/OIDC/JWT协议",
+          "DAC/MAC及全部访问控制模型",
+          "SSRF/文件上传/渗透操作/法规合规细项"
+        ],
+        "reason": "集中CIA、密码学用途、身份与授权和指定Web攻击，不把7道基础题扩成安全百科。"
+      }
+    },
+    {
+      "key": "soe-cs-self-test-a",
+      "label": "计算机专业综合自测 A 卷",
+      "filePath": "practice",
+      "outputPath": "soe/practice/soe-cs-self-test-a.md",
+      "action": "create",
+      "reason": "续做同一批次C部分；原创综合自测，复用已有文章，扩展知识点在解析内完整说明。",
+      "learningOutcome": "在明确题设下完成30道基础与应用选择题，用答案、排错解析和对应文章定位复习；对专题缺口给出自足讲解。",
+      "status": "ready-for-user-review",
+      "originalQuestions": 30,
+      "questionType": "single-choice-four-options",
+      "sourceReview": {
+        "status": "verified-primary-content",
+        "localArticleRole": "direct-explanation-or-explicit-background-only",
+        "sourceIds": [
+          "soe-batch2-papers-bus-basic",
+          "soe-batch2-papers-partition",
+          "soe-batch2-papers-fstab",
+          "soe-batch2-papers-tcp",
+          "soe-batch2-papers-raft",
+          "soe-batch2-papers-pow",
+          "soe-batch2-papers-pos",
+          "soe-batch2-papers-saga",
+          "soe-batch2-papers-tcc",
+          "soe-batch2-papers-docker",
+          "soe-batch2-papers-stateless",
+          "soe-batch2-papers-federated",
+          "soe-batch2-papers-federated-privacy",
+          "soe-batch2-papers-nfc",
+          "soe-batch2-papers-nb-iot",
+          "soe-batch2-papers-zigbee",
+          "soe-batch2-papers-wifi"
+        ]
+      },
+      "omittedTopics": [],
+      "bytes": 34993,
+      "sha256": "954b88adc1759c811c1f6901ad8e563f5fa31985c34b5596366e9d7de6c65731"
+    },
+    {
+      "key": "soe-cs-self-test-b",
+      "label": "计算机专业综合自测 B 卷",
+      "filePath": "practice",
+      "outputPath": "soe/practice/soe-cs-self-test-b.md",
+      "action": "create",
+      "reason": "续做同一批次C部分；原创综合自测，复用已有文章，扩展知识点在解析内完整说明。",
+      "learningOutcome": "在明确题设下完成30道基础与应用选择题，用答案、排错解析和对应文章定位复习；对专题缺口给出自足讲解。",
+      "status": "ready-for-user-review",
+      "originalQuestions": 30,
+      "questionType": "single-choice-four-options",
+      "sourceReview": {
+        "status": "verified-primary-content",
+        "localArticleRole": "direct-explanation-or-explicit-background-only",
+        "sourceIds": [
+          "soe-batch2-papers-bus-basic",
+          "soe-batch2-papers-partition",
+          "soe-batch2-papers-index",
+          "soe-batch2-papers-fstab",
+          "soe-batch2-papers-tcp",
+          "soe-batch2-papers-raft",
+          "soe-batch2-papers-pow",
+          "soe-batch2-papers-pos",
+          "soe-batch2-papers-saga",
+          "soe-batch2-papers-tcc-fence",
+          "soe-batch2-papers-docker",
+          "soe-batch2-papers-docker-restart",
+          "soe-batch2-papers-federated",
+          "soe-batch2-papers-federated-privacy",
+          "soe-batch2-papers-nfc",
+          "soe-batch2-papers-nb-iot",
+          "soe-batch2-papers-zigbee",
+          "soe-batch2-papers-wifi",
+          "soe-batch2-papers-map"
+        ]
+      },
+      "omittedTopics": [],
+      "bytes": 36034,
+      "sha256": "b0dfa9232fe6c92078628b7177486eb9ac61e704c6f6d87bd1400a35c8bad153"
+    }
+  ],
+  "deduplication": {
+    "inventory": {
+      "leaves": 334,
+      "existing": 334,
+      "missing": 0,
+      "duplicateKeys": 0,
+      "orphans": 2
+    },
+    "unrelatedOrphansUntouched": [
+      "knowledge/fe/aigc/aigc-application.md",
+      "knowledge/intro/pdf.md"
+    ],
+    "reuseWithoutEdits": [
+      "knowledge/backend/database/db-sharding.md",
+      "knowledge/backend/database/mysql-index.md",
+      "knowledge/backend/java/java-collections.md",
+      "knowledge/backend/java/java-runtime-memory.md",
+      "knowledge/backend/java/java-value-semantics.md",
+      "knowledge/backend/storage/agent-state-storage.md",
+      "knowledge/cs/algorithm/algorithm-complexity.md",
+      "knowledge/cs/algorithm/algorithm-graph.md",
+      "knowledge/cs/algorithm/algorithm-sorting.md",
+      "knowledge/cs/language/c-object-storage-duration.md",
+      "knowledge/cs/os/os-deadlock.md",
+      "knowledge/cs/os/os-process-thread.md",
+      "knowledge/cs/os/os-virtual-memory.md",
+      "knowledge/data-structure/algorithm/algorithm-array.md",
+      "knowledge/data-structure/algorithm/algorithm-loop.md",
+      "knowledge/data-structure/algorithm/algorithm-tree.md",
+      "knowledge/data/sql/sql-index-optimize.md",
+      "knowledge/llm/agent/agent-workflow-state.md",
+      "knowledge/llm/basics/llm-training-overview.md",
+      "knowledge/network/security/web-attack.md",
+      "knowledge/network/tcpIp/tcp-handshake.md",
+      "knowledge/network/tcpIp/tcp-udp.md"
+    ],
+    "reviewedButNotReused": [
+      {
+        "path": "knowledge/backend/auth/password-encrypt.md",
+        "reason": "把Argon2id64MiB/t3/p4写作OWASP统一最低值、SHA-256无碰撞问题、GPU成本指数级及bcrypt预哈希条件不足等实质风险。本篇直接使用OWASP；未改因任务只授权两篇新文。"
+      },
+      {
+        "path": "knowledge/backend/auth/sql-injection.md",
+        "reason": "存在将前缀/关键词判断作为Text-to-SQL安全校验及若干绝对化/上下文不足示例风险。本篇直接使用OWASP；未改因任务只授权两篇新文。"
+      },
+      {
+        "path": "knowledge/backend/devops/docker-basics.md",
+        "reason": "现有文中把容器直接称无状态，并混淆同容器重启与删除重建的可写层寿命。本次未改、未作为对应讲解链接；两卷引用官方Docker文档并自足说明。"
+      }
+    ],
+    "knowledgeArticlesModified": 0
+  },
+  "originality": {
+    "body": "原创编写，基于官方一手资料解释，不复制机构资料或原题。",
+    "questions": "全部自拟题干、情境、数据、选项和解析，逐题标原创模拟题。",
+    "examClaims": "仅写2025–2026发布的可核实官方公告或考试说明；缺项写该来源未公开；发布日期与招聘届次分开。"
+  },
+  "research": {
+    "status": "completed-with-disclosed-source-limits",
+    "verifiedAt": "2026-11-09T10:36:20.889Z",
+    "method": "Primary sources were actually read through Lightpanda rendered text, native PDF text extraction/readers, and employer-origin images read by OCR. Search results only located sources. No training provider, forum or university repost supplies exam-structure claims.",
+    "noSearchSnippetUsedAsExamEvidence": true,
+    "noTrainingProviderOrForumUsedAsSource": true,
+    "sources": [
+      {
+        "id": "soe-batch2-grid-sgcc-2027",
+        "title": "国家电网有限公司2027年招聘高校毕业生公告",
+        "url": "https://zhaopin.sgcc.com.cn/sgcchr/static/unitPart.html?bullet_id=dcefb56d04714dc4b488d0a7a204bf76",
+        "articles": [
+          "soe-grid-tech-exam-overview"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-user-supplied-official-summary",
+        "primary": true,
+        "publisher": "国家电网有限公司",
+        "publishedAt": "2026-10-17",
+        "recruitmentCycle": "2027年高校毕业生招聘",
+        "access": {
+          "date": "2026-11-09",
+          "method": "用户提供的官方公告要点摘要；本次Lightpanda读取指定公告页返回HTTP412，未取得正文，未重试或绕过访问限制。",
+          "httpStatus": 412,
+          "bodyRead": false,
+          "summaryRead": true,
+          "suppliedSummary": {
+            "name": "summary.md",
+            "bytes": 8797,
+            "sha256": "0c14d8957dddfaf772594b522b833e3c5385b53b75774ff3b7365137334793bb"
+          },
+          "searchExcerptUsedAsEvidence": false
+        },
+        "usedClaims": [
+          "2026-10-17发布，面向2027年高校毕业生招聘",
+          "四批次：国调网调及北京电力交易中心提前批、第一批、第二批、第三批",
+          "公告时间分别为2026-10-17、2026年11月中旬、2027年3月前、2027年5月前",
+          "笔试初定2026-10-31、2026-12-06、2027年3月、2027年5月，以考试公告为准",
+          "按批次统一笔试，范围见各科目考试大纲",
+          "收到多家单位笔试通知时只能选择一家参加，成绩在各单位之间通用"
+        ]
+      },
+      {
+        "id": "soe-batch2-grid-sgcc-computer-2027",
+        "title": "考试大纲-计算机类（2027版）",
+        "url": "https://zhaopin.sgcc.com.cn/sgcchr/static/unitPart.html?bullet_id=dcefb56d04714dc4b488d0a7a204bf76",
+        "attachmentName": "考试大纲-计算机类（2027版）",
+        "documentTitle": "国家电网有限公司高校毕业生招聘考试大纲（计算机类专业2027版）",
+        "articles": [
+          "soe-grid-tech-exam-overview"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-user-supplied-official-full-text",
+        "primary": true,
+        "publisher": "国家电网有限公司",
+        "recruitmentCycle": "2027年高校毕业生招聘",
+        "access": {
+          "date": "2026-11-09",
+          "method": "读取用户提供的官方PDF全文抽取，按专业方向和序号逐点核对；URL指向公告页，以附件名称定位，不虚构附件直链。",
+          "bodyRead": true,
+          "pages": 3,
+          "suppliedText": {
+            "name": "computer.txt",
+            "bytes": 2937,
+            "sha256": "e31ca6f094efa0152ab784e9f9c0f4aa476aa5e6784c2940ed4e07fb0472c01c"
+          },
+          "suppliedPdf": {
+            "name": "computer.pdf",
+            "bytes": 840297,
+            "sha256": "8446d58940ee274cd675f5b389ce9dee9d65d3bb9ad92df11a1b2e966ea00bb4"
+          },
+          "searchExcerptUsedAsEvidence": false
+        },
+        "usedClaims": [
+          "公共与行业知识20%、专业知识80%，未给出专业方向内部细分占比",
+          "公共部分含一般能力4项、企业文化、电力与能源战略、形势与政策",
+          "大纲明确指向公共与行业知识题库；本文只说明存在与用途，不摘录题目",
+          "题型、题量、作答时长、每题分值、满分在所引大纲中未公开",
+          "7个专业方向、48个知识点，按原方向与序号完整列出",
+          "信息新技术包括人工智能、物联网、云计算、大数据",
+          "信息安全分散在数据库系统、计算机网络、操作系统等方向，非单独专业方向"
+        ]
+      },
+      {
+        "id": "soe-batch2-grid-sgcc-telecom-2027",
+        "title": "考试大纲-通信类（2027版）",
+        "url": "https://zhaopin.sgcc.com.cn/sgcchr/static/unitPart.html?bullet_id=dcefb56d04714dc4b488d0a7a204bf76",
+        "attachmentName": "考试大纲-通信类（2027版）",
+        "documentTitle": "国家电网有限公司高校毕业生招聘考试大纲（通信类专业2027版）",
+        "articles": [
+          "soe-grid-tech-exam-overview"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-user-supplied-official-full-text",
+        "primary": true,
+        "publisher": "国家电网有限公司",
+        "recruitmentCycle": "2027年高校毕业生招聘",
+        "access": {
+          "date": "2026-11-09",
+          "method": "读取用户提供的官方PDF全文抽取，按专业方向和序号逐点核对；URL指向公告页，以附件名称定位，不虚构附件直链。",
+          "bodyRead": true,
+          "pages": 3,
+          "suppliedText": {
+            "name": "telecom.txt",
+            "bytes": 2715,
+            "sha256": "8e2a00f5c0e04a901dc26bec2bfb2d7a8f9130ba950615a2a14b367d5e92a264"
+          },
+          "suppliedPdf": {
+            "name": "telecom.pdf",
+            "bytes": 860025,
+            "sha256": "cd0f1b63cec564dde8bb8646e4f7ffe48244255d0210a3f73eae088881e0a852"
+          },
+          "searchExcerptUsedAsEvidence": false
+        },
+        "usedClaims": [
+          "公共与行业知识20%、专业知识80%，未给出专业方向内部细分占比",
+          "公共部分含一般能力4项、企业文化、电力与能源战略、形势与政策",
+          "大纲明确指向公共与行业知识题库；本文只说明存在与用途，不摘录题目",
+          "题型、题量、作答时长、每题分值、满分在所引大纲中未公开",
+          "4个专业方向、32个知识点，按原方向与序号完整列出",
+          "第15点保留原文EOPN，并注明疑为EPON"
+        ]
+      },
+      {
+        "id": "soe-batch2-grid-csg-2026",
+        "title": "中国南方电网有限责任公司2026年校园招聘公告",
+        "url": "https://zhaopin.csg.cn/#/notice-details?id=F06B9E154AAC433BBEAD551010AE6321&recuitType=1&back=1",
+        "articles": [
+          "soe-grid-tech-exam-overview"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "publisher": "南方电网员工招聘系统",
+        "attributedAuthor": "南方电网公司人力资源部",
+        "publishedAt": "2025-10-17",
+        "recruitmentCycle": "2026年校园招聘",
+        "access": {
+          "date": "2026-11-09",
+          "method": "Lightpanda CLI：Markdown 全文及附件锚点HTML，networkidle，8秒有界等待",
+          "httpStatus": 200,
+          "bodyRead": true,
+          "searchExcerptUsedAsEvidence": false,
+          "attachment": {
+            "title": "南方电网公司2026年校园招聘笔试大纲.pdf",
+            "accessResult": "官方页面附件锚点已观察；PDF工具不能打开；直接读取返回HTTP403，已停止，未通过其他主机、浏览器或请求参数绕过",
+            "used": false
+          }
+        },
+        "usedClaims": [
+          "统一组织实施，一般采用计算机考试（闭卷）模式",
+          "范围为综合知识60%、专业知识40%",
+          "专业知识按照招聘岗位对应的笔试试卷类别划分",
+          "正文没有定义该占比究竟按题数还是分值计算",
+          "统一笔试分两次，暂定2025年12月上旬及2026年3月，另行通知具体时间"
+        ]
+      },
+      {
+        "id": "soe-batch2-telecom-mobile-2027",
+        "title": "中国移动2027校园招聘启动",
+        "url": "http://www.sasac.gov.cn/n2588035/n2588325/n2588350/c35884240/content.html",
+        "articles": [
+          "soe-telecom-tech-exam-overview"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "publisher": "国务院国资委网站",
+        "attributedAuthor": "中国移动通信集团有限公司",
+        "publishedAt": "2026-09-08",
+        "recruitmentCycle": "2027校园招聘",
+        "access": {
+          "date": "2026-11-09",
+          "method": "Lightpanda CLI读取公告页及图片URL；直接读取该官方公开图片，内存分块后用Apple Vision识别正文",
+          "httpStatus": 200,
+          "bodyRead": true,
+          "image": {
+            "url": "http://www.sasac.gov.cn/n2588035/n2588325/n2588350/c35884240/part/35884252.png",
+            "httpStatus": 200,
+            "bytes": 6250403,
+            "width": 1000,
+            "height": 13820,
+            "readingMethod": "CGImage在内存按1500像素高度分段，VNRecognizeTextRequest accurate，zh-Hans及en-US；逐段读取至海报结尾",
+            "relevantSegments": [
+              {
+                "top": 4500,
+                "content": "技术类岗位包括通信网络、网络信息安全、智算开发、云计算、大数据及AI相关方向"
+              },
+              {
+                "top": 9000,
+                "content": "招聘流程列10月24日在线统一笔试"
+              },
+              {
+                "top": 10500,
+                "content": "具体招聘流程以各单位实际安排为准"
+              }
+            ]
+          },
+          "searchExcerptUsedAsEvidence": false
+        },
+        "usedClaims": [
+          "官方发布日期2026-09-08，招聘年度2027",
+          "招聘技术方向属于岗位清单，非考试大纲",
+          "计划流程列在线统一笔试及10月24日，并保留单位实际安排限定"
+        ]
+      },
+      {
+        "id": "soe-batch2-telecom-ct-2027",
+        "title": "中国电信集团2027年度校园招聘全面启动",
+        "url": "http://www.sasac.gov.cn/n2588035/n2588325/n2588350/c35816071/content.html",
+        "articles": [
+          "soe-telecom-tech-exam-overview"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "publisher": "国务院国资委网站",
+        "attributedAuthor": "中国电信集团有限公司",
+        "publishedAt": "2026-08-27",
+        "recruitmentCycle": "2027年度校园招聘",
+        "access": {
+          "date": "2026-11-09",
+          "method": "Lightpanda CLI读取公告页及图片URL；直接读取该官方公开图片，内存分块后用Apple Vision识别正文",
+          "httpStatus": 200,
+          "bodyRead": true,
+          "image": {
+            "url": "http://www.sasac.gov.cn/n2588035/n2588325/n2588350/c35816071/part/35816083.jpeg",
+            "httpStatus": 200,
+            "bytes": 9979581,
+            "width": 1080,
+            "height": 15752,
+            "readingMethod": "CGImage在内存按1500像素高度分段，VNRecognizeTextRequest accurate，zh-Hans及en-US；逐段读取至海报结尾",
+            "relevantSegments": [
+              {
+                "top": 6000,
+                "content": "2027届毕业生及符合岗位要求的2026届未就业毕业生"
+              },
+              {
+                "top": 7500,
+                "content": "岗位分类及网上报名、简历筛选、笔试面试、确定录用、签署三方协议等招聘流程"
+              }
+            ]
+          },
+          "searchExcerptUsedAsEvidence": false
+        },
+        "usedClaims": [
+          "官方发布日期2026-08-27，招聘年度2027",
+          "列出企业信息化、网发建设、网络维护与服务支撑、研发、产数等招聘类别",
+          "流程有笔试面试，未列卷内题型题量"
+        ]
+      },
+      {
+        "id": "soe-batch2-telecom-ct-notice-current",
+        "title": "中国电信招聘网站：招聘须知",
+        "url": "https://job.chinatelecom.com.cn/wt/TELE/web/index?brandCode=1",
+        "articles": [
+          "soe-telecom-tech-exam-overview"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "publisher": "中国电信招聘网站",
+        "publishedAt": null,
+        "recruitmentCycle": "本次实际读取的2027届招聘须知",
+        "access": {
+          "date": "2026-11-09",
+          "method": "Lightpanda原生MCP：导航、networkidle、观察HTML后点击已观察的招聘须知按钮，读取并以extract提取.recruitment-notice-content",
+          "httpStatus": 200,
+          "bodyRead": true,
+          "requiresLogin": false,
+          "searchExcerptUsedAsEvidence": false
+        },
+        "usedClaims": [
+          "集团秋季集中组织线上统一笔试，部分单位参与，具体以后续通知为准",
+          "除此之外，所属分子公司按招聘计划自行组织笔试面试",
+          "各单位按简历筛选情况安排，通过电子邮件或短信通知，可查招聘网站通告"
+        ]
+      },
+      {
+        "id": "soe-batch2-telecom-unicom-entry",
+        "title": "中国联通官方校园招聘入口",
+        "url": "https://www.chinaunicom.com.cn/46/menu01/528/column06",
+        "articles": [
+          "soe-telecom-tech-exam-overview"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "publisher": "中国联通官网",
+        "publishedAt": null,
+        "recruitmentCycle": "当前页面显示2027届校园招聘",
+        "access": {
+          "date": "2026-11-09",
+          "method": "Lightpanda CLI：Markdown及HTML，networkidle",
+          "httpStatus": 200,
+          "bodyRead": true,
+          "searchExcerptUsedAsEvidence": false,
+          "imageAccess": "官网海报图片返回HTTP406，已停止读取，未绕过，也未从海报推断考试安排"
+        },
+        "usedClaims": [
+          "可读官方入口显示2027届校园招聘并链接招聘投递平台",
+          "本次未取得2025–2026发布、可核验正文的联通官方考试说明；不写具体考试结构"
+        ]
+      },
+      {
+        "id": "soe-batch2-c-standard",
+        "title": "WG14 N1570: C11 committee draft",
+        "url": "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf",
+        "articles": [
+          "soe-c-language-mcq"
+        ],
+        "verifiedAt": "2026-11-09T10:29:15.754Z",
+        "status": "verified-primary-content",
+        "primary": true,
+        "access": {
+          "method": "Built-in PDF reader; parsed 701 pages; relevant clauses located by full-text search",
+          "httpStatus": null
+        }
+      },
+      {
+        "id": "soe-batch2-c-pointer-arithmetic",
+        "title": "GNU C Language Manual: Pointer Arithmetic",
+        "url": "https://www.gnu.org/software/c-intro-and-ref/manual/html_node/Pointer-Arithmetic.html",
+        "articles": [
+          "soe-c-language-mcq"
+        ],
+        "verifiedAt": "2026-11-09T10:29:15.755Z",
+        "status": "verified-primary-content",
+        "primary": true,
+        "access": {
+          "method": "Lightpanda CLI rendered Markdown",
+          "httpStatus": 200
+        }
+      },
+      {
+        "id": "soe-batch2-c-multidimensional",
+        "title": "GNU C Language Manual: Multidimensional Arrays",
+        "url": "https://www.gnu.org/software/c-intro-and-ref/manual/html_node/Multidimensional-Arrays.html",
+        "articles": [
+          "soe-c-language-mcq"
+        ],
+        "verifiedAt": "2026-11-09T10:29:15.755Z",
+        "status": "verified-primary-content",
+        "primary": true,
+        "access": {
+          "method": "Lightpanda CLI rendered Markdown",
+          "httpStatus": 200
+        }
+      },
+      {
+        "id": "soe-batch2-c-structure-layout",
+        "title": "GNU C Language Manual: Structure Layout",
+        "url": "https://www.gnu.org/software/c-intro-and-ref/manual/html_node/Structure-Layout.html",
+        "articles": [
+          "soe-c-language-mcq"
+        ],
+        "verifiedAt": "2026-11-09T10:29:15.755Z",
+        "status": "verified-primary-content",
+        "primary": true,
+        "access": {
+          "method": "Lightpanda CLI rendered Markdown",
+          "httpStatus": 200
+        }
+      },
+      {
+        "id": "soe-batch2-c-allocation",
+        "title": "GNU C Language Manual: Dynamic Memory Allocation",
+        "url": "https://www.gnu.org/software/c-intro-and-ref/manual/html_node/Dynamic-Memory-Allocation.html",
+        "articles": [
+          "soe-c-language-mcq"
+        ],
+        "verifiedAt": "2026-11-09T10:29:15.755Z",
+        "status": "verified-primary-content",
+        "primary": true,
+        "access": {
+          "method": "Lightpanda CLI rendered Markdown",
+          "httpStatus": 200
+        }
+      },
+      {
+        "id": "soe-batch2-c-bounds",
+        "title": "SEI CERT C: ARR30-C",
+        "url": "https://cmu-sei.github.io/secure-coding-standards/sei-cert-c-coding-standard/rules/arrays-arr/arr30-c/",
+        "articles": [
+          "soe-c-language-mcq"
+        ],
+        "verifiedAt": "2026-11-09T10:29:15.755Z",
+        "status": "verified-primary-content",
+        "primary": true,
+        "access": {
+          "method": "Lightpanda CLI rendered Markdown and built-in text reader",
+          "httpStatus": 200
+        }
+      },
+      {
+        "id": "soe-batch2-jls8",
+        "title": "jls8",
+        "url": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-8.html",
+        "articles": [
+          "soe-java-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "Java SE 21",
+        "access": {
+          "method": "Lightpanda CLI fetch; actual markdown body read",
+          "httpStatus": 200,
+          "error": null,
+          "bodyChars": 270587,
+          "bodyMarkdownSha256": "80578d996e8fbd2fb3c0afe0d700e6556e7df6cefce5478a047f24fd41a61573"
+        },
+        "readFacts": null
+      },
+      {
+        "id": "soe-batch2-jls11",
+        "title": "jls11",
+        "url": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-11.html",
+        "articles": [
+          "soe-java-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "Java SE 21",
+        "access": {
+          "method": "Lightpanda CLI fetch; actual markdown body read",
+          "httpStatus": 200,
+          "error": null,
+          "bodyChars": 35015,
+          "bodyMarkdownSha256": "442e6dea6cb004eb9da602ecf32f9b4dbd8f8c1f1323c77b7126f7439f8a9ad2"
+        },
+        "readFacts": null
+      },
+      {
+        "id": "soe-batch2-jls14",
+        "title": "jls14",
+        "url": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-14.html",
+        "articles": [
+          "soe-java-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "Java SE 21",
+        "access": {
+          "method": "Lightpanda CLI fetch; actual markdown body read",
+          "httpStatus": 200,
+          "error": null,
+          "bodyChars": 193345,
+          "bodyMarkdownSha256": "a7d4efa054c633b0c2dcff4eb43d18b4f07d3b0ae712b718495da6c5c8b0a3b0"
+        },
+        "readFacts": null
+      },
+      {
+        "id": "soe-batch2-jls15",
+        "title": "jls15",
+        "url": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-15.html",
+        "articles": [
+          "soe-java-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "Java SE 21",
+        "access": {
+          "method": "Lightpanda CLI fetch; actual markdown body read",
+          "httpStatus": 200,
+          "error": null,
+          "bodyChars": 417944,
+          "bodyMarkdownSha256": "ba2871e8f42938cb2311386fe4771f87eabd5b6f340bcbd2e0864586bd3c8d77"
+        },
+        "readFacts": null
+      },
+      {
+        "id": "soe-batch2-jls12",
+        "title": "jls12",
+        "url": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-12.html",
+        "articles": [
+          "soe-java-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "Java SE 21",
+        "access": {
+          "method": "Lightpanda CLI fetch; actual markdown body read",
+          "httpStatus": 200,
+          "error": null,
+          "bodyChars": 64592,
+          "bodyMarkdownSha256": "9339ef469ae03a576ba51de623093ceef419dc37788dd2867677a550691f3c78"
+        },
+        "readFacts": null
+      },
+      {
+        "id": "soe-batch2-string",
+        "title": "string",
+        "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html",
+        "articles": [
+          "soe-java-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "Java SE 21",
+        "access": {
+          "method": "Lightpanda CLI fetch; actual markdown body read",
+          "httpStatus": 200,
+          "error": null,
+          "bodyChars": 185124,
+          "bodyMarkdownSha256": "d793d569df274732f966199a49c2743a9f5c2643dc36dc1577773f20b83510bc"
+        },
+        "readFacts": null
+      },
+      {
+        "id": "soe-batch2-list",
+        "title": "list",
+        "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html",
+        "articles": [
+          "soe-java-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "Java SE 21",
+        "access": {
+          "method": "Lightpanda CLI fetch; actual markdown body read",
+          "httpStatus": 200,
+          "error": null,
+          "bodyChars": 101176,
+          "bodyMarkdownSha256": "857df4e11cfe00e6454190cd8d930e071c06d1b876b1082d962f30a4112dea29"
+        },
+        "readFacts": null
+      },
+      {
+        "id": "soe-batch2-arrays",
+        "title": "arrays",
+        "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Arrays.html",
+        "articles": [
+          "soe-java-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "Java SE 21",
+        "access": {
+          "method": "Lightpanda CLI fetch; actual markdown body read",
+          "httpStatus": 200,
+          "error": null,
+          "bodyChars": 394485,
+          "bodyMarkdownSha256": "07aba312fa18c0bb56514d5da8692a7119fae91859995248f8eed800dc9d277a"
+        },
+        "readFacts": null
+      },
+      {
+        "id": "soe-batch2-arraylist",
+        "title": "arraylist",
+        "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html",
+        "articles": [
+          "soe-java-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "Java SE 21",
+        "access": {
+          "method": "Lightpanda CLI fetch; actual markdown body read",
+          "httpStatus": 200,
+          "error": null,
+          "bodyChars": 81284,
+          "bodyMarkdownSha256": "a6f3d20dcb88f1b3d1794bde86091aaf1fe3fdaa1ee6f82ee53fc4d6719669f8"
+        },
+        "readFacts": null
+      },
+      {
+        "id": "soe-batch2-hashset",
+        "title": "hashset",
+        "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/HashSet.html",
+        "articles": [
+          "soe-java-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "Java SE 21",
+        "access": {
+          "method": "Lightpanda CLI fetch; actual markdown body read",
+          "httpStatus": 200,
+          "error": null,
+          "bodyChars": 42098,
+          "bodyMarkdownSha256": "1002da0fc5ea5f0b13e8e432628219c2a1032f4c3d4269b2191f68032b023547"
+        },
+        "readFacts": null
+      },
+      {
+        "id": "soe-batch2-hashmap",
+        "title": "hashmap",
+        "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/HashMap.html",
+        "articles": [
+          "soe-java-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "Java SE 21",
+        "access": {
+          "method": "Lightpanda CLI fetch; actual markdown body read",
+          "httpStatus": 200,
+          "error": null,
+          "bodyChars": 61785,
+          "bodyMarkdownSha256": "04f5d83dcfbdebd8ed0e7b51433a703d59ce57e43748fd7ec6f2fff082776093"
+        },
+        "readFacts": null
+      },
+      {
+        "id": "soe-batch2-jep122",
+        "title": "jep122",
+        "url": "https://openjdk.org/jeps/122",
+        "articles": [
+          "soe-java-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "JDK 8 delivered HotSpot implementation JEP",
+        "access": {
+          "method": "Lightpanda CLI fetch; actual markdown body read",
+          "httpStatus": 200,
+          "error": null,
+          "bodyChars": 11468,
+          "bodyMarkdownSha256": "2cab32deca898f40a1f02589b080d94e56a4c3cd4376591288dec17b4f394c2f"
+        },
+        "readFacts": null
+      },
+      {
+        "id": "soe-batch2-java7-oom",
+        "title": "java7-oom",
+        "url": "https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/memleaks.html",
+        "articles": [
+          "soe-java-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "HotSpot JDK 7 historical troubleshooting guide",
+        "access": {
+          "method": "Lightpanda CLI fetch; actual markdown body read",
+          "httpStatus": 200,
+          "error": null,
+          "bodyChars": 39845,
+          "bodyMarkdownSha256": "598ace5399034eb9d2d1cc49a5a69d2f410ae0d5b4474026694a99f3232b1649"
+        },
+        "readFacts": null
+      },
+      {
+        "id": "soe-batch2-javaoom",
+        "title": "javaoom",
+        "url": "https://docs.oracle.com/en/java/javase/21/troubleshoot/troubleshooting-memory-leaks.html",
+        "articles": [
+          "soe-java-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "Java SE 21",
+        "access": {
+          "method": "Lightpanda CLI fetch; actual markdown body read",
+          "httpStatus": 200,
+          "error": null,
+          "bodyChars": 52306,
+          "bodyMarkdownSha256": "8ae48d552aa32f3b671ec450e47a5851b4df858e06e00cec7f59b47e04be9fd4"
+        },
+        "readFacts": null
+      },
+      {
+        "id": "soe-batch2-naming-conventions",
+        "title": "naming-conventions",
+        "url": "https://alibaba.github.io/Alibaba-Java-Coding-Guidelines/",
+        "articles": [
+          "soe-java-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "rolling primary page, read 2026-11-09",
+        "access": {
+          "method": "Lightpanda CLI fetch; actual markdown body read",
+          "httpStatus": 200,
+          "error": null,
+          "bodyChars": 83780,
+          "bodyMarkdownSha256": "e6c655b04dfcc76ac2eab48126d09992a85138c7c4f7c8671b1fc2e2e2e6e88d"
+        },
+        "readFacts": null
+      },
+      {
+        "id": "soe-batch2-fowler-value",
+        "title": "fowler-value",
+        "url": "https://martinfowler.com/bliki/ValueObject.html",
+        "articles": [
+          "soe-java-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "rolling primary page, read 2026-11-09",
+        "access": {
+          "method": "Lightpanda CLI fetch; actual markdown body read",
+          "httpStatus": 200,
+          "error": null,
+          "bodyChars": 14831,
+          "bodyMarkdownSha256": "0b336658733a9df2a5c36d3704a50b7cabd696c3dbb8f9b68dd53ba477ad61c2"
+        },
+        "readFacts": null
+      },
+      {
+        "id": "soe-batch2-owasp-crypto",
+        "title": "owasp-crypto",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html",
+        "articles": [
+          "soe-information-security-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "rolling primary page, read 2026-11-09",
+        "access": {
+          "method": "Lightpanda CLI fetch; actual markdown body read",
+          "httpStatus": 200,
+          "error": null,
+          "bodyChars": 47543,
+          "bodyMarkdownSha256": "fbbed3cb422153f744206fb3c8f69275e359f17fa8a6922b587812f068d7e349"
+        },
+        "readFacts": null
+      },
+      {
+        "id": "soe-batch2-owasp-key",
+        "title": "owasp-key",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Key_Management_Cheat_Sheet.html",
+        "articles": [
+          "soe-information-security-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "rolling primary page, read 2026-11-09",
+        "access": {
+          "method": "Lightpanda CLI fetch; actual markdown body read",
+          "httpStatus": 200,
+          "error": null,
+          "bodyChars": 60865,
+          "bodyMarkdownSha256": "555a883feeae65e680e2c1d2f960fcc16e87607687a6b1fc9f0c634d1d075cd6"
+        },
+        "readFacts": null
+      },
+      {
+        "id": "soe-batch2-owasp-authz",
+        "title": "owasp-authz",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+        "articles": [
+          "soe-information-security-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "rolling primary page, read 2026-11-09",
+        "access": {
+          "method": "Lightpanda CLI fetch; actual markdown body read",
+          "httpStatus": 200,
+          "error": null,
+          "bodyChars": 56703,
+          "bodyMarkdownSha256": "2d01d5eb856ee6cc135fc7973e1acaa3be44139bf794f4267ec3b8381d18043a"
+        },
+        "readFacts": null
+      },
+      {
+        "id": "soe-batch2-owasp-sqli",
+        "title": "owasp-sqli",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html",
+        "articles": [
+          "soe-information-security-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "rolling primary page, read 2026-11-09",
+        "access": {
+          "method": "Lightpanda CLI fetch; actual markdown body read",
+          "httpStatus": 200,
+          "error": null,
+          "bodyChars": 40814,
+          "bodyMarkdownSha256": "4eaa70cda911c491bcf9ffa76364fce47c30dc530e4f9b52badcd5f5cf6484f8"
+        },
+        "readFacts": null
+      },
+      {
+        "id": "soe-batch2-owasp-xss",
+        "title": "owasp-xss",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html",
+        "articles": [
+          "soe-information-security-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "rolling primary page, read 2026-11-09",
+        "access": {
+          "method": "Lightpanda CLI fetch; actual markdown body read",
+          "httpStatus": 200,
+          "error": null,
+          "bodyChars": 64905,
+          "bodyMarkdownSha256": "38e1e1d2a8950b5eb3308ad37d9ff44bf1b03b60a8197b8d3260c420fe52cbaa"
+        },
+        "readFacts": null
+      },
+      {
+        "id": "soe-batch2-owasp-csrf",
+        "title": "owasp-csrf",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html",
+        "articles": [
+          "soe-information-security-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "rolling primary page, read 2026-11-09",
+        "access": {
+          "method": "Lightpanda CLI fetch; actual markdown body read",
+          "httpStatus": 200,
+          "error": null,
+          "bodyChars": 94680,
+          "bodyMarkdownSha256": "7bb1107013b456d863bfaa088714485103b6555eb4fe46151a9c113c8d2fddac"
+        },
+        "readFacts": null
+      },
+      {
+        "id": "soe-batch2-owasp-password",
+        "title": "owasp-password",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html",
+        "articles": [
+          "soe-information-security-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "rolling primary page, read 2026-11-09",
+        "access": {
+          "method": "Lightpanda CLI fetch; actual markdown body read",
+          "httpStatus": 200,
+          "error": null,
+          "bodyChars": 49642,
+          "bodyMarkdownSha256": "91c4e1e4f767545ae03e519fbe210014d8c03466a215f629042ab4b5d47da0b0"
+        },
+        "readFacts": null
+      },
+      {
+        "id": "soe-batch2-nist-fips199",
+        "title": "nist-fips199",
+        "url": "https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.199.pdf",
+        "articles": [
+          "soe-information-security-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "FIPS 199, February 2004",
+        "access": {
+          "method": "web open; official full-text body read",
+          "httpStatus": null,
+          "error": null,
+          "bodyChars": null,
+          "bodyMarkdownSha256": null
+        },
+        "readFacts": null
+      },
+      {
+        "id": "soe-batch2-nist-hash",
+        "title": "nist-hash",
+        "url": "https://csrc.nist.gov/glossary/term/cryptographic_hash_function",
+        "articles": [
+          "soe-information-security-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "rolling official glossary, includes FIPS 186-5 definitions",
+        "access": {
+          "method": "web open; official full-text body read",
+          "httpStatus": null,
+          "error": null,
+          "bodyChars": null,
+          "bodyMarkdownSha256": null
+        },
+        "readFacts": null
+      },
+      {
+        "id": "soe-batch2-nist-signature",
+        "title": "nist-signature",
+        "url": "https://csrc.nist.gov/glossary/term/digital_signature",
+        "articles": [
+          "soe-information-security-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "rolling official glossary, includes FIPS 186-5 and SP 800-63-4 definitions",
+        "access": {
+          "method": "web open; official full-text body read",
+          "httpStatus": null,
+          "error": null,
+          "bodyChars": null,
+          "bodyMarkdownSha256": null
+        },
+        "readFacts": null
+      },
+      {
+        "id": "soe-batch2-mit-tree",
+        "title": "mit-tree",
+        "url": "https://courses.csail.mit.edu/6.046/fall03/handouts/pset4-sol.pdf",
+        "articles": [
+          "soe-data-structures-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "MIT 6.046J/18.410J, Handout 18, 2003-10-24",
+        "access": {
+          "method": "web PDF text read, PDF pages 1-2",
+          "actuallyRead": true
+        },
+        "readFacts": [
+          "Problem 4-1: preorder+inorder reconstruction; preorder+postorder ambiguity; binary search tree extra constraint"
+        ]
+      },
+      {
+        "id": "soe-batch2-princeton-huffman",
+        "title": "princeton-huffman",
+        "url": "https://algs4.cs.princeton.edu/55compression/",
+        "articles": [
+          "soe-data-structures-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "Algorithms, 4th Edition, authors Robert Sedgewick and Kevin Wayne",
+        "access": {
+          "method": "Lightpanda HTTP 200 Markdown",
+          "actuallyRead": true
+        },
+        "readFacts": [
+          "Variable-length codes: prefix-free requirement; Huffman optimality; left/right swaps yield different codewords with same code lengths"
+        ]
+      },
+      {
+        "id": "soe-batch2-princeton-mst",
+        "title": "princeton-mst",
+        "url": "https://algs4.cs.princeton.edu/43mst/",
+        "articles": [
+          "soe-data-structures-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "Algorithms, 4th Edition",
+        "access": {
+          "method": "Lightpanda HTTP 200 Markdown, one bounded retry after initial empty HTTP 0 result",
+          "actuallyRead": true
+        },
+        "readFacts": [
+          "Connectedness and minimum spanning forest; equal weights allowed; distinct weights sufficient for unique MST; Prim and Kruskal rules"
+        ]
+      },
+      {
+        "id": "soe-batch2-princeton-binary",
+        "title": "princeton-binary",
+        "url": "https://algs4.cs.princeton.edu/11model/BinarySearch.java.html",
+        "articles": [
+          "soe-data-structures-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "Algorithms, 4th Edition; page footer last updated 2022-08-11",
+        "access": {
+          "method": "Lightpanda HTTP 200 Markdown",
+          "actuallyRead": true
+        },
+        "readFacts": [
+          "indexOf requires ascending input; inclusive lo/hi; floor midpoint; comparison expressions differ from midpoint-key visit count"
+        ]
+      },
+      {
+        "id": "soe-batch2-princeton-merge",
+        "title": "princeton-merge",
+        "url": "https://algs4.cs.princeton.edu/22mergesort/",
+        "articles": [
+          "soe-data-structures-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "Algorithms, 4th Edition",
+        "access": {
+          "method": "Lightpanda HTTP 200 Markdown",
+          "actuallyRead": true
+        },
+        "readFacts": [
+          "Merge two sorted arrays; divide-sort-merge mechanism; two recursive halves plus linear merge; N log N guarantee"
+        ]
+      },
+      {
+        "id": "soe-batch2-uw-recurrences",
+        "title": "uw-recurrences",
+        "url": "https://courses.cs.washington.edu/courses/cse332/26wi/summaries/recurrences.html",
+        "articles": [
+          "soe-data-structures-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "University of Washington CSE 332, Winter 2026; page footer 2026-02-12",
+        "access": {
+          "method": "Lightpanda HTTP 200 Markdown",
+          "actuallyRead": true
+        },
+        "readFacts": [
+          "One-smaller versus fractional-size recursion; identify number of recursive calls and non-recursive work; tree method and per-level sums"
+        ]
+      },
+      {
+        "id": "soe-batch2-cmu-process",
+        "title": "cmu-process",
+        "url": "https://users.ece.cmu.edu/~koopman/lectures/ece642/03_SoftwareProcess.pdf",
+        "articles": [
+          "soe-software-engineering-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "CMU 18-642, Philip Koopman, copyright 2020",
+        "access": {
+          "method": "web PDF text read, slides 3, 6, 8, 10",
+          "actuallyRead": true
+        },
+        "readFacts": [
+          "Waterfall includes backtracking; V traceability; detailed design to unit tests, HLD to integration, SRS to software/system tests, PRS to acceptance"
+        ]
+      },
+      {
+        "id": "soe-batch2-cmu-spiral",
+        "title": "cmu-spiral",
+        "url": "https://www.sei.cmu.edu/library/spiral-development-experience-principles-and-refinements-spiral-development-workshop-february-9-2000/",
+        "articles": [
+          "soe-software-engineering-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "CMU/SEI-2000-SR-008, 2000-07-01",
+        "access": {
+          "method": "Lightpanda HTTP 200 Markdown",
+          "actuallyRead": true
+        },
+        "readFacts": [
+          "Official report abstract characterizes cyclic development with active risk reduction; no claim that spiral is merely repeated waterfall"
+        ]
+      },
+      {
+        "id": "soe-batch2-cmu-vmodel",
+        "title": "cmu-vmodel",
+        "url": "https://sei.cmu.edu/blog/using-v-models-for-testing/",
+        "articles": [
+          "soe-software-engineering-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "Donald Firesmith, CMU/SEI, 2013-11-11",
+        "access": {
+          "method": "Lightpanda HTTP 200 Markdown",
+          "actuallyRead": true
+        },
+        "readFacts": [
+          "Traditional V links earlier work products to later test activities; simplistic sequential depiction; iterative/concurrent activities; early test design and left-side verification"
+        ]
+      },
+      {
+        "id": "soe-batch2-omg-uml",
+        "title": "omg-uml",
+        "url": "https://www.omg.org/spec/UML/2.5.1/PDF",
+        "articles": [
+          "soe-software-engineering-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "OMG UML 2.5.1, formal/2017-12-05, December 2017",
+        "access": {
+          "method": "Downloaded official PDF; extracted using pypdf 3.17.4; read targeted normative clauses and relevant chapter summaries",
+          "actuallyRead": true
+        },
+        "readFacts": [
+          "7.7 dependency client to supplier and realization; 9.2 generalization; 9.5 shared versus composite aggregation and removal exception; 11.5 notation and omitted multiplicity; 17 interactions; 18.1 include/extend direction; Annex A 14 diagram taxonomy"
+        ]
+      },
+      {
+        "id": "soe-batch2-mit-testing",
+        "title": "mit-testing",
+        "url": "https://ocw.mit.edu/ans7870/6/6.005/s16/classes/03-testing/",
+        "articles": [
+          "soe-software-engineering-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "MIT 6.005, Spring 2016, Reading 3",
+        "access": {
+          "method": "Lightpanda HTTP 200 Markdown",
+          "actuallyRead": true
+        },
+        "readFacts": [
+          "Black-box specification basis versus white-box implementation basis; partitioning/boundaries; statement/branch/path coverage; unit versus integration; regression"
+        ]
+      },
+      {
+        "id": "soe-batch2-istqb-ctfl",
+        "title": "istqb-ctfl",
+        "url": "https://istqb.org/wp-content/uploads/2024/11/ISTQB_CTFL_Syllabus_v4.0.1.pdf",
+        "articles": [
+          "soe-software-engineering-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "ISTQB CTFL v4.0.1, 2024-09-15",
+        "access": {
+          "method": "web PDF text read, 78 pages; selected sections 2.1, 2.2, 3.1, 4.2, 4.3",
+          "actuallyRead": true
+        },
+        "readFacts": [
+          "Early testing under sequential lifecycle; five test levels; test levels and types are separate; confirmation versus regression; static versus dynamic; equivalence and boundary methods; branch subsumes statement at 100%"
+        ]
+      },
+      {
+        "id": "soe-batch2-istqb-tta",
+        "title": "istqb-tta",
+        "url": "https://istqb.org/wp-content/uploads/2024/11/ISTQB-CTAL-TTA_Syllabus_v4.0.pdf",
+        "articles": [
+          "soe-software-engineering-mcq"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "version": "ISTQB CTAL-TTA v4.0, 2021-06-30",
+        "access": {
+          "method": "web PDF text read, 59 pages, sections 2.3-2.5 and 2.8",
+          "actuallyRead": true
+        },
+        "readFacts": [
+          "Whole decision versus atomic conditions; short-circuit may skip atomic condition evaluation; multiple-condition combinations; coverage subsumption; not described as latest syllabus"
+        ]
+      },
+      {
+        "id": "soe-batch2-papers-bus-basic",
+        "title": "华盛顿大学课程：系统总线",
+        "url": "https://courses.cs.washington.edu/courses/cse451/TLKCopy/basics/hw.html",
+        "articles": [
+          "soe-cs-self-test-a",
+          "soe-cs-self-test-b"
+        ],
+        "questions": [
+          "A01",
+          "B01"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "access": {
+          "date": "2026-11-09",
+          "method": "Lightpanda CLI Markdown, DOMContentLoaded, 6s wait, 15s hard deadline; actual supporting body read",
+          "httpStatus": 200,
+          "bodyRead": true,
+          "bodyCharacters": 15695
+        },
+        "usedClaims": [
+          "传统模型中地址、数据与控制总线的逻辑职责。"
+        ]
+      },
+      {
+        "id": "soe-batch2-papers-partition",
+        "title": "PostgreSQL 18：Table Partitioning",
+        "url": "https://www.postgresql.org/docs/18/ddl-partitioning.html",
+        "articles": [
+          "soe-cs-self-test-a",
+          "soe-cs-self-test-b"
+        ],
+        "questions": [
+          "A06",
+          "B06"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "access": {
+          "date": "2026-11-09",
+          "method": "Lightpanda CLI Markdown, DOMContentLoaded, 6s wait, 15s hard deadline; actual supporting body read",
+          "httpStatus": 200,
+          "bodyRead": true,
+          "bodyCharacters": 45140
+        },
+        "usedClaims": [
+          "RANGE半开边界、分区裁剪及父表唯一约束的分区键限制。"
+        ]
+      },
+      {
+        "id": "soe-batch2-papers-index",
+        "title": "PostgreSQL 18：Multicolumn Indexes",
+        "url": "https://www.postgresql.org/docs/18/indexes-multicolumn.html",
+        "articles": [
+          "soe-cs-self-test-b"
+        ],
+        "questions": [
+          "B05"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "access": {
+          "date": "2026-11-09",
+          "method": "Lightpanda CLI Markdown, DOMContentLoaded, 6s wait, 15s hard deadline; actual supporting body read",
+          "httpStatus": 200,
+          "bodyRead": true,
+          "bodyCharacters": 5865
+        },
+        "usedClaims": [
+          "前导等值、首个范围列与右侧过滤条件的边界，skip scan不被绝对排除。"
+        ]
+      },
+      {
+        "id": "soe-batch2-papers-fstab",
+        "title": "Linux fstab(5)",
+        "url": "https://man7.org/linux/man-pages/man5/fstab.5.html",
+        "articles": [
+          "soe-cs-self-test-a",
+          "soe-cs-self-test-b"
+        ],
+        "questions": [
+          "A08",
+          "B09"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "access": {
+          "date": "2026-11-09",
+          "method": "Lightpanda CLI Markdown, DOMContentLoaded, 6s wait, 15s hard deadline; actual supporting body read",
+          "httpStatus": 200,
+          "bodyRead": true,
+          "bodyCharacters": 15580
+        },
+        "usedClaims": [
+          "六字段、dump/fsck序号、noauto对mount -a的作用。"
+        ]
+      },
+      {
+        "id": "soe-batch2-papers-tcp",
+        "title": "RFC 5681：TCP Congestion Control",
+        "url": "https://www.rfc-editor.org/rfc/rfc5681.html",
+        "articles": [
+          "soe-cs-self-test-a",
+          "soe-cs-self-test-b"
+        ],
+        "questions": [
+          "A11",
+          "B11"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "access": {
+          "date": "2026-11-09",
+          "method": "Lightpanda CLI Markdown, DOMContentLoaded, 6s wait, 15s hard deadline; actual supporting body read",
+          "httpStatus": 200,
+          "bodyRead": true,
+          "bodyCharacters": 53740
+        },
+        "usedClaims": [
+          "cwnd/rwnd、slow start/congestion avoidance与超时后FlightSize阈值上限。"
+        ]
+      },
+      {
+        "id": "soe-batch2-papers-raft",
+        "title": "Hyperledger Fabric：The Ordering Service",
+        "url": "https://hyperledger-fabric.readthedocs.io/en/latest/orderer/ordering_service.html",
+        "articles": [
+          "soe-cs-self-test-a",
+          "soe-cs-self-test-b"
+        ],
+        "questions": [
+          "A26",
+          "B26"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "access": {
+          "date": "2026-11-09",
+          "method": "Lightpanda CLI Markdown, DOMContentLoaded, 6s wait, 15s hard deadline; actual supporting body read",
+          "httpStatus": 200,
+          "bodyRead": true,
+          "bodyCharacters": 26447
+        },
+        "usedClaims": [
+          "Raft为CFT，多数派要求与BFT不同。"
+        ]
+      },
+      {
+        "id": "soe-batch2-papers-pow",
+        "title": "Bitcoin: A Peer-to-Peer Electronic Cash System",
+        "url": "https://bitcoin.org/bitcoin.pdf",
+        "articles": [
+          "soe-cs-self-test-a",
+          "soe-cs-self-test-b"
+        ],
+        "questions": [
+          "A26",
+          "B26"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "access": {
+          "date": "2026-11-09",
+          "method": "web primary PDF full-text read, original paper §4",
+          "httpStatus": null,
+          "bodyRead": true
+        },
+        "usedClaims": [
+          "原始论文第4节工作量证明。"
+        ]
+      },
+      {
+        "id": "soe-batch2-papers-pos",
+        "title": "Ethereum：Proof-of-stake",
+        "url": "https://ethereum.org/developers/docs/consensus-mechanisms/pos/",
+        "articles": [
+          "soe-cs-self-test-a",
+          "soe-cs-self-test-b"
+        ],
+        "questions": [
+          "A26",
+          "B26"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "access": {
+          "date": "2026-11-09",
+          "method": "web primary documentation body read; Lightpanda TLS connection failed on one bounded retry, no access-control restriction bypassed",
+          "httpStatus": null,
+          "bodyRead": true
+        },
+        "usedClaims": [
+          "权益质押、验证者与作恶惩罚；不推导所有PoS的统一故障阈值。"
+        ]
+      },
+      {
+        "id": "soe-batch2-papers-saga",
+        "title": "Seata Saga Mode",
+        "url": "https://seata.apache.org/docs/user/mode/saga/",
+        "articles": [
+          "soe-cs-self-test-a",
+          "soe-cs-self-test-b"
+        ],
+        "questions": [
+          "A27",
+          "B27"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "access": {
+          "date": "2026-11-09",
+          "method": "Lightpanda CLI Markdown, DOMContentLoaded, 6s wait, 15s hard deadline; actual supporting body read",
+          "httpStatus": 200,
+          "bodyRead": true,
+          "bodyCharacters": 66335
+        },
+        "usedClaims": [
+          "本地事务提交、业务补偿、隔离限制与失败处理。"
+        ]
+      },
+      {
+        "id": "soe-batch2-papers-tcc",
+        "title": "Seata TCC Mode",
+        "url": "https://seata.apache.org/docs/user/mode/tcc/",
+        "articles": [
+          "soe-cs-self-test-a"
+        ],
+        "questions": [
+          "A27"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "access": {
+          "date": "2026-11-09",
+          "method": "Lightpanda CLI Markdown, DOMContentLoaded, 6s wait, 15s hard deadline; actual supporting body read",
+          "httpStatus": 200,
+          "bodyRead": true,
+          "bodyCharacters": 6813
+        },
+        "usedClaims": [
+          "Try检查预留、Confirm确认、Cancel取消的业务合同。"
+        ]
+      },
+      {
+        "id": "soe-batch2-papers-tcc-fence",
+        "title": "Seata：TCC幂等、空回滚与悬挂",
+        "url": "https://seata.apache.org/blog/seata-tcc-fence/",
+        "articles": [
+          "soe-cs-self-test-b"
+        ],
+        "questions": [
+          "B27"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "access": {
+          "date": "2026-11-09",
+          "method": "Lightpanda CLI Markdown, DOMContentLoaded, 6s wait, 15s hard deadline; actual supporting body read",
+          "httpStatus": 200,
+          "bodyRead": true,
+          "bodyCharacters": 18267
+        },
+        "usedClaims": [
+          "重复Confirm/Cancel、先Cancel后Try及事务状态记录。"
+        ]
+      },
+      {
+        "id": "soe-batch2-papers-docker",
+        "title": "Docker Storage",
+        "url": "https://docs.docker.com/engine/storage/",
+        "articles": [
+          "soe-cs-self-test-a",
+          "soe-cs-self-test-b"
+        ],
+        "questions": [
+          "A28",
+          "B28"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "access": {
+          "date": "2026-11-09",
+          "method": "Lightpanda CLI Markdown, DOMContentLoaded, 6s wait, 15s hard deadline; actual supporting body read",
+          "httpStatus": 200,
+          "bodyRead": true,
+          "bodyCharacters": 5334
+        },
+        "usedClaims": [
+          "容器可写层在容器销毁时丢失，卷与容器生命周期分离。"
+        ]
+      },
+      {
+        "id": "soe-batch2-papers-stateless",
+        "title": "Kubernetes：Run a Stateless Application Using a Deployment",
+        "url": "https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/",
+        "articles": [
+          "soe-cs-self-test-a"
+        ],
+        "questions": [
+          "A28"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "access": {
+          "date": "2026-11-09",
+          "method": "Lightpanda CLI Markdown, DOMContentLoaded, 6s wait, 15s hard deadline; actual supporting body read",
+          "httpStatus": 200,
+          "bodyRead": true,
+          "bodyCharacters": 7523
+        },
+        "usedClaims": [
+          "无状态工作负载与可替换副本的例子。"
+        ]
+      },
+      {
+        "id": "soe-batch2-papers-docker-restart",
+        "title": "Docker：Run your first container",
+        "url": "https://docs.docker.com/learn/content/run-your-first-container/",
+        "articles": [
+          "soe-cs-self-test-b"
+        ],
+        "questions": [
+          "B28"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "access": {
+          "date": "2026-11-09",
+          "method": "Lightpanda CLI Markdown, DOMContentLoaded, 6s wait, 15s hard deadline; actual supporting body read",
+          "httpStatus": 200,
+          "bodyRead": true,
+          "bodyCharacters": 13086
+        },
+        "usedClaims": [
+          "同一容器停止后再启动保留可写层，删除后新建不继承。"
+        ]
+      },
+      {
+        "id": "soe-batch2-papers-federated",
+        "title": "Communication-Efficient Learning of Deep Networks from Decentralized Data",
+        "url": "https://research.google/pubs/communication-efficient-learning-of-deep-networks-from-decentralized-data/",
+        "articles": [
+          "soe-cs-self-test-a",
+          "soe-cs-self-test-b"
+        ],
+        "questions": [
+          "A29",
+          "B29"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "access": {
+          "date": "2026-11-09",
+          "method": "Lightpanda CLI Markdown, DOMContentLoaded, 6s wait, 15s hard deadline; actual supporting body read",
+          "httpStatus": 200,
+          "bodyRead": true,
+          "bodyCharacters": 1246
+        },
+        "usedClaims": [
+          "数据分散、本地更新聚合、非IID与不均衡数据。"
+        ]
+      },
+      {
+        "id": "soe-batch2-papers-federated-privacy",
+        "title": "Google Research：Toward provably private learning from federated data",
+        "url": "https://research.google/blog/toward-provably-private-learning-from-federated-data/",
+        "articles": [
+          "soe-cs-self-test-a",
+          "soe-cs-self-test-b"
+        ],
+        "questions": [
+          "A29",
+          "B29"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "access": {
+          "date": "2026-11-09",
+          "method": "Lightpanda CLI Markdown, DOMContentLoaded, 6s wait, 15s hard deadline; actual supporting body read",
+          "httpStatus": 200,
+          "bodyRead": true,
+          "bodyCharacters": 11363
+        },
+        "usedClaims": [
+          "隐私需要最小化、聚合、差分隐私及威胁模型与可验证保证，名称本身不足。"
+        ]
+      },
+      {
+        "id": "soe-batch2-papers-nfc",
+        "title": "NFC Forum：NFC Technology",
+        "url": "https://nfc-forum.org/learn/nfc-technology/",
+        "articles": [
+          "soe-cs-self-test-a",
+          "soe-cs-self-test-b"
+        ],
+        "questions": [
+          "A30",
+          "B30"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "access": {
+          "date": "2026-11-09",
+          "method": "Lightpanda CLI Markdown, DOMContentLoaded, 6s wait, 15s hard deadline; actual supporting body read",
+          "httpStatus": 200,
+          "bodyRead": true,
+          "bodyCharacters": 9995
+        },
+        "usedClaims": [
+          "NFC厘米级近场。"
+        ]
+      },
+      {
+        "id": "soe-batch2-papers-nb-iot",
+        "title": "GSMA：NB-IoT",
+        "url": "https://www.gsma.com/solutions-and-impact/technologies/internet-of-things/mobile-iot-technology-nb-iot/",
+        "articles": [
+          "soe-cs-self-test-a",
+          "soe-cs-self-test-b"
+        ],
+        "questions": [
+          "A30",
+          "B30"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "access": {
+          "date": "2026-11-09",
+          "method": "Lightpanda CLI Markdown, DOMContentLoaded, 6s wait, 15s hard deadline; actual supporting body read",
+          "httpStatus": 200,
+          "bodyRead": true,
+          "bodyCharacters": 2680
+        },
+        "usedClaims": [
+          "NB-IoT低功耗蜂窝广域覆盖，不给出统一最大米数。"
+        ]
+      },
+      {
+        "id": "soe-batch2-papers-zigbee",
+        "title": "Connectivity Standards Alliance：Zigbee",
+        "url": "https://csa-iot.org/all-solutions/zigbee/",
+        "articles": [
+          "soe-cs-self-test-a",
+          "soe-cs-self-test-b"
+        ],
+        "questions": [
+          "A30",
+          "B30"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "access": {
+          "date": "2026-11-09",
+          "method": "Lightpanda CLI Markdown, DOMContentLoaded, 6s wait, 15s hard deadline; actual supporting body read",
+          "httpStatus": 200,
+          "bodyRead": true,
+          "bodyCharacters": 7768
+        },
+        "usedClaims": [
+          "低功耗mesh与拓扑覆盖，区分单跳和整网。"
+        ]
+      },
+      {
+        "id": "soe-batch2-papers-wifi",
+        "title": "Wi-Fi Alliance：Wi-Fi MAC/PHY",
+        "url": "https://www.wi-fi.org/wi-fi-macphy",
+        "articles": [
+          "soe-cs-self-test-a",
+          "soe-cs-self-test-b"
+        ],
+        "questions": [
+          "A30",
+          "B30"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "access": {
+          "date": "2026-11-09",
+          "method": "Lightpanda CLI Markdown, DOMContentLoaded, 6s wait, 15s hard deadline; actual supporting body read",
+          "httpStatus": 200,
+          "bodyRead": true,
+          "bodyCharacters": 7014
+        },
+        "usedClaims": [
+          "Wi-Fi有多种频段/变体，HaLow约公里级能力不可泛化至所有Wi-Fi。"
+        ]
+      },
+      {
+        "id": "soe-batch2-papers-map",
+        "title": "Java 21 Map API",
+        "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html",
+        "articles": [
+          "soe-cs-self-test-b"
+        ],
+        "questions": [
+          "B16"
+        ],
+        "verifiedAt": "2026-11-09",
+        "status": "verified-primary-content",
+        "primary": true,
+        "access": {
+          "date": "2026-11-09",
+          "method": "Lightpanda CLI Markdown, DOMContentLoaded, 6s wait, 15s hard deadline; actual supporting body read",
+          "httpStatus": 200,
+          "bodyRead": true,
+          "bodyCharacters": 95657
+        },
+        "usedClaims": [
+          "改变影响equals比较的键状态不受Map合同保证。"
+        ]
+      }
+    ],
+    "accessBoundaryNotes": [
+      {
+        "url": "https://zhaopin.sgcc.com.cn/sgcchr/static/unitPart.html?bullet_id=dcefb56d04714dc4b488d0a7a204bf76",
+        "result": "2026-11-09本次Lightpanda读取公告页返回HTTP412，未取得正文；未重试或切换浏览器绕过。公告要点采用用户已提供的摘要，两类大纲采用用户已提供的官方PDF全文抽取，分别记录证据。"
+      },
+      {
+        "url": "https://www.chinatelecom.com.cn/ct/zp/",
+        "result": "Lightpanda HTTP412访问限制，未绕过；使用可公开读取的中国电信自建招聘网站及国资委独立发布公告"
+      },
+      {
+        "url": "https://job.chinaunicom.cn/",
+        "result": "SSL连接失败，未取得正文，未作证据"
+      },
+      {
+        "url": "https://wap.sasac.gov.cn/",
+        "result": "HTTPS证书/握手读取失败；官方www站点使用其页面提供的HTTP路径正常读到全文，不关闭TLS校验，不改用户代理"
+      },
+      {
+        "url": "https://zhaopin.csg.cn/",
+        "result": "本任务原生MCP仅见站点壳；CLI同一官方公告networkidle后可完整读取正文，正文事实依据CLI结果"
+      },
+      {
+        "url": "https://www.open.edu/openlearn/science-maths-technology/approaches-software-development/content-section-2.3.2",
+        "result": "Lightpanda HTTP 403 Cloudflare BotChallenge",
+        "action": "Stopped access to that source. No browser/raw-request bypass. Not cited; CMU/SEI primary source independently chosen."
+      }
+    ],
+    "technicalAccessNotes": [
+      {
+        "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/HashSet.html",
+        "initial": "Lightpanda multiURL status0/empty body without explicit tool error",
+        "resolution": "一次独立networkidle重试HTTP200，正文实际读取。"
+      },
+      {
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html",
+        "initial": "Lightpanda multiURL status0/empty body",
+        "resolution": "一次独立networkidle重试HTTP200；未引用，authz已直接支持所需区别。"
+      },
+      {
+        "urls": [
+          "https://csrc.nist.gov/glossary/term/confidentiality",
+          "https://csrc.nist.gov/glossary/term/availability"
+        ],
+        "initial": "Lightpanda status0/empty body，web open超时",
+        "resolution": "未引用；改读官方FIPS199完整PDF核对CIA。"
+      },
+      {
+        "urls": [
+          "https://csrc.nist.gov/glossary/term/cryptographic_hash_function",
+          "https://csrc.nist.gov/glossary/term/digital_signature"
+        ],
+        "initial": "Lightpanda status0/empty body",
+        "resolution": "web open返回官方完整术语正文，实际读取并保存在nist-web-read.json；未虚构HTTP状态。"
+      }
+    ],
+    "examSourceLimits": [
+      {
+        "key": "soe-grid-tech-exam-overview",
+        "verifiableFields": {
+          "sgcc": [
+            "2027招聘年度及2026-10-17公告日期",
+            "四批次公告时间与笔试初定时间，以考试公告为准",
+            "统一笔试及成绩通用规则",
+            "两类大纲20%/80%模块占比",
+            "公共与行业知识构成及官方题库指引",
+            "计算机类7方向48点",
+            "通信类4方向32点及EOPN原文"
+          ],
+          "csg": [
+            "公告日期及招聘年度",
+            "公司统一组织",
+            "一般闭卷机考",
+            "综合60%与专业40%范围表述",
+            "按岗位对应类别划分专业内容",
+            "实施两次及暂定时间"
+          ]
+        },
+        "unpublishedFields": {
+          "sgcc": [
+            "本人岗位适用科目（需岗位公告或笔试通知确认）",
+            "线上线下及机考纸笔形式",
+            "题型",
+            "题量",
+            "答题时长",
+            "各专业方向在专业知识80%内的细分占比",
+            "每题分值",
+            "满分",
+            "错漏选规则",
+            "成绩折算"
+          ],
+          "csg": [
+            "正文中的信通岗位对应具体类别及细目",
+            "题型",
+            "题量",
+            "答题时长",
+            "60%/40%的题数或分值计算口径",
+            "单题分值",
+            "满分",
+            "错漏选规则",
+            "笔面试成绩折算"
+          ]
+        },
+        "omittedTopics": [
+          {
+            "topic": "南网信息通信类详细考点及细分权重",
+            "reason": "官方2026大纲附件访问403，未成功读取，停止后不绕过"
+          },
+          {
+            "topic": "行测专项讲解、银行综合、企业清单与网申时间表",
+            "reason": "只列大纲公共模块构成及国网四批次公告、笔试初定时间，不扩写专项教程或其他企业网申安排。"
+          },
+          {
+            "topic": "原创模拟题和图解",
+            "reason": "考情稿无需模拟题；字段对照表已足够，没有需要图解的高认知负荷关系"
+          }
+        ]
+      },
+      {
+        "key": "soe-telecom-tech-exam-overview",
+        "verifiableFields": {
+          "mobile": [
+            "官方刊载日期2026-09-08",
+            "2027校园招聘",
+            "在线统一笔试",
+            "公告计划10月24日",
+            "各单位实际安排限定"
+          ],
+          "telecom": [
+            "官方刊载日期2026-08-27",
+            "2027年度校园招聘",
+            "岗位类别及笔试面试流程",
+            "招聘须知2027届适用版本",
+            "集团秋季线上统笔试仅部分单位参与",
+            "分子公司自行组织及通知渠道"
+          ],
+          "unicom": [
+            "官方入口当前显示2027届",
+            "官方入口链接招聘投递平台"
+          ]
+        },
+        "unpublishedFields": {
+          "mobile": [
+            "技术岗卷内模块及知识点",
+            "题型",
+            "题量",
+            "作答时长",
+            "每题分值",
+            "模块占比",
+            "满分",
+            "错漏选规则",
+            "成绩折算",
+            "是否另有岗位技术笔试或编程测评"
+          ],
+          "telecom": [
+            "岗位卷内模块和专业细目",
+            "题型",
+            "题量",
+            "作答时长",
+            "具体考试日期",
+            "每题分值",
+            "模块占比",
+            "满分",
+            "错漏选规则",
+            "成绩折算",
+            "招聘须知独立发布日期"
+          ],
+          "unicom": [
+            "入口发布日期",
+            "具体统一或单位笔试安排",
+            "考试形式",
+            "技术模块",
+            "专业细目",
+            "考试日期",
+            "题型",
+            "题量",
+            "作答时长",
+            "每题分值",
+            "模块占比",
+            "满分",
+            "错漏选规则",
+            "成绩折算"
+          ]
+        },
+        "omittedTopics": [
+          {
+            "topic": "三大运营商统一技术试卷、大纲或固定技术题题数",
+            "reason": "没有官方证据支持三家统一考试；各家公司所引来源均未公开这些具体字段"
+          },
+          {
+            "topic": "联通2025–2026具体笔试安排",
+            "reason": "官方入口无发布日期，海报406；高校转载仅作研究线索，不作考试结构证据；未绕过限制"
+          },
+          {
+            "topic": "移动额外技术笔试、编程题结构",
+            "reason": "所引集团公告未公开，不从个别单位的第三方摘要外推"
+          },
+          {
+            "topic": "电信所有单位一律参加集团统笔试",
+            "reason": "与招聘须知的部分单位参与限定不符，未写为事实"
+          },
+          {
+            "topic": "行测题、银行综合、企业清单、网申时间表和模拟题",
+            "reason": "用户范围限制，且考情稿无需模拟题"
+          }
+        ]
+      }
+    ],
+    "secondPartVerifiedAt": "2026-11-09",
+    "secondPartSourceIds": [
+      "soe-batch2-papers-bus-basic",
+      "soe-batch2-papers-partition",
+      "soe-batch2-papers-index",
+      "soe-batch2-papers-fstab",
+      "soe-batch2-papers-tcp",
+      "soe-batch2-papers-raft",
+      "soe-batch2-papers-pow",
+      "soe-batch2-papers-pos",
+      "soe-batch2-papers-saga",
+      "soe-batch2-papers-tcc",
+      "soe-batch2-papers-tcc-fence",
+      "soe-batch2-papers-docker",
+      "soe-batch2-papers-stateless",
+      "soe-batch2-papers-docker-restart",
+      "soe-batch2-papers-federated",
+      "soe-batch2-papers-federated-privacy",
+      "soe-batch2-papers-nfc",
+      "soe-batch2-papers-nb-iot",
+      "soe-batch2-papers-zigbee",
+      "soe-batch2-papers-wifi",
+      "soe-batch2-papers-map"
+    ]
+  },
+  "evidenceMap": [
+    {
+      "article": "soe-grid-tech-exam-overview",
+      "claim": "国家电网部分仅依据2027年招聘公告及计算机类、通信类2027版大纲；公告2026-10-17发布。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-grid-sgcc-2027",
+        "soe-batch2-grid-sgcc-computer-2027",
+        "soe-batch2-grid-sgcc-telecom-2027"
+      ]
+    },
+    {
+      "article": "soe-grid-tech-exam-overview",
+      "claim": "两类均为公共与行业知识20%、专业知识80%；计算机类7方向48点，通信类4方向32点，专业方向细分占比未公开。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-grid-sgcc-computer-2027",
+        "soe-batch2-grid-sgcc-telecom-2027"
+      ]
+    },
+    {
+      "article": "soe-grid-tech-exam-overview",
+      "claim": "公共部分含一般能力4项、企业文化、电力与能源战略、形势与政策；两类大纲指向公共与行业知识题库，不摘录题目。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-grid-sgcc-computer-2027",
+        "soe-batch2-grid-sgcc-telecom-2027"
+      ]
+    },
+    {
+      "article": "soe-grid-tech-exam-overview",
+      "claim": "四批公告时间为2026-10-17、2026年11月中旬、2027年3月前、2027年5月前；笔试初定2026-10-31、2026-12-06、2027年3月、2027年5月，以考试公告为准。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-grid-sgcc-2027"
+      ]
+    },
+    {
+      "article": "soe-grid-tech-exam-overview",
+      "claim": "题型、题量、时长、每题分值、满分仍标该来源未公开，不推导固定试卷结构。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-grid-sgcc-2027",
+        "soe-batch2-grid-sgcc-computer-2027",
+        "soe-batch2-grid-sgcc-telecom-2027"
+      ]
+    },
+    {
+      "article": "soe-grid-tech-exam-overview",
+      "claim": "通信类第15点保留官方EOPN原文，疑为EPON属于明确标注的编辑提示。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-grid-sgcc-telecom-2027"
+      ]
+    },
+    {
+      "article": "soe-grid-tech-exam-overview",
+      "claim": "站内入口按计算机类方向映射，补数据结构链接；安全为跨方向补充；信息新技术及通信类专业方向缺专门入口；7项覆盖仅待补核，不改其他文章。",
+      "confidence": "high",
+      "kind": "基于大纲的站内映射与覆盖边界",
+      "sourceIds": [
+        "soe-batch2-grid-sgcc-computer-2027",
+        "soe-batch2-grid-sgcc-telecom-2027"
+      ]
+    },
+    {
+      "article": "soe-grid-tech-exam-overview",
+      "claim": "南网本文仅适用于2026校招，正文公开机考闭卷与60%/40%范围占比，不把占比自行解释为题数或分值",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-grid-csg-2026"
+      ]
+    },
+    {
+      "article": "soe-grid-tech-exam-overview",
+      "claim": "两家分别记录，不拼接统一考试；临时安排与最终实际不同",
+      "confidence": "high",
+      "kind": "阅读方法及来源边界",
+      "sourceIds": [
+        "soe-batch2-grid-sgcc-2027",
+        "soe-batch2-grid-csg-2026"
+      ]
+    },
+    {
+      "article": "soe-telecom-tech-exam-overview",
+      "claim": "移动2027公告发布于2026-09-08，列在线统一笔试及10月24日计划，保留各单位实际安排限定",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-telecom-mobile-2027"
+      ]
+    },
+    {
+      "article": "soe-telecom-tech-exam-overview",
+      "claim": "电信2027公告发布于2026-08-27，岗位类别不自动成为考试模块",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-telecom-ct-2027"
+      ]
+    },
+    {
+      "article": "soe-telecom-tech-exam-overview",
+      "claim": "电信集团秋季线上统笔试仅部分单位参与，所属分子公司按计划自行组织笔面试，具体以后续通知为准",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-telecom-ct-notice-current"
+      ]
+    },
+    {
+      "article": "soe-telecom-tech-exam-overview",
+      "claim": "联通官方入口当前显示2027届但未标发布日；未取得有2025–2026发布日期且正文可验证的官方考试说明",
+      "confidence": "high",
+      "kind": "本次研究结论与证据边界，不是声称联通没有笔试",
+      "sourceIds": [
+        "soe-batch2-telecom-unicom-entry"
+      ]
+    },
+    {
+      "article": "soe-c-language-mcq",
+      "claim": "Array conversion and parameter adjustment; sizeof array vs pointer; qualifiers and string literal constraints; unsequenced side effects",
+      "sourceIds": [
+        "soe-batch2-c-standard"
+      ],
+      "confidence": "high",
+      "timeSensitive": false
+    },
+    {
+      "article": "soe-c-language-mcq",
+      "claim": "Same-array arithmetic and one-past restrictions",
+      "sourceIds": [
+        "soe-batch2-c-pointer-arithmetic",
+        "soe-batch2-c-bounds",
+        "soe-batch2-c-standard"
+      ],
+      "confidence": "high",
+      "timeSensitive": false
+    },
+    {
+      "article": "soe-c-language-mcq",
+      "claim": "Rows of multidimensional arrays; struct padding under a stated ABI; allocation and lifetime",
+      "sourceIds": [
+        "soe-batch2-c-multidimensional",
+        "soe-batch2-c-structure-layout",
+        "soe-batch2-c-allocation",
+        "soe-batch2-c-standard"
+      ],
+      "confidence": "high",
+      "timeSensitive": false
+    },
+    {
+      "article": "soe-java-mcq",
+      "claim": "普通调用先在编译时选择签名，再按运行时对象执行相应重写，不在运行时重做全部重载选择。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-jls8",
+        "soe-batch2-jls15"
+      ],
+      "versionAndAccess": [
+        {
+          "url": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-8.html",
+          "version": "Java SE 21",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        },
+        {
+          "url": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-15.html",
+          "version": "Java SE 21",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        }
+      ]
+    },
+    {
+      "article": "soe-java-mcq",
+      "claim": "Java始终按值传递；引用参数复制引用值，数组修改可见，重绑形参不修改调用方变量。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-jls15",
+        "soe-batch2-string"
+      ],
+      "versionAndAccess": [
+        {
+          "url": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-15.html",
+          "version": "Java SE 21",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        },
+        {
+          "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html",
+          "version": "Java SE 21",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        }
+      ]
+    },
+    {
+      "article": "soe-java-mcq",
+      "claim": "String不可变，equals按字符序列比较。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-string"
+      ],
+      "versionAndAccess": [
+        {
+          "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html",
+          "version": "Java SE 21",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        }
+      ]
+    },
+    {
+      "article": "soe-java-mcq",
+      "claim": "异常分类、catch覆盖顺序、重写不可缩小可见性或任意扩大受检异常。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-jls8",
+        "soe-batch2-jls11"
+      ],
+      "versionAndAccess": [
+        {
+          "url": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-8.html",
+          "version": "Java SE 21",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        },
+        {
+          "url": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-11.html",
+          "version": "Java SE 21",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        }
+      ]
+    },
+    {
+      "article": "soe-java-mcq",
+      "claim": "return表达式先求值；finally正常完成保留先前返回，异常完成可覆盖。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-jls14"
+      ],
+      "versionAndAccess": [
+        {
+          "url": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-14.html",
+          "version": "Java SE 21",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        }
+      ]
+    },
+    {
+      "article": "soe-java-mcq",
+      "claim": "remove(int)删除下标、remove(Object)删除首个相等值；asList固定长度且与数组关联、允许set；List.of不可修改。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-list",
+        "soe-batch2-arrays",
+        "soe-batch2-arraylist"
+      ],
+      "versionAndAccess": [
+        {
+          "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html",
+          "version": "Java SE 21",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        },
+        {
+          "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Arrays.html",
+          "version": "Java SE 21",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        },
+        {
+          "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html",
+          "version": "Java SE 21",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        }
+      ]
+    },
+    {
+      "article": "soe-java-mcq",
+      "claim": "HashSet相等成员去重；HashMap重复key更新value，不同key允许相同value。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-hashset",
+        "soe-batch2-hashmap",
+        "soe-batch2-string"
+      ],
+      "versionAndAccess": [
+        {
+          "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/HashSet.html",
+          "version": "Java SE 21",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        },
+        {
+          "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/HashMap.html",
+          "version": "Java SE 21",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        },
+        {
+          "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html",
+          "version": "Java SE 21",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        }
+      ]
+    },
+    {
+      "article": "soe-java-mcq",
+      "claim": "HotSpot JDK8移除永久代；JDK7过多类可能形成PermGen space，JDK8+对应类元数据使用元空间。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-jep122",
+        "soe-batch2-java7-oom",
+        "soe-batch2-javaoom"
+      ],
+      "versionAndAccess": [
+        {
+          "url": "https://openjdk.org/jeps/122",
+          "version": "JDK 8 delivered HotSpot implementation JEP",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        },
+        {
+          "url": "https://docs.oracle.com/javase/7/docs/webnotes/tsg/TSG-VM/html/memleaks.html",
+          "version": "HotSpot JDK 7 historical troubleshooting guide",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        },
+        {
+          "url": "https://docs.oracle.com/en/java/javase/21/troubleshoot/troubleshooting-memory-leaks.html",
+          "version": "Java SE 21",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        }
+      ]
+    },
+    {
+      "article": "soe-java-mcq",
+      "claim": "普通命名类的卸载要求定义加载器可回收；无界普通类定义、加载器保活、有限容量可使元空间耗尽，业务对象被丢弃不代表类立即卸载。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-jls12",
+        "soe-batch2-jep122",
+        "soe-batch2-javaoom"
+      ],
+      "versionAndAccess": [
+        {
+          "url": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-12.html",
+          "version": "Java SE 21",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        },
+        {
+          "url": "https://openjdk.org/jeps/122",
+          "version": "JDK 8 delivered HotSpot implementation JEP",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        },
+        {
+          "url": "https://docs.oracle.com/en/java/javase/21/troubleshoot/troubleshooting-memory-leaks.html",
+          "version": "Java SE 21",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        }
+      ]
+    },
+    {
+      "article": "soe-java-mcq",
+      "claim": "DO/DTO/PO/VO是题设中的工程约定，不是Java语言标准；PO及DomainObject展开显式自定义；ViewObject与ValueObject语境不同。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-naming-conventions",
+        "soe-batch2-fowler-value",
+        "soe-batch2-jls8"
+      ],
+      "versionAndAccess": [
+        {
+          "url": "https://alibaba.github.io/Alibaba-Java-Coding-Guidelines/",
+          "version": "rolling primary page, read 2026-11-09",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        },
+        {
+          "url": "https://martinfowler.com/bliki/ValueObject.html",
+          "version": "rolling primary page, read 2026-11-09",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        },
+        {
+          "url": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-8.html",
+          "version": "Java SE 21",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        }
+      ]
+    },
+    {
+      "article": "soe-information-security-mcq",
+      "claim": "CIA分别关注未授权披露、不当修改/破坏、访问使用中断；所有场景与数字原创。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-nist-fips199"
+      ],
+      "versionAndAccess": [
+        {
+          "url": "https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.199.pdf",
+          "version": "FIPS 199, February 2004",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        }
+      ]
+    },
+    {
+      "article": "soe-information-security-mcq",
+      "claim": "对称共享密钥与非对称公私钥职责；不因已加密就推出完整性，须检查完整方案和认证模式。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-owasp-crypto",
+        "soe-batch2-owasp-key"
+      ],
+      "versionAndAccess": [
+        {
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html",
+          "version": "rolling primary page, read 2026-11-09",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        },
+        {
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Key_Management_Cheat_Sheet.html",
+          "version": "rolling primary page, read 2026-11-09",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        }
+      ]
+    },
+    {
+      "article": "soe-information-security-mcq",
+      "claim": "哈希安全性是计算上的抗原像/第二原像/碰撞；公开摘要不单独证明发送者，签名不自动保密或防重放，公钥归属须可信。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-nist-hash",
+        "soe-batch2-nist-signature",
+        "soe-batch2-owasp-key"
+      ],
+      "versionAndAccess": [
+        {
+          "url": "https://csrc.nist.gov/glossary/term/cryptographic_hash_function",
+          "version": "rolling official glossary, includes FIPS 186-5 definitions",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        },
+        {
+          "url": "https://csrc.nist.gov/glossary/term/digital_signature",
+          "version": "rolling official glossary, includes FIPS 186-5 and SP 800-63-4 definitions",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        },
+        {
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Key_Management_Cheat_Sheet.html",
+          "version": "rolling primary page, read 2026-11-09",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        }
+      ]
+    },
+    {
+      "article": "soe-information-security-mcq",
+      "claim": "身份鉴别不同于授权；受保护请求按可信主体、资源、动作实施权限检查，最小权限、默认拒绝，不能信任客户端ownerId。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-owasp-authz"
+      ],
+      "versionAndAccess": [
+        {
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+          "version": "rolling primary page, read 2026-11-09",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        }
+      ]
+    },
+    {
+      "article": "soe-information-security-mcq",
+      "claim": "SQL数据值绑定与标识符允许映射不同；ORM原始拼接仍可能注入，参数化不替代资源授权。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-owasp-sqli",
+        "soe-batch2-owasp-authz"
+      ],
+      "versionAndAccess": [
+        {
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html",
+          "version": "rolling primary page, read 2026-11-09",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        },
+        {
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+          "version": "rolling primary page, read 2026-11-09",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        }
+      ]
+    },
+    {
+      "article": "soe-information-security-mcq",
+      "claim": "纯文本可用textContent避免该sink的HTML解析；富文本需适当清洗；CSP和HttpOnly不消除所有XSS。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-owasp-xss",
+        "soe-batch2-owasp-csrf"
+      ],
+      "versionAndAccess": [
+        {
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html",
+          "version": "rolling primary page, read 2026-11-09",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        },
+        {
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html",
+          "version": "rolling primary page, read 2026-11-09",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        }
+      ]
+    },
+    {
+      "article": "soe-information-security-mcq",
+      "claim": "跨站请求即使读不到响应仍可产生副作用；Secure、HttpOnly、SameSite、CORS各有条件，不是无条件CSRF免疫；同源XSS可能绕过页面CSRF防线。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-owasp-csrf"
+      ],
+      "versionAndAccess": [
+        {
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html",
+          "version": "rolling primary page, read 2026-11-09",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        }
+      ]
+    },
+    {
+      "article": "soe-information-security-mcq",
+      "claim": "密码使用适合的自适应密码哈希和独立随机salt；salt不必保密且不消灭弱密码离线猜测，在线限速不控制离线计算。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-owasp-password"
+      ],
+      "versionAndAccess": [
+        {
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html",
+          "version": "rolling primary page, read 2026-11-09",
+          "accessedAt": "2026-11-09",
+          "accessStatus": "body_read"
+        }
+      ]
+    },
+    {
+      "article": "soe-data-structures-mcq",
+      "claim": "Traversal uniqueness requires distinct node identifiers and consistent legal sequences; inorder with preorder/postorder reconstructs uniquely; preorder+postorder alone does not generally. Full 0-or-2-child constraint removes the single-child ambiguity.",
+      "confidence": "high",
+      "boundary": "Full-tree extension is explained by elimination of single-child ambiguity; no null markers or duplicate identifiers assumed.",
+      "sourceIds": [
+        "soe-batch2-mit-tree"
+      ]
+    },
+    {
+      "article": "soe-data-structures-mcq",
+      "claim": "Binary Huffman merges 2+3=5,5+7=12,8+12=20; D=0,C=11,A=100,B=101; WPL=37.",
+      "confidence": "high",
+      "verification": "Own data and independent heap merge/depth calculation; not a copied primary-source exercise.",
+      "sourceIds": [
+        "soe-batch2-princeton-huffman"
+      ]
+    },
+    {
+      "article": "soe-data-structures-mcq",
+      "claim": "MST permits equal weights; all distinct is sufficient, not necessary, for uniqueness.",
+      "confidence": "high",
+      "verification": "Original equal-weight triangle counterexamples; exhaustive spanning-tree calculation gives minimum weight 6 and 6 optimal trees for MCQ 4.",
+      "sourceIds": [
+        "soe-batch2-princeton-mst"
+      ]
+    },
+    {
+      "article": "soe-data-structures-mcq",
+      "claim": "Search/sort counts depend on midpoint, key-visit versus expression count, shifting versus writing, and I/O pass conventions.",
+      "confidence": "high",
+      "verification": "Independent Python calculations reproduce all stated traces and counts.",
+      "sourceIds": [
+        "soe-batch2-princeton-binary",
+        "soe-batch2-princeton-merge"
+      ]
+    },
+    {
+      "article": "soe-data-structures-mcq",
+      "claim": "Recurrence order depends on branching factor, size reduction and combine work; not just recursion height.",
+      "confidence": "high",
+      "verification": "Exact formulas checked against recurrences at n=2,4,8,16.",
+      "sourceIds": [
+        "soe-batch2-uw-recurrences",
+        "soe-batch2-princeton-merge"
+      ]
+    },
+    {
+      "article": "soe-software-engineering-mcq",
+      "claim": "Waterfall permits feedback; increment and iteration can coexist; spiral is risk-driven; V supports early test planning and work-product traceability.",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-cmu-process",
+        "soe-batch2-cmu-spiral",
+        "soe-batch2-cmu-vmodel",
+        "soe-batch2-istqb-ctfl"
+      ]
+    },
+    {
+      "article": "soe-software-engineering-mcq",
+      "claim": "UML taxonomy has 14 main diagrams; interaction is behavioral; dependencies point client to supplier; triangles/diamonds and include/extend have specific direction and semantics.",
+      "confidence": "high",
+      "boundary": "Profile translated as 剖面图/轮廓图, not Artifact; shared aggregation has intentionally variable semantics; composite removal exception explicit.",
+      "sourceIds": [
+        "soe-batch2-omg-uml"
+      ]
+    },
+    {
+      "article": "soe-software-engineering-mcq",
+      "claim": "Black/white-box describe design basis, not tester role or test level; static testing does not execute the software.",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-mit-testing",
+        "soe-batch2-istqb-ctfl"
+      ]
+    },
+    {
+      "article": "soe-software-engineering-mcq",
+      "claim": "Equivalence partitions and boundary values require specified ordered domain and test criterion.",
+      "confidence": "high",
+      "boundary": "MCQ 4 explicitly targets only valid-domain endpoints with predecessor/point/successor. It does not mislabel the six-value set as full ISTQB 3-value coverage over every partition boundary.",
+      "sourceIds": [
+        "soe-batch2-mit-testing",
+        "soe-batch2-istqb-ctfl"
+      ]
+    },
+    {
+      "article": "soe-software-engineering-mcq",
+      "claim": "100% branch coverage subsumes statement coverage; condition and decision coverage are incomparable; short-circuit input assignments differ from actual evaluations.",
+      "confidence": "high",
+      "verification": "Original non-short-circuit OR counterexamples and short-circuit AND example independently checked; MCQ 7 actual atomic outcomes are 3/4 and decision outcomes 1/2.",
+      "sourceIds": [
+        "soe-batch2-istqb-ctfl",
+        "soe-batch2-istqb-tta",
+        "soe-batch2-mit-testing"
+      ]
+    },
+    {
+      "article": "soe-software-engineering-mcq",
+      "claim": "Five CTFL levels include component integration and system integration separately; confirmation and regression are purposes rather than extra levels.",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-istqb-ctfl"
+      ]
+    },
+    {
+      "articles": [
+        "soe-cs-self-test-a",
+        "soe-cs-self-test-b"
+      ],
+      "questions": [
+        "A01",
+        "B01"
+      ],
+      "claim": "传统模型中地址、数据与控制总线的逻辑职责。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-papers-bus-basic"
+      ]
+    },
+    {
+      "articles": [
+        "soe-cs-self-test-a",
+        "soe-cs-self-test-b"
+      ],
+      "questions": [
+        "A06",
+        "B06"
+      ],
+      "claim": "RANGE半开边界、分区裁剪及父表唯一约束的分区键限制。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-papers-partition"
+      ]
+    },
+    {
+      "articles": [
+        "soe-cs-self-test-b"
+      ],
+      "questions": [
+        "B05"
+      ],
+      "claim": "前导等值、首个范围列与右侧过滤条件的边界，skip scan不被绝对排除。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-papers-index"
+      ]
+    },
+    {
+      "articles": [
+        "soe-cs-self-test-a",
+        "soe-cs-self-test-b"
+      ],
+      "questions": [
+        "A08",
+        "B09"
+      ],
+      "claim": "六字段、dump/fsck序号、noauto对mount -a的作用。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-papers-fstab"
+      ]
+    },
+    {
+      "articles": [
+        "soe-cs-self-test-a",
+        "soe-cs-self-test-b"
+      ],
+      "questions": [
+        "A11",
+        "B11"
+      ],
+      "claim": "cwnd/rwnd、slow start/congestion avoidance与超时后FlightSize阈值上限。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-papers-tcp"
+      ]
+    },
+    {
+      "articles": [
+        "soe-cs-self-test-a",
+        "soe-cs-self-test-b"
+      ],
+      "questions": [
+        "A26",
+        "B26"
+      ],
+      "claim": "Raft为CFT，多数派要求与BFT不同。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-papers-raft"
+      ]
+    },
+    {
+      "articles": [
+        "soe-cs-self-test-a",
+        "soe-cs-self-test-b"
+      ],
+      "questions": [
+        "A26",
+        "B26"
+      ],
+      "claim": "原始论文第4节工作量证明。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-papers-pow"
+      ]
+    },
+    {
+      "articles": [
+        "soe-cs-self-test-a",
+        "soe-cs-self-test-b"
+      ],
+      "questions": [
+        "A26",
+        "B26"
+      ],
+      "claim": "权益质押、验证者与作恶惩罚；不推导所有PoS的统一故障阈值。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-papers-pos"
+      ]
+    },
+    {
+      "articles": [
+        "soe-cs-self-test-a",
+        "soe-cs-self-test-b"
+      ],
+      "questions": [
+        "A27",
+        "B27"
+      ],
+      "claim": "本地事务提交、业务补偿、隔离限制与失败处理。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-papers-saga"
+      ]
+    },
+    {
+      "articles": [
+        "soe-cs-self-test-a"
+      ],
+      "questions": [
+        "A27"
+      ],
+      "claim": "Try检查预留、Confirm确认、Cancel取消的业务合同。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-papers-tcc"
+      ]
+    },
+    {
+      "articles": [
+        "soe-cs-self-test-b"
+      ],
+      "questions": [
+        "B27"
+      ],
+      "claim": "重复Confirm/Cancel、先Cancel后Try及事务状态记录。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-papers-tcc-fence"
+      ]
+    },
+    {
+      "articles": [
+        "soe-cs-self-test-a",
+        "soe-cs-self-test-b"
+      ],
+      "questions": [
+        "A28",
+        "B28"
+      ],
+      "claim": "容器可写层在容器销毁时丢失，卷与容器生命周期分离。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-papers-docker"
+      ]
+    },
+    {
+      "articles": [
+        "soe-cs-self-test-a"
+      ],
+      "questions": [
+        "A28"
+      ],
+      "claim": "无状态工作负载与可替换副本的例子。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-papers-stateless"
+      ]
+    },
+    {
+      "articles": [
+        "soe-cs-self-test-b"
+      ],
+      "questions": [
+        "B28"
+      ],
+      "claim": "同一容器停止后再启动保留可写层，删除后新建不继承。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-papers-docker-restart"
+      ]
+    },
+    {
+      "articles": [
+        "soe-cs-self-test-a",
+        "soe-cs-self-test-b"
+      ],
+      "questions": [
+        "A29",
+        "B29"
+      ],
+      "claim": "数据分散、本地更新聚合、非IID与不均衡数据。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-papers-federated"
+      ]
+    },
+    {
+      "articles": [
+        "soe-cs-self-test-a",
+        "soe-cs-self-test-b"
+      ],
+      "questions": [
+        "A29",
+        "B29"
+      ],
+      "claim": "隐私需要最小化、聚合、差分隐私及威胁模型与可验证保证，名称本身不足。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-papers-federated-privacy"
+      ]
+    },
+    {
+      "articles": [
+        "soe-cs-self-test-a",
+        "soe-cs-self-test-b"
+      ],
+      "questions": [
+        "A30",
+        "B30"
+      ],
+      "claim": "NFC厘米级近场。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-papers-nfc"
+      ]
+    },
+    {
+      "articles": [
+        "soe-cs-self-test-a",
+        "soe-cs-self-test-b"
+      ],
+      "questions": [
+        "A30",
+        "B30"
+      ],
+      "claim": "NB-IoT低功耗蜂窝广域覆盖，不给出统一最大米数。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-papers-nb-iot"
+      ]
+    },
+    {
+      "articles": [
+        "soe-cs-self-test-a",
+        "soe-cs-self-test-b"
+      ],
+      "questions": [
+        "A30",
+        "B30"
+      ],
+      "claim": "低功耗mesh与拓扑覆盖，区分单跳和整网。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-papers-zigbee"
+      ]
+    },
+    {
+      "articles": [
+        "soe-cs-self-test-a",
+        "soe-cs-self-test-b"
+      ],
+      "questions": [
+        "A30",
+        "B30"
+      ],
+      "claim": "Wi-Fi有多种频段/变体，HaLow约公里级能力不可泛化至所有Wi-Fi。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-papers-wifi"
+      ]
+    },
+    {
+      "articles": [
+        "soe-cs-self-test-b"
+      ],
+      "questions": [
+        "B16"
+      ],
+      "claim": "改变影响equals比较的键状态不受Map合同保证。",
+      "confidence": "high",
+      "sourceIds": [
+        "soe-batch2-papers-map"
+      ]
+    }
+  ],
+  "diagramSpecifications": [
+    {
+      "article": "soe-c-language-mcq",
+      "purpose": "Separate the C array object from the pointer object; show element stride and the one-past boundary.",
+      "elementsAndConstraints": "p points to a[1], p-a=1, *(p+2)=8; a+4 cannot be dereferenced and a+5 cannot be formed.",
+      "readingDirectionAndLayout": "One pointer above a left-to-right four-cell array; dashed one-past position is not an element.",
+      "diagramType": "object-boundary",
+      "renderer": "excalidraw",
+      "version": "2.1.2",
+      "source": "soe/bank-tech/soe-c-language-mcq-array-pointers-v1.excalidraw",
+      "output": "images/soe-c-language-mcq-array-pointers-v1.png",
+      "sourceSha256": "53be96b5b2aa4bde5e8229a1398c631bc0d44e9f8cdf7199ebff2c9637e8e0b2",
+      "outputSha256": "ef63a1fb934b14e9419c30258015570ced1d41e5b9ae71bad448703e36dd6b77",
+      "width": 2260,
+      "height": 1130,
+      "visualStyle": "white background, semantic fills, native shapes/text/arrows",
+      "font": "native fontFamily 2; system CJK fallback used; PNG glyphs visually verified",
+      "renderStatus": "rendered",
+      "reviewStatus": "visually-reviewed",
+      "publicationStatus": "not-published",
+      "altTextPresent": true,
+      "sourceEvidenceIds": [
+        "soe-batch2-c-standard",
+        "soe-batch2-c-pointer-arithmetic",
+        "soe-batch2-c-multidimensional",
+        "soe-batch2-c-structure-layout",
+        "soe-batch2-c-allocation",
+        "soe-batch2-c-bounds"
+      ],
+      "factualSourceReview": "verified"
+    },
+    {
+      "article": "soe-java-mcq",
+      "purpose": "Show the copied reference values and shared array/String objects at method entry.",
+      "elementsAndConstraints": "nums/a share A{2,5}; text/s share immutable S ab. Mutating A is visible; rebinding parameters does not rebind caller variables. No physical address representation.",
+      "readingDirectionAndLayout": "Two separated pairs of variables point to their shared objects, with method-entry scope stated.",
+      "diagramType": "object-reference",
+      "renderer": "excalidraw",
+      "version": "2.1.2",
+      "source": "soe/bank-tech/soe-java-mcq-reference-values-v1.excalidraw",
+      "output": "images/soe-java-mcq-reference-values-v1.png",
+      "sourceSha256": "39912f305af67c4ff54b895c5b04fe662accc77ba77b3c04f4db7db7c6df5f4d",
+      "outputSha256": "077303d7228c629a23633f3a2fc5af39d7bda7f59784ca5936887c4199f168ea",
+      "width": 2140,
+      "height": 1603,
+      "visualStyle": "white background, semantic fills, native shapes/text/arrows",
+      "font": "native fontFamily 2; system CJK fallback used; PNG glyphs visually verified",
+      "renderStatus": "rendered",
+      "reviewStatus": "visually-reviewed",
+      "publicationStatus": "not-published",
+      "altTextPresent": true,
+      "sourceEvidenceIds": [
+        "soe-batch2-jls8",
+        "soe-batch2-jls11",
+        "soe-batch2-jls14",
+        "soe-batch2-jls15",
+        "soe-batch2-jls12",
+        "soe-batch2-string",
+        "soe-batch2-list",
+        "soe-batch2-arrays",
+        "soe-batch2-arraylist",
+        "soe-batch2-hashset",
+        "soe-batch2-hashmap",
+        "soe-batch2-jep122",
+        "soe-batch2-java7-oom",
+        "soe-batch2-javaoom",
+        "soe-batch2-naming-conventions",
+        "soe-batch2-fowler-value"
+      ],
+      "factualSourceReview": "verified"
+    },
+    {
+      "article": "soe-data-structures-mcq",
+      "purpose": "Read unequal prefix codes from a Huffman tree and check WPL.",
+      "elementsAndConstraints": "Root20 left D8=0; right12 includes left5 with A2=100,B3=101 and right C7=11. WPL37. Orientation is one valid choice.",
+      "readingDirectionAndLayout": "Top-down tree, every branch labeled 0 or 1, codes and weighted sum below.",
+      "diagramType": "tree-components",
+      "renderer": "excalidraw",
+      "version": "2.1.2",
+      "source": "soe/bank-tech/soe-data-structures-mcq-huffman-v1.excalidraw",
+      "output": "images/soe-data-structures-mcq-huffman-v1.png",
+      "sourceSha256": "529d8053659bc5af85a47e340e507321ffd9bd10ae1a6982e135ca81068eb127",
+      "outputSha256": "e913da2898d6f752d5624fc6158eb9998c397c5ea23834b16c970d6f3176cd10",
+      "width": 2120,
+      "height": 1738,
+      "visualStyle": "white background, semantic fills, native shapes/text/arrows",
+      "font": "native fontFamily 2; system CJK fallback used; PNG glyphs visually verified",
+      "renderStatus": "rendered",
+      "reviewStatus": "visually-reviewed",
+      "publicationStatus": "not-published",
+      "altTextPresent": true,
+      "sourceEvidenceIds": [
+        "soe-batch2-mit-tree",
+        "soe-batch2-princeton-huffman",
+        "soe-batch2-princeton-mst",
+        "soe-batch2-princeton-binary",
+        "soe-batch2-princeton-merge",
+        "soe-batch2-uw-recurrences"
+      ],
+      "factualSourceReview": "verified"
+    },
+    {
+      "article": "soe-software-engineering-mcq",
+      "purpose": "Trace development artifacts to the test levels that use them as test bases.",
+      "elementsAndConstraints": "Needs/acceptance, system specification/system, architecture/integration, module/unit. Test analysis/design and static review can precede finished code; actual projects can separate system integration.",
+      "readingDirectionAndLayout": "Four paired abstraction rows, coding below; solid teaching progression and dashed test-basis relations.",
+      "diagramType": "workflow",
+      "renderer": "archify",
+      "version": "3.2.0",
+      "source": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.archify.json",
+      "output": "images/soe-software-engineering-mcq-v-model-v1.png",
+      "sourceSha256": "501972c29980c054d32f1dbdb5ab8d4ca45a972c23e8bd2b3328d28f0ca3567e",
+      "outputSha256": "f6a22d90fba43e523d4cf21571761034592dfb59c7591c26fc07c454983ea990",
+      "width": 3488,
+      "height": 3720,
+      "visualStyle": "Archify classic native workflow",
+      "font": "Native Archify browser fonts; Chinese labels visually verified in canonical PNG",
+      "renderStatus": "rendered",
+      "reviewStatus": "visually-reviewed",
+      "publicationStatus": "not-published",
+      "altTextPresent": true,
+      "sourceEvidenceIds": [
+        "soe-batch2-cmu-process",
+        "soe-batch2-cmu-spiral",
+        "soe-batch2-cmu-vmodel",
+        "soe-batch2-omg-uml",
+        "soe-batch2-mit-testing",
+        "soe-batch2-istqb-ctfl",
+        "soe-batch2-istqb-tta"
+      ],
+      "factualSourceReview": "verified",
+      "html": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.html",
+      "htmlSha256": "97eb380e29f5f033eef226fa131f6b876aab75d6bf005dc396769b205f8ad9c4",
+      "automatedGates": {
+        "validate": "pass",
+        "deliver": "pass",
+        "check": "pass",
+        "browser-check": "pass"
+      },
+      "receipts": [
+        "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.delivery.json",
+        "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.finalize.json",
+        "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.finalize-summary.json",
+        "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.browser-check.json"
+      ],
+      "canonicalExport": {
+        "data-last-export-format": "png",
+        "data-last-export-bytes": "676560",
+        "data-last-export-canonical": "true"
+      },
+      "correctionRounds": 1
+    },
+    {
+      "article": "soe-information-security-mcq",
+      "purpose": "Distinguish authentication from per-resource authorization and keep both rejection paths before execution.",
+      "elementsAndConstraints": "Protected requests only. Success requires identity plus resource/action authorization; tenant and owner use trusted server facts, not request claims.",
+      "readingDirectionAndLayout": "Left-to-right request/authentication/authorization/execution, with separate rejected branches below.",
+      "diagramType": "workflow",
+      "renderer": "archify",
+      "version": "3.2.0",
+      "source": "soe/bank-tech/soe-information-security-mcq-access-control-v1.archify.json",
+      "output": "images/soe-information-security-mcq-access-control-v1.png",
+      "sourceSha256": "fcd3221720d56411c550dc363b06b95d9c84f775bf7d4ef5fed96d2cfb968af9",
+      "outputSha256": "cb244e3420e78ad972e495725c4a10030a33da3b49ba17754d0118e42424a853",
+      "width": 3732,
+      "height": 2232,
+      "visualStyle": "Archify classic native workflow",
+      "font": "Native Archify browser fonts; Chinese labels visually verified in canonical PNG",
+      "renderStatus": "rendered",
+      "reviewStatus": "visually-reviewed",
+      "publicationStatus": "not-published",
+      "altTextPresent": true,
+      "sourceEvidenceIds": [
+        "soe-batch2-owasp-crypto",
+        "soe-batch2-owasp-key",
+        "soe-batch2-owasp-authz",
+        "soe-batch2-owasp-sqli",
+        "soe-batch2-owasp-xss",
+        "soe-batch2-owasp-csrf",
+        "soe-batch2-owasp-password",
+        "soe-batch2-nist-fips199",
+        "soe-batch2-nist-hash",
+        "soe-batch2-nist-signature"
+      ],
+      "factualSourceReview": "verified",
+      "html": "soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
+      "htmlSha256": "d0467686389641a1cf1cdc85ac2ed343543c8c8143c1be076d650145d1e124b8",
+      "automatedGates": {
+        "validate": "pass",
+        "deliver": "pass",
+        "check": "pass",
+        "browser-check": "pass"
+      },
+      "receipts": [
+        "soe/bank-tech/soe-information-security-mcq-access-control-v1.delivery.json",
+        "soe/bank-tech/soe-information-security-mcq-access-control-v1.finalize.json",
+        "soe/bank-tech/soe-information-security-mcq-access-control-v1.finalize-summary.json",
+        "soe/bank-tech/soe-information-security-mcq-access-control-v1.browser-check.json"
+      ],
+      "canonicalExport": {
+        "data-last-export-format": "png",
+        "data-last-export-bytes": "490298",
+        "data-last-export-canonical": "true"
+      },
+      "correctionRounds": 0
+    }
+  ],
+  "deferred": [
+    {
+      "scope": "行测、银行综合知识、企业清单与网申时间表",
+      "reason": "任务简报明确不在本批。"
+    }
+  ],
+  "validation": {
+    "structure": {
+      "status": "passed",
+      "details": {
+        "status": "passed",
+        "failures": [],
+        "leaves": 12,
+        "articles": 7,
+        "originalQuestions": 40,
+        "articlesChecked": [
+          {
+            "key": "soe-grid-tech-exam-overview",
+            "path": "soe/grid/soe-grid-tech-exam-overview.md",
+            "bytes": 19108,
+            "sha256": "46ca717f0ce09413f0f5126f000cd50089e47b6a21dfb248c0b5d6eb880fef01",
+            "originalQuestions": 0,
+            "imageCount": 0,
+            "localLinks": [
+              "soe/bank-tech/soe-data-structures-mcq.md",
+              "soe/bank-tech/soe-database-theory.md",
+              "soe/bank-tech/soe-network-mcq.md",
+              "soe/bank-tech/soe-os-mcq.md",
+              "soe/bank-tech/soe-computer-organization.md",
+              "soe/bank-tech/soe-software-engineering-mcq.md",
+              "soe/bank-tech/soe-information-security-mcq.md",
+              "knowledge/network/tcpIp/tcp-udp.md",
+              "knowledge/network/tcpIp/tcp-handshake.md"
+            ],
+            "imageNames": []
+          },
+          {
+            "key": "soe-telecom-tech-exam-overview",
+            "path": "soe/telecom/soe-telecom-tech-exam-overview.md",
+            "bytes": 9416,
+            "sha256": "e7cd617156ec05241da0961a840448a77fb2657db7d6ae605461eaace4010276",
+            "originalQuestions": 0,
+            "imageCount": 0,
+            "localLinks": [
+              "soe/bank-tech/soe-network-mcq.md",
+              "soe/bank-tech/soe-c-language-mcq.md",
+              "soe/bank-tech/soe-java-mcq.md",
+              "soe/bank-tech/soe-data-structures-mcq.md",
+              "soe/bank-tech/soe-software-engineering-mcq.md",
+              "soe/bank-tech/soe-information-security-mcq.md"
+            ],
+            "imageNames": []
+          },
+          {
+            "key": "soe-c-language-mcq",
+            "path": "soe/bank-tech/soe-c-language-mcq.md",
+            "bytes": 14535,
+            "sha256": "8a7cc54178cc77d4535b03a58b976f9153887dec1746ae110eecd4cd80a49528",
+            "originalQuestions": 8,
+            "imageCount": 1,
+            "localLinks": [
+              "knowledge/cs/language/c-object-storage-duration.md"
+            ],
+            "imageNames": [
+              "soe-c-language-mcq-array-pointers-v1.png"
+            ]
+          },
+          {
+            "key": "soe-java-mcq",
+            "path": "soe/bank-tech/soe-java-mcq.md",
+            "bytes": 19659,
+            "sha256": "3963ce2404580861ded5ac8a32ceb2201ca61d4d71281a6442f9f4bb01aac646",
+            "originalQuestions": 8,
+            "imageCount": 1,
+            "localLinks": [
+              "knowledge/backend/java/java-value-semantics.md",
+              "knowledge/backend/java/java-collections.md",
+              "knowledge/backend/java/java-runtime-memory.md",
+              "knowledge/backend/java/java-collections.md"
+            ],
+            "imageNames": [
+              "soe-java-mcq-reference-values-v1.png"
+            ]
+          },
+          {
+            "key": "soe-data-structures-mcq",
+            "path": "soe/bank-tech/soe-data-structures-mcq.md",
+            "bytes": 18390,
+            "sha256": "667fdcc6915e395d41edd799765fdc568e4c1b932e5a1a9131902afa89aa0af4",
+            "originalQuestions": 9,
+            "imageCount": 1,
+            "localLinks": [
+              "knowledge/data-structure/algorithm/algorithm-tree.md",
+              "knowledge/data-structure/algorithm/algorithm-array.md",
+              "knowledge/cs/algorithm/algorithm-sorting.md",
+              "knowledge/cs/algorithm/algorithm-complexity.md",
+              "knowledge/data-structure/algorithm/algorithm-loop.md",
+              "knowledge/cs/algorithm/algorithm-graph.md",
+              "knowledge/data-structure/algorithm/algorithm-tree.md",
+              "knowledge/cs/algorithm/algorithm-sorting.md",
+              "knowledge/cs/algorithm/algorithm-sorting.md",
+              "knowledge/cs/algorithm/algorithm-complexity.md"
+            ],
+            "imageNames": [
+              "soe-data-structures-mcq-huffman-v1.png"
+            ]
+          },
+          {
+            "key": "soe-software-engineering-mcq",
+            "path": "soe/bank-tech/soe-software-engineering-mcq.md",
+            "bytes": 23309,
+            "sha256": "6e2a7544729e338292e7a2fd37beeb00e747dc0e95ab6760771853b5ab37efe0",
+            "originalQuestions": 8,
+            "imageCount": 1,
+            "localLinks": [],
+            "imageNames": [
+              "soe-software-engineering-mcq-v-model-v1.png"
+            ]
+          },
+          {
+            "key": "soe-information-security-mcq",
+            "path": "soe/bank-tech/soe-information-security-mcq.md",
+            "bytes": 16326,
+            "sha256": "b5c19eecdb6381869f7b8b3a06493f20685a50cc0607594119d7a928d801ad31",
+            "originalQuestions": 7,
+            "imageCount": 1,
+            "localLinks": [
+              "knowledge/network/security/web-attack.md"
+            ],
+            "imageNames": [
+              "soe-information-security-mcq-access-control-v1.png"
+            ]
+          }
+        ],
+        "images": [
+          {
+            "path": "images/soe-c-language-mcq-array-pointers-v1.png",
+            "bytes": 112939,
+            "width": 2260,
+            "height": 1130,
+            "sha256": "ef63a1fb934b14e9419c30258015570ced1d41e5b9ae71bad448703e36dd6b77"
+          },
+          {
+            "path": "images/soe-java-mcq-reference-values-v1.png",
+            "bytes": 157857,
+            "width": 2140,
+            "height": 1603,
+            "sha256": "077303d7228c629a23633f3a2fc5af39d7bda7f59784ca5936887c4199f168ea"
+          },
+          {
+            "path": "images/soe-data-structures-mcq-huffman-v1.png",
+            "bytes": 127631,
+            "width": 2120,
+            "height": 1738,
+            "sha256": "e913da2898d6f752d5624fc6158eb9998c397c5ea23834b16c970d6f3176cd10"
+          },
+          {
+            "path": "images/soe-software-engineering-mcq-v-model-v1.png",
+            "bytes": 676560,
+            "width": 3488,
+            "height": 3720,
+            "sha256": "f6a22d90fba43e523d4cf21571761034592dfb59c7591c26fc07c454983ea990"
+          },
+          {
+            "path": "images/soe-information-security-mcq-access-control-v1.png",
+            "bytes": 490298,
+            "width": 3732,
+            "height": 2232,
+            "sha256": "cb244e3420e78ad972e495725c4a10030a33da3b49ba17754d0118e42424a853"
+          }
+        ],
+        "reuseWithoutEdits": [
+          "knowledge/backend/java/java-collections.md",
+          "knowledge/backend/java/java-runtime-memory.md",
+          "knowledge/backend/java/java-value-semantics.md",
+          "knowledge/cs/algorithm/algorithm-complexity.md",
+          "knowledge/cs/algorithm/algorithm-graph.md",
+          "knowledge/cs/algorithm/algorithm-sorting.md",
+          "knowledge/cs/language/c-object-storage-duration.md",
+          "knowledge/data-structure/algorithm/algorithm-array.md",
+          "knowledge/data-structure/algorithm/algorithm-loop.md",
+          "knowledge/data-structure/algorithm/algorithm-tree.md",
+          "knowledge/network/security/web-attack.md",
+          "knowledge/network/tcpIp/tcp-handshake.md",
+          "knowledge/network/tcpIp/tcp-udp.md"
+        ],
+        "existingArticlesUnchanged": true,
+        "existingHistoryRecordsUnchanged": true,
+        "pendingImages": 0
+      }
+    },
+    "arithmetic": {
+      "status": "passed",
+      "method": "C defined examples compiled/run with assertions; DS independently recomputed traversal, Huffman/WPL, exhaustive MST, binary/insertion/merge/external-I/O counts and recurrence forms; SE truth tables and coverage recomputed.",
+      "c": {
+        "status": "passed",
+        "method": "cc -std=c11 -Wall -Wextra -Wpedantic; assertions for all defined code examples, no execution of invalid code",
+        "observed": "int=4 ptr=8 Packet=12 offsets=4,8; expected sizeof-array-parameter warning only"
+      },
+      "dataStructureAndSoftware": {
+        "totalOriginalMCQs": 17,
+        "independentNumericalChecks": "PASS: traversal, prefix-free, Huffman merges+WPL, exhaustive MST, midpoint trace, insertion counts, merge comparisons, external I/O, 6 recurrence exact forms, conditional coverage.",
+        "localMarkdownChecks": "PASS: both have no H1, sequential original-question numbers, one answer per question, all relative links exist, one parent-owned diagram slot each.",
+        "npmTreeValidation": "Parent to run after whole-batch integration, not claimed by this subagent.",
+        "publication": "Not attempted or claimed."
+      }
+    },
+    "java": {
+      "status": "static-semantics-verified-runtime-unavailable",
+      "method": "JLS 21/API reasoning and independent 40-MCQ review; java -version and javac -version both report no installed Java Runtime. No JDK installed, no runtime claim."
+    },
+    "existingKnowledgeUntouched": true,
+    "existingSoeArticlesUntouched": true,
+    "existingMasterRefUntouched": true,
+    "remoteCitations": {
+      "status": "primary-content-read-with-disclosed-gaps",
+      "verifiedPrimarySources": 51,
+      "unknownHttpStatusesNotInvented": true,
+      "scope": "Readable content and claims verified; unavailable exam attachments are omitted. New image URLs are canonical future destinations backed by local PNGs, not claimed live."
+    },
+    "repositoryTreeValidation": {
+      "status": "passed",
+      "command": "npm run validate:tree",
+      "exitCode": 0,
+      "errors": 0,
+      "warnings": 2,
+      "warningCause": "Preexisting unrelated orphan knowledge/fe/aigc/aigc-application.md and knowledge/intro/pdf.md",
+      "counts": {
+        "interview": 243,
+        "knowledge": 334,
+        "soe": 12
+      },
+      "logSha256": "a9baec29f3b5c83c7877ca353f70205aae6ef0e4393f8ed29662165dd5df35be"
+    },
+    "npmTest": {
+      "status": "passed",
+      "command": "env PATH=\"/usr/bin:$PATH\" npm test",
+      "exitCode": 0,
+      "tests": 161,
+      "pass": 161,
+      "fail": 0,
+      "skipped": 0,
+      "gitVersion": "2.39.5 (Apple Git-154)",
+      "initialRun": {
+        "command": "npm test",
+        "exitCode": 1,
+        "pass": 159,
+        "fail": 2,
+        "rootCause": "PATH selected Git 2.15.0, which did not create GIT_TRACE2_EVENT files required by two immutable-Git tests.",
+        "failures": [
+          "1269 binary publication paths are hashed exactly with one real batched blob process",
+          "large valid inventories split into bounded batches without losing binary hashes"
+        ],
+        "resolution": "Verified the same read-only Git command produces Trace2 with existing system Git and not legacy default Git. Prepend the system Git executable directory for this test command only; no repository, global configuration or test change."
+      },
+      "finalLogSha256": "909eae9035207d6380b0ad3cc1ce336293989cac9ba97ac96976339f7a148455",
+      "rerunAfterHistoryAppend": true
+    },
+    "independentContentReview": {
+      "status": "passed",
+      "reviewer": "fresh isolated content_review agent",
+      "scope": "All seven article bodies; static derivation of all 40 original MCQs; local links, technical assumptions, source limits and requested scope.",
+      "findings": {
+        "critical": 0,
+        "important": 0,
+        "minor": 0
+      },
+      "notReviewed": [
+        "Image visual QA (performed separately by primary agent)",
+        "Final manifest hashes (validated by primary agent)",
+        "Full second network audit of all external URLs",
+        "Java execution without JDK",
+        "C papers, PR, release-review v3 and publication"
+      ],
+      "formalReleaseReview": false
+    },
+    "publication": "Not performed or authorized in this run; no commit, push, PR, merge or sync.",
+    "historyLedger": {
+      "status": "passed",
+      "addedPendingSoeRecords": 7,
+      "existingRecordsUnchanged": true
+    },
+    "diffWhitespace": "git diff --check passed",
+    "scope": "Historical first-part validation snapshot from the prior delivery; partTwo.validation contains the current paper checks and fresh whole-repository command results."
+  },
+  "historyLedger": {
+    "target": ".codex/knowledge-update-history.json",
+    "reason": "Per-key processing ledger for all nine SOE batch articles: first seven records preserved from HEAD; appended only A/B paper records with pending status. No article or existing history record outside this scope changed.",
+    "pendingRecords": [
+      {
+        "module": "soe",
+        "key": "soe-grid-tech-exam-overview",
+        "label": "国家电网 / 南方电网信通岗笔试考什么",
+        "filePath": "grid",
+        "action": "created",
+        "batch": "soe-cs-batch2-20261109",
+        "recordedAt": "2026-11-09",
+        "status": "pending",
+        "reason": "Local article, diagram and source review complete; user requested uncommitted local delivery. Not published and not counted as new published knowledge.",
+        "sourceVerification": "verified-with-explicit-gaps"
+      },
+      {
+        "module": "soe",
+        "key": "soe-telecom-tech-exam-overview",
+        "label": "三大运营商技术岗笔试考什么",
+        "filePath": "telecom",
+        "action": "created",
+        "batch": "soe-cs-batch2-20261109",
+        "recordedAt": "2026-11-09",
+        "status": "pending",
+        "reason": "Local article, diagram and source review complete; user requested uncommitted local delivery. Not published and not counted as new published knowledge.",
+        "sourceVerification": "verified-with-explicit-gaps"
+      },
+      {
+        "module": "soe",
+        "key": "soe-c-language-mcq",
+        "label": "C 语言常考点：指针、数组、结构体与内存",
+        "filePath": "bank-tech",
+        "action": "created",
+        "batch": "soe-cs-batch2-20261109",
+        "recordedAt": "2026-11-09",
+        "status": "pending",
+        "reason": "Local article, diagram and source review complete; user requested uncommitted local delivery. Not published and not counted as new published knowledge.",
+        "sourceVerification": "verified"
+      },
+      {
+        "module": "soe",
+        "key": "soe-java-mcq",
+        "label": "Java 基础常考点：面向对象、异常、集合与常见陷阱",
+        "filePath": "bank-tech",
+        "action": "created",
+        "batch": "soe-cs-batch2-20261109",
+        "recordedAt": "2026-11-09",
+        "status": "pending",
+        "reason": "Local article, diagram and source review complete; user requested uncommitted local delivery. Not published and not counted as new published knowledge.",
+        "sourceVerification": "verified"
+      },
+      {
+        "module": "soe",
+        "key": "soe-data-structures-mcq",
+        "label": "数据结构选择题高频考点",
+        "filePath": "bank-tech",
+        "action": "created",
+        "batch": "soe-cs-batch2-20261109",
+        "recordedAt": "2026-11-09",
+        "status": "pending",
+        "reason": "Local article, diagram and source review complete; user requested uncommitted local delivery. Not published and not counted as new published knowledge.",
+        "sourceVerification": "verified"
+      },
+      {
+        "module": "soe",
+        "key": "soe-software-engineering-mcq",
+        "label": "软件工程基础：生命周期模型、UML、测试方法",
+        "filePath": "bank-tech",
+        "action": "created",
+        "batch": "soe-cs-batch2-20261109",
+        "recordedAt": "2026-11-09",
+        "status": "pending",
+        "reason": "Local article, diagram and source review complete; user requested uncommitted local delivery. Not published and not counted as new published knowledge.",
+        "sourceVerification": "verified"
+      },
+      {
+        "module": "soe",
+        "key": "soe-information-security-mcq",
+        "label": "信息安全基础：加密、认证、常见攻击与防护",
+        "filePath": "bank-tech",
+        "action": "created",
+        "batch": "soe-cs-batch2-20261109",
+        "recordedAt": "2026-11-09",
+        "status": "pending",
+        "reason": "Local article, diagram and source review complete; user requested uncommitted local delivery. Not published and not counted as new published knowledge.",
+        "sourceVerification": "verified"
+      },
+      {
+        "module": "soe",
+        "key": "soe-cs-self-test-a",
+        "label": "计算机专业综合自测 A 卷",
+        "filePath": "practice",
+        "action": "created",
+        "batch": "soe-cs-batch2-20261109",
+        "recordedAt": "2026-11-09",
+        "status": "pending",
+        "reason": "Second-part original paper completed locally; no commit, push, PR or publication in this run. Background-only article links explicitly disclosed; all 26 computational questions across both papers independently recomputed.",
+        "sourceVerification": "verified-primary-content",
+        "originalQuestions": 30
+      },
+      {
+        "module": "soe",
+        "key": "soe-cs-self-test-b",
+        "label": "计算机专业综合自测 B 卷",
+        "filePath": "practice",
+        "action": "created",
+        "batch": "soe-cs-batch2-20261109",
+        "recordedAt": "2026-11-09",
+        "status": "pending",
+        "reason": "Second-part original paper completed locally; no commit, push, PR or publication in this run. Background-only article links explicitly disclosed; all 26 computational questions across both papers independently recomputed.",
+        "sourceVerification": "verified-primary-content",
+        "originalQuestions": 30
+      }
+    ],
+    "writable": true
+  },
+  "summary": {
+    "createdDrafts": 0,
+    "createdReady": 9,
+    "updatedExistingKnowledge": 0,
+    "failedArticles": 0,
+    "pendingSource": 0,
+    "sourceLimitedArticles": 2,
+    "pendingImages": 0,
+    "pendingImagePublication": 5,
+    "originalQuestions": 100,
+    "reviewedArticles": 9,
+    "newArticlesThisRun": 2,
+    "newQuestionsThisRun": 60
+  },
+  "gitHandoff": {
+    "branch": "codex/soe-batch2-20261109",
+    "commitCreated": false,
+    "pushed": false,
+    "pullRequestCreated": false,
+    "merged": false,
+    "masterModified": false,
+    "gitMutationsThisRun": [],
+    "status": "second-part-local-delivery-per-user-instruction",
+    "workPreserved": true,
+    "submissionOwner": "user",
+    "releaseReviewV3": "not-started-no-PR-per-user-scope",
+    "remainingExternalWork": [
+      "User may review these local uncommitted paper additions. No Git submission is part of this run.",
+      "Any later authorized release must include the first-part assets and follow the applicable release-review and sync contracts."
+    ],
+    "stagedChangesPending": false,
+    "executionScope": "This second-part run only; the first seven articles were already committed by the user before execution.",
+    "preExistingCommit": "55f9283d942a817a08e9075de3bfb5b9e4936a1a"
+  },
+  "unresolvedIssues": [
+    {
+      "type": "declared-source-limit",
+      "key": "soe-grid-tech-exam-overview",
+      "details": "国网2027两类大纲及20%/80%范围已据用户提供的官方全文核对；题型、题量、时长、每题分值、满分未公开。公告页本次HTTP412，公告安排据用户摘要；南网2026附件403后的边界保持不变。"
+    },
+    {
+      "type": "declared-source-limit",
+      "key": "soe-telecom-tech-exam-overview",
+      "details": "联通未取得2025–2026可核验官方考试说明；移动、电信来源未给技术卷题量、时长、分值。当前电信招聘须知单独标明发布日期未公开。"
+    },
+    {
+      "type": "verification-environment",
+      "key": "soe-java-mcq",
+      "details": "无JDK，代码题仅完成规范静态推导，未声称编译运行。"
+    },
+    {
+      "type": "publication-not-requested",
+      "details": "Five canonical PNG image destinations have not been synchronized online; all assets exist locally."
+    }
+  ],
+  "knowledgeProgress": {
+    "basisCommit": "96658617d065dde5efc1a9221d7759fda3545ff7",
+    "basis": "Fresh read of verified remote master snapshot. Unique knowledge leaves only; published records plus pending records with article and canonical local Markdown images present in this merged commit and no pending diagram marker. This local SOE-only addition is excluded.",
+    "total": 334,
+    "published": 125,
+    "mergedPending": 209,
+    "updated": 334,
+    "percentage": "100.00",
+    "unresolved": []
+  },
+  "lastReviewedAt": "2026-11-09T14:31:41Z",
+  "defaultBranchInspection": {
+    "name": "master",
+    "verifiedRemoteTip": "96658617d065dde5efc1a9221d7759fda3545ff7",
+    "workingHead": "96658617d065dde5efc1a9221d7759fda3545ff7",
+    "localMasterRefUntouched": "e6e1ca3c47db7c60ff419c11a2fcb2cfd67fb050",
+    "reason": "Current task branch begins at verified remote default tip. Local master ref is older and was not moved.",
+    "secondPart": {
+      "name": "master",
+      "verifiedRemoteTip": "96658617d065dde5efc1a9221d7759fda3545ff7",
+      "workingHead": "55f9283d942a817a08e9075de3bfb5b9e4936a1a",
+      "headPreserved": true,
+      "method": "git ls-remote --symref origin HEAD; read-only comparison"
+    }
+  },
+  "fileInventory": {
+    "created": [
+      "images/soe-c-language-mcq-array-pointers-v1.png",
+      "images/soe-data-structures-mcq-huffman-v1.png",
+      "images/soe-information-security-mcq-access-control-v1.png",
+      "images/soe-java-mcq-reference-values-v1.png",
+      "images/soe-software-engineering-mcq-v-model-v1.png",
+      "soe/bank-tech/soe-c-language-mcq-array-pointers-v1.excalidraw",
+      "soe/bank-tech/soe-c-language-mcq.md",
+      "soe/bank-tech/soe-data-structures-mcq-huffman-v1.excalidraw",
+      "soe/bank-tech/soe-data-structures-mcq.md",
+      "soe/bank-tech/soe-information-security-mcq-access-control-v1.archify.json",
+      "soe/bank-tech/soe-information-security-mcq-access-control-v1.browser-check.json",
+      "soe/bank-tech/soe-information-security-mcq-access-control-v1.delivery.json",
+      "soe/bank-tech/soe-information-security-mcq-access-control-v1.finalize-summary.json",
+      "soe/bank-tech/soe-information-security-mcq-access-control-v1.finalize.json",
+      "soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
+      "soe/bank-tech/soe-information-security-mcq.md",
+      "soe/bank-tech/soe-java-mcq-reference-values-v1.excalidraw",
+      "soe/bank-tech/soe-java-mcq.md",
+      "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.archify.json",
+      "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.browser-check.json",
+      "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.delivery.json",
+      "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.finalize-summary.json",
+      "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.finalize.json",
+      "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.html",
+      "soe/bank-tech/soe-software-engineering-mcq.md",
+      "soe/batches/soe-cs-batch2-20261109.json",
+      "soe/grid/soe-grid-tech-exam-overview.md",
+      "soe/telecom/soe-telecom-tech-exam-overview.md",
+      "soe/practice/soe-cs-self-test-a.md",
+      "soe/practice/soe-cs-self-test-b.md",
+      "soe/batches/soe-cs-batch2-20261109-papers-check.mjs",
+      "soe/batches/soe-cs-batch2-20261109-papers-checks.json"
+    ],
+    "modified": [
+      "soe/_tree.json",
+      ".codex/knowledge-update-history.json"
+    ],
+    "fingerprints": [
+      {
+        "path": "images/soe-c-language-mcq-array-pointers-v1.png",
+        "bytes": 112939,
+        "sha256": "ef63a1fb934b14e9419c30258015570ced1d41e5b9ae71bad448703e36dd6b77"
+      },
+      {
+        "path": "images/soe-data-structures-mcq-huffman-v1.png",
+        "bytes": 127631,
+        "sha256": "e913da2898d6f752d5624fc6158eb9998c397c5ea23834b16c970d6f3176cd10"
+      },
+      {
+        "path": "images/soe-information-security-mcq-access-control-v1.png",
+        "bytes": 490298,
+        "sha256": "cb244e3420e78ad972e495725c4a10030a33da3b49ba17754d0118e42424a853"
+      },
+      {
+        "path": "images/soe-java-mcq-reference-values-v1.png",
+        "bytes": 157857,
+        "sha256": "077303d7228c629a23633f3a2fc5af39d7bda7f59784ca5936887c4199f168ea"
+      },
+      {
+        "path": "images/soe-software-engineering-mcq-v-model-v1.png",
+        "bytes": 676560,
+        "sha256": "f6a22d90fba43e523d4cf21571761034592dfb59c7591c26fc07c454983ea990"
+      },
+      {
+        "path": "soe/bank-tech/soe-c-language-mcq-array-pointers-v1.excalidraw",
+        "bytes": 16330,
+        "sha256": "53be96b5b2aa4bde5e8229a1398c631bc0d44e9f8cdf7199ebff2c9637e8e0b2"
+      },
+      {
+        "path": "soe/bank-tech/soe-c-language-mcq.md",
+        "bytes": 14535,
+        "sha256": "8a7cc54178cc77d4535b03a58b976f9153887dec1746ae110eecd4cd80a49528"
+      },
+      {
+        "path": "soe/bank-tech/soe-data-structures-mcq-huffman-v1.excalidraw",
+        "bytes": 27939,
+        "sha256": "529d8053659bc5af85a47e340e507321ffd9bd10ae1a6982e135ca81068eb127"
+      },
+      {
+        "path": "soe/bank-tech/soe-data-structures-mcq.md",
+        "bytes": 18390,
+        "sha256": "667fdcc6915e395d41edd799765fdc568e4c1b932e5a1a9131902afa89aa0af4"
+      },
+      {
+        "path": "soe/bank-tech/soe-information-security-mcq-access-control-v1.archify.json",
+        "bytes": 2998,
+        "sha256": "fcd3221720d56411c550dc363b06b95d9c84f775bf7d4ef5fed96d2cfb968af9"
+      },
+      {
+        "path": "soe/bank-tech/soe-information-security-mcq-access-control-v1.browser-check.json",
+        "bytes": 30318,
+        "sha256": "e06bc4648eaaa09f87aad0c8105c306ab755c84e3c55ce78ff43d030da8e41be"
+      },
+      {
+        "path": "soe/bank-tech/soe-information-security-mcq-access-control-v1.delivery.json",
+        "bytes": 1330,
+        "sha256": "a11ec284249ef6d8df67fe81139c68c01aca4d21893ff62e096ed976581b643e"
+      },
+      {
+        "path": "soe/bank-tech/soe-information-security-mcq-access-control-v1.finalize-summary.json",
+        "bytes": 2245,
+        "sha256": "13a484133f7def9abdc6e18c158058831402d2f85981fc88c076d99b2d12a087"
+      },
+      {
+        "path": "soe/bank-tech/soe-information-security-mcq-access-control-v1.finalize.json",
+        "bytes": 44711,
+        "sha256": "e15a819560d42df9809ed5382cfaefd356421c02b61f66eec2b95635d597d022"
+      },
+      {
+        "path": "soe/bank-tech/soe-information-security-mcq-access-control-v1.html",
+        "bytes": 812813,
+        "sha256": "d0467686389641a1cf1cdc85ac2ed343543c8c8143c1be076d650145d1e124b8"
+      },
+      {
+        "path": "soe/bank-tech/soe-information-security-mcq.md",
+        "bytes": 16326,
+        "sha256": "b5c19eecdb6381869f7b8b3a06493f20685a50cc0607594119d7a928d801ad31"
+      },
+      {
+        "path": "soe/bank-tech/soe-java-mcq-reference-values-v1.excalidraw",
+        "bytes": 20119,
+        "sha256": "39912f305af67c4ff54b895c5b04fe662accc77ba77b3c04f4db7db7c6df5f4d"
+      },
+      {
+        "path": "soe/bank-tech/soe-java-mcq.md",
+        "bytes": 19659,
+        "sha256": "3963ce2404580861ded5ac8a32ceb2201ca61d4d71281a6442f9f4bb01aac646"
+      },
+      {
+        "path": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.archify.json",
+        "bytes": 4051,
+        "sha256": "501972c29980c054d32f1dbdb5ab8d4ca45a972c23e8bd2b3328d28f0ca3567e"
+      },
+      {
+        "path": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.browser-check.json",
+        "bytes": 40903,
+        "sha256": "ab99df269ffa628a9ac1a0cc51d03014ad00262f3789bb4d53b3db388434d632"
+      },
+      {
+        "path": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.delivery.json",
+        "bytes": 1316,
+        "sha256": "29bba9c4fdd5013dc86ac7ff4a212f372cd73d5be66421de52bad4c93ae688db"
+      },
+      {
+        "path": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.finalize-summary.json",
+        "bytes": 2207,
+        "sha256": "66049eef20c0e8e603fee70955473250c6569dd5a1a1155332cc550c958f8a36"
+      },
+      {
+        "path": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.finalize.json",
+        "bytes": 57772,
+        "sha256": "f8b113e0f3e06cba33835679286602572dfc7c2ee4934b8fb7d199a93c34c609"
+      },
+      {
+        "path": "soe/bank-tech/soe-software-engineering-mcq-v-model-v1.html",
+        "bytes": 816753,
+        "sha256": "97eb380e29f5f033eef226fa131f6b876aab75d6bf005dc396769b205f8ad9c4"
+      },
+      {
+        "path": "soe/bank-tech/soe-software-engineering-mcq.md",
+        "bytes": 23309,
+        "sha256": "6e2a7544729e338292e7a2fd37beeb00e747dc0e95ab6760771853b5ab37efe0"
+      },
+      {
+        "path": "soe/grid/soe-grid-tech-exam-overview.md",
+        "bytes": 19108,
+        "sha256": "46ca717f0ce09413f0f5126f000cd50089e47b6a21dfb248c0b5d6eb880fef01"
+      },
+      {
+        "path": "soe/telecom/soe-telecom-tech-exam-overview.md",
+        "bytes": 9416,
+        "sha256": "e7cd617156ec05241da0961a840448a77fb2657db7d6ae605461eaace4010276"
+      },
+      {
+        "path": "soe/practice/soe-cs-self-test-a.md",
+        "bytes": 34993,
+        "sha256": "954b88adc1759c811c1f6901ad8e563f5fa31985c34b5596366e9d7de6c65731"
+      },
+      {
+        "path": "soe/practice/soe-cs-self-test-b.md",
+        "bytes": 36034,
+        "sha256": "b0dfa9232fe6c92078628b7177486eb9ac61e704c6f6d87bd1400a35c8bad153"
+      },
+      {
+        "path": "soe/batches/soe-cs-batch2-20261109-papers-check.mjs",
+        "bytes": 18881,
+        "sha256": "bb863747d2059d736b5e5fa4b23d452a75aea97f2e4857826264d663b9826a24"
+      },
+      {
+        "path": "soe/batches/soe-cs-batch2-20261109-papers-checks.json",
+        "bytes": 9908,
+        "sha256": "a53795ef8c2a4fd713f27b8d57738a9e94546cc88205c90f8090b16484dc8969"
+      }
+    ],
+    "treeSha256": "6671fd74525ea2ef3af10e254fa8aac609c968cfa0b1b4cbb123ac97f2b15b63",
+    "manifestSelfHashExcluded": true,
+    "modifiedFingerprints": [
+      {
+        "path": "soe/_tree.json",
+        "bytes": 6475,
+        "sha256": "6671fd74525ea2ef3af10e254fa8aac609c968cfa0b1b4cbb123ac97f2b15b63"
+      },
+      {
+        "path": ".codex/knowledge-update-history.json",
+        "bytes": 256521,
+        "sha256": "90ace6ffacecbebcf72ba5c63fef74001703ac86f23ff4aefcda4e1d4a9ee875"
+      }
+    ]
+  },
+  "partTwo": {
+    "scope": "C 综合练习",
+    "executionBaseCommit": "55f9283d942a817a08e9075de3bfb5b9e4936a1a",
+    "requestedAt": "2026-11-09",
+    "actions": [
+      {
+        "key": "soe-cs-self-test-a",
+        "label": "计算机专业综合自测 A 卷",
+        "filePath": "practice",
+        "outputPath": "soe/practice/soe-cs-self-test-a.md",
+        "action": "create",
+        "reason": "续做同一批次C部分；原创综合自测，复用已有文章，扩展知识点在解析内完整说明。",
+        "learningOutcome": "在明确题设下完成30道基础与应用选择题，用答案、排错解析和对应文章定位复习；对专题缺口给出自足讲解。",
+        "status": "ready-for-user-review",
+        "originalQuestions": 30,
+        "questionType": "single-choice-four-options",
+        "sourceReview": {
+          "status": "verified-primary-content",
+          "localArticleRole": "direct-explanation-or-explicit-background-only",
+          "sourceIds": [
+            "soe-batch2-papers-bus-basic",
+            "soe-batch2-papers-partition",
+            "soe-batch2-papers-fstab",
+            "soe-batch2-papers-tcp",
+            "soe-batch2-papers-raft",
+            "soe-batch2-papers-pow",
+            "soe-batch2-papers-pos",
+            "soe-batch2-papers-saga",
+            "soe-batch2-papers-tcc",
+            "soe-batch2-papers-docker",
+            "soe-batch2-papers-stateless",
+            "soe-batch2-papers-federated",
+            "soe-batch2-papers-federated-privacy",
+            "soe-batch2-papers-nfc",
+            "soe-batch2-papers-nb-iot",
+            "soe-batch2-papers-zigbee",
+            "soe-batch2-papers-wifi"
+          ]
+        },
+        "omittedTopics": [],
+        "bytes": 34993,
+        "sha256": "954b88adc1759c811c1f6901ad8e563f5fa31985c34b5596366e9d7de6c65731"
+      },
+      {
+        "key": "soe-cs-self-test-b",
+        "label": "计算机专业综合自测 B 卷",
+        "filePath": "practice",
+        "outputPath": "soe/practice/soe-cs-self-test-b.md",
+        "action": "create",
+        "reason": "续做同一批次C部分；原创综合自测，复用已有文章，扩展知识点在解析内完整说明。",
+        "learningOutcome": "在明确题设下完成30道基础与应用选择题，用答案、排错解析和对应文章定位复习；对专题缺口给出自足讲解。",
+        "status": "ready-for-user-review",
+        "originalQuestions": 30,
+        "questionType": "single-choice-four-options",
+        "sourceReview": {
+          "status": "verified-primary-content",
+          "localArticleRole": "direct-explanation-or-explicit-background-only",
+          "sourceIds": [
+            "soe-batch2-papers-bus-basic",
+            "soe-batch2-papers-partition",
+            "soe-batch2-papers-index",
+            "soe-batch2-papers-fstab",
+            "soe-batch2-papers-tcp",
+            "soe-batch2-papers-raft",
+            "soe-batch2-papers-pow",
+            "soe-batch2-papers-pos",
+            "soe-batch2-papers-saga",
+            "soe-batch2-papers-tcc-fence",
+            "soe-batch2-papers-docker",
+            "soe-batch2-papers-docker-restart",
+            "soe-batch2-papers-federated",
+            "soe-batch2-papers-federated-privacy",
+            "soe-batch2-papers-nfc",
+            "soe-batch2-papers-nb-iot",
+            "soe-batch2-papers-zigbee",
+            "soe-batch2-papers-wifi",
+            "soe-batch2-papers-map"
+          ]
+        },
+        "omittedTopics": [],
+        "bytes": 36034,
+        "sha256": "b0dfa9232fe6c92078628b7177486eb9ac61e704c6f6d87bd1400a35c8bad153"
+      }
+    ],
+    "plannedDistributionPerPaper": {
+      "计算机组成原理": 3,
+      "数据库": 3,
+      "操作系统": 3,
+      "计算机网络": 2,
+      "C语言": 2,
+      "Java基础": 3,
+      "数据结构与算法": 3,
+      "软件工程": 3,
+      "信息安全": 3,
+      "金融科技与分布式常识": 5
+    },
+    "questionType": "四选一，唯一最佳答案，逐题标原创模拟题",
+    "diagramDecision": "试卷使用短代码、选项和局部核算表；完整机制沿已有文章复习，无新增图解需求。",
+    "arithmeticVerification": {
+      "status": "passed",
+      "command": "node soe/batches/soe-cs-batch2-20261109-papers-check.mjs",
+      "script": "soe/batches/soe-cs-batch2-20261109-papers-check.mjs",
+      "report": "soe/batches/soe-cs-batch2-20261109-papers-checks.json",
+      "questions": 26,
+      "method": "独立模拟FIFO/LRU、逐时间单位SRTF、枚举闭包与全部候选键、穷举合并树与生成树；另重算位域、地址、指针布局、递推、覆盖与外部归并I/O，并绑定正文唯一选项。"
+    },
+    "publication": "不commit、不push、不创建PR；第一部分HEAD提交为本次执行前既有状态。",
+    "status": "ready-for-user-review-local-uncommitted",
+    "firstPart": {
+      "commit": "55f9283d942a817a08e9075de3bfb5b9e4936a1a",
+      "articleCount": 7,
+      "originalQuestions": 40,
+      "status": "committed-before-this-run",
+      "articleBodiesModified": false
+    },
+    "questionDistribution": {
+      "A": {
+        "计算机组成原理": 3,
+        "数据库": 3,
+        "操作系统": 3,
+        "计算机网络": 2,
+        "C语言": 2,
+        "Java基础": 3,
+        "数据结构与算法": 3,
+        "软件工程": 3,
+        "信息安全": 3,
+        "金融科技与分布式常识": 5
+      },
+      "B": {
+        "计算机组成原理": 3,
+        "数据库": 3,
+        "操作系统": 3,
+        "计算机网络": 2,
+        "C语言": 2,
+        "Java基础": 3,
+        "数据结构与算法": 3,
+        "软件工程": 3,
+        "信息安全": 3,
+        "金融科技与分布式常识": 5
+      }
+    },
+    "coverage": [
+      {
+        "topic": "组成原理：三类总线、补码、Cache、CPU时间、寻址单位",
+        "questions": [
+          "A01",
+          "A02",
+          "A03",
+          "B01",
+          "B02",
+          "B03"
+        ]
+      },
+      {
+        "topic": "数据库：范式、联合索引最左前缀与范围边界、分区表设计",
+        "questions": [
+          "A04",
+          "A05",
+          "A06",
+          "B04",
+          "B05",
+          "B06"
+        ]
+      },
+      {
+        "topic": "操作系统：FIFO/LRU、Linux /etc/fstab、死锁、SRTF、分页地址",
+        "questions": [
+          "A07",
+          "A08",
+          "A09",
+          "B07",
+          "B08",
+          "B09"
+        ]
+      },
+      {
+        "topic": "网络：IPv4子网、TCP慢启动/拥塞避免与重传超时",
+        "questions": [
+          "A10",
+          "A11",
+          "B10",
+          "B11"
+        ]
+      },
+      {
+        "topic": "C：指针、数组、结构体对齐、字符串与内存计量",
+        "questions": [
+          "A12",
+          "A13",
+          "B12",
+          "B13"
+        ]
+      },
+      {
+        "topic": "Java：值传递、数组与String、元空间/永久代、集合、重写/异常、DO/DTO/PO/VO",
+        "questions": [
+          "A14",
+          "A15",
+          "A16",
+          "B14",
+          "B15",
+          "B16"
+        ]
+      },
+      {
+        "topic": "数据结构与算法：遍历、哈夫曼不等长编码、分治递推、MST、二分、外部排序",
+        "questions": [
+          "A17",
+          "A18",
+          "A19",
+          "B17",
+          "B18",
+          "B19"
+        ]
+      },
+      {
+        "topic": "软件工程：生命周期、V模型、UML、覆盖与边界值测试",
+        "questions": [
+          "A20",
+          "A21",
+          "A22",
+          "B20",
+          "B21",
+          "B22"
+        ]
+      },
+      {
+        "topic": "信息安全：数字签名与保密、鉴别/访问控制、SQL注入、salt、XSS、CSRF",
+        "questions": [
+          "A23",
+          "A24",
+          "A25",
+          "B23",
+          "B24",
+          "B25"
+        ]
+      },
+      {
+        "topic": "共识：RAFT/PoW/PoS、BFT/CFT",
+        "questions": [
+          "A26",
+          "B26"
+        ]
+      },
+      {
+        "topic": "分布式事务：SAGA/TCC、幂等、补偿、空回滚与悬挂",
+        "questions": [
+          "A27",
+          "B27"
+        ]
+      },
+      {
+        "topic": "容器与无状态应用：可写层、停止重启/删除重建、外部状态",
+        "questions": [
+          "A28",
+          "B28"
+        ]
+      },
+      {
+        "topic": "联邦学习：本地训练/聚合、隐私边界、非IID与离线",
+        "questions": [
+          "A29",
+          "B29"
+        ]
+      },
+      {
+        "topic": "通信距离：NFC/NB-IoT/WiFi/Zigbee、单跳与mesh、HaLow前提",
+        "questions": [
+          "A30",
+          "B30"
+        ]
+      }
+    ],
+    "articleExplanationGaps": [
+      {
+        "topic": "三类总线的职责",
+        "questions": [
+          "A01",
+          "B01"
+        ],
+        "existingCoverage": "组成原理文章讲CPU、ISA与访存，未单独解释三类总线。",
+        "resolution": "解析内给出地址/数据/控制分工，明确为传统教学模型；引用大学课程。"
+      },
+      {
+        "topic": "分区表按访问与保留策略设计及半开区间",
+        "questions": [
+          "A06",
+          "B06"
+        ],
+        "existingCoverage": "数据库理论未讲分区；db-sharding已有普通分区与跨节点分片边界，但未详解本题月度设计。",
+        "resolution": "解析内讲按月RANGE、半开日期区间、裁剪与索引分工，并提示PostgreSQL18父表唯一约束限制。"
+      },
+      {
+        "topic": "Linux /etc/fstab 与 noauto",
+        "questions": [
+          "A08",
+          "B09"
+        ],
+        "existingCoverage": "无对应字段与选项专题。",
+        "resolution": "逐项解释六字段、dump/fsck与noauto，不把配置等同实际挂载状态；引用fstab(5)。"
+      },
+      {
+        "topic": "TCP拥塞窗口增长与超时恢复",
+        "questions": [
+          "A11",
+          "B11"
+        ],
+        "existingCoverage": "TCP/UDP文章只概述拥塞控制，未展开slow start、ssthresh与FlightSize。",
+        "resolution": "解析内自足解释cwnd/rwnd、经典增长假设和超时上限；题干固定具体计算规则，不冒充所有TCP默认算法。"
+      },
+      {
+        "topic": "RAFT/PoW/PoS、BFT/CFT",
+        "questions": [
+          "A26",
+          "B26"
+        ],
+        "existingCoverage": "无共识机制与故障模型专题。",
+        "resolution": "区分资源参与机制与故障假设，解释Raft多数派和拜占庭边界；安全文章仅作前提链接。"
+      },
+      {
+        "topic": "SAGA/TCC完整对比与TCC失败合同",
+        "questions": [
+          "A27",
+          "B27"
+        ],
+        "existingCoverage": "db-sharding及工作流文章已讲资源预留、补偿和幂等，但缺完整对比及空回滚/悬挂解释。",
+        "resolution": "解析内说明本地提交/补偿、Try预留、Confirm/Cancel及重复乱序处理，引用Seata一手资料。"
+      },
+      {
+        "topic": "容器生命周期与无状态服务的区别",
+        "questions": [
+          "A28",
+          "B28"
+        ],
+        "existingCoverage": "agent-state-storage可支撑外置状态；docker-basics存在把容器天然无状态与重启清空混同的说法，本次未链接该文。",
+        "resolution": "解析内说明同容器stop/start保留可写层、删除重建不继承旧层、外部状态合同；引用Docker与Kubernetes。"
+      },
+      {
+        "topic": "联邦学习与隐私、数据异质性",
+        "questions": [
+          "A29",
+          "B29"
+        ],
+        "existingCoverage": "只有训练流程前提文章，无联邦学习专题。",
+        "resolution": "解释经典本地训练与更新聚合、非IID和参与离线，说明安全聚合/差分隐私各有边界。"
+      },
+      {
+        "topic": "NFC/NB-IoT/WiFi/Zigbee距离与拓扑",
+        "questions": [
+          "A30",
+          "B30"
+        ],
+        "existingCoverage": "无四种通信技术专题。",
+        "resolution": "说明厘米近场/蜂窝广域/局域通信与单跳/mesh边界；限定常规Wi-Fi并提示HaLow，不编造统一最大距离或绝对排序。"
+      },
+      {
+        "topic": "HashMap可变键",
+        "questions": [
+          "B16"
+        ],
+        "existingCoverage": "已有集合与key相等性前提，缺本题修改键状态的具体场景。",
+        "resolution": "解析自足说明稳定key与插入后更改相等/散列字段风险，并链接Java21 Map合同。"
+      }
+    ],
+    "uncoveredRequiredTopics": [],
+    "notCreatedAsStandaloneArticles": [
+      {
+        "topic": "三类总线的职责",
+        "reason": "本次仅授权新增两份综合卷；已在题目解析内补全，未扩写既有文章或另建专题。",
+        "questions": [
+          "A01",
+          "B01"
+        ],
+        "status": "explained-in-paper"
+      },
+      {
+        "topic": "分区表按访问与保留策略设计及半开区间",
+        "reason": "本次仅授权新增两份综合卷；已在题目解析内补全，未扩写既有文章或另建专题。",
+        "questions": [
+          "A06",
+          "B06"
+        ],
+        "status": "explained-in-paper"
+      },
+      {
+        "topic": "Linux /etc/fstab 与 noauto",
+        "reason": "本次仅授权新增两份综合卷；已在题目解析内补全，未扩写既有文章或另建专题。",
+        "questions": [
+          "A08",
+          "B09"
+        ],
+        "status": "explained-in-paper"
+      },
+      {
+        "topic": "TCP拥塞窗口增长与超时恢复",
+        "reason": "本次仅授权新增两份综合卷；已在题目解析内补全，未扩写既有文章或另建专题。",
+        "questions": [
+          "A11",
+          "B11"
+        ],
+        "status": "explained-in-paper"
+      },
+      {
+        "topic": "RAFT/PoW/PoS、BFT/CFT",
+        "reason": "本次仅授权新增两份综合卷；已在题目解析内补全，未扩写既有文章或另建专题。",
+        "questions": [
+          "A26",
+          "B26"
+        ],
+        "status": "explained-in-paper"
+      },
+      {
+        "topic": "SAGA/TCC完整对比与TCC失败合同",
+        "reason": "本次仅授权新增两份综合卷；已在题目解析内补全，未扩写既有文章或另建专题。",
+        "questions": [
+          "A27",
+          "B27"
+        ],
+        "status": "explained-in-paper"
+      },
+      {
+        "topic": "容器生命周期与无状态服务的区别",
+        "reason": "本次仅授权新增两份综合卷；已在题目解析内补全，未扩写既有文章或另建专题。",
+        "questions": [
+          "A28",
+          "B28"
+        ],
+        "status": "explained-in-paper"
+      },
+      {
+        "topic": "联邦学习与隐私、数据异质性",
+        "reason": "本次仅授权新增两份综合卷；已在题目解析内补全，未扩写既有文章或另建专题。",
+        "questions": [
+          "A29",
+          "B29"
+        ],
+        "status": "explained-in-paper"
+      },
+      {
+        "topic": "NFC/NB-IoT/WiFi/Zigbee距离与拓扑",
+        "reason": "本次仅授权新增两份综合卷；已在题目解析内补全，未扩写既有文章或另建专题。",
+        "questions": [
+          "A30",
+          "B30"
+        ],
+        "status": "explained-in-paper"
+      },
+      {
+        "topic": "HashMap可变键",
+        "reason": "本次仅授权新增两份综合卷；已在题目解析内补全，未扩写既有文章或另建专题。",
+        "questions": [
+          "B16"
+        ],
+        "status": "explained-in-paper"
+      }
+    ],
+    "independentContentReview": {
+      "status": "passed",
+      "reviewer": "fresh isolated papers_review agent",
+      "scope": "Read all 60 questions and local linked targets; independently derived answers and checked summary tables, assumptions, unique best choices and requested coverage.",
+      "findings": {
+        "critical": 0,
+        "important": 0,
+        "minorRequired": 0
+      },
+      "excluded": [
+        "Remote citation second full audit",
+        "Internet-wide originality detection",
+        "Calculation script",
+        "Final manifest",
+        "npm commands",
+        "Publication/release-review"
+      ],
+      "formalReleaseReview": false,
+      "postReviewCitationCorrections": [
+        "B27 changed generic Seata mode page to official TCC fence article explaining the cited failure cases.",
+        "B28 changed generic container introduction to official stop/start/remove tutorial. No stems, options or answers changed."
+      ]
+    },
+    "fileInventory": {
+      "created": [
+        "soe/practice/soe-cs-self-test-a.md",
+        "soe/practice/soe-cs-self-test-b.md",
+        "soe/batches/soe-cs-batch2-20261109-papers-check.mjs",
+        "soe/batches/soe-cs-batch2-20261109-papers-checks.json"
+      ],
+      "modified": [
+        "soe/batches/soe-cs-batch2-20261109.json",
+        "soe/_tree.json",
+        ".codex/knowledge-update-history.json"
+      ],
+      "existingArticleBodiesModified": [],
+      "fingerprints": [
+        {
+          "path": "soe/practice/soe-cs-self-test-a.md",
+          "bytes": 34993,
+          "sha256": "954b88adc1759c811c1f6901ad8e563f5fa31985c34b5596366e9d7de6c65731"
+        },
+        {
+          "path": "soe/practice/soe-cs-self-test-b.md",
+          "bytes": 36034,
+          "sha256": "b0dfa9232fe6c92078628b7177486eb9ac61e704c6f6d87bd1400a35c8bad153"
+        },
+        {
+          "path": "soe/batches/soe-cs-batch2-20261109-papers-check.mjs",
+          "bytes": 18881,
+          "sha256": "bb863747d2059d736b5e5fa4b23d452a75aea97f2e4857826264d663b9826a24"
+        },
+        {
+          "path": "soe/batches/soe-cs-batch2-20261109-papers-checks.json",
+          "bytes": 9908,
+          "sha256": "a53795ef8c2a4fd713f27b8d57738a9e94546cc88205c90f8090b16484dc8969"
+        }
+      ],
+      "modifiedFingerprints": [
+        {
+          "path": "soe/_tree.json",
+          "bytes": 6475,
+          "sha256": "6671fd74525ea2ef3af10e254fa8aac609c968cfa0b1b4cbb123ac97f2b15b63"
+        },
+        {
+          "path": ".codex/knowledge-update-history.json",
+          "bytes": 256521,
+          "sha256": "90ace6ffacecbebcf72ba5c63fef74001703ac86f23ff4aefcda4e1d4a9ee875"
+        }
+      ],
+      "manifestSelfHashExcluded": true
+    },
+    "validation": {
+      "status": "passed",
+      "structure": {
+        "status": "passed",
+        "papers": 2,
+        "questions": 60,
+        "singleChoiceQuestions": 60,
+        "answerTablesConsistent": true,
+        "localArticleTargets": 28,
+        "allLocalLinksExist": true,
+        "registrationChecked": true,
+        "noNewDiagrams": true
+      },
+      "arithmetic": {
+        "status": "passed",
+        "questions": 26,
+        "report": "soe/batches/soe-cs-batch2-20261109-papers-checks.json"
+      },
+      "existingArticleBodiesUnchanged": true,
+      "history": {
+        "status": "passed",
+        "newPendingSoeRecords": 2,
+        "existingRecordsUnchanged": true
+      },
+      "repositoryCommands": {
+        "status": "next"
+      },
+      "repositoryTreeValidation": {
+        "status": "passed",
+        "command": "npm run validate:tree",
+        "exitCode": 0,
+        "errors": 0,
+        "warnings": 2,
+        "counts": {
+          "interview": 243,
+          "knowledge": 334,
+          "soe": 14
+        },
+        "warningCause": "Preexisting unrelated orphan knowledge/fe/aigc/aigc-application.md and knowledge/intro/pdf.md; both left unchanged.",
+        "logSha256": "9479b4079e91dc8f3ff69a21f2ed55573a37cfde60f095ba8a18566a1b92c366"
+      },
+      "npmTest": {
+        "status": "passed",
+        "command": "env PATH=\"/usr/bin:$PATH\" npm test",
+        "exitCode": 0,
+        "tests": 161,
+        "pass": 161,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "gitVersion": "git version 2.39.5 (Apple Git-154)",
+        "environmentReason": "System Git 2.39.5 supplies Trace2 required by existing tests; legacy default Git is 2.15.0. Only the child test command PATH was adjusted; no test, repository configuration or global configuration was changed.",
+        "logSha256": "979587dd3193934edceedc7f3e06602ea6141e44080ed701ff7e0fede9c16d12"
+      },
+      "diffWhitespace": "git diff --check passed",
+      "publication": "Not attempted: user explicitly excluded commit/push/PR. HEAD and index unchanged."
+    },
+    "completedPreviouslyDeferred": [
+      {
+        "scope": "C 综合练习 A/B 卷，各30道原创选择题",
+        "reason": "本次用户明确留到下一次运行，不建叶子或空壳文章。",
+        "status": "completed-in-part-two",
+        "resolution": "Included in A/B papers and per-question coverage map; local-only delivery."
+      },
+      {
+        "scope": "C 卷中首批专题的交叉题与扩展：三类总线、联合索引/分区表、Linux /etc/fstab、TCP 拥塞控制",
+        "reason": "属于下次综合卷覆盖范围；本次只处理 A+B，不追写首批文章或 knowledge 内容。",
+        "status": "completed-in-part-two",
+        "resolution": "Included in A/B papers and per-question coverage map; local-only delivery."
+      },
+      {
+        "scope": "综合卷专属增补：金融科技与分布式常识（共识、SAGA/TCC、容器/无状态、联邦学习、物联网通信距离）",
+        "reason": "随C卷下次处理，不扩展本次7篇范围。",
+        "status": "completed-in-part-two",
+        "resolution": "Included in A/B papers and per-question coverage map; local-only delivery."
+      }
+    ],
+    "research": {
+      "verifiedAt": "2026-11-09",
+      "primarySources": 21,
+      "sourceIds": [
+        "soe-batch2-papers-bus-basic",
+        "soe-batch2-papers-partition",
+        "soe-batch2-papers-index",
+        "soe-batch2-papers-fstab",
+        "soe-batch2-papers-tcp",
+        "soe-batch2-papers-raft",
+        "soe-batch2-papers-pow",
+        "soe-batch2-papers-pos",
+        "soe-batch2-papers-saga",
+        "soe-batch2-papers-tcc",
+        "soe-batch2-papers-tcc-fence",
+        "soe-batch2-papers-docker",
+        "soe-batch2-papers-stateless",
+        "soe-batch2-papers-docker-restart",
+        "soe-batch2-papers-federated",
+        "soe-batch2-papers-federated-privacy",
+        "soe-batch2-papers-nfc",
+        "soe-batch2-papers-nb-iot",
+        "soe-batch2-papers-zigbee",
+        "soe-batch2-papers-wifi",
+        "soe-batch2-papers-map"
+      ],
+      "bodyRead": true,
+      "sourceGapsUnresolved": [],
+      "accessNotes": [
+        {
+          "url": "https://arxiv.org/abs/1906.08935",
+          "status": 403,
+          "usedAsEvidence": false,
+          "action": "Stopped access to this URL; no browser, identity, or raw-request bypass. This source is not cited. Privacy explanation uses independently selected readable Google Research material."
+        },
+        {
+          "url": "https://developer.bitcoin.org/devguide/mining.html",
+          "status": "TLS connection failed",
+          "usedAsEvidence": false,
+          "action": "No result claimed; cited and read original Bitcoin paper instead."
+        },
+        {
+          "url": "https://seata.apache.org/docs/dev/mode/tcc-mode/",
+          "status": "Readable but inadequate for the claimed failure scenarios",
+          "usedAsEvidence": false,
+          "action": "Cited and read the specific Seata TCC fence article instead."
+        }
+      ],
+      "method": "Primary technical documentation, original research and standards bodies; public text via Lightpanda, web fallback for original PDF and TLS-incompatible primary documentation."
+    },
+    "history": {
+      "newPendingRecords": 2,
+      "existingRecordsPreserved": true,
+      "publicationClaimed": false
+    },
+    "outOfScope": [
+      {
+        "topic": "行测、银行综合知识、企业清单与网申时间表",
+        "reason": "原始简报明确排除。"
+      },
+      {
+        "topic": "新增完整知识专题、扩写既有knowledge或第一部分soe正文",
+        "reason": "当前用户只授权两份综合卷与登记；必要扩展放在解析内。"
+      },
+      {
+        "topic": "Git提交、推送、PR、正式release review与上线",
+        "reason": "当前用户明确禁止Git提交、推送和PR。"
+      }
+    ],
+    "linkedArticles": [
+      {
+        "path": "knowledge/backend/database/db-sharding.md",
+        "key": "db-sharding",
+        "label": "分库分表、读写分离与扩展",
+        "module": "knowledge"
+      },
+      {
+        "path": "knowledge/backend/database/mysql-index.md",
+        "key": "mysql-index",
+        "label": "数据库索引原理与查询优化",
+        "module": "knowledge"
+      },
+      {
+        "path": "knowledge/backend/java/java-collections.md",
+        "key": "java-collections",
+        "label": "Java 集合：接口分类与选型",
+        "module": "knowledge"
+      },
+      {
+        "path": "knowledge/backend/java/java-runtime-memory.md",
+        "key": "java-runtime-memory",
+        "label": "JVM 内存、类加载与 OOM 定位",
+        "module": "knowledge"
+      },
+      {
+        "path": "knowledge/backend/java/java-value-semantics.md",
+        "key": "java-value-semantics",
+        "label": "Java值语义：参数、字符串与返回",
+        "module": "knowledge"
+      },
+      {
+        "path": "knowledge/backend/storage/agent-state-storage.md",
+        "key": "agent-state-storage",
+        "label": "Agent 会话、检查点与任务状态存储",
+        "module": "knowledge"
+      },
+      {
+        "path": "knowledge/cs/algorithm/algorithm-complexity.md",
+        "key": "algorithm-complexity",
+        "label": "时间复杂度、空间复杂度与性能估算",
+        "module": "knowledge"
+      },
+      {
+        "path": "knowledge/cs/algorithm/algorithm-graph.md",
+        "key": "algorithm-graph",
+        "label": "BFS、DFS、最短路与拓扑排序",
+        "module": "knowledge"
+      },
+      {
+        "path": "knowledge/cs/algorithm/algorithm-sorting.md",
+        "key": "algorithm-sorting",
+        "label": "排序算法、稳定性与外部排序",
+        "module": "knowledge"
+      },
+      {
+        "path": "knowledge/cs/os/os-deadlock.md",
+        "key": "os-deadlock",
+        "label": "死锁、检测与避免",
+        "module": "knowledge"
+      },
+      {
+        "path": "knowledge/cs/os/os-process-thread.md",
+        "key": "os-process-thread",
+        "label": "进程、线程与协程",
+        "module": "knowledge"
+      },
+      {
+        "path": "knowledge/cs/os/os-virtual-memory.md",
+        "key": "os-virtual-memory",
+        "label": "内存、虚拟内存与分页",
+        "module": "knowledge"
+      },
+      {
+        "path": "knowledge/data-structure/algorithm/algorithm-array.md",
+        "key": "algorithm-array",
+        "label": "数组、字符串与双指针",
+        "module": "knowledge"
+      },
+      {
+        "path": "knowledge/data-structure/algorithm/algorithm-tree.md",
+        "key": "algorithm-tree",
+        "label": "树、图与遍历",
+        "module": "knowledge"
+      },
+      {
+        "path": "knowledge/data/sql/sql-index-optimize.md",
+        "key": "sql-index-optimize",
+        "label": "索引、执行计划与查询优化",
+        "module": "knowledge"
+      },
+      {
+        "path": "knowledge/llm/agent/agent-workflow-state.md",
+        "key": "agent-workflow-state",
+        "label": "工作流状态、检查点与断点续跑",
+        "module": "knowledge"
+      },
+      {
+        "path": "knowledge/llm/basics/llm-training-overview.md",
+        "key": "llm-training-overview",
+        "label": "大模型训练全流程概览",
+        "module": "knowledge"
+      },
+      {
+        "path": "knowledge/network/security/web-attack.md",
+        "key": "web-attack",
+        "label": "XSS、CSRF、CSP 与 Web 安全基础",
+        "module": "knowledge"
+      },
+      {
+        "path": "knowledge/network/tcpIp/tcp-udp.md",
+        "key": "tcp-udp",
+        "label": "TCP、UDP 与传输场景",
+        "module": "knowledge"
+      },
+      {
+        "path": "soe/bank-tech/soe-c-language-mcq.md",
+        "key": "soe-c-language-mcq",
+        "label": "C 语言常考点：指针、数组、结构体与内存",
+        "module": "soe"
+      },
+      {
+        "path": "soe/bank-tech/soe-computer-organization.md",
+        "key": "soe-computer-organization",
+        "label": "计算机组成原理速览：数制与编码、CPU、存储层次、指令系统",
+        "module": "soe"
+      },
+      {
+        "path": "soe/bank-tech/soe-data-structures-mcq.md",
+        "key": "soe-data-structures-mcq",
+        "label": "数据结构选择题高频考点",
+        "module": "soe"
+      },
+      {
+        "path": "soe/bank-tech/soe-database-theory.md",
+        "key": "soe-database-theory",
+        "label": "数据库理论：范式、ER 图、关系代数与事务隔离级别（选择题考法）",
+        "module": "soe"
+      },
+      {
+        "path": "soe/bank-tech/soe-information-security-mcq.md",
+        "key": "soe-information-security-mcq",
+        "label": "信息安全基础：加密、认证、常见攻击与防护",
+        "module": "soe"
+      },
+      {
+        "path": "soe/bank-tech/soe-java-mcq.md",
+        "key": "soe-java-mcq",
+        "label": "Java 基础常考点：面向对象、异常、集合与常见陷阱",
+        "module": "soe"
+      },
+      {
+        "path": "soe/bank-tech/soe-network-mcq.md",
+        "key": "soe-network-mcq",
+        "label": "计算机网络选择题高频考点",
+        "module": "soe"
+      },
+      {
+        "path": "soe/bank-tech/soe-os-mcq.md",
+        "key": "soe-os-mcq",
+        "label": "操作系统选择题高频考点",
+        "module": "soe"
+      },
+      {
+        "path": "soe/bank-tech/soe-software-engineering-mcq.md",
+        "key": "soe-software-engineering-mcq",
+        "label": "软件工程基础：生命周期模型、UML、测试方法",
+        "module": "soe"
+      }
+    ],
+    "linkedArticleCounts": {
+      "soe": 9,
+      "knowledge": 19,
+      "total": 28
+    },
+    "linkedArticlesByPaper": [
+      {
+        "paper": "A",
+        "paths": [
+          "knowledge/backend/database/db-sharding.md",
+          "knowledge/backend/database/mysql-index.md",
+          "knowledge/backend/java/java-collections.md",
+          "knowledge/backend/java/java-runtime-memory.md",
+          "knowledge/backend/java/java-value-semantics.md",
+          "knowledge/backend/storage/agent-state-storage.md",
+          "knowledge/cs/algorithm/algorithm-complexity.md",
+          "knowledge/cs/os/os-deadlock.md",
+          "knowledge/cs/os/os-virtual-memory.md",
+          "knowledge/data-structure/algorithm/algorithm-tree.md",
+          "knowledge/llm/agent/agent-workflow-state.md",
+          "knowledge/llm/basics/llm-training-overview.md",
+          "knowledge/network/tcpIp/tcp-udp.md",
+          "soe/bank-tech/soe-c-language-mcq.md",
+          "soe/bank-tech/soe-computer-organization.md",
+          "soe/bank-tech/soe-data-structures-mcq.md",
+          "soe/bank-tech/soe-database-theory.md",
+          "soe/bank-tech/soe-information-security-mcq.md",
+          "soe/bank-tech/soe-java-mcq.md",
+          "soe/bank-tech/soe-network-mcq.md",
+          "soe/bank-tech/soe-os-mcq.md",
+          "soe/bank-tech/soe-software-engineering-mcq.md"
+        ]
+      },
+      {
+        "paper": "B",
+        "paths": [
+          "knowledge/backend/database/db-sharding.md",
+          "knowledge/backend/java/java-collections.md",
+          "knowledge/backend/storage/agent-state-storage.md",
+          "knowledge/cs/algorithm/algorithm-graph.md",
+          "knowledge/cs/algorithm/algorithm-sorting.md",
+          "knowledge/cs/os/os-process-thread.md",
+          "knowledge/cs/os/os-virtual-memory.md",
+          "knowledge/data-structure/algorithm/algorithm-array.md",
+          "knowledge/data/sql/sql-index-optimize.md",
+          "knowledge/llm/agent/agent-workflow-state.md",
+          "knowledge/llm/basics/llm-training-overview.md",
+          "knowledge/network/security/web-attack.md",
+          "knowledge/network/tcpIp/tcp-udp.md",
+          "soe/bank-tech/soe-c-language-mcq.md",
+          "soe/bank-tech/soe-computer-organization.md",
+          "soe/bank-tech/soe-data-structures-mcq.md",
+          "soe/bank-tech/soe-database-theory.md",
+          "soe/bank-tech/soe-information-security-mcq.md",
+          "soe/bank-tech/soe-java-mcq.md",
+          "soe/bank-tech/soe-network-mcq.md",
+          "soe/bank-tech/soe-os-mcq.md",
+          "soe/bank-tech/soe-software-engineering-mcq.md"
+        ]
+      }
+    ],
+    "inheritedMetadataCorrections": [
+      {
+        "path": "soe/bank-tech/soe-software-engineering-mcq.md",
+        "field": "items[].sha256",
+        "previous": "489370deb7e64f1445ef7cb723f9b9746fe248da562979011b6fffc55877b467",
+        "current": "6e2a7544729e338292e7a2fd37beeb00e747dc0e95ab6760771853b5ab37efe0",
+        "reason": "The committed HEAD manifest item contained a stale digest; HEAD article bytes, working article bytes and existing fileInventory digest agree. Only this metadata field was corrected; no article body changed."
+      }
+    ],
+    "lastVerifiedAt": "2026-11-09T11:01:13.335Z"
+  }
+}
