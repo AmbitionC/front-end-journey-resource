@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
-  "updatedAt": "2026-11-06",
+  "updatedAt": "2026-11-09",
   "records": [
     {
       "key": "transformer-arch",
@@ -6499,6 +6499,116 @@
       "publishedByCommit": "2b0f25335fec61de41d99f1cae4e29bc498b3743",
       "publishedByPr": 74,
       "publishedAt": "2026-11-06T08:36:18.082Z"
+    },
+    {
+      "module": "soe",
+      "key": "soe-grid-tech-exam-overview",
+      "label": "国家电网 / 南方电网信通岗笔试考什么",
+      "filePath": "grid",
+      "action": "created",
+      "batch": "soe-cs-batch2-20261109",
+      "recordedAt": "2026-11-09",
+      "status": "pending",
+      "reason": "Local article, diagram and source review complete; user requested uncommitted local delivery. Not published and not counted as new published knowledge.",
+      "sourceVerification": "verified-with-explicit-gaps"
+    },
+    {
+      "module": "soe",
+      "key": "soe-telecom-tech-exam-overview",
+      "label": "三大运营商技术岗笔试考什么",
+      "filePath": "telecom",
+      "action": "created",
+      "batch": "soe-cs-batch2-20261109",
+      "recordedAt": "2026-11-09",
+      "status": "pending",
+      "reason": "Local article, diagram and source review complete; user requested uncommitted local delivery. Not published and not counted as new published knowledge.",
+      "sourceVerification": "verified-with-explicit-gaps"
+    },
+    {
+      "module": "soe",
+      "key": "soe-c-language-mcq",
+      "label": "C 语言常考点：指针、数组、结构体与内存",
+      "filePath": "bank-tech",
+      "action": "created",
+      "batch": "soe-cs-batch2-20261109",
+      "recordedAt": "2026-11-09",
+      "status": "pending",
+      "reason": "Local article, diagram and source review complete; user requested uncommitted local delivery. Not published and not counted as new published knowledge.",
+      "sourceVerification": "verified"
+    },
+    {
+      "module": "soe",
+      "key": "soe-java-mcq",
+      "label": "Java 基础常考点：面向对象、异常、集合与常见陷阱",
+      "filePath": "bank-tech",
+      "action": "created",
+      "batch": "soe-cs-batch2-20261109",
+      "recordedAt": "2026-11-09",
+      "status": "pending",
+      "reason": "Local article, diagram and source review complete; user requested uncommitted local delivery. Not published and not counted as new published knowledge.",
+      "sourceVerification": "verified"
+    },
+    {
+      "module": "soe",
+      "key": "soe-data-structures-mcq",
+      "label": "数据结构选择题高频考点",
+      "filePath": "bank-tech",
+      "action": "created",
+      "batch": "soe-cs-batch2-20261109",
+      "recordedAt": "2026-11-09",
+      "status": "pending",
+      "reason": "Local article, diagram and source review complete; user requested uncommitted local delivery. Not published and not counted as new published knowledge.",
+      "sourceVerification": "verified"
+    },
+    {
+      "module": "soe",
+      "key": "soe-software-engineering-mcq",
+      "label": "软件工程基础：生命周期模型、UML、测试方法",
+      "filePath": "bank-tech",
+      "action": "created",
+      "batch": "soe-cs-batch2-20261109",
+      "recordedAt": "2026-11-09",
+      "status": "pending",
+      "reason": "Local article, diagram and source review complete; user requested uncommitted local delivery. Not published and not counted as new published knowledge.",
+      "sourceVerification": "verified"
+    },
+    {
+      "module": "soe",
+      "key": "soe-information-security-mcq",
+      "label": "信息安全基础：加密、认证、常见攻击与防护",
+      "filePath": "bank-tech",
+      "action": "created",
+      "batch": "soe-cs-batch2-20261109",
+      "recordedAt": "2026-11-09",
+      "status": "pending",
+      "reason": "Local article, diagram and source review complete; user requested uncommitted local delivery. Not published and not counted as new published knowledge.",
+      "sourceVerification": "verified"
+    },
+    {
+      "module": "soe",
+      "key": "soe-cs-self-test-a",
+      "label": "计算机专业综合自测 A 卷",
+      "filePath": "practice",
+      "action": "created",
+      "batch": "soe-cs-batch2-20261109",
+      "recordedAt": "2026-11-09",
+      "status": "pending",
+      "reason": "Second-part original paper completed locally; no commit, push, PR or publication in this run. Background-only article links explicitly disclosed; all 26 computational questions across both papers independently recomputed.",
+      "sourceVerification": "verified-primary-content",
+      "originalQuestions": 30
+    },
+    {
+      "module": "soe",
+      "key": "soe-cs-self-test-b",
+      "label": "计算机专业综合自测 B 卷",
+      "filePath": "practice",
+      "action": "created",
+      "batch": "soe-cs-batch2-20261109",
+      "recordedAt": "2026-11-09",
+      "status": "pending",
+      "reason": "Second-part original paper completed locally; no commit, push, PR or publication in this run. Background-only article links explicitly disclosed; all 26 computational questions across both papers independently recomputed.",
+      "sourceVerification": "verified-primary-content",
+      "originalQuestions": 30
     }
   ],
   "deliveryEvidence": {
