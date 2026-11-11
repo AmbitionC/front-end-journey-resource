@@ -17,7 +17,7 @@ import { resolve } from 'node:path';
 
 const ROOT = resolve(import.meta.dirname, '..');
 const WRITE = process.argv.includes('--write');
-const MODULES = ['interview', 'knowledge', 'soe'];
+const MODULES = ['interview', 'knowledge', 'soe', 'civil'];
 
 /** 该文件最近一次提交的日期（YYYY-MM-DD）；未入库返回 undefined。 */
 function lastCommitDate(relativePath) {

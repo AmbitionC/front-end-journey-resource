@@ -10,9 +10,9 @@ export function isDirectExecution(url) {
 
 /**
  * 目录式内容模块：`{module}/_tree.json` + `{module}/{filePath}/{key}.md`。
- * soe = 央国企科技岗目标（2026-11-07 接入，站点侧默认关闭，见 front-end-journey 的 TRACKS_PREVIEW）。
+ * soe = 央国企科技岗目标（2026-11-07 接入）；civil = 考公选岗目标（2026-11-08 接入，站点侧在 TRACKS_PREVIEW 后）。
  */
-export const CONTENT_MODULES = ['interview', 'knowledge', 'soe'];
+export const CONTENT_MODULES = ['interview', 'knowledge', 'soe', 'civil'];
 
 export function safeRelativePath(value) {
   if (value === '.codex/image-resync.txt') return value;
