@@ -104,7 +104,7 @@
       "action": "create",
       "status": "ready-for-owner-review",
       "bytes": 4984,
-      "sha256": "d7f834c6af5d0959b622b03114e3ae695d5558124d607f7a70ef0523b614c7bf"
+      "sha256": "d8017a3d7230f3b0a8254b8d931f9d1521b70f396350d328748795513cc42d61"
     },
     {
       "key": "civil-sprint-fill-blank",
@@ -167,6 +167,11 @@
       "path": "images/civil-sprint-figure-intersections-v1.png",
       "bytes": 49439,
       "sha256": "7a23ab427baa37dd73b9646daa4551b55a306f951877a5042d96f53782b17121"
+    },
+    {
+      "path": "images/civil-sprint-figure-intersections-v2.png",
+      "bytes": 47414,
+      "sha256": "b558e1efab511ae6bb6aa2b1d300bb00146194175e0734f4dd81129df5095138"
     },
     {
       "path": "images/civil-sprint-figure-position-v1.png",
