@@ -268,6 +268,30 @@ export async function renderPdfBook(browser,root,approved,built) {
   }finally{await page.close();}
 }
 
+const OSS_TIMEOUT_MS = 10 * 60 * 1000;
+
+/** 私有上传并读回校验；网络类失败最多重试 3 次（同一 key、同一字节，幂等）。 */
+export async function uploadVerified(client, key, bytes, contentType, { attempts = 3, wait = (ms) => new Promise((r) => setTimeout(r, ms)) } = {}) {
+  for (let i = 1; ; i++) {
+    try {
+      await client.put(key, bytes, { headers: { 'Content-Type': contentType, 'x-oss-object-acl': 'private' } });
+      return await verifyUploadedMaterial(client, key, bytes);
+    } catch (err) {
+      if (i >= attempts) throw err;
+      console.warn(`[build-materials] 上传 ${key} 第 ${i} 次失败（${describeError(err)}），重试`);
+      await wait(2000 * i);
+    }
+  }
+}
+
+/** 只取错误类型、代码和首行信息，并抹掉任何环境变量里的密钥值，供 CI 日志定位原因。 */
+export function describeError(err, env = process.env) {
+  const parts = [err?.name, err?.code, err?.status && `HTTP ${err.status}`, String(err?.message ?? err).split('\n')[0].slice(0, 300)].filter(Boolean);
+  let text = parts.join(' · ');
+  for (const name of ['OSS_ACCESS_KEY_ID', 'OSS_ACCESS_KEY_SECRET']) if (env[name]) text = text.split(env[name]).join('***');
+  return text;
+}
+
 export async function verifyUploadedMaterial(client,key,bytes) {
   const actual=await client.get(key),acl=await client.getACL(key);
   if(!Buffer.isBuffer(actual.content)||sha256(actual.content)!==sha256(bytes)||acl.acl!=='private')throw new Error('PDF 商品上传读回字节或私有 ACL 不匹配');
@@ -345,6 +369,8 @@ async function main() {
       accessKeyId: OSS_ACCESS_KEY_ID,
       accessKeySecret: OSS_ACCESS_KEY_SECRET,
       bucket: process.env.OSS_BUCKET || 'font-end-journey-resources',
+      // 单册 PDF 可达数十 MB，ali-oss 默认 60 秒超时会在 CI 上把上传截断
+      timeout: OSS_TIMEOUT_MS,
     });
   } else {
     console.warn('[build-materials] 未配置 OSS_ACCESS_KEY_ID/SECRET，仅本地产出 dist，不上传。');
@@ -381,13 +407,9 @@ async function main() {
   if (client) {
     const readback=[];
     for (const {key,buf} of uploads) {
-      await client.put(`${opts.ossPrefix}${key}.pdf`,buf,{headers:{'Content-Type':'application/pdf','x-oss-object-acl':'private'}});
-      readback.push(await verifyUploadedMaterial(client,`${opts.ossPrefix}${key}.pdf`,buf));
+      readback.push(await uploadVerified(client,`${opts.ossPrefix}${key}.pdf`,buf,'application/pdf'));
     }
-    await client.put(`${opts.ossPrefix}manifest.json`, Buffer.from(manifestStr), {
-      headers: { 'Content-Type': 'application/json; charset=utf-8', 'x-oss-object-acl': 'private' },
-    });
-    readback.push(await verifyUploadedMaterial(client,`${opts.ossPrefix}manifest.json`,Buffer.from(manifestStr)));
+    readback.push(await uploadVerified(client,`${opts.ossPrefix}manifest.json`,Buffer.from(manifestStr),'application/json; charset=utf-8'));
     writeFileSync(join(opts.dist,'upload-readback.json'),JSON.stringify({sourceCommit:head,publicationDigest:snapshot.digest,objects:readback},null,2));
   }
 
@@ -396,5 +418,5 @@ async function main() {
 }
 
 if (isDirectExecution(import.meta.url)) {
-  main().catch(() => { console.error('正式 PDF 生成/上传失败；审核、同 SHA 同步及图片条件必须全部满足'); process.exitCode=1; });
+  main().catch((err) => { console.error(`正式 PDF 生成/上传失败；审核、同 SHA 同步及图片条件必须全部满足。原因：${describeError(err)}`); process.exitCode=1; });
 }
