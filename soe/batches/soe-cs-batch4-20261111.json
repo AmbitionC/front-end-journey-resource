@@ -3,7 +3,7 @@
   "batchId": "soe-cs-batch4-20261111",
   "date": "2026-11-11",
   "branch": "claude/soe-batch4-20261111",
-  "baseCommit": "2b64a70d897b7a63fb6dd7a1a1212a106d1e215f",
+  "baseCommit": "d5bcb5d59a73a58c9bcba0fdc24bd8b92ffa53e4",
   "scope": {
     "module": "soe",
     "topLevelLabel": "银行·国企科技岗笔试",
@@ -30,8 +30,8 @@
       "originalQuestions": 12,
       "questionType": "single-choice-four-options",
       "status": "ready-for-independent-review",
-      "bytes": 20848,
-      "sha256": "690893234c735df9fe26afc0957af665587982a1cae2f14e3a7ea92826aef5f7"
+      "bytes": 21267,
+      "sha256": "836f11afa74ffffb04bc2af08b07a8db24de9a0e09046febb9331d4b0d345f29"
     }
   ],
   "coverageGaps": {
