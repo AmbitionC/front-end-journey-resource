@@ -62,6 +62,120 @@
         "quickRead": {
           "text": "链接现有 TCP、HTTP、DNS 文章，练习 IPv4 前缀、地址范围、等长及可变长子网，并辨别 /31 与 /32 边界。"
         }
+      },
+      {
+        "label": "国家电网 / 南方电网信通岗笔试考什么",
+        "key": "soe-grid-tech-exam-overview",
+        "isLeaf": true,
+        "filePath": "grid",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-09",
+        "quickRead": {
+          "text": "对照国网2027计算机类7方向48点、通信类4方向32点及20%/80%占比，核对四批初定时间；南网保留2026公告口径。"
+        }
+      },
+      {
+        "label": "三大运营商技术岗笔试考什么",
+        "key": "soe-telecom-tech-exam-overview",
+        "isLeaf": true,
+        "filePath": "telecom",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-09",
+        "quickRead": {
+          "text": "区分移动、电信、联通的官方招聘流程与已公开考试说明，识别未知题量和权重。"
+        }
+      },
+      {
+        "label": "C 语言常考点：指针、数组、结构体与内存",
+        "key": "soe-c-language-mcq",
+        "isLeaf": true,
+        "filePath": "bank-tech",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-09",
+        "quickRead": {
+          "text": "依据表达式类型、数组边界及明确 ABI 假设计算指针、数组和结构体题目。"
+        }
+      },
+      {
+        "label": "Java 基础常考点：面向对象、异常、集合与常见陷阱",
+        "key": "soe-java-mcq",
+        "isLeaf": true,
+        "filePath": "bank-tech",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-09",
+        "quickRead": {
+          "text": "复用现有 Java 概念文章，准确解读值语义、分派、异常、集合及 JVM 版本相关选择题。"
+        }
+      },
+      {
+        "label": "数据结构选择题高频考点",
+        "key": "soe-data-structures-mcq",
+        "isLeaf": true,
+        "filePath": "bank-tech",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-09",
+        "quickRead": {
+          "text": "在明确计数与唯一性条件后手算遍历、编码、生成树、查找排序与递推复杂度。"
+        }
+      },
+      {
+        "label": "软件工程基础：生命周期模型、UML、测试方法",
+        "key": "soe-software-engineering-mcq",
+        "isLeaf": true,
+        "filePath": "bank-tech",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-09",
+        "quickRead": {
+          "text": "由需求风险和观察对象选择生命周期、UML 图与测试方法，辨别覆盖标准边界。"
+        }
+      },
+      {
+        "label": "信息安全基础：加密、认证、常见攻击与防护",
+        "key": "soe-information-security-mcq",
+        "isLeaf": true,
+        "filePath": "bank-tech",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-09",
+        "quickRead": {
+          "text": "区分安全目标、身份鉴别与访问控制，为给定威胁匹配有条件的密码与应用防御措施。"
+        }
+      },
+      {
+        "label": "计算机专业综合练习",
+        "key": "soe-cs-practice",
+        "children": [
+          {
+            "label": "计算机专业综合自测 A 卷",
+            "key": "soe-cs-self-test-a",
+            "isLeaf": true,
+            "filePath": "practice",
+            "heat": 0,
+            "currRank": 0,
+            "updatedAt": "2026-11-09",
+            "quickRead": {
+              "text": "30道原创模拟题：九个计算机基础模块25题，金融科技与分布式常识5题，逐题附答案、解析和复习链接。"
+            }
+          },
+          {
+            "label": "计算机专业综合自测 B 卷",
+            "key": "soe-cs-self-test-b",
+            "isLeaf": true,
+            "filePath": "practice",
+            "heat": 0,
+            "currRank": 0,
+            "updatedAt": "2026-11-09",
+            "quickRead": {
+              "text": "30道原创模拟题：九个计算机基础模块25题，金融科技与分布式常识5题，逐题附答案、解析和复习链接。"
+            }
+          }
+        ]
       }
     ]
   }
