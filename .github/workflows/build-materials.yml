@@ -45,11 +45,25 @@ jobs:
           node-version: '20'
 
       # 中文字体：PDF 渲染 CJK 必需
+      # apt 源偶发 DNS 解析失败（2026-11-11 连续四次），重试后仍失败就改从 GitHub Release 取字体
       - name: Install CJK fonts
         run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends fonts-noto-cjk fonts-noto-color-emoji
-          sudo fc-cache -f
+          ok=0
+          for i in 1 2 3; do
+            if sudo apt-get update && sudo apt-get install -y --no-install-recommends fonts-noto-cjk fonts-noto-color-emoji; then ok=1; break; fi
+            echo "apt 第 $i 次失败，20 秒后重试"; sleep 20
+          done
+          if [ "$ok" != 1 ]; then
+            echo "apt 不可用，改从 notofonts/noto-cjk Release 下载"
+            mkdir -p "$HOME/.local/share/fonts/noto-cjk" /tmp/noto
+            for z in Sans2.004/03_NotoSansCJK-OTC.zip Serif2.003/04_NotoSerifCJKOTC.zip; do
+              curl -fsSL --retry 3 -o /tmp/noto/f.zip "https://github.com/notofonts/noto-cjk/releases/download/$z"
+              unzip -o -q /tmp/noto/f.zip -d /tmp/noto
+            done
+            find /tmp/noto -name '*.ttc' -exec cp {} "$HOME/.local/share/fonts/noto-cjk/" \;
+          fi
+          sudo fc-cache -f; fc-cache -f
+          fc-list :lang=zh family | grep -q "Noto Sans CJK SC" || { echo "没有装上 Noto Sans CJK SC"; exit 1; }
 
       - name: Install deps
         run: npm ci --no-audit --no-fund
