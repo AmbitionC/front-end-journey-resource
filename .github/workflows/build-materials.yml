@@ -55,6 +55,7 @@ jobs:
         run: npm ci --no-audit --no-fund
 
       - name: Require final review and successful sync of same commit
+        id: gate
         env:
           BEFORE: ${{ github.event.before }}
           AFTER: ${{ github.sha }}
@@ -64,6 +65,7 @@ jobs:
 
       # puppeteer v24 自带 Chromium 下载；确保可用
       - name: Ensure Chromium
+        id: chromium
         run: npx puppeteer browsers install chrome
 
       - name: Build & upload material PDFs (knowledge)
@@ -78,6 +80,8 @@ jobs:
 
       # 央国企：自测卷和题库的答案另出一册「答案与解析」
       - name: Build & upload material PDFs (soe)
+        # 各模块互不连坐：前一个模块失败不跳过后面的模块（每步仍各自重验审核与同步）
+        if: ${{ !cancelled() && steps.gate.outcome == 'success' && steps.chromium.outcome == 'success' }}
         env:
           OSS_BUCKET: ${{ secrets.OSS_BUCKET }}
           OSS_REGION: ${{ secrets.OSS_REGION }}
@@ -89,6 +93,8 @@ jobs:
 
       # 考公：答案与解析集中在每册末尾
       - name: Build & upload material PDFs (civil)
+        # 各模块互不连坐：前一个模块失败不跳过后面的模块（每步仍各自重验审核与同步）
+        if: ${{ !cancelled() && steps.gate.outcome == 'success' && steps.chromium.outcome == 'success' }}
         env:
           OSS_BUCKET: ${{ secrets.OSS_BUCKET }}
           OSS_REGION: ${{ secrets.OSS_REGION }}
@@ -99,6 +105,7 @@ jobs:
         run: npm run build:materials -- --module civil --answers appendix
 
       - name: Upload artifacts (调试留档)
+        if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
         with:
           name: material-pdfs
