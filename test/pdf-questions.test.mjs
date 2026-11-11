@@ -56,6 +56,11 @@ test('公式转静态文本', () => {
   assert.equal(latexToHtml('\\dfrac{\\text{部分}}{\\text{整体}}'), '部分/整体');
   assert.equal(latexToHtml('A\\to B'), 'A → B');
   assert.equal(latexToHtml('\\lnot A'), '¬A');
+  // 函数名下标紧贴；求和号和前面的分数隔开
+  assert.equal(latexToHtml('\\log_2 n'), 'log<sub>2</sub> n');
+  assert.equal(latexToHtml('O(n\\log n)'), 'O(n log n)');
+  assert.equal(latexToHtml('\\frac{1}{n}\\sum_{i=1}^{n} x_i'), '1/n Σ<sub>i=1</sub><sup>n</sup> x<sub>i</sub>');
+  assert.equal(latexToHtml('a+\\sum x'), 'a+Σx');
   assert.equal(latexToHtml('(1+r)^{n}'), '(1+r)<sup>n</sup>');
   assert.equal(latexToHtml('a<b'), 'a&lt;b');
   assert.throws(() => latexToHtml('\\unknowncmd'), /未支持的命令/u);

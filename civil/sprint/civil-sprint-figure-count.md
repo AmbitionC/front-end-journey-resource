@@ -63,7 +63,7 @@
 
 从所给的四个选项中，选择最合适的一个填入问号处，使之呈现一定的规律性。
 
-![曲直交点规律题：题干中直线与圆的交点数依次为 1、2、3、4，要求选出第五幅](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/civil-sprint-figure-intersections-v1.png)
+![曲直交点规律题：题干中直线与圆的交点数依次为 1、2、3、4，要求选出第五幅](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/civil-sprint-figure-intersections-v2.png)
 
 - A
 - B

@@ -154,12 +154,15 @@ def cl(lines):
 tangent_top = ((12, 26), (108, 26))     # 与圆相切（y = 60 - 34）
 tangent_left = ((26, 12), (26, 108))    # x = 60 - 34
 tangent_right = ((94, 12), (94, 108))
-sec1 = ((10, 70), (110, 70))
-sec2 = ((45, 10), (75, 110))
-sec3 = ((10, 40), (110, 95))
+# v2：坐标由穷举挑出——交点数不变（直线与圆 1/2/3/4，选项 5/6/2/4；全部交点 7/9/2/6），
+# 同一幅图里任意两个交点相距 ≥ 8 个单位，且线与线的交点不落在线段两端。
+# v1 里 B 三线近乎共点、A/D 的交点贴着切点或圆周，读者容易数错。
+sec1 = ((10, 84), (110, 84))
+sec2 = ((90, 10), (65, 110))
+sec3 = ((10, 10), (110, 95))
 seq = [cl([tangent_top]), cl([sec1]), cl([sec1, tangent_top]), cl([sec1, sec2])]
 opts = [cl([sec1, sec2, tangent_top]), cl([sec1, sec2, sec3]), cl([tangent_left, tangent_right]), cl([sec1, tangent_left, tangent_right])]
-sheet('civil-sprint-figure-intersections-v1', [
+sheet('civil-sprint-figure-intersections-v2', [
     ('题干', [(b, None) for b in seq] + [(qmark(), None)]),
     ('选项', [(b, l) for b, l in zip(opts, 'ABCD')]),
 ])
