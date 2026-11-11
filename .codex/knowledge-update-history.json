@@ -6619,7 +6619,7 @@
       "batch": "soe-cs-batch3-20261111",
       "recordedAt": "2026-11-11",
       "status": "pending",
-      "reason": "Claude 撰写（Codex 额度不足），独立 Claude 审核后按 release-review v3 发布。",
+      "reason": "Claude 撰写（Codex 额度不足），按 release-review v3 提交独立审核。",
       "sourceVerification": "verified"
     },
     {
@@ -6631,7 +6631,7 @@
       "batch": "soe-cs-batch3-20261111",
       "recordedAt": "2026-11-11",
       "status": "pending",
-      "reason": "Claude 撰写（Codex 额度不足），独立 Claude 审核后按 release-review v3 发布。",
+      "reason": "Claude 撰写（Codex 额度不足），按 release-review v3 提交独立审核。",
       "sourceVerification": "verified"
     },
     {
@@ -6643,7 +6643,7 @@
       "batch": "soe-cs-batch3-20261111",
       "recordedAt": "2026-11-11",
       "status": "pending",
-      "reason": "Claude 撰写（Codex 额度不足），独立 Claude 审核后按 release-review v3 发布。",
+      "reason": "Claude 撰写（Codex 额度不足），按 release-review v3 提交独立审核。",
       "sourceVerification": "verified"
     },
     {
@@ -6655,7 +6655,7 @@
       "batch": "soe-cs-batch3-20261111",
       "recordedAt": "2026-11-11",
       "status": "pending",
-      "reason": "Claude 撰写（Codex 额度不足），独立 Claude 审核后按 release-review v3 发布。",
+      "reason": "Claude 撰写（Codex 额度不足），按 release-review v3 提交独立审核。",
       "sourceVerification": "verified"
     },
     {
@@ -6667,7 +6667,19 @@
       "batch": "soe-cs-batch3-20261111",
       "recordedAt": "2026-11-11",
       "status": "pending",
-      "reason": "Claude 撰写（Codex 额度不足），独立 Claude 审核后按 release-review v3 发布。",
+      "reason": "Claude 撰写（Codex 额度不足），按 release-review v3 提交独立审核。",
+      "sourceVerification": "verified"
+    },
+    {
+      "module": "soe",
+      "key": "soe-db-os-security-delivery-mcq",
+      "label": "数据库备份恢复与安全、操作系统安全、软件交付与维护常考点",
+      "filePath": "bank-tech",
+      "action": "created",
+      "batch": "soe-cs-batch4-20261111",
+      "recordedAt": "2026-11-11",
+      "status": "pending",
+      "reason": "Claude 撰写（Codex 额度不足），按 release-review v3 提交独立审核。",
       "sourceVerification": "verified"
     }
   ],

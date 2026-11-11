@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "batchId": "soe-cs-batch4-20261111",
+  "date": "2026-11-11",
+  "branch": "claude/soe-batch4-20261111",
+  "baseCommit": "2b64a70d897b7a63fb6dd7a1a1212a106d1e215f",
+  "scope": {
+    "module": "soe",
+    "topLevelLabel": "银行·国企科技岗笔试",
+    "articleCount": 1,
+    "revisedArticles": [
+      "soe-new-it-mcq",
+      "soe-comm-theory-mcq",
+      "soe-optical-comm-mcq",
+      "soe-mobile-comm-mcq"
+    ]
+  },
+  "workflow": ".codex/skills/generate-knowledge-docs/SKILL.md（由 Claude 执行写作，Codex 未参与）",
+  "syllabusSource": "国家电网有限公司2027年招聘高校毕业生公告（2026-10-17）附件《考试大纲-计算机类（2027版）》",
+  "originality": "全部为原创模拟题；大纲仅用于确定考点范围；未使用第三方题库或汇编试卷。",
+  "diagrams": "本批未配示意图。",
+  "items": [
+    {
+      "key": "soe-db-os-security-delivery-mcq",
+      "label": "数据库备份恢复与安全、操作系统安全、软件交付与维护常考点",
+      "filePath": "bank-tech",
+      "outputPath": "soe/bank-tech/soe-db-os-security-delivery-mcq.md",
+      "action": "create",
+      "syllabusScope": "计算机类大纲第14项（备份和恢复）、第15项（数据库应用系统设计与开发）、第16项（数据库安全）、第30项（操作系统安全与保护）、第44项（软件交付与维护）",
+      "originalQuestions": 12,
+      "questionType": "single-choice-four-options",
+      "status": "ready-for-independent-review",
+      "bytes": 20848,
+      "sha256": "690893234c735df9fe26afc0957af665587982a1cae2f14e3a7ea92826aef5f7"
+    }
+  ],
+  "coverageGaps": {
+    "stillUncovered": [],
+    "note": "至此国网2027计算机类大纲48个知识点均有对应soe文章。"
+  }
+}
