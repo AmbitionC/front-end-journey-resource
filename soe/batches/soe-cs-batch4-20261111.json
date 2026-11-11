@@ -30,12 +30,22 @@
       "originalQuestions": 12,
       "questionType": "single-choice-four-options",
       "status": "ready-for-independent-review",
-      "bytes": 21267,
-      "sha256": "836f11afa74ffffb04bc2af08b07a8db24de9a0e09046febb9331d4b0d345f29"
+      "bytes": 21363,
+      "sha256": "d1064c13cfb10cf94963ecb6827c89398a702ebc1d7c497d5319f0b45ab34a4d"
     }
   ],
   "coverageGaps": {
     "stillUncovered": [],
     "note": "至此国网2027计算机类大纲48个知识点均有对应soe文章。"
-  }
+  },
+  "postReleaseRevisions": [
+    {
+      "date": "2026-11-11",
+      "batch": "soe-cs-batch5-20261111",
+      "keys": [
+        "soe-db-os-security-delivery-mcq"
+      ],
+      "reason": "参考资料补充张海藩《软件工程导论》"
+    }
+  ]
 }

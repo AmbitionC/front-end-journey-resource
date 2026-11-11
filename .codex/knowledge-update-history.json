@@ -6693,6 +6693,18 @@
       "status": "pending",
       "reason": "按 2027 届官方公告更新，按 release-review v3 提交独立审核。",
       "sourceVerification": "verified"
+    },
+    {
+      "module": "soe",
+      "key": "soe-comm-self-test",
+      "label": "通信类专业综合自测卷",
+      "filePath": "practice",
+      "action": "created",
+      "batch": "soe-cs-batch5-20261111",
+      "recordedAt": "2026-11-11",
+      "status": "pending",
+      "reason": "Claude 撰写（Codex 额度不足），按 release-review v3 提交独立审核。",
+      "sourceVerification": "verified"
     }
   ],
   "deliveryEvidence": {

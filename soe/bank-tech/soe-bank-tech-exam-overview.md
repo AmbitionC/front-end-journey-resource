@@ -128,5 +128,5 @@
 - [中国建设银行 2027 年度校园招聘统一笔试及性格测评公告](https://job.ccb.com/cn/job/announcement.html?annoId=20261020092404778535)：笔试时间与四个单元，发布于 2026-10-20。
 - [中国银行股份有限公司 2027 年全球校园招聘公告](https://www.boc.cn/aboutboc/bi4/202609/t20260903_25689311.html)：招聘岗位、报名截止与统一笔试的初步安排，发布于 2026-09-03。
 - [上海农商银行 2027 校园招聘在线测评通知](https://www.shrcb.com/shrcb/articleFileDir/2026-10/29/98f65e32509d44918198b85a5b326a8d/%E4%B8%8A%E6%B5%B7%E5%86%9C%E5%95%86%E9%93%B6%E8%A1%8C2027%E6%A0%A1%E5%9B%AD%E6%8B%9B%E8%81%98%E5%9C%A8%E7%BA%BF%E6%B5%8B%E8%AF%84%E9%80%9A%E7%9F%A5.pdf?aisite-article-file=shrcb%2C98f65e32509d44918198b85a5b326a8d%2C2026-10-29+10%3A19%3A36)：AI+FINTECH 培训生的测评组成、实施形式和日期范围，落款为 2026-10-28。
-- [招商银行招聘网站校园招聘页](https://career.cmbchina.com/campus/home)：校招公告列表，含 2026-11-05 发布的部分分行 2027 届冬季校园招聘公告，核实于 2026-11-11。
+- [招商银行招聘网站校园招聘页](https://career.cmbchina.com/campus/home)：校招公告列表，含 2026-11-05 发布的部分分行 2027 冬季校园招聘公告，核实于 2026-11-11。
 - [中国农业银行人才招聘网站](https://career.abchina.com/build/index.html)：首页及校园招聘页招聘公告栏，核实于 2026-11-11。
