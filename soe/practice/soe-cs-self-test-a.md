@@ -32,7 +32,7 @@
 
 **解析：** 地址回答“访问哪里”，数据回答“传送什么”，控制信号回答“执行什么操作、何时有效”。在这个模型中，数据总线可用于读、写两个方向；控制信号也不限于时钟。三者位宽分别服务于地址编码、一次传输的数据量和控制需求，不要求相同。这里讨论逻辑功能，不把它当作所有现代片上互连的物理布线承诺。
 
-**对应文章：** [计算机组成原理速览](../bank-tech/soe-computer-organization.md)提供 CPU 与访存前提，尚未专门讲三类总线；本题补足分工，依据[华盛顿大学课程：Buses](https://courses.cs.washington.edu/courses/cse451/TLKCopy/basics/hw.html)。
+**对应文章：** [计算机组成原理速览](../bank-tech/soe-computer-organization.md)可补 CPU 与访存的前提知识；三类总线的分工可读[华盛顿大学课程：Buses](https://courses.cs.washington.edu/courses/cse451/TLKCopy/basics/hw.html)。
 
 ### 高频考点题 A02：补码位串的数值
 
@@ -182,7 +182,7 @@ PostgreSQL 18 中的审计表主要按 `occurred_on DATE` 查询某个月的数�
 
 **解析：** cwnd 限制向网络投入的未确认数据量，rwnd 限制接收端可承受的未确认数据量，发送要同时服从两者。上述逐段确认且窗口受限的理想条件下，慢启动按 ACK 增长，形成近似指数增长；拥塞避免采用近似加性增长。达到阈值后阶段变化，延迟 ACK、应用受限及其他拥塞控制算法都可能改变曲线，因此不能把模型当作所有系统的默认实测行为。
 
-**对应文章：** [计算机网络选择题](../bank-tech/soe-network-mcq.md)与[TCP、UDP 与传输场景](../../knowledge/network/tcpIp/tcp-udp.md)提供前提；增长机制在此补足，见[RFC 5681 §2、§3.1](https://www.rfc-editor.org/rfc/rfc5681.html#section-3.1)。
+**对应文章：** [计算机网络选择题](../bank-tech/soe-network-mcq.md)与[TCP、UDP 与传输场景](../../knowledge/network/tcpIp/tcp-udp.md)可补前提知识；拥塞窗口的增长机制见[RFC 5681 §2、§3.1](https://www.rfc-editor.org/rfc/rfc5681.html#section-3.1)。
 
 ### 高频考点题 A12：指针差的单位
 
@@ -424,7 +424,7 @@ Java 21 中，`list = Arrays.asList(array)`，其中 `array` 是非空 `String[]
 
 **解析：** SAGA（Saga）由已提交的本地事务组成，失败时用业务补偿恢复可接受状态，例如退款是新的业务动作，并非抹去原支付事实；补偿也可能失败，需要重试、幂等和恢复记录。TCC 是 Try/Confirm/Cancel：Try 检查并预留资源，Confirm 确认，Cancel 释放预留。两者都不能仅凭名称保证所需隔离或对外原子性，必须设计并发和失败合同。
 
-**对应文章：** [分库分表：分布式事务的选择边界](../../knowledge/backend/database/db-sharding.md)与[持久工作流：补偿不是回滚时间](../../knowledge/llm/agent/agent-workflow-state.md)已有基础；完整对比在此补足，见[Seata Saga](https://seata.apache.org/docs/user/mode/saga/)与[Seata TCC](https://seata.apache.org/docs/user/mode/tcc/)。
+**对应文章：** [分库分表：分布式事务的选择边界](../../knowledge/backend/database/db-sharding.md)与[持久工作流：补偿不是回滚时间](../../knowledge/llm/agent/agent-workflow-state.md)可补基础；Saga 与 TCC 的完整对比见[Seata Saga](https://seata.apache.org/docs/user/mode/saga/)与[Seata TCC](https://seata.apache.org/docs/user/mode/tcc/)。
 
 ### 高频考点题 A28：容器化与无状态应用
 
@@ -454,7 +454,7 @@ Java 21 中，`list = Arrays.asList(array)`，其中 `array` 是非空 `String[]
 
 **解析：** 经典联邦学习把训练计算移向分散的数据，协调方汇总更新形成新模型，减少集中收集原始样本的需要。但“传更新”不等于“更新不含可推断的信息”，服务器、其他参与方和最终模型的可见内容都影响风险。安全聚合可限制对单方更新的直接观察，差分隐私在明确参数与假设下约束信息泄露；它们各有适用范围，不能只靠“联邦”名称承诺绝对隐私。
 
-**对应文章：** [大模型训练全流程概览](../../knowledge/llm/basics/llm-training-overview.md)只提供训练前提，未专讲联邦学习。本题依据[联邦学习原始研究：分散数据上的模型平均](https://research.google/pubs/communication-efficient-learning-of-deep-networks-from-decentralized-data/)与[Google Research：联邦学习的隐私保证与验证](https://research.google/blog/toward-provably-private-learning-from-federated-data/)。
+**对应文章：** [大模型训练全流程概览](../../knowledge/llm/basics/llm-training-overview.md)可补训练前提；联邦学习本身可读[联邦学习原始研究：分散数据上的模型平均](https://research.google/pubs/communication-efficient-learning-of-deep-networks-from-decentralized-data/)与[Google Research：联邦学习的隐私保证与验证](https://research.google/blog/toward-provably-private-learning-from-federated-data/)。
 
 ### 高频考点题 A30：通信距离要带上场景
 
@@ -469,7 +469,7 @@ Java 21 中，`list = Arrays.asList(array)`，其中 `array` 是非空 `String[]
 
 **解析：** NFC 的典型交互在厘米尺度；NB-IoT 是低功耗蜂窝广域技术，依赖运营商网络覆盖。常规 Wi-Fi 用于局域联网，Zigbee 常用于低功耗局域 mesh，后者可通过多跳扩展整体跨度，但不能据此增加每一跳的无线距离。功率、频段、天线、障碍物及网络拓扑都会影响可用距离，因此不把 Wi-Fi 与 Zigbee 排成永远成立的长短关系，也不给协议虚构统一最大米数。Wi-Fi 家族的 HaLow 等变体还会改变比较前提。
 
-**对应文章：** [计算机网络选择题](../bank-tech/soe-network-mcq.md)只提供网络基础，未含这四种技术专题；见[NFC Forum：NFC 技术](https://nfc-forum.org/learn/nfc-technology/)、[GSMA：NB-IoT](https://www.gsma.com/solutions-and-impact/technologies/internet-of-things/mobile-iot-technology-nb-iot/)、[CSA：Zigbee](https://csa-iot.org/all-solutions/zigbee/)及[Wi-Fi Alliance：Wi-Fi 技术与 HaLow](https://www.wi-fi.org/wi-fi-macphy)。
+**对应文章：** [信息新技术常考点](../bank-tech/soe-new-it-mcq.md)的物联网一节讲了 Zigbee、NB-IoT 等接入技术，[计算机网络选择题](../bank-tech/soe-network-mcq.md)可补网络前提；四种技术的官方资料见[NFC Forum：NFC 技术](https://nfc-forum.org/learn/nfc-technology/)、[GSMA：NB-IoT](https://www.gsma.com/solutions-and-impact/technologies/internet-of-things/mobile-iot-technology-nb-iot/)、[CSA：Zigbee](https://csa-iot.org/all-solutions/zigbee/)及[Wi-Fi Alliance：Wi-Fi 技术与 HaLow](https://www.wi-fi.org/wi-fi-macphy)。
 
 ## 答案速查
 

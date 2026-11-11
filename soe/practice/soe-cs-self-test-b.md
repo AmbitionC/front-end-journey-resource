@@ -32,7 +32,7 @@
 
 **解析：** 三类总线的逻辑职责不同：地址线编码访问位置，数据线承载数据，控制线组织读写与时序。只改数据宽度，不增加地址编码的可选值。更宽也不保证程序性能按同样比例提升，实际还受事务开销、存储响应和工作负载限制。
 
-**对应文章：** [计算机组成原理速览](../bank-tech/soe-computer-organization.md)提供前提，三类总线的职责由本题补足；依据[华盛顿大学课程：Buses](https://courses.cs.washington.edu/courses/cse451/TLKCopy/basics/hw.html)。
+**对应文章：** [计算机组成原理速览](../bank-tech/soe-computer-organization.md)可补前提知识；三类总线的职责可读[华盛顿大学课程：Buses](https://courses.cs.washington.edu/courses/cse451/TLKCopy/basics/hw.html)。
 
 ### 高频考点题 B02：从 CPI 求 CPU 时间
 
@@ -107,7 +107,7 @@ PostgreSQL 18 表以 `event_day DATE` 做 RANGE 分区：P1 为 `[2026-01-01,202
 
 **解析：** RANGE 下界包含、上界排除，所以 2 月 1 日归 P2，3 月 1 日归 P3，查询只与 P2 区间相交。分区约束足以证明另外两个分区没有匹配行，是否以及何时裁剪还要结合系统设置和执行计划；分区内的索引访问是另一层问题。半开区间使相邻月份边界无需重复或留缝。
 
-**对应文章：** [数据库理论](../bank-tech/soe-database-theory.md)与[分库分表：表分区的边界](../../knowledge/backend/database/db-sharding.md)；现有文章未详解此日期算例，依据[PostgreSQL 18 分区表文档](https://www.postgresql.org/docs/18/ddl-partitioning.html)。
+**对应文章：** [数据库理论](../bank-tech/soe-database-theory.md)与[分库分表：表分区的边界](../../knowledge/backend/database/db-sharding.md)；这类日期边界的算例可对照[PostgreSQL 18 分区表文档](https://www.postgresql.org/docs/18/ddl-partitioning.html)。
 
 ### 高频考点题 B07：SRTF 平局时保留当前进程
 
@@ -152,7 +152,7 @@ PostgreSQL 18 表以 `event_day DATE` 做 RANGE 分区：P1 为 `[2026-01-01,202
 
 **解析：** `noauto` 控制批量自动挂载选择：`mount -a` 不挂载带这个选项的条目。它不同于权限控制或禁止所有显式挂载；管理员仍可在满足条件时按挂载点等方式显式请求挂载。最后两列涉及 dump 与 fsck，不负责把 noauto 改回 auto。还应区分 fstab 配置与某次实际挂载状态。
 
-**对应文章：** [操作系统选择题](../bank-tech/soe-os-mcq.md)提供前提，现有文章未讲 noauto；依据[Linux fstab(5)](https://man7.org/linux/man-pages/man5/fstab.5.html)。
+**对应文章：** [操作系统选择题](../bank-tech/soe-os-mcq.md)可补前提知识；noauto 等挂载选项的解释见[Linux fstab(5)](https://man7.org/linux/man-pages/man5/fstab.5.html)。
 
 ### 高频考点题 B10：按主机需求选最小地址块
 
@@ -454,7 +454,7 @@ UML 用例模型中，“提交申请”总要执行可复用的“核验必填�
 
 **解析：** 经典联邦设置允许数据留在参与方，通过本地计算与更新聚合协作；样本不均衡、非独立同分布和参与不稳定是需要处理的实际条件。FedAvg 一类方法可按样本量等约定聚合，但不存在仅凭“联邦”名称得到的统一准确率保证。安全聚合限制单方更新暴露，差分隐私约束相应信息泄露，都不替代数据质量、效果和公平性评估，也不提供无条件隐私保证。
 
-**对应文章：** [大模型训练全流程概览](../../knowledge/llm/basics/llm-training-overview.md)提供训练基础，现有文章未讲联邦专题；依据[联邦学习原始研究](https://research.google/pubs/communication-efficient-learning-of-deep-networks-from-decentralized-data/)及[Google Research：隐私与可验证保证](https://research.google/blog/toward-provably-private-learning-from-federated-data/)。
+**对应文章：** [大模型训练全流程概览](../../knowledge/llm/basics/llm-training-overview.md)可补训练基础；联邦学习本身可读[联邦学习原始研究](https://research.google/pubs/communication-efficient-learning-of-deep-networks-from-decentralized-data/)及[Google Research：隐私与可验证保证](https://research.google/blog/toward-provably-private-learning-from-federated-data/)。
 
 ### 高频考点题 B30：选通信技术时同时看距离与拓扑
 
@@ -469,7 +469,7 @@ UML 用例模型中，“提交申请”总要执行可复用的“核验必填�
 
 **解析：** NFC 面向厘米级贴近交互；NB-IoT 面向低功耗蜂窝广域覆盖，仍须核查当地网络与业务容量；常规 Wi-Fi 适合既有 AP 的局域联网；Zigbee 常用于低功耗局域 mesh，靠合适的路由节点扩展多跳覆盖。局域单跳与整网跨度不能混为一谈。这里限定常见场景，不保证固定米数或 Wi-Fi 与 Zigbee 的绝对远近；例如 Wi-Fi HaLow 属于不同前提，联盟资料列举约公里级能力，也不能照搬到所有室内 Wi-Fi。
 
-**对应文章：** [计算机网络选择题](../bank-tech/soe-network-mcq.md)只提供网络前提，四种通信技术在此补足；依据[NFC Forum](https://nfc-forum.org/learn/nfc-technology/)、[GSMA：NB-IoT](https://www.gsma.com/solutions-and-impact/technologies/internet-of-things/mobile-iot-technology-nb-iot/)、[CSA：Zigbee](https://csa-iot.org/all-solutions/zigbee/)及[Wi-Fi Alliance：Wi-Fi 与 HaLow](https://www.wi-fi.org/wi-fi-macphy)。
+**对应文章：** [信息新技术常考点](../bank-tech/soe-new-it-mcq.md)的物联网一节讲了 Zigbee、NB-IoT 等接入技术，[计算机网络选择题](../bank-tech/soe-network-mcq.md)可补网络前提；四种技术的官方资料见[NFC Forum](https://nfc-forum.org/learn/nfc-technology/)、[GSMA：NB-IoT](https://www.gsma.com/solutions-and-impact/technologies/internet-of-things/mobile-iot-technology-nb-iot/)、[CSA：Zigbee](https://csa-iot.org/all-solutions/zigbee/)及[Wi-Fi Alliance：Wi-Fi 与 HaLow](https://www.wi-fi.org/wi-fi-macphy)。
 
 ## 答案速查
 
