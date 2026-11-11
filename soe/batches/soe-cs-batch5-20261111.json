@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "batchId": "soe-cs-batch5-20261111",
+  "date": "2026-11-11",
+  "branch": "claude/soe-batch5-20261111",
+  "baseCommit": "204a08972afb62986627f01ab91fdbeef4e8170d",
+  "scope": {
+    "module": "soe",
+    "articleCount": 1,
+    "revisedArticles": [
+      "soe-bank-tech-exam-overview",
+      "soe-db-os-security-delivery-mcq"
+    ]
+  },
+  "workflow": ".codex/skills/generate-knowledge-docs/SKILL.md（由 Claude 执行写作，Codex 未参与）",
+  "syllabusSource": "国家电网有限公司2027年招聘高校毕业生公告（2026-10-17）附件《考试大纲-通信类（2027版）》",
+  "originality": "全部为原创模拟题；大纲仅用于确定考点范围；未使用第三方题库或汇编试卷。",
+  "diagrams": "本批未配示意图。",
+  "items": [
+    {
+      "key": "soe-comm-self-test",
+      "label": "通信类专业综合自测卷",
+      "filePath": "practice",
+      "outputPath": "soe/practice/soe-comm-self-test.md",
+      "action": "create",
+      "syllabusScope": "通信类大纲第1–32项",
+      "originalQuestions": 30,
+      "questionType": "single-choice-four-options",
+      "status": "ready-for-independent-review",
+      "bytes": 30854,
+      "sha256": "f01a3901e2ca4cc92f454d4d3c2bd8ad5c845535d4732e7a60681ab19114d7a5"
+    }
+  ]
+}
