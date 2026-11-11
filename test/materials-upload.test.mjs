@@ -31,3 +31,13 @@ test('错误描述只取首行，并抹掉密钥', () => {
   const text = describeError(Object.assign(new Error('bad AKIDsecret verysecret\nmore'), { code: 'X', status: 403 }), env);
   assert.equal(text, 'Error · X · HTTP 403 · bad *** ***');
 });
+
+test('一次上传挂住不返回时，看门狗放弃并重试', async () => {
+  const client = fakeClient();
+  let calls = 0;
+  const realPut = client.put.bind(client);
+  client.put = (...args) => (++calls === 1 ? new Promise(() => {}) : realPut(...args));
+  const r = await uploadVerified(client, 'materials/soe/a.pdf', Buffer.from('%PDF'), 'application/pdf', { attemptTimeoutMs: 20, wait: async () => {} });
+  assert.equal(calls, 2);
+  assert.equal(r.acl, 'private');
+});
