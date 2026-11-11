@@ -69,7 +69,7 @@ jobs:
         run: npx puppeteer browsers install chrome
 
       - name: Build & upload material PDFs (knowledge)
-        timeout-minutes: 40
+        timeout-minutes: 120
         env:
           OSS_BUCKET: ${{ secrets.OSS_BUCKET }}
           OSS_REGION: ${{ secrets.OSS_REGION }}
