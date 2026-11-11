@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "batchId": "soe-cs-batch3-20261111",
+  "date": "2026-11-11",
+  "branch": "claude/soe-batch3-20261111",
+  "baseCommit": "2d26d8aeef206df6140d90f80923a4f82f0a94b3",
+  "scope": {
+    "module": "soe",
+    "topLevelLabel": "银行·国企科技岗笔试",
+    "articleCount": 5,
+    "newCategory": {
+      "key": "soe-comm",
+      "label": "通信类专业知识"
+    }
+  },
+  "workflow": ".codex/skills/generate-knowledge-docs/SKILL.md（由 Claude 执行写作，Codex 未参与）",
+  "syllabusSource": "国家电网有限公司2027年招聘高校毕业生公告（2026-10-17）附件《考试大纲-计算机类（2027版）》《考试大纲-通信类（2027版）》",
+  "originality": "全部为原创模拟题；大纲仅用于确定考点范围；未使用第三方题库或汇编试卷。",
+  "diagrams": "本批未配示意图。",
+  "items": [
+    {
+      "key": "soe-new-it-mcq",
+      "label": "信息新技术常考点：人工智能、物联网、云计算与大数据",
+      "filePath": "bank-tech",
+      "outputPath": "soe/bank-tech/soe-new-it-mcq.md",
+      "action": "create",
+      "syllabusScope": "计算机类大纲第45–48项（信息新技术）及第37项（并行与异构计算）",
+      "originalQuestions": 12,
+      "questionType": "single-choice-four-options",
+      "status": "ready-for-independent-review",
+      "bytes": 24706,
+      "sha256": "b41b99d480ca2d21927a383ab20dafe531716a0803bea9f896b41b186a35ad91"
+    },
+    {
+      "key": "soe-comm-theory-mcq",
+      "label": "通信理论基础常考点：信号与系统、调制解调、信道与编码",
+      "filePath": "comm",
+      "outputPath": "soe/comm/soe-comm-theory-mcq.md",
+      "action": "create",
+      "syllabusScope": "通信类大纲第1–9项（通信理论基础）",
+      "originalQuestions": 12,
+      "questionType": "single-choice-four-options",
+      "status": "ready-for-independent-review",
+      "bytes": 21640,
+      "sha256": "987d44c880e683d7cd99bc1f2e9be01ecf573b97fd240f2391322f16de831459"
+    },
+    {
+      "key": "soe-optical-comm-mcq",
+      "label": "光纤通信常考点：光纤特性、传输体制与接入技术",
+      "filePath": "comm",
+      "outputPath": "soe/comm/soe-optical-comm-mcq.md",
+      "action": "create",
+      "syllabusScope": "通信类大纲第10–16项（光纤通信）",
+      "originalQuestions": 12,
+      "questionType": "single-choice-four-options",
+      "status": "ready-for-independent-review",
+      "bytes": 19993,
+      "sha256": "879822143a1d9845c0b1854a2e98628c9e8c22cc97d669d71751185654c62cb7"
+    },
+    {
+      "key": "soe-data-comm-network-mcq",
+      "label": "数据通信网常考点：交换技术、网络协议、设备与组网配置",
+      "filePath": "comm",
+      "outputPath": "soe/comm/soe-data-comm-network-mcq.md",
+      "action": "create",
+      "syllabusScope": "通信类大纲第17–22项（数据通信网）",
+      "originalQuestions": 12,
+      "questionType": "single-choice-four-options",
+      "status": "ready-for-independent-review",
+      "bytes": 22465,
+      "sha256": "641edead33ee630f5109e1786240e596586f0e528be706daf43233ef7dc329e9"
+    },
+    {
+      "key": "soe-mobile-comm-mcq",
+      "label": "移动通信及其他业务系统常考点：5G/6G、卫星、会议系统与电力专网",
+      "filePath": "comm",
+      "outputPath": "soe/comm/soe-mobile-comm-mcq.md",
+      "action": "create",
+      "syllabusScope": "通信类大纲第23–32项（移动通信及其他业务系统）及计算机类大纲第24项（无线网络与移动网络）",
+      "originalQuestions": 12,
+      "questionType": "single-choice-four-options",
+      "status": "ready-for-independent-review",
+      "bytes": 21143,
+      "sha256": "2058ceeed67776246f6a827d512c264b49e4d9c2481ef50eff826193c260e835"
+    }
+  ],
+  "coverageGaps": {
+    "coveredInThisBatch": [
+      "无线网络与移动网络（计算机类第24项）→ soe-mobile-comm-mcq",
+      "并行计算与异构计算（计算机类第37项）→ soe-new-it-mcq"
+    ],
+    "stillUncovered": [
+      {
+        "topic": "数据库备份和恢复（计算机类第14项）",
+        "reason": "不属于本批5个主题，未改已有文章"
+      },
+      {
+        "topic": "数据库应用系统设计与开发（第15项）",
+        "reason": "同上"
+      },
+      {
+        "topic": "数据库安全（第16项）",
+        "reason": "同上"
+      },
+      {
+        "topic": "操作系统安全与保护（第30项）",
+        "reason": "同上"
+      },
+      {
+        "topic": "软件交付与维护（第44项）",
+        "reason": "同上"
+      }
+    ]
+  }
+}

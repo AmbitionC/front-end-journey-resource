@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
-  "updatedAt": "2026-11-09",
+  "updatedAt": "2026-11-11",
   "records": [
     {
       "key": "transformer-arch",
@@ -6609,6 +6609,66 @@
       "reason": "Second-part original paper completed locally; no commit, push, PR or publication in this run. Background-only article links explicitly disclosed; all 26 computational questions across both papers independently recomputed.",
       "sourceVerification": "verified-primary-content",
       "originalQuestions": 30
+    },
+    {
+      "module": "soe",
+      "key": "soe-new-it-mcq",
+      "label": "信息新技术常考点：人工智能、物联网、云计算与大数据",
+      "filePath": "bank-tech",
+      "action": "created",
+      "batch": "soe-cs-batch3-20261111",
+      "recordedAt": "2026-11-11",
+      "status": "pending",
+      "reason": "Claude 撰写（Codex 额度不足），独立 Claude 审核后按 release-review v3 发布。",
+      "sourceVerification": "verified"
+    },
+    {
+      "module": "soe",
+      "key": "soe-comm-theory-mcq",
+      "label": "通信理论基础常考点：信号与系统、调制解调、信道与编码",
+      "filePath": "comm",
+      "action": "created",
+      "batch": "soe-cs-batch3-20261111",
+      "recordedAt": "2026-11-11",
+      "status": "pending",
+      "reason": "Claude 撰写（Codex 额度不足），独立 Claude 审核后按 release-review v3 发布。",
+      "sourceVerification": "verified"
+    },
+    {
+      "module": "soe",
+      "key": "soe-optical-comm-mcq",
+      "label": "光纤通信常考点：光纤特性、传输体制与接入技术",
+      "filePath": "comm",
+      "action": "created",
+      "batch": "soe-cs-batch3-20261111",
+      "recordedAt": "2026-11-11",
+      "status": "pending",
+      "reason": "Claude 撰写（Codex 额度不足），独立 Claude 审核后按 release-review v3 发布。",
+      "sourceVerification": "verified"
+    },
+    {
+      "module": "soe",
+      "key": "soe-data-comm-network-mcq",
+      "label": "数据通信网常考点：交换技术、网络协议、设备与组网配置",
+      "filePath": "comm",
+      "action": "created",
+      "batch": "soe-cs-batch3-20261111",
+      "recordedAt": "2026-11-11",
+      "status": "pending",
+      "reason": "Claude 撰写（Codex 额度不足），独立 Claude 审核后按 release-review v3 发布。",
+      "sourceVerification": "verified"
+    },
+    {
+      "module": "soe",
+      "key": "soe-mobile-comm-mcq",
+      "label": "移动通信及其他业务系统常考点：5G/6G、卫星、会议系统与电力专网",
+      "filePath": "comm",
+      "action": "created",
+      "batch": "soe-cs-batch3-20261111",
+      "recordedAt": "2026-11-11",
+      "status": "pending",
+      "reason": "Claude 撰写（Codex 额度不足），独立 Claude 审核后按 release-review v3 发布。",
+      "sourceVerification": "verified"
     }
   ],
   "deliveryEvidence": {
