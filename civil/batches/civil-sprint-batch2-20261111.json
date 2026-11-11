@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "batchId": "civil-sprint-batch2-20261111",
+  "date": "2026-11-11",
+  "branch": "claude/civil-sprint-batch2",
+  "basedOn": "master fcab8dd（第一批已上线）",
+  "scope": {
+    "module": "civil",
+    "topLevelLabel": "国考冲刺速查",
+    "articleCount": 4,
+    "mergeAuthorized": false
+  },
+  "workflow": "owner 2026-11-10 起考公内容由 Claude 撰写、另一个独立 Claude 会话审核；结构与第一批一致",
+  "status": "content-ready-for-owner-review",
+  "originality": {
+    "body": "原创编写，不引用任何机构、老师或书目的讲义内容。",
+    "questions": "全部题干、情境、选项、解析自拟，逐题标注「原创模拟题」；数量关系题答案已用脚本逐题复算。",
+    "figures": "本批无图片。"
+  },
+  "sources": [],
+  "sourcesNote": "本批为方法讲解与原创模拟题，不涉及需要核对的统计数据或政策事实。",
+  "notWritten": [
+    "常识（需逐条核对事实，单独成批）",
+    "结构化面试",
+    "调剂"
+  ],
+  "items": [
+    {
+      "key": "civil-sprint-reading-main-idea",
+      "label": "片段阅读：主旨题和意图题怎么找重点句",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-reading-main-idea.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 6758,
+      "sha256": "37fa22815603e592e9dddd0ce8ac2898efc5907d762b10b0d484849487fa75e1"
+    },
+    {
+      "key": "civil-sprint-definition-analogy",
+      "label": "定义判断与类比推理：拆要素、说关系",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-definition-analogy.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 5612,
+      "sha256": "09aee03f7713541160aa31a8f5042c34638ffd29ac425eb1261fbee64ed16d89"
+    },
+    {
+      "key": "civil-sprint-math-work-profit",
+      "label": "数量关系：工程问题和利润问题都用赋值法",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-math-work-profit.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 4702,
+      "sha256": "d744a0104ccf6872863f461b60abbcc36662f800027b435eece8b59e4ba3965e"
+    },
+    {
+      "key": "civil-sprint-math-combinatorics",
+      "label": "数量关系：排列组合与概率",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-math-combinatorics.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 4658,
+      "sha256": "96a1b0a78143e996ce1deae755f767c38b24bc950277c19b419a531e2afce456"
+    }
+  ]
+}
