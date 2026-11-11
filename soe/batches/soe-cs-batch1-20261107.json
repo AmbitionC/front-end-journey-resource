@@ -32,8 +32,8 @@
           "soe-batch1-source-02"
         ]
       },
-      "bytes": 10412,
-      "sha256": "0052d407af6f972f90d032fc3095eb93ccbc3e4832ad71fc77b97ec348a02ed5"
+      "bytes": 18363,
+      "sha256": "d410578cdbef27b308091ac9320cab7842e92e1fab967969ff0698daa1037a6a"
     },
     {
       "key": "soe-computer-organization",
@@ -1511,6 +1511,15 @@
     {
       "type": "soe-module-integration-not-verified",
       "detail": "The existing repository validator only covers interview/knowledge. Independent SOE structure checks passed. Website/backend integration and production synchronization were not changed or asserted."
+    }
+  ],
+  "postReleaseRevisions": [
+    {
+      "date": "2026-11-11",
+      "keys": [
+        "soe-bank-tech-exam-overview"
+      ],
+      "reason": "按 2027 届官方公告更新：补工商银行、建设银行考试信息与中国银行报名截止，增加时效说明；只引用银行官方页面。"
     }
   ]
 }
