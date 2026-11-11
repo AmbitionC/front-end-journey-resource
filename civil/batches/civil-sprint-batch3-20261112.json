@@ -30,7 +30,7 @@
     },
     {
       "id": "civil-cs-src-02",
-      "title": "中华人民共和国宪法（2018年修正，第60、67条）",
+      "title": "中华人民共和国宪法（2018年修正，第60、62、67条）",
       "url": "https://flk.npc.gov.cn/",
       "usedBy": [
         "civil-sprint-common-law"
@@ -69,8 +69,8 @@
       "outputPath": "civil/sprint/civil-sprint-common-law.md",
       "action": "create",
       "status": "ready-for-owner-review",
-      "bytes": 5969,
-      "sha256": "23b695819df8cc810220371369502cc3f599362e00bba905c76e9e77b1c39063"
+      "bytes": 6200,
+      "sha256": "744d57335c15e3ce6b6d6ecfd13a75f3df3c092aa71173303506996594c8b01c"
     },
     {
       "key": "civil-sprint-common-science",
