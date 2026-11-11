@@ -6681,6 +6681,18 @@
       "status": "pending",
       "reason": "Claude 撰写（Codex 额度不足），按 release-review v3 提交独立审核。",
       "sourceVerification": "verified"
+    },
+    {
+      "module": "soe",
+      "key": "soe-bank-tech-exam-overview",
+      "label": "银行科技岗笔试考什么：结构、题型与分值",
+      "filePath": "bank-tech",
+      "action": "updated",
+      "batch": "soe-bank-2027-refresh-20261111",
+      "recordedAt": "2026-11-11",
+      "status": "pending",
+      "reason": "按 2027 届官方公告更新，按 release-review v3 提交独立审核。",
+      "sourceVerification": "verified"
     }
   ],
   "deliveryEvidence": {
