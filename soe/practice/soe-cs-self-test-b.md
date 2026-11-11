@@ -409,7 +409,7 @@ UML 用例模型中，“提交申请”总要执行可复用的“核验必填�
 
 **解析：** 五节点多数派为 $\lfloor5/2\rfloor+1=3$，因此在题设的连通、选主和持久化等条件下，两个崩溃仍可保留推进所需多数。CFT 的停止故障不同于 BFT 所考虑的矛盾投票、伪造协议行为等。Raft 不能把“节点数够”当作恶意节点也会守约的证据；PoW 以计算工作、PoS 以权益及配套规则参与共识，也都须按完整协议和攻击假设分析。
 
-**对应文章：** [信息安全基础](../bank-tech/soe-information-security-mcq.md)只补信任前提，现有文章无 Raft/PoW/PoS、BFT/CFT 专题；依据[Hyperledger Fabric：Raft 与 BFT](https://hyperledger-fabric.readthedocs.io/en/latest/orderer/ordering_service.html)、[Bitcoin 原始论文 §4](https://bitcoin.org/bitcoin.pdf)及[Ethereum：PoS](https://ethereum.org/developers/docs/consensus-mechanisms/pos/)。
+**对应文章：** [信息安全基础](../bank-tech/soe-information-security-mcq.md)可补信任前提。Raft、PoW、PoS 与 BFT/CFT 的机制可读[Hyperledger Fabric：Raft 与 BFT](https://hyperledger-fabric.readthedocs.io/en/latest/orderer/ordering_service.html)、[Bitcoin 原始论文 §4](https://bitcoin.org/bitcoin.pdf)及[Ethereum：PoS](https://ethereum.org/developers/docs/consensus-mechanisms/pos/)。
 
 ### 高频考点题 B27：TCC 的重试不是重复扣减
 

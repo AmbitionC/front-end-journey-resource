@@ -137,7 +137,7 @@ PostgreSQL 18 中的审计表主要按 `occurred_on DATE` 查询某个月的数�
 
 **解析：** 六列依次为源设备标识、挂载点、文件系统类型、挂载选项、dump 标志、fsck 检查序号。第五列 0 表示不由 dump 据此安排备份；通常根文件系统的检查序号为 1，其他需检查的文件系统为 2，0 则表示不按该字段检查。它们不是备份份数或挂载时间。具体引导实现还可能由 systemd 等管理，不能仅凭一行配置保证启动一定成功。
 
-**对应文章：** [操作系统选择题](../bank-tech/soe-os-mcq.md)提供系统复习入口，尚无 fstab 专节；完整字段解释见[Linux fstab(5)](https://man7.org/linux/man-pages/man5/fstab.5.html)。
+**对应文章：** [操作系统选择题](../bank-tech/soe-os-mcq.md)可系统复习操作系统；fstab 各字段的完整解释见[Linux fstab(5)](https://man7.org/linux/man-pages/man5/fstab.5.html)。
 
 ### 高频考点题 A09：解除一个死锁必要条件
 
@@ -409,7 +409,7 @@ Java 21 中，`list = Arrays.asList(array)`，其中 `array` 是非空 `String[]
 
 **解析：** CFT 是崩溃容错，主要考虑节点停止服务等非任意作恶故障；BFT 还考虑节点可能恶意发送矛盾信息等行为。Raft 在成员明确、节点按协议执行等前提下依靠选主和多数派复制，不靠挖矿，也不提供任意作恶容错保证。PoW 以满足难度条件的计算工作参与竞争；PoS 以权益与相应验证、奖惩规则参与共识。PoW/PoS 的资源机制与 CFT/BFT 的故障假设不是同一分类轴，不能只看名字推导完整安全保证。
 
-**对应文章：** [信息安全基础](../bank-tech/soe-information-security-mcq.md)仅补信任与身份前提，现有文章无共识专题。本题机制依据[Hyperledger Fabric：Raft 与 BFT 排序服务](https://hyperledger-fabric.readthedocs.io/en/latest/orderer/ordering_service.html)、[Bitcoin 原始论文 §4](https://bitcoin.org/bitcoin.pdf)及[Ethereum：PoS](https://ethereum.org/developers/docs/consensus-mechanisms/pos/)。
+**对应文章：** [信息安全基础](../bank-tech/soe-information-security-mcq.md)可补信任与身份的前提知识。共识机制本身可读[Hyperledger Fabric：Raft 与 BFT 排序服务](https://hyperledger-fabric.readthedocs.io/en/latest/orderer/ordering_service.html)、[Bitcoin 原始论文 §4](https://bitcoin.org/bitcoin.pdf)及[Ethereum：PoS](https://ethereum.org/developers/docs/consensus-mechanisms/pos/)。
 
 ### 高频考点题 A27：SAGA 与 TCC 的业务动作
 
