@@ -1,4 +1,4 @@
-本卷为**原创模拟题**，共 30 道单项选择题，每题四个选项，只有一个最佳答案。目标是检验能否根据题设区分概念、完成基础计算，并沿对应文章补齐理解。题目不表示任何招聘考试的题量、分值或出题概率；A、B 两卷可以独立作答。
+本卷按**高频考点**出题，共 30 道单项选择题，每题四个选项，只有一个最佳答案。目标是检验能否根据题设区分概念、完成基础计算，并沿对应文章补齐理解。题目不表示任何招聘考试的题量、分值或出题概率；A、B 两卷可以独立作答。
 
 计算以各题明确的位宽、算法和初始化条件为准。C 题采用 C11；Java 题涉及实现时单独指定 HotSpot 版本。第 26—30 题为金融科技与分布式常识；缺少现有专题的知识已在解析中完整说明，关联阅读会标清用途。
 
@@ -19,7 +19,7 @@
 
 ## 基础与应用
 
-### 原创模拟题 A01：三类总线分别传什么
+### 高频考点题 A01：三类总线分别传什么
 
 在传统共享系统总线的教学模型中，CPU 从主存读取一个数据。以下分工正确的是哪项？
 
@@ -34,7 +34,7 @@
 
 **对应文章：** [计算机组成原理速览](../bank-tech/soe-computer-organization.md)提供 CPU 与访存前提，尚未专门讲三类总线；本题补足分工，依据[华盛顿大学课程：Buses](https://courses.cs.washington.edu/courses/cse451/TLKCopy/basics/hw.html)。
 
-### 原创模拟题 A02：补码位串的数值
+### 高频考点题 A02：补码位串的数值
 
 将 `11010110` 按 **8 位补码有符号整数**解释，十进制值是多少？
 
@@ -49,7 +49,7 @@
 
 **对应文章：** [计算机组成原理速览：数制、位宽与解释规则](../bank-tech/soe-computer-organization.md)。
 
-### 原创模拟题 A03：Cache 地址字段预算
+### 高频考点题 A03：Cache 地址字段预算
 
 某教学机器按字节寻址，主存地址为 32 位；Cache 数据区为 8 KiB，采用直接映射，块大小为 32 B。不计有效位等元数据，地址的“标记、行索引、块内偏移”分别占多少位？其中 1 KiB = 1024 B。
 
@@ -64,7 +64,7 @@
 
 **对应文章：** [计算机组成原理速览：存储层次与 Cache](../bank-tech/soe-computer-organization.md)。
 
-### 原创模拟题 A04：联合主键中的部分依赖
+### 高频考点题 A04：联合主键中的部分依赖
 
 关系 `Line(order_no, item_no, item_name, qty)` 的属性均为不可再分的原子值。仅给定依赖 `(order_no, item_no) → qty`、`item_no → item_name`，其余非平凡依赖均由它们推导。在传统关系模型下，该关系达到的最高范式是什么？
 
@@ -79,7 +79,7 @@
 
 **对应文章：** [数据库理论：函数依赖、候选键与范式](../bank-tech/soe-database-theory.md)。
 
-### 原创模拟题 A05：WHERE 的书写顺序与最左前缀
+### 高频考点题 A05：WHERE 的书写顺序与最左前缀
 
 订单表有普通 B-tree 联合索引 `(tenant_id, status, created_at)`。查询条件写成 `WHERE status = 'PAID' AND tenant_id = 9`，两列类型匹配且没有函数包装。仅判断索引键的排序和等值前缀，哪项正确？
 
@@ -94,7 +94,7 @@
 
 **对应文章：** [数据库理论](../bank-tech/soe-database-theory.md)与[MySQL 索引：最左前缀原则](../../knowledge/backend/database/mysql-index.md)。
 
-### 原创模拟题 A06：按查询与保留策略设计分区
+### 高频考点题 A06：按查询与保留策略设计分区
 
 PostgreSQL 18 中的审计表主要按 `occurred_on DATE` 查询某个月的数据，并按月归档过期记录。哪项设计最贴合这两种操作？
 
@@ -109,7 +109,7 @@ PostgreSQL 18 中的审计表主要按 `occurred_on DATE` 查询某个月的数�
 
 **对应文章：** [数据库理论](../bank-tech/soe-database-theory.md)补关系约束，[分库分表：普通表分区与跨节点分片](../../knowledge/backend/database/db-sharding.md)补边界；月度设计、半开边界和唯一约束详见[PostgreSQL 18 分区表文档](https://www.postgresql.org/docs/18/ddl-partitioning.html)。
 
-### 原创模拟题 A07：同一访问序列的两种置换
+### 高频考点题 A07：同一访问序列的两种置换
 
 页框数为 3，初始全空，访问序列为 `1, 2, 3, 1, 4, 1, 2, 5, 2, 1`。不预取，每次未命中均计一次缺页。FIFO 与 LRU 的缺页次数依次是多少？
 
@@ -124,7 +124,7 @@ PostgreSQL 18 中的审计表主要按 `occurred_on DATE` 查询某个月的数�
 
 **对应文章：** [操作系统选择题：页面置换计算](../bank-tech/soe-os-mcq.md)与[内存、虚拟内存与分页](../../knowledge/cs/os/os-virtual-memory.md)。
 
-### 原创模拟题 A08：读懂 /etc/fstab 的六个字段
+### 高频考点题 A08：读懂 /etc/fstab 的六个字段
 
 某 Linux 系统的 `/etc/fstab` 有一行 `UUID=demo-data /srv/data ext4 defaults 0 2`。仅按 `fstab(5)` 的字段含义，哪项正确？
 
@@ -139,7 +139,7 @@ PostgreSQL 18 中的审计表主要按 `occurred_on DATE` 查询某个月的数�
 
 **对应文章：** [操作系统选择题](../bank-tech/soe-os-mcq.md)提供系统复习入口，尚无 fstab 专节；完整字段解释见[Linux fstab(5)](https://man7.org/linux/man-pages/man5/fstab.5.html)。
 
-### 原创模拟题 A09：解除一个死锁必要条件
+### 高频考点题 A09：解除一个死锁必要条件
 
 资源只能独占使用，进程必须持有已申请资源才能继续。系统现在规定：申请新资源前，先释放自己已持有的全部资源。该规定直接破坏哪个经典死锁必要条件？
 
@@ -154,7 +154,7 @@ PostgreSQL 18 中的审计表主要按 `occurred_on DATE` 查询某个月的数�
 
 **对应文章：** [操作系统选择题](../bank-tech/soe-os-mcq.md)与[死锁、检测与避免](../../knowledge/cs/os/os-deadlock.md)。
 
-### 原创模拟题 A10：普通 IPv4 子网的边界
+### 高频考点题 A10：普通 IPv4 子网的边界
 
 地址 `198.51.100.219/28` 位于普通 IPv4 广播子网。网络地址、定向广播地址、通常可分配主机数依次是哪组？
 
@@ -169,7 +169,7 @@ PostgreSQL 18 中的审计表主要按 `occurred_on DATE` 查询某个月的数�
 
 **对应文章：** [计算机网络选择题：IPv4 前缀与地址计算](../bank-tech/soe-network-mcq.md)。
 
-### 原创模拟题 A11：慢启动与拥塞避免
+### 高频考点题 A11：慢启动与拥塞避免
 
 采用 RFC 5681 的经典 TCP 教学模型：发送端始终有数据、接收窗口足够大、每个满长数据段均单独确认，不发生丢包。下列哪项正确？
 
@@ -184,7 +184,7 @@ PostgreSQL 18 中的审计表主要按 `occurred_on DATE` 查询某个月的数�
 
 **对应文章：** [计算机网络选择题](../bank-tech/soe-network-mcq.md)与[TCP、UDP 与传输场景](../../knowledge/network/tcpIp/tcp-udp.md)提供前提；增长机制在此补足，见[RFC 5681 §2、§3.1](https://www.rfc-editor.org/rfc/rfc5681.html#section-3.1)。
 
-### 原创模拟题 A12：指针差的单位
+### 高频考点题 A12：指针差的单位
 
 有 C11 代码 `int a[5] = {3, 6, 9, 12, 15}; int *p = a + 1;`。表达式 `*(p + 2)` 与 `(a + 5) - p` 的值依次是多少？只求表达式值，不涉及 printf 格式。
 
@@ -199,7 +199,7 @@ PostgreSQL 18 中的审计表主要按 `occurred_on DATE` 查询某个月的数�
 
 **对应文章：** [C 语言常考点：指针、数组与边界](../bank-tech/soe-c-language-mcq.md)。
 
-### 原创模拟题 A13：带尾部填充的结构体
+### 高频考点题 A13：带尾部填充的结构体
 
 某题指定布局规则：`char` 大小/对齐为 `1/1` B，`double` 为 `8/8` B，`short` 为 `2/2` B；成员按声明顺序放在各自对齐边界，结构体对齐取成员最大值，总大小补到该对齐的整数倍。对 `struct Record { char tag; double value; short code; };`，`code` 的偏移与结构体大小依次是多少？
 
@@ -214,7 +214,7 @@ PostgreSQL 18 中的审计表主要按 `occurred_on DATE` 查询某个月的数�
 
 **对应文章：** [C 语言常考点：结构体对齐与内存](../bank-tech/soe-c-language-mcq.md)。
 
-### 原创模拟题 A14：数组和 String 的参数语义
+### 高频考点题 A14：数组和 String 的参数语义
 
 调用者把一个数组引用和一个 String 引用传给 Java 方法。方法先通过数组形参修改某元素，再把数组形参重新绑定到新数组，同时把字符串形参重新绑定到拼接结果。调用返回后，哪项正确？
 
@@ -229,7 +229,7 @@ PostgreSQL 18 中的审计表主要按 `occurred_on DATE` 查询某个月的数�
 
 **对应文章：** [Java 基础选择题：数组与 String](../bank-tech/soe-java-mcq.md)与[Java 值语义](../../knowledge/backend/java/java-value-semantics.md)。
 
-### 原创模拟题 A15：动态生成类与元空间
+### 高频考点题 A15：动态生成类与元空间
 
 一个 HotSpot JDK 21 服务持续定义新的普通命名类，定义这些类的类加载器一直被缓存保活，并配置了有限的 `MaxMetaspaceSize`。即使普通业务对象数量稳定，仍可能出现哪种问题？
 
@@ -244,7 +244,7 @@ PostgreSQL 18 中的审计表主要按 `occurred_on DATE` 查询某个月的数�
 
 **对应文章：** [Java 基础选择题：永久代与元空间](../bank-tech/soe-java-mcq.md)与[JVM 内存、类加载与 OOM 定位](../../knowledge/backend/java/java-runtime-memory.md)。
 
-### 原创模拟题 A16：固定长度列表与不可修改列表
+### 高频考点题 A16：固定长度列表与不可修改列表
 
 Java 21 中，`list = Arrays.asList(array)`，其中 `array` 是非空 `String[]`，且下标合法。以下哪项符合 API 合同？
 
@@ -259,7 +259,7 @@ Java 21 中，`list = Arrays.asList(array)`，其中 `array` 是非空 `String[]
 
 **对应文章：** [Java 基础选择题：集合合同](../bank-tech/soe-java-mcq.md)与[Java 集合：接口分类与选型](../../knowledge/backend/java/java-collections.md)。
 
-### 原创模拟题 A17：用先序和中序推后序
+### 高频考点题 A17：用先序和中序推后序
 
 二叉树各结点标识互不相同。先序为 `Q M H P W T Z`，中序为 `H M P Q T W Z`，后序是哪项？
 
@@ -274,7 +274,7 @@ Java 21 中，`list = Arrays.asList(array)`，其中 `array` 是非空 `String[]
 
 **对应文章：** [数据结构选择题：遍历序列](../bank-tech/soe-data-structures-mcq.md)与[树结构与遍历](../../knowledge/data-structure/algorithm/algorithm-tree.md)。
 
-### 原创模拟题 A18：不等长编码的总位数
+### 高频考点题 A18：不等长编码的总位数
 
 五种符号出现次数分别为 `3、5、8、10、14`，采用二元哈夫曼编码。只计算编码这批符号的比特总数，不计码表与填充，最少是多少？
 
@@ -289,7 +289,7 @@ Java 21 中，`list = Arrays.asList(array)`，其中 `array` 是非空 `String[]
 
 **对应文章：** [数据结构选择题：哈夫曼与前缀编码](../bank-tech/soe-data-structures-mcq.md)。
 
-### 原创模拟题 A19：分治的层数与每层工作量
+### 高频考点题 A19：分治的层数与每层工作量
 
 令 n 为 2 的幂，`T(1)=S(1)=1`。若 `T(n)=2T(n/2)+n`，`S(n)=S(n/2)+1`，两者的渐近紧确界依次是哪项？
 
@@ -304,7 +304,7 @@ Java 21 中，`list = Arrays.asList(array)`，其中 `array` 是非空 `String[]
 
 **对应文章：** [数据结构选择题：递推式与分治](../bank-tech/soe-data-structures-mcq.md)与[算法复杂度](../../knowledge/cs/algorithm/algorithm-complexity.md)。
 
-### 原创模拟题 A20：以风险分析驱动迭代
+### 高频考点题 A20：以风险分析驱动迭代
 
 一个项目每轮先识别主要技术风险，必要时用原型验证，再计划下一轮工程活动。哪种经典生命周期模型最贴合这一特征？
 
@@ -319,7 +319,7 @@ Java 21 中，`list = Arrays.asList(array)`，其中 `array` 是非空 `String[]
 
 **对应文章：** [软件工程基础：生命周期模型](../bank-tech/soe-software-engineering-mcq.md)。
 
-### 原创模拟题 A21：UML 图的观察对象
+### 高频考点题 A21：UML 图的观察对象
 
 需要分别表达“账户类与交易类的结构关系”“一次转账中各对象的消息先后”“审批步骤的条件分支”。依次最合适的 UML 图是哪组？
 
@@ -334,7 +334,7 @@ Java 21 中，`list = Arrays.asList(array)`，其中 `array` 是非空 `String[]
 
 **对应文章：** [软件工程基础：UML 视角与符号](../bank-tech/soe-software-engineering-mcq.md)。
 
-### 原创模拟题 A22：短路条件的覆盖分母
+### 高频考点题 A22：短路条件的覆盖分母
 
 代码判定为 `if (x >= 0 && y >= 0)`，采用从左到右短路求值。测试输入只有 `(1,1)` 与 `(-1,1)`。判定覆盖统计整个 if 的真/假结果；条件覆盖仅统计两个原子条件**实际被求值**时的真/假结果。两种覆盖率依次是多少？
 
@@ -349,7 +349,7 @@ Java 21 中，`list = Arrays.asList(array)`，其中 `array` 是非空 `String[]
 
 **对应文章：** [软件工程基础：白盒覆盖与短路求值](../bank-tech/soe-software-engineering-mcq.md)。
 
-### 原创模拟题 A23：签名证明什么
+### 高频考点题 A23：签名证明什么
 
 接收方确认签名公钥属于预期发送方，使用安全的数字签名方案验签通过，并正确核对了签名所覆盖的消息。可以直接据此得到哪项结论？
 
@@ -364,7 +364,7 @@ Java 21 中，`list = Arrays.asList(array)`，其中 `array` 是非空 `String[]
 
 **对应文章：** [信息安全基础：加密、摘要与数字签名](../bank-tech/soe-information-security-mcq.md)。
 
-### 原创模拟题 A24：已登录仍须检查对象权限
+### 高频考点题 A24：已登录仍须检查对象权限
 
 某接口已确认用户登录，却仅按请求中的账单 ID 返回记录，未校验账单所属用户。攻击者改 ID 后读到他人账单，直接缺少的是哪项控制？
 
@@ -379,7 +379,7 @@ Java 21 中，`list = Arrays.asList(array)`，其中 `array` 是非空 `String[]
 
 **对应文章：** [信息安全基础：身份鉴别与访问控制](../bank-tech/soe-information-security-mcq.md)。
 
-### 原创模拟题 A25：参数化查询的边界
+### 高频考点题 A25：参数化查询的边界
 
 报表接口接收筛选值 `status` 与排序列名 `sortColumn`。哪项实现最合理？
 
@@ -396,7 +396,7 @@ Java 21 中，`list = Arrays.asList(array)`，其中 `array` 是非空 `String[]
 
 ## 金融科技与分布式常识
 
-### 原创模拟题 A26：共识机制与故障模型
+### 高频考点题 A26：共识机制与故障模型
 
 关于区块链及分布式复制中的 RAFT（通常写作 Raft）、PoW、PoS，以及 CFT/BFT，哪项正确？
 
@@ -411,7 +411,7 @@ Java 21 中，`list = Arrays.asList(array)`，其中 `array` 是非空 `String[]
 
 **对应文章：** [信息安全基础](../bank-tech/soe-information-security-mcq.md)仅补信任与身份前提，现有文章无共识专题。本题机制依据[Hyperledger Fabric：Raft 与 BFT 排序服务](https://hyperledger-fabric.readthedocs.io/en/latest/orderer/ordering_service.html)、[Bitcoin 原始论文 §4](https://bitcoin.org/bitcoin.pdf)及[Ethereum：PoS](https://ethereum.org/developers/docs/consensus-mechanisms/pos/)。
 
-### 原创模拟题 A27：SAGA 与 TCC 的业务动作
+### 高频考点题 A27：SAGA 与 TCC 的业务动作
 
 跨服务业务中，一种方案先让每步本地事务提交，后续失败时执行退款等补偿；另一种先预留资源，再确认使用或取消预留。以下对应关系哪项正确？
 
@@ -426,7 +426,7 @@ Java 21 中，`list = Arrays.asList(array)`，其中 `array` 是非空 `String[]
 
 **对应文章：** [分库分表：分布式事务的选择边界](../../knowledge/backend/database/db-sharding.md)与[持久工作流：补偿不是回滚时间](../../knowledge/llm/agent/agent-workflow-state.md)已有基础；完整对比在此补足，见[Seata Saga](https://seata.apache.org/docs/user/mode/saga/)与[Seata TCC](https://seata.apache.org/docs/user/mode/tcc/)。
 
-### 原创模拟题 A28：容器化与无状态应用
+### 高频考点题 A28：容器化与无状态应用
 
 一个容器化 API 的多个副本会被负载均衡随机选中，也会随时被替换。若要使用户下一次请求不依赖上一台副本仍存活，哪项做法最合适？
 
@@ -441,7 +441,7 @@ Java 21 中，`list = Arrays.asList(array)`，其中 `array` 是非空 `String[]
 
 **对应文章：** [Agent 状态存储与恢复](../../knowledge/backend/storage/agent-state-storage.md)可复习状态外置；容器生命周期依据[Docker 存储](https://docs.docker.com/engine/storage/)，无状态副本示例见[Kubernetes Deployment 教程](https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/)。
 
-### 原创模拟题 A29：联邦学习是否自动保护隐私
+### 高频考点题 A29：联邦学习是否自动保护隐私
 
 多家机构希望在原始训练样本不集中汇入同一训练库的条件下协作训练。按经典的本地训练、上传模型更新再聚合的联邦学习方式，哪项正确？
 
@@ -456,7 +456,7 @@ Java 21 中，`list = Arrays.asList(array)`，其中 `array` 是非空 `String[]
 
 **对应文章：** [大模型训练全流程概览](../../knowledge/llm/basics/llm-training-overview.md)只提供训练前提，未专讲联邦学习。本题依据[联邦学习原始研究：分散数据上的模型平均](https://research.google/pubs/communication-efficient-learning-of-deep-networks-from-decentralized-data/)与[Google Research：联邦学习的隐私保证与验证](https://research.google/blog/toward-provably-private-learning-from-federated-data/)。
 
-### 原创模拟题 A30：通信距离要带上场景
+### 高频考点题 A30：通信距离要带上场景
 
 这里的 WiFi 指常见室内 2.4/5 GHz Wi-Fi 局域网，不含 HaLow 等扩展；Zigbee 区分单跳与多跳网络。以下对 NFC、NB-IoT、Wi-Fi、Zigbee 的描述哪项最合理？
 

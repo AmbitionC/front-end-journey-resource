@@ -1,4 +1,4 @@
-本卷为**原创模拟题**，共 30 道四选一单项选择题，每题只有一个最佳答案。与 A 卷采用相同模块配额，通过新的情境检验边界条件、失败处理与计算过程；两卷均可独立使用，不代表任何招聘考试的试卷结构。
+本卷按**高频考点**出题，共 30 道四选一单项选择题，每题只有一个最佳答案。与 A 卷采用相同模块配额，通过新的情境检验边界条件、失败处理与计算过程；两卷均可独立使用，不代表任何招聘考试的试卷结构。
 
 计算仅采用题干给出的模型。C 题采用 C11，涉及字节数时显式规定类型大小；Java 题采用 Java 21 的语言或 API 合同。第 26—30 题为金融科技与分布式常识，现有文章不足以支撑的部分已在解析中补齐，并标明关联阅读的边界。
 
@@ -19,7 +19,7 @@
 
 ## 基础与应用
 
-### 原创模拟题 B01：数据总线加宽能推出什么
+### 高频考点题 B01：数据总线加宽能推出什么
 
 某传统并行总线教学系统只把数据总线加宽，地址编码方式、地址线数和控制协议均保持不变。哪项判断正确？
 
@@ -34,7 +34,7 @@
 
 **对应文章：** [计算机组成原理速览](../bank-tech/soe-computer-organization.md)提供前提，三类总线的职责由本题补足；依据[华盛顿大学课程：Buses](https://courses.cs.washington.edu/courses/cse451/TLKCopy/basics/hw.html)。
 
-### 原创模拟题 B02：从 CPI 求 CPU 时间
+### 高频考点题 B02：从 CPI 求 CPU 时间
 
 某程序动态执行 $6\times10^6$ 条指令，测得该次执行的平均 CPI 为 1.5，CPU 时钟频率为 3 GHz。只按 `CPU 时间 = 指令数 × 平均 CPI / 时钟频率` 计算，结果是多少？
 
@@ -49,7 +49,7 @@
 
 **对应文章：** [计算机组成原理速览：CPU 时间](../bank-tech/soe-computer-organization.md)。
 
-### 原创模拟题 B03：寻址单位决定容量
+### 高频考点题 B03：寻址单位决定容量
 
 某教学机器有 24 位物理地址，各地址编码均可用，按字节寻址，每字节 8 位。不考虑地址空洞，地址空间总容量是多少？1 MiB = $2^{20}$ B。
 
@@ -64,7 +64,7 @@
 
 **对应文章：** [计算机组成原理速览：地址位数与寻址单位](../bank-tech/soe-computer-organization.md)。
 
-### 原创模拟题 B04：达到 3NF 却未达到 BCNF
+### 高频考点题 B04：达到 3NF 却未达到 BCNF
 
 关系 `R(A,B,C)` 的属性均为原子值，函数依赖由 `A → B`、`B → A` 及其推论构成。哪项正确？
 
@@ -79,7 +79,7 @@
 
 **对应文章：** [数据库理论：闭包、主属性与范式](../bank-tech/soe-database-theory.md)。
 
-### 原创模拟题 B05：范围条件之后的列
+### 高频考点题 B05：范围条件之后的列
 
 有 B-tree 联合索引 `(tenant_id, occurred_at, status)`，查询为 `tenant_id = 7 AND occurred_at >= :start AND occurred_at < :end AND status = 'DONE'`。明确只讨论普通连续前缀范围扫描，不使用 skip scan 等额外优化。哪项正确？
 
@@ -94,7 +94,7 @@
 
 **对应文章：** [数据库理论](../bank-tech/soe-database-theory.md)与[SQL 索引优化：复合索引与最左前缀](../../knowledge/data/sql/sql-index-optimize.md)；规则与优化边界见[PostgreSQL 18 多列索引](https://www.postgresql.org/docs/18/indexes-multicolumn.html)。
 
-### 原创模拟题 B06：分区边界与裁剪候选
+### 高频考点题 B06：分区边界与裁剪候选
 
 PostgreSQL 18 表以 `event_day DATE` 做 RANGE 分区：P1 为 `[2026-01-01,2026-02-01)`，P2 为 `[2026-02-01,2026-03-01)`，P3 为 `[2026-03-01,2026-04-01)`。查询条件是 `event_day >= DATE '2026-02-01' AND event_day < DATE '2026-03-01'`。只按分区约束判断可能包含匹配行的分区，哪项正确？
 
@@ -109,7 +109,7 @@ PostgreSQL 18 表以 `event_day DATE` 做 RANGE 分区：P1 为 `[2026-01-01,202
 
 **对应文章：** [数据库理论](../bank-tech/soe-database-theory.md)与[分库分表：表分区的边界](../../knowledge/backend/database/db-sharding.md)；现有文章未详解此日期算例，依据[PostgreSQL 18 分区表文档](https://www.postgresql.org/docs/18/ddl-partitioning.html)。
 
-### 原创模拟题 B07：SRTF 平局时保留当前进程
+### 高频考点题 B07：SRTF 平局时保留当前进程
 
 单 CPU、无 I/O、切换开销为 0。P1 的到达时刻/服务时间为 `0/8`，P2 为 `1/3`，P3 为 `2/2`。采用 SRTF；剩余时间相同则保留当前运行者。平均等待时间是多少？
 
@@ -124,7 +124,7 @@ PostgreSQL 18 表以 `event_day DATE` 做 RANGE 分区：P1 为 `[2026-01-01,202
 
 **对应文章：** [操作系统选择题：调度规则与指标](../bank-tech/soe-os-mcq.md)与[进程、线程与协程](../../knowledge/cs/os/os-process-thread.md)。
 
-### 原创模拟题 B08：页号与页内偏移
+### 高频考点题 B08：页号与页内偏移
 
 某教学分页系统按字节寻址，虚拟地址宽度为 16 位，页大小为 1 KiB，给定虚拟地址 `0x2BCD`。其虚拟页已有效映射到物理页框 5，无其他变换。物理地址是多少？1 KiB = 1024 B。
 
@@ -139,7 +139,7 @@ PostgreSQL 18 表以 `event_day DATE` 做 RANGE 分区：P1 为 `[2026-01-01,202
 
 **对应文章：** [操作系统选择题](../bank-tech/soe-os-mcq.md)与[内存、虚拟内存与分页](../../knowledge/cs/os/os-virtual-memory.md)。
 
-### 原创模拟题 B09：fstab 的 noauto 不等于禁止挂载
+### 高频考点题 B09：fstab 的 noauto 不等于禁止挂载
 
 配置为 `UUID=demo-archive /archive ext4 defaults,noauto 0 2`。假设设备、权限与文件系统正常，仅按挂载选项的含义判断，哪项正确？
 
@@ -154,7 +154,7 @@ PostgreSQL 18 表以 `event_day DATE` 做 RANGE 分区：P1 为 `[2026-01-01,202
 
 **对应文章：** [操作系统选择题](../bank-tech/soe-os-mcq.md)提供前提，现有文章未讲 noauto；依据[Linux fstab(5)](https://man7.org/linux/man-pages/man5/fstab.5.html)。
 
-### 原创模拟题 B10：按主机需求选最小地址块
+### 高频考点题 B10：按主机需求选最小地址块
 
 普通 IPv4 广播子网需要容纳 50 台主机，网络地址与定向广播地址均不分配给主机。以下哪个单一 CIDR 地址块最小且足够？
 
@@ -169,7 +169,7 @@ PostgreSQL 18 表以 `event_day DATE` 做 RANGE 分区：P1 为 `[2026-01-01,202
 
 **对应文章：** [计算机网络选择题：子网容量与前缀选择](../bank-tech/soe-network-mcq.md)。
 
-### 原创模拟题 B11：重传超时后用哪个量减半
+### 高频考点题 B11：重传超时后用哪个量减半
 
 采用经典 TCP 教学规则，所有窗口均以 MSS 为单位。超时前 `cwnd=12`，实际未确认数据量 `FlightSize=10`，接收窗口足够大。首次重传超时后，按 `ssthresh=max(FlightSize/2,2)`、`cwnd=1` 取值。新的 `ssthresh、cwnd` 依次是多少？
 
@@ -184,7 +184,7 @@ PostgreSQL 18 表以 `event_day DATE` 做 RANGE 分区：P1 为 `[2026-01-01,202
 
 **对应文章：** [计算机网络选择题](../bank-tech/soe-network-mcq.md)与[TCP、UDP 与传输场景](../../knowledge/network/tcpIp/tcp-udp.md)补前提，超时规则在此自足说明；依据[RFC 5681 §3.1](https://www.rfc-editor.org/rfc/rfc5681.html#section-3.1)。
 
-### 原创模拟题 B12：二维数组的行指针
+### 高频考点题 B12：二维数组的行指针
 
 C11 中声明 `short a[4][3]; short (*p)[3] = a;`。规定 `sizeof(short)=2` B，指针运算保持在合法数组边界内。`sizeof *p` 与 `p+2` 相对 `p` 所指位置前进的字节数依次是多少？
 
@@ -199,7 +199,7 @@ C11 中声明 `short a[4][3]; short (*p)[3] = a;`。规定 `sizeof(short)=2` B�
 
 **对应文章：** [C 语言常考点：二维数组与指向行的指针](../bank-tech/soe-c-language-mcq.md)。
 
-### 原创模拟题 B13：字符串长度与数组容量
+### 高频考点题 B13：字符串长度与数组容量
 
 C11 代码为 `char s[] = "cash";`，并已正确包含 `<string.h>`。`sizeof s` 和 `strlen(s)` 依次是多少？
 
@@ -214,7 +214,7 @@ C11 代码为 `char s[] = "cash";`，并已正确包含 `<string.h>`。`sizeof s
 
 **对应文章：** [C 语言常考点：字符数组、字符串与 sizeof](../bank-tech/soe-c-language-mcq.md)。
 
-### 原创模拟题 B14：静态类型决定受检异常合同
+### 高频考点题 B14：静态类型决定受检异常合同
 
 接口声明 `Object read() throws java.io.IOException`。实现类合法地以 `public String read()` 重写，未声明受检异常。调用者的变量静态类型是该接口，在普通方法中调用 `ref.read()`。哪项正确？
 
@@ -229,7 +229,7 @@ C11 代码为 `char s[] = "cash";`，并已正确包含 `<string.h>`。`sizeof s
 
 **对应文章：** [Java 基础选择题：重写、分派与受检异常](../bank-tech/soe-java-mcq.md)。
 
-### 原创模拟题 B15：对象后缀需要团队约定
+### 高频考点题 B15：对象后缀需要团队约定
 
 本题团队明确约定：DO 表示领域对象，PO 表示持久化对象，DTO 表示跨边界传输对象，VO 表示页面展示对象。接口要向外返回账户摘要，并排除内部风控字段。哪项最合理？
 
@@ -244,7 +244,7 @@ C11 代码为 `char s[] = "cash";`，并已正确包含 `<string.h>`。`sizeof s
 
 **对应文章：** [Java 基础选择题：DO/DTO/PO/VO 的约定边界](../bank-tech/soe-java-mcq.md)。
 
-### 原创模拟题 B16：HashMap 键的稳定性
+### 高频考点题 B16：HashMap 键的稳定性
 
 业务对象被用作 HashMap 的键，`equals` 与 `hashCode` 都使用一个可修改的账户编号字段。把键放入 Map 后又修改该编号，随后用“修改后相等”的另一个对象查找。哪项正确？
 
@@ -259,7 +259,7 @@ C11 代码为 `char s[] = "cash";`，并已正确包含 `<string.h>`。`sizeof s
 
 **对应文章：** [Java 基础选择题：集合与 key 相等性](../bank-tech/soe-java-mcq.md)及[Java 集合：接口分类与选型](../../knowledge/backend/java/java-collections.md)；键可变性的 API 边界见[Java 21 Map 合同](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html)。
 
-### 原创模拟题 B17：最小生成树的总权重
+### 高频考点题 B17：最小生成树的总权重
 
 无向连通图有顶点 A、B、C、D、E，边为 `AB=2、AC=6、BC=3、BD=5、CD=4、CE=7、DE=1、BE=8`，没有其他边。最小生成树总权重是多少？
 
@@ -274,7 +274,7 @@ C11 代码为 `char s[] = "cash";`，并已正确包含 `<string.h>`。`sizeof s
 
 **对应文章：** [数据结构选择题：最小生成树](../bank-tech/soe-data-structures-mcq.md)与[图与图算法](../../knowledge/cs/algorithm/algorithm-graph.md)。
 
-### 原创模拟题 B18：二分查找比较了哪些键
+### 高频考点题 B18：二分查找比较了哪些键
 
 有序数组为 `3,7,11,15,19,23,27,31,35,39,43,47`，下标从 0 开始。用闭区间 `[lo,hi]` 二分查找 35，初始 `lo=0, hi=11`，每轮 `mid=floor((lo+hi)/2)`，找到相等即停止。每轮只把访问一个中点元素计作一次键比较。哪项正确？
 
@@ -289,7 +289,7 @@ C11 代码为 `char s[] = "cash";`，并已正确包含 `<string.h>`。`sizeof s
 
 **对应文章：** [数据结构选择题：二分查找计数](../bank-tech/soe-data-structures-mcq.md)与[数组与查找](../../knowledge/data-structure/algorithm/algorithm-array.md)。
 
-### 原创模拟题 B19：外部归并的轮数与 I/O
+### 高频考点题 B19：外部归并的轮数与 I/O
 
 文件有 180 个磁盘块，内存共 6 块。初始阶段每次读最多 6 块内部排序后全部写出，不采用置换选择；之后每轮最多用 5 路输入归并，1 块作输出缓冲。规定每轮所有记录均完整读写，即使尾部某组只有一个段也复制到本轮输出，最终结果写回磁盘。不计其他 I/O。初始成段后还需几轮归并，全部过程块 I/O 总数是多少？
 
@@ -304,7 +304,7 @@ C11 代码为 `char s[] = "cash";`，并已正确包含 `<string.h>`。`sizeof s
 
 **对应文章：** [数据结构选择题：外部归并](../bank-tech/soe-data-structures-mcq.md)与[排序算法与外部排序](../../knowledge/cs/algorithm/algorithm-sorting.md)。
 
-### 原创模拟题 B20：V 模型中的需求与验收
+### 高频考点题 B20：V 模型中的需求与验收
 
 按软件工程教学中的 V 模型，团队要验证最终交付是否满足用户业务需要。哪项最贴合该目标？
 
@@ -319,7 +319,7 @@ C11 代码为 `char s[] = "cash";`，并已正确包含 `<string.h>`。`sizeof s
 
 **对应文章：** [软件工程基础：V 模型与测试层次](../bank-tech/soe-software-engineering-mcq.md)。
 
-### 原创模拟题 B21：include 与 extend 的方向
+### 高频考点题 B21：include 与 extend 的方向
 
 UML 用例模型中，“提交申请”总要执行可复用的“核验必填项”；另有“补充担保”只在特定扩展条件下插入基本用例“办理授信”，基本用例在没有该扩展时仍可独立成立。哪项正确？
 
@@ -334,7 +334,7 @@ UML 用例模型中，“提交申请”总要执行可复用的“核验必填�
 
 **对应文章：** [软件工程基础：UML include 与 extend](../bank-tech/soe-software-engineering-mcq.md)。
 
-### 原创模拟题 B22：带区间外邻居的边界值
+### 高频考点题 B22：带区间外邻居的边界值
 
 某整数输入仅在闭区间 `[21,55]` 内有效。本题规定选取“两个端点、各自向有效区间内一步、各自向无效区间外一步”，去掉重复值。下列哪组刚好符合规则？
 
@@ -349,7 +349,7 @@ UML 用例模型中，“提交申请”总要执行可复用的“核验必填�
 
 **对应文章：** [软件工程基础：等价类与边界值](../bank-tech/soe-software-engineering-mcq.md)。
 
-### 原创模拟题 B23：salt 能做什么
+### 高频考点题 B23：salt 能做什么
 
 用户密码采用经评估的专用密码散列算法，并为每个账户生成独立随机 salt。数据库泄露后，salt 与散列均可被攻击者读取。哪项正确？
 
@@ -364,7 +364,7 @@ UML 用例模型中，“提交申请”总要执行可复用的“核验必填�
 
 **对应文章：** [信息安全基础：密码存储与 salt](../bank-tech/soe-information-security-mcq.md)。
 
-### 原创模拟题 B24：昵称作为纯文本显示
+### 高频考点题 B24：昵称作为纯文本显示
 
 前端只需显示用户昵称，无任何富文本需求。昵称可能包含 `<`、`>` 等字符。哪项处理最符合该输出目标？
 
@@ -379,7 +379,7 @@ UML 用例模型中，“提交申请”总要执行可复用的“核验必填�
 
 **对应文章：** [信息安全基础：XSS 与输出上下文](../bank-tech/soe-information-security-mcq.md)及[常见 Web 攻击与防御](../../knowledge/network/security/web-attack.md)。
 
-### 原创模拟题 B25：读不到响应仍可能发起跨站请求
+### 高频考点题 B25：读不到响应仍可能发起跨站请求
 
 某修改收款账户的接口依赖浏览器自动携带的会话 Cookie。假设跨站请求在当前 Cookie 策略下确实会携带会话，接口没有其他请求来源或意图校验。为什么仅禁止恶意站点通过 CORS 读取响应仍不充分？
 
@@ -396,7 +396,7 @@ UML 用例模型中，“提交申请”总要执行可复用的“核验必填�
 
 ## 金融科技与分布式常识
 
-### 原创模拟题 B26：Raft 多数派与作恶节点
+### 高频考点题 B26：Raft 多数派与作恶节点
 
 某固定成员的 Raft 集群有 5 个投票节点，其他前提符合标准 Raft 模型。先有 2 个节点崩溃且停止响应；剩下节点互通并最终能选出稳定领导者。随后有人提出“既然容忍了两个崩溃，也必然能容忍两个节点任意作恶”。哪项正确？
 
@@ -411,7 +411,7 @@ UML 用例模型中，“提交申请”总要执行可复用的“核验必填�
 
 **对应文章：** [信息安全基础](../bank-tech/soe-information-security-mcq.md)只补信任前提，现有文章无 Raft/PoW/PoS、BFT/CFT 专题；依据[Hyperledger Fabric：Raft 与 BFT](https://hyperledger-fabric.readthedocs.io/en/latest/orderer/ordering_service.html)、[Bitcoin 原始论文 §4](https://bitcoin.org/bitcoin.pdf)及[Ethereum：PoS](https://ethereum.org/developers/docs/consensus-mechanisms/pos/)。
 
-### 原创模拟题 B27：TCC 的重试不是重复扣减
+### 高频考点题 B27：TCC 的重试不是重复扣减
 
 一个 TCC 服务的 Try 已预留资源，Confirm 因超时被重复投递；网络乱序也可能使 Cancel 先于相应 Try 到达。哪项设计合理？
 
@@ -426,7 +426,7 @@ UML 用例模型中，“提交申请”总要执行可复用的“核验必填�
 
 **对应文章：** [分库分表：事务边界](../../knowledge/backend/database/db-sharding.md)与[持久工作流：幂等与补偿](../../knowledge/llm/agent/agent-workflow-state.md)只覆盖部分前提；本题 TCC 失败场景依据[Seata：幂等、空回滚与悬挂](https://seata.apache.org/blog/seata-tcc-fence/)，对比见[Seata Saga](https://seata.apache.org/docs/user/mode/saga/)。
 
-### 原创模拟题 B28：同一容器重启与容器替换
+### 高频考点题 B28：同一容器重启与容器替换
 
 应用文件仅写在 Docker 容器可写层，不挂载卷。运维分别执行“停止后启动同一容器”和“删除该容器，再用同镜像新建容器”。不考虑其他故障，哪项正确？
 
@@ -441,7 +441,7 @@ UML 用例模型中，“提交申请”总要执行可复用的“核验必填�
 
 **对应文章：** [Agent 状态存储与恢复](../../knowledge/backend/storage/agent-state-storage.md)补持久状态外置；生命周期依据[Docker 存储](https://docs.docker.com/engine/storage/)与[Docker：停止、启动与删除容器](https://docs.docker.com/learn/content/run-your-first-container/)。
 
-### 原创模拟题 B29：联邦学习的数据异质性
+### 高频考点题 B29：联邦学习的数据异质性
 
 多家参与方按经典联邦学习方式在本地训练并上传更新。各方的样本量和数据分布明显不同，部分设备还会间歇离线。哪项判断正确？
 
@@ -456,7 +456,7 @@ UML 用例模型中，“提交申请”总要执行可复用的“核验必填�
 
 **对应文章：** [大模型训练全流程概览](../../knowledge/llm/basics/llm-training-overview.md)提供训练基础，现有文章未讲联邦专题；依据[联邦学习原始研究](https://research.google/pubs/communication-efficient-learning-of-deep-networks-from-decentralized-data/)及[Google Research：隐私与可验证保证](https://research.google/blog/toward-provably-private-learning-from-federated-data/)。
 
-### 原创模拟题 B30：选通信技术时同时看距离与拓扑
+### 高频考点题 B30：选通信技术时同时看距离与拓扑
 
 四个场景分别为：手机贴近标签交互；有运营商覆盖的分散低速水表上报；使用既有室内 AP 的手持终端联网；依靠低功耗节点和路由设备扩展覆盖的楼内传感网。按常见适用场景，哪组匹配最合理？
 

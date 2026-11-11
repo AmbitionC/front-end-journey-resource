@@ -1,4 +1,4 @@
-Java 基础选择题常把不同层次的规则放进同一个选项：编译时选哪个方法、运行时执行哪个实现、变量复制了什么，以及某个集合操作是否受支持。做题时先判编译是否合法，再推演运行结果。本篇补充这些考法；以下 8 题均为**原创模拟题，单选**，代码按 Java SE 21 规则分析，不代表任何招聘考试的原题或出题频率。
+Java 基础选择题常把不同层次的规则放进同一个选项：编译时选哪个方法、运行时执行哪个实现、变量复制了什么，以及某个集合操作是否受支持。做题时先判编译是否合法，再推演运行结果。本篇补充这些考法；以下 8 题均为**单选**，代码按 Java SE 21 规则分析，不代表任何招聘考试的原题或出题频率。
 
 ## 先用已有文章补前提
 
@@ -16,7 +16,7 @@ Java 基础选择题常把不同层次的规则放进同一个选项：编译时
 
 对本篇这种参数已经有确定类型的普通调用，先依据编译时可见的方法和实参表达式选择签名，再在运行时寻找该签名的重写实现。不能看到对象是子类实例，就把子类所有重载都加入这次调用的候选集合。[JLS 21 §15.12.2](https://docs.oracle.com/javase/specs/jls/se21/html/jls-15.html#jls-15.12.2)、[§15.12.4.4](https://docs.oracle.com/javase/specs/jls/se21/html/jls-15.html#jls-15.12.4.4)
 
-### 原创模拟题 1：实际对象能否改变重载选择
+### 高频考点题 1：实际对象能否改变重载选择
 
 ```java
 class Parent {
@@ -56,7 +56,7 @@ public class DispatchQuiz {
 ![Java 方法入口中，调用方 nums 和形参 a 共同指向数组 A，调用方 text 和形参 s 共同指向不可变字符串 S；形参获得引用值的副本](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/soe-java-mcq-reference-values-v1.png)
 *图：这是方法入口的逻辑关系快照。后续修改 A 的元素能被 nums 观察到；给 a 或 s 赋新引用值，不会重绑调用方变量。*
 
-### 原创模拟题 2：数组和 String 为什么表现不同
+### 高频考点题 2：数组和 String 为什么表现不同
 
 ```java
 import java.util.Arrays;
@@ -91,7 +91,7 @@ A 忽略了共享数组的修改；C、D 把形参赋值当成了调用方变量
 
 多个 `catch` 按顺序匹配，不能把能捕获子类的父类处理器放在前面，再写已被覆盖的子类处理器。例如同一个 `try` 后先捕获 `IOException`、再捕获 `FileNotFoundException`，后一个分支不能通过编译检查。[JLS 21 §11.2.3](https://docs.oracle.com/javase/specs/jls/se21/html/jls-11.html#jls-11.2.3)
 
-### 原创模拟题 3：哪个重写满足父类合同
+### 高频考点题 3：哪个重写满足父类合同
 
 父类定义如下，各选项分别作为 `class DetailSource extends Source` 的唯一方法。哪个合法？
 
@@ -108,7 +108,7 @@ class Source {
 
 **答案：A。** `public` 没有缩小访问权限，`FileNotFoundException` 是 `IOException` 的子类，因此受检异常范围也没有扩大。B 缩小了可见性；C 扩大为 `Exception`；D 不能靠把返回类型从 `void` 改成 `int` 来重载或合法重写相同参数的方法。重写也可以不声明受检异常，父类允许抛出不等于子类必须抛出。[JLS 21 §8.4.8.3](https://docs.oracle.com/javase/specs/jls/se21/html/jls-8.html#jls-8.4.8.3)
 
-### 原创模拟题 4：finally 改局部变量会改返回值吗
+### 高频考点题 4：finally 改局部变量会改返回值吗
 
 下面是类内的一个方法，调用 `score()` 的返回值是什么？
 
@@ -144,7 +144,7 @@ List 的位置顺序不等于自动排序；Set 去重不等于所有实现都�
 
 `remove` 的两个重载及不可修改列表由 [List API](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html)定义；固定长度视图及数组联动由 [Arrays.asList API](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Arrays.html#asList(T...))定义；从集合创建新列表的合同见 [ArrayList API](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ArrayList.html)。
 
-### 原创模拟题 5：固定长度不等于不能替换元素
+### 高频考点题 5：固定长度不等于不能替换元素
 
 ```java
 import java.util.ArrayList;
@@ -171,7 +171,7 @@ public class ListQuiz {
 
 **答案：D。** `set` 不改变长度，合法且使 `raw[1]` 变成 9。复制后的 `values` 起初为 `[4, 9, 4]`；`remove(1)` 删除下标 1 的 9，得到 `[4, 4]`；`remove(Integer.valueOf(4))` 再删除首个值为 4 的元素，留下 `[4]`。后续操作发生在新 `ArrayList`，不改变 `raw` 的长度或元素。A 漏掉数组联动，B 混淆删除的目标，C 把固定长度视图误当成不可修改列表。
 
-### 原创模拟题 6：不同对象不必成为不同 key
+### 高频考点题 6：不同对象不必成为不同 key
 
 ```java
 import java.util.HashMap;
@@ -206,7 +206,7 @@ public class KeyQuiz {
 
 动态生成类只是增长来源之一。要推断元空间可能耗尽，还要检查：是否持续定义新的类、旧类是否具备卸载条件，以及元空间上限或可用本地内存是否足以承载增长。对题设中的普通命名类，定义它的类加载器仍被长期保活，会使这些类不满足卸载条件；丢弃普通业务实例不等于类元数据立即回收。[JLS 21 §12.7](https://docs.oracle.com/javase/specs/jls/se21/html/jls-12.html#jls-12.7)
 
-### 原创模拟题 7：没有堆满，为什么仍可能 OOM
+### 高频考点题 7：没有堆满，为什么仍可能 OOM
 
 一个 HotSpot JDK 21 服务设置了有限的 `-XX:MaxMetaspaceSize`。每次请求都定义一个新名称的普通类；这些类的定义类加载器始终由全局缓存强引用，已加载类数量持续增加。堆仍有较多空闲，但新的类元数据已无法在元空间上限内分配。下列判断最准确的是哪项？
 
@@ -232,7 +232,7 @@ DO、DTO、PO、VO 是工程里的角色命名约定，不是 Java 关键字或�
 
 DO、DTO、View Object 的一种分层命名示例可见[《Java 开发手册》的领域模型约定](https://alibaba.github.io/Alibaba-Java-Coding-Guidelines/)。Value Object 强调按值而非独立身份区分对象，例如按币种和金额判断相等；它描述建模语义，与“页面展示对象”不是一回事。[Value Object 的原始模式说明](https://martinfowler.com/bliki/ValueObject.html)
 
-### 原创模拟题 8：同一个 VO 缩写能否直接套定义
+### 高频考点题 8：同一个 VO 缩写能否直接套定义
 
 某项目文档约定：DO 承载表数据，PO 表示持久化映射，DTO 用于服务接口传输，VO 表示页面展示。另外，设计说明把按“币种＋金额”比较相等的 `Money` 称为 Value Object。哪个说法正确？
 
