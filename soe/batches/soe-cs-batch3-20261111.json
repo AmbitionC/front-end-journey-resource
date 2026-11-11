@@ -28,8 +28,8 @@
       "originalQuestions": 12,
       "questionType": "single-choice-four-options",
       "status": "ready-for-independent-review",
-      "bytes": 24706,
-      "sha256": "b41b99d480ca2d21927a383ab20dafe531716a0803bea9f896b41b186a35ad91"
+      "bytes": 24940,
+      "sha256": "eb55e33684649bd4c8ae8b30c38c0a1e97c7b75d20a059769fb94100fef6703c"
     },
     {
       "key": "soe-comm-theory-mcq",
@@ -41,8 +41,8 @@
       "originalQuestions": 12,
       "questionType": "single-choice-four-options",
       "status": "ready-for-independent-review",
-      "bytes": 21640,
-      "sha256": "987d44c880e683d7cd99bc1f2e9be01ecf573b97fd240f2391322f16de831459"
+      "bytes": 22051,
+      "sha256": "067a3b0644443450fa7039bc0cdacd3143ac8f8310d494f1c75de836cbeb1660"
     },
     {
       "key": "soe-optical-comm-mcq",
@@ -54,8 +54,8 @@
       "originalQuestions": 12,
       "questionType": "single-choice-four-options",
       "status": "ready-for-independent-review",
-      "bytes": 19993,
-      "sha256": "879822143a1d9845c0b1854a2e98628c9e8c22cc97d669d71751185654c62cb7"
+      "bytes": 20040,
+      "sha256": "b53508e731e6a8d3a6180c6339d164ef9ea3df6a8e59f644a5cc2076ddfcaed3"
     },
     {
       "key": "soe-data-comm-network-mcq",
@@ -80,8 +80,8 @@
       "originalQuestions": 12,
       "questionType": "single-choice-four-options",
       "status": "ready-for-independent-review",
-      "bytes": 21143,
-      "sha256": "2058ceeed67776246f6a827d512c264b49e4d9c2481ef50eff826193c260e835"
+      "bytes": 21296,
+      "sha256": "f2a313a38f1f81148ee63da8e6e03eb4b0ddee6477cd08d228ec1504a00699e6"
     }
   ],
   "coverageGaps": {
@@ -111,5 +111,18 @@
         "reason": "同上"
       }
     ]
-  }
+  },
+  "postReleaseRevisions": [
+    {
+      "date": "2026-11-11",
+      "batch": "soe-cs-batch4-20261111",
+      "keys": [
+        "soe-new-it-mcq",
+        "soe-comm-theory-mcq",
+        "soe-optical-comm-mcq",
+        "soe-mobile-comm-mcq"
+      ],
+      "reason": "落实 PR #85 独立审核的非阻断建议：抽样临界口径说明、链接文字去频率暗示、补充错误选项解析。"
+    }
+  ]
 }

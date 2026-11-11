@@ -160,6 +160,18 @@
         }
       },
       {
+        "label": "数据库备份恢复与安全、操作系统安全、软件交付与维护常考点",
+        "key": "soe-db-os-security-delivery-mcq",
+        "isLeaf": true,
+        "filePath": "bank-tech",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-11",
+        "quickRead": {
+          "text": "对照国网2027计算机类大纲第14–16、30、44项：备份集与恢复计算、日志重做撤销、RPO/RTO、授权级联回收、Linux特殊权限、四类维护与语义化版本，12道原创模拟题。"
+        }
+      },
+      {
         "label": "通信类专业知识",
         "key": "soe-comm",
         "children": [
