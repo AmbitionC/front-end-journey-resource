@@ -271,6 +271,14 @@ export async function renderPdfBook(browser,root,approved,built) {
 const OSS_TIMEOUT_MS = 5 * 60 * 1000;
 // 库内超时在 CI 上实测不可靠（#83 后一次 put 挂了 1 小时无任何报错），这里再加一道硬看门狗
 const ATTEMPT_TIMEOUT_MS = 6 * 60 * 1000;
+const MULTIPART_THRESHOLD = 4 * 1024 * 1024;
+const PART_SIZE = 1024 * 1024;
+const PART_TIMEOUT_MS = 2 * 60 * 1000;
+
+/** 单次尝试时限：至少 attemptTimeoutMs，大文件按每 MB 1 分钟放宽 */
+export function attemptTimeoutFor(size, base = ATTEMPT_TIMEOUT_MS) {
+  return Math.max(base, Math.ceil(size / (1024 * 1024)) * 60 * 1000);
+}
 
 function withDeadline(promise, ms, label) {
   let timer;
@@ -286,9 +294,12 @@ export async function uploadVerified(client, key, bytes, contentType, { attempts
     const started = Date.now();
     try {
       const result = await withDeadline((async () => {
-        await client.put(key, bytes, { headers: { 'Content-Type': contentType, 'x-oss-object-acl': 'private' } });
+        const headers = { 'Content-Type': contentType, 'x-oss-object-acl': 'private' };
+        // 大文件分片并行上传：单连接慢时（实测 runner→OSS 低至约 28KB/s）也能推进，每片单独超时
+        if (bytes.length > MULTIPART_THRESHOLD) await client.multipartUpload(key, bytes, { partSize: PART_SIZE, parallel: 4, timeout: PART_TIMEOUT_MS, headers });
+        else await client.put(key, bytes, { headers });
         return verifyUploadedMaterial(client, key, bytes);
-      })(), attemptTimeoutMs, `上传 ${key}`);
+      })(), attemptTimeoutFor(bytes.length, attemptTimeoutMs), `上传 ${key}`);
       console.log(`[build-materials] 已上传 ${key}（${(bytes.length / 1024 / 1024).toFixed(2)}MB，${((Date.now() - started) / 1000).toFixed(1)} 秒）`);
       return result;
     } catch (err) {
