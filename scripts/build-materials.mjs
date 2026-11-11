@@ -1,9 +1,11 @@
-// 按知识库一级分类生成会员资料 PDF，以私有 ACL 上传 OSS + 写 manifest。
-// 内容源：knowledge/_tree.json（一级分类=顶层节点）；叶子文件 knowledge/<filePath>/<key>.md。
+// 按内容模块生成会员资料 PDF，以私有 ACL 上传 OSS + 写 manifest。
+// 默认 knowledge：内容源 knowledge/_tree.json，每个二级分类一册，产物与 OSS 路径保持原样（materials/knowledge/）。
+// --module soe|civil：每个顶层分组一册，OSS 前缀 materials/<模块>/；「原创模拟题」的答案与解析
+// 按 --answers 处理：appendix（默认，集中到本册末尾）、separate（另出一册「答案与解析」）、inline（不动）。
 // 图片：拦截既有 OSS 图片地址，仅从同一已审提交读取本地图片，禁止外部可变内容。
 // 运行：node scripts/build-materials.mjs；须有最终提交审查和同 SHA 同步成功证据。
 import { readFileSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
-import { join, dirname, resolve } from 'node:path';
+import { join, dirname, resolve, posix } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { isDirectExecution, leafPath, readBounded, safeRelativePath, safeKey } from './resource-paths.mjs';
@@ -14,13 +16,37 @@ import puppeteer from 'puppeteer';
 import OSS from 'ali-oss';
 import parse5 from 'parse5';
 import { configurePdfMarkdown, createPdfStaticRenderer } from './pdf-static-images.mjs';
+import { renderPdfMath, splitQuestionAnswers } from './pdf-questions.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const KNOWLEDGE = join(ROOT, 'knowledge');
-const DIST = join(ROOT, 'dist', 'materials');
 
-const OSS_PREFIX = 'materials/knowledge/';
+/** 可出会员 PDF 的模块；label 用作 manifest 分组名和封面副标题 */
+export const MATERIAL_MODULES = { knowledge: '知识库', soe: '央国企备考', civil: '考公备考' };
+const ANSWER_MODES = ['inline', 'appendix', 'separate'];
+
+export function parseMaterialArgs(argv) {
+  const get = (name) => {
+    const i = argv.indexOf(name);
+    if (i < 0) return undefined;
+    const v = argv[i + 1];
+    if (!v || v.startsWith('--')) throw new Error(`${name} 缺参数值`);
+    return v;
+  };
+  const module = get('--module') ?? 'knowledge';
+  if (!Object.hasOwn(MATERIAL_MODULES, module)) throw new Error(`不支持的 PDF 模块：${module}`);
+  const answers = get('--answers') ?? (module === 'knowledge' ? 'inline' : 'appendix');
+  if (!ANSWER_MODES.includes(answers)) throw new Error(`--answers 只能是 ${ANSWER_MODES.join(' / ')}`);
+  return {
+    module,
+    answers,
+    // knowledge 保持既有产物路径，已上线的下载不受影响
+    dist: module === 'knowledge' ? join(ROOT, 'dist', 'materials') : join(ROOT, 'dist', 'materials', module),
+    ossPrefix: `materials/${module}/`,
+  };
+}
+
 let approvedFiles;
+let MODULE = 'knowledge';
 
 const md = configurePdfMarkdown(new MarkdownIt({ html: true, linkify: true, breaks: false }));
 
@@ -34,7 +60,7 @@ function collectLeaves(node, trail, out) {
 }
 
 function readLeafMd(leaf) {
-  const path = leafPath('knowledge',leaf), bytes = readFileSync(join(ROOT,path));
+  const path = leafPath(MODULE,leaf), bytes = readFileSync(join(ROOT,path));
   if (sha256(bytes)!==approvedFiles.get(path)) throw new Error('PDF 正文与已审版本不一致');
   return bytes.toString();
 }
@@ -68,31 +94,92 @@ const CSS = `
   .foot { margin-top:8px; text-align:center; color:#b8b6ad; font-size:11px; }
   .pdf-toc { page-break-after:always; } .pdf-toc li { margin:4px 0; }
   h3, article :is(h1,h2,h3,h4,h5,h6) { break-after:avoid; } tr { break-inside:avoid; }
+  .pdf-math { font-family:"Times New Roman","Noto Serif CJK SC",serif; font-style:italic; white-space:nowrap; }
+  .pdf-math-block { font-family:"Times New Roman","Noto Serif CJK SC",serif; font-style:italic; text-align:center; margin:12px 0; }
+  .pdf-answers h4 { font-size:14px; font-weight:600; margin:14px 0 4px; color:#26251e; }
 `;
 
-/** 为某个二级分类节点构建整册 HTML（封面=二级分类名，章节=更深层目录） */
-export function buildHtml(sub, parentLabel, readArticle=readLeafMd, renderArticle=(_leaf,text)=>md.render(text)) {
+const wrapHtml = (body) => `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><style>${CSS}</style></head><body>${body}</body></html>`;
+
+/**
+ * 为某个分类节点构建整册 HTML（封面=分类名，章节=更深层目录）。
+ * answers 为 appendix / separate 时，把「原创模拟题」的答案与解析从题目后挪走：
+ * appendix 集中到本册末尾；separate 另返回一册 answersBook。
+ */
+export function buildHtml(sub, parentLabel, readArticle=readLeafMd, renderArticle=(_leaf,text)=>md.render(text), {answers='inline'}={}) {
   const out = [];
   collectLeaves(sub, [], out);
   if (!out.length) return null;
+  const answersLabel = `${sub.label} · 答案与解析`;
+  const hint = answers === 'separate' ? `答案与解析见《${answersLabel}》。` : '答案与解析见本册末尾。';
   let body =
     `<h1 class="cover">${esc(sub.label)}` +
     `<div class="sub">${esc(parentLabel)}</div>` +
-    `<div class="foot">FrontEnd Journey · 会员资料</div></h1>`;
-  body+=`<nav class="pdf-toc"><h2>目录</h2><ol>${out.map(({leaf})=>`<li><a href="#pdf-${esc(leaf.key)}">${esc(leaf.label)}</a></li>`).join('')}</ol></nav>`;
+    `<div class="foot">Agent Journey · 会员资料</div></h1>`;
+  const collected = [];
   let lastSection = '';
+  let articles = '';
   for (const { leaf, trail } of out) {
-    const section = trail.slice(1).join(' · '); // 去掉本二级分类名，保留更深层目录
+    const section = trail.slice(1).join(' · '); // 去掉本分类名，保留更深层目录
     if (section && section !== lastSection) {
-      body += `<h2 class="section">${esc(section)}</h2>`;
+      articles += `<h2 class="section">${esc(section)}</h2>`;
       lastSection = section;
     }
-    const mdText = readArticle(leaf);
-    body += `<article id="pdf-${esc(leaf.key)}"><h3>${esc(leaf.label)}</h3>${renderArticle(leaf,mdText)}</article>`;
+    let mdText = readArticle(leaf);
+    if (answers !== 'inline') {
+      const split = splitQuestionAnswers(mdText, { hint });
+      mdText = split.body;
+      if (split.answers.length) collected.push({ leaf, answers: split.answers });
+    }
+    articles += `<article id="pdf-${esc(leaf.key)}"><h3>${esc(leaf.label)}</h3>${renderArticle(leaf,mdText)}</article>`;
   }
-  const html = `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><style>${CSS}</style></head><body>${body}</body></html>`;
+  const answerBlocks = collected.map(({ leaf, answers: list }) =>
+    `<h3>${esc(leaf.label)}</h3>` + list.map((a) => `<h4>${esc(a.title)}</h4>${renderArticle(leaf, a.text)}`).join(''));
+  const tocItems = out.map(({leaf})=>`<li><a href="#pdf-${esc(leaf.key)}">${esc(leaf.label)}</a></li>`);
+  if (answers === 'appendix' && collected.length) tocItems.push(`<li><a href="#pdf-answers">答案与解析</a></li>`);
+  body += `<nav class="pdf-toc"><h2>目录</h2><ol>${tocItems.join('')}</ol></nav>` + articles;
+  if (answers === 'appendix' && collected.length)
+    body += `<h2 class="section" id="pdf-answers">答案与解析</h2><section class="pdf-answers">${answerBlocks.join('')}</section>`;
+  const html = wrapHtml(body);
   validatePdfHtml(html);
-  return { html, count: out.length };
+  const built = { html, count: out.length };
+  if (answers === 'separate' && collected.length) {
+    const aBody =
+      `<h1 class="cover">${esc(answersLabel)}<div class="sub">${esc(parentLabel)}</div><div class="foot">Agent Journey · 会员资料</div></h1>` +
+      `<nav class="pdf-toc"><h2>目录</h2><ol>${collected.map(({leaf})=>`<li><a href="#pdf-${esc(leaf.key)}">${esc(leaf.label)}</a></li>`).join('')}</ol></nav>` +
+      collected.map(({ leaf, answers: list }) =>
+        `<article id="pdf-${esc(leaf.key)}" class="pdf-answers"><h3>${esc(leaf.label)}</h3>${list.map((a) => `<h4>${esc(a.title)}</h4>${renderArticle(leaf, a.text)}`).join('')}</article>`).join('');
+    const aHtml = wrapHtml(aBody);
+    validatePdfHtml(aHtml);
+    built.answersBook = { html: aHtml, count: collected.length, label: answersLabel };
+  }
+  return built;
+}
+
+/**
+ * soe / civil 的正文渲染：公式转静态文本；相对链接指向同册文章时改成册内锚点，
+ * 否则固定到来源提交的 GitHub 地址（与 knowledge 的处理一致，PDF 里不留相对链接）。
+ */
+export function createModuleRenderer(module, { sourceCommit, bookKeys = new Set() } = {}) {
+  if (!/^[a-f0-9]{40}$/u.test(sourceCommit ?? '')) throw new Error('PDF 来源提交必须固定为完整 SHA');
+  const renderer = configurePdfMarkdown(new MarkdownIt({ html: true, linkify: true, breaks: false }));
+  return function render(leaf, text) {
+    const articlePath = leafPath(module, leaf);
+    const fragment = parse5.parseFragment(renderer.render(renderPdfMath(text)));
+    (function links(node) {
+      if (node.tagName === 'a') for (const a of node.attrs ?? []) if (a.name === 'href' && !/^[a-z][a-z0-9+.-]*:|^#|^\/\//iu.test(a.value)) {
+        const [target, frag] = a.value.split('#');
+        const path = posix.normalize(posix.join(posix.dirname(articlePath), decodeURIComponent(target)));
+        safeRelativePath(path);
+        const key = posix.basename(path, '.md');
+        a.value = path.startsWith(`${module}/`) && bookKeys.has(key)
+          ? `#pdf-${key}`
+          : `https://github.com/AmbitionC/front-end-journey-resource/blob/${sourceCommit}/${path}${frag ? `#${frag}` : ''}`;
+      }
+      for (const c of node.childNodes ?? []) links(c);
+    })(fragment);
+    return parse5.serialize(fragment);
+  };
 }
 
 const PDF_HTML_TAGS = new Set('html head meta style body article h1 h2 h3 h4 h5 h6 p div span section header footer main aside nav address blockquote pre code kbd samp var strong em b i u s del ins small sub sup mark br hr wbr a img ul ol li dl dt dd table caption colgroup col thead tbody tfoot tr th td details summary figure figcaption'.split(' '));
@@ -187,30 +274,64 @@ export async function verifyUploadedMaterial(client,key,bytes) {
   return {key,sha256:sha256(bytes),sizeBytes:bytes.length,acl:'private'};
 }
 
+/**
+ * 要出的册：knowledge 每个二级分类一册（分组=一级分类，保持既有 manifest 形状）；
+ * soe / civil 每个顶层分组一册，整个模块是一个 manifest 分组。
+ */
+export function planBooks(module, tree, { read, render, answers }) {
+  const groups = [];
+  if (module === 'knowledge') {
+    for (const cat of tree) {
+      safeKey(cat.key);
+      const books = [];
+      for (const sub of cat.children ?? []) {
+        safeKey(sub.key);
+        const built = buildHtml(sub, cat.label, read, render, { answers });
+        if (built) books.push({ key: sub.key, label: sub.label, built });
+        else console.log(`skip ${cat.key}/${sub.key}: 无已发布文章`);
+      }
+      if (books.length) groups.push({ key: cat.key, label: cat.label, books });
+    }
+    return groups;
+  }
+  const books = [];
+  for (const node of tree) {
+    safeKey(node.key);
+    const built = buildHtml(node, MATERIAL_MODULES[module], read, render(node), { answers });
+    if (!built) { console.log(`skip ${module}/${node.key}: 无已发布文章`); continue; }
+    books.push({ key: node.key, label: node.label, built });
+    if (built.answersBook) books.push({ key: `${node.key}-answers`, label: built.answersBook.label, kind: 'answers', built: built.answersBook });
+  }
+  if (books.length) groups.push({ key: module, label: MATERIAL_MODULES[module], books });
+  return groups;
+}
+
+function leafKeys(node, out = new Set()) {
+  if (node.isLeaf) out.add(node.key);
+  else for (const c of node.children ?? []) leafKeys(c, out);
+  return out;
+}
+
 async function main() {
+  const opts = parseMaterialArgs(process.argv.slice(2));
+  MODULE = opts.module;
   const head = spawnSync('git',['rev-parse','HEAD'],{cwd:ROOT,encoding:'utf8'}).stdout.trim();
   const before = process.env.RELEASE_BEFORE_SHA || spawnSync('git',['rev-parse','HEAD^1'],{cwd:ROOT,encoding:'utf8'}).stdout.trim();
   const approval = await requireReviewedRelease(ROOT,before,process.env.RELEASE_AFTER_SHA || head,{requireSync:true});
   const snapshot = await publicInventory(ROOT);
   if (snapshot.digest!==approval.publicationDigest) throw new Error('PDF 输入在最终审核后改变');
   approvedFiles = new Map(snapshot.files.map(x=>[x.path,x.sha256]));
-  const renderArticle=await createPdfStaticRenderer(ROOT,approvedFiles,{sourceCommit:head});
-  const treeBytes = await readBounded(ROOT,'knowledge/_tree.json','knowledge');
-  if (sha256(treeBytes)!==approvedFiles.get('knowledge/_tree.json')) throw new Error('PDF 目录与已审版本不一致');
+  const treePath = `${MODULE}/_tree.json`;
+  const treeBytes = await readBounded(ROOT,treePath,MODULE);
+  if (sha256(treeBytes)!==approvedFiles.get(treePath)) throw new Error('PDF 目录与已审版本不一致');
   const tree = JSON.parse(treeBytes);
+  let render;
+  if (MODULE === 'knowledge') render = await createPdfStaticRenderer(ROOT,approvedFiles,{sourceCommit:head});
+  else render = (node) => createModuleRenderer(MODULE, { sourceCommit: head, bookKeys: leafKeys(node) });
   // Freeze and inspect every book before browser startup or OSS client use.
-  const preparedBooks=new Map();
-  for(const cat of tree) {
-    safeKey(cat.key);
-    for(const sub of cat.children??[]) {
-      safeKey(sub.key);
-      const built=buildHtml(sub,cat.label,readLeafMd,renderArticle);
-      if(!built) continue;
-      await preflightPdfImages(ROOT,built.html,approvedFiles);
-      preparedBooks.set(sub.key,built);
-    }
-  }
-  mkdirSync(DIST,{recursive:true});
+  const plan = planBooks(MODULE, tree, { read: readLeafMd, render, answers: opts.answers });
+  for (const g of plan) for (const b of g.books) await preflightPdfImages(ROOT,b.built.html,approvedFiles);
+  mkdirSync(opts.dist,{recursive:true});
   const browser = await puppeteer.launch({
     headless: 'new',
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
@@ -233,59 +354,44 @@ async function main() {
   const groups = [];
   let total = 0;
   const uploads = [];
-
-  // 按「一级分类 → 二级分类」拆分：每个二级分类一册 PDF（控制单册体积）
-  for (const cat of tree) {
-    safeKey(cat.key);
-    const subs = Array.isArray(cat.children) ? cat.children : [];
+  for (const g of plan) {
     const items = [];
-    for (const sub of subs) {
-      safeKey(sub.key);
-      // 二级节点本身可能直接是叶子（无更深分层）——也按一册处理
-      const built = preparedBooks.get(sub.key);
-      if (!built) {
-        console.log(`skip ${cat.key}/${sub.key}: 无已发布文章`);
-        continue;
-      }
-      const {bytes:buf,acceptance}=await renderPdfBook(browser,ROOT,approvedFiles,built);
-      writeFileSync(join(DIST, `${sub.key}.pdf`), buf);
-      writeFileSync(join(DIST, `${sub.key}.acceptance.json`),JSON.stringify({sourceCommit:head,publicationDigest:snapshot.digest,pdfSha256:sha256(buf),...acceptance},null,2));
-
-      uploads.push({key:sub.key,buf});
+    for (const book of g.books) {
+      const {bytes:buf,acceptance}=await renderPdfBook(browser,ROOT,approvedFiles,book.built);
+      writeFileSync(join(opts.dist, `${book.key}.pdf`), buf);
+      writeFileSync(join(opts.dist, `${book.key}.acceptance.json`),JSON.stringify({sourceCommit:head,publicationDigest:snapshot.digest,pdfSha256:sha256(buf),...acceptance},null,2));
+      uploads.push({key:book.key,buf});
       items.push({
-        key: sub.key,
-        label: sub.label,
+        key: book.key,
+        label: book.label,
+        ...(book.kind ? { kind: book.kind } : {}),
         updatedAt: now,
         sizeBytes: buf.length,
-        articleCount: built.count,
+        articleCount: book.built.count,
       });
       total += 1;
-      console.log(
-        `built ${cat.key}/${sub.key}: ${built.count} 篇, ${(buf.length / 1024 / 1024).toFixed(2)}MB`,
-      );
+      console.log(`built ${MODULE}/${g.key}/${book.key}: ${book.built.count} 篇, ${(buf.length / 1024 / 1024).toFixed(2)}MB`);
     }
-    if (items.length) groups.push({ key: cat.key, label: cat.label, items });
+    if (items.length) groups.push({ key: g.key, label: g.label, items });
   }
 
   const manifest = { generatedAt: now, version: 2, groups };
   const manifestStr = JSON.stringify(manifest, null, 2);
-  writeFileSync(join(DIST, 'manifest.json'), manifestStr);
+  writeFileSync(join(opts.dist, 'manifest.json'), manifestStr);
   if (client) {
     const readback=[];
     for (const {key,buf} of uploads) {
-      await client.put(`${OSS_PREFIX}${key}.pdf`,buf,{headers:{'Content-Type':'application/pdf','x-oss-object-acl':'private'}});
-      readback.push(await verifyUploadedMaterial(client,`${OSS_PREFIX}${key}.pdf`,buf));
+      await client.put(`${opts.ossPrefix}${key}.pdf`,buf,{headers:{'Content-Type':'application/pdf','x-oss-object-acl':'private'}});
+      readback.push(await verifyUploadedMaterial(client,`${opts.ossPrefix}${key}.pdf`,buf));
     }
-    await client.put(`${OSS_PREFIX}manifest.json`, Buffer.from(manifestStr), {
+    await client.put(`${opts.ossPrefix}manifest.json`, Buffer.from(manifestStr), {
       headers: { 'Content-Type': 'application/json; charset=utf-8', 'x-oss-object-acl': 'private' },
     });
-    readback.push(await verifyUploadedMaterial(client,`${OSS_PREFIX}manifest.json`,Buffer.from(manifestStr)));
-    writeFileSync(join(DIST,'upload-readback.json'),JSON.stringify({sourceCommit:head,publicationDigest:snapshot.digest,objects:readback},null,2));
+    readback.push(await verifyUploadedMaterial(client,`${opts.ossPrefix}manifest.json`,Buffer.from(manifestStr)));
+    writeFileSync(join(opts.dist,'upload-readback.json'),JSON.stringify({sourceCommit:head,publicationDigest:snapshot.digest,objects:readback},null,2));
   }
 
-  console.log(
-    `done: ${groups.length} 个一级分类 / ${total} 册二级 PDF${client ? ' 已上传 OSS' : '（本地）'}。`,
-  );
+  console.log(`done: ${MODULE} ${groups.length} 个分组 / ${total} 册 PDF${client ? ' 已上传 OSS' : '（本地）'}。`);
   } finally { await browser.close(); }
 }
 

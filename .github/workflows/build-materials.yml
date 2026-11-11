@@ -1,15 +1,19 @@
 name: Build member material PDFs
 
-# 知识点内容变更时，按一级分类重建会员资料 PDF 并以私有 ACL 上传 OSS。
+# 知识点、央国企、考公内容变更时，重建会员资料 PDF 并以私有 ACL 上传 OSS。
+# knowledge 按二级分类出册（materials/knowledge/）；soe、civil 按顶层分组出册（materials/<模块>/）。
 # 内容编辑经 manager→faas 写回本仓 knowledge/**，push 即触发＝「知识点更新自动重建对应 PDF」。
 on:
   push:
     branches: [master, main]
     paths:
       - 'knowledge/**'
+      - 'soe/**'
+      - 'civil/**'
       - 'images/**'
       - 'scripts/build-materials.mjs'
       - 'scripts/pdf-static-images.mjs'
+      - 'scripts/pdf-questions.mjs'
       - 'scripts/*release*.mjs'
       - 'scripts/content-review.mjs'
       - 'scripts/resource-paths.mjs'
@@ -62,7 +66,7 @@ jobs:
       - name: Ensure Chromium
         run: npx puppeteer browsers install chrome
 
-      - name: Build & upload material PDFs
+      - name: Build & upload material PDFs (knowledge)
         env:
           OSS_BUCKET: ${{ secrets.OSS_BUCKET }}
           OSS_REGION: ${{ secrets.OSS_REGION }}
@@ -72,12 +76,34 @@ jobs:
           RELEASE_AFTER_SHA: ${{ github.sha }}
         run: npm run build:materials
 
+      # 央国企：自测卷和题库的答案另出一册「答案与解析」
+      - name: Build & upload material PDFs (soe)
+        env:
+          OSS_BUCKET: ${{ secrets.OSS_BUCKET }}
+          OSS_REGION: ${{ secrets.OSS_REGION }}
+          OSS_ACCESS_KEY_ID: ${{ secrets.OSS_ACCESS_KEY_ID }}
+          OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
+          RELEASE_BEFORE_SHA: ${{ github.event.before }}
+          RELEASE_AFTER_SHA: ${{ github.sha }}
+        run: npm run build:materials -- --module soe --answers separate
+
+      # 考公：答案与解析集中在每册末尾
+      - name: Build & upload material PDFs (civil)
+        env:
+          OSS_BUCKET: ${{ secrets.OSS_BUCKET }}
+          OSS_REGION: ${{ secrets.OSS_REGION }}
+          OSS_ACCESS_KEY_ID: ${{ secrets.OSS_ACCESS_KEY_ID }}
+          OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
+          RELEASE_BEFORE_SHA: ${{ github.event.before }}
+          RELEASE_AFTER_SHA: ${{ github.sha }}
+        run: npm run build:materials -- --module civil --answers appendix
+
       - name: Upload artifacts (调试留档)
         uses: actions/upload-artifact@v4
         with:
           name: material-pdfs
           path: |
-            dist/materials/*.pdf
-            dist/materials/*.json
+            dist/materials/**/*.pdf
+            dist/materials/**/*.json
           if-no-files-found: warn
           retention-days: 7
