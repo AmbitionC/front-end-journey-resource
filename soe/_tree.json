@@ -148,6 +148,72 @@
         }
       },
       {
+        "label": "信息新技术常考点：人工智能、物联网、云计算与大数据",
+        "key": "soe-new-it-mcq",
+        "isLeaf": true,
+        "filePath": "bank-tech",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-11",
+        "quickRead": {
+          "text": "对照国网2027计算机类大纲第45–48项：机器学习与大模型、物联网协议、云服务模型与云边协同、大数据预处理，含Amdahl加速比，12道原创模拟题。"
+        }
+      },
+      {
+        "label": "通信类专业知识",
+        "key": "soe-comm",
+        "children": [
+          {
+            "label": "通信理论基础常考点：信号与系统、调制解调、信道与编码",
+            "key": "soe-comm-theory-mcq",
+            "isLeaf": true,
+            "filePath": "comm",
+            "heat": 0,
+            "currRank": 0,
+            "updatedAt": "2026-11-11",
+            "quickRead": {
+              "text": "对照国网2027通信类大纲第1–9项：抽样定理、香农公式、熵、PCM、调制带宽、复用多址、匹配滤波、码距与同步，12道原创模拟题。"
+            }
+          },
+          {
+            "label": "光纤通信常考点：光纤特性、传输体制与接入技术",
+            "key": "soe-optical-comm-mcq",
+            "isLeaf": true,
+            "filePath": "comm",
+            "heat": 0,
+            "currRank": 0,
+            "updatedAt": "2026-11-11",
+            "quickRead": {
+              "text": "对照国网2027通信类大纲第10–16项：低损耗窗口、色散、功率预算、SDH/OTN/PTN、PON分光损耗、OTDR测距、OPGW与ADSS，12道原创模拟题。"
+            }
+          },
+          {
+            "label": "数据通信网常考点：交换技术、网络协议、设备与组网配置",
+            "key": "soe-data-comm-network-mcq",
+            "isLeaf": true,
+            "filePath": "comm",
+            "heat": 0,
+            "currRank": 0,
+            "updatedAt": "2026-11-11",
+            "quickRead": {
+              "text": "对照国网2027通信类大纲第17–22项：交换时延计算、软交换、VLAN与STP、OSPF开销、MPLS、WLAN、VRRP与链路聚合、802.1X鉴权，12道原创模拟题。"
+            }
+          },
+          {
+            "label": "移动通信及其他业务系统常考点：5G/6G、卫星、会议系统与电力专网",
+            "key": "soe-mobile-comm-mcq",
+            "isLeaf": true,
+            "filePath": "comm",
+            "heat": 0,
+            "currRank": 0,
+            "updatedAt": "2026-11-11",
+            "quickRead": {
+              "text": "对照国网2027通信类大纲第23–32项：频率复用、多普勒与路径损耗、5G参数集与切片、卫星时延、H.323与SIP、230MHz专网与电力线载波，12道原创模拟题。"
+            }
+          }
+        ]
+      },
+      {
         "label": "计算机专业综合练习",
         "key": "soe-cs-practice",
         "children": [
