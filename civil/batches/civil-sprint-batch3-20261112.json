@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "batchId": "civil-sprint-batch3-20261112",
+  "date": "2026-11-12",
+  "branch": "claude/civil-common-sense",
+  "basedOn": "master 48a29d5",
+  "scope": {
+    "module": "civil",
+    "topLevelLabel": "国考冲刺速查",
+    "articleCount": 3,
+    "mergeAuthorized": false
+  },
+  "workflow": "Claude 撰写、另一个独立 Claude 会话审核；题目按 owner 11/11 要求标「高频考点题」",
+  "status": "content-ready-for-owner-review",
+  "originality": {
+    "body": "自行编写，不引用任何机构、老师或书目的讲义内容。",
+    "questions": "题干、选项、解析全部自拟。",
+    "figures": "本批无图片。"
+  },
+  "factCheck": "每条事实性陈述须与下列来源一致；法律条文以国家法律法规数据库现行文本为准。",
+  "sources": [
+    {
+      "id": "civil-cs-src-01",
+      "title": "中华人民共和国民法典（第17-20、188、192、1047、1077、1142、1260条）",
+      "url": "https://flk.npc.gov.cn/",
+      "usedBy": [
+        "civil-sprint-common-law"
+      ],
+      "checkedAt": "2026-11-12"
+    },
+    {
+      "id": "civil-cs-src-02",
+      "title": "中华人民共和国宪法（2018年修正，第60、67条）",
+      "url": "https://flk.npc.gov.cn/",
+      "usedBy": [
+        "civil-sprint-common-law"
+      ],
+      "checkedAt": "2026-11-12"
+    },
+    {
+      "id": "civil-cs-src-03",
+      "title": "全国人大常委会关于设立国家宪法日的决定（2014年11月1日）",
+      "url": "https://flk.npc.gov.cn/",
+      "usedBy": [
+        "civil-sprint-common-law"
+      ],
+      "checkedAt": "2026-11-12"
+    },
+    {
+      "id": "civil-cs-src-04",
+      "title": "中国非物质文化遗产网：二十四节气列入人类非遗代表作名录（2016年11月30日）",
+      "url": "https://www.ihchina.cn/",
+      "usedBy": [
+        "civil-sprint-common-geography"
+      ],
+      "checkedAt": "2026-11-12"
+    }
+  ],
+  "sourcesNote": "科技、地理部分为初中物理、地理教材的基础知识，审核时按教材通行表述核对。",
+  "notWritten": [
+    "结构化面试",
+    "调剂"
+  ],
+  "items": [
+    {
+      "key": "civil-sprint-common-law",
+      "label": "常识判断：法律必背数字与易错规则",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-common-law.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 5969,
+      "sha256": "23b695819df8cc810220371369502cc3f599362e00bba905c76e9e77b1c39063"
+    },
+    {
+      "key": "civil-sprint-common-science",
+      "label": "常识判断：光学与物态变化",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-common-science.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 4868,
+      "sha256": "b014a5024bd4db54569de0e457fc326f417f52b2f6182c00d979792594158be6"
+    },
+    {
+      "key": "civil-sprint-common-geography",
+      "label": "常识判断：地球运动、二十四节气与季风",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-common-geography.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 4658,
+      "sha256": "b9a34847e4fb2a56802b0410641530a6d1a79fceafe0576dd133da39bbac8783"
+    }
+  ]
+}
