@@ -28,5 +28,131 @@
         }
       }
     ]
+  },
+  {
+    "label": "国考冲刺速查",
+    "key": "civil-sprint",
+    "children": [
+      {
+        "label": "资料分析公式总表：基期、现期、增长、比重、平均数、倍数",
+        "key": "civil-sprint-data-formulas",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-10",
+        "quickRead": {
+          "text": "五个量、三个比的公式和题干信号，单独讲清「百分点」和「百分比」，配五道原创模拟题。"
+        }
+      },
+      {
+        "label": "资料分析：比重与两期比重、两期平均数",
+        "key": "civil-sprint-data-proportion",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-10",
+        "quickRead": {
+          "text": "两期比重升降只看两个增长率谁大，变化值一定小于两个增长率之差；两期平均数用同一套思路。"
+        }
+      },
+      {
+        "label": "资料分析速算：截位直除、特征数字、同位比较、错位加减",
+        "key": "civil-sprint-data-speed",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-10",
+        "quickRead": {
+          "text": "先看选项定精度，再用四种方法把除法算到够用即可，例题全部用 2025 年统计公报数据。"
+        }
+      },
+      {
+        "label": "图形推理：看到一组图先看什么",
+        "key": "civil-sprint-figure-order",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-10",
+        "quickRead": {
+          "text": "按位置、对称、数量、样式、属性的顺序排查，配位置、对称、黑白三道原创图形题。"
+        }
+      },
+      {
+        "label": "图形推理：数量规律（面、线、笔画、交点）",
+        "key": "civil-sprint-figure-count",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-10",
+        "quickRead": {
+          "text": "什么时候数面、线、笔画、交点；一笔画看奇点数是不是 0 或 2，配三道原创图形题。"
+        }
+      },
+      {
+        "label": "逻辑填空三步法：找对应、辨侧重、查搭配",
+        "key": "civil-sprint-fill-blank",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-10",
+        "quickRead": {
+          "text": "先找句中线索，再辨近义词的语义、程度、色彩，最后用搭配定答案，配四道原创题。"
+        }
+      },
+      {
+        "label": "判断推理：翻译推理速查",
+        "key": "civil-sprint-logic-translation",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-10",
+        "quickRead": {
+          "text": "「如果」后面放前，「只有」后面放后，「除非」取反放前；肯前推肯后，否后推否前。"
+        }
+      },
+      {
+        "label": "申论五类小题答题框架",
+        "key": "civil-sprint-essay-five-types",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-10",
+        "quickRead": {
+          "text": "归纳概括、综合分析、提出对策、贯彻执行、公文写作的识别词和答题框架，配原创材料练习。"
+        }
+      },
+      {
+        "label": "申论单一题：问题类、影响类、原因类怎么找要点",
+        "key": "civil-sprint-essay-single-question",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-10",
+        "quickRead": {
+          "text": "三类单一题的问法和材料标志，问题和原因怎么区分，影响按对象分组，配原创材料三连题。"
+        }
+      },
+      {
+        "label": "国考最后两周：时间分配、答题顺序、模考复盘",
+        "key": "civil-sprint-final-two-weeks",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-10",
+        "quickRead": {
+          "text": "2027 年度笔试时间，行测和申论的时间分配建议、跳题规则，以及每套模考的复盘清单。"
+        }
+      }
+    ]
   }
 ]

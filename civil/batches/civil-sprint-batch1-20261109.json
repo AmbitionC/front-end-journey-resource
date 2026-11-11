@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 1,
+  "batchId": "civil-sprint-batch1-20261109",
+  "date": "2026-11-10",
+  "branch": "claude/project-thread-e46hvl",
+  "basedOn": "claude/project-thread-eyvtpy (resource PR #79)",
+  "scope": {
+    "module": "civil",
+    "topLevelLabel": "国考冲刺速查",
+    "articleCount": 10,
+    "mergeAuthorized": false
+  },
+  "brief": "/mnt/project-files/research/codex-brief-考公冲刺速查-第一批-2026-11-09.md（仓外）",
+  "workflow": "按 .codex/skills/generate-knowledge-docs 的结构与验收执行；owner 2026-11-10 因 Codex 额度不足，改由 Claude 撰写、另一个独立 Claude 会话审核",
+  "status": "content-ready-for-owner-review",
+  "originality": {
+    "body": "原创编写；参考资料只用于确定考点覆盖与题型分类，不复制任何题干、选项、解析或材料。",
+    "questions": "全部题干、数据情境、选项、解析自拟，逐题标注「原创模拟题」。",
+    "figures": "图形推理题图由 scripts/civil/figures/build-figures.py 按规律程序生成，不截图任何参考资料。"
+  },
+  "sources": [
+    {
+      "id": "civil-sprint-src-01",
+      "title": "中华人民共和国2025年国民经济和社会发展统计公报",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202602/t20260228_1962662.html",
+      "usedBy": [
+        "civil-sprint-data-formulas",
+        "civil-sprint-data-proportion",
+        "civil-sprint-data-speed"
+      ],
+      "checkedAt": "2026-11-10"
+    },
+    {
+      "id": "civil-sprint-src-02",
+      "title": "政府工作报告（2026年3月5日）",
+      "url": "https://www.gov.cn/gongbao/2026/issue_12646/202603/content_7064134.html",
+      "usedBy": [
+        "civil-sprint-essay-five-types",
+        "civil-sprint-essay-single-question"
+      ],
+      "checkedAt": "2026-11-10"
+    },
+    {
+      "id": "civil-sprint-src-03",
+      "title": "中央机关及其直属机构2027年度考试录用公务员公告（德安县人民政府转载）",
+      "url": "https://www.dean.gov.cn/zw/03/04/07/002/202611/t20261102_7357588.html",
+      "usedBy": [
+        "civil-sprint-final-two-weeks"
+      ],
+      "checkedAt": "2026-11-09"
+    }
+  ],
+  "review": {
+    "independentReviewer": "独立 Claude 会话（未参与撰写，只读审核）",
+    "date": "2026-11-10",
+    "result": "有条件通过：7 处必须改已全部修改，建议改项大部分采纳"
+  },
+  "items": [
+    {
+      "key": "civil-sprint-data-formulas",
+      "label": "资料分析公式总表：基期、现期、增长、比重、平均数、倍数",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-data-formulas.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 6209,
+      "sha256": "1e03ba5d16e2041b2646441c001e32ca347033394bbfddd637e2ba66e4d0b7fd"
+    },
+    {
+      "key": "civil-sprint-data-proportion",
+      "label": "资料分析：比重与两期比重、两期平均数",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-data-proportion.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 5068,
+      "sha256": "85d100ba5aed0407f82db4425bce91887a5b3a648c176d43b7ee0df046ed7e43"
+    },
+    {
+      "key": "civil-sprint-data-speed",
+      "label": "资料分析速算：截位直除、特征数字、同位比较、错位加减",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-data-speed.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 5466,
+      "sha256": "c87163e17d0810f78efd551947bb399d25a791678c974bc4a65fb8c2fbd2dfd5"
+    },
+    {
+      "key": "civil-sprint-figure-order",
+      "label": "图形推理：看到一组图先看什么",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-figure-order.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 5199,
+      "sha256": "e29cc25a8277aed13f1468e40f9fd446c64424ef207944d2b644f8f68bb798f1"
+    },
+    {
+      "key": "civil-sprint-figure-count",
+      "label": "图形推理：数量规律（面、线、笔画、交点）",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-figure-count.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 4984,
+      "sha256": "d7f834c6af5d0959b622b03114e3ae695d5558124d607f7a70ef0523b614c7bf"
+    },
+    {
+      "key": "civil-sprint-fill-blank",
+      "label": "逻辑填空三步法：找对应、辨侧重、查搭配",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-fill-blank.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 5082,
+      "sha256": "1169bf569fb72acafac28113474d30c3e15297f85e22b5bc1bbca863849e0d96"
+    },
+    {
+      "key": "civil-sprint-logic-translation",
+      "label": "判断推理：翻译推理速查",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-logic-translation.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 5898,
+      "sha256": "7a10977f4ee7dbe4f28f4c2e1ea457bdf6af65b6001a61d46bc5b4dfde24637e"
+    },
+    {
+      "key": "civil-sprint-essay-five-types",
+      "label": "申论五类小题答题框架",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-essay-five-types.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 6226,
+      "sha256": "a564861e9ec198743fa8ccb317dc3508d54576c42fa7590a9ef28bab6f7ef1d7"
+    },
+    {
+      "key": "civil-sprint-essay-single-question",
+      "label": "申论单一题：问题类、影响类、原因类怎么找要点",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-essay-single-question.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 5759,
+      "sha256": "b3b67f32c8dbc79307e4a4cf46d719bd8e0a311614f50ade10eb3f9437853206"
+    },
+    {
+      "key": "civil-sprint-final-two-weeks",
+      "label": "国考最后两周：时间分配、答题顺序、模考复盘",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-final-two-weeks.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 4890,
+      "sha256": "21fc41199a4679729adedda67742b70f34a410ccd9d95837ab2eb407ad7e7284"
+    }
+  ],
+  "images": [
+    {
+      "path": "images/civil-sprint-figure-blackwhite-v1.png",
+      "bytes": 20046,
+      "sha256": "bd052fb018cbff531a14d36383909d96a5ffdea12b38ba33c7dca66c515364e8"
+    },
+    {
+      "path": "images/civil-sprint-figure-intersections-v1.png",
+      "bytes": 49439,
+      "sha256": "7a23ab427baa37dd73b9646daa4551b55a306f951877a5042d96f53782b17121"
+    },
+    {
+      "path": "images/civil-sprint-figure-position-v1.png",
+      "bytes": 32455,
+      "sha256": "01b0bb0161c710edab544c5938152b3bb8eced09a23c3f0659fcc6813914112d"
+    },
+    {
+      "path": "images/civil-sprint-figure-regions-v1.png",
+      "bytes": 52801,
+      "sha256": "5a43993daa7ed246e3498058044cb34e4e3a5bcc289c73ebe65275ffe8df1097"
+    },
+    {
+      "path": "images/civil-sprint-figure-stroke-v1.png",
+      "bytes": 21778,
+      "sha256": "3ae03d7970b1cfe8a4e054bae185ebb8b92caca8ea5debbc216a156373259563"
+    },
+    {
+      "path": "images/civil-sprint-figure-symmetry-v1.png",
+      "bytes": 44768,
+      "sha256": "40b6e78b111dd2f2ff9359c68b8560c78577fdfb1b577909d8b618aee44adcbd"
+    }
+  ],
+  "exemptions": [
+    {
+      "key": "civil-sprint-final-two-weeks",
+      "reason": "规划类文章，以考试安排、时间分配和复盘清单代替例题。"
+    }
+  ],
+  "notWritten": [
+    "常识判断（时政变化快，单独一批逐条核实）",
+    "言语理解片段阅读",
+    "数量关系",
+    "结构化面试",
+    "调剂"
+  ]
+}
