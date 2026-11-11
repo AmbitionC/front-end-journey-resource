@@ -268,14 +268,29 @@ export async function renderPdfBook(browser,root,approved,built) {
   }finally{await page.close();}
 }
 
-const OSS_TIMEOUT_MS = 10 * 60 * 1000;
+const OSS_TIMEOUT_MS = 5 * 60 * 1000;
+// 库内超时在 CI 上实测不可靠（#83 后一次 put 挂了 1 小时无任何报错），这里再加一道硬看门狗
+const ATTEMPT_TIMEOUT_MS = 6 * 60 * 1000;
 
-/** 私有上传并读回校验；网络类失败最多重试 3 次（同一 key、同一字节，幂等）。 */
-export async function uploadVerified(client, key, bytes, contentType, { attempts = 3, wait = (ms) => new Promise((r) => setTimeout(r, ms)) } = {}) {
+function withDeadline(promise, ms, label) {
+  let timer;
+  const deadline = new Promise((_, reject) => {
+    timer = setTimeout(() => reject(Object.assign(new Error(`${label} 超过 ${Math.round(ms / 1000)} 秒未完成`), { name: 'WatchdogTimeout' })), ms);
+  });
+  return Promise.race([promise, deadline]).finally(() => clearTimeout(timer));
+}
+
+/** 私有上传并读回校验；失败或超时最多重试 3 次（同一 key、同一字节，幂等）。 */
+export async function uploadVerified(client, key, bytes, contentType, { attempts = 3, attemptTimeoutMs = ATTEMPT_TIMEOUT_MS, wait = (ms) => new Promise((r) => setTimeout(r, ms)) } = {}) {
   for (let i = 1; ; i++) {
+    const started = Date.now();
     try {
-      await client.put(key, bytes, { headers: { 'Content-Type': contentType, 'x-oss-object-acl': 'private' } });
-      return await verifyUploadedMaterial(client, key, bytes);
+      const result = await withDeadline((async () => {
+        await client.put(key, bytes, { headers: { 'Content-Type': contentType, 'x-oss-object-acl': 'private' } });
+        return verifyUploadedMaterial(client, key, bytes);
+      })(), attemptTimeoutMs, `上传 ${key}`);
+      console.log(`[build-materials] 已上传 ${key}（${(bytes.length / 1024 / 1024).toFixed(2)}MB，${((Date.now() - started) / 1000).toFixed(1)} 秒）`);
+      return result;
     } catch (err) {
       if (i >= attempts) throw err;
       console.warn(`[build-materials] 上传 ${key} 第 ${i} 次失败（${describeError(err)}），重试`);
@@ -418,5 +433,6 @@ async function main() {
 }
 
 if (isDirectExecution(import.meta.url)) {
-  main().catch((err) => { console.error(`正式 PDF 生成/上传失败；审核、同 SHA 同步及图片条件必须全部满足。原因：${describeError(err)}`); process.exitCode=1; });
+  // 被看门狗放弃的请求可能还挂着 socket，显式退出，避免进程空等到 CI 上限
+  main().then(() => process.exit(0), (err) => { console.error(`正式 PDF 生成/上传失败；审核、同 SHA 同步及图片条件必须全部满足。原因：${describeError(err)}`); process.exit(1); });
 }
