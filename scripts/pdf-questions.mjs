@@ -133,9 +133,12 @@ export function latexToHtml(src) {
         const sym = SYMBOLS[name];
         const spaced = /^[×÷≈→¬≥≤≠±⇒↔⇔∈∉⊂⊆∧∨∪∩≺≻⋈]$/u.test(sym) && sym !== '¬';
         const word = /^(log|ln|max|min)$/u.test(name);
-        if (word && out && !/[\s(]$/u.test(out)) out += ' ';
+        // 函数名和求和号与前面的项隔开：1/n Σ、n log n
+        const lead = word || name === 'sum';
+        if (lead && /[\p{L}\p{N})>′']$/u.test(out)) out += ' ';
         out += spaced ? ` ${escHtml(sym)} ` : escHtml(sym);
-        if (word) out += ' ';
+        // log_2 n：下标紧贴函数名，空格留给下标之后（原文里自带）
+        if (word && src[i] !== '_' && src[i] !== '^') out += ' ';
       } else {
         throw new Error(`PDF 公式含未支持的命令 \\${name}`);
       }
