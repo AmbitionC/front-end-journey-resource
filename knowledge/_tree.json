@@ -1427,14 +1427,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 20,
+            "heat": 21,
             "currRank": 5,
             "updatedAt": "2026-08-29",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "确定性步骤用显式节点和依赖表达，不确定决策放入受控 Agent 节点。状态、失败出口、恢复和人工接管需共同设计，步骤多不意味着必须采用多智能体。"
             },
-            "interviewCount": 14,
+            "interviewCount": 15,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -2540,14 +2540,14 @@
             "isLeaf": true,
             "filePath": "backend/java",
             "contentStatus": "published",
-            "updatedAt": "2026-10-03",
+            "updatedAt": "2026-11-12",
             "quickRead": {
-              "text": "ThreadPoolExecutor 的核心数、最大数、队列和拒绝策略共同决定容量：核心数不足先建线程，否则优先排队，队列满才扩容。CallerRuns 在未关闭时让提交线程执行，并不是固定主线程；无界队列和核数加一都不能保证性能，需验证过载、等待与下游容量。"
+              "text": "ThreadPoolExecutor 的核心数、最大数、队列和拒绝策略共同决定容量：核心数不足先建线程，否则优先排队，队列满才扩容。拆分业务池仍需限制总资源并确认 RPC 回调的执行位置；动态改参数与替换池不同，shutdown 仅发起关闭，shutdownNow 仅尽力中断，须观察任务实际结束与终止状态。"
             },
             "interviewBaseHeat": 0,
-            "interviewCount": 7,
-            "heat": 7,
-            "currRank": 4,
+            "interviewCount": 8,
+            "heat": 8,
+            "currRank": 5,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -2620,9 +2620,9 @@
               "text": "先区分 JVM 运行时数据区与线程可见性的 Java 内存模型：程序计数器和栈服务线程执行，堆、方法区与常量池保存共享运行时数据。规范区域与 HotSpot 元空间、直接内存等实现资源不能简单画等号；内存故障应按资源区域和证据定位。"
             },
             "interviewBaseHeat": 0,
-            "interviewCount": 4,
-            "heat": 4,
-            "currRank": 3,
+            "interviewCount": 5,
+            "heat": 5,
+            "currRank": 4,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -2869,6 +2869,22 @@
             }
           },
           {
+            "label": "API 幂等键与重复请求处理",
+            "key": "api-idempotency",
+            "isLeaf": true,
+            "filePath": "backend/api",
+            "contentStatus": "published",
+            "heat": 9,
+            "currRank": 5,
+            "updatedAt": "2026-11-06",
+            "interviewBaseHeat": 1,
+            "quickRead": {
+              "text": "幂等键将同一逻辑请求的重试绑定到一次执行和可重放结果。服务端按租户与操作划定作用域，用原子账本取得执行权，并核对请求指纹；同键不同请求应冲突。外部副作用超时时先确认结果，不能删除记录后盲重试，保留期也限定重试保证。 释放执行锁不等于删除幂等结果，租约和结果保留期要分别设计。"
+            },
+            "interviewCount": 8,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
             "label": "文件上传、分片与对象存储",
             "key": "file-upload-service",
             "isLeaf": true,
@@ -2883,22 +2899,6 @@
             "quickRead": {
               "text": "大文件上传不应让应用服务器先完整接收再转发对象存储。更可扩展的方式是：应用创建受限上传会话和 PENDING 元数据，客户端使用短时预签名直接上传各 part，对象存储记录校验信息，客户端提交完成请求后，应用验证完整性与内容，最后才把文件标记 READY。"
             }
-          },
-          {
-            "label": "API 幂等键与重复请求处理",
-            "key": "api-idempotency",
-            "isLeaf": true,
-            "filePath": "backend/api",
-            "contentStatus": "published",
-            "heat": 8,
-            "currRank": 5,
-            "updatedAt": "2026-11-06",
-            "interviewBaseHeat": 1,
-            "quickRead": {
-              "text": "幂等键将同一逻辑请求的重试绑定到一次执行和可重放结果。服务端按租户与操作划定作用域，用原子账本取得执行权，并核对请求指纹；同键不同请求应冲突。外部副作用超时时先确认结果，不能删除记录后盲重试，保留期也限定重试保证。 释放执行锁不等于删除幂等结果，租约和结果保留期要分别设计。"
-            },
-            "interviewCount": 7,
-            "interviewCountBasis": "verified-public-posts"
           },
           {
             "label": "分页、过滤、排序与游标设计",
@@ -3031,14 +3031,14 @@
             "isLeaf": true,
             "filePath": "backend/database",
             "contentStatus": "published",
-            "heat": 30,
+            "heat": 31,
             "currRank": 5,
             "updatedAt": "2026-11-04",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "索引按键与页布局减少定位工作，是否更快须看扫描、回表、缓存和写维护。InnoDB普通有序索引以页式树组织，RocksDB的LSM把更新缓冲后生成SST并以compaction维护，二者在读取、写入、空间与后台成本间取舍。固定查询、持久性和负载后比较，不能只凭树名下性能结论。"
             },
-            "interviewCount": 29,
+            "interviewCount": 30,
             "interviewCountBasis": "verified-public-posts"
           },
           {

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
-  "updatedAt": "2026-11-11",
+  "updatedAt": "2026-11-12",
   "records": [
     {
       "key": "transformer-arch",
@@ -6202,21 +6202,31 @@
       "label": "Java线程池：容量、排队与拒绝",
       "filePath": "backend/java",
       "status": "pending",
-      "action": "audited",
-      "recordedAt": "2026-10-28",
-      "batch": "agentjourney-thirty-20261028",
-      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "action": "updated",
+      "recordedAt": "2026-11-12",
+      "batch": "daily-content-20261107-b01",
+      "reason": "Actual b01 update adds isolation, RPC execution, dynamic configuration and retirement boundaries; final binding, independent review and publication pending.",
       "previousRecord": {
         "key": "java-thread-pool",
         "label": "Java线程池：容量、排队与拒绝",
         "filePath": "backend/java",
-        "status": "published",
-        "action": "created",
-        "recordedAt": "2026-10-03",
-        "batch": "interview-content-local-20261003",
-        "publishedAt": "2026-10-05T09:27:13Z",
-        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-        "publishedBySyncRun": 37289136872
+        "status": "pending",
+        "action": "audited",
+        "recordedAt": "2026-10-28",
+        "batch": "agentjourney-thirty-20261028",
+        "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+        "previousRecord": {
+          "key": "java-thread-pool",
+          "label": "Java线程池：容量、排队与拒绝",
+          "filePath": "backend/java",
+          "status": "published",
+          "action": "created",
+          "recordedAt": "2026-10-03",
+          "batch": "interview-content-local-20261003",
+          "publishedAt": "2026-10-05T09:27:13Z",
+          "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+          "publishedBySyncRun": 37289136872
+        }
       }
     },
     {

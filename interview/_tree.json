@@ -1053,6 +1053,24 @@
             ],
             "updatedAt": "2026-11-06",
             "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "字节后端实习一面：Agent 取舍、线程池与索引",
+            "key": "bytedance-base-78",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "department": "其他",
+            "role": "后端开发实习",
+            "roleCategory": "后端工程",
+            "tags": [
+              "Agent",
+              "Java",
+              "线程池",
+              "幂等",
+              "MySQL"
+            ],
+            "updatedAt": "2026-11-12",
+            "contentFormat": "short-qa-v2"
           }
         ]
       },
