@@ -3165,7 +3165,7 @@
             "contentStatus": "published",
             "heat": 6,
             "currRank": 4,
-            "updatedAt": "2026-10-31",
+            "updatedAt": "2026-11-12",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "先按容量、访问模式和一致性目标实测，再比较索引、归档、副本与分片。普通InnoDB表分区不自动获得跨节点写能力；跨节点分片还要对象定位、迁移和跨片事务，固定行数与优化顺序不能替代容量证据。"

@@ -368,10 +368,6 @@ Redis Cluster 按 Key 的 hash slot 分片；一个热点桶 Key 仍由一个 sl
 - [美团 AI 全栈一面：索引、限流与分片边界](../../../interview/meituan/ai/meituan-ai-12.md)
 <!-- interview-source-history:end -->
 
-## 学习阅读（不计专题频次）
-
-- [阿里淘天 AI 应用研发一面：RAG、限流 Top-K 与优惠策略](../../../interview/alibaba/ai/alibaba-ai-5.md)（cluster-456378924c83）（本页原有延伸阅读；该来源本次逐题主绑定为其他专题，不计本专题频次。）
-
 ## 参考资料
 
 - [RFC 3290 附录 A：Token Buckets and Leaky Buckets](https://www.rfc-editor.org/rfc/rfc3290.html#appendix-A)

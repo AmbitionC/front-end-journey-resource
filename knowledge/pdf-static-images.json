@@ -3329,7 +3329,7 @@
       "id": "db-sharding:mermaid:125",
       "kind": "mermaid",
       "articlePath": "knowledge/backend/database/db-sharding.md",
-      "articleSha256": "ce8d8db23fa15ab0a34067abc148e7953dc9ccfb34bd9454df3ceafad6c4156b",
+      "articleSha256": "1a0d351309bcbe3a0907ecba110fb710a3bdda8e59bb11e2605ccebfb44be81d",
       "line": 125,
       "sourceText": "flowchart TD\n    Client[\"客户端 / API 层\"]\n    Router[\"分片路由中间件\\nSharding Router\"]\n    Cache[\"路由缓存\\nRedis / 本地缓存\"]\n    RoutingTable[(\"路由表 DB\\n目录分片模式\")]\n\n    subgraph ShardGroup[\"分片组\"]\n        S0[(\"shard_0\\nDB\")]\n        S1[(\"shard_1\\nDB\")]\n        S2[(\"shard_2\\nDB\")]\n        S3[(\"shard_3\\nDB\")]\n    end\n\n    subgraph ReadReplica[\"读副本\"]\n        R0[\"shard_0 Replica\"]\n        R1[\"shard_1 Replica\"]\n    end\n\n    Client -->|\"所有请求\"| Router\n    Router -->|\"查路由（目录模式）\"| Cache\n    Cache -->|\"缓存未命中\"| RoutingTable\n    Router -->|\"写请求 → 主库\"| S0\n    Router -->|\"写请求 → 主库\"| S1\n    Router -->|\"写请求 → 主库\"| S2\n    Router -->|\"写请求 → 主库\"| S3\n    S0 -->|\"主从复制 binlog\"| R0\n    S1 -->|\"主从复制 binlog\"| R1\n    Router -->|\"读请求 → 副本\"| R0\n    Router -->|\"读请求 → 副本\"| R1\n",
       "sourceSha256": "0e7382d31aee39a68effb78c6257a00d78040e2265a0c17a8dd8b926b4f29a48",
