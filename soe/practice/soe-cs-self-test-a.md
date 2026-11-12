@@ -1,6 +1,6 @@
 本卷按**高频考点**出题，共 30 道单项选择题，每题四个选项，只有一个最佳答案。目标是检验能否根据题设区分概念、完成基础计算，并沿对应文章补齐理解。题目不表示任何招聘考试的题量、分值或出题概率；A、B 两卷可以独立作答。
 
-计算以各题明确的位宽、算法和初始化条件为准。C 题采用 C11；Java 题涉及实现时单独指定 HotSpot 版本。第 26—30 题为金融科技与分布式常识；缺少现有专题的知识已在解析中完整说明，关联阅读会标清用途。
+计算以各题明确的位宽、算法和初始化条件为准。C 题采用 C11；Java 题涉及实现时单独指定 HotSpot 版本。第 26—30 题为金融科技与分布式常识，答题所需的知识都在解析里讲全，并附可继续阅读的资料。
 
 ## 考点分布
 
@@ -424,7 +424,7 @@ Java 21 中，`list = Arrays.asList(array)`，其中 `array` 是非空 `String[]
 
 **解析：** SAGA（Saga）由已提交的本地事务组成，失败时用业务补偿恢复可接受状态，例如退款是新的业务动作，并非抹去原支付事实；补偿也可能失败，需要重试、幂等和恢复记录。TCC 是 Try/Confirm/Cancel：Try 检查并预留资源，Confirm 确认，Cancel 释放预留。两者都不能仅凭名称保证所需隔离或对外原子性，必须设计并发和失败合同。
 
-**对应文章：** [分库分表：分布式事务的选择边界](../../knowledge/backend/database/db-sharding.md)与[持久工作流：补偿不是回滚时间](../../knowledge/llm/agent/agent-workflow-state.md)可补基础；Saga 与 TCC 的完整对比见[Seata Saga](https://seata.apache.org/docs/user/mode/saga/)与[Seata TCC](https://seata.apache.org/docs/user/mode/tcc/)。
+**对应文章：** [分库分表：分布式事务的选择边界](../../knowledge/backend/database/db-sharding.md)可补基础；Saga 与 TCC 的完整对比见[Seata Saga](https://seata.apache.org/docs/user/mode/saga/)与[Seata TCC](https://seata.apache.org/docs/user/mode/tcc/)。
 
 ### 高频考点题 A28：容器化与无状态应用
 
@@ -439,7 +439,7 @@ Java 21 中，`list = Arrays.asList(array)`，其中 `array` 是非空 `String[]
 
 **解析：** 无状态说的是某个服务实例不独占后续请求必须依赖的持久状态，不是整个系统没有状态。容器有可写层，容器化本身不提供状态复制或持久化。把必要状态外置，并正确处理并发、幂等和权限，才使副本更易替换；数据库、对象存储和卷仍可作为系统中的有状态部件。
 
-**对应文章：** [Agent 状态存储与恢复](../../knowledge/backend/storage/agent-state-storage.md)可复习状态外置；容器生命周期依据[Docker 存储](https://docs.docker.com/engine/storage/)，无状态副本示例见[Kubernetes Deployment 教程](https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/)。
+**对应文章：** 容器生命周期见[Docker 存储](https://docs.docker.com/engine/storage/)，无状态副本示例见[Kubernetes Deployment 教程](https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/)。
 
 ### 高频考点题 A29：联邦学习是否自动保护隐私
 
@@ -454,7 +454,7 @@ Java 21 中，`list = Arrays.asList(array)`，其中 `array` 是非空 `String[]
 
 **解析：** 经典联邦学习把训练计算移向分散的数据，协调方汇总更新形成新模型，减少集中收集原始样本的需要。但“传更新”不等于“更新不含可推断的信息”，服务器、其他参与方和最终模型的可见内容都影响风险。安全聚合可限制对单方更新的直接观察，差分隐私在明确参数与假设下约束信息泄露；它们各有适用范围，不能只靠“联邦”名称承诺绝对隐私。
 
-**对应文章：** [大模型训练全流程概览](../../knowledge/llm/basics/llm-training-overview.md)可补训练前提；联邦学习本身可读[联邦学习原始研究：分散数据上的模型平均](https://research.google/pubs/communication-efficient-learning-of-deep-networks-from-decentralized-data/)与[Google Research：联邦学习的隐私保证与验证](https://research.google/blog/toward-provably-private-learning-from-federated-data/)。
+**对应文章：** 联邦学习可读[联邦学习原始研究：分散数据上的模型平均](https://research.google/pubs/communication-efficient-learning-of-deep-networks-from-decentralized-data/)与[Google Research：联邦学习的隐私保证与验证](https://research.google/blog/toward-provably-private-learning-from-federated-data/)。
 
 ### 高频考点题 A30：通信距离要带上场景
 
@@ -488,7 +488,7 @@ Java 21 中，`list = Arrays.asList(array)`，其中 `array` 是非空 `String[]
 
 ## 参考资料
 
-各题“对应文章”链接用于复习；对现有文章尚未完整讲解的内容，本卷直接使用以下资料核对机制。
+各题“对应文章”链接用于复习；以下是解析中引用的外部资料，可用来核对机制。
 
 - [华盛顿大学课程：系统总线](https://courses.cs.washington.edu/courses/cse451/TLKCopy/basics/hw.html)
 - [PostgreSQL 18：分区表](https://www.postgresql.org/docs/18/ddl-partitioning.html)

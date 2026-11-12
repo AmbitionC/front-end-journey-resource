@@ -1,6 +1,6 @@
 本卷按**高频考点**出题，共 30 道四选一单项选择题，每题只有一个最佳答案。与 A 卷采用相同模块配额，通过新的情境检验边界条件、失败处理与计算过程；两卷均可独立使用，不代表任何招聘考试的试卷结构。
 
-计算仅采用题干给出的模型。C 题采用 C11，涉及字节数时显式规定类型大小；Java 题采用 Java 21 的语言或 API 合同。第 26—30 题为金融科技与分布式常识，现有文章不足以支撑的部分已在解析中补齐，并标明关联阅读的边界。
+计算仅采用题干给出的模型。C 题采用 C11，涉及字节数时显式规定类型大小；Java 题采用 Java 21 的语言或 API 合同。第 26—30 题为金融科技与分布式常识，答题所需的知识都在解析里讲全，并附可继续阅读的资料。
 
 ## 考点分布
 
@@ -424,7 +424,7 @@ UML 用例模型中，“提交申请”总要执行可复用的“核验必填�
 
 **解析：** Confirm/Cancel 的重试必须识别同一业务分支，已经确认或取消时不能重复产生业务效果。Cancel 先到形成空回滚，随后 Try 还要识别已取消状态，避免再次预留形成悬挂。SAGA 则以本地提交后的补偿处理失败，仍需幂等、可恢复记录与补偿失败处理。TCC 的 Try 预留与 SAGA 的先提交后补偿不同，都要设计完整的失败路径。
 
-**对应文章：** [分库分表：事务边界](../../knowledge/backend/database/db-sharding.md)与[持久工作流：幂等与补偿](../../knowledge/llm/agent/agent-workflow-state.md)只覆盖部分前提；本题 TCC 失败场景依据[Seata：幂等、空回滚与悬挂](https://seata.apache.org/blog/seata-tcc-fence/)，对比见[Seata Saga](https://seata.apache.org/docs/user/mode/saga/)。
+**对应文章：** [分库分表：事务边界](../../knowledge/backend/database/db-sharding.md)可补基础；TCC 的失败场景见[Seata：幂等、空回滚与悬挂](https://seata.apache.org/blog/seata-tcc-fence/)，对比见[Seata Saga](https://seata.apache.org/docs/user/mode/saga/)。
 
 ### 高频考点题 B28：同一容器重启与容器替换
 
@@ -439,7 +439,7 @@ UML 用例模型中，“提交申请”总要执行可复用的“核验必填�
 
 **解析：** 镜像层与容器自己的可写层要分开。停止、启动同一容器没有删除它的可写层；删除容器则结束该层的生命周期，同镜像新容器会得到自己的新可写层。卷或外部存储可把状态寿命与实例分离，但需要备份、权限和并发合同。无状态应用强调副本可替换，不是容器平台自动替业务作出的保证。
 
-**对应文章：** [Agent 状态存储与恢复](../../knowledge/backend/storage/agent-state-storage.md)补持久状态外置；生命周期依据[Docker 存储](https://docs.docker.com/engine/storage/)与[Docker：停止、启动与删除容器](https://docs.docker.com/learn/content/run-your-first-container/)。
+**对应文章：** 状态外置与容器生命周期见[Docker 存储](https://docs.docker.com/engine/storage/)与[Docker：停止、启动与删除容器](https://docs.docker.com/learn/content/run-your-first-container/)。
 
 ### 高频考点题 B29：联邦学习的数据异质性
 
@@ -454,7 +454,7 @@ UML 用例模型中，“提交申请”总要执行可复用的“核验必填�
 
 **解析：** 经典联邦设置允许数据留在参与方，通过本地计算与更新聚合协作；样本不均衡、非独立同分布和参与不稳定是需要处理的实际条件。FedAvg 一类方法可按样本量等约定聚合，但不存在仅凭“联邦”名称得到的统一准确率保证。安全聚合限制单方更新暴露，差分隐私约束相应信息泄露，都不替代数据质量、效果和公平性评估，也不提供无条件隐私保证。
 
-**对应文章：** [大模型训练全流程概览](../../knowledge/llm/basics/llm-training-overview.md)可补训练基础；联邦学习本身可读[联邦学习原始研究](https://research.google/pubs/communication-efficient-learning-of-deep-networks-from-decentralized-data/)及[Google Research：隐私与可验证保证](https://research.google/blog/toward-provably-private-learning-from-federated-data/)。
+**对应文章：** 联邦学习可读[联邦学习原始研究](https://research.google/pubs/communication-efficient-learning-of-deep-networks-from-decentralized-data/)及[Google Research：隐私与可验证保证](https://research.google/blog/toward-provably-private-learning-from-federated-data/)。
 
 ### 高频考点题 B30：选通信技术时同时看距离与拓扑
 
@@ -488,7 +488,7 @@ UML 用例模型中，“提交申请”总要执行可复用的“核验必填�
 
 ## 参考资料
 
-各题已列对应复习文章；以下资料用于核对扩展题与现有文章未完整解释的边界。
+各题已列对应复习文章；以下是解析中引用的外部资料，可用来核对机制。
 
 - [华盛顿大学课程：系统总线](https://courses.cs.washington.edu/courses/cse451/TLKCopy/basics/hw.html)
 - [PostgreSQL 18：多列索引](https://www.postgresql.org/docs/18/indexes-multicolumn.html)
