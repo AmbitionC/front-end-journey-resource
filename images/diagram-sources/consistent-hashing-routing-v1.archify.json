@@ -1,0 +1,116 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "一致性哈希：后继查找与归属",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "diagrams/consistent-hashing-routing-v1.html",
+    "legend": {
+      "entries": {
+        "backend": {
+          "label": "处理步骤"
+        }
+      }
+    }
+  },
+  "lanes": [
+    {
+      "id": "lane0",
+      "label": "输入与哈希"
+    },
+    {
+      "id": "lane1",
+      "label": "Token与后继"
+    },
+    {
+      "id": "lane2",
+      "label": "节点归属"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "n0",
+      "lane": "lane0",
+      "col": 0,
+      "type": "backend",
+      "label": "输入 Key",
+      "sublabel": "固定编码规则"
+    },
+    {
+      "id": "n1",
+      "lane": "lane0",
+      "col": 1,
+      "type": "backend",
+      "label": "计算哈希",
+      "sublabel": "映射固定空间"
+    },
+    {
+      "id": "n2",
+      "lane": "lane1",
+      "col": 1,
+      "type": "backend",
+      "label": "有序 Token",
+      "sublabel": "虚拟节点可多个"
+    },
+    {
+      "id": "n3",
+      "lane": "lane1",
+      "col": 2,
+      "type": "backend",
+      "label": "寻找后继",
+      "sublabel": "越过末尾则绕回"
+    },
+    {
+      "id": "n4",
+      "lane": "lane2",
+      "col": 2,
+      "type": "backend",
+      "label": "物理节点",
+      "sublabel": "复制与一致性另议"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "from": "n0",
+      "to": "n1",
+      "role": "main"
+    },
+    {
+      "id": "e1",
+      "from": "n1",
+      "to": "n2",
+      "role": "main"
+    },
+    {
+      "id": "e2",
+      "from": "n2",
+      "to": "n3",
+      "role": "main"
+    },
+    {
+      "id": "e3",
+      "from": "n3",
+      "to": "n4",
+      "role": "main"
+    }
+  ],
+  "mainPath": [
+    "n0",
+    "n1",
+    "n2",
+    "n3",
+    "n4"
+  ],
+  "cards": [
+    {
+      "dot": "slate",
+      "title": "阅读边界",
+      "items": [
+        "机制教学示意，不代表面试项目的真实实现。",
+        "箭头表示逻辑处理关系，不表示测量耗时。"
+      ]
+    }
+  ]
+}

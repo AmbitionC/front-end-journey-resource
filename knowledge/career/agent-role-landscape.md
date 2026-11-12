@@ -110,6 +110,7 @@ Infra 工程师关心的是：**Agent 在大规模生产环境下能不能跑起
 - [阿里淘天 Agent 算法一面：任务构造、轨迹与训练路线](../../interview/alibaba/ai/alibaba-ai-4.md)
 - [vivo Agent 秋招线下面：Harness 与工程诊断](../../interview/vivo/ai/vivo-ai-1.md)
 - [字节剪映 AI 前端一面：Agent 运行时、MCP 与性能](../../interview/bytedance/base/bytedance-base-30.md)
+- [美团业务后台综合面：本体建模、Agent 评测与一致性](../../interview/meituan/ai/meituan-ai-13.md)
 - [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../interview/bytedance/base/bytedance-base-42.md)
 <!-- interview-source-history:end -->
 

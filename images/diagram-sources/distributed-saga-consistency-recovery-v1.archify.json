@@ -1,0 +1,152 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Saga：按实际结果选择恢复路径",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "diagrams/distributed-saga-consistency-recovery-v1.html",
+    "legend": {
+      "entries": {
+        "backend": {
+          "label": "处理步骤"
+        }
+      }
+    }
+  },
+  "lanes": [
+    {
+      "id": "forward",
+      "label": "业务推进"
+    },
+    {
+      "id": "recovery",
+      "label": "恢复处理",
+      "variant": "exception"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "n0",
+      "lane": "forward",
+      "col": 0,
+      "type": "backend",
+      "label": "预留库存",
+      "sublabel": "本地事务提交"
+    },
+    {
+      "id": "n1",
+      "lane": "forward",
+      "col": 1,
+      "type": "backend",
+      "label": "支付操作",
+      "sublabel": "稳定操作 ID"
+    },
+    {
+      "id": "n2",
+      "lane": "forward",
+      "col": 2,
+      "type": "backend",
+      "label": "确认订单",
+      "sublabel": "仅确定成功"
+    },
+    {
+      "id": "n3",
+      "lane": "recovery",
+      "col": 1,
+      "type": "backend",
+      "label": "查询支付状态",
+      "sublabel": "超时不是失败"
+    },
+    {
+      "id": "n4",
+      "lane": "recovery",
+      "col": 2,
+      "type": "backend",
+      "label": "释放预留",
+      "sublabel": "仅确定失败"
+    },
+    {
+      "id": "n5",
+      "lane": "recovery",
+      "col": 3,
+      "type": "backend",
+      "label": "持久恢复任务",
+      "sublabel": "补偿失败保留"
+    },
+    {
+      "id": "n6",
+      "lane": "recovery",
+      "col": 0,
+      "type": "backend",
+      "label": "确认订单",
+      "sublabel": "核对成功后继续"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e01",
+      "from": "n0",
+      "to": "n1",
+      "label": "",
+      "role": "main"
+    },
+    {
+      "id": "e12",
+      "from": "n1",
+      "to": "n2",
+      "label": "确定成功",
+      "role": "main"
+    },
+    {
+      "id": "e13",
+      "from": "n1",
+      "to": "n3",
+      "label": "结果未知",
+      "role": "branch"
+    },
+    {
+      "id": "e14",
+      "from": "n1",
+      "to": "n4",
+      "label": "确定失败",
+      "role": "error"
+    },
+    {
+      "id": "e34",
+      "from": "n3",
+      "to": "n4",
+      "label": "确认失败",
+      "role": "branch"
+    },
+    {
+      "id": "e45",
+      "from": "n4",
+      "to": "n5",
+      "label": "补偿失败",
+      "role": "error"
+    },
+    {
+      "id": "verified-success",
+      "from": "n3",
+      "to": "n6",
+      "label": "确认成功",
+      "role": "branch"
+    }
+  ],
+  "mainPath": [
+    "n0",
+    "n1",
+    "n2"
+  ],
+  "cards": [
+    {
+      "dot": "slate",
+      "title": "阅读边界",
+      "items": [
+        "机制教学示意，不代表面试项目的真实实现。",
+        "箭头表示逻辑处理关系，不表示测量耗时。"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Quickselect：只继续含目标秩的区间",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "diagrams/algorithm-array-quickselect-rank-v1.html",
+    "legend": {
+      "entries": {
+        "backend": {
+          "label": "处理步骤"
+        }
+      }
+    }
+  },
+  "lanes": [
+    {
+      "id": "select",
+      "label": "选择过程"
+    },
+    {
+      "id": "shrink",
+      "label": "未命中时"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "input",
+      "lane": "select",
+      "col": 0,
+      "type": "backend",
+      "label": "目标秩与区间",
+      "sublabel": "先固定升降序合同"
+    },
+    {
+      "id": "partition",
+      "lane": "select",
+      "col": 1,
+      "type": "backend",
+      "label": "Partition",
+      "sublabel": "确定枢轴秩"
+    },
+    {
+      "id": "compare",
+      "lane": "select",
+      "col": 2,
+      "type": "backend",
+      "label": "比较目标与枢轴",
+      "sublabel": "左 / 右 / 命中"
+    },
+    {
+      "id": "result",
+      "lane": "select",
+      "col": 3,
+      "type": "backend",
+      "label": "返回目标值",
+      "sublabel": "秩相等时"
+    },
+    {
+      "id": "keep",
+      "lane": "shrink",
+      "col": 2,
+      "type": "backend",
+      "label": "只保留目标一侧",
+      "sublabel": "另一侧不再处理"
+    }
+  ],
+  "edges": [
+    {
+      "id": "start",
+      "from": "input",
+      "to": "partition"
+    },
+    {
+      "id": "rank",
+      "from": "partition",
+      "to": "compare"
+    },
+    {
+      "id": "equal",
+      "from": "compare",
+      "to": "result",
+      "label": "命中"
+    },
+    {
+      "id": "side",
+      "from": "compare",
+      "to": "keep",
+      "label": "未命中",
+      "role": "branch"
+    },
+    {
+      "id": "again",
+      "from": "keep",
+      "to": "partition",
+      "label": "新区间继续",
+      "role": "return"
+    }
+  ],
+  "mainPath": [
+    "input",
+    "partition",
+    "compare",
+    "result"
+  ],
+  "cards": [
+    {
+      "dot": "slate",
+      "title": "复杂度边界",
+      "items": [
+        "互异键随机模型，或正确处理重复键版本中期望线性；二路坏划分可退化平方。",
+        "示意通用选秩机制，不补缺失中位数题面。"
+      ]
+    }
+  ]
+}

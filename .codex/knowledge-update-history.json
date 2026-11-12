@@ -5512,56 +5512,65 @@
       "key": "algorithm-array",
       "label": "数组、字符串与双指针",
       "filePath": "data-structure/algorithm",
-      "status": "published",
-      "action": "updated",
-      "recordedAt": "2026-11-06",
-      "batch": "daily-content-20261106",
-      "reason": "Actual PR74 exact-SHA synchronization, formal PDF, database/body readback and production consumer acceptance completed.",
+      "action": "update",
+      "batch": "nowcoder-263d20b6-ddba-4c4c-8601-ae97167ad2b5",
+      "date": "2026-11-12",
+      "status": "pending",
       "previousRecord": {
         "key": "algorithm-array",
         "label": "数组、字符串与双指针",
         "filePath": "data-structure/algorithm",
-        "status": "pending",
+        "status": "published",
         "action": "updated",
-        "recordedAt": "2026-11-04",
-        "batch": "daily-content-20261104",
-        "reason": "Actual interview-question driven teaching additions or accuracy corrections; final release and synchronization pending.",
+        "recordedAt": "2026-11-06",
+        "batch": "daily-content-20261106",
+        "reason": "Actual PR74 exact-SHA synchronization, formal PDF, database/body readback and production consumer acceptance completed.",
         "previousRecord": {
           "key": "algorithm-array",
           "label": "数组、字符串与双指针",
           "filePath": "data-structure/algorithm",
           "status": "pending",
           "action": "updated",
-          "recordedAt": "2026-10-31",
-          "batch": "nowcoder-next-twenty-20261031",
-          "reason": "New interview knowledge processing; publication pending.",
+          "recordedAt": "2026-11-04",
+          "batch": "daily-content-20261104",
+          "reason": "Actual interview-question driven teaching additions or accuracy corrections; final release and synchronization pending.",
           "previousRecord": {
             "key": "algorithm-array",
             "label": "数组、字符串与双指针",
             "filePath": "data-structure/algorithm",
             "status": "pending",
             "action": "updated",
-            "recordedAt": "2026-10-29",
-            "batch": "agentjourney-next-thirty-20261029",
-            "reason": "Actual source-question processing; final independent review and online release are pending.",
+            "recordedAt": "2026-10-31",
+            "batch": "nowcoder-next-twenty-20261031",
+            "reason": "New interview knowledge processing; publication pending.",
             "previousRecord": {
               "key": "algorithm-array",
               "label": "数组、字符串与双指针",
               "filePath": "data-structure/algorithm",
-              "status": "published",
+              "status": "pending",
               "action": "updated",
-              "recordedAt": "2026-10-03",
-              "batch": "interview-content-local-20261003",
-              "publishedAt": "2026-10-05T09:27:13Z",
-              "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-              "publishedBySyncRun": 37289136872
+              "recordedAt": "2026-10-29",
+              "batch": "agentjourney-next-thirty-20261029",
+              "reason": "Actual source-question processing; final independent review and online release are pending.",
+              "previousRecord": {
+                "key": "algorithm-array",
+                "label": "数组、字符串与双指针",
+                "filePath": "data-structure/algorithm",
+                "status": "published",
+                "action": "updated",
+                "recordedAt": "2026-10-03",
+                "batch": "interview-content-local-20261003",
+                "publishedAt": "2026-10-05T09:27:13Z",
+                "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+                "publishedBySyncRun": 37289136872
+              }
             }
           }
-        }
-      },
-      "publishedByCommit": "2b0f25335fec61de41d99f1cae4e29bc498b3743",
-      "publishedByPr": 74,
-      "publishedAt": "2026-11-06T08:36:18.082Z"
+        },
+        "publishedByCommit": "2b0f25335fec61de41d99f1cae4e29bc498b3743",
+        "publishedByPr": 74,
+        "publishedAt": "2026-11-06T08:36:18.082Z"
+      }
     },
     {
       "key": "algorithm-hash",
@@ -6725,6 +6734,78 @@
       "status": "pending",
       "reason": "Claude 撰写（Codex 额度不足），按 release-review v3 提交独立审核。",
       "sourceVerification": "verified"
+    },
+    {
+      "key": "ddd-domain-modeling",
+      "label": "DDD：限界上下文、聚合与领域行为",
+      "filePath": "backend/framework",
+      "action": "create",
+      "batch": "nowcoder-263d20b6-ddba-4c4c-8601-ae97167ad2b5",
+      "date": "2026-11-12",
+      "status": "pending"
+    },
+    {
+      "key": "agent-ontology-modeling",
+      "label": "本体、Action 与 MCP：语义和执行合同",
+      "filePath": "llm/agent",
+      "action": "create",
+      "batch": "nowcoder-263d20b6-ddba-4c4c-8601-ae97167ad2b5",
+      "date": "2026-11-12",
+      "status": "pending"
+    },
+    {
+      "key": "java-dynamic-proxy",
+      "label": "Java 动态代理：JDK、CGLIB 与字节码",
+      "filePath": "backend/java",
+      "action": "create",
+      "batch": "nowcoder-263d20b6-ddba-4c4c-8601-ae97167ad2b5",
+      "date": "2026-11-12",
+      "status": "pending"
+    },
+    {
+      "key": "distributed-training-parallelism",
+      "label": "分布式训练：数据、张量与流水线并行",
+      "filePath": "llm/basics",
+      "action": "create",
+      "batch": "nowcoder-263d20b6-ddba-4c4c-8601-ae97167ad2b5",
+      "date": "2026-11-12",
+      "status": "pending"
+    },
+    {
+      "key": "consistent-hashing",
+      "label": "一致性哈希：环、虚拟节点与迁移边界",
+      "filePath": "backend/database",
+      "action": "create",
+      "batch": "nowcoder-263d20b6-ddba-4c4c-8601-ae97167ad2b5",
+      "date": "2026-11-12",
+      "status": "pending"
+    },
+    {
+      "key": "distributed-saga-consistency",
+      "label": "Saga：跨服务一致性、补偿与隔离边界",
+      "filePath": "backend/storage",
+      "action": "create",
+      "batch": "nowcoder-263d20b6-ddba-4c4c-8601-ae97167ad2b5",
+      "date": "2026-11-12",
+      "status": "pending"
+    },
+    {
+      "key": "control-data-plane",
+      "label": "控制平面与数据平面：配置、执行和故障边界",
+      "filePath": "backend/framework",
+      "action": "create",
+      "batch": "nowcoder-263d20b6-ddba-4c4c-8601-ae97167ad2b5",
+      "date": "2026-11-12",
+      "status": "pending"
+    },
+    {
+      "key": "bounded-data-processing",
+      "label": "批处理有界内存：分块、在途任务与并发",
+      "filePath": "data/processing",
+      "action": "create",
+      "batch": "nowcoder-263d20b6-ddba-4c4c-8601-ae97167ad2b5",
+      "date": "2026-11-12",
+      "status": "pending"
     }
   ],
   "deliveryEvidence": {
