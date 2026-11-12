@@ -132,6 +132,17 @@ console.log(quickSelect(arr, k)); // 5
 
 
 
+
+#### 4.1 Quickselect：只保留目标秩所在的一侧
+
+Partition 把枢轴放到它在当前区间的正确秩上；如果目标秩在左侧，只继续左侧，右侧同理，命中则返回。这与完整快排递归处理两侧不同：只要一个顺序统计量，通常不需要得到完整有序数组。常见快速排序在适当随机模型下平均 O(n log n)，连续极端划分最坏 O(n²)，不能把平均复杂度当任意输入保证。[Princeton 的选择算法说明](https://algs4.cs.princeton.edu/25applications/)给出这种缩小目标区间的方法。
+
+![划分当前区间后比较枢轴秩与目标秩，只保留含目标的一侧，命中则返回](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/algorithm-array-quickselect-rank-v1.png)
+
+在键互异等适当随机输入模型下，或采用正确处理重复键的随机化选择版本时，Quickselect 的期望时间为 O(n)；连续选到极端枢轴时，工作量可能是 n+(n−1)+…，最坏 O(n²)。上面的代码固定取末元素作枢轴，且把相等值送到同一侧，不能对任意输入承诺线性；有序或大量重复值都需检查退化。随机化或三向划分可缓解部分退化，但不自动给出所有情况下的最坏线性保证。最坏平方可由上述连续极端划分的工作量求和直接推出；这里不把随机条件下的平均结论当作每次运行的保证。
+
+求中位数前，先约定偶数长度返回较小中位数、较大中位数，还是两个中间值的均值。若需均值，要找两个目标秩并防止整数相加溢出；还能否原地改输入、整数值域、额外空间也要明确。数据已经能放入内存，并不自动说明可以再分配同样大小的副本。这里解释通用选秩方法，不复原缺失的原题合同。
+
 #### 5. 判断数组是否为子数组
 **问题**：判断一个数组是否为另一个数组的子数组。  
 **解法**：枚举起点，逐项比较候选片段。
@@ -557,6 +568,7 @@ console.log(constructIDPermutation(''));     // [0]
 - [拼多多服务器开发一面：模型网关、动态鉴权与 Tool 授权](../../../interview/pinduoduo/ai/pinduoduo-ai-4.md)
 - [字节全栈二、三面：幂等、索引与字符串匹配](../../../interview/bytedance/base/bytedance-base-32.md)
 - [腾讯云 CSIG 后台一面：Skill 边界与有序查找](../../../interview/tencent/ai/tencent-ai-23.md)
+- [阿里云后端与 Agent 二面：领域建模、训练并行与 Java 基础](../../../interview/alibaba/ai/alibaba-ai-28.md)
 - [百度后端一面：延迟诊断、工具恢复与滑动窗口](../../../interview/baidu/ai/baidu-ai-10.md)
 - [腾讯 CDG 金融科技二面：Agent 评估、协程与存储基础](../../../interview/tencent/ai/tencent-ai-29.md)
 - [蚂蚁机器学习实习一面：RAG 数据、幻觉与热点识别](../../../interview/antfin/ai/antfin-ai-15.md)

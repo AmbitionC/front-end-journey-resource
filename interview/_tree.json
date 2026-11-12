@@ -1822,6 +1822,19 @@
             ],
             "updatedAt": "2026-11-04",
             "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "阿里云后端与 Agent 二面：领域建模、训练并行与 Java 基础",
+            "key": "alibaba-ai-28",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "tags": [
+              "Agent",
+              "后端",
+              "领域建模"
+            ],
+            "contentFormat": "short-qa-v2",
+            "updatedAt": "2026-11-12"
           }
         ]
       },
@@ -3838,6 +3851,19 @@
             "department": "Keeta",
             "roleCategory": "Agent 与全栈工程",
             "role": "Agent开发（智能客服方向）"
+          },
+          {
+            "label": "美团业务后台综合面：本体建模、Agent 评测与一致性",
+            "key": "meituan-ai-13",
+            "isLeaf": true,
+            "filePath": "meituan/ai",
+            "tags": [
+              "Agent",
+              "后端",
+              "领域建模"
+            ],
+            "contentFormat": "short-qa-v2",
+            "updatedAt": "2026-11-12"
           }
         ]
       },

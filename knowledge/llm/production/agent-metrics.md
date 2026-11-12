@@ -97,6 +97,7 @@ cost_per_qualified_success = total_eligible_cost / qualified_success_count
 
 <!-- interview-source-history:start -->
 - [蚂蚁 AI 应用一面：响应延迟、幻觉与 AI Coding](../../../interview/antfin/ai/antfin-ai-12.md)
+- [美团业务后台综合面：本体建模、Agent 评测与一致性](../../../interview/meituan/ai/meituan-ai-13.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

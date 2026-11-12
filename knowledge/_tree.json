@@ -29,14 +29,14 @@
             "isLeaf": true,
             "filePath": "llm/basics",
             "contentStatus": "published",
-            "heat": 16,
+            "heat": 17,
             "currRank": 5,
             "updatedAt": "2026-08-23",
             "interviewBaseHeat": 11,
             "quickRead": {
               "text": "模型按 token 消费上下文并自回归生成，窗口限制影响可放入的指令、证据与历史。KV Cache 保存既有注意力计算的键值，增长会占显存；它不是长期业务记忆，也不证明模型输出事实正确。PD 分离将输入计算与逐步生成解耦，但 KV 交接、调度与回收有成本，Mooncake 等方案须按真实负载评测。"
             },
-            "interviewCount": 5,
+            "interviewCount": 6,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -45,14 +45,14 @@
             "isLeaf": true,
             "filePath": "llm/basics",
             "contentStatus": "published",
-            "heat": 16,
+            "heat": 17,
             "currRank": 5,
             "updatedAt": "2026-10-31",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "训练从数据治理、预训练走向 SFT、偏好优化、独立评估和上线监控。训练集更新参数，验证集辅助选择，测试集检查泛化；训练 loss 改善不能独自证明业务能力提升。欠拟合和过拟合需要结合未见数据、指标及泄漏排查，不能只凭模型大小或训练轮次判断。"
             },
-            "interviewCount": 10,
+            "interviewCount": 11,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -61,14 +61,14 @@
             "isLeaf": true,
             "filePath": "llm/basics",
             "contentStatus": "published",
-            "heat": 12,
+            "heat": 13,
             "currRank": 5,
             "updatedAt": "2026-07-14",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Transformer 用 Attention 聚合位置间的信息、FFN 变换每个位置，并以残差与归一化堆叠。Q、K 决定匹配权重，V 提供被聚合内容；长距离可见不等于可靠记忆，标准全量 Attention 仍有长度相关成本。"
             },
-            "interviewCount": 6,
+            "interviewCount": 7,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -295,6 +295,23 @@
             "heat": 2,
             "currRank": 2,
             "updatedAt": "2026-10-31"
+          },
+          {
+            "label": "分布式训练：数据、张量与流水线并行",
+            "key": "distributed-training-parallelism",
+            "isLeaf": true,
+            "filePath": "llm/basics",
+            "tags": [
+              "面试知识"
+            ],
+            "updatedAt": "2026-11-12",
+            "interviewBaseHeat": 0,
+            "quickRead": {
+              "text": "数据并行切样本并同步梯度，张量并行切层内算子，流水线并行切模型阶段；通信、显存与气泡共同决定组合方式。"
+            },
+            "interviewCount": 1,
+            "heat": 1,
+            "currRank": 1
           },
           {
             "label": "在线策略蒸馏（On-Policy Distillation）",
@@ -1438,6 +1455,22 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
+            "label": "Agent 工具契约、Schema 与错误语义",
+            "key": "agent-tool-design",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published",
+            "heat": 21,
+            "currRank": 5,
+            "updatedAt": "2026-11-04",
+            "interviewBaseHeat": 6,
+            "quickRead": {
+              "text": "工具以窄职责、参数与结果Schema、服务端授权、预算和副作用语义构成契约。模型提出调用后仍需独立校验，结构化错误和状态查询指导继续、重试或停止。"
+            },
+            "interviewCount": 15,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
             "label": "ReAct：推理与行动框架",
             "key": "agent-react",
             "isLeaf": true,
@@ -1451,22 +1484,6 @@
               "text": "ReAct 交替选择行动、执行工具与观察结果，直到满足终止条件。它与 React UI 库不同；模型决定动作后仍由宿主校验权限、预算和结果，循环不能无限继续。"
             },
             "interviewCount": 9,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "Agent 工具契约、Schema 与错误语义",
-            "key": "agent-tool-design",
-            "isLeaf": true,
-            "filePath": "llm/agent",
-            "contentStatus": "published",
-            "heat": 19,
-            "currRank": 5,
-            "updatedAt": "2026-11-04",
-            "interviewBaseHeat": 6,
-            "quickRead": {
-              "text": "工具以窄职责、参数与结果Schema、服务端授权、预算和副作用语义构成契约。模型提出调用后仍需独立校验，结构化错误和状态查询指导继续、重试或停止。"
-            },
-            "interviewCount": 13,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1876,6 +1893,23 @@
             "quickRead": {
               "text": "Agentic RL 不是给普通问答换一个新名字，而是把模型放进会持续变化的环境：模型要读取观察、选择动作、调用工具，再根据新观察继续决策。轨迹可能跨几十到几百步，最终奖励却只在任务结束时出现。"
             }
+          },
+          {
+            "label": "本体、Action 与 MCP：语义和执行合同",
+            "key": "agent-ontology-modeling",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "tags": [
+              "面试知识"
+            ],
+            "updatedAt": "2026-11-12",
+            "interviewBaseHeat": 0,
+            "quickRead": {
+              "text": "本体统一对象、关系与概念语义；Action约束业务操作，MCP提供能力发现和调用合同，三者不能互相替代授权。"
+            },
+            "interviewCount": 2,
+            "heat": 2,
+            "currRank": 2
           }
         ]
       },
@@ -1889,14 +1923,14 @@
             "isLeaf": true,
             "filePath": "llm/production",
             "contentStatus": "published",
-            "heat": 31,
+            "heat": 32,
             "currRank": 5,
             "updatedAt": "2026-10-28",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Agent 验收分开读取任务要求、执行轨迹和实际环境结果。确定条件用程序，开放质量用经校准的模型或人工判断；固定初始状态、版本和统计分母，不能只相信最终回复中的成功声明。"
             },
-            "interviewCount": 25,
+            "interviewCount": 26,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -2326,6 +2360,22 @@
             "interviewCount": 2
           },
           {
+            "label": "成功率、质量、延迟、成本与业务指标",
+            "key": "agent-metrics",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "published",
+            "heat": 8,
+            "currRank": 5,
+            "updatedAt": "2026-07-17",
+            "interviewBaseHeat": 6,
+            "interviewCount": 2,
+            "interviewCountBasis": "verified-public-posts",
+            "quickRead": {
+              "text": "先区分业务结果、任务质量、可靠性、延迟和成本，再定义分子分母、时间窗与切片。延迟要分首个可见输出、完成时间、模型、工具与排队，并看长尾；聚合指标用于发现问题，具体原因仍靠关联 Trace 和日志核实。"
+            }
+          },
+          {
             "label": "用户模拟器与环境模拟测试",
             "key": "agent-simulation",
             "isLeaf": true,
@@ -2372,22 +2422,6 @@
             "interviewBaseHeat": 6,
             "interviewCount": 1,
             "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "成功率、质量、延迟、成本与业务指标",
-            "key": "agent-metrics",
-            "isLeaf": true,
-            "filePath": "llm/production",
-            "contentStatus": "published",
-            "heat": 7,
-            "currRank": 4,
-            "updatedAt": "2026-07-17",
-            "interviewBaseHeat": 6,
-            "interviewCount": 1,
-            "interviewCountBasis": "verified-public-posts",
-            "quickRead": {
-              "text": "先区分业务结果、任务质量、可靠性、延迟和成本，再定义分子分母、时间窗与切片。延迟要分首个可见输出、完成时间、模型、工具与排队，并看长尾；聚合指标用于发现问题，具体原因仍靠关联 Trace 和日志核实。"
-            }
           },
           {
             "label": "不可抵赖审计日志与合规留痕",
@@ -2620,8 +2654,8 @@
               "text": "先区分 JVM 运行时数据区与线程可见性的 Java 内存模型：程序计数器和栈服务线程执行，堆、方法区与常量池保存共享运行时数据。规范区域与 HotSpot 元空间、直接内存等实现资源不能简单画等号；内存故障应按资源区域和证据定位。"
             },
             "interviewBaseHeat": 0,
-            "interviewCount": 5,
-            "heat": 5,
+            "interviewCount": 6,
+            "heat": 6,
             "currRank": 4,
             "interviewCountBasis": "verified-public-posts"
           },
@@ -2714,6 +2748,23 @@
             "heat": 2,
             "currRank": 2,
             "updatedAt": "2026-11-06"
+          },
+          {
+            "label": "DDD：限界上下文、聚合与领域行为",
+            "key": "ddd-domain-modeling",
+            "isLeaf": true,
+            "filePath": "backend/framework",
+            "tags": [
+              "面试知识"
+            ],
+            "updatedAt": "2026-11-12",
+            "interviewBaseHeat": 0,
+            "quickRead": {
+              "text": "从业务语言和不变量确定模型边界；实体依赖身份，值对象依赖值，聚合控制事务一致性，应用层编排用例。"
+            },
+            "interviewCount": 2,
+            "heat": 2,
+            "currRank": 2
           },
           {
             "label": "请求上下文与洋葱模型",
@@ -2829,6 +2880,40 @@
             "heat": 1,
             "currRank": 1,
             "interviewCountBasis": "verified-public-posts"
+          },
+          {
+            "label": "Java 动态代理：JDK、CGLIB 与字节码",
+            "key": "java-dynamic-proxy",
+            "isLeaf": true,
+            "filePath": "backend/java",
+            "tags": [
+              "面试知识"
+            ],
+            "updatedAt": "2026-11-12",
+            "interviewBaseHeat": 0,
+            "quickRead": {
+              "text": "JDK代理实现接口并转发给InvocationHandler；CGLIB生成子类并拦截可覆写方法，final和自调用边界决定增强是否生效。"
+            },
+            "interviewCount": 1,
+            "heat": 1,
+            "currRank": 1
+          },
+          {
+            "label": "控制平面与数据平面：配置、执行和故障边界",
+            "key": "control-data-plane",
+            "isLeaf": true,
+            "filePath": "backend/framework",
+            "tags": [
+              "面试知识"
+            ],
+            "updatedAt": "2026-11-12",
+            "interviewBaseHeat": 0,
+            "quickRead": {
+              "text": "控制平面决定策略和期望状态，数据平面承载实际请求；配置传播、版本、缓存与失联策略决定两者故障时的行为。"
+            },
+            "interviewCount": 1,
+            "heat": 1,
+            "currRank": 1
           }
         ]
       },
@@ -3058,6 +3143,22 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
+            "label": "Redis 分布式锁：租约、续期与故障边界",
+            "key": "redis-distributed-lock",
+            "isLeaf": true,
+            "filePath": "backend/database",
+            "contentStatus": "published",
+            "heat": 15,
+            "currRank": 5,
+            "updatedAt": "2026-10-28",
+            "interviewBaseHeat": 1,
+            "quickRead": {
+              "text": "Redis 租约锁用原子 NX、随机持有者 token 和过期时间，释放或续期原子核对身份。租约失效、暂停和故障切换可能破坏排他，重要写入需资源端版本或 fencing，watchdog 不自动消除风险。"
+            },
+            "interviewCount": 14,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
             "label": "Redis 数据结构与使用场景",
             "key": "redis-data-structure",
             "isLeaf": true,
@@ -3085,22 +3186,6 @@
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "事务定义提交与隔离边界。InnoDB 普通一致性读用 ReadView 与 undo 选择可见版本，锁定读与写语句另按当前数据和锁规则处理；锁范围取决于索引、条件与隔离级别。持久化、错误回滚和跨系统幂等都要说明具体配置与失败边界。"
-            },
-            "interviewCount": 13,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "Redis 分布式锁：租约、续期与故障边界",
-            "key": "redis-distributed-lock",
-            "isLeaf": true,
-            "filePath": "backend/database",
-            "contentStatus": "published",
-            "heat": 14,
-            "currRank": 5,
-            "updatedAt": "2026-10-28",
-            "interviewBaseHeat": 1,
-            "quickRead": {
-              "text": "Redis 租约锁用原子 NX、随机持有者 token 和过期时间，释放或续期原子核对身份。租约失效、暂停和故障切换可能破坏排他，重要写入需资源端版本或 fencing，watchdog 不自动消除风险。"
             },
             "interviewCount": 13,
             "interviewCountBasis": "verified-public-posts"
@@ -3214,6 +3299,40 @@
             "quickRead": {
               "text": "分布式 ID 先明确唯一范围和顺序合同：单节点递增、号段内递增、全局趋势有序与严格全局顺序各不相同。号段和序列缓存可能交错或留空洞，ID 大小不能直接证明业务提交先后；时钟、节点身份与故障恢复也须纳入设计。"
             }
+          },
+          {
+            "label": "一致性哈希：环、虚拟节点与迁移边界",
+            "key": "consistent-hashing",
+            "isLeaf": true,
+            "filePath": "backend/database",
+            "tags": [
+              "面试知识"
+            ],
+            "updatedAt": "2026-11-12",
+            "interviewBaseHeat": 0,
+            "quickRead": {
+              "text": "把Key与节点Token映射到同一环并寻找后继，节点变化只迁移受影响区间；虚拟节点分散负载，但不解决热点Key或一致性协议。"
+            },
+            "interviewCount": 1,
+            "heat": 1,
+            "currRank": 1
+          },
+          {
+            "label": "Saga：跨服务一致性、补偿与隔离边界",
+            "key": "distributed-saga-consistency",
+            "isLeaf": true,
+            "filePath": "backend/storage",
+            "tags": [
+              "面试知识"
+            ],
+            "updatedAt": "2026-11-12",
+            "interviewBaseHeat": 0,
+            "quickRead": {
+              "text": "Saga把跨服务流程拆成本地事务，用状态推进与补偿恢复业务一致；它不提供全局隔离，补偿失败、并发和不可逆动作必须单独治理。"
+            },
+            "interviewCount": 1,
+            "heat": 1,
+            "currRank": 1
           }
         ]
       },
@@ -3578,6 +3697,23 @@
             "heat": 1,
             "currRank": 1,
             "updatedAt": "2026-07-17"
+          },
+          {
+            "label": "批处理有界内存：分块、在途任务与并发",
+            "key": "bounded-data-processing",
+            "isLeaf": true,
+            "filePath": "data/processing",
+            "tags": [
+              "面试知识"
+            ],
+            "updatedAt": "2026-11-12",
+            "interviewBaseHeat": 0,
+            "quickRead": {
+              "text": "让读取、转换、队列和写出都受条数与字节预算约束；先测工作集与瓶颈，再增加并发，防止把全量加载换成无界排队。"
+            },
+            "interviewCount": 1,
+            "heat": 1,
+            "currRank": 1
           }
         ]
       },
@@ -3957,14 +4093,14 @@
             "isLeaf": true,
             "filePath": "cs/os",
             "contentStatus": "published",
-            "heat": 13,
+            "heat": 14,
             "currRank": 5,
             "updatedAt": "2026-11-04",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "进程承载地址空间与资源，内核线程是系统调度的执行流；协程由语言或运行时挂起与恢复。C++20提供promise、awaiter、状态与handle机制，I/O循环和公平调度由库或应用另行实现，不能把Go GMP当C++标准。任务过多先区分等待与就绪积压，并限制内存、队列和下游并发。"
             },
-            "interviewCount": 12,
+            "interviewCount": 13,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -4184,14 +4320,14 @@
             "isLeaf": true,
             "filePath": "data-structure/algorithm",
             "contentStatus": "published",
-            "heat": 13,
+            "heat": 14,
             "currRank": 5,
-            "updatedAt": "2026-11-06",
+            "updatedAt": "2026-11-12",
             "interviewBaseHeat": 1,
             "quickRead": {
-              "text": "数组算法先确认字符单位、排序、索引和输出合同，再用双指针、窗口或二分的不变量证明排除。vector/slice未说明语言时须澄清；C++20示例中vector管理存储，span借用范围且不会延长生命周期，重分配会使旧视图失效。复杂度之外还要检查所有权、变更和并发前提。"
+              "text": "用连续序列、双指针和窗口不变量解释常见数组问题；Quickselect只保留目标秩一侧，须区分随机平均与最坏退化，并先固定输入输出合同。"
             },
-            "interviewCount": 12,
+            "interviewCount": 13,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -4822,14 +4958,14 @@
             "isLeaf": true,
             "filePath": "career",
             "contentStatus": "published",
-            "heat": 17,
+            "heat": 18,
             "currRank": 5,
             "updatedAt": "2026-10-28",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Agent相关岗位覆盖应用、平台、评测、安全与研究工程，名称并不统一。按团队实际产出和工作任务判断方向，工程基础、状态工具与质量验证常有交集；岗位热度不能代替自身能力证据和团队要求。"
             },
-            "interviewCount": 11,
+            "interviewCount": 12,
             "interviewCountBasis": "verified-public-posts"
           },
           {
