@@ -2697,6 +2697,23 @@
             ],
             "updatedAt": "2026-10-31",
             "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "快手 AI 全栈一面：分布式锁、线程池与 AI 编码",
+            "key": "kuaishou-ai-20",
+            "isLeaf": true,
+            "filePath": "kuaishou/ai",
+            "department": "其他",
+            "roleCategory": "AI 与 Agent 工程",
+            "role": "AI 全栈研发",
+            "tags": [
+              "Redis",
+              "分布式锁",
+              "线程池",
+              "AI Coding"
+            ],
+            "contentFormat": "short-qa-v2",
+            "updatedAt": "2026-11-12"
           }
         ]
       }
