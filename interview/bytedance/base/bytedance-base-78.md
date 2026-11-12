@@ -69,4 +69,3 @@
 <details data-binding-status="pending_semantic_verification"><summary>（17）力扣 198：打家劫舍。</summary><p>关联知识点待核实。</p></details>
 
 <p>原帖明确给出题号与题名；完整约束和题解待补，暂不扩写未经核验的题干。</p>
-
