@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
-  "updatedAt": "2026-11-11",
+  "updatedAt": "2026-11-12",
   "records": [
     {
       "key": "transformer-arch",
@@ -4807,39 +4807,49 @@
       "key": "db-sharding",
       "label": "分库分表、读写分离与扩展",
       "filePath": "backend/database",
-      "status": "published",
+      "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-31",
-      "batch": "nowcoder-available-20261031",
-      "reason": "Source-bounded interview knowledge processing; resource PR publication pending.",
+      "recordedAt": "2026-11-12",
+      "batch": "daily-content-20261112-three-independent-runs",
+      "reason": "Bounded factual correction to shard-local AUTO_INCREMENT identity, workload-dependent UUID index locality and deployment-dependent range-service availability; current original question and final knowledge execution revalidated.",
       "previousRecord": {
         "key": "db-sharding",
         "label": "分库分表、读写分离与扩展",
         "filePath": "backend/database",
-        "status": "pending",
-        "action": "audited",
-        "recordedAt": "2026-10-28",
-        "batch": "historical-source-bindings-20261028",
-        "reason": "Actual bounded seven-source reconciliation; exact current independent review and publication remain pending.",
+        "status": "published",
+        "action": "updated",
+        "recordedAt": "2026-10-31",
+        "batch": "nowcoder-available-20261031",
+        "reason": "Source-bounded interview knowledge processing; resource PR publication pending.",
         "previousRecord": {
           "key": "db-sharding",
           "label": "分库分表、读写分离与扩展",
           "filePath": "backend/database",
           "status": "pending",
-          "action": "updated",
-          "recordedAt": "2026-07-18",
-          "batch": "complete-remaining-91-2026-07-18"
+          "action": "audited",
+          "recordedAt": "2026-10-28",
+          "batch": "historical-source-bindings-20261028",
+          "reason": "Actual bounded seven-source reconciliation; exact current independent review and publication remain pending.",
+          "previousRecord": {
+            "key": "db-sharding",
+            "label": "分库分表、读写分离与扩展",
+            "filePath": "backend/database",
+            "status": "pending",
+            "action": "updated",
+            "recordedAt": "2026-07-18",
+            "batch": "complete-remaining-91-2026-07-18"
+          },
+          "previousPublication": {
+            "status": "pending",
+            "batch": "interview-seven-coherent-local-20261020",
+            "recordedAt": "2026-10-20"
+          }
         },
-        "previousPublication": {
-          "status": "pending",
-          "batch": "interview-seven-coherent-local-20261020",
-          "recordedAt": "2026-10-20"
+        "publication": {
+          "commit": "1b4f0baf424d87f6016e4c203ca900c28ab56fab",
+          "pullRequest": 70,
+          "syncRunId": 41111246573
         }
-      },
-      "publication": {
-        "commit": "1b4f0baf424d87f6016e4c203ca900c28ab56fab",
-        "pullRequest": 70,
-        "syncRunId": 41111246573
       }
     },
     {
@@ -6202,21 +6212,31 @@
       "label": "Java线程池：容量、排队与拒绝",
       "filePath": "backend/java",
       "status": "pending",
-      "action": "audited",
-      "recordedAt": "2026-10-28",
-      "batch": "agentjourney-thirty-20261028",
-      "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+      "action": "updated",
+      "recordedAt": "2026-11-12",
+      "batch": "daily-content-20261107-b01",
+      "reason": "Actual b01 update adds isolation, RPC execution, dynamic configuration and retirement boundaries; final binding, independent review and publication pending.",
       "previousRecord": {
         "key": "java-thread-pool",
         "label": "Java线程池：容量、排队与拒绝",
         "filePath": "backend/java",
-        "status": "published",
-        "action": "created",
-        "recordedAt": "2026-10-03",
-        "batch": "interview-content-local-20261003",
-        "publishedAt": "2026-10-05T09:27:13Z",
-        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-        "publishedBySyncRun": 37289136872
+        "status": "pending",
+        "action": "audited",
+        "recordedAt": "2026-10-28",
+        "batch": "agentjourney-thirty-20261028",
+        "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+        "previousRecord": {
+          "key": "java-thread-pool",
+          "label": "Java线程池：容量、排队与拒绝",
+          "filePath": "backend/java",
+          "status": "published",
+          "action": "created",
+          "recordedAt": "2026-10-03",
+          "batch": "interview-content-local-20261003",
+          "publishedAt": "2026-10-05T09:27:13Z",
+          "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+          "publishedBySyncRun": 37289136872
+        }
       }
     },
     {

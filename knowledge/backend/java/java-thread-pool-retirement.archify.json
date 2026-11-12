@@ -1,0 +1,98 @@
+{
+  "schema_version": 3,
+  "diagram_type": "lifecycle",
+  "meta": {
+    "title": "线程池：关闭请求与终止确认",
+    "output": "java-thread-pool-retirement.html",
+    "locale": "zh-CN",
+    "quality_profile": "showcase"
+  },
+  "mainPath": [
+    "accepting",
+    "draining",
+    "terminated"
+  ],
+  "states": [
+    {
+      "id": "accepting",
+      "type": "start",
+      "label": "正常运行"
+    },
+    {
+      "id": "draining",
+      "type": "active",
+      "label": "拒新、处理旧任务"
+    },
+    {
+      "id": "terminated",
+      "type": "success",
+      "label": "确认已终止"
+    },
+    {
+      "id": "interrupting",
+      "type": "active",
+      "label": "尽力停止"
+    }
+  ],
+  "transitions": [
+    {
+      "id": "shutdown",
+      "from": "accepting",
+      "to": "draining",
+      "label": "shutdown()"
+    },
+    {
+      "id": "drained",
+      "from": "draining",
+      "to": "terminated",
+      "label": "任务全部结束"
+    },
+    {
+      "id": "stop-direct",
+      "from": "accepting",
+      "to": "interrupting",
+      "label": "shutdownNow()"
+    },
+    {
+      "id": "escalate",
+      "from": "draining",
+      "to": "interrupting",
+      "label": "shutdownNow()"
+    },
+    {
+      "id": "stopped",
+      "from": "interrupting",
+      "to": "terminated",
+      "label": "任务实际结束"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "JDK 21 契约",
+      "items": [
+        "shutdown 不等待任务执行完毕",
+        "等待超时只返回 false，不改变关闭方式",
+        "等待也可能被中断并抛出异常"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "业务负责交接",
+      "items": [
+        "先定义新旧池切换与并发提交的边界",
+        "shutdownNow 返回尚未开始的任务",
+        "是否重投需检查原任务效果与幂等约束"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "图示边界",
+      "items": [
+        "这是 API 可观察行为的教学简图",
+        "不是内部 runState 的完整状态图",
+        "移除旧池引用不代表线程立即释放"
+      ]
+    }
+  ]
+}

@@ -299,14 +299,18 @@ try {
 
 ## 分布式 ID：Snowflake 算法
 
-分表后各表的 `AUTO_INCREMENT` 独立计数，会产生跨表 ID 冲突，必须使用全局唯一 ID 方案。
+各分片表用 `AUTO_INCREMENT` 主键本地发号时，唯一性约束作用于本表，不会自动协调其他分片；不同分片可能出现相同的本地 ID。只有业务要求跨片识别同一个全局对象时，才需规划全局标识，例如统一发号，或使用能唯一定位对象的 `(shard_id, local_id)` 复合身份，并明确迁移后如何保持身份稳定。[Microsoft Sharding 指南](https://learn.microsoft.com/en-us/azure/architecture/patterns/sharding)指出自增字段可能跨片重复，并介绍分片定位与片内行标识的两部分键；复合身份是据此可采用的设计选择，不代表每种分片都必须新增发号服务。
 
 | 方案 | 原理 | 优点 | 缺点 |
 |------|------|------|------|
-| UUID v4 | 随机 128 bit | 无需中心节点 | 无序，B+ 树写入碎片化，索引性能差 |
+| UUID v4 | 128 bit 标识，随机字段生成 | 无需中心发号节点 | 作为 InnoDB 聚簇主键时，随机插入可能增加页分裂与缓存、I/O 成本，需按存储与负载评估 |
 | 雪花算法（Snowflake） | 时间戳 + 机器 ID + 序列号 | 趋势递增，高性能，可反解时间 | 依赖时钟，时钟回拨风险 |
-| 数据库号段模式 | 批量预分配 ID 段 | 简单可靠，无时钟依赖 | 服务重启浪费号段；号段服务单点 |
+| 数据库号段模式 | 批量预分配互不重叠的 ID 段 | 减少取号时访问数据库的频率，无需用时间戳发号 | 重启可能丢弃未用号段；可用性取决于服务与分配存储的部署、故障恢复及号段缓存 |
 | Redis INCR | 原子自增 | 极简 | 依赖 Redis 可用性；持久化风险 |
+
+随机键的成本有具体前提：[Percona 的 InnoDB 原理分析与实验](https://www.percona.com/blog/uuids-are-popular-but-bad-for-performance-lets-discuss/)说明，聚簇索引按主键组织行，随机插入可能分散页访问、触发页分裂；数据超出 buffer pool 后，I/O 成本可能更明显。实际影响还取决于键的存储宽度、缓存、存储设备与读写负载，不能把 UUID v4 概括为在所有索引与业务中“性能差”。
+
+号段方案也不固有地是单点。[美团 Leaf 原始设计](https://tech.meituan.com/2017/04/21/mt-leaf.html)给出多台服务各持不同号段、双 buffer 预取，以及数据库高可用部署的例子；同时指出数据库故障与切换时的数据一致性风险。缓存只能在剩余号段可用期间缓冲故障，不能替代分配存储的恢复与防重号验证。
 
 **Snowflake 64-bit 结构：**
 
@@ -453,3 +457,6 @@ class SnowflakeIdGen {
 - [Read Preference — MongoDB Manual](https://www.mongodb.com/docs/manual/core/read-preference/)
 - [Production Considerations (Sharded Clusters) — MongoDB Manual](https://www.mongodb.com/docs/manual/core/transactions-sharded-clusters/index.html)
 - [MySQL 8.4：Partitioning Overview](https://dev.mysql.com/doc/refman/8.4/en/partitioning-overview.html)（普通 InnoDB 与 NDB 机制分开；2026-10-20 北京时间核验）
+- [Sharding pattern — Microsoft Azure Architecture Center](https://learn.microsoft.com/en-us/azure/architecture/patterns/sharding)
+- [UUIDs are Popular, but Bad for Performance — Percona 原理分析与实验](https://www.percona.com/blog/uuids-are-popular-but-bad-for-performance-lets-discuss/)
+- [Leaf：美团分布式 ID 生成服务原始设计](https://tech.meituan.com/2017/04/21/mt-leaf.html)
