@@ -166,6 +166,42 @@
         }
       },
       {
+        "label": "常识判断：法律必背数字与易错规则",
+        "key": "civil-sprint-common-law",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-12",
+        "quickRead": {
+          "text": "民事行为能力年龄、诉讼时效、法定婚龄、宪法日期一张表，再讲清遗嘱以最后为准、解释宪法归谁，配五道练习题。"
+        }
+      },
+      {
+        "label": "常识判断：光学与物态变化",
+        "key": "civil-sprint-common-science",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-12",
+        "quickRead": {
+          "text": "影子、倒影、折射、彩虹各对应什么原理，六种物态变化的方向和吸放热，配五道练习题。"
+        }
+      },
+      {
+        "label": "常识判断：地球运动、二十四节气与季风",
+        "key": "civil-sprint-common-geography",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-12",
+        "quickRead": {
+          "text": "自转和公转各自带来的现象，节气顺序口诀，北京时间的含义，我国季风气候特点，配五道练习题。"
+        }
+      },
+      {
         "label": "申论五类小题答题框架",
         "key": "civil-sprint-essay-five-types",
         "isLeaf": true,
