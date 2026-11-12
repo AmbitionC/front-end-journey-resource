@@ -337,14 +337,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 20,
+            "heat": 21,
             "currRank": 5,
             "updatedAt": "2026-10-14",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "上下文工程决定模型此刻能看到哪些指令、工具、历史、记忆和检索证据。按任务与预算选择内容，保留来源与权限，压缩后做回归；提供更多文本并不自动让回答更可靠。"
             },
-            "interviewCount": 14,
+            "interviewCount": 15,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1283,14 +1283,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 58,
+            "heat": 59,
             "currRank": 5,
             "updatedAt": "2026-11-04",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Coding Agent 围绕仓库事实完成检索、补丁和验证闭环；编辑器补全则可从光标前后文与相关代码生成候选，并处理取消和文档版本变化。两者都需用任务、静态检查、测试与人工审查检验正确性，采纳率或生成代码量不能代替交付质量。"
             },
-            "interviewCount": 52,
+            "interviewCount": 53,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -2545,8 +2545,8 @@
               "text": "ThreadPoolExecutor 的核心数、最大数、队列和拒绝策略共同决定容量：核心数不足先建线程，否则优先排队，队列满才扩容。拆分业务池仍需限制总资源并确认 RPC 回调的执行位置；动态改参数与替换池不同，shutdown 仅发起关闭，shutdownNow 仅尽力中断，须观察任务实际结束与终止状态。"
             },
             "interviewBaseHeat": 0,
-            "interviewCount": 8,
-            "heat": 8,
+            "interviewCount": 9,
+            "heat": 9,
             "currRank": 5,
             "interviewCountBasis": "verified-public-posts"
           },
@@ -2635,9 +2635,9 @@
               "text": "ThreadLocal 隔离每线程的变量绑定，不复制对象。OpenJDK 21 在线程持有的 Map 中用弱 key、强 value 保存值；线程池任务必须在 finally 清理，异步切线程需显式传播必要上下文，共享可变对象仍要同步。"
             },
             "interviewBaseHeat": 0,
-            "interviewCount": 4,
-            "heat": 4,
-            "currRank": 3,
+            "interviewCount": 5,
+            "heat": 5,
+            "currRank": 4,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -2842,14 +2842,14 @@
             "isLeaf": true,
             "filePath": "backend/api",
             "contentStatus": "published",
-            "heat": 20,
+            "heat": 21,
             "currRank": 5,
             "updatedAt": "2026-11-06",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "异步 Job 把持久业务状态、消息通知和 Worker 执行分开：发布确认与路由结果、持久与复制策略、提交后 ACK 各保护一段责任。断连和重投仍要求幂等、恢复与对账，队列缓冲、消费确认或持久化都不自动提供端到端恰好一次。"
             },
-            "interviewCount": 19,
+            "interviewCount": 20,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -3095,14 +3095,14 @@
             "isLeaf": true,
             "filePath": "backend/database",
             "contentStatus": "published",
-            "heat": 13,
+            "heat": 14,
             "currRank": 5,
             "updatedAt": "2026-10-28",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "Redis 租约锁用原子 NX、随机持有者 token 和过期时间，释放或续期原子核对身份。租约失效、暂停和故障切换可能破坏排他，重要写入需资源端版本或 fencing，watchdog 不自动消除风险。"
             },
-            "interviewCount": 12,
+            "interviewCount": 13,
             "interviewCountBasis": "verified-public-posts"
           },
           {

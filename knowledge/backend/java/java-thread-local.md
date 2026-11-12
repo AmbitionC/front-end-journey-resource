@@ -46,6 +46,7 @@ void handle(String id) {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [快手 AI 全栈一面：分布式锁、线程池与 AI 编码](../../../interview/kuaishou/ai/kuaishou-ai-20.md)
 - [商盟支付 Java 开发实习一面：交易去重、并发与消息](../../../interview/shangmeng/ai/shangmeng-ai-1.md)
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
 - [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
