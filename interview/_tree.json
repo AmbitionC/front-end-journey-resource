@@ -1834,7 +1834,8 @@
               "领域建模"
             ],
             "contentFormat": "short-qa-v2",
-            "updatedAt": "2026-11-12"
+            "updatedAt": "2026-11-12",
+            "department": "阿里云"
           }
         ]
       },
@@ -3851,19 +3852,6 @@
             "department": "Keeta",
             "roleCategory": "Agent 与全栈工程",
             "role": "Agent开发（智能客服方向）"
-          },
-          {
-            "label": "美团业务后台综合面：本体建模、Agent 评测与一致性",
-            "key": "meituan-ai-13",
-            "isLeaf": true,
-            "filePath": "meituan/ai",
-            "tags": [
-              "Agent",
-              "后端",
-              "领域建模"
-            ],
-            "contentFormat": "short-qa-v2",
-            "updatedAt": "2026-11-12"
           }
         ]
       },
@@ -3994,6 +3982,20 @@
             "role": "AI 全栈（标题自述）",
             "roleCategory": "AI 与 Agent 工程",
             "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "美团业务后台综合面：本体建模、Agent 评测与一致性",
+            "key": "meituan-ai-13",
+            "isLeaf": true,
+            "filePath": "meituan/ai",
+            "tags": [
+              "Agent",
+              "后端",
+              "领域建模"
+            ],
+            "contentFormat": "short-qa-v2",
+            "updatedAt": "2026-11-12",
+            "department": "其他"
           }
         ]
       },
