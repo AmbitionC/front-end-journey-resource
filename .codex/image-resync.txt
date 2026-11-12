@@ -32,4 +32,3 @@ images/rag-evaluation-diagnostic-loop-v2.png
 images/agent-architecture-peas-loop-v2.png
 images/agent-first-demo-loop-v2.png
 images/agent-history-timeline-v2.png
-images/java-thread-pool-retirement-v2.png
