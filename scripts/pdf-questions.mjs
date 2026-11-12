@@ -1,9 +1,9 @@
-// 会员 PDF 的两个文本变换，只用于 soe / civil 这类带「原创模拟题」的模块：
+// 会员 PDF 的两个文本变换，只用于 soe / civil 这类带练习题（「高频考点题」，旧写法「原创模拟题」）的模块：
 // 1) splitQuestionAnswers：把每道题的答案与解析从题目后面挪走，题目册里只留题干和选项；
 // 2) renderPdfMath：PDF 渲染时页面禁用脚本，$…$ 公式不能交给 KaTeX，这里转成可读的静态文本。
 // 两者都只做确定的、可逆读的变换；认不出来的内容原样保留，绝不丢字。
 
-const QUESTION_HEADING = /^(#{2,4})\s+原创模拟题\s*([A-Za-z]{0,2}\d+)?\s*[：:]\s*(.+?)\s*$/u;
+const QUESTION_HEADING = /^(#{2,4})\s+(原创模拟题|高频考点题)\s*([A-Za-z]{0,2}\d+)?\s*[：:]\s*(.+?)\s*$/u;
 const ANY_HEADING = /^(#{1,6})\s+(.+?)\s*$/u;
 const ANSWER_START = /^\*\*(?:答案[：:]\s*[A-H]\s*。?|答案与解析[：:]|参考答案[：:]|参考解答[：:])\*\*/u;
 const ANSWER_KEY_TITLE = /^答案速查/u;
@@ -56,7 +56,7 @@ export function splitQuestionAnswers(markdown, { hint = '答案与解析见文�
       body.push(...lines.slice(i, a));
       while (body.length && body[body.length - 1].trim() === '') body.pop();
       body.push('', `*${hint}*`, '');
-      answers.push({ title: `原创模拟题${q[2] ? ` ${q[2]}` : ''}：${q[3]}`, text: lines.slice(a, end).join('\n').trim() });
+      answers.push({ title: `${q[2]}${q[3] ? ` ${q[3]}` : ''}：${q[4]}`, text: lines.slice(a, end).join('\n').trim() });
     }
     i = end;
   }

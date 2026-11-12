@@ -1,4 +1,4 @@
-信息安全选择题先问“要保护什么”，再问“攻击跨过了哪个边界”。加密、身份鉴别和访问控制解决的问题不同，任何一个控制都不能自动替代其他控制。本篇用边界对照和 **7 道原创模拟题，均为单选**，练习从题干选择与风险对应的措施，不代表真实考试原题或出题统计。
+信息安全选择题先问“要保护什么”，再问“攻击跨过了哪个边界”。加密、身份鉴别和访问控制解决的问题不同，任何一个控制都不能自动替代其他控制。本篇用边界对照和 **7 道高频考点题，均为单选**，练习从题干选择与风险对应的措施，不代表真实考试原题或出题统计。
 
 ## 先把安全目标与技术措施分开
 
@@ -12,7 +12,7 @@
 
 一场攻击可能同时影响多个目标。题目问“直接体现”时按已给出的事实判断，不能自行补出“攻击者一定还窃取了数据”。
 
-### 原创模拟题 1：三个现象分别破坏什么
+### 高频考点题 1：三个现象分别破坏什么
 
 某业务系统发生三个独立事件：①未授权人员读取客户地址；②攻击者把订单金额从 80 改为 800；③大量恶意请求耗尽处理容量，正常用户无法查询。依次直接对应哪组目标？
 
@@ -34,7 +34,7 @@
 
 加密模式与密钥职责可核对 [OWASP Cryptographic Storage](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html)和 [Key Management](https://cheatsheetseries.owasp.org/cheatsheets/Key_Management_Cheat_Sheet.html)。哈希的抗原像、抗第二原像与抗碰撞要求见 [NIST 密码学哈希定义](https://csrc.nist.gov/glossary/term/cryptographic_hash_function)；签名提供来源真实性、完整性及抗抵赖支持，其效果依赖实现、密钥和配套制度，不能写成无条件保证。[NIST 数字签名定义](https://csrc.nist.gov/glossary/term/digital_signature)
 
-### 原创模拟题 2：验签成功是否意味着文件保密
+### 高频考点题 2：验签成功是否意味着文件保密
 
 系统需要让接收方确认一份通知来自指定发布者，且内容未被替换。攻击者能够替换下载渠道中的文件和公开摘要。下列说法最准确的是哪项？
 
@@ -56,7 +56,7 @@
 
 常见 RBAC 按角色关联权限，ABAC 则按主体、资源、动作和环境等属性评估策略。无论模型叫什么，仍要落实最小权限、默认拒绝和每次请求的权限检查；仅隐藏界面按钮不能阻止用户直接调用接口。[OWASP Authorization：权限检查与控制模型](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html#validate-the-permissions-on-every-request)
 
-### 原创模拟题 3：登录通过之后缺了哪一道检查
+### 高频考点题 3：登录通过之后缺了哪一道检查
 
 系统规则是“员工只能读取自己所属租户内、且分配给自己的报表”。员工甲已通过登录，尝试请求员工乙的报表，并把请求中的 `ownerId` 改成甲。哪项处理正确？
 
@@ -79,7 +79,7 @@ XSS、CSRF 的机制可先复习已有的 [XSS、CSRF、CSP 与 Web 安全基础
 
 三个解释器/请求边界的依据分别是 [OWASP SQL 注入防御](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html)、[XSS 防御](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html)和 [CSRF 防御](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html)。参数化不替代业务授权，CSP 不替代正确输出处理，CSRF 校验也不授予原本没有的资源权限。
 
-### 原创模拟题 4：占位符能否代替任意 SQL 片段
+### 高频考点题 4：占位符能否代替任意 SQL 片段
 
 一个订单接口允许按 `amount` 或 `created_at` 排序，还接收客户编号。开发者希望保留以下查询结构，但不能信任客户端传来的排序字符串：
 
@@ -98,7 +98,7 @@ ORDER BY <column> <direction>
 
 **答案：A。** 绑定值与选择 SQL 标识符是不同工作。A 让外部数据不能自行改变查询结构；服务端允许映射应产生应用自有的 SQL 片段。B 的前端校验可被绕过，且并未分离代码与数据；C 的占位符不等于标识符替换机制；D 忽略 ORM 的原始查询或查询语言同样可能因拼接而注入。即便查询没有注入，接口仍须确认调用方可以读取相应客户的订单。
 
-### 原创模拟题 5：只需要显示昵称，应该用什么输出方式
+### 高频考点题 5：只需要显示昵称，应该用什么输出方式
 
 页面只需把昵称当普通文本显示，当前实现为：
 
@@ -115,7 +115,7 @@ preview.innerHTML = nickname;
 
 **答案：B。** 需求是纯文本，`textContent` 使这处内容按文本呈现。`HttpOnly` 限制脚本读取对应 Cookie，不阻止其他恶意脚本行为；SQL 参数化保护的是数据库解释边界。CSP 有助于限制执行，但不能替代安全输出。若需求变成富文本，就要重新设计允许的 HTML、属性和 URL 清洗规则，不能简单沿用本题的“按文本显示”来满足富文本需求。
 
-### 原创模拟题 6：读不到响应，为什么仍可能 CSRF
+### 高频考点题 6：读不到响应，为什么仍可能 CSRF
 
 某修改收款地址接口依赖会话 Cookie。题设浏览器在跨站请求中实际携带了该 Cookie；它使用 `SameSite=None; Secure; HttpOnly`。恶意页面能发出服务器接受的跨站表单请求，虽然读不到响应，收款地址仍被修改。下列判断正确的是哪项？
 
@@ -132,7 +132,7 @@ preview.innerHTML = nickname;
 
 密码验证通常需要判断输入是否匹配，无需恢复用户的原始密码。应使用适合密码的自适应哈希方案，为每份密码生成独立随机 salt，并保存验证所需的算法、参数、salt 与结果。工作因子要结合当前指南和部署容量评估。单次快速通用哈希即使加盐，也不能替代密码专用的成本设计。[OWASP Password Storage](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)
 
-### 原创模拟题 7：数据库泄露后，salt 提供什么保护
+### 高频考点题 7：数据库泄露后，salt 提供什么保护
 
 系统只需验证密码，不需要取回明文。哪种设计最合理？
 

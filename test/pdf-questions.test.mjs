@@ -118,3 +118,9 @@ test('inline：与原来一致，不拆答案', () => {
   assert.match(built.html, /答案：A/u);
   assert.equal(built.answersBook, undefined);
 });
+
+test('高频考点题 headings are read the same way as the old 原创模拟题 ones', () => {
+  const md = '## 高频考点题 A1：新标题\n\n题干\n\n- A. 甲\n- B. 乙\n\n**答案：A。** 因为甲。\n';
+  const { answers } = splitQuestionAnswers(md);
+  assert.equal(answers[0].title, '高频考点题 A1：新标题');
+});
