@@ -106,6 +106,7 @@ Infra 工程师关心的是：**Agent 在大规模生产环境下能不能跑起
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../interview/bytedance/base/bytedance-base-48.md)
 - [字节全栈：多智能体导购、客户端与系统评测](../../interview/bytedance/base/bytedance-base-43.md)
 - [京东 AI 应用开发日常实习二面：项目表达与产品场景](../../interview/jd/ai/jd-ai-7.md)
+- [快手 Agent 开发实习一面：MySQL、Kafka 与 RAG](../../interview/kuaishou/ai/kuaishou-ai-21.md)
 - [字节 Agent 实习：推理、微调与工具编排](../../interview/bytedance/base/bytedance-base-51.md)
 - [阿里淘天 Agent 算法一面：任务构造、轨迹与训练路线](../../interview/alibaba/ai/alibaba-ai-4.md)
 - [vivo Agent 秋招线下面：Harness 与工程诊断](../../interview/vivo/ai/vivo-ai-1.md)

@@ -92,6 +92,7 @@
 - [阿里淘天 Agent 一面：Skill、路由与灰度发布](../../../interview/alibaba/ai/alibaba-ai-13.md)
 - [阿里云 Agent 开发秋招一面](../../../interview/alibaba/ai/alibaba-ai-1.md)
 - [快手 AI 全栈一二面：Harness、沙箱与需求交付](../../../interview/kuaishou/ai/kuaishou-ai-8.md)
+- [小红书 AI 全栈实习一面：多 Agent、Skill 与 Harness](../../../interview/redbook/ai/redbook-ai-22.md)
 - [快手 AI 应用服务端秋招三面：分布式 Agent、通信与 Lua](../../../interview/kuaishou/ai/kuaishou-ai-6.md)
 - [腾讯 AI 应用开发面试：跨会话记忆与多 Agent](../../../interview/tencent/ai/tencent-ai-4.md)
 - [百度搜索框架 Agent 日常实习一二面：上下文、工程选型与评测](../../../interview/baidu/ai/baidu-ai-14.md)

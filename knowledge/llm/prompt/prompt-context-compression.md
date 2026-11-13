@@ -153,6 +153,7 @@ usage 是提供商对这次调用的计量结果，tokenizer 的事前估算用�
 - [快手 AI 应用一面：沙箱中的 Skill、工具调用与记忆压缩](../../../interview/kuaishou/ai/kuaishou-ai-12.md)
 - [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)
 - [拼多多 Agent 复活赛一面：检索权限、上下文与流式协议](../../../interview/pinduoduo/ai/pinduoduo-ai-3.md)
+- [快手 Agent 开发二面关联题单：Hooks、锁与设计模式](../../../interview/kuaishou/ai/kuaishou-ai-22.md)
 - [小红书 PE 一面：订单号、上下文摘要与执行范式](../../../interview/redbook/ai/redbook-ai-14.md)
 - [百度 AI 应用社招一面：工作区权限、工具发现与上下文](../../../interview/baidu/ai/baidu-ai-7.md)
 - [百度大模型研发一面：Context、Harness 与 RAG](../../../interview/baidu/ai/baidu-ai-1.md)

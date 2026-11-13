@@ -73,6 +73,48 @@ AI/Agent 岗位面试通常覆盖以下几个方向。学长不列具体题目�
 
 还有越来越常见的 **live debugging**：面试官给你一个 Agent 的输出结果，让你说出可能的出错原因。解题路径是：先看输出格式是否异常 → 看 Prompt 构造 → 看检索结果是否噪声多 → 看工具调用是否符合预期。提前在心里跑几遍这个路径，现场会从容很多。
 
+## HR 与行为面试：让项目事实经得起追问
+
+技术面讲清系统怎样运行，行为面还需要讲清你在约束下怎样做决定、怎样与人合作。[MIT CAPD 的 STAR 指南](https://capd.mit.edu/resources/the-star-method-for-behavioral-interviews)建议使用真实经历，交代情境（Situation）、自己承担的任务（Task）、亲自采取的行动（Action）和结果（Result），把重点放在行动上。[Amazon 的官方面试建议](https://www.aboutamazon.com/news/workplace/amazon-interview-best-tips)也强调具体经历与个人贡献。这里借用的是表达方法，不能据此推断其他公司的评分规则或招聘安排。
+
+### 个人贡献与团队帮助怎样同时讲清
+
+先建立一张项目事实表，再准备口头表达。事实表可以只留在个人备考笔记中；公司代码、内部日志和未公开文档不能因为面试而直接外发。
+
+| 需要说明的事实 | 可以核对的材料或边界 |
+| --- | --- |
+| 接手前已经有什么 | 当时的系统版本、已有接口与遗留问题，区分接手和从零建设 |
+| 你负责什么 | 自己完成的设计、提交、用例与验证，说明与他人模块的接口 |
+| 谁帮助过你 | 对方提出的方向、评审意见或资源支持，以及你据此完成的工作 |
+| 成果到了哪一步 | Demo、内部试用、灰度或正式使用分别说明；未上线就如实说未上线 |
+| 哪个判断最困难 | 约束、备选方案、取舍依据、验证结果和仍未解决的问题 |
+
+下面是**虚构的表达示例，不是某位候选人的现场经历**：“项目已有检索链路，我负责补充失败分类与回归用例。导师在评审中指出只看最终回答会漏掉工具错误；我据此补充工具结果核对，整理失败样本并完成回归。集成与发布由其他同事负责，我只能确认自己的改动通过内部验收，不能把团队上线后的全部效果算成个人成果。”
+
+承认指导不会抵消个人贡献，关键是准确说明建议由谁提出、哪些判断和工作由自己完成。结果没有收益数字时，可以讲清验收对象、可复现用例与交付状态；不要把“预计节省”写成已经实现的收益。如何建立基线与结果证据，可继续阅读[用业务指标证明 Agent 项目价值](agent-project-evaluation.md)；作品展示方式见[Agent 项目与作品集设计](agent-project-portfolio.md)。
+
+### 技术探索与交付目标冲突时怎样回答
+
+先说明冲突发生时的共同目标与硬约束，再解释自己的方案为什么超出当前交付范围。回答中要出现真实的沟通和取舍：和负责人确认必须交付的能力与验收条件，比较最小可交付方案和探索方案的成本、风险，把暂不影响交付的验证放到后续计划。对权限、安全、质量的必要要求不能简单以赶进度为由删掉；无法同时满足时，应及时让有决策责任的人确认调整范围或延期。
+
+**虚构示例**：“我希望尝试多智能体，但当前目标是交付可验证的单流程。评审后，我先用现有链路完成必要功能与回归，把多智能体实验另列为候选任务，写明要验证的问题与停止条件；实验没有达到可解释、可维护的要求，就不并入交付。”这个例子展示决策结构，实际回答必须换成自己发生过的事件，不可声称因此取得了未测量的提效。
+
+被安排不感兴趣的工作时，也先解释它与团队目标的关系、自己的交付责任，再说明怎样学习、争取反馈或协商后续方向。可以坦诚偏好，但“我都愿意做”不足以说明行动；也不必把一次分歧包装成双方都满意的故事。
+
+### 时间与压力问题需要什么证据
+
+“我会管理时间”过于抽象。选一次真实的任务冲突，说明交付期限、依赖关系、当时可用时间和风险，再讲自己取消、延后或缩减了什么。个人项目应使用有权使用的时间、数据和设备；不能把挤占本职交付或持续超负荷当作能力证明。
+
+**虚构示例**：“一次联调与个人项目计划发生冲突。我先确认联调依赖和阻塞项，把个人项目的新功能延后，只保留复现问题所需的最小用例，并提前同步调整后的安排。”回答还应补上真实结果：交付了什么、留下了什么问题、之后怎样改进。如果任务仍然延期，就解释原因与补救，不补写圆满结局。压力题同样按“触发情境—识别风险—具体行动—真实结果”展开；需要帮助时，说清向谁求助、带去了哪些信息、如何落实反馈。
+
+### 已有留用意向，为什么仍看其他机会
+
+先准确区分意向沟通、书面意向和正式 offer，再说明继续了解机会的真实原因。可以围绕工作内容、职责边界、培养方式和长期方向解释自己仍要确认的条件，并指出当前机会已经满足什么、尚有哪些信息待核实。不要把意向描述成已确定的正式 offer，不虚构竞争机会、承诺或薪资条件，也不靠贬低原团队证明动机。
+
+**虚构示例**：“我已收到留用意向，正式职责与安排仍在沟通。我希望进一步了解不同岗位的工程责任和培养方式，再根据实际信息作选择；现有工作与交接会按约定完成。”只有这些事实确实成立时，才可用于自己的回答。对于其他流程、工作地点偏好和可到岗时间，也只说明已确认的状态、现实约束与可履行的安排；不必暴露无关个人信息。
+
+教育背景、经历空档和技术栈确认也遵循同一原则：回答与岗位有关的事实，说明阶段选择与后续行动，记不清的数据先核对。实习收获应以具体案例说明认识如何变化；“用了某语言”本身不能证明语言熟练度，也不能证明大模型项目已经创造业务价值。
+
 ## 最后
 
 学长见过不少同学，面试准备做得非常充分——背了很多题、总结了很多框架——但一到"讲讲你做过最有挑战的 AI 项目"，就开始语焉不详。因为他们的准备是在"补"，而不是在"整理"。
@@ -90,6 +132,7 @@ AI/Agent 岗位面试通常覆盖以下几个方向。学长不列具体题目�
 - [阿里淘宝闪购 Agent 算法实习一面：框架、记忆与线上排障](../../interview/alibaba/ai/alibaba-ai-6.md)
 
 <!-- interview-source-history:start -->
+- [阿里云后端与 Agent HR 面：个人贡献、协作与求职动机](../../interview/alibaba/ai/alibaba-ai-29.md)
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../interview/bytedance/base/bytedance-base-53.md)
 - [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../interview/bytedance/base/bytedance-base-36.md)
 - [小红书 AI 应用一面：RAG 评测、Skill 与平方根](../../interview/redbook/ai/redbook-ai-20.md)
@@ -102,10 +145,12 @@ AI/Agent 岗位面试通常覆盖以下几个方向。学长不列具体题目�
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../interview/bytedance/base/bytedance-base-50.md)
 - [字节 Agent 实习：异步消息、上下文与容器隔离](../../interview/bytedance/base/bytedance-base-41.md)
 - [字节全栈二、三面：幂等、索引与字符串匹配](../../interview/bytedance/base/bytedance-base-32.md)
+- [快手 Agent 开发二面关联题单：Hooks、锁与设计模式](../../interview/kuaishou/ai/kuaishou-ai-22.md)
 - [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../interview/bytedance/base/bytedance-base-24.md)
 - [字节全栈实习：Session、权限与前端基础](../../interview/bytedance/base/bytedance-base-46.md)
 - [字节抖音 Agent 一面：Skill、MCP 与记忆](../../interview/bytedance/base/bytedance-base-39.md)
 - [字节财经保险 AI 全栈实习一面：项目设计、AI Coding 与 Diff](../../interview/bytedance/base/bytedance-base-34.md)
+- [小红书增长方向一、二面：Harness、ReAct 与研究贡献](../../interview/redbook/ai/redbook-ai-23.md)
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../interview/bytedance/base/bytedance-base-53.md)
 - [字节 Agent 后端实习一面：LangGraph、评测集与混合检索](../../interview/bytedance/base/bytedance-base-22.md)
 - [腾讯 CDG 金融科技二面：Agent 评估、协程与存储基础](../../interview/tencent/ai/tencent-ai-29.md)
@@ -125,6 +170,8 @@ AI/Agent 岗位面试通常覆盖以下几个方向。学长不列具体题目�
 
 ## 参考资料
 
+- [Using the STAR method for your next behavioral interview — MIT CAPD](https://capd.mit.edu/resources/the-star-method-for-behavioral-interviews)
+- [An Amazon recruiting manager offers his 3 best tips for a successful job interview — About Amazon](https://www.aboutamazon.com/news/workplace/amazon-interview-best-tips)
 - [How do I write a resume for a federal job? — USAJOBS Help Center](https://usajobshelp.opm.gov/hc/en-us/articles/52839989720851-How-do-I-write-a-resume-for-a-federal-job)
 - [SDE II Interview Prep — Amazon Jobs](https://amazon.jobs/content/en/how-we-hire/sde-ii-interview-prep)
 - [GitHub Certified: Agentic AI Developer (beta)](https://learn.microsoft.com/en-us/credentials/certifications/agentic-ai-developer/)

@@ -7,6 +7,18 @@ Agent 框架是连接大语言模型（LLM）与真实世界任务的工程骨�
 
 ---
 
+## Harness：把模型接成能执行任务的系统
+
+Agent Harness（也称 scaffold）是让模型作为 Agent 工作的运行支撑系统：处理输入、编排工具调用并返回结果。模型提出动作，周围的软件负责把请求送到工具、带回观察并推进运行；[Anthropic 对 Agent Harness 的定义](https://www.anthropic.com/research/demystifying-evals-for-ai-agents)明确区分了模型和这层支撑。框架提供可复用组件，实际系统可以用框架组装 Harness，也可以自行实现；这是理解职责的方式，不是统一的产品命名标准。
+
+从零搭建时，可先检查六项职责：输入与上下文装配；调用模型并处理工具结果的循环；带输入输出契约的工具注册与执行；保存任务进度、工具结果和恢复位置的状态；在动作执行前生效的权限检查；明确的完成、失败、取消和预算耗尽出口。权限不能由模型自报，输出“完成”也不能代替读取实际产物。这里是自建系统的职责清单，各组件能否省略取决于任务，并非每个 SDK 已默认提供；[Claude Agent SDK 概览](https://code.claude.com/docs/en/agent-sdk/overview)展示了工具、Agent Loop、上下文管理以及权限等能力如何组合。
+
+本文下面的 ReAct 示例用文本协议演示循环：请求模型、解析动作、执行受控工具、把观察交回下一轮，直到明确停止。它没有实现完整生产 Harness；工具参数校验、权限、超时取消、状态持久化和终态验收仍须补齐。示例中的 Thought 是要求输出的可见文本协议，不代表读取模型隐藏的推理。上下文压缩也不是无限记忆：长任务需要把可恢复进度保存在会话外，再在新会话读取；[Anthropic 的长程 Harness 实践](https://www.anthropic.com/research/effective-harnesses-for-long-running-agents)用初始化环境、进度文件、Git 和逐项验收衔接多轮工作，并指出仅靠压缩并不足够。
+
+还要分清 Evaluation Harness：它启动评测用例、记录轨迹、读取结果并汇总评分；Agent Harness 则承载被测模型的实际行动。评测对象是模型与运行支撑的组合，不能把换模型、改工具或改循环后的结果都归因于模型本身。上述[评测术语说明](https://www.anthropic.com/research/demystifying-evals-for-ai-agents)对这两类 Harness 分别给出了定义。
+
+---
+
 ## 为什么要自己搭框架
 
 成熟框架（LangChain、AutoGen 等）提供了极大的便利，但也带来了代价：
@@ -439,25 +451,27 @@ Context Window 有限，不做裁剪会导致调用失败。滑动窗口、摘�
 - [阿里淘宝闪购 Agent 算法实习一面：框架、记忆与线上排障](../../../interview/alibaba/ai/alibaba-ai-6.md)
 
 <!-- interview-source-history:start -->
-- [小红书 AI 全栈业务交叉面与二面：MVP、运行稳定性和视频 Agent](../../../interview/redbook/ai/redbook-ai-5.md)
-- [快手 AI 全栈一二面：Harness、沙箱与需求交付](../../../interview/kuaishou/ai/kuaishou-ai-8.md)
-- [小红书大模型平台全栈一面：写边界、Harness 与意图澄清](../../../interview/redbook/ai/redbook-ai-7.md)
 - [字节大模型应用秋招一面：日志盲区、框架选择与 BFS](../../../interview/bytedance/base/bytedance-base-71.md)
-- [京东后端一面：交付标准、Agent 选型与跨语言数据边界](../../../interview/jd/ai/jd-ai-1.md)
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
 - [字节 Agent 一面：会话记忆、并发更新与算法](../../../interview/bytedance/base/bytedance-base-29.md)
+- [快手 AI 全栈一二面：Harness、沙箱与需求交付](../../../interview/kuaishou/ai/kuaishou-ai-8.md)
+- [小红书 AI 全栈实习一面：多 Agent、Skill 与 Harness](../../../interview/redbook/ai/redbook-ai-22.md)
 - [字节 AI 平台一面：Agent 评测、框架与数据结构](../../../interview/bytedance/base/bytedance-base-33.md)
 - [蚂蚁 Agent 一二面：Code Agent 与应用开发](../../../interview/antfin/ai/antfin-ai-2.md)
 - [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
+- [小红书 AI 全栈业务交叉面与二面：MVP、运行稳定性和视频 Agent](../../../interview/redbook/ai/redbook-ai-5.md)
 - [字节 Agent 暑期实习一面：摘要、工具预算与链表](../../../interview/bytedance/base/bytedance-base-27.md)
 - [腾讯混元后台一面：Java 并发、限流与 Agent 工程](../../../interview/tencent/ai/tencent-ai-28.md)
 - [字节 Agent Infra 校招：运行时、MySQL 与 LRU](../../../interview/bytedance/base/bytedance-base-25.md)
 - [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)
 - [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../../interview/bytedance/base/bytedance-base-24.md)
 - [vivo Agent 秋招线下面：Harness 与工程诊断](../../../interview/vivo/ai/vivo-ai-1.md)
+- [京东后端一面：交付标准、Agent 选型与跨语言数据边界](../../../interview/jd/ai/jd-ai-1.md)
+- [小红书增长方向一、二面：Harness、ReAct 与研究贡献](../../../interview/redbook/ai/redbook-ai-23.md)
 - [腾讯 CDG 金融科技二面：Agent 评估、协程与存储基础](../../../interview/tencent/ai/tencent-ai-29.md)
 - [字节剪映 AI 前端一面：Agent 运行时、MCP 与性能](../../../interview/bytedance/base/bytedance-base-30.md)
 - [字节 Agent 开发实习一面：自进化与评测](../../../interview/bytedance/base/bytedance-base-8.md)
+- [小红书大模型平台全栈一面：写边界、Harness 与意图澄清](../../../interview/redbook/ai/redbook-ai-7.md)
 - [字节 TRAE 后端秋招二面：项目逻辑、工具与编辑距离](../../../interview/bytedance/base/bytedance-base-76.md)
 - [字节搜广推引擎架构一面：JSON 输出、并发与系统基础](../../../interview/bytedance/base/bytedance-base-74.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)
@@ -475,3 +489,7 @@ Context Window 有限，不做裁剪会导致调用失败。滑动窗口、摘�
 - [openai-python 官方仓库](https://github.com/openai/openai-python)（适配器示例范围，本次核验于 2026-10-14）。
 - [Python：ast](https://docs.python.org/3/library/ast.html)（语法树与资源风险，本次核验于 2026-10-14）。
 - [Python：eval](https://docs.python.org/3/library/functions.html#eval)（不可信代码风险，本次核验于 2026-10-14）。
+
+- [Anthropic：Agent Harness 与 Evaluation Harness 的定义](https://www.anthropic.com/research/demystifying-evals-for-ai-agents)（Harness 补充核验于 2026-11-13）。
+- [Anthropic：Effective harnesses for long-running agents](https://www.anthropic.com/research/effective-harnesses-for-long-running-agents)（长任务状态衔接，核验于 2026-11-13）。
+- [Claude Agent SDK 概览](https://code.claude.com/docs/en/agent-sdk/overview)（循环、上下文、工具与权限能力，核验于 2026-11-13）。

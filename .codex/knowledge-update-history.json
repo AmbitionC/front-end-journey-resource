@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
-  "updatedAt": "2026-11-12",
+  "updatedAt": "2026-11-13",
   "records": [
     {
       "key": "transformer-arch",
@@ -2102,18 +2102,18 @@
       "filePath": "llm/agent",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-11-04",
-      "batch": "daily-content-20261104",
-      "reason": "Actual interview-question driven teaching additions or accuracy corrections; final release and synchronization pending.",
+      "recordedAt": "2026-11-13",
+      "batch": "daily-content-20261113-reviewed-cohorts",
+      "reason": "Actual source-grounded Claude Code Hooks lifecycle and execution-boundary teaching supplement; final release pending.",
       "previousRecord": {
         "key": "agent-coding",
         "label": "Coding Agent 的架构与执行循环",
         "filePath": "llm/agent",
         "status": "pending",
-        "action": "audited",
-        "recordedAt": "2026-10-29",
-        "batch": "agentjourney-plus-thirty-175-20261029",
-        "reason": "Actual source-question processing; final independent review and online release are pending.",
+        "action": "updated",
+        "recordedAt": "2026-11-04",
+        "batch": "daily-content-20261104",
+        "reason": "Actual interview-question driven teaching additions or accuracy corrections; final release and synchronization pending.",
         "previousRecord": {
           "key": "agent-coding",
           "label": "Coding Agent 的架构与执行循环",
@@ -2121,7 +2121,7 @@
           "status": "pending",
           "action": "audited",
           "recordedAt": "2026-10-29",
-          "batch": "agentjourney-next-thirty-20261029",
+          "batch": "agentjourney-plus-thirty-175-20261029",
           "reason": "Actual source-question processing; final independent review and online release are pending.",
           "previousRecord": {
             "key": "agent-coding",
@@ -2129,9 +2129,9 @@
             "filePath": "llm/agent",
             "status": "pending",
             "action": "audited",
-            "recordedAt": "2026-10-28",
-            "batch": "agentjourney-thirty-20261028",
-            "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+            "recordedAt": "2026-10-29",
+            "batch": "agentjourney-next-thirty-20261029",
+            "reason": "Actual source-question processing; final independent review and online release are pending.",
             "previousRecord": {
               "key": "agent-coding",
               "label": "Coding Agent 的架构与执行循环",
@@ -2139,26 +2139,36 @@
               "status": "pending",
               "action": "audited",
               "recordedAt": "2026-10-28",
-              "batch": "historical-source-bindings-20261028",
-              "reason": "Actual per-question skill execution findings: bounded factual/teaching/quickRead corrections; preserve useful content and media.",
+              "batch": "agentjourney-thirty-20261028",
+              "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
               "previousRecord": {
                 "key": "agent-coding",
                 "label": "Coding Agent 的架构与执行循环",
                 "filePath": "llm/agent",
                 "status": "pending",
-                "action": "updated",
-                "recordedAt": "2026-08-29",
-                "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
-              },
-              "publishedByPdfRun": 38639074189,
-              "publicationAcceptanceSha256": "db119149ffa5eb1e77b36d8139d5afe3fd90bb3d4530967cd52749e28fa6b38d",
-              "previousPublication": {
-                "status": "published",
-                "batch": "title-body2-quality-20261014",
-                "recordedAt": "2026-10-14",
-                "publishedAt": "2026-10-14T22:17:17.306Z",
-                "publishedByCommit": "0c66885813a50113c1a22e42f381cca14119b63d",
-                "publishedBySyncRun": 38639074103
+                "action": "audited",
+                "recordedAt": "2026-10-28",
+                "batch": "historical-source-bindings-20261028",
+                "reason": "Actual per-question skill execution findings: bounded factual/teaching/quickRead corrections; preserve useful content and media.",
+                "previousRecord": {
+                  "key": "agent-coding",
+                  "label": "Coding Agent 的架构与执行循环",
+                  "filePath": "llm/agent",
+                  "status": "pending",
+                  "action": "updated",
+                  "recordedAt": "2026-08-29",
+                  "batch": "nowcoder-agent-market-20260829063417803-6fa42eaf"
+                },
+                "publishedByPdfRun": 38639074189,
+                "publicationAcceptanceSha256": "db119149ffa5eb1e77b36d8139d5afe3fd90bb3d4530967cd52749e28fa6b38d",
+                "previousPublication": {
+                  "status": "published",
+                  "batch": "title-body2-quality-20261014",
+                  "recordedAt": "2026-10-14",
+                  "publishedAt": "2026-10-14T22:17:17.306Z",
+                  "publishedByCommit": "0c66885813a50113c1a22e42f381cca14119b63d",
+                  "publishedBySyncRun": 38639074103
+                }
               }
             }
           }
@@ -4050,18 +4060,18 @@
       "filePath": "llm/agent",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-29",
-      "batch": "agentjourney-next-thirty-20261029",
-      "reason": "Actual source-question processing; final independent review and online release are pending.",
+      "recordedAt": "2026-11-13",
+      "batch": "daily-content-20261113-reviewed-cohorts",
+      "reason": "Actual source-grounded Harness definition and runtime boundary supplement; final release pending.",
       "previousRecord": {
         "key": "build-agent-framework",
         "label": "从零构建 Agent 运行时",
         "filePath": "llm/agent",
         "status": "pending",
-        "action": "audited",
-        "recordedAt": "2026-10-28",
-        "batch": "agentjourney-thirty-20261028",
-        "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+        "action": "updated",
+        "recordedAt": "2026-10-29",
+        "batch": "agentjourney-next-thirty-20261029",
+        "reason": "Actual source-question processing; final independent review and online release are pending.",
         "previousRecord": {
           "key": "build-agent-framework",
           "label": "从零构建 Agent 运行时",
@@ -4069,43 +4079,53 @@
           "status": "pending",
           "action": "audited",
           "recordedAt": "2026-10-28",
-          "batch": "historical-source-bindings-20261028",
-          "reason": "Actual per-question skill execution findings: bounded factual/teaching/quickRead corrections; preserve useful content and media.",
+          "batch": "agentjourney-thirty-20261028",
+          "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
           "previousRecord": {
             "key": "build-agent-framework",
             "label": "从零构建 Agent 运行时",
             "filePath": "llm/agent",
-            "status": "published",
-            "action": "updated",
-            "recordedAt": "2026-10-14",
-            "batch": "title-verified6-quality-20261014",
-            "reason": "对本批面经已绑定知识的技术错误做有一手来源支持的限定修正。",
+            "status": "pending",
+            "action": "audited",
+            "recordedAt": "2026-10-28",
+            "batch": "historical-source-bindings-20261028",
+            "reason": "Actual per-question skill execution findings: bounded factual/teaching/quickRead corrections; preserve useful content and media.",
             "previousRecord": {
               "key": "build-agent-framework",
               "label": "从零构建 Agent 运行时",
               "filePath": "llm/agent",
               "status": "published",
               "action": "updated",
-              "recordedAt": "2026-10-04",
-              "batch": "next-twenty-source-increments-20261004",
-              "publishedAt": "2026-10-05T09:27:13Z",
-              "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-              "publishedBySyncRun": 37289136872
+              "recordedAt": "2026-10-14",
+              "batch": "title-verified6-quality-20261014",
+              "reason": "对本批面经已绑定知识的技术错误做有一手来源支持的限定修正。",
+              "previousRecord": {
+                "key": "build-agent-framework",
+                "label": "从零构建 Agent 运行时",
+                "filePath": "llm/agent",
+                "status": "published",
+                "action": "updated",
+                "recordedAt": "2026-10-04",
+                "batch": "next-twenty-source-increments-20261004",
+                "publishedAt": "2026-10-05T09:27:13Z",
+                "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+                "publishedBySyncRun": 37289136872
+              },
+              "publishedAt": "2026-10-14T18:28:19Z",
+              "publishedByCommit": "afbce3dd82d0e693b14d20e2b3dd02a96c6731b3",
+              "publishedBySyncRun": 38614482119,
+              "publishedByPdfRun": 38614481957
             },
-            "publishedAt": "2026-10-14T18:28:19Z",
-            "publishedByCommit": "afbce3dd82d0e693b14d20e2b3dd02a96c6731b3",
-            "publishedBySyncRun": 38614482119,
-            "publishedByPdfRun": 38614481957
-          },
-          "publishedByPdfRun": 38639074189,
-          "publicationAcceptanceSha256": "db119149ffa5eb1e77b36d8139d5afe3fd90bb3d4530967cd52749e28fa6b38d",
-          "previousPublication": {
-            "status": "published",
-            "batch": "title-body2-quality-20261014",
-            "recordedAt": "2026-10-14",
-            "publishedAt": "2026-10-14T22:17:17.306Z",
-            "publishedByCommit": "0c66885813a50113c1a22e42f381cca14119b63d",
-            "publishedBySyncRun": 38639074103
+            "publishedByPdfRun": 38639074189,
+            "publicationAcceptanceSha256": "db119149ffa5eb1e77b36d8139d5afe3fd90bb3d4530967cd52749e28fa6b38d",
+            "previousPublication": {
+              "status": "published",
+              "batch": "title-body2-quality-20261014",
+              "recordedAt": "2026-10-14",
+              "publishedAt": "2026-10-14T22:17:17.306Z",
+              "publishedByCommit": "0c66885813a50113c1a22e42f381cca14119b63d",
+              "publishedBySyncRun": 38639074103
+            }
           }
         }
       }
@@ -5863,27 +5883,37 @@
       "filePath": "career",
       "status": "pending",
       "action": "updated",
-      "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
-      "reason": "Actual per-question skill execution findings: bounded factual/teaching/quickRead corrections; preserve useful content and media.",
+      "recordedAt": "2026-11-13",
+      "batch": "daily-content-20261113-reviewed-cohorts",
+      "reason": "Actual HR source-grounded contribution, collaboration, pressure and motivation teaching supplement; final release pending.",
       "previousRecord": {
         "key": "agent-resume-interview",
         "label": "AI / Agent 岗位简历与面试",
         "filePath": "career",
         "status": "pending",
         "action": "updated",
-        "recordedAt": "2026-07-18",
-        "batch": "complete-remaining-91-2026-07-18"
-      },
-      "publishedByPdfRun": 38639074189,
-      "publicationAcceptanceSha256": "db119149ffa5eb1e77b36d8139d5afe3fd90bb3d4530967cd52749e28fa6b38d",
-      "previousPublication": {
-        "status": "published",
-        "batch": "title-body2-quality-20261014",
-        "recordedAt": "2026-10-14",
-        "publishedAt": "2026-10-14T22:17:17.306Z",
-        "publishedByCommit": "0c66885813a50113c1a22e42f381cca14119b63d",
-        "publishedBySyncRun": 38639074103
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "reason": "Actual per-question skill execution findings: bounded factual/teaching/quickRead corrections; preserve useful content and media.",
+        "previousRecord": {
+          "key": "agent-resume-interview",
+          "label": "AI / Agent 岗位简历与面试",
+          "filePath": "career",
+          "status": "pending",
+          "action": "updated",
+          "recordedAt": "2026-07-18",
+          "batch": "complete-remaining-91-2026-07-18"
+        },
+        "publishedByPdfRun": 38639074189,
+        "publicationAcceptanceSha256": "db119149ffa5eb1e77b36d8139d5afe3fd90bb3d4530967cd52749e28fa6b38d",
+        "previousPublication": {
+          "status": "published",
+          "batch": "title-body2-quality-20261014",
+          "recordedAt": "2026-10-14",
+          "publishedAt": "2026-10-14T22:17:17.306Z",
+          "publishedByCommit": "0c66885813a50113c1a22e42f381cca14119b63d",
+          "publishedBySyncRun": 38639074103
+        }
       }
     },
     {
@@ -6806,6 +6836,26 @@
       "batch": "nowcoder-263d20b6-ddba-4c4c-8601-ae97167ad2b5",
       "date": "2026-11-12",
       "status": "pending"
+    },
+    {
+      "key": "kafka-core",
+      "label": "Kafka 日志、分区与可靠消费",
+      "filePath": "backend/api",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-11-13",
+      "batch": "daily-content-20261113-reviewed-cohorts",
+      "reason": "Actual source-question semantic gap, primary research and rendered editable teaching diagram; final release pending."
+    },
+    {
+      "key": "decorator-pattern",
+      "label": "装饰器模式：组合与动态扩展",
+      "filePath": "backend/framework",
+      "status": "pending",
+      "action": "created",
+      "recordedAt": "2026-11-13",
+      "batch": "daily-content-20261113-reviewed-cohorts",
+      "reason": "Actual source-question semantic gap, primary research and rendered editable teaching diagram; final release pending."
     }
   ],
   "deliveryEvidence": {

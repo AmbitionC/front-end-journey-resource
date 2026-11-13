@@ -105,6 +105,7 @@ MCP 组织宿主与服务器的能力发现和调用，Skill 组织按需加载�
 - [阿里淘天 Agent 一面：Skill、路由与灰度发布](../../../interview/alibaba/ai/alibaba-ai-13.md)
 - [阿里云 Agent 开发秋招一面](../../../interview/alibaba/ai/alibaba-ai-1.md)
 - [百度测开多轮：SQL 分组与 Skill 实践](../../../interview/baidu/ai/baidu-ai-8.md)
+- [小红书 AI 全栈实习一面：多 Agent、Skill 与 Harness](../../../interview/redbook/ai/redbook-ai-22.md)
 - [小红书 AI 全栈暑期二面：RAG 流程与 Skill 实践](../../../interview/redbook/ai/redbook-ai-10.md)
 - [蚂蚁 Agent 一二面：Code Agent 与应用开发](../../../interview/antfin/ai/antfin-ai-2.md)
 - [腾讯 AI 应用开发面试：跨会话记忆与多 Agent](../../../interview/tencent/ai/tencent-ai-4.md)

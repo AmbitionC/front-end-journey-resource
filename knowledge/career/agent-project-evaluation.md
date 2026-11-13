@@ -60,6 +60,7 @@ Canary 让少量合格用户真实使用，限制工具和预算，设置自动�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [阿里云后端与 Agent HR 面：个人贡献、协作与求职动机](../../interview/alibaba/ai/alibaba-ai-29.md)
 - [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../interview/bytedance/base/bytedance-base-36.md)
 - [字节 AI 平台一面：Agent 评测、框架与数据结构](../../interview/bytedance/base/bytedance-base-33.md)
 - [字节全栈：多智能体导购、客户端与系统评测](../../interview/bytedance/base/bytedance-base-43.md)

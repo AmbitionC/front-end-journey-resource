@@ -72,6 +72,7 @@ prototype 的完整销毁责任不由容器自动接管，使用方必须释放�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [快手 Agent 开发二面关联题单：Hooks、锁与设计模式](../../../interview/kuaishou/ai/kuaishou-ai-22.md)
 - [商盟支付 Java 开发实习一面：交易去重、并发与消息](../../../interview/shangmeng/ai/shangmeng-ai-1.md)
 - [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
 <!-- interview-source-history:end -->

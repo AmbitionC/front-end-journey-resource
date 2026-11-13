@@ -78,6 +78,24 @@ Bug 修复先建立失败证据：运行最小相关测试，或添加能在旧�
 
 [git status](https://git-scm.com/docs/git-status)用于检查已跟踪、未跟踪和暂存状态。测试产生的快照、覆盖率或下载文件不能悄悄进入提交。最终列出变更、验证命令与结果、剩余风险；没有运行的测试也明确说明。
 
+## Claude Code Hooks：在生命周期事件上接入检查
+
+Hooks 是 Claude Code 在特定生命周期事件上调用的扩展处理器，不是模型隐式推理过程中的某个“思考步骤”。常见配置先选事件，再用该事件支持的 matcher 过滤，最后指定处理器；命令型 Hook 执行外部程序，部分其他类型则可借助模型进行判定。以下依据 2026-11-13 核验的[官方 Hooks reference](https://code.claude.com/docs/en/hooks)说明，事件和输出字段会随版本演进，不能把某个版本的配置复制成所有环境的默认行为。
+
+| 事件 | 触发位置 | 适合做什么、不能证明什么 |
+| --- | --- | --- |
+| `PreToolUse` | 模型已形成工具参数、工具调用处理之前 | 检查候选动作，按事件合同返回拒绝或要求确认等决定；模型提出动作不等于动作已获权 |
+| `PostToolUse` | 工具成功执行之后 | 根据实际返回做检查或提供反馈；事后检查不能阻止已经发生的副作用 |
+| `PostToolUseFailure` | 工具执行失败之后 | 补充失败反馈，仍需区分可重试、不可重试和外部状态未知 |
+| `Stop` | 主 Agent 完成回复时 | 检查是否还有未满足条件；回复结束不证明测试、交付或外部操作成功 |
+
+例如希望编辑之后验证代码，可以在匹配相关工具的事后事件里触发有界检查，再把真实结果交回运行流程。这个设计只说明一种扩展方法：不是每次文件变化都由同一种工具造成，也不能把 Hook 已启动当作验证通过。阻止不允许的动作应发生在执行前，工具服务仍要执行自己的权限与输入校验。[官方 PreToolUse 合同](https://code.claude.com/docs/en/hooks#pretooluse-decision-control)区分 Hook 决定与权限规则；Hook 返回允许也不是绕过所有拒绝、询问规则或外部服务权限的通行证。
+
+命令型 Hook 从标准输入收到事件 JSON，通过退出码、标准输出和标准错误返回结果。退出码 `0` 是成功输出结构化 JSON 的预期路径；`2` 的阻断或反馈含义依事件而定，其他错误也不能一概解释成阻断。需要结构化控制时，仅输出符合该事件 schema 的 JSON；额外日志、无效 JSON、超时与失败策略都会影响结果，不能用“脚本报错了”推断动作一定没执行。具体组合应核对[输入输出与退出码规则](https://code.claude.com/docs/en/hooks#hook-input-and-output)，并在目标版本测试允许、拒绝、处理器失败和重复触发等路径。
+
+Hook 本身也是可执行扩展，配置来源、参数、路径和返回内容都要审查，不能把模型生成的字符串直接拼成高权限命令。只记录必要事件与结果引用，避免复制秘密；用超时、幂等与结果验收控制实际任务。它适合把检查接到明确时机，可靠交付仍需要前文的测试、Diff 审查和证据。
+
+
 ## 外部副作用与工具安全
 
 代码执行、依赖安装和测试脚本都可能不可信，在沙箱或受控工作区运行，限制网络、凭证和资源。不要把仓库 `.env`、SSH agent 或云 token 自动暴露给生成代码。依赖更新检查来源、锁文件和安装脚本。
@@ -132,6 +150,7 @@ Trace 记录搜索、读取、编辑、命令、退出码、diff 统计和验证
 - [蚂蚁数字支付 AI 应用研发二面：数据分层、迁移与微调](../../../interview/antfin/ai/antfin-ai-13.md)
 - [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)
 - [拼多多 Agent 复活赛一面：检索权限、上下文与流式协议](../../../interview/pinduoduo/ai/pinduoduo-ai-3.md)
+- [快手 Agent 开发二面关联题单：Hooks、锁与设计模式](../../../interview/kuaishou/ai/kuaishou-ai-22.md)
 - [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../../interview/bytedance/base/bytedance-base-24.md)
 - [字节全栈实习：Session、权限与前端基础](../../../interview/bytedance/base/bytedance-base-46.md)
 - [蚂蚁国际 Agent 一面：跨系统 AI 交付与 MCP 工具链](../../../interview/antfin/ai/antfin-ai-7.md)
@@ -159,6 +178,8 @@ Trace 记录搜索、读取、编辑、命令、退出码、diff 统计和验证
 <!-- interview-source-history:end -->
 
 ## 参考资料
+
+- [Claude Code：Hooks reference，生命周期、权限与输入输出合同](https://code.claude.com/docs/en/hooks)（2026-11-13 核验，滚动文档）。
 
 - [Jimenez et al. — SWE-bench](https://arxiv.org/abs/2310.06770)
 - [SWE-bench — Original benchmark](https://www.swebench.com/original.html)
