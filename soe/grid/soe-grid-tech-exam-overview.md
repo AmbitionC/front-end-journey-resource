@@ -189,7 +189,7 @@
 | --- | --- | --- |
 | 数据结构与算法（1–9） | [数据结构选择题高频考点](../bank-tech/soe-data-structures-mcq.md) | 对照基本概念、线性结构、树图、查找、排序及算法分析逐项复习 |
 | 数据库系统（10–16） | [数据库理论](../bank-tech/soe-database-theory.md)、[数据库备份恢复与安全、操作系统安全、软件交付与维护常考点](../bank-tech/soe-db-os-security-delivery-mcq.md) | 前一篇管关系理论与事务，后一篇管备份和恢复、数据库应用系统设计与开发、数据库安全 |
-| 计算机网络（17–24） | [计算机网络选择题高频考点](../bank-tech/soe-network-mcq.md) | 仍需补核入口对无线网络与移动网络的覆盖 |
+| 计算机网络（17–24） | [计算机网络选择题高频考点](../bank-tech/soe-network-mcq.md) | 无线网络与移动网络不在这篇里，配合[数据通信网常考点](../comm/soe-data-comm-network-mcq.md)和[移动通信及其他业务系统常考点](../comm/soe-mobile-comm-mcq.md)复习 |
 | 操作系统（25–30） | [操作系统选择题高频考点](../bank-tech/soe-os-mcq.md)、[数据库备份恢复与安全、操作系统安全、软件交付与维护常考点](../bank-tech/soe-db-os-security-delivery-mcq.md) | 操作系统安全与保护在后一篇 |
 | 计算机组成与体系结构（31–37） | [计算机组成原理速览](../bank-tech/soe-computer-organization.md)、[信息新技术常考点](../bank-tech/soe-new-it-mcq.md) | 并行计算与异构计算在后一篇的“云计算、云边协同与并行加速”一节 |
 | 软件工程（38–44） | [软件工程基础](../bank-tech/soe-software-engineering-mcq.md)、[数据库备份恢复与安全、操作系统安全、软件交付与维护常考点](../bank-tech/soe-db-os-security-delivery-mcq.md) | 软件交付与维护在后一篇 |
@@ -199,7 +199,7 @@
 
 通信类的四个专业方向各有一篇对应文章：[通信理论基础常考点](../comm/soe-comm-theory-mcq.md)、[光纤通信常考点](../comm/soe-optical-comm-mcq.md)、[数据通信网常考点](../comm/soe-data-comm-network-mcq.md)、[移动通信及其他业务系统常考点](../comm/soe-mobile-comm-mcq.md)。复习完可以用[通信类专业综合自测卷](../practice/soe-comm-self-test.md)找薄弱方向。
 
-上表只剩计算机网络一行标着“仍需补核”：无线网络与移动网络在入口文章里的覆盖还没有逐项核对，这个提示不等于已经判定入口文章缺少相应内容。基础概念继续复用已有知识文章，例如 [TCP、UDP 与传输场景](../../knowledge/network/tcpIp/tcp-udp.md)、[TCP 建连、断开与连接状态](../../knowledge/network/tcpIp/tcp-handshake.md)。
+计算机网络的基础概念还可以复用已有知识文章，例如 [TCP、UDP 与传输场景](../../knowledge/network/tcpIp/tcp-udp.md)、[TCP 建连、断开与连接状态](../../knowledge/network/tcpIp/tcp-handshake.md)。
 
 国家电网两类 2027 版大纲已明确范围与 20%/80% 模块占比；南方电网仍保留所引 2026 年公告的考试模式和范围占比。两家材料未给出的题型、题量、时长和计分细则，继续等待适用岗位、批次的官方补充说明。
 
