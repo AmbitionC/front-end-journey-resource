@@ -338,14 +338,14 @@
             "isLeaf": true,
             "filePath": "llm/prompt",
             "contentStatus": "published",
-            "heat": 30,
+            "heat": 31,
             "currRank": 5,
             "updatedAt": "2026-11-04",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "上下文压缩先保护目标、约束、事实与出处，再通过裁剪、抽取或摘要控制预算。OpenClaw 示例区分持久摘要、请求内工具结果裁剪与可选记忆写入；磁盘保留不等于本轮已读，压缩仍需验证保真和继续任务的效果。"
             },
-            "interviewCount": 24,
+            "interviewCount": 25,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -882,14 +882,14 @@
             "isLeaf": true,
             "filePath": "llm/rag",
             "contentStatus": "published",
-            "heat": 37,
+            "heat": 39,
             "currRank": 5,
             "updatedAt": "2026-07-14",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "RAG 分离离线资料解析、分块和索引，与在线授权、召回、排序、上下文装配和生成。证据必须保留来源和版本；检索不等于训练，有引用也不证明结论成立，需要分层评测和失败追踪。"
             },
-            "interviewCount": 31,
+            "interviewCount": 33,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -946,14 +946,14 @@
             "isLeaf": true,
             "filePath": "llm/rag",
             "contentStatus": "published",
-            "heat": 15,
+            "heat": 16,
             "currRank": 5,
             "updatedAt": "2026-07-14",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "分块在可检索粒度、语义完整性与模型预算间取舍，保留标题、位置、版本和权限。整篇向量可能稀释局部主题，过细又可能丢条件；按实际token和代表性问题评估边界、重叠与召回，不存在统一最优块长。"
             },
-            "interviewCount": 9,
+            "interviewCount": 10,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -962,14 +962,14 @@
             "isLeaf": true,
             "filePath": "llm/rag",
             "contentStatus": "published",
-            "heat": 15,
+            "heat": 16,
             "currRank": 5,
             "updatedAt": "2026-11-06",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Embedding 将文档和查询映射到经验证兼容的向量空间，用约定距离支持检索；维度相同不等于编码器兼容，相似不等于事实正确。聚类另需明确算法、簇数或阈值并回读原文，几何分离指标不能代替语义和业务评估。"
             },
-            "interviewCount": 9,
+            "interviewCount": 10,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1300,14 +1300,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 59,
+            "heat": 60,
             "currRank": 5,
-            "updatedAt": "2026-11-04",
+            "updatedAt": "2026-11-13",
             "interviewBaseHeat": 6,
             "quickRead": {
-              "text": "Coding Agent 围绕仓库事实完成检索、补丁和验证闭环；编辑器补全则可从光标前后文与相关代码生成候选，并处理取消和文档版本变化。两者都需用任务、静态检查、测试与人工审查检验正确性，采纳率或生成代码量不能代替交付质量。"
+              "text": "Coding Agent 围绕仓库事实完成检索、补丁和验证闭环；编辑器补全则可从光标前后文与相关代码生成候选，并处理取消和文档版本变化。两者都需用任务、静态检查、测试与人工审查检验正确性，采纳率或生成代码量不能代替交付质量。 生命周期 Hook 的事件、输入输出和权限应按宿主合同核对，不能等同于模型推理或绕过权限。"
             },
-            "interviewCount": 53,
+            "interviewCount": 54,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1316,14 +1316,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 36,
+            "heat": 37,
             "currRank": 5,
             "updatedAt": "2026-10-28",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "Skill按需组织任务说明、资源和版本，工具执行仍由运行时校验。MCP解决能力接入，Skill可使用本地或MCP工具，两者可组合；自定义YAML注册表要区分官方格式，发现不等于执行，路径、输入和权限边界也不能被配置绕过。"
             },
-            "interviewCount": 35,
+            "interviewCount": 36,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1348,14 +1348,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 30,
+            "heat": 31,
             "currRank": 5,
             "updatedAt": "2026-10-02",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "多Agent让执行者分别持有上下文、工具与证据，由协调者合并。是否值得分工要用同一任务、数据、权限和预算与单Agent或普通代码比较；角色增多不保证正确，通信、共享状态和合并失败都需要验证。"
             },
-            "interviewCount": 24,
+            "interviewCount": 25,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1364,14 +1364,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 29,
+            "heat": 31,
             "currRank": 5,
-            "updatedAt": "2026-10-29",
+            "updatedAt": "2026-11-13",
             "interviewBaseHeat": 6,
             "quickRead": {
-              "text": "Agent 运行时连接模型、工具、状态、记忆与执行循环；框架按状态和控制流需求组合。最大步数、错误处理、持久化、权限和轨迹仍需明确合同，框架名称或检查点本身都不保证可靠完成。"
+              "text": "Agent Harness以运行循环、工具、状态、上下文、权限与停止出口支撑模型执行任务，框架提供可组合组件。需区分Agent运行支撑与评测Harness；模型声称完成、检查点或框架名称都不能代替实际产物、权限和终态验收。"
             },
-            "interviewCount": 23,
+            "interviewCount": 25,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1380,14 +1380,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 26,
+            "heat": 27,
             "currRank": 5,
             "updatedAt": "2026-10-28",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Agent记忆按用途管理当前状态、可恢复checkpoint、长期事实和证据，写入与检索都有来源和权限边界。LangGraph按super-step提交完整快照，并保存步内成功节点写入；挂checkpointer不会自动写入任意变量。Claude Code持久文件仅在加载后进入当前上下文，文件格式不等于通用记忆架构。"
             },
-            "interviewCount": 20,
+            "interviewCount": 21,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1476,14 +1476,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 19,
+            "heat": 20,
             "currRank": 5,
             "updatedAt": "2026-10-28",
             "interviewBaseHeat": 10,
             "quickRead": {
               "text": "ReAct 交替选择行动、执行工具与观察结果，直到满足终止条件。它与 React UI 库不同；模型决定动作后仍由宿主校验权限、预算和结果，循环不能无限继续。"
             },
-            "interviewCount": 9,
+            "interviewCount": 10,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1923,14 +1923,14 @@
             "isLeaf": true,
             "filePath": "llm/production",
             "contentStatus": "published",
-            "heat": 32,
+            "heat": 33,
             "currRank": 5,
             "updatedAt": "2026-10-28",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Agent 验收分开读取任务要求、执行轨迹和实际环境结果。确定条件用程序，开放质量用经校准的模型或人工判断；固定初始状态、版本和统计分母，不能只相信最终回复中的成功声明。"
             },
-            "interviewCount": 26,
+            "interviewCount": 27,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -2701,21 +2701,6 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
-            "label": "Spring 外部配置：优先级、刷新与版本对账",
-            "key": "spring-external-config",
-            "isLeaf": true,
-            "filePath": "backend/java",
-            "updatedAt": "2026-10-19",
-            "quickRead": {
-              "text": "PropertySource 顺序决定解析优先级，普通 @Value 不因属性源更新自动重注入。动态配置先校验带版本快照，再协调业务应用；通知配合周期对账，失败保留最后有效版本，需重建资源或重启的字段另定义生效策略。"
-            },
-            "interviewBaseHeat": 0,
-            "interviewCount": 2,
-            "heat": 2,
-            "currRank": 2,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
             "label": "Spring 容器：BeanFactory 与 ApplicationContext",
             "key": "spring-container",
             "isLeaf": true,
@@ -2723,6 +2708,21 @@
             "updatedAt": "2026-11-06",
             "quickRead": {
               "text": "BeanFactory 提供 Bean 工厂合同；ApplicationContext 经接口扩展资源、事件、国际化和环境能力。实例创建取决于实现、scope 与 lazy 配置，singleton 是每容器每定义一份，不保证业务线程安全；prototype 清理另有责任。"
+            },
+            "interviewBaseHeat": 0,
+            "interviewCount": 3,
+            "heat": 3,
+            "currRank": 3,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
+            "label": "Spring 外部配置：优先级、刷新与版本对账",
+            "key": "spring-external-config",
+            "isLeaf": true,
+            "filePath": "backend/java",
+            "updatedAt": "2026-10-19",
+            "quickRead": {
+              "text": "PropertySource 顺序决定解析优先级，普通 @Value 不因属性源更新自动重注入。动态配置先校验带版本快照，再协调业务应用；通知配合周期对账，失败保留最后有效版本，需重建资源或重启的字段另定义生效策略。"
             },
             "interviewBaseHeat": 0,
             "interviewCount": 2,
@@ -2914,6 +2914,26 @@
             "interviewCount": 1,
             "heat": 1,
             "currRank": 1
+          },
+          {
+            "label": "装饰器模式：组合与动态扩展",
+            "key": "decorator-pattern",
+            "isLeaf": true,
+            "filePath": "backend/framework",
+            "tags": [
+              "设计模式",
+              "组合",
+              "装饰器"
+            ],
+            "contentStatus": "published",
+            "updatedAt": "2026-11-13",
+            "interviewBaseHeat": 0,
+            "interviewCount": 1,
+            "heat": 1,
+            "currRank": 1,
+            "quickRead": {
+              "text": "装饰器以同接口包装对象，通过inner委托和逐层组合增加职责；顺序会改变结果，同接口不保证所有组合语义正确。它不等于Python/TypeScript语法装饰器，和代理需按主要意图区分，并明确资源、异常与性能边界。"
+            }
           }
         ]
       },
@@ -3087,6 +3107,26 @@
             "heat": 1,
             "currRank": 1,
             "updatedAt": "2026-07-17"
+          },
+          {
+            "label": "Kafka 日志、分区与可靠消费",
+            "key": "kafka-core",
+            "isLeaf": true,
+            "filePath": "backend/api",
+            "tags": [
+              "Kafka",
+              "消息队列",
+              "可靠性"
+            ],
+            "contentStatus": "published",
+            "updatedAt": "2026-11-13",
+            "interviewBaseHeat": 0,
+            "interviewCount": 1,
+            "heat": 1,
+            "currRank": 1,
+            "quickRead": {
+              "text": "Kafka 把事件保存在可重读的分区日志中，普通消费组按分区分担处理并保存各自位置。可靠性需分别核对生产确认与幂等重试、Broker 副本与选主、消费进度和业务幂等；Kafka 内部事务的恰好一次不能直接扩展到外部业务。"
+            }
           }
         ]
       },
@@ -3100,14 +3140,14 @@
             "isLeaf": true,
             "filePath": "backend/database",
             "contentStatus": "published",
-            "heat": 35,
+            "heat": 36,
             "currRank": 5,
             "updatedAt": "2026-10-31",
             "interviewBaseHeat": 10,
             "quickRead": {
               "text": "Cache-aside 以数据库为权威，读缓存未命中后回填，写数据库后失效缓存。TTL、失效通知和并发请求合并分别约束旧值、传播与负载，却不能保证跨层强一致或阻止旧请求回填；关键决策仍须在权威数据上校验，并设计失效失败的恢复路径。"
             },
-            "interviewCount": 25,
+            "interviewCount": 26,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -3116,14 +3156,14 @@
             "isLeaf": true,
             "filePath": "backend/database",
             "contentStatus": "published",
-            "heat": 31,
+            "heat": 32,
             "currRank": 5,
             "updatedAt": "2026-11-04",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "索引按键与页布局减少定位工作，是否更快须看扫描、回表、缓存和写维护。InnoDB普通有序索引以页式树组织，RocksDB的LSM把更新缓冲后生成SST并以compaction维护，二者在读取、写入、空间与后台成本间取舍。固定查询、持久性和负载后比较，不能只凭树名下性能结论。"
             },
-            "interviewCount": 30,
+            "interviewCount": 31,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -3132,14 +3172,30 @@
             "isLeaf": true,
             "filePath": "backend/storage",
             "contentStatus": "published",
-            "heat": 15,
+            "heat": 16,
             "currRank": 5,
             "updatedAt": "2026-10-29",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "持久状态区分会话消息、执行检查点、任务与事件，按身份与版本更新并限制访问。客户端缓存不是唯一真相，恢复、保留、删除与外部副作用对账要分别定义。"
             },
-            "interviewCount": 9,
+            "interviewCount": 10,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
+            "label": "事务、隔离级别与锁",
+            "key": "db-transaction-lock",
+            "isLeaf": true,
+            "filePath": "backend/database",
+            "contentStatus": "published",
+            "heat": 16,
+            "currRank": 5,
+            "updatedAt": "2026-10-16",
+            "interviewBaseHeat": 1,
+            "quickRead": {
+              "text": "事务定义提交与隔离边界。InnoDB 普通一致性读用 ReadView 与 undo 选择可见版本，锁定读与写语句另按当前数据和锁规则处理；锁范围取决于索引、条件与隔离级别。持久化、错误回滚和跨系统幂等都要说明具体配置与失败边界。"
+            },
+            "interviewCount": 15,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -3170,22 +3226,6 @@
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "Redis 类型按访问语义选择，内部编码随版本、配置和数据变化。小 ZSet 可采用紧凑编码，非紧凑实现结合字典的 member 查分与跳表的有序、范围和排名；选型同时约束容量、过期、并发与故障恢复。"
-            },
-            "interviewCount": 13,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "事务、隔离级别与锁",
-            "key": "db-transaction-lock",
-            "isLeaf": true,
-            "filePath": "backend/database",
-            "contentStatus": "published",
-            "heat": 14,
-            "currRank": 5,
-            "updatedAt": "2026-10-16",
-            "interviewBaseHeat": 1,
-            "quickRead": {
-              "text": "事务定义提交与隔离边界。InnoDB 普通一致性读用 ReadView 与 undo 选择可见版本，锁定读与写语句另按当前数据和锁规则处理；锁范围取决于索引、条件与隔离级别。持久化、错误回滚和跨系统幂等都要说明具体配置与失败边界。"
             },
             "interviewCount": 13,
             "interviewCountBasis": "verified-public-posts"
@@ -4910,14 +4950,14 @@
             "isLeaf": true,
             "filePath": "career",
             "contentStatus": "published",
-            "heat": 37,
+            "heat": 40,
             "currRank": 5,
-            "updatedAt": "2026-10-28",
+            "updatedAt": "2026-11-13",
             "interviewBaseHeat": 6,
             "quickRead": {
-              "text": "简历围绕问题、个人决策和可核验结果叙述项目，区分个人与团队成果。面试需解释系统边界、选型、评测和失败处理；示例指标不能写成自己的经历，未做过的技术与真实用户情况应如实说明。"
+              "text": "简历围绕问题、个人决策和可核验结果叙述项目，区分个人贡献与团队帮助。技术面解释系统边界、选型、评测与失败处理，HR面用真实经历说明协作、压力和求职动机；不补造指标、承诺或未发生的成果。"
             },
-            "interviewCount": 31,
+            "interviewCount": 34,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -4958,14 +4998,14 @@
             "isLeaf": true,
             "filePath": "career",
             "contentStatus": "published",
-            "heat": 18,
+            "heat": 19,
             "currRank": 5,
             "updatedAt": "2026-10-28",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Agent相关岗位覆盖应用、平台、评测、安全与研究工程，名称并不统一。按团队实际产出和工作任务判断方向，工程基础、状态工具与质量验证常有交集；岗位热度不能代替自身能力证据和团队要求。"
             },
-            "interviewCount": 12,
+            "interviewCount": 13,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -4974,14 +5014,14 @@
             "isLeaf": true,
             "filePath": "career",
             "contentStatus": "published",
-            "heat": 17,
+            "heat": 18,
             "currRank": 5,
             "updatedAt": "2026-07-17",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "项目价值应在可比较任务和基线下衡量真实完成质量、风险、延迟、成本与使用负担。离线、shadow、canary和持续监控各自回答不同问题，不把演示成功或未校准总分当收益证明。"
             },
-            "interviewCount": 11,
+            "interviewCount": 12,
             "interviewCountBasis": "verified-public-posts"
           },
           {

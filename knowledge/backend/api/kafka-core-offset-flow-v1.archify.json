@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "Kafka：写入、处理与消费进度",
+    "output": "kafka-core-offset-flow-v1.html",
+    "locale": "zh-CN",
+    "quality_profile": "showcase"
+  },
+  "stages": [
+    {
+      "label": "生产"
+    },
+    {
+      "label": "日志与进度"
+    },
+    {
+      "label": "消费处理"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "producer",
+      "type": "backend",
+      "label": "生产者",
+      "sublabel": "发送事件",
+      "stage": 0,
+      "row": 0
+    },
+    {
+      "id": "log",
+      "type": "database",
+      "label": "分区日志",
+      "sublabel": "记录有 offset",
+      "stage": 1,
+      "row": 0
+    },
+    {
+      "id": "consumer",
+      "type": "backend",
+      "label": "消费者",
+      "sublabel": "拉取记录",
+      "stage": 2,
+      "row": 0
+    },
+    {
+      "id": "handler",
+      "type": "backend",
+      "label": "处理并持久化",
+      "sublabel": "业务效果另行验证",
+      "stage": 2,
+      "row": 1
+    },
+    {
+      "id": "commit",
+      "type": "backend",
+      "label": "提交消费进度",
+      "sublabel": "下一条 offset",
+      "stage": 2,
+      "row": 2
+    },
+    {
+      "id": "offsets",
+      "type": "database",
+      "label": "组进度存储",
+      "sublabel": "__consumer_offsets",
+      "stage": 1,
+      "row": 2
+    }
+  ],
+  "flows": [
+    {
+      "id": "produce",
+      "from": "producer",
+      "to": "log",
+      "label": "事件",
+      "variant": "emphasis"
+    },
+    {
+      "id": "fetch",
+      "from": "log",
+      "to": "consumer",
+      "label": "记录批次",
+      "variant": "emphasis"
+    },
+    {
+      "id": "process",
+      "from": "consumer",
+      "to": "handler",
+      "label": "处理输入",
+      "variant": "emphasis"
+    },
+    {
+      "id": "success",
+      "from": "handler",
+      "to": "commit",
+      "label": "处理成功",
+      "variant": "default"
+    },
+    {
+      "id": "save",
+      "from": "commit",
+      "to": "offsets",
+      "label": "消费位置",
+      "variant": "default"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "amber",
+      "title": "图的适用范围",
+      "items": [
+        "示例采用处理成功后手动提交进度；不表示业务写入与进度提交原子完成。",
+        "业务已提交、offset 未提交时崩溃，恢复可能重复处理，仍需幂等。",
+        "图省略副本与生产确认；消息被消费不会立即删除日志。"
+      ]
+    }
+  ]
+}

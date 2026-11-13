@@ -1836,6 +1836,20 @@
             "contentFormat": "short-qa-v2",
             "updatedAt": "2026-11-12",
             "department": "阿里云"
+          },
+          {
+            "label": "阿里云后端与 Agent HR 面：个人贡献、协作与求职动机",
+            "key": "alibaba-ai-29",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "tags": [
+              "Agent",
+              "HR面",
+              "项目表达"
+            ],
+            "contentFormat": "short-qa-v2",
+            "updatedAt": "2026-11-13",
+            "department": "阿里云"
           }
         ]
       },
@@ -2728,6 +2742,36 @@
             ],
             "contentFormat": "short-qa-v2",
             "updatedAt": "2026-11-12"
+          },
+          {
+            "label": "快手 Agent 开发实习一面：MySQL、Kafka 与 RAG",
+            "key": "kuaishou-ai-21",
+            "isLeaf": true,
+            "filePath": "kuaishou/ai",
+            "tags": [
+              "Agent",
+              "MySQL",
+              "Kafka",
+              "RAG"
+            ],
+            "contentFormat": "short-qa-v2",
+            "updatedAt": "2026-11-13",
+            "department": "其他"
+          },
+          {
+            "label": "快手 Agent 开发二面关联题单：Hooks、锁与设计模式",
+            "key": "kuaishou-ai-22",
+            "isLeaf": true,
+            "filePath": "kuaishou/ai",
+            "tags": [
+              "Agent",
+              "Hooks",
+              "设计模式",
+              "MySQL"
+            ],
+            "contentFormat": "short-qa-v2",
+            "updatedAt": "2026-11-13",
+            "department": "其他"
           }
         ]
       }
@@ -3560,6 +3604,35 @@
             "updatedAt": "2026-10-31",
             "contentFormat": "short-qa-v2",
             "role": "AI 研发工程师"
+          },
+          {
+            "label": "小红书 AI 全栈实习一面：多 Agent、Skill 与 Harness",
+            "key": "redbook-ai-22",
+            "isLeaf": true,
+            "filePath": "redbook/ai",
+            "tags": [
+              "Agent",
+              "Skill",
+              "Harness",
+              "RAG"
+            ],
+            "contentFormat": "short-qa-v2",
+            "updatedAt": "2026-11-13",
+            "department": "其他"
+          },
+          {
+            "label": "小红书增长方向一、二面：Harness、ReAct 与研究贡献",
+            "key": "redbook-ai-23",
+            "isLeaf": true,
+            "filePath": "redbook/ai",
+            "tags": [
+              "Agent",
+              "Harness",
+              "ReAct"
+            ],
+            "contentFormat": "short-qa-v2",
+            "updatedAt": "2026-11-13",
+            "department": "其他"
           }
         ]
       }
