@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "JDK 7 头插扩容：一种成环交错",
+    "locale": "zh-CN",
+    "output": "hashmap-cycle.html",
+    "quality_profile": "showcase"
+  },
+  "participants": [
+    {
+      "id": "first",
+      "type": "backend",
+      "label": "线程 T1"
+    },
+    {
+      "id": "nodes",
+      "type": "database",
+      "label": "共享链节点",
+      "sublabel": "初始 A → B → null"
+    },
+    {
+      "id": "second",
+      "type": "backend",
+      "label": "线程 T2"
+    }
+  ],
+  "messages": [
+    {
+      "id": "save-next",
+      "from": "first",
+      "to": "nodes",
+      "y": 160,
+      "label": "读取 A.next = B",
+      "note": "T1 保存 e=A、next=B 后暂停。"
+    },
+    {
+      "id": "other-transfer",
+      "from": "second",
+      "to": "nodes",
+      "y": 225,
+      "label": "先完成头插迁移",
+      "note": "共享链接变成 B → A → null。"
+    },
+    {
+      "id": "resume-a",
+      "from": "first",
+      "to": "nodes",
+      "y": 290,
+      "label": "恢复：先把 A 放入新桶",
+      "note": "T1 的桶头 A；继续处理保存的 B。"
+    },
+    {
+      "id": "read-changed-next",
+      "from": "first",
+      "to": "nodes",
+      "y": 355,
+      "label": "读取 B.next = A，插入 B",
+      "note": "T1 的桶头 B → A；下一次又处理 A。"
+    },
+    {
+      "id": "link-cycle",
+      "from": "first",
+      "to": "nodes",
+      "y": 420,
+      "label": "读取 A.next=null，再头插 A",
+      "note": "A.next=B，且 B.next=A，形成环。"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "amber",
+      "title": "成立条件",
+      "items": [
+        "A、B 在新表仍落同一桶。",
+        "两线程各有新表，但共享节点。"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "历史边界",
+      "items": [
+        "依据 7u80-b15 transfer 构造，未现场复现。",
+        "不能套用为 JDK 17 的扩容实现。"
+      ]
+    }
+  ]
+}

@@ -21,6 +21,28 @@
 
 HotSpot 的元空间是实现类元数据的一种机制，不能把“方法区”这个规范概念与某一实现名称完全等同。堆使用量也不等于 RSS；映射、保留与实际提交内存须分别理解。
 
+## JDK 8 到元空间：改的是实现，不是全部共享区
+
+“共享区在 JDK 8 之后变成元空间”混合了规范区域和 HotSpot 实现。准确说法是：JDK 8 的 HotSpot 移除了永久代，把类元数据改在本地内存中分配；Java 堆仍然存在，方法区这个规范概念也没有消失。[JEP 122](https://openjdk.org/jeps/122)的目标是移除永久代及其容量调优需求，而非让所有共享数据搬进元空间；它明确把减少类元数据内存列为非目标。
+
+这项变化减少了依赖 `MaxPermSize` 预估类元数据容量的负担，但没有让内存无限。类加载器持续存活、动态生成类不断增长，仍会占用本地资源并可能导致分配失败。定位时应分别观察类/类加载器数、元数据占用、堆和进程内存，不能仅靠“已经换成元空间”排除泄漏。
+
+## 为什么规范区分 JVM 栈和本地方法栈
+
+JVM 栈保存方法调用帧、局部变量与中间计算结果；本地方法栈支持非 Java 语言编写的 native 方法，也可支持用 C 等语言实现的解释器。[JVMS 17 §2.5.2 与 §2.5.6](https://docs.oracle.com/javase/specs/jvms/se17/html/jvms-2.html#jvms-2.5.6)描述的是不同执行需求，并不强制所有 JVM 都实现两个彼此独立的物理栈；不需要相关机制的实现可以不提供本地方法栈。
+
+因此，回答“Java 中会用到 C/C++ 吗”时，可以说明 Java 方法能通过本地接口调用非 Java 实现，但不能推断每个 Java 方法都会转成 C/C++ 后再执行。线程私有的是它的执行状态；局部变量里保存一个共享对象的引用，也不会使该对象变成线程私有。
+
+## 有 GC 为什么仍会泄漏
+
+[JLS 17 的可达性规则](https://docs.oracle.com/javase/specs/jls/se17/html/jls-12.html#jls-12.6.1)从线程后续计算能否访问对象解释可达性；GC 不能替应用判断一个仍被持有的对象是否还有业务用途。例如静态 Map 持续加入请求记录且从不删除，旧记录即使已无用途，也仍被长期存活对象引用；线程池中的 ThreadLocal 值、未注销的监听器或缓存条目也应按实际引用链检查。这些是需要取证的候选模式，不是看见 Map 或 ThreadLocal 就能判定泄漏；ThreadLocal 的具体边界见[线程局部变量与清理](java-thread-local.md)。
+
+同样要区分 Java 对象保留和未释放的文件句柄、连接、native 分配等资源。排查时先证明持续增长及持有者，再修生命周期、容量或释放协议；不能用一次 OOM 或一次堆快照直接断言泄漏。
+
+## 先固定运行版本，再讨论为什么选 JDK 17
+
+运行时问题应先记录 JDK 发行版、版本、VM 参数和依赖。解释“为什么使用 17”时，应说清项目所需能力、框架与工具兼容性、运行环境和升级验证；版本号本身不是性能结论，也不能代替项目选型证据。[Oracle 的 JDK 17 迁移指南](https://docs.oracle.com/en/java/javase/17/migrate/preparing-migration.html)要求检查第三方库、过时 VM 参数和程序行为，能启动并不意味着迁移验证已经完成。该指南中的“最新版本”指其 Java 17 文档语境，不能据此把 17 称为当前最新 JDK。
+
 ## StackOverflowError 与 OutOfMemoryError
 
 递归超过允许栈深度可产生 StackOverflowError；创建线程或扩展栈时无法获得内存也可能产生 OutOfMemoryError。堆无法满足分配、类元数据增长、直接内存或本地线程资源耗尽都要按异常和实现诊断。[JVMS 栈与堆的异常条件](https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-2.html#jvms-2.5.2)解释了为什么“OOM 一定来自堆”不成立。
@@ -59,15 +81,20 @@ jcmd <pid> VM.native_memory summary.diff
 - [字节后端实习一面：Agent 取舍、线程池与索引](../../../interview/bytedance/base/bytedance-base-78.md)
 - [阿里国际 AI 应用研发一面：JDK 8、消息可靠性与 RAG](../../../interview/alibaba/ai/alibaba-ai-25.md)
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
+- [腾讯后台开发暑期一面：Java 内存、并发与检索](../../../interview/tencent/ai/tencent-ai-31.md)
 - [58同城 Agent 开发一面：MCP、数据查询与后端基础](../../../interview/58tongcheng/ai/58tongcheng-ai-1.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
 
-原有区域与诊断说明采用 Java 21；程序计数器、本地方法栈及 JMM 的补充另按下列 Java 8 规范核对。HotSpot 细节不代表所有 JVM。
+原有区域与诊断说明采用 Java 21；程序计数器、本地方法栈、可达性及 JMM 的补充分别按下列 Java 8/17 规范核对。永久代迁移依据 JEP 122，运行版本检查依据 JDK 17 迁移指南；HotSpot 细节不代表所有 JVM。
 
 - [JVMS 21：运行时数据区域](https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-2.html#jvms-2.5)
 - [JVMS 8：程序计数器与本地方法栈](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5)
 - [JLS 8：Java 内存模型](https://docs.oracle.com/javase/specs/jls/se8/html/jls-17.html#jls-17.4)
 - [JVMS 21：加载、链接与初始化](https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-5.html)
+- [JLS 17：对象可达性与类卸载条件](https://docs.oracle.com/javase/specs/jls/se17/html/jls-12.html#jls-12.6.1)
+- [JEP 122：移除永久代的目标与实现范围](https://openjdk.org/jeps/122)
+- [JVMS 17：JVM 栈与本地方法栈](https://docs.oracle.com/javase/specs/jvms/se17/html/jvms-2.html#jvms-2.5.6)
+- [Oracle JDK 17：迁移前验证](https://docs.oracle.com/en/java/javase/17/migrate/preparing-migration.html)
 - [Java 21：Native Memory Tracking](https://docs.oracle.com/en/java/javase/21/vm/native-memory-tracking.html)

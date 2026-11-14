@@ -106,6 +106,7 @@ AI 功能还要计入检索和模型费用、人工复核、失败处理与维�
 - [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../interview/bytedance/base/bytedance-base-36.md)
 - [阿里云 AI 产品一面：模型基础、需求优先级与产品定位](../../interview/alibaba/ai/alibaba-ai-27.md)
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../interview/bytedance/base/bytedance-base-48.md)
+- [美团后端暑期二面：AI Coding 复盘、记忆与评估计划](../../interview/meituan/ai/meituan-ai-15.md)
 - [京东 AI 应用开发日常实习二面：项目表达与产品场景](../../interview/jd/ai/jd-ai-7.md)
 - [VAST 后端一面：可观测性、AI Coding 与节点调度](../../interview/vast/ai/vast-ai-1.md)
 - [字节全栈实习：Session、权限与前端基础](../../interview/bytedance/base/bytedance-base-46.md)
