@@ -180,20 +180,20 @@ STM-4 每帧共有多少字节？其信息净负荷区（含通道开销）对�
 
 **对应文章：** [光纤通信：SDH 速率与帧结构](../comm/soe-optical-comm-mcq.md)。
 
-### 高频考点题 C12：新建线路的地线兼做通信
+### 高频考点题 C12：DWDM 频率间隔换算成波长间隔
 
-某 500 kV 新建输电线路，计划让杆塔顶部的架空地线同时承担通信功能。合适的光缆类型及需要重点校核的问题是哪项？
+某 DWDM 系统工作在 1550 nm 附近，按 ITU-T G.694.1 频率栅格采用 100 GHz 信道间隔，光速取 3×10⁸ m/s。相邻信道的波长间隔约为多少？
 
-- A. OPGW；需要校核短路电流引起的温升和雷击影响
-- B. ADSS；它全介质，可以直接替代架空地线承担防雷
-- C. OPGW；主要风险是强电场下护套的电腐蚀
-- D. ADSS；需要校核其作为地线的短路电流热容量
+- A. 0.08 nm
+- B. 0.4 nm
+- C. 0.8 nm
+- D. 20 nm
 
-**答案：A。**
+**答案：C。**
 
-**解析：** OPGW 把光纤单元放在金属绞线中，替代架空地线，兼有防雷、短路电流通道和通信功能，适合新建或更换地线时同步建设；它要承受短路电流和雷击，因此要校核温升与雷击。ADSS 是全介质自承式光缆，只承担通信，不能替代地线，B、D 错。电腐蚀是 ADSS 护套在强电场下的问题，不是金属外层 OPGW 的主要问题，C 错。
+**解析：** 由 λ = c/f 微分得 Δλ ≈ λ²·Δf / c = (1550×10⁻⁹ m)² × 100×10⁹ Hz ÷ (3×10⁸ m/s) ≈ 0.80×10⁻⁹ m，即约 0.8 nm。A 少算了一个数量级；B 是 50 GHz 间隔对应的波长间隔，约 0.4 nm；D 是 CWDM 的标称波长间隔（ITU-T G.694.2 为 20 nm），CWDM 正是靠宽间隔降低对激光器波长稳定性的要求，不是 DWDM 的取值。
 
-**对应文章：** [光纤通信：电力特种光缆 OPGW 与 ADSS](../comm/soe-optical-comm-mcq.md)。
+**对应文章：** [光纤通信：常用器件与 DWDM](../comm/soe-optical-comm-mcq.md)，频率栅格见 [ITU-T G.694.1](https://www.itu.int/rec/T-REC-G.694.1/en)。
 
 ### 高频考点题 C13：APD 的输出光电流
 
@@ -298,7 +298,7 @@ R1 当前路由表：N1 距离 3、下一跳 R2；N2 距离 5、下一跳 R3；N
 
 **答案：D。**
 
-**解析：** 通告距离先加 1：N1 为 5、N2 为 3、N3 为 16、N4 为 2。N1 原下一跳就是 R2，即使变差也要更新为 5；N2 经 R2 为 3，小于原来的 5，改为经 R2；N3 为 16 即不可达，不加入；N4 经 R2 为 2，与原来经 R4 的 2 相同，不更换。A 没有按同一下一跳的变化更新 N1，把不可达路由加进了表，还在距离相等时无故更换了 N4 的下一跳；B 是通告距离一律没有加 1 的结果：N1 为 4、N2 为 2、N4 为 1 都比正确值少 1，N3 也因此被当成 15 跳可达加入了表。C 忽略了同一下一跳 R2 的距离变化（N1 仍为 3），N2、N3 没有加 1，并把 N3 当作可达加入了表，N4 则保留原路由。
+**解析：** 通告距离先加 1：N1 为 5、N2 为 3、N3 为 16、N4 为 2。N1 原下一跳就是 R2，即使变差也要更新为 5；N2 经 R2 为 3，小于原来的 5，改为经 R2；N3 为 16 即不可达，不加入；N4 经 R2 为 2，与原来经 R4 的 2 相同，不更换。A 没有按同一下一跳的变化更新 N1，把不可达路由加进了表，还在距离相等时无故更换了 N4 的下一跳；B 是通告距离一律没有加 1 的结果：N1 为 4、N2 为 2、N4 为 1 都比正确值少 1，N3 也因此被当成 15 跳可达加入了表。C 忽略了同一下一跳 R2 的距离变化（N1 仍为 3），N2、N3 没有加 1，并把 N3 当作可达加入了表；它对 N4 保留经 R4、距离 2 的原路由，这一项本身是对的，但其余各项有错，整体不成立。
 
 **对应文章：** [数据通信网：路由协议](../comm/soe-data-comm-network-mcq.md)，更新规则见 [RFC 2453：RIP Version 2](https://www.rfc-editor.org/rfc/rfc2453)。
 
@@ -424,20 +424,20 @@ R1 当前路由表：N1 距离 3、下一跳 R2；N2 距离 5、下一跳 R3；N
 
 **对应文章：** [移动通信：电力无线专网与无线虚拟专网](../comm/soe-mobile-comm-mcq.md)，原文见 [工业和信息化部关于调整 223-235MHz 频段无线数据传输系统频率使用规划的通知](https://wap.miit.gov.cn/jgsj/wgj/wjfb/art/2022/art_08a0e1d6b59a4828a22a64b7255a1dc4.html)。
 
-### 高频考点题 C28：窄带与宽带电力线载波
+### 高频考点题 C28：地下配电室传感器的物联网接入
 
-关于电力线载波通信，下列说法正确的是哪项？
+某地要为分散在多个小区地下配电室里的大量状态传感器选择无线接入方式：每台每天只上报几条小数据，要求电池供电工作数年，地下室需要较强的信号穿透能力，并且希望直接由运营商蜂窝网络接入、不自建网关。最合适的是哪项？
 
-- A. 宽带载波带宽大，信号可以轻易穿过配电变压器实现跨台区通信
-- B. 窄带电力线载波的信道特性恒定，没有噪声和时变衰减问题
-- C. 电力线载波通信需要先另行敷设一条专用通信电缆
-- D. 窄带和宽带电力线载波都有公开标准（如 ITU-T G.9903、IEEE 1901），宽带速率更高，但都要应对时变衰减和噪声，常用 OFDM、纠错编码和中继组网
+- A. Wi-Fi（IEEE 802.11）；速率高，适合大量终端长期靠电池工作
+- B. LoRa；工作在授权频谱，由运营商基站直接覆盖
+- C. Zigbee；单跳即可实现数公里的广域覆盖
+- D. NB-IoT；工作在授权频谱，有覆盖增强和省电机制，可由运营商蜂窝网络直接承载
 
 **答案：D。**
 
-**解析：** 两类 PLC 都以电力线为介质，负载投切带来阻抗和衰减的时变以及脉冲噪声，工程上靠 OFDM、纠错和中继提升可靠性。变压器对高频载波衰减大，通信一般限于同一台区，A 错；B 与电力线信道特性相反；C 违背了 PLC 利用既有电力线的基本优点。
+**解析：** NB-IoT 是 3GPP 标准化的低功耗广域（LPWA）技术，使用运营商的授权频谱，通过覆盖增强提升地下室、管井等场景的穿透，并用省电模式（PSM）和扩展非连续接收（eDRX）延长电池寿命，适合海量低速、小数据量的终端。A 错，Wi-Fi 面向局域高速接入，终端功耗高，不适合多年电池供电，也不是运营商广域网络。B 错，LoRa 工作在免许可的 ISM 频段，通常要自建或租用网关组网。C 错，Zigbee 基于 IEEE 802.15.4，是短距离低功耗技术，靠多跳网状网络扩展范围，单跳达不到数公里。
 
-**对应文章：** [移动通信：电力线载波通信](../comm/soe-mobile-comm-mcq.md)，标准见 [ITU-T G.9903](https://www.itu.int/rec/T-REC-G.9903)。
+**对应文章：** [移动通信：物联网](../comm/soe-mobile-comm-mcq.md)，NB-IoT 介绍见 [GSMA：NB-IoT](https://www.gsma.com/solutions-and-impact/technologies/internet-of-things/mobile-iot-technology-nb-iot/)。
 
 ### 高频考点题 C29：电力业务与 5G 场景、切片的对应
 
@@ -474,7 +474,7 @@ R1 当前路由表：N1 距离 3、下一跳 R2；N2 距离 5、下一跳 R3；N
 | 题号 | 答案 | 题号 | 答案 | 题号 | 答案 |
 | --- | --- | --- | --- | --- | --- |
 | C01 | C | C11 | D | C21 | C |
-| C02 | A | C12 | A | C22 | B |
+| C02 | A | C12 | C | C22 | B |
 | C03 | B | C13 | C | C23 | A |
 | C04 | B | C14 | B | C24 | C |
 | C05 | D | C15 | C | C25 | C |
@@ -491,6 +491,8 @@ R1 当前路由表：N1 距离 3、下一跳 R2；N2 距离 5、下一跳 R3；N
 - [MIT OpenCourseWare 6.02 Digital Communication Systems](https://ocw.mit.edu/courses/6-02-introduction-to-eecs-ii-digital-communication-systems-fall-2012/)：线性分组码、CRC 与码间串扰
 - [MIT OpenCourseWare 6.011 Introduction to Communication, Control, and Signal Processing](https://ocw.mit.edu/courses/6-011-introduction-to-communication-control-and-signal-processing-spring-2010/)：随机过程通过线性系统、匹配滤波
 - [ITU-T G.652：单模光纤和光缆特性](https://www.itu.int/rec/T-REC-G.652/en)
+- [ITU-T G.694.1：DWDM 频率栅格](https://www.itu.int/rec/T-REC-G.694.1/en)
+- [ITU-T G.694.2：CWDM 波长栅格](https://www.itu.int/rec/T-REC-G.694.2/en)
 - [ITU-T G.707：SDH 网络节点接口](https://www.itu.int/rec/T-REC-G.707/en)
 - [ITU-T G.984.2：GPON 物理媒质相关层](https://www.itu.int/rec/T-REC-G.984.2/en)
 - [ITU-T G.650.3：已敷设单模光缆段的测试方法](https://www.itu.int/rec/T-REC-G.650.3/en)
@@ -502,8 +504,9 @@ R1 当前路由表：N1 距离 3、下一跳 R2；N2 距离 5、下一跳 R3；N
 - [ITU-R M.2083：IMT-2020 框架与使用场景](https://www.itu.int/rec/R-REC-M.2083)
 - [RFC 3261：SIP: Session Initiation Protocol](https://www.rfc-editor.org/rfc/rfc3261)
 - [工业和信息化部关于调整 223-235MHz 频段无线数据传输系统频率使用规划的通知](https://wap.miit.gov.cn/jgsj/wgj/wjfb/art/2022/art_08a0e1d6b59a4828a22a64b7255a1dc4.html)
-- [ITU-T G.9903：窄带 OFDM 电力线通信](https://www.itu.int/rec/T-REC-G.9903)
-- IEEE 1138（OPGW）、IEEE 1901（宽带电力线通信）、IEEE 802.11（无线局域网）系列标准
+- [GSMA：NB-IoT](https://www.gsma.com/solutions-and-impact/technologies/internet-of-things/mobile-iot-technology-nb-iot/)
+- [CSA：Zigbee](https://csa-iot.org/all-solutions/zigbee/)
+- IEEE 802.11（无线局域网）、IEEE 802.15.4（低速无线个域网）系列标准
 - 国家电网 2027 版通信类考试大纲（专业知识第 1–32 项）
 
-以上来源核实日期为 2026-11-11。
+以上来源核实日期为 2026-11-11；C12、C28 两题所用来源于 2026-11-13 核实。
