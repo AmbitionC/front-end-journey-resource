@@ -39,6 +39,21 @@ Skill 是把「某类任务该怎么做」固化下来、供 Agent 按需加载�
 
 缓存元信息时用 registry revision 或 ETag 失效；正文缓存键包含 `skill_id@version + contentHash`。常规兼容更新后，在途 Run 可固定旧版本，新 Run 才看到新索引；紧急安全撤销则按策略暂停或取消相关任务并核对已产生的副作用，避免一半流程使用旧规则、一半使用新规则。
 
+### 数百个 Skill：领域只是候选标签
+
+[Agent Skills 格式规范](https://agentskills.io/specification)把名称与描述、完整正文、按需资源分层加载；它没有规定业务领域必须互斥，也没有保证只选一个领域就能找到正确 Skill。领域分类可以缩小候选集，不能成为权限边界或任务完成的证据。下面是可实现的工程取舍，并非规范要求的统一路由算法：
+
+| 任务与目录的关系 | 处理方式 | 需要验证什么 |
+|---|---|---|
+| 领域明确、候选可区分 | 先读少量描述，再加载命中正文 | 描述是否覆盖真实输入、输出和不适用条件 |
+| 两个领域都相关 | 允许多标签召回，按子任务选择必要 Skill | 依赖、执行顺序与输入输出是否兼容 |
+| 初选领域后发现缺能力或前提不符 | 返回允许目录，扩大一次候选范围或澄清 | 是否保留原目标、已完成动作和版本，避免重复执行 |
+| 所有候选都不合适 | 明确无匹配，按任务约定交还或澄清 | 是否停止猜选，是否仍遵守原权限与预算 |
+
+例如“查订单异常后准备客户说明”同时涉及只读数据分析和文字撰写，不能因先选了分析领域就永远看不到写作能力。可以分解成有依赖的两个子任务，只加载各自需要的正文；准备说明不自动授权发送消息。若某个 Skill 已产生写操作，改选前先核对原操作结果，不能把错域重选变成重新执行整个任务。
+
+回退次数、候选数量与加载 token 应有任务预算。用单领域、跨领域、描述相近但不适用、无匹配等用例，分别评估候选覆盖、最终选中、正文遵循和任务结果；同时记载总 token、重选次数与耗时。[官方描述优化指南](https://agentskills.io/skill-creation/optimizing-descriptions)强调相近但不应触发的负例，以及固定训练与验证切分；触发正确还需继续检查输出质量。只有 token 下降而跨领域任务失败增加，不能算优化成功。目录、模型或描述更新后重新评测；给领域换名字不能修复真实能力重叠。
+
 ## 热插拔：不重启地新增、更新与下线
 
 热插拔的关键在于**索引与正文分离**——只有索引常驻，所以增删改代价小且可回滚：
@@ -131,6 +146,7 @@ MCP 组织宿主与服务器的能力发现和调用，Skill 组织按需加载�
 - [快手主站 SRE 一二三面：Agent Skill、性能排障与数据链路](../../../interview/kuaishou/ai/kuaishou-ai-5.md)
 - [网易云音乐全栈一面：JavaScript、排序与 RAG](../../../interview/netease/fullstack/netease-fullstack-2.md)
 - [小红书大模型平台全栈一面：写边界、Harness 与意图澄清](../../../interview/redbook/ai/redbook-ai-7.md)
+- [字节中国交易与广告 AI 全栈实习一面：Skill、MCP 与回文](../../../interview/bytedance/base/bytedance-base-79.md)
 - [快手 AI 全栈一面：Skill 成本、Agent 链路与开发验收](../../../interview/kuaishou/ai/kuaishou-ai-9.md)
 - [快手大模型应用 Java 实习一面：Agent、SkillHub 与 Vibe Coding](../../../interview/kuaishou/ai/kuaishou-ai-1.md)
 - [58同城 Agent 开发一面：MCP、数据查询与后端基础](../../../interview/58tongcheng/ai/58tongcheng-ai-1.md)
@@ -143,3 +159,5 @@ MCP 组织宿主与服务器的能力发现和调用，Skill 组织按需加载�
 - [Anthropic — Agent Skills](https://www.anthropic.com/news/skills)
 - [Model Context Protocol — Specification](https://modelcontextprotocol.io/specification/2025-11-25)
 - [Anthropic Engineering — Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)
+- [Agent Skills — Specification](https://agentskills.io/specification)：格式与渐进式披露层次。
+- [Agent Skills — Optimizing skill descriptions](https://agentskills.io/skill-creation/optimizing-descriptions)：触发正负例与训练、验证分离。

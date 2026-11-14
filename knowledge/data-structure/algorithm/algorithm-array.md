@@ -571,6 +571,7 @@ console.log(constructIDPermutation(''));     // [0]
 - [阿里云后端与 Agent 二面：领域建模、训练并行与 Java 基础](../../../interview/alibaba/ai/alibaba-ai-28.md)
 - [百度后端一面：延迟诊断、工具恢复与滑动窗口](../../../interview/baidu/ai/baidu-ai-10.md)
 - [腾讯 CDG 金融科技二面：Agent 评估、协程与存储基础](../../../interview/tencent/ai/tencent-ai-29.md)
+- [腾讯后台开发暑期一面：Java 内存、并发与检索](../../../interview/tencent/ai/tencent-ai-31.md)
 - [蚂蚁机器学习实习一面：RAG 数据、幻觉与热点识别](../../../interview/antfin/ai/antfin-ai-15.md)
 <!-- interview-source-history:end -->
 

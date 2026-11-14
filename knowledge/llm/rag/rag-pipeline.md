@@ -362,6 +362,7 @@ async function answerWithRag(question: string, session: Session) {
 - [腾讯混元后台开发二面：推理调度、队列与缓存故障](../../../interview/tencent/ai/tencent-ai-30.md)
 - [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
 - [阿里国际 Java 二面：RAG 数据评测、微调与代码生成](../../../interview/alibaba/ai/alibaba-ai-26.md)
+- [腾讯后台开发暑期一面：Java 内存、并发与检索](../../../interview/tencent/ai/tencent-ai-31.md)
 - [蚂蚁 Agent 实习一面：缓存、消息与 RAG](../../../interview/antfin/ai/antfin-ai-6.md)
 - [OPPO 多模态暑期实习二面：RAG 项目复盘](../../../interview/oppo/ai/oppo-ai-4.md)
 - [字节 Agent 全栈一面：工具、评测与编码](../../../interview/bytedance/base/bytedance-base-40.md)

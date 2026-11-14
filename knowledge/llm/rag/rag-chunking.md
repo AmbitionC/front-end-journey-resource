@@ -247,6 +247,7 @@ function chunkDocument(nodes: Node[], limits: ChunkLimits) {
 - [字节 Agent 后端实习一面：LangGraph、评测集与混合检索](../../../interview/bytedance/base/bytedance-base-22.md)
 - [字节 Agent 二面：RAG 分块、查询改写与随机采样](../../../interview/bytedance/base/bytedance-base-28.md)
 - [京东零售后端一面：RAG 分块、证据与工具调用](../../../interview/jd/ai/jd-ai-4.md)
+- [腾讯后台开发暑期一面：Java 内存、并发与检索](../../../interview/tencent/ai/tencent-ai-31.md)
 - [携程 Java 后端二面：分块、向量检索与查询改写](../../../interview/ctrip/ai/ctrip-ai-1.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)
 - [蚂蚁机器学习实习一面：RAG 数据、幻觉与热点识别](../../../interview/antfin/ai/antfin-ai-15.md)

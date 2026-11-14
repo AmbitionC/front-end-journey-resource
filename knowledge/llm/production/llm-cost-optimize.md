@@ -442,6 +442,7 @@ Batch API 的完成时限和模型支持范围由提供商决定。在任务量�
 <!-- interview-source-history:start -->
 - [字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-20.md)
 - [海康威视 AI Agent 开发一面：可靠工具与任务状态](../../../interview/hikvision/ai/hikvision-ai-1.md)
+- [字节中国交易与广告 AI 全栈实习一面：Skill、MCP 与回文](../../../interview/bytedance/base/bytedance-base-79.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

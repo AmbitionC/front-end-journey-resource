@@ -29,6 +29,12 @@
 
 分词、大小写归一、同义词和字段权重都会影响结果。中文语料还要关注分词粒度：把一个专有名词切碎，可能比算法选择本身造成更大损失。
 
+### 为什么叫倒排：把“文档到词”反过来
+
+正向阅读从文档出发找它有哪些词；倒排索引从词出发找包含它的文档。假设分析器输出 `d1 → [向量, 检索]`、`d2 → [关键词, 检索]`，倒排表就是 `向量 → [d1]`、`关键词 → [d2]`、`检索 → [d1, d2]`。查询“检索”时直接读该词的文档列表，无须先逐篇扫描全文；多个词可以按查询语义对列表求交、求并，再打分。这是教学示例，不预设具体中文分词结果。[Elasticsearch 的 doc values 说明](https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/doc-values)用词项找文档与文档找字段值的访问方向解释了这种区别。
+
+文档列表称为 postings list；按字段配置，它还可保存词频、位置和偏移等信息。词频支持相关性计算，词位置可支持短语或邻近查询；只知道两个词都出现，不足以证明它们按指定次序相邻。[Elasticsearch 的 index_options](https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/index-options)区分这些信息层次。倒排索引是查找结构，BM25 是候选相关性评分方法，两者不是同一个概念；分词与归一化仍须在建索引和查询时保持兼容。
+
 ### 语义链路：Embedding 与近似最近邻
 
 语义检索先把查询和文档块映射为向量，再根据余弦距离、点积或欧氏距离寻找近邻。大规模系统一般使用 ANN 索引，以少量召回损失换取延迟和吞吐。
@@ -177,11 +183,14 @@ RRF 公式与 rank 从 1 开始的约定按 Elastic 官方滚动文档核验于 
 - [京东大模型应用开发实习：混合检索权重、向量索引与评测](../../../interview/jd/ai/jd-ai-5.md)
 - [美团 AI 应用开发实习一面：多路检索、半开熔断与记忆](../../../interview/meituan/ai/meituan-ai-8.md)
 - [蚂蚁 Agent 开发一面：多 Agent 并发与质量保障](../../../interview/antfin/ai/antfin-ai-1.md)
+- [腾讯后台开发暑期一面：Java 内存、并发与检索](../../../interview/tencent/ai/tencent-ai-31.md)
 - [蚂蚁 Agent 实习一面：缓存、消息与 RAG](../../../interview/antfin/ai/antfin-ai-6.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
 
+- [Elasticsearch：倒排与正向字段访问](https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/doc-values)
+- [Elasticsearch：词频、词位置与偏移配置](https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/index-options)
 - [Elastic：What is hybrid search?](https://www.elastic.co/what-is/hybrid-search)
 - [Elasticsearch Reference：Reciprocal rank fusion](https://www.elastic.co/docs/reference/elasticsearch/rest-apis/reciprocal-rank-fusion)
 - [Stanford IR：Evaluation Measures in Information Retrieval](https://web.stanford.edu/class/cs276/handouts/EvaluationNew-handout-1-per.pdf)
