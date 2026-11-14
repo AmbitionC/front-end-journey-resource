@@ -169,6 +169,21 @@
             "department": "中国交易与广告",
             "originalLabel": "字节 AI 全栈实习一面：多 Agent 编排与海量 URL Top-K",
             "roleCategory": "AI 与 Agent 工程"
+          },
+          {
+            "label": "字节中国交易与广告 AI 全栈实习一面：Skill、MCP 与回文",
+            "key": "bytedance-base-79",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "Agent",
+              "Skill",
+              "MCP",
+              "算法"
+            ],
+            "contentFormat": "short-qa-v2",
+            "department": "中国交易与广告",
+            "updatedAt": "2026-11-14"
           }
         ]
       },
@@ -1523,6 +1538,21 @@
             ],
             "updatedAt": "2026-10-31",
             "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "腾讯后台开发暑期一面：Java 内存、并发与检索",
+            "key": "tencent-ai-31",
+            "isLeaf": true,
+            "filePath": "tencent/ai",
+            "tags": [
+              "Java",
+              "RAG",
+              "索引",
+              "算法"
+            ],
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "updatedAt": "2026-11-14"
           }
         ]
       },
@@ -2772,6 +2802,21 @@
             "contentFormat": "short-qa-v2",
             "updatedAt": "2026-11-13",
             "department": "其他"
+          },
+          {
+            "label": "快手二面：事务快照、缓存与 Agent 项目复盘",
+            "key": "kuaishou-ai-23",
+            "isLeaf": true,
+            "filePath": "kuaishou/ai",
+            "tags": [
+              "MySQL",
+              "Redis",
+              "RAG",
+              "记忆"
+            ],
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "updatedAt": "2026-11-14"
           }
         ]
       }
@@ -4069,6 +4114,35 @@
             "contentFormat": "short-qa-v2",
             "updatedAt": "2026-11-12",
             "department": "其他"
+          },
+          {
+            "label": "美团 AI 全栈二面：AI Coding 复盘与测试边界",
+            "key": "meituan-ai-14",
+            "isLeaf": true,
+            "filePath": "meituan/ai",
+            "tags": [
+              "AI Coding",
+              "测试",
+              "全栈"
+            ],
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "updatedAt": "2026-11-14"
+          },
+          {
+            "label": "美团后端暑期二面：AI Coding 复盘、记忆与评估计划",
+            "key": "meituan-ai-15",
+            "isLeaf": true,
+            "filePath": "meituan/ai",
+            "tags": [
+              "AI Coding",
+              "RAG",
+              "记忆",
+              "评估"
+            ],
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "updatedAt": "2026-11-14"
           }
         ]
       },

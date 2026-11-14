@@ -61,6 +61,45 @@ function longestUnique(text) {
 
 更新 `left` 时取 max，避免窗口因遇到窗口外的旧字符而向左倒退。若语义是 grapheme cluster，先分段再应用相同窗口。
 
+## 最长回文子串的长度：枚举奇偶中心
+
+回文子串要求一段**连续**字符正反相同，不能跳过中间字符；最长回文子序列是另一个问题。只要求 $O(N^2)$ 时间并返回长度时，可以枚举中心，再向左右扩展，不必先建立整张动态规划表。输入字符范围、最大长度和空串规则仍须先确认，不能从题名补成某道题的约束。
+
+每个非空回文都有一个中心：奇数长度围绕某个字符，偶数长度围绕相邻字符之间的间隙。例如下面按 ASCII 字符说明，索引从 0 开始：
+
+| 文本 | 初始左右端点 | 扩展后覆盖 | 长度 |
+|---|---|---|---:|
+| `aba` | `(1, 1)`，中心为 `b` | `a b a` | 3 |
+| `abba` | `(1, 2)`，中心为两个 `b` 的间隙 | `a b b a` | 4 |
+
+扩展前内部已是回文，只有两个端点相等时，才能把它扩大一层；边界外或端点不同即停止。停止时 `left`、`right` 已分别越过最后一个有效端点，长度为 `right - left - 1`。枚举所有字符中心与间隙中心就覆盖了所有非空回文，取其中最大长度即可。
+
+下面是教学合同：按 Unicode code point 精确比较，空串返回 0，不做大小写折叠或 Unicode 归一化；这不是对原题未给条件的还原。
+
+```javascript
+function longestPalindromeLength(text) {
+  const chars = Array.from(text);
+  let best = 0;
+
+  function expand(left, right) {
+    while (left >= 0 && right < chars.length && chars[left] === chars[right]) {
+      left -= 1;
+      right += 1;
+    }
+    return right - left - 1;
+  }
+
+  for (let i = 0; i < chars.length; i += 1) {
+    best = Math.max(best, expand(i, i), expand(i, i + 1));
+  }
+  return best;
+}
+```
+
+有 $O(N)$ 个中心，每个最多扩展 $O(N)$ 次，最坏时间 $O(N^2)$，例如全部字符相同的文本。扩展本身只用常数工作空间，但本实现的 `Array.from` 保存字符数组，因此**总额外空间为 $O(N)$**；不能把整个实现称为 $O(1)$ 空间。
+
+按此合同，空串、`a`、`abba`、`abc`、`aaaa`、`😀a😀` 分别返回 0、1、4、1、4、3。JavaScript 的[String 迭代器规范](https://tc39.es/ecma262/multipage/text-processing.html#sec-string.prototype-%symbol.iterator%)按 code point 生成元素；组合字素仍可能由多个 code point 组成。若业务要按用户感知字符计长，应先按前述 Unicode 分段规则得到 grapheme 数组，再采用同一中心扩展不变量，另计分段成本。
+
 ## KMP 为什么不回退文本指针
 
 朴素匹配在每个起点重新比较，最坏为 O(nm)。Knuth、Morris 与 Pratt 的[原始论文](https://www.cs.jhu.edu/~misha/ReadingSeminar/Papers/Knuth77.pdf)构造模式串的前缀信息：当已匹配 `pattern[0..j)` 却失配时，最长真前缀与后缀告诉我们哪些字符仍可复用。
@@ -178,6 +217,7 @@ function compareVersions(a, b) {
 <!-- interview-source-history:start -->
 - [字节全栈实习：Session、权限与前端基础](../../../interview/bytedance/base/bytedance-base-46.md)
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
+- [字节中国交易与广告 AI 全栈实习一面：Skill、MCP 与回文](../../../interview/bytedance/base/bytedance-base-79.md)
 - [字节 TRAE 后端秋招二面：项目逻辑、工具与编辑距离](../../../interview/bytedance/base/bytedance-base-76.md)
 <!-- interview-source-history:end -->
 
@@ -188,3 +228,4 @@ function compareVersions(a, b) {
 - [NIST：Levenshtein distance](https://xlinux.nist.gov/dads/HTML/Levenshtein.html)
 - [MIT 6.006：动态规划练习中的编辑距离](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/487dc976eabd0f9bcd6a3c385203ea27_MIT6_006S20_r16.pdf)
 - [MDN：String.prototype[Symbol.iterator]()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Symbol.iterator)
+- [ECMAScript：String.prototype[Symbol.iterator]](https://tc39.es/ecma262/multipage/text-processing.html#sec-string.prototype-%symbol.iterator%)：本文中心扩展代码采用的 code point 迭代语义。

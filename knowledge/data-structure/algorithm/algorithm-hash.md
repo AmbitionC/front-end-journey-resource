@@ -135,6 +135,17 @@ JavaScript 的 Map 支持任意值作为 key，并提供明确的 `has`、`size`
 
 容量翻倍时，旧桶中的普通链表按 `(node.hash & oldCapacity)` 分为两组，分别留在原下标或移动到“原下标 + 旧容量”，并保留各组相对次序。例如旧容量为 16，扰动后的哈希值 3 与 19 原来都落在桶 3；扩为 32 后分别落在 3 和 19。这里重新确定的是桶位置，不需要为这些节点重新调用 key 的 `hashCode()`；树桶另走拆分逻辑。这个示例解释扩容机制，不是并发正确性证明。
 
+## 历史追问：JDK 7 的并发扩容为什么可能成环
+
+讨论这条历史故障链时，必须注明版本。以下根据 [OpenJDK 7u80-b15 的 HashMap.transfer](https://github.com/openjdk/jdk7u/blob/jdk7u80-b15/jdk/src/share/classes/java/util/HashMap.java)解释一种允许发生的线程交错，不声称本机已复现故障。其迁移循环先保存 `next = e.next`，再把 `e` 头插入新桶；节点本身是共享的，两个线程各自的新数组并不隔离节点的 `next`。
+
+假设旧链为 `A → B → null`，两个节点扩容后仍落在同一新桶。T1 保存 `e=A, next=B` 后暂停；T2 先完成头插迁移，使节点链接变为 `B → A → null`。T1 恢复后，仍从保存的 B 继续，但读取到的 B.next 已被 T2 改为 A；在它自己的新桶中先插 A、再插 B、再处理回到的 A，最后把 A.next 指向 B，于是形成 `A ↔ B`。查找一个映射到该桶、却不存在的 key 时，遍历可能无法结束。是否恰好触发取决于实际交错与桶分布，并非并发写入必然成环。
+
+![T1 保存 A 的后继后暂停，T2 反转共享链接，T1 继续迁移并最终把 A 和 B 连接成环；这是 JDK7 头插迁移的教学交错](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/algorithm-hash-jdk7-resize-cycle-20261114.png)
+*图：两个线程操作同一批节点，各有自己的新桶数组；图示为依据旧版源码构造的可能交错，不是生产追踪或 JDK 17 的扩容实现。*
+
+前一节的 JDK 8 链表拆分保留组内顺序，不能把上述头插反转机制原样套到 8 或 17。机制改变也不赋予 HashMap 并发安全：共享结构性更新仍须外部同步，或改用满足操作合同的并发容器。线程安全协议与扩容算法要分别说明，不能以“新版不会按这条旧路径成环”推出“新版可放心并发写”。
+
 ## Java 底层实现：先限定 JDK，再比较并发控制
 
 下面以 **OpenJDK 25 GA** 源码为例，区分实现细节与公共 API 合同。`HashMap` 使用桶数组，容量为 2 的幂，非空 key 的 `hashCode` 与其高 16 位异或后参与 `(capacity-1) & hash` 定位；同桶还要用 key 相等性判定映射。桶通常是链表，也可转为红黑树；`putVal`、`treeifyBin` 使用链长阈值与最小表容量共同决定树化，源码常量分别为 8 和 64，容量不足时优先扩容，不能简化成“第 8 项一定树化”。扩容按新容量重新分布桶，2 倍扩容时可依据旧容量对应的哈希位把同桶节点分开。参见 [OpenJDK 25 HashMap 源码](https://github.com/openjdk/jdk/blob/jdk-25-ga/src/java.base/share/classes/java/util/HashMap.java)。
@@ -188,12 +199,14 @@ while iterator.hasNext():
 - [腾讯 AI Agent 应用开发一面：上下文、强化学习与系统基础](../../../interview/tencent/ai/tencent-ai-11.md)
 - [海康威视 AI Agent 开发一面：可靠工具与任务状态](../../../interview/hikvision/ai/hikvision-ai-1.md)
 - [字节 AML / 火山方舟 AI Infra 一面：Agent Runtime、OS 与网络（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-17.md)
+- [腾讯后台开发暑期一面：Java 内存、并发与检索](../../../interview/tencent/ai/tencent-ai-31.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
 
 - [NIST Dictionary of Algorithms and Data Structures: hash table](https://xlinux.nist.gov/dads/HTML/hashtab.html)
 - [Python dictionary view objects and mapping types](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict)
+- [OpenJDK 7u80-b15：HashMap 头插迁移的历史实现](https://github.com/openjdk/jdk7u/blob/jdk7u80-b15/jdk/src/share/classes/java/util/HashMap.java)
 - [JEP 180：JDK 8 高冲突 HashMap 桶的平衡树改进](https://openjdk.org/jeps/180)
 - [OpenJDK 8u402-b06：HashMap 的哈希、插入、树化与扩容](https://github.com/openjdk/jdk8u/blob/jdk8u402-b06/jdk/src/share/classes/java/util/HashMap.java)
 
