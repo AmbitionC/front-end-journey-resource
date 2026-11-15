@@ -1086,6 +1086,21 @@
             ],
             "updatedAt": "2026-11-12",
             "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "字节后端与 Agent 开发三面：领域建模、项目评测与基础",
+            "key": "bytedance-base-80",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "Agent",
+              "本体建模",
+              "评测",
+              "Java"
+            ],
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "updatedAt": "2026-11-15"
           }
         ]
       },
@@ -1553,6 +1568,21 @@
             "contentFormat": "short-qa-v2",
             "department": "其他",
             "updatedAt": "2026-11-14"
+          },
+          {
+            "label": "腾讯云智二面：Spring、Java 内存模型与 IO 多路复用",
+            "key": "tencent-ai-32",
+            "isLeaf": true,
+            "filePath": "tencent/ai",
+            "tags": [
+              "Spring",
+              "Java",
+              "IO多路复用",
+              "Agent"
+            ],
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "updatedAt": "2026-11-15"
           }
         ]
       },
@@ -2817,6 +2847,21 @@
             "contentFormat": "short-qa-v2",
             "department": "其他",
             "updatedAt": "2026-11-14"
+          },
+          {
+            "label": "快手测开二面：Agent 交接、轨迹评测与业务测试",
+            "key": "kuaishou-ai-24",
+            "isLeaf": true,
+            "filePath": "kuaishou/ai",
+            "tags": [
+              "测试开发",
+              "Agent",
+              "评测",
+              "状态恢复"
+            ],
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "updatedAt": "2026-11-15"
           }
         ]
       }
@@ -4143,6 +4188,21 @@
             "contentFormat": "short-qa-v2",
             "department": "其他",
             "updatedAt": "2026-11-14"
+          },
+          {
+            "label": "美团后端 Agent 暑期一面：约束、工作流与 AI 开发验证",
+            "key": "meituan-ai-16",
+            "isLeaf": true,
+            "filePath": "meituan/ai",
+            "tags": [
+              "Agent",
+              "Skill",
+              "MCP",
+              "AI Coding"
+            ],
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "updatedAt": "2026-11-15"
           }
         ]
       },
@@ -4240,6 +4300,21 @@
             "department": "其他",
             "originalLabel": "华为 Agent 实习两轮记录：TCP、C 存储期与拓扑序",
             "roleCategory": "AI 与 Agent 工程"
+          },
+          {
+            "label": "华为后训练与强化学习实习一面：分类模型、训练并行与排序",
+            "key": "huawei-ai-4",
+            "isLeaf": true,
+            "filePath": "huawei/ai",
+            "tags": [
+              "文本分类",
+              "分布式训练",
+              "推荐排序",
+              "算法"
+            ],
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "updatedAt": "2026-11-15"
           }
         ]
       },

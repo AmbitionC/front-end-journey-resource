@@ -12,6 +12,14 @@
 
 FSDP/ZeRO 类分片还会改变参数、梯度或优化器状态的归属，不能把所有“数据并行”都说成每卡始终持有完整状态；比较时明确所指是复制式 DDP 还是分片方案。
 
+### DDP 具体同步什么
+
+以常见的每 GPU 一个进程配置为例，每个 rank 持有模型副本，读取自己的样本并计算局部梯度。DDP 的 Reducer 通过 autograd hook 标记梯度就绪，将梯度组织为 buckets；桶就绪后发起异步 all-reduce，使部分通信与后续反向计算重叠，反向结束前等待必要同步完成。各副本从一致参数状态出发，取得一致的同步梯度后，各自执行相同优化器更新，因此不需要每一步把全部参数重新广播。[PyTorch 的 DDP 设计说明](https://docs.pytorch.org/docs/stable/notes/ddp.html)给出梯度桶、hook 与通信顺序。
+
+DDP 主要同步梯度，不自动替应用把数据正确分给各 rank；采样器、每轮随机打乱、尾批和进程参与顺序仍需检查。全局有效批次通常与每卡批次、参与进程数和梯度累积步数共同相关，但不等长样本、不同 loss 归约或自定义通信会改变等价关系。应核对 loss 的 sum/mean、各 rank 样本贡献与累积中的同步时机，不能只说“梯度求平均就等于任意单卡大批次”。
+
+所有参与者必须遵守一致的集体通信协议；分支导致某个 rank 缺少对应同步，可能挂起。同步 BatchNorm、未使用参数、混合精度及分片训练状态各有额外合同，不能从普通 DDP 推出。选型时测量计算/通信重叠与扩卡效率，而不是把 all-reduce 本身当成免费步骤。
+
 ## 张量并行：把同一层拆给多设备
 
 矩阵乘法可以按行或列切分权重与中间值，多设备合作完成同一层，再按切分布局进行必要的通信。[PyTorch 张量并行教程](https://docs.pytorch.org/tutorials/intermediate/TP_tutorial.html)用线性层的行列分片展示布局如何决定通信；不是把任意矩阵切成几块就可省略结果合并。
@@ -38,6 +46,7 @@ FSDP/ZeRO 类分片还会改变参数、梯度或优化器状态的归属，不�
 
 <!-- interview-source-history:start -->
 - [阿里云后端与 Agent 二面：领域建模、训练并行与 Java 基础](../../../interview/alibaba/ai/alibaba-ai-28.md)
+- [华为后训练与强化学习实习一面：分类模型、训练并行与排序](../../../interview/huawei/ai/huawei-ai-4.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
@@ -45,3 +54,4 @@ FSDP/ZeRO 类分片还会改变参数、梯度或优化器状态的归属，不�
 - [PyTorch：Distributed Overview](https://docs.pytorch.org/tutorials/beginner/dist_overview.html)
 - [PyTorch：Tensor Parallelism](https://docs.pytorch.org/tutorials/intermediate/TP_tutorial.html)
 - [PyTorch：Pipeline Parallelism](https://docs.pytorch.org/tutorials/intermediate/pipelining_tutorial.html)
+- [PyTorch：DDP 设计说明](https://docs.pytorch.org/docs/stable/notes/ddp.html)

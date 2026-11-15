@@ -24,6 +24,26 @@ singleton 是共享实例，业务可变状态需要自己的并发设计，容�
 
 prototype 的完整销毁责任不由容器自动接管，使用方必须释放它持有的资源。request、session 等作用域还依赖相应 Web 环境，不是任意基础工厂都可以直接使用。[Spring 6.2 作用域文档](https://docs.spring.io/spring-framework/reference/6.2/core/beans/factory-scopes.html)界定这些边界。
 
+## 循环依赖：三级缓存只能解决受限场景
+
+循环依赖不是普通业务对象的循环引用，而是容器在创建和装配时再次要求取得仍在创建的 Bean。先区分“对象已实例化”和“依赖注入、初始化都已完成”：部分单例可提前暴露引用，才有继续装配的可能。构造器相互依赖时，双方尚未获得可提前暴露的实例，通常会抛出 BeanCurrentlyInCreationException；改成 setter 并不意味着所有循环都应当保留。[Spring 6.2 依赖注入文档](https://docs.spring.io/spring-framework/reference/6.2/core/beans/dependencies/factory-collaborators.html)说明了这一差别。
+
+以 **Spring Framework 6.2.19** 的实现为例，常说的三级缓存分别是：
+
+| 名称 | 保存什么 | 作用 |
+|---|---|---|
+| singletonObjects | 已完成创建并注册的单例对象 | 常规单例查找 |
+| earlySingletonObjects | 已取得的早期单例引用 | 同一早期引用的复用 |
+| singletonFactories | 获取早期引用的 ObjectFactory | 需要时通过后处理器取得适当的早期引用 |
+
+在允许循环引用且满足单例创建条件的典型属性注入路径中，先实例化 A，再登记它的早期引用工厂；填充 A 的属性时需要 B，于是创建 B；填充 B 时又需要 A，就可能通过早期引用完成 B 的装配；A 随后继续初始化，完成后注册到 singletonObjects，并清理另外两个缓存中的对应项。这是有前提的说明，不保证任意初始化回调中的相互调用都安全。
+
+三级中的工厂不是为同一个 Bean 创建三份对象。`getEarlyBeanReference` 允许适用的 SmartInstantiationAwareBeanPostProcessor 参与，早期引用可能是代理；若最终包装与已经注入的引用不一致，容器仍可能拒绝完成创建。不能把“有三级缓存”解释为自动解决所有 AOP 循环。上述路径可在[6.2.19 单例注册表](https://github.com/spring-projects/spring-framework/blob/v6.2.19/spring-beans/src/main/java/org/springframework/beans/factory/support/DefaultSingletonBeanRegistry.java)及[自动装配工厂](https://github.com/spring-projects/spring-framework/blob/v6.2.19/spring-beans/src/main/java/org/springframework/beans/factory/support/AbstractAutowireCapableBeanFactory.java)交叉核对。
+
+版本和配置还决定这条路径是否被允许。上述 Framework 实现的 allowCircularReferences 默认字段为 true，但 **Spring Boot 的应用政策不能据此推断**：例如[Boot 2.7.18 属性表](https://docs.spring.io/spring-boot/docs/2.7.18/reference/html/application-properties.html#application-properties.core.spring.main.allow-circular-references)中，spring.main.allow-circular-references 默认是 false。这里用固定版本说明区别，不把某个版本的默认值推广到所有 Spring/Boot 应用。即使开启允许，也不覆盖构造器环、prototype 环或不兼容的代理包装场景。
+
+设计时优先拆分共同职责、调整依赖方向；延迟查找或 provider 只能在明确需要时选择，并会改变失败时机。核验方案时同时检查版本、配置、作用域、注入方式与代理后的对象身份；启动成功也不能证明提前引用时业务方法能安全访问未完成初始化的状态。
+
 ## 从数据库预加载缓存，先决定需要哪个完成边界
 
 “Spring 初始化时查数据库写缓存”不只有一个扩展点。先确认预热只依赖当前 Bean 的配置，还是需要常规 singleton 及其代理已经可用；再确认缓存缺失是否允许接流量。选择回调解决的是执行时机，数据库可用、预热成功和业务就绪仍是不同条件。下面是独立教学设计，不代表某份面经里的项目实际采用了这些方案。
@@ -72,6 +92,7 @@ prototype 的完整销毁责任不由容器自动接管，使用方必须释放�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [腾讯云智二面：Spring、Java 内存模型与 IO 多路复用](../../../interview/tencent/ai/tencent-ai-32.md)
 - [快手 Agent 开发二面关联题单：Hooks、锁与设计模式](../../../interview/kuaishou/ai/kuaishou-ai-22.md)
 - [商盟支付 Java 开发实习一面：交易去重、并发与消息](../../../interview/shangmeng/ai/shangmeng-ai-1.md)
 - [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
@@ -88,3 +109,7 @@ prototype 的完整销毁责任不由容器自动接管，使用方必须释放�
 - [Spring Framework 6.2：SmartInitializingSingleton 回调合同](https://docs.spring.io/spring-framework/docs/6.2.x/javadoc-api/org/springframework/beans/factory/SmartInitializingSingleton.html)
 - [Spring Framework 6.2.19：上下文事件与刷新边界](https://github.com/spring-projects/spring-framework/blob/v6.2.19/framework-docs/modules/ROOT/pages/core/beans/context-introduction.adoc)
 - [Spring Boot 3.5.16：Runner、启动事件与就绪](https://github.com/spring-projects/spring-boot/blob/v3.5.16/spring-boot-project/spring-boot-docs/src/docs/antora/modules/reference/pages/features/spring-application.adoc)
+- [Spring 6.2：循环依赖与构造注入](https://docs.spring.io/spring-framework/reference/6.2/core/beans/dependencies/factory-collaborators.html)（循环依赖增补于2026-11-15核验）
+- [Spring Framework 6.2.19：DefaultSingletonBeanRegistry](https://github.com/spring-projects/spring-framework/blob/v6.2.19/spring-beans/src/main/java/org/springframework/beans/factory/support/DefaultSingletonBeanRegistry.java)
+- [Spring Framework 6.2.19：AbstractAutowireCapableBeanFactory](https://github.com/spring-projects/spring-framework/blob/v6.2.19/spring-beans/src/main/java/org/springframework/beans/factory/support/AbstractAutowireCapableBeanFactory.java)
+- [Spring Boot 2.7.18：循环引用配置及默认值](https://docs.spring.io/spring-boot/docs/2.7.18/reference/html/application-properties.html#application-properties.core.spring.main.allow-circular-references)

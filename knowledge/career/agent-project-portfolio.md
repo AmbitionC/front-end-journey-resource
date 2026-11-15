@@ -154,6 +154,7 @@ Orchestrator 解析 PR diff，分发给各专项 Agent，收集结果后合并�
 - [京东 AI 应用开发日常实习二面：项目表达与产品场景](../../interview/jd/ai/jd-ai-7.md)
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../interview/bytedance/base/bytedance-base-50.md)
 - [字节 Agent 实习：异步消息、上下文与容器隔离](../../interview/bytedance/base/bytedance-base-41.md)
+- [字节后端与 Agent 开发三面：领域建模、项目评测与基础](../../interview/bytedance/base/bytedance-base-80.md)
 - [字节 Agent 实习：推理、微调与工具编排](../../interview/bytedance/base/bytedance-base-51.md)
 - [字节全栈实习：Session、权限与前端基础](../../interview/bytedance/base/bytedance-base-46.md)
 - [字节抖音 Agent 一面：Skill、MCP 与记忆](../../interview/bytedance/base/bytedance-base-39.md)

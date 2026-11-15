@@ -137,7 +137,7 @@ chain = prompt | llm
 result = chain.invoke({"question": "什么是 RAG？"})
 ```
 
-对于非 LangChain 代码，使用 `@traceable` 装饰器手动标注：
+对于非 LangChain 链式调用，也可以使用 `@traceable` 装饰器手动标注函数。下面假设 `vector_store` 实现 LangChain 的 `VectorStore` 接口，其 [`similarity_search` 返回 `Document` 列表](https://github.com/langchain-ai/langchain/blob/master/libs/core/langchain_core/vectorstores/base.py)，因此先用 `page_content` 明确转换为本例统一的字典合同；它不是任意向量库都返回字典的承诺。
 
 ```python
 from langsmith import traceable, Client
@@ -146,8 +146,8 @@ client = Client()
 
 @traceable(name="rag-retrieval", run_type="retriever")
 def retrieve_documents(query: str) -> list[dict]:
-    # 向量检索逻辑
-    return vector_store.similarity_search(query, k=5)
+    documents = vector_store.similarity_search(query, k=5)
+    return [{"content": doc.page_content} for doc in documents]
 
 @traceable(name="llm-generate", run_type="llm")
 def generate_answer(question: str, context: str) -> str:
@@ -265,7 +265,8 @@ def qa_pipeline(question: str) -> str:
     with langfuse.start_as_current_observation(
         as_type="generation", name="llm-answer", model=MODEL_ID
     ) as generation:
-        answer = generate_answer(question, docs)
+        context = "\n".join(d["content"] for d in docs)
+        answer = generate_answer(question, context)
         generation.update(output=answer)
 
     return answer
@@ -444,6 +445,7 @@ Trace 是通过共同 trace ID 关联的一组 Span，根 Span 是其中没有�
 
 <!-- interview-source-history:start -->
 - [字节 Agent 暑期一面：优化证据、指令偏差与长上下文](../../../interview/bytedance/base/bytedance-base-59.md)
+- [快手测开二面：Agent 交接、轨迹评测与业务测试](../../../interview/kuaishou/ai/kuaishou-ai-24.md)
 - [VAST 后端一面：可观测性、AI Coding 与节点调度](../../../interview/vast/ai/vast-ai-1.md)
 - [字节 Agent 开发一面：评分、Harness 与任务可靠性](../../../interview/bytedance/base/bytedance-base-57.md)
 - [海康威视 AI Agent 开发一面：可靠工具与任务状态](../../../interview/hikvision/ai/hikvision-ai-1.md)

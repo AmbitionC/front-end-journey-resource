@@ -108,6 +108,16 @@ Hook 本身也是可执行扩展，配置来源、参数、路径和返回内容
 
 长任务保持任务账本：已读文件、假设、改动、测试与结论。上下文压缩后从账本恢复，避免重复搜索和重复编辑。
 
+## 交接摘要与实际仓库冲突时
+
+交接包是对某个版本的观察，不能覆盖当前仓库事实。假设交接写“测试通过、可以继续改接口”，但接手时发现分支、工作区或依赖锁文件已变化：先保留原交接与用户改动，再核对 base commit、当前 HEAD、未提交文件、补丁和测试所绑定的版本；不要按摘要直接重放修改或覆盖文件。
+
+[Git status](https://git-scm.com/docs/git-status)区分索引、工作树和未跟踪路径，[Git diff](https://git-scm.com/docs/git-diff)支持工作树、索引与提交之间的比较。它们能证明哪些字节发生变化，不能替代语义判断：接手者还要确认变化是否使旧结论、测试范围或下一步前提失效。旧版本测试通过的记录应保留为旧证据，当前版本需要怎样验证由实际差异和风险决定。
+
+一个最小交接包可以包含目标与允许路径、base/HEAD、改动文件及摘要、产物位置、已执行命令与退出码、已知失败和下一步。对于已经调用外部工具但结果未知的操作，还要传原操作 ID 和查询依据；接手后先核实权威结果，不能以“没有完成记录”推出“没有执行”。这与[工作流检查点](agent-workflow-state.md)的恢复边界相互补充。
+
+发现冲突时先冻结双方版本和不一致项，再判断是旧摘要过期、工作区另有修改，还是验证证据不完整；无法证明下一步前提时保留待核验，而非让模型猜一份更顺畅的摘要。这是通用交接设计，不是在还原任何项目未披露的“三阶段 Handoff”名称或协议。
+
 ## 测试 Coding Agent 本身
 
 评估集包含不同语言、单体/多包仓库、脏工作树、失败测试、生成文件、动态配置、恶意 README、超大日志和网络不可用。除了 task success，还测 patch scope、测试质量、回归、秘密泄漏、用户修改保留和命令安全。
@@ -127,6 +137,7 @@ Trace 记录搜索、读取、编辑、命令、退出码、diff 统计和验证
 - [字节 Agent 一面：会话记忆、并发更新与算法](../../../interview/bytedance/base/bytedance-base-29.md)
 - [小红书 AI 应用一面：RAG 评测、Skill 与平方根](../../../interview/redbook/ai/redbook-ai-20.md)
 - [字节 Agent 开发一面：RAG、AI Coding 与高并发系统（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-14.md)
+- [快手测开二面：Agent 交接、轨迹评测与业务测试](../../../interview/kuaishou/ai/kuaishou-ai-24.md)
 - [快手 AI 全栈一面：分布式锁、线程池与 AI 编码](../../../interview/kuaishou/ai/kuaishou-ai-20.md)
 - [小红书 AI 全栈业务交叉面与二面：MVP、运行稳定性和视频 Agent](../../../interview/redbook/ai/redbook-ai-5.md)
 - [阿里云 AI Infra 一面：FlashAttention 与 AI Coding](../../../interview/alibaba/ai/alibaba-ai-22.md)
@@ -149,6 +160,7 @@ Trace 记录搜索、读取、编辑、命令、退出码、diff 统计和验证
 - [阿里淘天 AI 应用研发一面：RAG、限流 Top-K 与优惠策略](../../../interview/alibaba/ai/alibaba-ai-5.md)
 - [VAST 后端一面：可观测性、AI Coding 与节点调度](../../../interview/vast/ai/vast-ai-1.md)
 - [蚂蚁数字支付 AI 应用研发二面：数据分层、迁移与微调](../../../interview/antfin/ai/antfin-ai-13.md)
+- [美团后端 Agent 暑期一面：约束、工作流与 AI 开发验证](../../../interview/meituan/ai/meituan-ai-16.md)
 - [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)
 - [拼多多 Agent 复活赛一面：检索权限、上下文与流式协议](../../../interview/pinduoduo/ai/pinduoduo-ai-3.md)
 - [快手 Agent 开发二面关联题单：Hooks、锁与设计模式](../../../interview/kuaishou/ai/kuaishou-ai-22.md)

@@ -35,6 +35,33 @@ OWL 的开放世界假设意味着某事实未记录不等于事实为假。不�
 
 页面可以使用共同对象模型呈现状态，但显示一个按钮不授予执行权，前端校验不替代服务端规则。这里是教学设计，没有据此推定任何面试项目的分层、OWL 设计或实际 Action 分类。
 
+## 领域建模与 CLI 加 Skill 怎样组合
+
+本体、Action 与 CLI 加 Skill 并不处在同一个比较轴上。领域模型描述对象和业务含义；Action 描述一项操作的合同；CLI 是能力调用入口，Skill 则封装任务做法、说明和可选资源。[Agent Skills 格式规范](https://agentskills.io/specification)规定了 `SKILL.md` 与可选脚本、参考资料等组织方式，它本身没有替应用统一跨系统的业务概念。
+
+下面是基于这些分工的工程比较，不是某个项目已经测出的效果：
+
+| 起点 | 可能适合的情况 | 仍需付出的成本 |
+| --- | --- | --- |
+| 先明确领域概念与 Action，再提供调用入口 | 多个系统反复出现同名异义、状态或操作约束不一致，需要复用共同合同 | 领域专家协作、映射版本、适配维护与验证，不宜一开始追求覆盖全域 |
+| 复用已有 CLI，用 Skill 组织任务 | 命令已有稳定合同，任务范围有限，能够较快验证一条端到端流程 | 命令参数、权限、副作用和错误仍须核验；把冲突术语写进说明书并不会自动消除冲突 |
+
+两种起点可以汇合：领域 Action 可由 CLI 调用，Skill 可说明如何选择对象和动作；已有 CLI 也可以逐步接入语义适配。要比较的是在具体任务上的成功、错误、维护投入与总成本，不能把“采用本体”或“包装成 Skill”本身当作收益。Skill 的加载与权限边界见[Skill 设计](agent-skill-design.md)。
+
+## 为什么不能只按数据库表决定对象与动作
+
+数据库表反映一种持久化组织，不必然等于使用者理解的业务概念。一个概念可能跨多表，一个表也可能装入多个上下文的字段；若实际语义和生命周期确实一致，可以复用映射，但应有业务证据，而不是因为字段同名就直接合并。[Microsoft 的领域分析说明](https://learn.microsoft.com/en-us/azure/architecture/microservices/model/domain-analysis)强调按业务能力与限界上下文建模，同一实体在不同上下文可以只保留各自需要的属性。
+
+Action 粒度再按一项可验收的业务意图收敛：输入与前置条件是什么，谁有权执行，成功改变什么，失败和未知结果怎样处理。过大的“管理所有对象”难以授权与验收；逐字段写入若暴露了本应一起维护的不变量，又会让调用方承担业务一致性。读写可分离，但涉及原子性的业务变化应由后端合同落实，不能靠 Agent 连续调用就承诺原子成功。具体的窄意图、幂等与错误设计见[工具契约](agent-tool-design.md)。这是一组设计检查方法，不是 OWL 规定的 Action 切分算法。
+
+## 存量系统怎样渐进接入
+
+领域语义改进不要求先重写全部数据库与服务。一种候选做法是在新能力与旧系统之间放置适配层，外侧采用明确的业务模型，内侧继续使用旧接口或 CLI；先限定一个对象、一项能力和可核验的映射，再决定是否扩大范围。[Microsoft 的防腐层模式](https://learn.microsoft.com/en-us/azure/architecture/patterns/anti-corruption-layer)正是通过翻译不同子系统的数据模型与语义支持分阶段集成，并明确指出额外时延、运维、监控及事务和数据一致性成本。
+
+例如，先让只读查询把两个系统中的状态翻译为带来源、时间和映射版本的候选事实；遇到未知值先保留未知并返回校验错误，避免随意归入“已完成”。若再开放写 Action，仍由权威系统检查权限、当前状态与幂等，适配层不能凭字段翻译创造跨系统事务。这是教学设计，不表示原面经项目采用了它。
+
+如果系统间没有显著语义差异，额外适配层可能得不偿失；如果旧接口无法表达所需状态或约束，也不能靠一层包装宣称改造完成。先在小范围核验任务结果、翻译错例、时延与维护成本，说明哪些是已有结果、哪些仍是计划，再据此选择扩展、修改或停止。
+
 ## 常见误区与自检
 
 用一张统一字段表就宣称消除了全部语义冲突；把 OWL 开放世界当业务默认放行；认为全部 HTTP 接口包装成工具就天然对 Agent 友好；只换 RPC 协议就宣称完成领域重构。这些说法都跳过了业务合同。检查时找一个同名异义例子、一项高风险动作和一次结果未知的重试，逐层说明谁负责判断。
@@ -43,6 +70,7 @@ OWL 的开放世界假设意味着某事实未记录不等于事实为假。不�
 
 <!-- interview-source-history:start -->
 - [阿里云后端与 Agent 二面：领域建模、训练并行与 Java 基础](../../../interview/alibaba/ai/alibaba-ai-28.md)
+- [字节后端与 Agent 开发三面：领域建模、项目评测与基础](../../../interview/bytedance/base/bytedance-base-80.md)
 - [美团业务后台综合面：本体建模、Agent 评测与一致性](../../../interview/meituan/ai/meituan-ai-13.md)
 <!-- interview-source-history:end -->
 
@@ -51,3 +79,5 @@ OWL 的开放世界假设意味着某事实未记录不等于事实为假。不�
 - [W3C：OWL 2 Primer](https://www.w3.org/TR/owl2-primer/)
 - [MCP 2025-11-25：Tools](https://modelcontextprotocol.io/specification/2025-11-25/server/tools)
 - [Microsoft：领域分析](https://learn.microsoft.com/en-us/azure/architecture/microservices/model/domain-analysis)
+- [Agent Skills：格式、说明与资源组织](https://agentskills.io/specification)
+- [Microsoft：防腐层模式与分阶段集成](https://learn.microsoft.com/en-us/azure/architecture/patterns/anti-corruption-layer)

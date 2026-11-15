@@ -103,6 +103,24 @@ Agent 输出常没有唯一正确字符串，需要确定性规则、模型评�
 
 覆盖矩阵用于发现空白，不应追求每个维度的笛卡尔积。采用风险优先的组合测试：高权限写工具、敏感数据、异步恢复和新模型版本获得更多组合，低风险只读问答可以抽样。
 
+## AI 生成测试：先独立定义预期
+
+生成器同时读实现和写测试时，可能把实现中的错误一并写成“预期”。先从需求、接口合同和业务不变量得到可检查的结果，再让 AI 辅助列输入与实现测试；审查者需要追问：这个断言若删掉或把关键条件改错，会不会失败？[pytest 的参数化机制](https://docs.pytest.org/en/stable/how-to/parametrize.html)可以把多个输入和预期组织成用例，但自动枚举参数本身不会判断需求是否正确或是否遗漏。
+
+例如，购物车与下单功能可以按下表组织**教学测试合同**，实际金额、库存、身份和幂等规则仍须由产品与接口规范明确；这不是某篇面经项目的已实现方案。
+
+| 层级 | 例子与应检查的结果 |
+| --- | --- |
+| 单元 | 数量边界、价格精度、优惠互斥与失效商品规则，核对明确定义的金额和错误；不要只断言返回值非空 |
+| 集成 | 同一商品重复加入、库存变化、跨用户购物车隔离与请求重试，检查持久状态及实际副作用次数 |
+| 场景或端到端 | 加入后修改数量、商品下架、提交响应丢失后查询订单状态，检查订单、库存与购物车是否符合约定，不以一个成功提示替代状态验收 |
+
+这些业务断言不要求系统必须由 Agent 实现；若 Agent 代用户调用工具，还要额外检查它是否遵守身份、授权、确认与停止条件。购物车数量变化与库存预占的时机因业务而异，不能在没有合同的情况下断言所有系统都在加入购物车时扣库存。
+
+行覆盖率表示代码是否被执行过，分支覆盖率表示条件分支是否被走过，都不证明输出被有效验证，也不证明需求、状态组合或故障已覆盖。可以用变异测试检查断言强度：例如故意把数量边界比较改错，观察测试是否能发现。[PIT 的基本概念](https://pitest.org/quickstart/basic_concepts/)区分被测试发现、存活、未覆盖和执行错误等结果；等价变异与工具错误不能直接当作“测试没有价值”。变异测试仍不证明业务规格完整，也不能覆盖其变异算子没有表达的所有缺陷。
+
+因此，“保证生成的单测覆盖全”应改成可核验的范围：需求与风险矩阵有哪些行、每行由哪层测试覆盖、哪些边界与历史故障仍未验证。保留独立预期、初次失败与修复证据，不能靠重复生成更多测试、一次绿色结果或一个覆盖率数字宣称完整。
+
 ## 常见误区
 
 - 把所有测试都写成端到端聊天脚本，慢且难定位。
@@ -119,13 +137,17 @@ Agent 测试金字塔从单元契约、工具集成、受控场景到端到端�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [腾讯搜狗输入法后台二至四面：AI 代码可靠性与测试](../../../interview/tencent/base/tencent-base-1.md)
+- [快手测开二面：Agent 交接、轨迹评测与业务测试](../../../interview/kuaishou/ai/kuaishou-ai-24.md)
 - [百度 AI 测开一面：LLM 评测、压测与有序链表](../../../interview/baidu/ai/baidu-ai-13.md)
+- [美团后端 Agent 暑期一面：约束、工作流与 AI 开发验证](../../../interview/meituan/ai/meituan-ai-16.md)
 - [理想汽车 IT 全栈交付培养生一面：Skill、测试与工作流](../../../interview/liauto/fullstack/liauto-fullstack-1.md)
+- [腾讯搜狗输入法后台二至四面：AI 代码可靠性与测试](../../../interview/tencent/base/tencent-base-1.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
 
+- [pytest：参数化测试的输入与预期组织](https://docs.pytest.org/en/stable/how-to/parametrize.html)
+- [PIT：变异、检测结果与等价变异](https://pitest.org/quickstart/basic_concepts/)
 - [NIST AI RMF：TEVV tasks throughout the lifecycle](https://airc.nist.gov/airmf-resources/airmf/appendices/app-a-descriptions-of-ai-actor-tasks/)
 - [NIST：AI RMF Generative AI Profile](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence)
 - [OpenTelemetry：Signals](https://opentelemetry.io/docs/concepts/signals/)
