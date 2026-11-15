@@ -145,6 +145,7 @@ AI/Agent 岗位面试通常覆盖以下几个方向。学长不列具体题目�
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../interview/bytedance/base/bytedance-base-50.md)
 - [字节 Agent 实习：异步消息、上下文与容器隔离](../../interview/bytedance/base/bytedance-base-41.md)
 - [字节全栈二、三面：幂等、索引与字符串匹配](../../interview/bytedance/base/bytedance-base-32.md)
+- [字节后端与 Agent 开发三面：领域建模、项目评测与基础](../../interview/bytedance/base/bytedance-base-80.md)
 - [快手 Agent 开发二面关联题单：Hooks、锁与设计模式](../../interview/kuaishou/ai/kuaishou-ai-22.md)
 - [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../interview/bytedance/base/bytedance-base-24.md)
 - [字节全栈实习：Session、权限与前端基础](../../interview/bytedance/base/bytedance-base-46.md)

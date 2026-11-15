@@ -108,6 +108,34 @@ function longestSubarraySum(nums, k) {
 
 例如 `[1, -1, 5, -2, 3]`、`k=3`，处理到下标3时前缀和为3，匹配初始的 `0 → -1`，得到长度4。负数让区间和无法按窗口长度单调变化，因此不能无条件套只适用于正数等约束的滑动窗口。哈希操作平均常数时间时，总时间为O(n)、额外空间为O(n)；没有非空解时返回0。
 
+## 和为 K 的子数组：要保存频次，不能只保存最早位置
+
+上节求最长长度，所以记录最早位置；力扣 560 则要求**连续子数组个数**。同一个前缀和值出现多次，代表多个不同左边界，必须全部计数。定义 $P_0=0$、$P_j=\sum_{i=0}^{j-1}nums_i$，区间 $[i,j)$ 的和为 $P_j-P_i$；固定右边界 j，答案增量就是此前 $P_i=P_j-k$ 的次数。
+
+```javascript
+function subarraySum(nums, k) {
+  const frequency = new Map([[0, 1]]);
+  let prefix = 0, count = 0;
+  for (const value of nums) {
+    prefix += value;
+    count += frequency.get(prefix - k) ?? 0;
+    frequency.set(prefix, (frequency.get(prefix) ?? 0) + 1);
+  }
+  return count;
+}
+
+console.log(subarraySum([1, 1, 1], 2)); // 2
+console.log(subarraySum([1, 2, 3], 3)); // 2
+console.log(subarraySum([0, 0], 0));    // 3
+console.log(subarraySum([1, -1, 1], 1)); // 3
+```
+
+扫描 `[1,2,3]`、k=3 时，初始表为 `{0:1}`；前缀1查询 -2 不命中，前缀3查询0增加1，前缀6查询3再增加1，对应 `[1,2]` 和 `[3]`。零前缀的初始一次表示空前缀，让从下标0开始的非空区间也被统计；它不是把空子数组算作答案。
+
+每轮查询时，表只包含**当前右边界之前**的前缀。必须先查再写，否则 k=0 时会把当前前缀与自身配对，错误增加长度0的区间。`[0,0]` 有三个非空区间，也说明 value 不能是布尔值或一个最早索引。负数会破坏“窗口扩大则和增加”的单调性，一般整数输入不能无条件使用滑动窗口。
+
+哈希操作平均常数时间的模型下，时间 O(n)、额外空间 O(n)。这份 JavaScript 示例要求输入、k、前缀和及结果计数都在 Number 的安全整数范围内；若超出，需要一致改用精确整数。空数组返回0。以上推导和边界由前缀和不变量给出。
+
 ## 无序流、Bitmap 与空间边界
 
 有限无序输入可把较小一侧放入哈希集合，再扫描另一侧查成员；需要多重集合交集时，保存计数并在命中后扣减。若流没有结束标记，就不能声称已得到完整交集：未来元素仍可能与过去匹配。面对无界值域和无界历史，精确成员判断需要保留区分已见集合的信息，固定内存不能无条件处理任意增长的唯一元素。
@@ -196,6 +224,7 @@ while iterator.hasNext():
 - [字节 Agent Infra 校招：运行时、MySQL 与 LRU](../../../interview/bytedance/base/bytedance-base-25.md)
 - [商盟支付 Java 开发实习一面：交易去重、并发与消息](../../../interview/shangmeng/ai/shangmeng-ai-1.md)
 - [阿里国际 AI 应用研发一面：JDK 8、消息可靠性与 RAG](../../../interview/alibaba/ai/alibaba-ai-25.md)
+- [华为后训练与强化学习实习一面：分类模型、训练并行与排序](../../../interview/huawei/ai/huawei-ai-4.md)
 - [腾讯 AI Agent 应用开发一面：上下文、强化学习与系统基础](../../../interview/tencent/ai/tencent-ai-11.md)
 - [海康威视 AI Agent 开发一面：可靠工具与任务状态](../../../interview/hikvision/ai/hikvision-ai-1.md)
 - [字节 AML / 火山方舟 AI Infra 一面：Agent Runtime、OS 与网络（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-17.md)

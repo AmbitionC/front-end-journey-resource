@@ -1,0 +1,85 @@
+{
+  "schema_version": 3,
+  "diagram_type": "lifecycle",
+  "meta": {
+    "title": "ET读取主路径（省略EINTR重试分支）",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "et-read-loop-v2.html"
+  },
+  "mainPath": [
+    "wait",
+    "read"
+  ],
+  "states": [
+    {
+      "id": "wait",
+      "type": "waiting",
+      "label": "等待新事件",
+      "sublabel": "epoll_wait"
+    },
+    {
+      "id": "read",
+      "type": "active",
+      "label": "非阻塞读取",
+      "sublabel": "按 read 返回值分支"
+    },
+    {
+      "id": "data",
+      "type": "active",
+      "label": "保存并解析字节",
+      "sublabel": "保留未完整消息的状态"
+    },
+    {
+      "id": "end",
+      "type": "neutral",
+      "label": "进入生命周期处理",
+      "sublabel": "按协议处理连接生命周期"
+    }
+  ],
+  "transitions": [
+    {
+      "from": "wait",
+      "to": "read",
+      "label": "可读事件"
+    },
+    {
+      "from": "read",
+      "to": "wait",
+      "label": "EAGAIN / EWOULDBLOCK"
+    },
+    {
+      "from": "read",
+      "to": "data",
+      "label": "n > 0"
+    },
+    {
+      "from": "data",
+      "to": "read",
+      "label": "继续读取"
+    },
+    {
+      "from": "read",
+      "to": "end",
+      "label": "EOF / 不可恢复错误"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "amber",
+      "title": "保留读取进度",
+      "items": [
+        "预算先耗尽：保留应用 ready 状态，轮转后继续",
+        "EINTR：按取消策略决定继续重试或退出"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "适用范围",
+      "items": [
+        "仅描述非阻塞流式读取；就绪不代表完整消息",
+        "依据 Linux epoll(7)，代码与业务结果未运行验证"
+      ]
+    }
+  ]
+}

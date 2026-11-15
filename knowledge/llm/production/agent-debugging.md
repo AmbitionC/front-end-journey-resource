@@ -156,6 +156,7 @@ Agent 调试是一门复现实验：定义失败、冻结快照、还原因果�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [快手测开二面：Agent 交接、轨迹评测与业务测试](../../../interview/kuaishou/ai/kuaishou-ai-24.md)
 - [百度搜索框架 Agent 日常实习一二面：上下文、工程选型与评测](../../../interview/baidu/ai/baidu-ai-14.md)
 - [字节 AI 应用开发一、二面：规划、结构化输出与部署取舍](../../../interview/bytedance/base/bytedance-base-65.md)
 - [网易游戏 AI 实习：体验实验、问题复现与交付取舍](../../../interview/netease/ai/netease-ai-2.md)

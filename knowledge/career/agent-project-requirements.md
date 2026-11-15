@@ -109,6 +109,7 @@ AI 功能还要计入检索和模型费用、人工复核、失败处理与维�
 - [美团后端暑期二面：AI Coding 复盘、记忆与评估计划](../../interview/meituan/ai/meituan-ai-15.md)
 - [京东 AI 应用开发日常实习二面：项目表达与产品场景](../../interview/jd/ai/jd-ai-7.md)
 - [VAST 后端一面：可观测性、AI Coding 与节点调度](../../interview/vast/ai/vast-ai-1.md)
+- [字节后端与 Agent 开发三面：领域建模、项目评测与基础](../../interview/bytedance/base/bytedance-base-80.md)
 - [字节全栈实习：Session、权限与前端基础](../../interview/bytedance/base/bytedance-base-46.md)
 - [字节财经保险 AI 全栈实习一面：项目设计、AI Coding 与 Diff](../../interview/bytedance/base/bytedance-base-34.md)
 - [京东后端一面：交付标准、Agent 选型与跨语言数据边界](../../interview/jd/ai/jd-ai-1.md)

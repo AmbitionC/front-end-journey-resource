@@ -93,12 +93,13 @@ TCP 只能根据收到的报文和本地定时器更新状态。若对端突然�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
+- [腾讯云智二面：Spring、Java 内存模型与 IO 多路复用](../../../interview/tencent/ai/tencent-ai-32.md)
 - [阿里云 SRE 运维开发一面：部署、网络与最大拼接数](../../../interview/alibaba/ai/alibaba-ai-20.md)
 - [华为 Agent 实习两轮记录：TCP、C 存储期与拓扑序](../../../interview/huawei/ai/huawei-ai-1.md)
-- [小米秋招二面：Agent 项目说明与 TCP 状态](../../../interview/xiaomi/ai/xiaomi-ai-3.md)
-- [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
 - [腾讯 WXG 一面：跨语言 RAG、消息幂等与算法](../../../interview/tencent/base/tencent-base-3.md)
 - [蚂蚁智能体与大模型应用一面：幻觉、Skill 与 RAG](../../../interview/antfin/ai/antfin-ai-5.md)
+- [小米秋招二面：Agent 项目说明与 TCP 状态](../../../interview/xiaomi/ai/xiaomi-ai-3.md)
 - [字节 AML / 火山方舟 AI Infra 一面：Agent Runtime、OS 与网络（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-17.md)
 - [字节搜广推引擎架构一面：JSON 输出、并发与系统基础](../../../interview/bytedance/base/bytedance-base-74.md)
 - [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../../interview/bytedance/base/bytedance-base-47.md)

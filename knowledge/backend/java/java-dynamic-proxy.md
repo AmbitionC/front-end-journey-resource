@@ -33,6 +33,7 @@ CGLIB 的常见用法生成目标类的子类，通过覆写方法插入拦截�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [腾讯云智二面：Spring、Java 内存模型与 IO 多路复用](../../../interview/tencent/ai/tencent-ai-32.md)
 - [阿里云后端与 Agent 二面：领域建模、训练并行与 Java 基础](../../../interview/alibaba/ai/alibaba-ai-28.md)
 <!-- interview-source-history:end -->
 

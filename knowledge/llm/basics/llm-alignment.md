@@ -33,6 +33,16 @@ SFT 使用“输入—理想输出”示范继续训练模型。它适合教授�
 
 [TRL 1.16.0 的 SFT 文档](https://github.com/huggingface/trl/blob/v1.16.0/docs/source/sft_trainer.md)区分 prompt-completion 的 completion-only loss 与 conversational 数据的 assistant-only loss；后者还依赖能产生助手掩码的聊天模板。这里限定该版本的约定，不把参数默认值推广到其他训练器。构造训练集时保留任务来源、拒答与工具失败等困难样本，做语义去重并隔离同源评测材料；训练前后的任务质量、过度拒答和失败切片都要复核。
 
+### 多路打标微调：先定义标签，再比较分层与端到端
+
+若任务是从文本生成多个业务标签，先冻结标签本体、共现/层级约束、标注指南及无法判定时的表示，并保存样本来源和授权范围。输入只包含预测时可获得的文字和上下文；输出可以是固定 schema 的标签列表或结构化对象。训练前实际检查模板、截断、labels 掩码与解析结果，让“生成一段话”和“返回合法标签”成为可区分的验收项。[TRL 的 SFT 数据说明](https://github.com/huggingface/trl/blob/v1.16.0/docs/source/sft_trainer.md)支持核对不同数据格式与目标位置。
+
+先按来源做近重复去重，并依据部署目标按时间、用户或业务实体隔离训练、验证和测试，避免同一事件的改写跨集合。时间泛化和新实体泛化不是一个问题，应分别设计协议；[scikit-learn 的分组与时序切分说明](https://scikit-learn.org/stable/modules/cross_validation.html)解释了普通随机切分不能替代这些边界。验证集选择提示、训练参数和输出校验规则，独立测试集只验收冻结后的方案。
+
+分层方案先判上层类别，再调用相应下层预测，可能限制标签空间、便于逐层维护，但上层漏判会使下层失去机会；端到端方案直接生成完整标签集合，减少显式级联，也会面临组合稀疏、格式错误和层级不一致。这是按任务依赖作出的设计分析，不是某个训练器自动提供的保证。比较时保持标签与切分一致，同时报告完整标签集结果、逐标签/逐层指标、错误传播、无效输出、时延与成本；不只看训练 loss。
+
+训练完成后固定模型、模板、标签版本与解析器，再做部署约束下的验收。全参数更新、LoRA 和分布式并行是参数/资源层面的选择，与“标签预测分层还是端到端”属于不同维度。原项目没有数据集和实测记录时，只能提出上述复核框架，不能补造样本量、提升幅度或最终选型。
+
 ## 第二层：偏好优化
 
 很多问题没有唯一标准答案，示范难以覆盖所有风格。偏好数据让评价者比较两个回答，表达哪一个更有帮助、更真实或更安全。
@@ -90,6 +100,7 @@ SFT 使用“输入—理想输出”示范继续训练模型。它适合教授�
 <!-- interview-source-history:start -->
 - [阿里国际 Accio Agent 算法一面：数据合成、任务环境与 GUI Agent](../../../interview/alibaba/ai/alibaba-ai-3.md)
 - [阿里大模型算法校招：Attention、后训练与 Agent 评测](../../../interview/alibaba/ai/alibaba-ai-24.md)
+- [华为后训练与强化学习实习一面：分类模型、训练并行与排序](../../../interview/huawei/ai/huawei-ai-4.md)
 - [阿里国际 Java 二面：RAG 数据评测、微调与代码生成](../../../interview/alibaba/ai/alibaba-ai-26.md)
 <!-- interview-source-history:end -->
 
@@ -100,3 +111,4 @@ SFT 使用“输入—理想输出”示范继续训练模型。它适合教授�
 - [The Llama 3 Herd of Models](https://arxiv.org/abs/2407.21783)
 
 - [TRL 1.16.0：SFT 数据与目标位置](https://github.com/huggingface/trl/blob/v1.16.0/docs/source/sft_trainer.md)
+- [scikit-learn：分组与时序交叉验证](https://scikit-learn.org/stable/modules/cross_validation.html)

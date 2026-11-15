@@ -50,6 +50,21 @@ Trie 只快速找到 prefix 对应子树。推荐顺序可能综合历史频次�
 
 这些场景共享“前缀路径”，但 alphabet、匹配规则和 terminal payload 不同，不应把单词 Trie 原样套用。
 
+## 从 Trie 到 AC 自动机：一遍扫描匹配多个模式
+
+普通 Trie 常从文本的某个起点沿模式前缀尝试；Aho–Corasick（AC）自动机在 Trie 上增加 failure links 与输出信息，复用已读文本的后缀状态，适合用一个固定模式词典扫描长文本。它做的是精确多模式匹配，不会自动理解同义改写，也不直接完成向量召回或语义分类。[pyahocorasick 官方文档](https://pyahocorasick.readthedocs.io/en/latest/)说明其 Trie、failure links 与多模式搜索接口。
+
+对非根状态 v，`fail(v)` 指向“v 所表示字符串的最长真后缀，且这个后缀也是词典中某条前缀”的状态。扫描字符 c 时：有子边就转移；没有则沿 fail 继续找；退到根仍没有就保持根。文本指针不因 fail 倒退。构建时通常按广度优先确定失败链接，使父状态的失败信息先准备好；根和根的直接孩子要按约定单独处理。
+
+**输出也必须沿后缀关系传播或查询。** 模式集 `{he, she, hers}` 扫描 `ushers`：读到 `she` 时同时命中 `she` 与后缀 `he`；下一字符 r 无法从 she 直接前进，沿 fail 到 he 后消费这个 r 到 her，再读 s 命中 hers。若只报告当前状态的终止标记，就会漏掉 he；若只报告最长匹配，也会改变“返回全部匹配”的任务合同。
+
+![模式 he、she、hers 的 Trie 结构，he、she、hers 是终止词，紫色虚线表示 she 的 fail 指向 he，提醒输出包含后缀词](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/algorithm-trie-ac-structure-20261115.png)
+*图：只展开 she→he 这一条失败链接，其余状态的 fail 省略。实线是 Trie 子边，紫色虚线不消费字符；完整自动机还须构建其余失败链接并维护输出。*
+
+若文本长度为 n、报告的匹配数为 z，在固定字母表及常数时间转移等通常假设下，扫描可达到 O(n+z)；不能忽略输出量。构建空间和时间还取决于模式总长度、字母表、稠密转移表还是稀疏边，以及怎样保存输出链；复制每个状态的全部输出可能占用额外空间，不应无条件说所有实现都只需线性空间。
+
+实际工程先统一大小写、Unicode 规范化与字符单位，返回词条 ID、匹配区间和词典版本；重叠如何处理、短词边界和优先级另定规则。词典频繁变化时可以批量重建不可变版本并切换，评估峰值内存与切换语义。若把匹配结果送入分类器或 Agent，它只是带出处的规则信号；是否召回更多材料、调用其他模型以及允许执行什么动作，还需独立编排和校验，不能从“命中了关键词”推出业务结论。
+
 ## 规范化与测试
 
 大小写、重音、全半角和 Unicode 组合形式必须在写入和查询使用同一版本规则，并保留展示原文。中文自动补全可能按汉字、拼音或分词 token 建多路索引，需明确用户输入如何映射。
@@ -61,9 +76,11 @@ Trie 只快速找到 prefix 对应子树。推荐顺序可能综合历史频次�
 ## 参考资料
 
 - [Princeton Algorithms：Tries](https://algs4.cs.princeton.edu/52trie/)
+- [pyahocorasick：Trie、failure links 与多模式匹配](https://pyahocorasick.readthedocs.io/en/latest/)
 
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
 - [字节 AI 平台一面：Agent 评测、框架与数据结构](../../../interview/bytedance/base/bytedance-base-33.md)
+- [华为后训练与强化学习实习一面：分类模型、训练并行与排序](../../../interview/huawei/ai/huawei-ai-4.md)
 <!-- interview-source-history:end -->

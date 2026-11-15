@@ -4,6 +4,10 @@
 
 面试里“JVM 内存模型有哪些区域”容易混用两个概念。**运行时数据区**回答线程执行、对象和类结构由哪些逻辑区域承载；**Java 内存模型（JMM）**约束执行中一次读取可以观察到哪次写入，以及同步与执行顺序等规则。前者不是堆栈名称版的 JMM；共享堆的两个线程怎样正确发布和读取对象，应另按 [JLS §17.4 的内存模型](https://docs.oracle.com/javase/specs/jls/se8/html/jls-17.html#jls-17.4)讨论。
 
+“主内存与工作内存”可作为解释线程共享变量与执行视图的教学抽象，但不能把工作内存直接等同于 JVM 栈或 CPU 的某级缓存。JMM 的核心问题是：哪些动作建立 happens-before，以及一次读允许观察哪次写。JLS 21 规定同一 volatile 字段的写与同步顺序中后续读建立 synchronizes-with，monitor 的解锁与后续加锁也有相应关系；这不是承诺“每个普通变量都立即刷新到所有线程”。[JLS 21 §17.4](https://docs.oracle.com/javase/specs/jls/se21/html/jls-17.html#jls-17.4)给出的是可观察行为约束。
+
+因此，问“内存模型具体实现在哪里”时，先澄清是 JMM 还是运行时区域。JMM 由编译器与 JVM 在目标硬件上共同落实：优化、代码生成及必要的同步机制必须使执行符合规范允许的行为；不能把某条内存屏障指令、CPU 缓存一致性或某块物理内存单独称为整个 JMM 的实现。具体指令依 JVM、架构和版本核对，JLS 不规定唯一执行策略。volatile 也不会使 count++ 等复合操作原子；相关并发边界见[锁、信号量与并发同步](../../cs/os/os-thread-sync.md)。
+
 对象生命周期、方法执行与类加载使用不同结构。JVMS 21 定义共享的堆、方法区，以及线程私有的 PC 和 JVM 栈等逻辑区域，具体布局由实现决定。[JVMS §2.5](https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-2.html#jvms-2.5)没有规定所有实现必须采用同一种物理分区。
 
 ![对象分配由共享堆承载，类加载与执行需要类结构和线程栈；本地资源另有边界，异常应按区域定位](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/java-runtime-memory-archify-v1.png)
@@ -69,6 +73,25 @@ jcmd <pid> VM.native_memory summary.diff
 
 堆快照可能含用户数据，应控制采集与保存范围。先定位持续持有者或过高并发，再考虑调整容量；增大堆可能暂缓症状，也可能挤压其他本地资源。
 
+## 查 GC：区分累计统计、事件和保留对象
+
+“怎么查 GC”应先说清观察目标：回收频率和累计耗时、某次暂停的原因，还是 GC 后仍存活的对象。它们需要不同证据；一次堆占用高也可能只是正常的回收前峰值，不直接等于泄漏。先固定 JDK、收集器、VM 参数与业务时间线，再选择相应工具。
+
+以下仅是 **JDK 21 文档对应的诊断示意**，未在本环境连接业务 JVM 执行：
+
+```text
+jcmd <pid> help
+jcmd <pid> VM.version
+jcmd <pid> GC.heap_info
+jstat -gcutil -t <pid> 1000 10
+```
+
+`jcmd ... help` 用于核对目标 JVM 实际支持的命令；GC.heap_info 提供堆概况。`jstat -gcutil` 可周期查看容量利用率与回收计数、累计耗时，`-t` 增加采样时间。比较一段时间内计数和耗时的增量，而不是把进程启动后的累计 GCT 说成刚才一次暂停。列的含义和适用性需要结合收集器、JDK 版本核对；jstat 文档还明确提醒输出格式可能变化，不应把其文本列当稳定监控协议。[JDK 21 jcmd](https://docs.oracle.com/en/java/javase/21/docs/specs/man/jcmd.html)与[jstat](https://docs.oracle.com/en/java/javase/21/docs/specs/man/jstat.html)分别说明这些边界。
+
+若要回答“哪一次回收造成请求变慢”，需要与请求时间线对齐的 GC 事件证据，例如已配置的 GC 日志或相应 JFR 事件；累计统计本身给不出每次暂停的完整细节。若怀疑对象持续保留，再按影响评估选择直方图或堆快照，并分析引用链；不能从类的实例数排名直接推断根因。
+
+诊断命令也会改变或干扰目标。jcmd 的 GC.class_histogram、GC.heap_dump 被文档标为高影响；默认堆转储还会请求 Full GC，除非使用其 -all 选项。GC.run 则调用 System.gc()，不是被动“查看 GC”的命令。先使用已有指标、日志和适当采样，再按需要采集高影响证据；不要为了观察一次回收就直接触发它。输出可能包含业务数据，沿前述堆快照的保存边界处理。
+
 ## 多进程与多线程的边界
 
 多进程可以隔离单进程地址空间与故障，但复制模型、数据和运行时会增加总内存。多线程共享对象，减少复制的同时需要并发控制。对大批处理，限制并发、分批、流式处理或释放引用有时比拆进程更直接；采用哪种方案必须测量峰值与恢复效果。
@@ -76,8 +99,10 @@ jcmd <pid> VM.native_memory summary.diff
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [腾讯云智二面：Spring、Java 内存模型与 IO 多路复用](../../../interview/tencent/ai/tencent-ai-32.md)
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
 - [阿里云后端与 Agent 二面：领域建模、训练并行与 Java 基础](../../../interview/alibaba/ai/alibaba-ai-28.md)
+- [字节后端与 Agent 开发三面：领域建模、项目评测与基础](../../../interview/bytedance/base/bytedance-base-80.md)
 - [字节后端实习一面：Agent 取舍、线程池与索引](../../../interview/bytedance/base/bytedance-base-78.md)
 - [阿里国际 AI 应用研发一面：JDK 8、消息可靠性与 RAG](../../../interview/alibaba/ai/alibaba-ai-25.md)
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
@@ -92,9 +117,12 @@ jcmd <pid> VM.native_memory summary.diff
 - [JVMS 21：运行时数据区域](https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-2.html#jvms-2.5)
 - [JVMS 8：程序计数器与本地方法栈](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5)
 - [JLS 8：Java 内存模型](https://docs.oracle.com/javase/specs/jls/se8/html/jls-17.html#jls-17.4)
+- [JLS 21：共享内存、同步关系与允许行为](https://docs.oracle.com/javase/specs/jls/se21/html/jls-17.html#jls-17.4)（JMM 实现层次增补于2026-11-15核验）
 - [JVMS 21：加载、链接与初始化](https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-5.html)
 - [JLS 17：对象可达性与类卸载条件](https://docs.oracle.com/javase/specs/jls/se17/html/jls-12.html#jls-12.6.1)
 - [JEP 122：移除永久代的目标与实现范围](https://openjdk.org/jeps/122)
 - [JVMS 17：JVM 栈与本地方法栈](https://docs.oracle.com/javase/specs/jvms/se17/html/jvms-2.html#jvms-2.5.6)
 - [Oracle JDK 17：迁移前验证](https://docs.oracle.com/en/java/javase/17/migrate/preparing-migration.html)
 - [Java 21：Native Memory Tracking](https://docs.oracle.com/en/java/javase/21/vm/native-memory-tracking.html)
+- [JDK 21：jcmd 命令、GC 概况和诊断影响](https://docs.oracle.com/en/java/javase/21/docs/specs/man/jcmd.html)（GC 观测增补于2026-11-15核验）
+- [JDK 21：jstat 采样、累计统计与格式边界](https://docs.oracle.com/en/java/javase/21/docs/specs/man/jstat.html)

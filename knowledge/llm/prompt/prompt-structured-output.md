@@ -158,12 +158,13 @@ if (!validate(parsed)) {
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [小红书 AI 全栈暑期二面：MCP 更新安全与 JSON 验收](../../../interview/redbook/ai/redbook-ai-11.md)
-- [字节 AI 应用开发一、二面：规划、结构化输出与部署取舍](../../../interview/bytedance/base/bytedance-base-65.md)
 - [小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展](../../../interview/redbook/ai/redbook-ai-3.md)
+- [字节后端与 Agent 开发三面：领域建模、项目评测与基础](../../../interview/bytedance/base/bytedance-base-80.md)
+- [字节 AI 应用开发一、二面：规划、结构化输出与部署取舍](../../../interview/bytedance/base/bytedance-base-65.md)
 - [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)
 - [字节财经保险 AI 全栈实习一面：项目设计、AI Coding 与 Diff](../../../interview/bytedance/base/bytedance-base-34.md)
 - [字节 Agent 开发一面：评分、Harness 与任务可靠性](../../../interview/bytedance/base/bytedance-base-57.md)
+- [小红书 AI 全栈暑期二面：MCP 更新安全与 JSON 验收](../../../interview/redbook/ai/redbook-ai-11.md)
 - [字节搜广推引擎架构一面：JSON 输出、并发与系统基础](../../../interview/bytedance/base/bytedance-base-74.md)
 <!-- interview-source-history:end -->
 
