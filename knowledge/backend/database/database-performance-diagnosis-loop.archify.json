@@ -7,14 +7,7 @@
     "quality_profile": "showcase",
     "output": "database-performance-diagnosis-loop.html",
     "legend": {
-      "entries": {
-        "backend": {
-          "label": "诊断与改进"
-        },
-        "security": {
-          "label": "变更门禁"
-        }
-      }
+      "mode": "hidden"
     }
   },
   "lanes": [
@@ -34,8 +27,8 @@
       "col": 0,
       "type": "backend",
       "icon": "start",
-      "label": "固定基线",
-      "sublabel": "请求率 / 延迟 / 错误"
+      "label": "1 固定基线",
+      "width": 132
     },
     {
       "id": "classify",
@@ -43,32 +36,32 @@
       "col": 1,
       "type": "backend",
       "icon": "decision",
-      "label": "分类定位",
-      "sublabel": "工作量 / 等待 / 资源"
+      "label": "2 分类定位",
+      "width": 132
     },
     {
       "id": "hypothesis",
       "lane": "observe",
       "col": 2,
       "type": "backend",
-      "label": "形成假设",
-      "sublabel": "证据 → 动作 → 预期"
+      "label": "3 证据与假设",
+      "width": 132
     },
     {
       "id": "review",
       "lane": "change",
       "col": 2,
       "type": "security",
-      "label": "评审与演练",
-      "sublabel": "责任 / 窗口 / 回退"
+      "label": "4 责任 / 回退评审",
+      "width": 132
     },
     {
       "id": "canary",
       "lane": "change",
       "col": 1,
       "type": "backend",
-      "label": "小范围实施",
-      "sublabel": "灰度 / 限速 / 停止条件"
+      "label": "5 评审通过后灰度",
+      "width": 132
     },
     {
       "id": "compare",
@@ -76,8 +69,8 @@
       "col": 0,
       "type": "backend",
       "icon": "decision",
-      "label": "同口径复测",
-      "sublabel": "达标固化 / 未达标回退"
+      "label": "6 同口径复测",
+      "width": 132
     }
   ],
   "edges": [
@@ -99,8 +92,7 @@
     {
       "id": "d",
       "from": "review",
-      "to": "canary",
-      "label": "通过评审"
+      "to": "canary"
     },
     {
       "id": "e",
@@ -111,14 +103,14 @@
       "id": "f",
       "from": "compare",
       "to": "baseline",
-      "label": "继续定位",
+      "label": "未达标回退",
       "role": "return",
       "variant": "dashed",
       "fromSide": "left",
       "toSide": "left",
       "route": "return-left",
       "labelSegment": 1,
-      "labelDx": 35
+      "labelDx": 44
     }
   ]
 }
