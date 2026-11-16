@@ -33,6 +33,20 @@ SFT 使用“输入—理想输出”示范继续训练模型。它适合教授�
 
 [TRL 1.16.0 的 SFT 文档](https://github.com/huggingface/trl/blob/v1.16.0/docs/source/sft_trainer.md)区分 prompt-completion 的 completion-only loss 与 conversational 数据的 assistant-only loss；后者还依赖能产生助手掩码的聊天模板。这里限定该版本的约定，不把参数默认值推广到其他训练器。构造训练集时保留任务来源、拒答与工具失败等困难样本，做语义去重并隔离同源评测材料；训练前后的任务质量、过度拒答和失败切片都要复核。
 
+### Agent 轨迹：先分诊，再决定是否入训
+
+假设已积累一批成功、失败和人工修正的轨迹，数量本身不决定训练价值。先保留获准使用的原始记录，建立派生数据版本：关联任务、模型 / Prompt / 工具与环境版本，校验调用和返回能否对应，记录终止原因，并用外部状态或人工复核确认任务结果。缺工具返回、只有“完成了”的自述或人工修正无法对齐到原上下文的样本，应隔离待审，不靠补写内容凑成完整示范。[Agent 评测实践](https://www.anthropic.com/research/demystifying-evals-for-ai-agents)区分轨迹与环境终态；这也是整理训练候选时需要保留两类证据的原因。
+
+再按失败原因分流。工具不可用、权限缺失、错误接口合同或流程跳过验收，优先修工程链路；资料过期先检查检索与数据更新；在上下文和工具都充分时仍反复出现的行为、格式或决策问题，才形成 SFT、偏好学习或其他后训练的候选。这个分流是诊断框架，最终仍须用保留任务比较工程修复与训练的收益。
+
+| 轨迹类型 | 可以提取的信号 | 不应直接做的事 |
+| --- | --- | --- |
+| 经核验的成功 | 满足目标与约束的示范、可比较的偏好候选 | 把全部中间动作都认作必要或最优 |
+| 失败 | 失败类型、回归案例、经复核的负例或步骤标签 | 把原失败动作当作正确 SFT 目标 |
+| 人工修正或恢复成功 | 原上下文下经验证的修正动作、恢复决策 | 把人类额外获知的信息伪装成模型当时已知 |
+
+清洗需做隐私与许可检查、角色和工具合同校验、语义近重复去重，并按任务来源及部署目标划分训练、验证和保留测试。同一任务的成功、失败、重试与人工改写应作为同源组处理，避免改写跨集合；不按固定长度或固定成功率阈值一刀切删除难例。[TRL 1.16.0 的 SFT 工具数据约定](https://github.com/huggingface/trl/blob/v1.16.0/docs/source/sft_trainer.md)要求保留工具调用、工具回复与可用工具信息；转换后还要实际检查聊天模板、截断和目标掩码，避免把错误动作或工具观察误当成应模仿的助手输出。失败与长轨迹不是天然垃圾，关键是监督目标与证据是否匹配。
+
 ### 多路打标微调：先定义标签，再比较分层与端到端
 
 若任务是从文本生成多个业务标签，先冻结标签本体、共现/层级约束、标注指南及无法判定时的表示，并保存样本来源和授权范围。输入只包含预测时可获得的文字和上下文；输出可以是固定 schema 的标签列表或结构化对象。训练前实际检查模板、截断、labels 掩码与解析结果，让“生成一段话”和“返回合法标签”成为可区分的验收项。[TRL 的 SFT 数据说明](https://github.com/huggingface/trl/blob/v1.16.0/docs/source/sft_trainer.md)支持核对不同数据格式与目标位置。
@@ -100,6 +114,7 @@ SFT 使用“输入—理想输出”示范继续训练模型。它适合教授�
 <!-- interview-source-history:start -->
 - [阿里国际 Accio Agent 算法一面：数据合成、任务环境与 GUI Agent](../../../interview/alibaba/ai/alibaba-ai-3.md)
 - [阿里大模型算法校招：Attention、后训练与 Agent 评测](../../../interview/alibaba/ai/alibaba-ai-24.md)
+- [淘天 AI Agent / 大模型应用研发二面：幻觉治理、Action 与轨迹偏好](../../../interview/alibaba/ai/alibaba-ai-30.md)
 - [华为后训练与强化学习实习一面：分类模型、训练并行与排序](../../../interview/huawei/ai/huawei-ai-4.md)
 - [阿里国际 Java 二面：RAG 数据评测、微调与代码生成](../../../interview/alibaba/ai/alibaba-ai-26.md)
 <!-- interview-source-history:end -->
@@ -112,3 +127,4 @@ SFT 使用“输入—理想输出”示范继续训练模型。它适合教授�
 
 - [TRL 1.16.0：SFT 数据与目标位置](https://github.com/huggingface/trl/blob/v1.16.0/docs/source/sft_trainer.md)
 - [scikit-learn：分组与时序交叉验证](https://scikit-learn.org/stable/modules/cross_validation.html)
+- [Anthropic：Agent 评测中的轨迹与环境终态](https://www.anthropic.com/research/demystifying-evals-for-ai-agents)

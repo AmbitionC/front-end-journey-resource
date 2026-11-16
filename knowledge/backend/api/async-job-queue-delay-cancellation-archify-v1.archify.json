@@ -1,0 +1,90 @@
+{
+  "schema_version": 3,
+  "diagram_type": "lifecycle",
+  "meta": {
+    "title": "延迟任务：取消与开始执行的竞争",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "diagram/delayed-task-cancellation.html"
+  },
+  "mainPath": [
+    "scheduled",
+    "running",
+    "succeeded"
+  ],
+  "states": [
+    {
+      "id": "scheduled",
+      "type": "start",
+      "label": "尚未执行",
+      "sublabel": "可含已领取租约"
+    },
+    {
+      "id": "running",
+      "type": "active",
+      "label": "正在执行",
+      "sublabel": "running"
+    },
+    {
+      "id": "succeeded",
+      "type": "success",
+      "label": "已完成",
+      "sublabel": "succeeded"
+    },
+    {
+      "id": "cancelled",
+      "type": "neutral",
+      "label": "已取消",
+      "sublabel": "未执行或已安全停止"
+    },
+    {
+      "id": "cancel_requested",
+      "type": "waiting",
+      "label": "请求停止",
+      "sublabel": "尚未确认取消"
+    }
+  ],
+  "transitions": [
+    {
+      "from": "scheduled",
+      "to": "running",
+      "label": "开始先赢"
+    },
+    {
+      "from": "running",
+      "to": "succeeded",
+      "label": "保存结果"
+    },
+    {
+      "from": "scheduled",
+      "to": "cancelled",
+      "label": "取消先赢"
+    },
+    {
+      "from": "running",
+      "to": "cancel_requested",
+      "label": "请求取消"
+    },
+    {
+      "from": "cancel_requested",
+      "to": "cancelled",
+      "label": "安全停止"
+    },
+    {
+      "from": "cancel_requested",
+      "to": "succeeded",
+      "label": "保留完成事实"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "amber",
+      "title": "读图边界",
+      "items": [
+        "图只展开取消与开始竞争，省略调度和续租状态",
+        "开始与取消对同一权威状态作条件更新",
+        "运行中请求取消，不等于副作用已被撤销"
+      ]
+    }
+  ]
+}

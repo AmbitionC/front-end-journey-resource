@@ -159,6 +159,7 @@ if (!validate(parsed)) {
 
 <!-- interview-source-history:start -->
 - [小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展](../../../interview/redbook/ai/redbook-ai-3.md)
+- [字节后端与 Agent 开发二面：本体平台、延迟任务与注意力](../../../interview/bytedance/base/bytedance-base-81.md)
 - [字节后端与 Agent 开发三面：领域建模、项目评测与基础](../../../interview/bytedance/base/bytedance-base-80.md)
 - [字节 AI 应用开发一、二面：规划、结构化输出与部署取舍](../../../interview/bytedance/base/bytedance-base-65.md)
 - [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)

@@ -1,0 +1,116 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "数据库整体性能诊断闭环",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "database-performance-diagnosis-loop.html",
+    "legend": {
+      "mode": "hidden"
+    }
+  },
+  "lanes": [
+    {
+      "id": "observe",
+      "label": "定位证据"
+    },
+    {
+      "id": "change",
+      "label": "受控改进"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "baseline",
+      "lane": "observe",
+      "col": 0,
+      "type": "backend",
+      "icon": "start",
+      "label": "1 固定基线",
+      "width": 132
+    },
+    {
+      "id": "classify",
+      "lane": "observe",
+      "col": 1,
+      "type": "backend",
+      "icon": "decision",
+      "label": "2 分类定位",
+      "width": 132
+    },
+    {
+      "id": "hypothesis",
+      "lane": "observe",
+      "col": 2,
+      "type": "backend",
+      "label": "3 证据与假设",
+      "width": 132
+    },
+    {
+      "id": "review",
+      "lane": "change",
+      "col": 2,
+      "type": "security",
+      "label": "4 责任 / 回退评审",
+      "width": 132
+    },
+    {
+      "id": "canary",
+      "lane": "change",
+      "col": 1,
+      "type": "backend",
+      "label": "5 评审通过后灰度",
+      "width": 132
+    },
+    {
+      "id": "compare",
+      "lane": "change",
+      "col": 0,
+      "type": "backend",
+      "icon": "decision",
+      "label": "6 同口径复测",
+      "width": 132
+    }
+  ],
+  "edges": [
+    {
+      "id": "a",
+      "from": "baseline",
+      "to": "classify"
+    },
+    {
+      "id": "b",
+      "from": "classify",
+      "to": "hypothesis"
+    },
+    {
+      "id": "c",
+      "from": "hypothesis",
+      "to": "review"
+    },
+    {
+      "id": "d",
+      "from": "review",
+      "to": "canary"
+    },
+    {
+      "id": "e",
+      "from": "canary",
+      "to": "compare"
+    },
+    {
+      "id": "f",
+      "from": "compare",
+      "to": "baseline",
+      "label": "未达标回退",
+      "role": "return",
+      "variant": "dashed",
+      "fromSide": "left",
+      "toSide": "left",
+      "route": "return-left",
+      "labelSegment": 1,
+      "labelDx": 44
+    }
+  ]
+}

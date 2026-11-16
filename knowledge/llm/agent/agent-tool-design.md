@@ -90,6 +90,23 @@ MCP 解决发现与调用协议，不替代工具本身的生产契约。把一�
 
 再做 Agent 集成测试：是否选对工具、参数来源、何时审批、错误后是否正确重试/停止。录制工具 fixture 保证回归确定；生产沙箱验证真实授权与副作用隔离。
 
+## 新增 Action：从能力查重到受控发布
+
+这里把 Action 当作一项可验收的业务操作，具体语义见[本体与 Action 建模](agent-ontology-modeling.md)。新增需求先查现有能力，而不是先起一个新工具名：比较业务意图、对象与状态、输入输出、授权和副作用。两个名称不同却满足同一合同，可以复用接口或增加受控适配；名称相同但权限或业务状态不同，则应保留边界，不能强行合并。
+
+下面是一套工程准入设计，并非 MCP 规定的发布流程：
+
+| 阶段 | 要留下的可审核产物 | 不能跳过的判断 |
+| --- | --- | --- |
+| 需求与查重 | 真实用例、成功判据、现有 Action / 接口对照 | 是能力缺失，还是工具发现、参数或语义映射有问题？ |
+| 合同与适配 | 版本化 Schema、前置条件、权限、副作用、错误和超时语义 | 旧接口能否兑现合同，谁维护权威状态？ |
+| 评审与验证 | 业务及接口 owner 的确认、契约测试、Agent 场景回归 | 正常、拒绝、未知结果、重复执行和失败恢复是否被覆盖？ |
+| 发布与回退 | 工具注册版本、限定开放范围、观测指标和停用办法 | 新旧调用方是否兼容，运行中任务继续使用哪一版？ |
+
+[MCP 2025-11-25 工具规范](https://modelcontextprotocol.io/specification/2025-11-25/server/tools)提供发现、Schema、结果及错误的协议合同，并要求服务端校验输入与访问控制；这些能力仍需业务方落实到上述准入证据。已有接口不能满足授权、幂等或结果查询时，包装成工具并没有补齐缺口，应先修接口或缩小开放能力。
+
+发布后按版本观察误选工具、参数错误、权限拒绝、未知副作用和实际任务结果，出现退化先停用或回退注册版本。回退工具代码或目录不会撤销已发生的业务变化；已提交和状态未知的操作仍按 operation ID 对账，必要时补偿。这样新增能力的验收单位是“合同被真实兑现”，而非“工具列表多了一项”。
+
 ## 可观测性
 
 记录 tool name/version、call ID、trace ID、principal/tenant 的非敏感标识、schema/auth decision、时长、attempt、idempotency key hash、结果 code 和副作用资源 ID。参数按字段分类脱敏，不记录原始密码、token 和文档正文。
@@ -118,6 +135,7 @@ MCP 解决发现与调用协议，不替代工具本身的生产契约。把一�
 - [百度 Agent 秋招二三面：记忆、工具可靠性与运行循环](../../../interview/baidu/ai/baidu-ai-6.md)
 - [OPPO IT 开发一面：ReAct、MCP 与智能问数](../../../interview/oppo/ai/oppo-ai-3.md)
 - [美团北斗大模型算法一至四面：过程监督、GRPO 与工具参数](../../../interview/meituan/ai/meituan-ai-3.md)
+- [淘天 AI Agent / 大模型应用研发二面：幻觉治理、Action 与轨迹偏好](../../../interview/alibaba/ai/alibaba-ai-30.md)
 - [阿里云后端与 Agent 二面：领域建模、训练并行与 Java 基础](../../../interview/alibaba/ai/alibaba-ai-28.md)
 - [字节后端与 Agent 开发三面：领域建模、项目评测与基础](../../../interview/bytedance/base/bytedance-base-80.md)
 - [字节 Agent Infra 校招：运行时、MySQL 与 LRU](../../../interview/bytedance/base/bytedance-base-25.md)
@@ -137,3 +155,4 @@ MCP 解决发现与调用协议，不替代工具本身的生产契约。把一�
 - [JSON Schema — Draft 2020-12 Core](https://json-schema.org/draft/2020-12/json-schema-core)
 - [OpenAI — Function calling](https://developers.openai.com/api/docs/guides/function-calling)
 - [Model Context Protocol — Tools](https://modelcontextprotocol.io/specification/2025-06-18/server/tools)
+- [MCP 2025-11-25 — Tools：发现、合同、校验与访问控制](https://modelcontextprotocol.io/specification/2025-11-25/server/tools)

@@ -183,9 +183,46 @@ RabbitMQ 的 TTL 限制消息存活期，死信交换机路由过期、拒收等
 
 补偿扫描可以依据权威到期索引与水位查找漏处理项，并通过同一幂等路径收敛。它不替代实时使用时的判断。积压治理则另查生产速率、消费耗时、重试与下游容量，避免为了消化过期任务继续制造无意义重试；消息已到达或已 ACK 都不能单独证明业务终态正确。
 
+## 高提交率的可取消延迟任务怎样设计
+
+延迟任务比普通后台 Job 多一个条件：即使 Worker 有空，也不能早于 `dueAt` 开始。先约定延迟范围、允许的到期误差、受理后是否允许丢失，以及取消到底承诺“未开始”还是“尽力停止”。每秒约一万次提交只是接入负载；到期速率、任务停留时长和同一时刻集中到期的分布，才共同决定索引规模和调度容量。下面是一种教学设计，不代表任何来源项目采用了它，也不是该提交量下已经压测通过的方案。
+
+### 时间索引找候选，任务状态决定执行权
+
+任务记录至少关联 `jobId`、`dueAt`、参数或参数引用、主体、状态、版本及租约。提交先校验时间范围与幂等键，再按已约定的耐久性边界保存记录；时间索引只是可重建的候选入口，不是额外一份可独立决定执行的业务事实。
+
+一个选择是以关系库保存任务事实，并建立支持 `state + dueAt + jobId` 条件的索引；实际索引顺序与查询计划须按目标数据库和数据分布验证。另一个选择是用 Redis Sorted Set 按 `dueAt` 分数找候选，另存参数与权威状态；[Redis 有序集合文档](https://redis.io/docs/latest/develop/data-types/sorted-sets/)提供按分数排序、范围读取与成员删除的能力。范围读取后再单独删除仍有竞争，不能把“读到了同一批”当成某个实例已取得执行权；跨 Redis 与数据库写入也没有天然共同事务。
+
+到期扫描按 `(dueAt, jobId)` 等稳定顺序读取至多 B 条候选，再以状态、版本和租约条件原子领取，写入当前 owner 与 fencing token。只有领取成功且执行前状态仍允许的 Worker 才能开始。关系库的一种实现手段是行锁配合跳过已锁行；[PostgreSQL 的 SELECT 文档](https://www.postgresql.org/docs/current/sql-select.html#SQL-FOR-UPDATE-SHARE)明确指出 `SKIP LOCKED` 可用于多个消费者访问类似队列的表，但会提供不一致视图，不适用于一般查询。这里是说明可选机制，不把 PostgreSQL 语法当成所有数据库的通用 API，也不应持有数据库事务直到耗时任务执行结束。
+
+### 取消与开始必须竞争同一个状态
+
+任务尚未开始时，取消接口条件更新为 `cancelled`，开始接口条件更新为 `running`；两者在同一权威状态和版本上竞争，只有一个能从同一旧版本成功。若 Worker 已领取但未开始，取消仍必须影响这份权威记录，Worker 执行前重新检查；只从 Sorted Set 移除成员，无法阻止已读取候选的 Worker。
+
+下图只展开“开始与取消”的竞争，省略到期扫描、领取和续租状态。注意运行中的取消请求与已经确认停止是两个事实，完成结果不能被后来的请求擦除。
+
+![尚未执行的延迟任务通过条件更新由开始或取消的一方胜出；运行中取消先记录请求，确认安全停止才转为已取消，否则保留已完成事实](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/async-job-queue-delay-cancellation-archify-v1.png)
+
+如果已进入 `running`，接口只能按合同请求停止，并返回“请求已记录”“停止处理中”或“已完成”等真实状态。Worker 在安全点停止新工作；外部调用已经发出时还要查询或对账，不能把中断线程、关闭连接或删除记录当成撤销副作用。租约过期可能让另一个 Worker 接管，所以条件领取只限制当前所有权，不单独保证外部效果恰好一次；稳定操作 ID 与下游幂等合同仍然必需。
+
+### 每次取多少、多久轮询
+
+设一轮最多领取 B 条、每轮间隔为 T 秒，单个扫描器的理想领取上限约为 B/T 条每秒；这只是忽略查询、竞争、空批和失败的容量估算。若实际到期速率是每秒一万条，B=1000、T=0.1 秒恰好达到这一理想值，已经没有现实余量，不能因此宣布满足负载。还要分开验证领取能力与 Worker 真正完成任务的能力。
+
+空闲时可根据最早到期时间唤醒，并设最大休眠间隔处理新插入的更早任务或漏通知；繁忙时以有限批次持续领取，受可用 Worker 和下游容量背压。固定轮询还会增加至多约一个轮询周期的基础等待，实际尾延迟还包含存储、竞争和排队。分片可以分散负载，但要保留每个分片的公平处理、状态一致性与恢复路径，不能让一个热门时间点饿死其他到期任务。
+
+观察到期积压数、最老到期延迟、批次填充率、领取冲突、空扫比例、执行耗时、取消生效延迟与租约恢复次数，再调整 B、T、分片和并发。任务在同一时刻集中到期时，平均提交 QPS 无法替代这一突发场景的测试。
+
+### 要不要数据库，先问什么必须在故障后保留
+
+若任务可丢失且可重建、只在单进程内短暂停留，内存堆与 `jobId` 索引可能足够；跨重启恢复、可查询终态、长延迟、取消审计或跨实例状态竞争则需要相应外部事实源。外部事实源不只指关系库，选择仍须核对写入确认、持久化、复制和恢复的实际合同，不能只凭产品名作保证。
+
+任务存续量可先用“提交速率 × 平均等待时长”估算：若持续每秒一万条、平均等待一小时且尚未执行，等待任务约为三千六百万条。这是稳定流量下的教学估算，尚未计入参数大小、索引开销、重试、结果与保留期；它说明延迟跨度与数据体积可能比单一 QPS 更影响选型。最后用故障试验验证受理后崩溃、到期扫描双实例、领取后崩溃、开始与取消同时到达、租约过期和副作用结果未知，不能用正常路径跑通代替恢复证据。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [美团小象超市后端一面：写时复制、并发与消息](../../../interview/meituan/base/meituan-base-1.md)
 - [快手 AI 全栈一面：分布式锁、线程池与 AI 编码](../../../interview/kuaishou/ai/kuaishou-ai-20.md)
 - [美团容器平台 JAVA 一二面：消息一致性、MCP 权限与代码审查](../../../interview/meituan/ai/meituan-ai-5.md)
 - [阿里云 Agent Infra 一面：SGX、吞吐与日志写入](../../../interview/alibaba/ai/alibaba-ai-8.md)
@@ -195,6 +232,7 @@ RabbitMQ 的 TTL 限制消息存活期，死信交换机路由过期、拒收等
 - [腾讯 WXG 一面：跨语言 RAG、消息幂等与算法](../../../interview/tencent/base/tencent-base-3.md)
 - [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)
 - [快手 AI 应用实习面试：模型服务、RAG 与分类评估](../../../interview/kuaishou/ai/kuaishou-ai-15.md)
+- [字节后端与 Agent 开发二面：本体平台、延迟任务与注意力](../../../interview/bytedance/base/bytedance-base-81.md)
 - [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
 - [拼多多提前批一面：Agent 超时、消息可靠性与线上排障](../../../interview/pinduoduo/ai/pinduoduo-ai-2.md)
 - [商盟支付 Java 开发实习一面：交易去重、并发与消息](../../../interview/shangmeng/ai/shangmeng-ai-1.md)
@@ -204,6 +242,7 @@ RabbitMQ 的 TTL 限制消息存活期，死信交换机路由过期、拒收等
 - [腾讯混元后台开发二面：推理调度、队列与缓存故障](../../../interview/tencent/ai/tencent-ai-30.md)
 - [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
 - [快手效果营销实习一面：意图路由、模型容错与业务校验](../../../interview/kuaishou/ai/kuaishou-ai-18.md)
+- [字节后端与 Agent 开发一面：Java、数据库治理与系统设计](../../../interview/bytedance/base/bytedance-base-82.md)
 - [蚂蚁 Agent 实习一面：缓存、消息与 RAG](../../../interview/antfin/ai/antfin-ai-6.md)
 - [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../../interview/bytedance/base/bytedance-base-47.md)
 <!-- interview-source-history:end -->
@@ -228,3 +267,6 @@ RabbitMQ 的 TTL 限制消息存活期，死信交换机路由过期、拒收等
 - [RocketMQ 5.x：Topic 消息类型与类型校验](https://rocketmq.apache.org/docs/domainModel/02topic/)（消息类型和 FIFO 补充核验于 2026-11-06；运行配置需单独核对）
 - [RocketMQ 5.x：Ordered Message 与 MessageGroup](https://rocketmq.apache.org/docs/featureBehavior/03fifomessage/)
 - [RocketMQ 5.x：Transaction Message 的流程与边界](https://rocketmq.apache.org/docs/featureBehavior/04transactionmessage/)
+
+- [Redis：有序集合、按分数读取与成员删除](https://redis.io/docs/latest/develop/data-types/sorted-sets/)（延迟任务候选索引补充核验于 2026-11-16）
+- [PostgreSQL：SELECT 行锁与 SKIP LOCKED 的队列表场景](https://www.postgresql.org/docs/current/sql-select.html#SQL-FOR-UPDATE-SHARE)（滚动文档，核验于 2026-11-16）
