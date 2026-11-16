@@ -461,11 +461,11 @@ ReAct 循环经常不收敛，有人建议把 `max_steps` 从 8 调到 100。下
 下面哪种说法正确？
 
 - A. ReAct 先生成全局计划再逐步执行
-- B. ReAct 每一步根据 Observation 再决策；Plan-and-Solve 先出全局计划再执行，更适合步骤确定的任务
+- B. Plan-and-Solve 不需要工具
 - C. 两者完全一样，只是名字不同
-- D. Plan-and-Solve 不需要工具
+- D. ReAct 每一步根据 Observation 再决策；Plan-and-Solve 先出全局计划再执行，更适合步骤确定的任务
 
-**答案：B。** ReAct 动态性强、适合中间结果会改变后续步骤的任务；Plan-and-Solve 更可预测，但计划一旦错了需要重新规划。
+**答案：D。** ReAct 动态性强、适合中间结果会改变后续步骤的任务；Plan-and-Solve 更可预测，但计划一旦错了需要重新规划。
 
 ### 高频考点题 3：为什么需要 ToolRegistry
 
