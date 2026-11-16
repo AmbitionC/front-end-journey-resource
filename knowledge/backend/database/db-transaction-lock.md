@@ -335,6 +335,7 @@ MySQL redo 与 binlog 的内部协调涉及特定引擎实现，不等于完整�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [美团小象超市后端一面：写时复制、并发与消息](../../../interview/meituan/base/meituan-base-1.md)
 - [小红书产品工程师一面：一致性、知识来源与多模态评估](../../../interview/redbook/ai/redbook-ai-6.md)
 - [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
 - [小红书与百度 Agent 面试合并记录：LangGraph 子图、Skill 与工程校验](../../../interview/redbook/ai/redbook-ai-2.md)
@@ -349,6 +350,7 @@ MySQL redo 与 binlog 的内部协调涉及特定引擎实现，不等于完整�
 - [蚂蚁大模型应用秋招一面：记忆评测、事务日志与消息积压](../../../interview/antfin/ai/antfin-ai-11.md)
 - [快手二面：事务快照、缓存与 Agent 项目复盘](../../../interview/kuaishou/ai/kuaishou-ai-23.md)
 - [网易后端开发秋招一面：缓存一致性、死锁与分布式锁](../../../interview/netease/base/netease-base-1.md)
+- [字节后端与 Agent 开发一面：Java、数据库治理与系统设计](../../../interview/bytedance/base/bytedance-base-82.md)
 - [蚂蚁 Agent 实习一面：缓存、消息与 RAG](../../../interview/antfin/ai/antfin-ai-6.md)
 - [腾讯后端多轮复盘：热 Key、缓存一致性与库存](../../../interview/tencent/base/tencent-base-2.md)
 <!-- interview-source-history:end -->

@@ -55,12 +55,35 @@ String 不可变；StringBuilder 可变且不保证并发安全，StringBuffer �
 
 单例是实例生命周期策略，也不是线程安全的同义词。若展示双重检查锁，要保证实例安全发布，不能把锁外读取与锁内创建视为天然正确；静态持有者等方式可利用类初始化规则。原帖另一个被遮蔽的关键字题没有完整内容，知识补充不代表恢复了那道原题。
 
+## long 与 Long：先看静态类型，再看比较操作
+
+`long` 是基本类型，`Long` 是包装引用类型。回答两者的 `==` 与 `equals` 是否相同，必须给出操作数类型和值是否为 `null`，不能只看打印出的数字。[JLS 21 的相等运算规则](https://docs.oracle.com/javase/specs/jls/se21/html/jls-15.html#jls-15.21)区分数值相等与引用相等；当数值比较需要拆箱时，空包装引用不能变成基本值。
+
+| 比较条件 | 语义与边界 |
+| --- | --- |
+| 两边都是 `long`，使用 `==` | 比较数值；基本类型不能直接调用实例方法 `equals` |
+| 一边是 `long`、另一边是 `Long`，使用 `==` | 对包装值拆箱后比较数值；包装引用为 `null` 时拆箱抛 `NullPointerException` |
+| 两边静态类型都是 `Long`，使用 `==` | 比较引用身份；缓存复用可能让部分相同数值恰好是同一对象，不应依赖它比较业务数值 |
+| 非空 `Long` 调用 `equals` | 参数必须也是同数值的 `Long` 才为真；与数值相同的 `Integer` 不相等，参数为 `null` 时为假 |
+| 接收者本身为 `null`，调用 `equals` | 尚未进入方法就失败；可用 `Objects.equals` 做空值安全的对象相等比较，但它不统一不同包装类型 |
+
+[Long.equals 的官方合同](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html#equals(java.lang.Object))限定了参数类型和数值条件；这与“所有 `equals` 都比较字段”是不同结论。面试若给出具体表达式，应逐项写出编译期类型、是否拆箱以及可能的异常，再推导结果。
+
+## 单例：共享一个实例，不代表共享任意业务状态
+
+单例模式让一个受控作用域只创建并提供一个共享实例，通常还限制外部直接创建。以静态字段或静态持有者实现时，讨论的是相应类身份下的初始化；不同类加载器可能拥有各自的类和静态状态，不能据此承诺整个分布式系统只有一份对象。
+
+适合单例的是确实需要在该作用域内共用生命周期的服务或资源管理对象，例如配置快照访问器、统一管理受限连接资源的池。每个请求的用户、订单和事务状态应留在各自上下文中，不能为了方便放进全局可变单例。共享也有测试替换、关闭资源及并发访问的成本；没有共享需求时，无需强行使用单例。
+
+初始化正确性和运行中的状态正确性要分开。[JLS 21 的类初始化过程](https://docs.oracle.com/javase/specs/jls/se21/html/jls-12.html#jls-12.4.2)规定初始化同步机制，静态持有者可以利用它；若使用双重检查锁，仍要正确处理安全发布，例如对相应字段使用正确的 `volatile` 方案。对象创建一次不会自动同步后续业务修改，Spring 容器的 singleton 范围也不能直接等同于任意类的全局唯一性。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
 - [字节全栈一面：RAG、Java 与线程池](../../../interview/bytedance/base/bytedance-base-37.md)
 - [字节全栈实习：Session、权限与前端基础](../../../interview/bytedance/base/bytedance-base-46.md)
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
+- [字节后端与 Agent 开发一面：Java、数据库治理与系统设计](../../../interview/bytedance/base/bytedance-base-82.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
@@ -69,3 +92,6 @@ String 不可变；StringBuilder 可变且不保证并发安全，StringBuffer �
 - [JLS 21：try/finally](https://docs.oracle.com/javase/specs/jls/se21/html/jls-14.html#jls-14.20.2)
 - [JDK 21：String](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html)
 - [JDK 21：Objects.equals](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Objects.html)
+
+- [Java SE 21：Long.equals 的类型和数值合同](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html#equals(java.lang.Object))（2026-11-16 核验）
+- [JLS 21：类初始化过程与同步](https://docs.oracle.com/javase/specs/jls/se21/html/jls-12.html#jls-12.4.2)

@@ -69,6 +69,8 @@ Action 粒度再按一项可验收的业务意图收敛：输入与前置条件�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节后端与 Agent 开发二面：本体平台、延迟任务与注意力](../../../interview/bytedance/base/bytedance-base-81.md)
+- [淘天 AI Agent / 大模型应用研发二面：幻觉治理、Action 与轨迹偏好](../../../interview/alibaba/ai/alibaba-ai-30.md)
 - [阿里云后端与 Agent 二面：领域建模、训练并行与 Java 基础](../../../interview/alibaba/ai/alibaba-ai-28.md)
 - [字节后端与 Agent 开发三面：领域建模、项目评测与基础](../../../interview/bytedance/base/bytedance-base-80.md)
 - [美团业务后台综合面：本体建模、Agent 评测与一致性](../../../interview/meituan/ai/meituan-ai-13.md)

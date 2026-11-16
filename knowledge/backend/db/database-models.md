@@ -91,7 +91,8 @@ MySQL的[DECIMAL/NUMERIC](https://dev.mysql.com/doc/refman/8.4/en/fixed-point-ty
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [美团小象超市后端一面：写时复制、并发与消息](../../../interview/meituan/base/meituan-base-1.md)
 - [字节 Agent 一面：会话记忆、并发更新与算法](../../../interview/bytedance/base/bytedance-base-29.md)
-- [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../../interview/bytedance/base/bytedance-base-47.md)
 - [字节 Agent 实习：生成质量、多智能体与缓存](../../../interview/bytedance/base/bytedance-base-52.md)
+- [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../../interview/bytedance/base/bytedance-base-47.md)
 <!-- interview-source-history:end -->

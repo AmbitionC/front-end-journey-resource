@@ -341,6 +341,7 @@ TTL 决定一个 key 到何时不再有效；物理清理不意味着为每个 k
 - [网易后端开发秋招一面：缓存一致性、死锁与分布式锁](../../../interview/netease/base/netease-base-1.md)
 - [快手效果营销实习一面：意图路由、模型容错与业务校验](../../../interview/kuaishou/ai/kuaishou-ai-18.md)
 - [字节抖音研发一面：Agent 执行范式与缓存恢复](../../../interview/bytedance/base/bytedance-base-69.md)
+- [字节后端与 Agent 开发一面：Java、数据库治理与系统设计](../../../interview/bytedance/base/bytedance-base-82.md)
 - [蚂蚁 Agent 实习一面：缓存、消息与 RAG](../../../interview/antfin/ai/antfin-ai-6.md)
 - [蚂蚁后端 AI 开发一面：Agent、Redis 与短链系统](../../../interview/antfin/ai/antfin-ai-3.md)
 - [腾讯后端多轮复盘：热 Key、缓存一致性与库存](../../../interview/tencent/base/tencent-base-2.md)

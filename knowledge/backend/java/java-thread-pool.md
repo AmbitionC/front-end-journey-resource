@@ -81,6 +81,7 @@ JDK 21 的 `ThreadPoolExecutor` 可以运行时修改核心数、最大数和空
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [美团小象超市后端一面：写时复制、并发与消息](../../../interview/meituan/base/meituan-base-1.md)
 - [小红书产品工程师 Agent 一面：线程池与幻觉控制](../../../interview/redbook/ai/redbook-ai-9.md)
 - [快手 AI 全栈一面：分布式锁、线程池与 AI 编码](../../../interview/kuaishou/ai/kuaishou-ai-20.md)
 - [字节全栈一面：RAG、Java 与线程池](../../../interview/bytedance/base/bytedance-base-37.md)

@@ -1101,6 +1101,54 @@
             "contentFormat": "short-qa-v2",
             "department": "其他",
             "updatedAt": "2026-11-15"
+          },
+          {
+            "label": "字节后端与 Agent 开发二面：本体平台、延迟任务与注意力",
+            "key": "bytedance-base-81",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "Agent",
+              "System Design",
+              "Ontology",
+              "Transformer"
+            ],
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "updatedAt": "2026-11-16",
+            "role": "后端开发 / Agent 开发"
+          },
+          {
+            "label": "字节后端与 Agent HR 面：能力复用、主动性与日常 AI 实践",
+            "key": "bytedance-base-83",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "Agent",
+              "HR",
+              "项目表达",
+              "产品判断"
+            ],
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "updatedAt": "2026-11-16",
+            "role": "后端开发 / Agent 开发"
+          },
+          {
+            "label": "字节后端与 Agent 开发一面：Java、数据库治理与系统设计",
+            "key": "bytedance-base-82",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "Java",
+              "MySQL",
+              "Redis",
+              "Agent"
+            ],
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "updatedAt": "2026-11-16",
+            "role": "后端开发 / Agent 开发"
           }
         ]
       },
@@ -2058,6 +2106,23 @@
             "department": "淘天",
             "originalLabel": "淘天供应链 AI 应用一面：失败复盘、工具并行与精确检索",
             "roleCategory": "AI 与 Agent 工程"
+          },
+          {
+            "label": "淘天 AI Agent / 大模型应用研发二面：幻觉治理、Action 与轨迹偏好",
+            "key": "alibaba-ai-30",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "tags": [
+              "Agent",
+              "评测",
+              "Ontology",
+              "Action",
+              "DPO"
+            ],
+            "contentFormat": "short-qa-v2",
+            "department": "淘天",
+            "updatedAt": "2026-11-16",
+            "role": "AI Agent / 大模型应用研发"
           }
         ]
       },
@@ -4274,6 +4339,29 @@
             "role": "JAVA 开发"
           }
         ]
+      },
+      {
+        "label": "小象超市",
+        "key": "meituan-department-xiaoxiang",
+        "children": [
+          {
+            "label": "美团小象超市后端一面：写时复制、并发与消息",
+            "key": "meituan-base-1",
+            "isLeaf": true,
+            "filePath": "meituan/base",
+            "tags": [
+              "后端",
+              "并发",
+              "数据库",
+              "消息队列"
+            ],
+            "contentFormat": "short-qa-v2",
+            "department": "小象超市",
+            "updatedAt": "2026-11-16",
+            "role": "后端开发"
+          }
+        ],
+        "nodeType": "department"
       }
     ]
   },

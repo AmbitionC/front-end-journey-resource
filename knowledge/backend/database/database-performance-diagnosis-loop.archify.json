@@ -1,0 +1,124 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "数据库整体性能诊断闭环",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "database-performance-diagnosis-loop.html",
+    "legend": {
+      "entries": {
+        "backend": {
+          "label": "诊断与改进"
+        },
+        "security": {
+          "label": "变更门禁"
+        }
+      }
+    }
+  },
+  "lanes": [
+    {
+      "id": "observe",
+      "label": "定位证据"
+    },
+    {
+      "id": "change",
+      "label": "受控改进"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "baseline",
+      "lane": "observe",
+      "col": 0,
+      "type": "backend",
+      "icon": "start",
+      "label": "固定基线",
+      "sublabel": "请求率 / 延迟 / 错误"
+    },
+    {
+      "id": "classify",
+      "lane": "observe",
+      "col": 1,
+      "type": "backend",
+      "icon": "decision",
+      "label": "分类定位",
+      "sublabel": "工作量 / 等待 / 资源"
+    },
+    {
+      "id": "hypothesis",
+      "lane": "observe",
+      "col": 2,
+      "type": "backend",
+      "label": "形成假设",
+      "sublabel": "证据 → 动作 → 预期"
+    },
+    {
+      "id": "review",
+      "lane": "change",
+      "col": 2,
+      "type": "security",
+      "label": "评审与演练",
+      "sublabel": "责任 / 窗口 / 回退"
+    },
+    {
+      "id": "canary",
+      "lane": "change",
+      "col": 1,
+      "type": "backend",
+      "label": "小范围实施",
+      "sublabel": "灰度 / 限速 / 停止条件"
+    },
+    {
+      "id": "compare",
+      "lane": "change",
+      "col": 0,
+      "type": "backend",
+      "icon": "decision",
+      "label": "同口径复测",
+      "sublabel": "达标固化 / 未达标回退"
+    }
+  ],
+  "edges": [
+    {
+      "id": "a",
+      "from": "baseline",
+      "to": "classify"
+    },
+    {
+      "id": "b",
+      "from": "classify",
+      "to": "hypothesis"
+    },
+    {
+      "id": "c",
+      "from": "hypothesis",
+      "to": "review"
+    },
+    {
+      "id": "d",
+      "from": "review",
+      "to": "canary",
+      "label": "通过评审"
+    },
+    {
+      "id": "e",
+      "from": "canary",
+      "to": "compare"
+    },
+    {
+      "id": "f",
+      "from": "compare",
+      "to": "baseline",
+      "label": "继续定位",
+      "role": "return",
+      "variant": "dashed",
+      "fromSide": "left",
+      "toSide": "left",
+      "route": "return-left",
+      "labelSegment": 1,
+      "labelDx": 35
+    }
+  ]
+}

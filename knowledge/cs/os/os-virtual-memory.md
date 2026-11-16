@@ -178,6 +178,7 @@ Linux `write` 成功不等于数据已经提交到磁盘，错误也可能延迟
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [美团小象超市后端一面：写时复制、并发与消息](../../../interview/meituan/base/meituan-base-1.md)
 - [阿里云 Agent Infra 一面：SGX、吞吐与日志写入](../../../interview/alibaba/ai/alibaba-ai-8.md)
 - [腾讯 CDG 金融科技二面：Agent 评估、协程与存储基础](../../../interview/tencent/ai/tencent-ai-29.md)
 - [字节 AML / 火山方舟 AI Infra 一面：Agent Runtime、OS 与网络（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-17.md)
