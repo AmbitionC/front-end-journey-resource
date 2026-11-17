@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "batchId": "civil-sprint-batch6-20261117",
+  "date": "2026-11-17",
+  "branch": "claude/project-thread-dcj9w6",
+  "basedOn": "master 01013a7",
+  "scope": {
+    "module": "civil",
+    "topLevelLabel": "国考冲刺速查",
+    "articleCount": 3,
+    "mergeAuthorized": false
+  },
+  "workflow": "Claude 撰写、另一个独立 Claude 会话审核；题目标「高频考点题」。选题来自 2026-11-17 网盘资料吸收核对第三轮：图形推理题册中需要配图、此前未覆盖的题型（旋转翻转、遍历、样式叠加与黑白运算、曲直与对称轴方向、分组分类）。",
+  "status": "content-ready-for-owner-review",
+  "originality": {
+    "body": "自行编写，不引用任何机构、老师或书目的讲义内容；参考资料只用来确定考点范围和题型分布。",
+    "questions": "题干、选项、解析全部自拟；每道图形题的规律与唯一答案都在生成脚本里用断言验证（选项互不相同、旋转翻转结果、遍历拉丁方、去同存异与黑白运算真值表、对称轴方向、平面图面数与奇点数、分组只有正确选项成立）。",
+    "figures": "图形推理题图由 scripts/civil/figures/build-figures.py（第二批段落）按规律程序生成，不截图任何参考资料；SVG 源文件在 scripts/civil/figures/svg/，PNG 由 render-figures.mjs 渲染。"
+  },
+  "sourcesNote": "本批无外部事实性陈述。",
+  "items": [
+    {
+      "key": "civil-sprint-figure-rotate-flip",
+      "label": "图形推理：旋转、翻转与遍历",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-figure-rotate-flip.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 6033,
+      "sha256": "2193c81f80f27dea056183cae8cbb40d2ca6682021acccab16db9692ad071d29"
+    },
+    {
+      "key": "civil-sprint-figure-style-attribute",
+      "label": "图形推理：样式与属性（叠加、黑白运算、曲直、对称轴方向）",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-figure-style-attribute.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 6508,
+      "sha256": "848e0bfb9aefc5d39c93c5162bac9ce1b3cbc1c1bb267da335830211b43baf2b"
+    },
+    {
+      "key": "civil-sprint-figure-classify",
+      "label": "图形推理：分组分类（六图分两组）",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-figure-classify.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 5992,
+      "sha256": "d613b3d7991ad46e0ccf42de074e0ea4e8c5f45357f8908cf174f8a5800736fc"
+    }
+  ],
+  "images": [
+    {
+      "path": "images/civil-sprint-figure-axis-dir-v1.png",
+      "bytes": 40595,
+      "sha256": "cdcb0c9010ca5de89def0e86665d0409fed3edbaa6f449d07f85e7ee1063caf1"
+    },
+    {
+      "path": "images/civil-sprint-figure-bw-op-v1.png",
+      "bytes": 70446,
+      "sha256": "c4ccc8809954473001cb19bb7073bcdc9e44be099a948aff7f58cc42db74d342"
+    },
+    {
+      "path": "images/civil-sprint-figure-curve-v1.png",
+      "bytes": 61057,
+      "sha256": "61d9c2be4d259b600c8af8932c94cc508228a30cdda0c003e57d6c5f0d23b904"
+    },
+    {
+      "path": "images/civil-sprint-figure-flip-v1.png",
+      "bytes": 43855,
+      "sha256": "fc37ddbbef22563cc65161807b39d5f3292702fcaf4633e1ef93adf9af00cc57"
+    },
+    {
+      "path": "images/civil-sprint-figure-group-faces-v1.png",
+      "bytes": 34793,
+      "sha256": "347c9d1b9e5e78c53079b539fb379b54c1d96b43407ff54d9e66ae75ed48010a"
+    },
+    {
+      "path": "images/civil-sprint-figure-group-strokes-v1.png",
+      "bytes": 31471,
+      "sha256": "7851078d91bb63a1533dc1d7a269c030fe61bb51944d19acb53adf060cc0a52b"
+    },
+    {
+      "path": "images/civil-sprint-figure-group-symmetry-v1.png",
+      "bytes": 31292,
+      "sha256": "88eb30d7dddf42c3f8e47584abb559ab0ae324351a646cb758ae09bfa91e99b7"
+    },
+    {
+      "path": "images/civil-sprint-figure-lines-xor-v1.png",
+      "bytes": 38268,
+      "sha256": "01f30bd8651a0d7e835626c83d897538666021679766d95db7b58b05592eff7f"
+    },
+    {
+      "path": "images/civil-sprint-figure-rotate-v1.png",
+      "bytes": 25219,
+      "sha256": "0cbdbbf1d76b6f14aefe151e04356b2f038ad7ac41c00255d55acc4eac3679a3"
+    },
+    {
+      "path": "images/civil-sprint-figure-traverse-v1.png",
+      "bytes": 44350,
+      "sha256": "368a0b31c1d8c6cb6ef64e39d000139cedd7e435e1cf5710a9a91cc6696a5395"
+    }
+  ]
+}
