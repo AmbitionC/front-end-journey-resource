@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "batchId": "civil-sprint-batch5-20261117",
+  "date": "2026-11-17",
+  "branch": "claude/project-thread-dcj9w6",
+  "basedOn": "master 544a3b8",
+  "scope": {
+    "module": "civil",
+    "topLevelLabel": "国考冲刺速查",
+    "articleCount": 9,
+    "mergeAuthorized": false
+  },
+  "workflow": "Claude 撰写、另一个独立 Claude 会话审核；题目标「高频考点题」。选题来自 2026-11-17 网盘资料吸收核对第二轮：言语与判断要点、逻辑填空成语与实词辨析资料、图形推理题册（空间重构）、数量关系要点、常识汇总、申论素材积累包中尚未覆盖的模块。",
+  "status": "content-ready-for-owner-review",
+  "originality": {
+    "body": "自行编写，不引用任何机构、老师或书目的讲义内容；参考资料只用来确定考点范围和题型分布。",
+    "questions": "题干、选项、解析全部自拟；正方体展开图的相对面答案均经程序折叠验证。",
+    "figures": "本批无图片，展开图用代码块方格表示。"
+  },
+  "factCheck": "每条事实性陈述须与下列来源或中学教材、《现代汉语词典》通行表述一致。",
+  "sources": [
+    {
+      "id": "civil-b5-src-01",
+      "title": "中华人民共和国刑法（第17、20、33、34、35条）",
+      "url": "https://flk.npc.gov.cn/",
+      "usedBy": [
+        "civil-sprint-common-law-criminal-admin"
+      ],
+      "checkedAt": "2026-11-17"
+    },
+    {
+      "id": "civil-b5-src-02",
+      "title": "中华人民共和国行政处罚法（第9条）",
+      "url": "https://flk.npc.gov.cn/",
+      "usedBy": [
+        "civil-sprint-common-law-criminal-admin"
+      ],
+      "checkedAt": "2026-11-17"
+    },
+    {
+      "id": "civil-b5-src-03",
+      "title": "中华人民共和国行政复议法（2023年修订，第20条）",
+      "url": "https://flk.npc.gov.cn/",
+      "usedBy": [
+        "civil-sprint-common-law-criminal-admin"
+      ],
+      "checkedAt": "2026-11-17"
+    },
+    {
+      "id": "civil-b5-src-04",
+      "title": "中华人民共和国行政诉讼法（第46条）",
+      "url": "https://flk.npc.gov.cn/",
+      "usedBy": [
+        "civil-sprint-common-law-criminal-admin"
+      ],
+      "checkedAt": "2026-11-17"
+    }
+  ],
+  "sourcesNote": "文学、历史、节日、生物、化学部分为中学教材基础知识；实词与成语释义以《现代汉语词典》通行释义为准；逻辑、言语、数量、图推、申论各篇无外部事实。",
+  "notWritten": [
+    "结构化面试",
+    "调剂",
+    "常识：政治与时政（须逐条官方核实）",
+    "资料分析：年均增长率与隔年增长（需要新的官方统计数据，本会话无法访问国家统计局网站，暂缓）"
+  ],
+  "items": [
+    {
+      "key": "civil-sprint-reading-detail-title",
+      "label": "言语理解：细节理解与标题填入",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-reading-detail-title.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 5650,
+      "sha256": "7f6d3bf2be63a215e73cb8ad105e781bf0c408b08460a304a04c5d87432f7cf6"
+    },
+    {
+      "key": "civil-sprint-fill-blank-words",
+      "label": "逻辑填空：易混实词与易错成语",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-fill-blank-words.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 6175,
+      "sha256": "675383a3ec2634900b018238a1150421a1210aa43782f2bb2ddacfadb8400518"
+    },
+    {
+      "key": "civil-sprint-logic-induction-explain",
+      "label": "判断推理：归纳推理与原因解释",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-logic-induction-explain.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 5660,
+      "sha256": "8ccc2fa21c63d0c9eb566de2a1338846ce599501ffac2002e730e81e3ea19bce"
+    },
+    {
+      "key": "civil-sprint-figure-cube",
+      "label": "图形推理：正方体展开图与相对面",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-figure-cube.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 4662,
+      "sha256": "e59338e1fe006490a14140694d2a666ac2a825daf3915a11bfb433702f211f0e"
+    },
+    {
+      "key": "civil-sprint-math-ratio-extreme",
+      "label": "数量关系：和差倍比、年龄、日期、抽屉原理与最值",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-math-ratio-extreme.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 4855,
+      "sha256": "f4e147eebbdaa7eb84fb6eeb25449029aefef70f3a1abe42c4cbbb33b053055f"
+    },
+    {
+      "key": "civil-sprint-common-literature",
+      "label": "常识判断：典籍、诗人称号、名画与传统节日",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-common-literature.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 5081,
+      "sha256": "5925e37df2b285b7d45a6e38026b2d18e954d0f415c6eb929850ff1e3cb4422a"
+    },
+    {
+      "key": "civil-sprint-common-bio-chem",
+      "label": "常识判断：营养素、血液与家里的化学",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-common-bio-chem.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 5442,
+      "sha256": "b48e38df8956a5ccd5d3a9f07f16d898a075d351e1a4fa5ce5dbeaa28f880f84"
+    },
+    {
+      "key": "civil-sprint-common-law-criminal-admin",
+      "label": "常识判断：刑事责任年龄、刑罚种类与行政复议期限",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-common-law-criminal-admin.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 6268,
+      "sha256": "4a4ff7118b15ca250df3ce37ccd000b03823f1a4a8b9428a6afa1be6b51966ff"
+    },
+    {
+      "key": "civil-sprint-essay-execution",
+      "label": "申论贯彻执行类：倡议书、讲话稿、简报怎么写",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-essay-execution.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 4788,
+      "sha256": "e8f52d691ee346c38b6e12a04de53adb8c3d0ffb5e06c67d217ced2cdb20c053"
+    }
+  ]
+}
