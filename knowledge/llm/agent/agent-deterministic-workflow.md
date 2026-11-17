@@ -164,6 +164,7 @@ trace 将 workflow/run、decision、activity、approval 和 operation ID 关联�
 - [携程数据工程面试：Agent ETL、数据口径与 Skill](../../../interview/ctrip/ai/ctrip-ai-2.md)
 - [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)
 - [阿里云 Agent 一面：Workflow、通信与配置热更新](../../../interview/alibaba/ai/alibaba-ai-9.md)
+- [淘天 AI 应用开发暑期实习二面：RAG 评测、工具与成本控制](../../../interview/alibaba/ai/alibaba-ai-31.md)
 - [淘天 AI Agent / 大模型应用研发二面：幻觉治理、Action 与轨迹偏好](../../../interview/alibaba/ai/alibaba-ai-30.md)
 - [字节后端与 Agent 开发三面：领域建模、项目评测与基础](../../../interview/bytedance/base/bytedance-base-80.md)
 - [美团后端 Agent 暑期一面：约束、工作流与 AI 开发验证](../../../interview/meituan/ai/meituan-ai-16.md)

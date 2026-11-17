@@ -118,6 +118,7 @@ RLHF、RLAIF 与 DPO 是三种把偏好变成模型行为的路径。RLHF 用奖
 - [淘天 AI Agent / 大模型应用研发二面：幻觉治理、Action 与轨迹偏好](../../../interview/alibaba/ai/alibaba-ai-30.md)
 - [饿了么 AIGC 实习一面：Attention、训练与扩散模型](../../../interview/alibaba/ai/alibaba-ai-23.md)
 - [美团 Keeta Agent 一面：客服流程、偏好数据与链表](../../../interview/meituan/ai/meituan-ai-1.md)
+- [淘天 AI 应用研发实习：后端基础、Transformer 与训练](../../../interview/alibaba/ai/alibaba-ai-32.md)
 <!-- interview-source-history:end -->
 
 ## 学习阅读（不计专题频次）

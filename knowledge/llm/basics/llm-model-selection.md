@@ -68,10 +68,10 @@ $$
 比较“完成一次有效任务的成本”：
 
 $$
-C_{success}=\frac{C_{all\ requests}+C_{retry}+C_{fallback}}{N_{valid\ outcomes}}
+C_{success}=\frac{C_{initial}+C_{retry}+C_{fallback}}{N_{valid\ outcomes}}
 $$
 
-只看每百万 Token 单价会忽略输出长度、失败率和重试。
+这里的三项互不重叠：首轮请求、额外重试和额外降级调用；分母是在同一统计窗口通过验收的任务数。若已汇总全部调用费用，直接用该总额作分子，不能再次叠加重试或降级。没有成功任务时不报告有限的单次成功成本。只看每百万 Token 单价会忽略输出长度、失败率和重试。
 
 ### 保持条件可比
 
@@ -96,7 +96,7 @@ $$
 
 若厂商只提供浮动版本，应保存每次响应中的实际模型标识，并加强回归监控。订阅弃用公告，把迁移日期提前放入工程计划。
 
-截至 2026-07-13，DeepSeek 官方已公告旧别名 `deepseek-chat` 与 `deepseek-reasoner` 将于 2026-07-24 停用。这类变更正是版本治理不能省略的原因。
+名称还能调用，也不一定代表底层模型未变。例如 [DeepSeek 官方模型页](https://api-docs.deepseek.com/quick_start/pricing/)说明部分 legacy 名称继续被接受，但请求转由新模型服务（滚动文档，核验于 2026-11-17）。因此要同时检查别名解析、实际服务版本和回归结果。
 
 ## 灰度发布与持续回归
 
@@ -120,8 +120,9 @@ $$
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [华为 AI 训推实习一面：模型评估、Agent 架构与记忆](../../../interview/huawei/ai/huawei-ai-3.md)
 - [字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)
+- [淘天 AI 应用开发暑期实习二面：RAG 评测、工具与成本控制](../../../interview/alibaba/ai/alibaba-ai-31.md)
+- [华为 AI 训推实习一面：模型评估、Agent 架构与记忆](../../../interview/huawei/ai/huawei-ai-3.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)
 - [字节 Agent：AI Coding、技能设计与模型工程](../../../interview/bytedance/base/bytedance-base-49.md)
 <!-- interview-source-history:end -->
