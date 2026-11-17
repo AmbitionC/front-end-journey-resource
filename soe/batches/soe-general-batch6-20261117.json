@@ -38,8 +38,8 @@
       "filePath": "general",
       "outputPath": "soe/general/soe-general-aptitude.md",
       "action": "create",
-      "bytes": 6227,
-      "sha256": "b50cab013c64d94b8f5a29032342d9c1d49f59ee6c64bcd516268ae228d89da7"
+      "bytes": 6268,
+      "sha256": "6571e7ee020501e62123e8a176c5a79bd553ab04726351131fd277a65cb462bf"
     },
     {
       "key": "soe-english",
@@ -56,8 +56,8 @@
       "filePath": "general",
       "outputPath": "soe/general/soe-econ-finance-basics.md",
       "action": "create",
-      "bytes": 6673,
-      "sha256": "8eaa4801b311e301fabe0cf544fa9ec43bfc49ccf2a49590857164b67dadd2b6"
+      "bytes": 6801,
+      "sha256": "ea6f5277dddb398efe133a3bf2be496cfe353fbc75079a12d0ffee7af8af7729"
     }
   ]
 }
