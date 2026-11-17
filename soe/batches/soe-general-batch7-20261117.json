@@ -38,8 +38,8 @@
       "filePath": "general",
       "outputPath": "soe/general/soe-finance-insurance-securities.md",
       "action": "create",
-      "bytes": 5810,
-      "sha256": "6a3cfd5c51afa10988d83664fbb5a3e2fdb25bd383960d240bcd9f6cb2895d63"
+      "bytes": 5837,
+      "sha256": "fd401ae37d90d1d15cb0feadd53187757b935d09417d481085ba05e08acfd200"
     },
     {
       "key": "soe-number-series-advanced",
@@ -47,8 +47,8 @@
       "filePath": "general",
       "outputPath": "soe/general/soe-number-series-advanced.md",
       "action": "create",
-      "bytes": 3702,
-      "sha256": "54b6f23984635649a8b170d44d493d6404953a7d8b4480f5c79f0de45faf4e31"
+      "bytes": 3723,
+      "sha256": "8b1cc19621acf7f8de82a891d142b03fb9cd3edf44d19041d47c882b27059673"
     },
     {
       "key": "soe-industry-exam-map",

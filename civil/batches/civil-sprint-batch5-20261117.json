@@ -111,8 +111,8 @@
       "outputPath": "civil/sprint/civil-sprint-math-ratio-extreme.md",
       "action": "create",
       "status": "ready-for-owner-review",
-      "bytes": 4855,
-      "sha256": "f4e147eebbdaa7eb84fb6eeb25449029aefef70f3a1abe42c4cbbb33b053055f"
+      "bytes": 5184,
+      "sha256": "43b0cb4728d14b8caeef857190e333db51eeee3e8828e35e8b95b2228acb5ab7"
     },
     {
       "key": "civil-sprint-common-literature",
@@ -141,8 +141,8 @@
       "outputPath": "civil/sprint/civil-sprint-common-law-criminal-admin.md",
       "action": "create",
       "status": "ready-for-owner-review",
-      "bytes": 6268,
-      "sha256": "4a4ff7118b15ca250df3ce37ccd000b03823f1a4a8b9428a6afa1be6b51966ff"
+      "bytes": 6347,
+      "sha256": "4d6b8b7d7e6c5014da3473401ada1db27ffdc6ac400183610c46209ae32914fb"
     },
     {
       "key": "civil-sprint-essay-execution",
