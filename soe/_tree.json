@@ -92,6 +92,18 @@
         "key": "soe-general",
         "children": [
           {
+            "label": "各行业国企笔试构成对照",
+            "key": "soe-industry-exam-map",
+            "isLeaf": true,
+            "filePath": "general",
+            "heat": 0,
+            "currRank": 0,
+            "updatedAt": "2026-11-17",
+            "quickRead": {
+              "text": "按银行、交通物流、电力能源、军工航天等七个行业，给出回忆资料里行测、英语、常识、专业题的大致占比和对应的复习路线。"
+            }
+          },
+          {
             "label": "国企笔试的行测怎么备：直接复用考公内容，补上数字推理",
             "key": "soe-general-aptitude",
             "isLeaf": true,
@@ -101,6 +113,18 @@
             "updatedAt": "2026-11-17",
             "quickRead": {
               "text": "回忆资料里行测约占六成、专业题很少；给出可直接复用的考公篇目清单，再讲国企仍在考的数字推理五步试法，配四道高频考点题。"
+            }
+          },
+          {
+            "label": "数字推理进阶：二级作差、分数、多项求和、幂次修正、隔项",
+            "key": "soe-number-series-advanced",
+            "isLeaf": true,
+            "filePath": "general",
+            "heat": 0,
+            "currRank": 0,
+            "updatedAt": "2026-11-17",
+            "quickRead": {
+              "text": "先看数列长相再选方法的对照表，五种变形各一道自编题，规律均经程序逐项验证。"
             }
           },
           {
@@ -116,6 +140,18 @@
             }
           },
           {
+            "label": "英语阅读长难句与写作模板",
+            "key": "soe-english-reading-writing",
+            "isLeaf": true,
+            "filePath": "general",
+            "heat": 0,
+            "currRank": 0,
+            "updatedAt": "2026-11-17",
+            "quickRead": {
+              "text": "长难句先找谓语、括起从句；观点类和邮件类作文的三段式结构与一篇自编范文；英汉互译三条不丢分原则，配四道练习题。"
+            }
+          },
+          {
             "label": "经济金融会计常识高频考点",
             "key": "soe-econ-finance-basics",
             "isLeaf": true,
@@ -125,6 +161,42 @@
             "updatedAt": "2026-11-17",
             "quickRead": {
               "text": "机会成本、需求弹性、货币与财政政策、银行三类业务、会计等式五组概念各一张表，配五道练习题，适合非经管专业速补。"
+            }
+          },
+          {
+            "label": "金融市场、证券与保险基础",
+            "key": "soe-finance-insurance-securities",
+            "isLeaf": true,
+            "filePath": "general",
+            "heat": 0,
+            "currRank": 0,
+            "updatedAt": "2026-11-17",
+            "quickRead": {
+              "text": "货币市场与资本市场按期限分，股票债券基金对照表，实际利率与债券价格两个计算点，保险四大原则与大数法则，配五道练习题。"
+            }
+          },
+          {
+            "label": "管理学常识高频考点",
+            "key": "soe-management-basics",
+            "isLeaf": true,
+            "filePath": "general",
+            "heat": 0,
+            "currRank": 0,
+            "updatedAt": "2026-11-17",
+            "quickRead": {
+              "text": "泰勒、法约尔、韦伯、梅奥四位人物，管理四职能，幅度与层次成反比，马斯洛、双因素、X/Y 理论，SWOT 内外部之分，配五道练习题。"
+            }
+          },
+          {
+            "label": "企业文化与时政题怎么准备",
+            "key": "soe-culture-current-affairs",
+            "isLeaf": true,
+            "filePath": "general",
+            "heat": 0,
+            "currRank": 0,
+            "updatedAt": "2026-11-17",
+            "quickRead": {
+              "text": "企业文化只看官网三处、背原文不背大意，时政只用官方来源，附一段虚构企业简介的出题练习。"
             }
           }
         ]

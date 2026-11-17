@@ -94,6 +94,18 @@
         }
       },
       {
+        "label": "图形推理：正方体展开图与相对面",
+        "key": "civil-sprint-figure-cube",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-17",
+        "quickRead": {
+          "text": "一字型隔一个、Z 字型两端找相对面，相对面不能同时看见，11 种展开图的四类，配五道练习题。"
+        }
+      },
+      {
         "label": "逻辑填空三步法：找对应、辨侧重、查搭配",
         "key": "civil-sprint-fill-blank",
         "isLeaf": true,
@@ -103,6 +115,18 @@
         "updatedAt": "2026-11-10",
         "quickRead": {
           "text": "先找句中线索，再辨近义词的语义、程度、色彩，最后用搭配定答案，配四道练习题。"
+        }
+      },
+      {
+        "label": "逻辑填空：易混实词与易错成语",
+        "key": "civil-sprint-fill-blank-words",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-17",
+        "quickRead": {
+          "text": "截止截至、权利权力、启用起用等八组实词，差强人意、首当其冲等八个常被误用的成语，配五道练习题。"
         }
       },
       {
@@ -127,6 +151,18 @@
         "updatedAt": "2026-11-17",
         "quickRead": {
           "text": "排序题看首句、指代、关联词、重复词四条线索排除选项；填空题按开头、中间、结尾定任务，配四道练习题。"
+        }
+      },
+      {
+        "label": "言语理解：细节理解与标题填入",
+        "key": "civil-sprint-reading-detail-title",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-17",
+        "quickRead": {
+          "text": "细节题选项回原文逐句比对，记住六种设错方式；标题题先定主题再挑表达，配四道高频考点题。"
         }
       },
       {
@@ -166,6 +202,18 @@
         }
       },
       {
+        "label": "判断推理：归纳推理与原因解释",
+        "key": "civil-sprint-logic-induction-explain",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-17",
+        "quickRead": {
+          "text": "归纳题结论只能比题干小，排除无中生有、范围扩大、程度加深；原因解释找让矛盾双方同时成立的理由，配四道练习题。"
+        }
+      },
+      {
         "label": "定义判断与类比推理：拆要素、说关系",
         "key": "civil-sprint-definition-analogy",
         "isLeaf": true,
@@ -202,6 +250,18 @@
         }
       },
       {
+        "label": "数量关系：和差倍比、年龄、日期、抽屉原理与最值",
+        "key": "civil-sprint-math-ratio-extreme",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-17",
+        "quickRead": {
+          "text": "五类套路固定的题各讲一个核心思路：年龄差不变、天数除以 7 看余数、考虑最倒霉的情况、让其他项尽量接近，配五道练习题。"
+        }
+      },
+      {
         "label": "数量关系：排列组合与概率",
         "key": "civil-sprint-math-combinatorics",
         "isLeaf": true,
@@ -226,6 +286,18 @@
         }
       },
       {
+        "label": "常识判断：刑事责任年龄、刑罚种类与行政复议期限",
+        "key": "civil-sprint-common-law-criminal-admin",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-17",
+        "quickRead": {
+          "text": "刑法第 17 条三档年龄、主刑附加刑、行政处罚种类，拘役与行政拘留、罚金与罚款怎么分，复议 60 日与诉讼 6 个月，配五道练习题。"
+        }
+      },
+      {
         "label": "常识判断：光学与物态变化",
         "key": "civil-sprint-common-science",
         "isLeaf": true,
@@ -235,6 +307,18 @@
         "updatedAt": "2026-11-12",
         "quickRead": {
           "text": "影子、倒影、折射、彩虹各对应什么原理，六种物态变化的方向和吸放热，配五道练习题。"
+        }
+      },
+      {
+        "label": "常识判断：营养素、血液与家里的化学",
+        "key": "civil-sprint-common-bio-chem",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-17",
+        "quickRead": {
+          "text": "缺乏症对应表、血液各成分的功能、光合作用与呼吸作用、除水垢发面防锈的原理，配五道练习题。"
         }
       },
       {
@@ -262,6 +346,18 @@
         }
       },
       {
+        "label": "常识判断：典籍、诗人称号、名画与传统节日",
+        "key": "civil-sprint-common-literature",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-17",
+        "quickRead": {
+          "text": "第一部诗歌总集和纪传体史书、诗仙诗圣诗佛诗鬼、两幅名画、六个传统节日的日期和习俗，配五道练习题。"
+        }
+      },
+      {
         "label": "申论五类小题答题框架",
         "key": "civil-sprint-essay-five-types",
         "isLeaf": true,
@@ -283,6 +379,18 @@
         "updatedAt": "2026-11-10",
         "quickRead": {
           "text": "三类单一题的问法和材料标志，问题和原因怎么区分，影响按对象分组，配材料三连题。"
+        }
+      },
+      {
+        "label": "申论贯彻执行类：倡议书、讲话稿、简报怎么写",
+        "key": "civil-sprint-essay-execution",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-17",
+        "quickRead": {
+          "text": "圈出身份、对象、文种、要求四个要素，五种常考文种的格式一张表，附一份倡议书的完整提纲。"
         }
       },
       {
