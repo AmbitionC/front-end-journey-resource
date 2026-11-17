@@ -2123,6 +2123,38 @@
             "department": "淘天",
             "updatedAt": "2026-11-16",
             "role": "AI Agent / 大模型应用研发"
+          },
+          {
+            "label": "淘天 AI 应用开发暑期实习二面：RAG 评测、工具与成本控制",
+            "key": "alibaba-ai-31",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "tags": [
+              "Agent",
+              "RAG",
+              "工具调用",
+              "系统设计"
+            ],
+            "contentFormat": "short-qa-v2",
+            "department": "淘天",
+            "role": "AI 应用开发",
+            "updatedAt": "2026-11-17"
+          },
+          {
+            "label": "淘天 AI 应用研发实习：后端基础、Transformer 与训练",
+            "key": "alibaba-ai-32",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "tags": [
+              "RAG",
+              "Transformer",
+              "并发",
+              "模型训练"
+            ],
+            "contentFormat": "short-qa-v2",
+            "department": "淘天",
+            "role": "AI 应用研发",
+            "updatedAt": "2026-11-17"
           }
         ]
       },

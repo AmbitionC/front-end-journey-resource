@@ -67,7 +67,8 @@ dequeue():
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [阿里云 Agent Infra 一面：SGX、吞吐与日志写入](../../../interview/alibaba/ai/alibaba-ai-8.md)（cluster-21f88c2e7c88）
+- [阿里云 Agent Infra 一面：SGX、吞吐与日志写入](../../../interview/alibaba/ai/alibaba-ai-8.md)
+- [淘天 AI 应用研发实习：后端基础、Transformer 与训练](../../../interview/alibaba/ai/alibaba-ai-32.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

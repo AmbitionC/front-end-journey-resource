@@ -48,6 +48,14 @@ type RagEvalCase = {
 
 这张图强调一件事：自动指标、LLM Judge 和人工复核是互补关系，不应压成一个看似精确的总分。
 
+### 人工标注多少条：先说统计单位，再说数量
+
+“标了几百条”本身不能证明评测充分。先说明一条是一个查询、一份文档，还是一个查询—证据相关性判断；再记录标注规则、争议复核、重复与同源样本，以及各业务切片的有效数量。相关证据没有标全时，Recall 的分母也不完整，不能把候选池内的估算冒称全库真实召回率。
+
+如果指标是独立抽样查询上的二元成功率，例如“每个查询是否至少命中一份所需证据”，可以同时报告成功数、查询数和二项比例置信区间。[NIST 的比例区间说明](https://www.itl.nist.gov/div898/handbook/prc/section2/prc241.htm)给出了 Wilson 比例区间，并说明常见对称正态近似可能产生小于零的不合理下限。区间表达抽样不确定性，不会修复漏标、分布偏差或错误判据。
+
+多证据问题的 Recall@K 则可能是每题一个分数，再作宏平均；同一查询下的多个 chunk 也常相关，不能把它们都当独立伯努利样本套用上述区间。比较系统时保留逐查询配对结果，可按查询或同源文档组重采样估计差异，同时单列关键切片。样本量由覆盖目标、允许误差和风险决定；困难题过采样后应说明权重或单独报告，不把样本数当成统一上线门槛。
+
 ## 三、检索层：正确证据有没有进来
 
 ### Recall@K：相关证据是否被找回
@@ -245,6 +253,7 @@ RAG 评估是一套诊断系统，而不是排行榜。先用检索指标判断�
 - [美团后端暑期二面：AI Coding 复盘、记忆与评估计划](../../../interview/meituan/ai/meituan-ai-15.md)
 - [阿里 Agent 实习一面：图文检索、评估与微调实践](../../../interview/alibaba/ai/alibaba-ai-10.md)
 - [阿里大模型算法校招：Attention、后训练与 Agent 评测](../../../interview/alibaba/ai/alibaba-ai-24.md)
+- [淘天 AI 应用开发暑期实习二面：RAG 评测、工具与成本控制](../../../interview/alibaba/ai/alibaba-ai-31.md)
 - [字节 Agent 暑期实习一面：摘要、工具预算与链表](../../../interview/bytedance/base/bytedance-base-27.md)
 - [快手 AI 应用实习面试：模型服务、RAG 与分类评估](../../../interview/kuaishou/ai/kuaishou-ai-15.md)
 - [小红书 AI 后端一面：执行模式、Memory、意图与 RAG](../../../interview/redbook/ai/redbook-ai-8.md)
@@ -258,6 +267,7 @@ RAG 评估是一套诊断系统，而不是排行榜。先用检索指标判断�
 - [京东大模型应用开发实习：混合检索权重、向量索引与评测](../../../interview/jd/ai/jd-ai-5.md)
 - [阿里国际 Java 二面：RAG 数据评测、微调与代码生成](../../../interview/alibaba/ai/alibaba-ai-26.md)
 - [小红书一面：检索评测、上下文压缩与任务幂等](../../../interview/redbook/ai/redbook-ai-4.md)
+- [淘天 AI 应用研发实习：后端基础、Transformer 与训练](../../../interview/alibaba/ai/alibaba-ai-32.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)
 <!-- interview-source-history:end -->
 
@@ -267,3 +277,4 @@ RAG 评估是一套诊断系统，而不是排行榜。先用检索指标判断�
 - [Stanford CS276：Evaluation Measures in Information Retrieval](https://web.stanford.edu/class/cs276/handouts/EvaluationNew-handout-1-per.pdf)
 - [Lewis et al.：Retrieval-Augmented Generation](https://arxiv.org/abs/2005.11401)
 - [Anthropic：Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents)
+- [NIST：Confidence intervals for a binomial proportion](https://www.itl.nist.gov/div898/handbook/prc/section2/prc241.htm)

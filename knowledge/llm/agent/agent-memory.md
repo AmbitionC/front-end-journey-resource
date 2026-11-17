@@ -351,6 +351,7 @@ memory_tool.execute("forget", strategy="capacity_based", threshold=policy.capaci
 - [字节 Agent 开发二面（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-7.md)
 - [OPPO AI 全栈一面：Prompt 到 UI、RAG 与前端性能](../../../interview/oppo/ai/oppo-ai-2.md)
 - [美团 AI 全栈日常实习一面：记忆、Skill 与链表合并](../../../interview/meituan/ai/meituan-ai-11.md)
+- [淘天 AI 应用开发暑期实习二面：RAG 评测、工具与成本控制](../../../interview/alibaba/ai/alibaba-ai-31.md)
 - [字节 Agent 暑期实习一面：摘要、工具预算与链表](../../../interview/bytedance/base/bytedance-base-27.md)
 - [小红书 Agent 开发一面：多智能体、Memory 与广告投放优化](../../../interview/redbook/ai/redbook-ai-1.md)
 - [字节 Agent Infra 校招：运行时、MySQL 与 LRU](../../../interview/bytedance/base/bytedance-base-25.md)

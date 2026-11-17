@@ -341,6 +341,7 @@ MySQL redo 与 binlog 的内部协调涉及特定引擎实现，不等于完整�
 - [小红书与百度 Agent 面试合并记录：LangGraph 子图、Skill 与工程校验](../../../interview/redbook/ai/redbook-ai-2.md)
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
 - [快手 Agent 开发实习一面：MySQL、Kafka 与 RAG](../../../interview/kuaishou/ai/kuaishou-ai-21.md)
+- [淘天 AI 应用开发暑期实习二面：RAG 评测、工具与成本控制](../../../interview/alibaba/ai/alibaba-ai-31.md)
 - [字节 Agent Infra 校招：运行时、MySQL 与 LRU](../../../interview/bytedance/base/bytedance-base-25.md)
 - [快手 Agent 开发二面关联题单：Hooks、锁与设计模式](../../../interview/kuaishou/ai/kuaishou-ai-22.md)
 - [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../../interview/bytedance/base/bytedance-base-24.md)
