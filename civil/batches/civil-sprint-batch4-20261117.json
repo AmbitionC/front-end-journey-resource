@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "batchId": "civil-sprint-batch4-20261117",
+  "date": "2026-11-17",
+  "branch": "claude/project-thread-dcj9w6",
+  "basedOn": "master 3106678",
+  "scope": {
+    "module": "civil",
+    "topLevelLabel": "国考冲刺速查",
+    "articleCount": 6,
+    "mergeAuthorized": false
+  },
+  "workflow": "Claude 撰写、另一个独立 Claude 会话审核；题目标「高频考点题」。选题来自 2026-11-17 网盘资料吸收核对：判断推理千题册（论证题占比最高）、言语与数量必备要点、常识汇总、申论素材积累包中尚未覆盖的模块。",
+  "status": "content-ready-for-owner-review",
+  "originality": {
+    "body": "自行编写，不引用任何机构、老师或书目的讲义内容；参考资料只用来确定考点范围和题型分布。",
+    "questions": "题干、选项、解析全部自拟。",
+    "figures": "本批无图片。"
+  },
+  "factCheck": "每条事实性陈述须与下列来源或中学教材通行表述一致。",
+  "sources": [
+    {
+      "id": "civil-b4-src-01",
+      "title": "政府工作报告（2026年3月5日）",
+      "url": "https://www.gov.cn/gongbao/2026/issue_12646/202603/content_7064134.html",
+      "usedBy": [
+        "civil-sprint-essay-big-essay"
+      ],
+      "checkedAt": "2026-11-17"
+    }
+  ],
+  "sourcesNote": "历史人文部分为中学历史教材的基础知识，审核时按教材通行表述核对；逻辑、言语、数量各篇无外部事实。",
+  "notWritten": [
+    "结构化面试",
+    "调剂",
+    "常识：政治与时政（须逐条官方核实，单独一批）",
+    "言语：高频易混实词第二篇"
+  ],
+  "items": [
+    {
+      "key": "civil-sprint-logic-argument",
+      "label": "判断推理：论证题（削弱、加强、前提）",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-logic-argument.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 7049,
+      "sha256": "16321605b9c21889a4dff2610f9f59add8312fa436e0c0578f93cac2c3248832"
+    },
+    {
+      "key": "civil-sprint-logic-truth-analysis",
+      "label": "判断推理：真假推理与分析推理",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-logic-truth-analysis.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 5977,
+      "sha256": "235c33d8081ea382b36a41108bd90d2b64709a28d73553c8456d57ac0752cf72"
+    },
+    {
+      "key": "civil-sprint-reading-order-fill",
+      "label": "言语理解：语句排序与语句填空",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-reading-order-fill.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 6112,
+      "sha256": "2344c1352ceabb63d91f613987115a472475502d587065fdb615bf5c8f29ad50"
+    },
+    {
+      "key": "civil-sprint-math-distance-geometry",
+      "label": "数量关系：行程、几何、容斥",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-math-distance-geometry.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 5001,
+      "sha256": "90eb18560ab287757350adaa22131a090e88469ac100d1cf904e7e8e7c18f555"
+    },
+    {
+      "key": "civil-sprint-common-history",
+      "label": "常识判断：古代政治制度、科技成就与文化常识",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-common-history.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 5407,
+      "sha256": "86e55d9d148d34da48c799242778ccfe0508c27c7626125410b00b4d3b7b7cc4"
+    },
+    {
+      "key": "civil-sprint-essay-big-essay",
+      "label": "申论大作文：立意、结构与分论点",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-essay-big-essay.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 5715,
+      "sha256": "c97b870ed0fbe59c97dd7768669a8a4600ee3d41e24b70c57444d1af6047d22e"
+    }
+  ]
+}

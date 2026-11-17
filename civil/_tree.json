@@ -118,6 +118,18 @@
         }
       },
       {
+        "label": "言语理解：语句排序与语句填空",
+        "key": "civil-sprint-reading-order-fill",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-17",
+        "quickRead": {
+          "text": "排序题看首句、指代、关联词、重复词四条线索排除选项；填空题按开头、中间、结尾定任务，配四道练习题。"
+        }
+      },
+      {
         "label": "判断推理：翻译推理速查",
         "key": "civil-sprint-logic-translation",
         "isLeaf": true,
@@ -127,6 +139,30 @@
         "updatedAt": "2026-11-10",
         "quickRead": {
           "text": "「如果」后面放前，「只有」后面放后，「除非」取反放前；肯前推肯后，否后推否前。"
+        }
+      },
+      {
+        "label": "判断推理：论证题（削弱、加强、前提）",
+        "key": "civil-sprint-logic-argument",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-17",
+        "quickRead": {
+          "text": "先找论点论据，再按因果、样本、措施三类定最强削弱；前提题取非代入，配五道高频考点题。"
+        }
+      },
+      {
+        "label": "判断推理：真假推理与分析推理",
+        "key": "civil-sprint-logic-truth-analysis",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-17",
+        "quickRead": {
+          "text": "真假推理先找矛盾、再找反对关系；分析推理先用确定信息、再画表，推完必须回代核对，配四道练习题。"
         }
       },
       {
@@ -151,6 +187,18 @@
         "updatedAt": "2026-11-11",
         "quickRead": {
           "text": "工程题把总量设成工作时间的最小公倍数，利润题把成本设成 100，配五道高频考点题。"
+        }
+      },
+      {
+        "label": "数量关系：行程、几何、容斥",
+        "key": "civil-sprint-math-distance-geometry",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-17",
+        "quickRead": {
+          "text": "相遇追及流水三个模型、往返平均速度公式、面积体积缩放、两集合容斥，配五道高频考点题。"
         }
       },
       {
@@ -202,6 +250,18 @@
         }
       },
       {
+        "label": "常识判断：古代政治制度、科技成就与文化常识",
+        "key": "civil-sprint-common-history",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-17",
+        "quickRead": {
+          "text": "朝代主线、制度起源、四大发明、科举名次和唐宋八大家几张表，重点讲「创立和完善」这类设错点，配五道练习题。"
+        }
+      },
+      {
         "label": "申论五类小题答题框架",
         "key": "civil-sprint-essay-five-types",
         "isLeaf": true,
@@ -223,6 +283,18 @@
         "updatedAt": "2026-11-10",
         "quickRead": {
           "text": "三类单一题的问法和材料标志，问题和原因怎么区分，影响按对象分组，配材料三连题。"
+        }
+      },
+      {
+        "label": "申论大作文：立意、结构与分论点",
+        "key": "civil-sprint-essay-big-essay",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-17",
+        "quickRead": {
+          "text": "立意从资料里找、写成判断句，总分总结构和每段四句话骨架，附一份从立意到提纲的完整示例。"
         }
       },
       {
