@@ -88,6 +88,48 @@
         }
       },
       {
+        "label": "通用笔试：行测、英语与经济常识",
+        "key": "soe-general",
+        "children": [
+          {
+            "label": "国企笔试的行测怎么备：直接复用考公内容，补上数字推理",
+            "key": "soe-general-aptitude",
+            "isLeaf": true,
+            "filePath": "general",
+            "heat": 0,
+            "currRank": 0,
+            "updatedAt": "2026-11-17",
+            "quickRead": {
+              "text": "回忆资料里行测约占六成、专业题很少；给出可直接复用的考公篇目清单，再讲国企仍在考的数字推理五步试法，配四道高频考点题。"
+            }
+          },
+          {
+            "label": "银行与国企笔试英语：题型、方法与练习",
+            "key": "soe-english",
+            "isLeaf": true,
+            "filePath": "general",
+            "heat": 0,
+            "currRank": 0,
+            "updatedAt": "2026-11-17",
+            "quickRead": {
+              "text": "词汇语法、阅读、完形、写作四种题型的做法，时态、非谓语、虚拟语气和商务易混词，配一篇自编短文和五道练习题。"
+            }
+          },
+          {
+            "label": "经济金融会计常识高频考点",
+            "key": "soe-econ-finance-basics",
+            "isLeaf": true,
+            "filePath": "general",
+            "heat": 0,
+            "currRank": 0,
+            "updatedAt": "2026-11-17",
+            "quickRead": {
+              "text": "机会成本、需求弹性、货币与财政政策、银行三类业务、会计等式五组概念各一张表，配五道练习题，适合非经管专业速补。"
+            }
+          }
+        ]
+      },
+      {
         "label": "C 语言常考点：指针、数组、结构体与内存",
         "key": "soe-c-language-mcq",
         "isLeaf": true,

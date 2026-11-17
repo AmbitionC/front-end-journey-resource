@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "batchId": "soe-general-batch6-20261117",
+  "date": "2026-11-17",
+  "branch": "claude/project-thread-dcj9w6",
+  "baseCommit": "310667871d884d3566e3de76bbe9816978e1dad1",
+  "scope": {
+    "module": "soe",
+    "articleCount": 3
+  },
+  "workflow": "Claude 撰写、另一个独立 Claude 会话审核；题目标「高频考点题」。选题来自 2026-11-17 网盘资料吸收核对：46 家央企与银行笔试回忆整理资料中行测约六成、英语约一成多、经济金融会计常识约一成，站内此前零覆盖。",
+  "originality": "正文、例题、英文短文全部自编；回忆整理资料只用于粗略统计模块占比，未使用其中任何题目；不出现机构名。",
+  "sources": [
+    {
+      "title": "中国建设银行 2027 年度校园招聘统一笔试及性格测评公告（2026-10-20）",
+      "url": "https://job.ccb.com/cn/job/announcement.html?annoId=20261020092404778535",
+      "usedBy": [
+        "soe-general-aptitude",
+        "soe-english"
+      ],
+      "checkedAt": "2026-11-11（沿用 soe-bank-tech-exam-overview 已审核引用）"
+    },
+    {
+      "title": "中国工商银行 2027 年度校园招聘笔试考生须知（2026-10-27）",
+      "url": "https://job.icbc.com.cn/pc/index.html#/main/school/announDetail/00000000000010748003",
+      "usedBy": [
+        "soe-general-aptitude"
+      ],
+      "checkedAt": "2026-11-11（沿用 soe-bank-tech-exam-overview 已审核引用）"
+    }
+  ],
+  "sourcesNote": "经济金融会计概念为大学教材基础内容，审核时按教材通行表述核对。",
+  "diagrams": "本批未配示意图。",
+  "items": [
+    {
+      "key": "soe-general-aptitude",
+      "label": "国企笔试的行测怎么备：直接复用考公内容，补上数字推理",
+      "filePath": "general",
+      "outputPath": "soe/general/soe-general-aptitude.md",
+      "action": "create",
+      "bytes": 6227,
+      "sha256": "b50cab013c64d94b8f5a29032342d9c1d49f59ee6c64bcd516268ae228d89da7"
+    },
+    {
+      "key": "soe-english",
+      "label": "银行与国企笔试英语：题型、方法与练习",
+      "filePath": "general",
+      "outputPath": "soe/general/soe-english.md",
+      "action": "create",
+      "bytes": 6248,
+      "sha256": "ea183f4443bd2e2a6fff27e5d465491c3e8ef48e0130d63abfc75808fc829647"
+    },
+    {
+      "key": "soe-econ-finance-basics",
+      "label": "经济金融会计常识高频考点",
+      "filePath": "general",
+      "outputPath": "soe/general/soe-econ-finance-basics.md",
+      "action": "create",
+      "bytes": 6673,
+      "sha256": "8eaa4801b311e301fabe0cf544fa9ec43bfc49ccf2a49590857164b67dadd2b6"
+    }
+  ]
+}
