@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "batchId": "soe-general-batch7-20261117",
+  "date": "2026-11-17",
+  "branch": "claude/project-thread-dcj9w6",
+  "baseCommit": "969b598c4227b4ed314c54d8d7b8b0853700fb28",
+  "scope": {
+    "module": "soe",
+    "articleCount": 6
+  },
+  "workflow": "Claude 撰写、另一个独立 Claude 会话审核；题目标「高频考点题」。选题来自 2026-11-17 网盘资料吸收核对第二轮：46 家央企与银行笔试回忆整理资料中的英语、管理学、金融保险证券、数字推理、企业文化时政模块，以及按行业的模块占比统计。",
+  "originality": "正文、例题、英文句子与范文、练习用企业简介全部自编；回忆整理资料只用于粗略统计模块占比，未使用其中任何题目；数字推理规律经程序逐项验证。",
+  "sources": [],
+  "sourcesNote": "管理学、金融学、保险学概念为大学教材基础内容，审核时按教材通行表述核对；行业占比为回忆资料的关键词粗分统计，文中已标明非官方。",
+  "diagrams": "本批未配示意图。",
+  "items": [
+    {
+      "key": "soe-english-reading-writing",
+      "label": "英语阅读长难句与写作模板",
+      "filePath": "general",
+      "outputPath": "soe/general/soe-english-reading-writing.md",
+      "action": "create",
+      "bytes": 6933,
+      "sha256": "96fe94330673ebaf4f37770005ab7fb3d76e10be8e1652fa41dded1d6dd04c54"
+    },
+    {
+      "key": "soe-management-basics",
+      "label": "管理学常识高频考点",
+      "filePath": "general",
+      "outputPath": "soe/general/soe-management-basics.md",
+      "action": "create",
+      "bytes": 6325,
+      "sha256": "2a24ac52885120ae803096a2743b3bd9a94a599209838b97f83d9fb61b959921"
+    },
+    {
+      "key": "soe-finance-insurance-securities",
+      "label": "金融市场、证券与保险基础",
+      "filePath": "general",
+      "outputPath": "soe/general/soe-finance-insurance-securities.md",
+      "action": "create",
+      "bytes": 5810,
+      "sha256": "6a3cfd5c51afa10988d83664fbb5a3e2fdb25bd383960d240bcd9f6cb2895d63"
+    },
+    {
+      "key": "soe-number-series-advanced",
+      "label": "数字推理进阶：二级作差、分数、多项求和、幂次修正、隔项",
+      "filePath": "general",
+      "outputPath": "soe/general/soe-number-series-advanced.md",
+      "action": "create",
+      "bytes": 3702,
+      "sha256": "54b6f23984635649a8b170d44d493d6404953a7d8b4480f5c79f0de45faf4e31"
+    },
+    {
+      "key": "soe-industry-exam-map",
+      "label": "各行业国企笔试构成对照",
+      "filePath": "general",
+      "outputPath": "soe/general/soe-industry-exam-map.md",
+      "action": "create",
+      "bytes": 3969,
+      "sha256": "ceed81548ff0ee60514ac7b469bca452acc6219248089a33d370468d93d4272e"
+    },
+    {
+      "key": "soe-culture-current-affairs",
+      "label": "企业文化与时政题怎么准备",
+      "filePath": "general",
+      "outputPath": "soe/general/soe-culture-current-affairs.md",
+      "action": "create",
+      "bytes": 4707,
+      "sha256": "99239da2221f89404c7779e9ef492a3782fe7d150c39c9c97e08faf44fc17295"
+    }
+  ]
+}
