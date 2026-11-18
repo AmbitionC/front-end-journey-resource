@@ -32,6 +32,14 @@
 
 以[V8机制文章](https://v8.dev/blog/trash-talk)讨论的分代追踪为例，年轻区域回收需要知道老对象指向年轻对象的引用，可借助写屏障与记录集合追踪，避免每次都扫描所有老对象。年龄、存活与容量可能影响晋升或回收策略，但不能为所有JavaScript引擎给统一轮数和阈值，也不能把所有原始值一概放在栈上。这一段解释概念关系，不冒充当前V8版本的默认参数。
 
+## 放到 Java 中：规范机制与具体收集器分开回答
+
+[JVMS 21 的堆定义](https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-2.html#jvms-2.5.3)要求通过自动存储管理回收对象空间，却没有规定唯一的 GC 算法。回答 Java GC 时，可以先讲上述可达性与标记、清扫或移动的概念，再说明实际使用的 JDK、JVM 与收集器；不要把 V8 的某种分代布局或阈值直接套给 Java，也不要把所有 Java 收集器都描述成固定的“新生代复制、老年代标记整理”。
+
+以 Oracle 的 [JDK 21 HotSpot GC 指南](https://docs.oracle.com/en/java/javase/21/gctuning/introduction-garbage-collection-tuning.html)为例，运行时可组合分代、并行工作、与应用并发执行及压缩等技术，以不同方式平衡吞吐、暂停与内存成本。收集器名称和默认选择都带运行环境边界；并发也不代表每个阶段都无暂停。若追问调优，应先确认业务延迟目标，再看对齐请求时间线的 GC 日志或事件、分配速率与回收后的存活量，最后验证调整是否改善目标，不能只凭堆使用率高就换收集器。
+
+Java 中仍被长期集合保留、但业务已不需要的对象，可能继续满足可达性规则而无法回收；这和调用过深导致的 `StackOverflowError` 是两条不同路径。运行时区域、泄漏引用链与诊断工具可继续阅读 [JVM 内存与 OOM 定位](../../backend/java/java-runtime-memory.md)。
+
 ## 有 GC 仍会出现内存泄漏
 
 如果长期存活的缓存不断保存旧结果，或未清理的监听器间接保留对象，业务已不需要的数据仍可能可达。GC 保留它们符合自己的规则，泄漏发生在业务生命周期和引用生命周期不一致。
@@ -56,6 +64,8 @@
 
 - [MDN：Memory management](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Memory_management)。
 - [V8：Trash talk — the Orinoco garbage collector](https://v8.dev/blog/trash-talk)。
+- [JVMS 21：堆与自动存储管理](https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-2.html#jvms-2.5.3)。
+- [Oracle JDK 21 HotSpot：垃圾回收基础与取舍](https://docs.oracle.com/en/java/javase/21/gctuning/introduction-garbage-collection-tuning.html)。
 
 ## 出现于（热度来源）
 
@@ -63,4 +73,5 @@
 - [字节全栈二、三面：幂等、索引与字符串匹配](../../../interview/bytedance/base/bytedance-base-32.md)
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
 - [网易云音乐全栈一面：JavaScript、排序与 RAG](../../../interview/netease/fullstack/netease-fullstack-2.md)
+- [快手商业化 Java 实习一二面：缓存、JVM 与 AI Coding](../../../interview/kuaishou/ai/kuaishou-ai-25.md)
 <!-- interview-source-history:end -->

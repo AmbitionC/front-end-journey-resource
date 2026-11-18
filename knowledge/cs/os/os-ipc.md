@@ -148,6 +148,14 @@ Socket 原本是为网络通信设计的(TCP/UDP),但它同样能用于本机:**
 
 Unix Socket和TCP可以共享部分编程接口，但跨机迁移还涉及寻址、认证、网络故障与超时；不能承诺只改地址。
 
+## 后端服务与 MySQL：先分清调用 API 和传输通道
+
+“通过 JDBC 查数据库”描述的是 Java 程序使用的访问 API，还没有回答两个进程怎样交换字节。应继续核对连接驱动、连接配置、客户端与数据库的部署位置及实际建立的连接：若配置并建立的是 TCP 连接，底层就是 TCP socket，即使两个进程恰好在同一台机器；若所用客户端支持并配置了 Unix socket，则通过本机套接字通信。不能仅凭“后端与 MySQL 在同机”推断使用共享内存。
+
+[MySQL 8.4 的传输协议文档](https://dev.mysql.com/doc/refman/8.4/en/transport-protocols.html)列出 TCP/IP、Unix socket 文件、命名管道与共享内存，并说明 TCP/IP 可用于本机或远端，其他几种只用于本机且有平台及配置条件。该手册中的命令行客户端还可用 `--protocol=TCP` 显式选择协议；不能把命令行客户端对 `localhost` 的选择规则直接当成任意 Java 驱动的默认行为。
+
+例如，一个 Java 服务配置了远端 MySQL 主机与端口，确认建立的是 TCP 连接，可以回答“应用通过数据库驱动发送 MySQL 协议消息，传输使用 TCP socket”。连接池复用的是这些连接，不会把通信方式变成共享内存；若只有题目而没有项目连接配置，就应说明可能路径与验证方法，不代替作者补出真实部署。
+
 ## 横向对比
 
 | 方式 | 数据形态 | 范围 | 同步 | 速度 | 典型场景 |
@@ -199,6 +207,7 @@ flowchart LR
 <!-- interview-source-history:start -->
 - [腾讯 WXG 一面：跨语言 RAG、消息幂等与算法](../../../interview/tencent/base/tencent-base-3.md)
 - [阿里云 Agent 一面：Workflow、通信与配置热更新](../../../interview/alibaba/ai/alibaba-ai-9.md)
+- [快手商业化 Java 实习一二面：缓存、JVM 与 AI Coding](../../../interview/kuaishou/ai/kuaishou-ai-25.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
@@ -208,3 +217,4 @@ flowchart LR
 - [Linux unix(7)：本机套接字与描述符传递](https://man7.org/linux/man-pages/man7/unix.7.html)
 - [Linux pipe(7)：管道语义](https://man7.org/linux/man-pages/man7/pipe.7.html)
 - [Linux signal-safety(7)：异步信号安全](https://man7.org/linux/man-pages/man7/signal-safety.7.html)
+- [MySQL 8.4：Connection Transport Protocols（传输选择与本机/远端边界）](https://dev.mysql.com/doc/refman/8.4/en/transport-protocols.html)
