@@ -882,14 +882,14 @@
             "isLeaf": true,
             "filePath": "llm/rag",
             "contentStatus": "published",
-            "heat": 41,
+            "heat": 42,
             "currRank": 5,
-            "updatedAt": "2026-07-14",
+            "updatedAt": "2026-11-18",
             "interviewBaseHeat": 6,
             "quickRead": {
-              "text": "RAG 分离离线资料解析、分块和索引，与在线授权、召回、排序、上下文装配和生成。证据必须保留来源和版本；检索不等于训练，有引用也不证明结论成立，需要分层评测和失败追踪。"
+              "text": "RAG 将离线解析、切分和索引，与在线授权、召回、证据装配和生成连接起来；LangChain 是可用来组装这些环节的框架。保留来源与版本，分层评测检索和生成；使用框架或有引用都不能单独证明回答可靠。"
             },
-            "interviewCount": 35,
+            "interviewCount": 36,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -946,14 +946,14 @@
             "isLeaf": true,
             "filePath": "llm/rag",
             "contentStatus": "published",
-            "heat": 17,
+            "heat": 18,
             "currRank": 5,
             "updatedAt": "2026-07-14",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "分块在可检索粒度、语义完整性与模型预算间取舍，保留标题、位置、版本和权限。整篇向量可能稀释局部主题，过细又可能丢条件；按实际token和代表性问题评估边界、重叠与召回，不存在统一最优块长。"
             },
-            "interviewCount": 11,
+            "interviewCount": 12,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1444,14 +1444,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 23,
+            "heat": 24,
             "currRank": 5,
             "updatedAt": "2026-07-16",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Agent循环依次读取状态、决策、校验、执行、吸收结果并判断是否继续。工具调用成功不等于目标完成；每轮应保留trace、预算与进展证据，区分正常完成、超限、失败和人工介入，避免无限循环。"
             },
-            "interviewCount": 17,
+            "interviewCount": 18,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -2190,6 +2190,21 @@
             }
           },
           {
+            "label": "输入、输出与工具 Guardrails",
+            "key": "agent-guardrails",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "published",
+            "heat": 10,
+            "currRank": 5,
+            "updatedAt": "2026-11-18",
+            "quickRead": {
+              "text": "Guardrails 在输入、决策、工具和输出边界降低风险，不能替代授权、隔离与审批。内容安全需区分检测误报漏报与最终违规放行，明确分母和风险切片；代表流量与挑战集分别评估，标注复核、版本和独立验收共同约束结论。"
+            },
+            "interviewBaseHeat": 6,
+            "interviewCount": 4
+          },
+          {
             "label": "幂等性、重复执行与副作用控制",
             "key": "agent-idempotency",
             "isLeaf": true,
@@ -2265,21 +2280,6 @@
             },
             "interviewCount": 3,
             "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "输入、输出与工具 Guardrails",
-            "key": "agent-guardrails",
-            "isLeaf": true,
-            "filePath": "llm/production",
-            "contentStatus": "published",
-            "heat": 9,
-            "currRank": 5,
-            "updatedAt": "2026-07-16",
-            "quickRead": {
-              "text": "Guardrail分别检查输入、模型决策、工具、结果与最终输出，配合权限、隔离和确定性验证。输出分类不授予执行权，过滤也不能撤销已经发生的副作用；误报、漏报及并行检查竞态须实际评估。"
-            },
-            "interviewBaseHeat": 6,
-            "interviewCount": 3
           },
           {
             "label": "Agent Gateway 与统一接入层",
@@ -5051,14 +5051,14 @@
             "isLeaf": true,
             "filePath": "career",
             "contentStatus": "published",
-            "heat": 27,
+            "heat": 28,
             "currRank": 5,
             "updatedAt": "2026-11-04",
             "quickRead": {
               "text": "用真实问题、个人职责、关键取舍和可核验产物介绍项目。评估需给任务、基线、样本与分母；展示脱敏的工具和状态轨迹，不把固定题数、工具数量或虚构收益当作能力证明。"
             },
             "interviewBaseHeat": 6,
-            "interviewCount": 21,
+            "interviewCount": 22,
             "interviewCountBasis": "verified-public-posts"
           },
           {

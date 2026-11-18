@@ -408,10 +408,10 @@
       "label": "RAG 完整流程实战",
       "filePath": "llm/rag",
       "status": "pending",
-      "action": "audited",
-      "recordedAt": "2026-10-29",
-      "batch": "agentjourney-plus-thirty-175-20261029",
-      "reason": "Actual source-question processing; final independent review and online release are pending.",
+      "action": "updated",
+      "recordedAt": "2026-11-18",
+      "batch": "daily-content-20261118-b03",
+      "reason": "Source-grounded actual processing; awaiting reviewed publication.",
       "previousRecord": {
         "key": "rag-pipeline",
         "label": "RAG 完整流程实战",
@@ -419,7 +419,7 @@
         "status": "pending",
         "action": "audited",
         "recordedAt": "2026-10-29",
-        "batch": "agentjourney-next-thirty-20261029",
+        "batch": "agentjourney-plus-thirty-175-20261029",
         "reason": "Actual source-question processing; final independent review and online release are pending.",
         "previousRecord": {
           "key": "rag-pipeline",
@@ -427,9 +427,9 @@
           "filePath": "llm/rag",
           "status": "pending",
           "action": "audited",
-          "recordedAt": "2026-10-28",
-          "batch": "agentjourney-thirty-20261028",
-          "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+          "recordedAt": "2026-10-29",
+          "batch": "agentjourney-next-thirty-20261029",
+          "reason": "Actual source-question processing; final independent review and online release are pending.",
           "previousRecord": {
             "key": "rag-pipeline",
             "label": "RAG 完整流程实战",
@@ -437,21 +437,31 @@
             "status": "pending",
             "action": "audited",
             "recordedAt": "2026-10-28",
-            "batch": "historical-source-bindings-20261028",
-            "reason": "Reclassifies the existing Ant2 backlink as learning-only after actual primary question binding review; this navigation outside the canonical heat block is a real Markdown update and requires current-version quality review.",
+            "batch": "agentjourney-thirty-20261028",
+            "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
             "previousRecord": {
               "key": "rag-pipeline",
               "label": "RAG 完整流程实战",
               "filePath": "llm/rag",
-              "status": "published",
-              "action": "updated",
-              "recordedAt": "2026-07-14",
-              "batch": "frontend-scenarios-and-rag-foundations-2026-07-14"
-            },
-            "previousPublication": {
               "status": "pending",
-              "batch": "title-body4-quality-20261014",
-              "recordedAt": "2026-10-14"
+              "action": "audited",
+              "recordedAt": "2026-10-28",
+              "batch": "historical-source-bindings-20261028",
+              "reason": "Reclassifies the existing Ant2 backlink as learning-only after actual primary question binding review; this navigation outside the canonical heat block is a real Markdown update and requires current-version quality review.",
+              "previousRecord": {
+                "key": "rag-pipeline",
+                "label": "RAG 完整流程实战",
+                "filePath": "llm/rag",
+                "status": "published",
+                "action": "updated",
+                "recordedAt": "2026-07-14",
+                "batch": "frontend-scenarios-and-rag-foundations-2026-07-14"
+              },
+              "previousPublication": {
+                "status": "pending",
+                "batch": "title-body4-quality-20261014",
+                "recordedAt": "2026-10-14"
+              }
             }
           }
         }
@@ -2289,18 +2299,28 @@
       "label": "输入、输出与工具 Guardrails",
       "filePath": "llm/production",
       "status": "pending",
-      "action": "audited",
-      "recordedAt": "2026-10-29",
-      "batch": "agentjourney-next-thirty-20261029",
-      "reason": "Actual source-question processing; final independent review and online release are pending.",
+      "action": "updated",
+      "recordedAt": "2026-11-18",
+      "batch": "daily-content-20261118-b03",
+      "reason": "Source-grounded actual processing; awaiting reviewed publication.",
       "previousRecord": {
         "key": "agent-guardrails",
         "label": "输入、输出与工具 Guardrails",
         "filePath": "llm/production",
-        "status": "published",
-        "action": "created",
-        "recordedAt": "2026-07-16",
-        "batch": "agent-multi-production-next-20-2026-07-16"
+        "status": "pending",
+        "action": "audited",
+        "recordedAt": "2026-10-29",
+        "batch": "agentjourney-next-thirty-20261029",
+        "reason": "Actual source-question processing; final independent review and online release are pending.",
+        "previousRecord": {
+          "key": "agent-guardrails",
+          "label": "输入、输出与工具 Guardrails",
+          "filePath": "llm/production",
+          "status": "published",
+          "action": "created",
+          "recordedAt": "2026-07-16",
+          "batch": "agent-multi-production-next-20-2026-07-16"
+        }
       }
     },
     {
