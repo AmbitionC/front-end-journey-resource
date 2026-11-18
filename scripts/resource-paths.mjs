@@ -10,9 +10,10 @@ export function isDirectExecution(url) {
 
 /**
  * 目录式内容模块：`{module}/_tree.json` + `{module}/{filePath}/{key}.md`。
- * soe = 央国企科技岗目标（2026-11-07 接入）；civil = 考公选岗目标（2026-11-08 接入，站点侧在 TRACKS_PREVIEW 后）。
+ * soe = 央国企科技岗目标（2026-11-07 接入）；civil = 考公选岗目标（2026-11-08 接入，站点侧在 TRACKS_PREVIEW 后）；
+ * project = 实战项目教程（2026-11-18 接入），filePath 是项目标识，站点侧读 /project/{项目标识}/{key}.md。
  */
-export const CONTENT_MODULES = ['interview', 'knowledge', 'soe', 'civil'];
+export const CONTENT_MODULES = ['interview', 'knowledge', 'soe', 'civil', 'project'];
 
 export function safeRelativePath(value) {
   if (value === '.codex/image-resync.txt') return value;

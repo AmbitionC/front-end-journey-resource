@@ -20,9 +20,9 @@ export function changedPublicationPaths(before, after) {
 
 export async function publicInventory(root) {
   const files = [];
-  for (const module of ['interview', 'knowledge', 'soe', 'civil', 'images', 'class']) {
+  for (const module of ['interview', 'knowledge', 'soe', 'civil', 'project', 'images', 'class']) {
     try { await lstat(resolve(root, module)); }
-    catch (error) { if (error.code === 'ENOENT' && ['images','class','soe','civil'].includes(module)) continue; throw error; }
+    catch (error) { if (error.code === 'ENOENT' && ['images','class','soe','civil','project'].includes(module)) continue; throw error; }
     for (const path of await boundedFiles(root, module)) files.push({ path, sha256: sha256(await readBounded(root, path, module)) });
   }
   try {

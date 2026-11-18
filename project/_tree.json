@@ -1,0 +1,416 @@
+[
+  {
+    "label": "从零手写通用 Agent（编程 + 研究）",
+    "key": "project-general-agent",
+    "children": [
+      {
+        "label": "项目总览：一套内核，两种模式",
+        "key": "ga-overview",
+        "isLeaf": true,
+        "filePath": "general-agent",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "做完能得到什么、为什么不用框架、技术选型和三段路线。"
+        }
+      },
+      {
+        "label": "系统架构：五层部件与三条设计约束",
+        "key": "ga-architecture",
+        "isLeaf": true,
+        "filePath": "general-agent",
+        "heat": 0,
+        "currRank": 1,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "交互层、内核层、能力层、状态层和外部依赖怎么分工，一次任务怎样在部件之间流转。"
+        }
+      },
+      {
+        "label": "执行循环：调模型、派工具、判断何时停",
+        "key": "ga-loop",
+        "isLeaf": true,
+        "filePath": "general-agent",
+        "heat": 0,
+        "currRank": 2,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "最小实现、终止条件、只读并行与写入串行、把错误作为结果交回模型。"
+        }
+      },
+      {
+        "label": "工具系统：注册表与六个基础工具",
+        "key": "ga-tools",
+        "isLeaf": true,
+        "filePath": "general-agent",
+        "heat": 0,
+        "currRank": 3,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "工具怎样登记和执行，改文件为什么用唯一片段替换，命令执行的四层保护。"
+        }
+      },
+      {
+        "label": "权限闸门：放行、询问还是拒绝",
+        "key": "ga-permission",
+        "isLeaf": true,
+        "filePath": "general-agent",
+        "heat": 0,
+        "currRank": 4,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "拒绝优先于放行的判定顺序、命令拆分、路径边界和无界面模式。"
+        }
+      },
+      {
+        "label": "上下文管理：三道防线",
+        "key": "ga-context",
+        "isLeaf": true,
+        "filePath": "general-agent",
+        "heat": 0,
+        "currRank": 5,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "窗口里放什么，超限时先截断、再清理旧结果、最后才压缩成摘要。"
+        }
+      },
+      {
+        "label": "记忆：项目说明、长期记忆与会话恢复",
+        "key": "ga-memory",
+        "isLeaf": true,
+        "filePath": "general-agent",
+        "heat": 0,
+        "currRank": 6,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "三种“记住”各存什么，写入前查重，遗忘规则，以及记忆为什么是攻击面。"
+        }
+      },
+      {
+        "label": "子任务调度：独立上下文与并行",
+        "key": "ga-subagent",
+        "isLeaf": true,
+        "filePath": "general-agent",
+        "heat": 0,
+        "currRank": 7,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "什么时候该派子任务，任务说明怎么写，嵌套深度和并行数怎么限制。"
+        }
+      },
+      {
+        "label": "研究模式：主管、研究员与带引用的报告",
+        "key": "ga-research",
+        "isLeaf": true,
+        "filePath": "general-agent",
+        "heat": 0,
+        "currRank": 8,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "拆题、并行研究、来源库和引用校验，预算怎么定，网页里的指令怎么防。"
+        }
+      },
+      {
+        "label": "扩展：MCP 与技能",
+        "key": "ga-extension",
+        "isLeaf": true,
+        "filePath": "general-agent",
+        "heat": 0,
+        "currRank": 9,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "通过 MCP 接入外部工具，用技能按需加载做事的方法，以及第三方服务的风险。"
+        }
+      },
+      {
+        "label": "评测：用数字说明它好不好",
+        "key": "ga-eval",
+        "isLeaf": true,
+        "filePath": "general-agent",
+        "heat": 0,
+        "currRank": 10,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "任务集、评分器、多次运行和失败归类，以及怎样把结果写进简历。"
+        }
+      }
+    ]
+  },
+  {
+    "label": "Agent 评测与自进化平台",
+    "key": "project-eval-evolve",
+    "children": [
+      {
+        "label": "项目总览：先造尺子，再谈进化",
+        "key": "ee-overview",
+        "isLeaf": true,
+        "filePath": "eval-evolve",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "平台做什么、每一章依据哪篇论文、规模和结论的边界。"
+        }
+      },
+      {
+        "label": "系统架构：评测链路与自进化链路",
+        "key": "ee-architecture",
+        "isLeaf": true,
+        "filePath": "eval-evolve",
+        "heat": 0,
+        "currRank": 1,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "被测对象、评测、进化三块怎么连接，一个新版本从提出到合入经过什么。"
+        }
+      },
+      {
+        "label": "任务集：从真实失败里建题，分成三套",
+        "key": "ee-taskset",
+        "isLeaf": true,
+        "filePath": "eval-evolve",
+        "heat": 0,
+        "currRank": 2,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "一条好任务的标准，进化集、验收集、回归集怎么划分，验收集为什么会被用旧。"
+        }
+      },
+      {
+        "label": "评分器：代码判定、模型裁判与人工抽检",
+        "key": "ee-graders",
+        "isLeaf": true,
+        "filePath": "eval-evolve",
+        "heat": 0,
+        "currRank": 3,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "判结果不判过程，模型裁判怎样问小、校准和冻结版本。"
+        }
+      },
+      {
+        "label": "可靠性与成本：一个通过率说明不了什么",
+        "key": "ee-reliability",
+        "isLeaf": true,
+        "filePath": "eval-evolve",
+        "heat": 0,
+        "currRank": 4,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "同一任务跑多次，区分有能力做到和每次都做到，判断两个版本的差距是不是真的。"
+        }
+      },
+      {
+        "label": "审计评分器：注入已知错误",
+        "key": "ee-audit",
+        "isLeaf": true,
+        "filePath": "eval-evolve",
+        "heat": 0,
+        "currRank": 5,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "用已知答案的样本考评分器，发现误放后回放历史结果。"
+        }
+      },
+      {
+        "label": "第一级进化：反思式改写提示词（GEPA）",
+        "key": "ee-prompt-evolve",
+        "isLeaf": true,
+        "filePath": "eval-evolve",
+        "heat": 0,
+        "currRank": 6,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "读失败轨迹诊断并改写，保留各有所长的一组候选，先小批后完整地验证。"
+        }
+      },
+      {
+        "label": "第二级进化：增量维护经验手册（ACE）",
+        "key": "ee-playbook",
+        "isLeaf": true,
+        "filePath": "eval-evolve",
+        "heat": 0,
+        "currRank": 7,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "执行、反思、整理三个角色，手册只增补不重写，怎样去重和淘汰。"
+        }
+      },
+      {
+        "label": "第三级进化：配置与工具（Self-Harness）",
+        "key": "ee-harness-config",
+        "isLeaf": true,
+        "filePath": "eval-evolve",
+        "heat": 0,
+        "currRank": 8,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "从轨迹里挖掘弱点，提出最小修改，按固定顺序验证。"
+        }
+      },
+      {
+        "label": "第四级进化：让 Agent 改自己的代码（Meta-Harness）",
+        "key": "ee-harness-code",
+        "isLeaf": true,
+        "filePath": "eval-evolve",
+        "heat": 0,
+        "currRank": 9,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "用你自己写的编程 Agent 当提案器，历史目录怎么组织，安全边界怎么划。"
+        }
+      },
+      {
+        "label": "进化的副作用与准入闸门",
+        "key": "ee-side-effects",
+        "isLeaf": true,
+        "filePath": "eval-evolve",
+        "heat": 0,
+        "currRank": 10,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "学新忘旧怎么观察，准入的四条规则，闸门挡不住什么，怎样回退。"
+        }
+      }
+    ]
+  },
+  {
+    "label": "电商营销增长助手",
+    "key": "project-ecom-growth",
+    "children": [
+      {
+        "label": "项目总览：从素材生产到投放优化的闭环",
+        "key": "eg-overview",
+        "isLeaf": true,
+        "filePath": "ecom-growth",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "为什么选营销场景，模拟数据的三条约束，四段路线。"
+        }
+      },
+      {
+        "label": "系统架构：生产、试投与数据层",
+        "key": "eg-architecture",
+        "isLeaf": true,
+        "filePath": "ecom-growth",
+        "heat": 0,
+        "currRank": 1,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "活动主管怎样调度各环节，审核为什么是唯一通道，人在哪里介入。"
+        }
+      },
+      {
+        "label": "商品理解：卖点、证据与声明等级",
+        "key": "eg-product",
+        "isLeaf": true,
+        "filePath": "ecom-growth",
+        "heat": 0,
+        "currRank": 2,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "先提取卖点再写文案，依据逐字校验，哪些话需要证据才能说。"
+        }
+      },
+      {
+        "label": "人群分层：行为数据与模拟用户池",
+        "key": "eg-segment",
+        "isLeaf": true,
+        "filePath": "ecom-growth",
+        "heat": 0,
+        "currRank": 3,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "公开行为数据能提供什么，目标人群怎么定义，哪些是真实的、哪些是合成的。"
+        }
+      },
+      {
+        "label": "素材生成：先定方案，再写正文",
+        "key": "eg-creative",
+        "isLeaf": true,
+        "filePath": "ecom-growth",
+        "heat": 0,
+        "currRank": 4,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "让多版素材有实质差异，素材为什么要带标签，批量生成的工程问题。"
+        }
+      },
+      {
+        "label": "合规与调性审核：规则、模型、人工三层",
+        "key": "eg-compliance",
+        "isLeaf": true,
+        "filePath": "ecom-growth",
+        "heat": 0,
+        "currRank": 5,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "各层负责什么，漏放率和误拦率怎么取舍，拦截后怎么改。"
+        }
+      },
+      {
+        "label": "试投环境：模拟用户及其可信边界",
+        "key": "eg-simulation",
+        "isLeaf": true,
+        "filePath": "ecom-growth",
+        "heat": 0,
+        "currRank": 6,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "模型能不能模拟真实用户，行为模型怎么设计，循环论证怎么缓解。"
+        }
+      },
+      {
+        "label": "预算分配：探索与利用",
+        "key": "eg-allocation",
+        "isLeaf": true,
+        "filePath": "ecom-growth",
+        "heat": 0,
+        "currRank": 7,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "汤普森采样、最低曝光、优化点击还是下单、什么时候可以下结论。"
+        }
+      },
+      {
+        "label": "效果归因：哪个卖点、哪种写法有效",
+        "key": "eg-attribution",
+        "isLeaf": true,
+        "filePath": "ecom-growth",
+        "heat": 0,
+        "currRank": 8,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "素材、属性、原因三层归因，三个常见的坑，结论的置信等级。"
+        }
+      },
+      {
+        "label": "素材进化：淘汰、改写、补缺",
+        "key": "eg-evolve",
+        "isLeaf": true,
+        "filePath": "ecom-growth",
+        "heat": 0,
+        "currRank": 9,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "怎样读归因结论改写素材，怎样防止越改越偏，最终报告怎么写。"
+        }
+      },
+      {
+        "label": "工程化：成本、并发与断点续跑",
+        "key": "eg-production",
+        "isLeaf": true,
+        "filePath": "ecom-growth",
+        "heat": 0,
+        "currRank": 10,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "先按环节算账，再讲缓存、分级用模型、限流和可重入。"
+        }
+      }
+    ]
+  }
+]

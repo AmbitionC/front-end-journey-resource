@@ -12,6 +12,7 @@ on:
       - 'knowledge/**'
       - 'soe/**'
       - 'civil/**'
+      - 'project/**'
       - 'images/**'
       - 'class/**'
       - '.codex/image-resync.txt'
