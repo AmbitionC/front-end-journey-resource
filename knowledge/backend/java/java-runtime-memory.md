@@ -53,6 +53,16 @@ JVM 栈保存方法调用帧、局部变量与中间计算结果；本地方法�
 
 实践中先记录异常完整信息、运行参数和负载，再比较 GC 后存活量、分配速度、线程数量与进程内存。持续增长的存活集合可能是无界缓存或引用未释放，也可能是业务工作集确实变大；需要从引用链验证原因。
 
+## “栈占用 90%”先核对口径，再定位溢出
+
+“生产环境栈占用 90% 以上”没有统一的健康含义。先问监控项名称、分子分母、采样窗口，以及它表示单线程栈、全部线程栈的预留或提交资源，还是被误称为栈的堆/进程内存。线程栈的保留容量、实际提交和当前调用深度是不同观察，不能从一个未定义的百分比直接判定泄漏、递归或参数过小；题目也没有足够证据证明“90% 是常态”。
+
+若确实出现 `StackOverflowError`，从完整异常栈和可复现请求开始，检查重复调用帧、互相递归、递归终止条件与意外的深层调用。必要时在适当时间采集线程栈，比较正常与异常请求的调用路径。以 JDK 21 为例，`jcmd <pid> Thread.print` 可打印线程与栈，文档将其影响标为中等并提示取决于线程数量；先用目标 JVM 的 `jcmd <pid> help` 核对支持情况。它并不直接给出“每个线程已用栈字节的百分比”，异常已经退栈后也可能捕捉不到故障现场。[JDK 21 jcmd](https://docs.oracle.com/en/java/javase/21/docs/specs/man/jcmd.html)
+
+修复优先对应已证实的原因：错误递归修终止条件，合法但过深的递归可评估改迭代或限制输入深度；同时核对线程数、实际栈配置和进程资源预算。`-Xss` 设置线程栈容量，实际大小与平台及对齐要求有关；对已确认的合理深度不足，可以在压测和容量核算后调整，但增加容量不能终止无界递归。更多线程叠加更大的每线程容量，也须重新评估本地内存预算，不能把调大栈当成无成本修复。[JDK 21 java 的 `-Xss`](https://docs.oracle.com/en/java/javase/21/docs/specs/man/java.html#extra-options-for-java)
+
+若实际异常是 `OutOfMemoryError` 或堆持续增长，应回到对应资源区域取证，而非沿用“栈溢出”的诊断路径。GC 回收堆对象不能修复失控的调用深度；线程栈中保存堆对象引用，也不等于那些对象都分配在栈内。
+
 ## 类文件怎样进入运行时
 
 加载创建类的运行时表示；链接包括验证、准备和解析，随后在规范规定的触发条件下初始化。解析可以采用允许的不同时间策略，初始化也不是每次创建对象都重新执行。[JVMS §5](https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-5.html)是这些步骤的规范来源。
@@ -108,6 +118,7 @@ jstat -gcutil -t <pid> 1000 10
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
 - [腾讯后台开发暑期一面：Java 内存、并发与检索](../../../interview/tencent/ai/tencent-ai-31.md)
 - [58同城 Agent 开发一面：MCP、数据查询与后端基础](../../../interview/58tongcheng/ai/58tongcheng-ai-1.md)
+- [快手商业化 Java 实习一二面：缓存、JVM 与 AI Coding](../../../interview/kuaishou/ai/kuaishou-ai-25.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
@@ -126,3 +137,4 @@ jstat -gcutil -t <pid> 1000 10
 - [Java 21：Native Memory Tracking](https://docs.oracle.com/en/java/javase/21/vm/native-memory-tracking.html)
 - [JDK 21：jcmd 命令、GC 概况和诊断影响](https://docs.oracle.com/en/java/javase/21/docs/specs/man/jcmd.html)（GC 观测增补于2026-11-15核验）
 - [JDK 21：jstat 采样、累计统计与格式边界](https://docs.oracle.com/en/java/javase/21/docs/specs/man/jstat.html)
+- [JDK 21：java 命令的线程栈容量选项 `-Xss`](https://docs.oracle.com/en/java/javase/21/docs/specs/man/java.html#extra-options-for-java)

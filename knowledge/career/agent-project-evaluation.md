@@ -69,6 +69,7 @@ Canary 让少量合格用户真实使用，限制工具和预算，设置自动�
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../interview/bytedance/base/bytedance-base-50.md)
 - [字节后端与 Agent 开发二面：本体平台、延迟任务与注意力](../../interview/bytedance/base/bytedance-base-81.md)
 - [字节全栈二、三面：幂等、索引与字符串匹配](../../interview/bytedance/base/bytedance-base-32.md)
+- [淘天 AI 应用开发暑期实习二面：RAG 评测、工具与成本控制](../../interview/alibaba/ai/alibaba-ai-31.md)
 - [字节后端与 Agent 开发三面：领域建模、项目评测与基础](../../interview/bytedance/base/bytedance-base-80.md)
 - [阿里国际 AI 应用研发一面：JDK 8、消息可靠性与 RAG](../../interview/alibaba/ai/alibaba-ai-25.md)
 - [字节后端与 Agent HR 面：能力复用、主动性与日常 AI 实践](../../interview/bytedance/base/bytedance-base-83.md)

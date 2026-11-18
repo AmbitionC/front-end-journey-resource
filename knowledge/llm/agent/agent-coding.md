@@ -48,6 +48,14 @@ DAG 的权威状态不属于聊天窗口，也不应只放在某个子 Agent 的
 
 离线评测按语言、任务、长短上下文、跨文件依赖和错误恢复分组，固定仓库与依赖快照，并让同源代码或任务变体在训练、调参与最终测试之间隔离。分别记录语法/类型有效、测试与任务成功、回归、人工修订、延迟和成本；真实使用中再看展示、采纳与后续修改。GitHub 的[质量评测说明](https://docs.github.com/en/copilot/responsible-use/inline-suggestions#performance-and-quality-evaluation-methods)同样区分离线正确性与上下文相关性、线上使用指标及运行开销。采纳率是使用信号，不能单独证明候选正确，更不能给没有实测的工具补造“准确率”。
 
+## AI 很快生成大量文档，怎样审阅才有意义
+
+文档数量和阅读时长都不能证明实现正确。先把原需求中的验收条件固定下来，再让生成器给出简短的变更索引：每个条件对应哪些代码、哪些测试、哪份实际结果，哪些仍未验证。索引方便定位，但其中的链接、结论和“已通过”仍须回到当前版本核对。[GitHub 对 Copilot Agents 的使用说明](https://docs.github.com/en/copilot/responsible-use/agents#10-best-practices-and-recommendations)要求审阅和测试生成内容，也说明 AI 代码审查会漏报或误报；下面是将这些原则用于文档审阅的工程方法。
+
+先检查会改变行为的决定，例如工具能执行什么、输入如何校验、失败后是否重试，以及状态如何保存；随后沿真实 diff 和执行证据验证。背景说明可以按需阅读，不能用扫过摘要代替关键路径审查。发现“测试通过”却没有绑定版本的结果，或需求与实现相互矛盾时，停在该项核实，而不是继续点确认。涉及既有授权范围外的动作，另按原权限合同处理。
+
+例如教学任务要求“未知工具名不得执行任何函数”，文档写着支持工具白名单仍不够：应找到实际路由与拒绝分支，运行以未知名称为输入的检查，并确认工具副作用计数为零。若预期和测试都只照抄实现，同一错误可能被同时接受；让第二个模型读同一套材料也不会自动产生独立预期。验收依据仍来自需求与可观察结果，相关方法见 [Agent 测试金字塔](../production/agent-test-pyramid.md)。这只是教学示例，不能据此推断某场面试未公开文档中的具体要求。
+
 ## 隔离工作区
 
 [Git worktree](https://git-scm.com/docs/git-worktree)允许同一仓库拥有多个关联工作目录，适合把 Agent 变更与用户主工作区隔离。隔离不等于随意：仍从明确 base 创建分支，避免两个 Agent 写同一 worktree，结束前确认没有遗漏的未跟踪文件。
@@ -211,6 +219,7 @@ Coding Agent 接到一个修 bug 的任务，发现工作区里有几个用户�
 - [阿里淘天 AI 应用研发一面：RAG、限流 Top-K 与优惠策略](../../../interview/alibaba/ai/alibaba-ai-5.md)
 - [VAST 后端一面：可观测性、AI Coding 与节点调度](../../../interview/vast/ai/vast-ai-1.md)
 - [蚂蚁数字支付 AI 应用研发二面：数据分层、迁移与微调](../../../interview/antfin/ai/antfin-ai-13.md)
+- [淘天 AI 应用开发暑期实习二面：RAG 评测、工具与成本控制](../../../interview/alibaba/ai/alibaba-ai-31.md)
 - [美团后端 Agent 暑期一面：约束、工作流与 AI 开发验证](../../../interview/meituan/ai/meituan-ai-16.md)
 - [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)
 - [拼多多 Agent 复活赛一面：检索权限、上下文与流式协议](../../../interview/pinduoduo/ai/pinduoduo-ai-3.md)
@@ -240,10 +249,12 @@ Coding Agent 接到一个修 bug 的任务，发现工作区里有几个用户�
 - [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)
 - [字节 Agent：AI Coding、技能设计与模型工程](../../../interview/bytedance/base/bytedance-base-49.md)
 - [字节 Agent 一面：生成代码质量与限时 AI Coding](../../../interview/bytedance/base/bytedance-base-67.md)
+- [快手商业化 Java 实习一二面：缓存、JVM 与 AI Coding](../../../interview/kuaishou/ai/kuaishou-ai-25.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
 
+- [GitHub：Copilot Agents 的局限与生成内容审查建议](https://docs.github.com/en/copilot/responsible-use/agents)（2026-11-18 核验）。
 - [Claude Code：Hooks reference，生命周期、权限与输入输出合同](https://code.claude.com/docs/en/hooks)（2026-11-13 核验，滚动文档）。
 
 - [Jimenez et al. — SWE-bench](https://arxiv.org/abs/2310.06770)

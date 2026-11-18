@@ -106,6 +106,42 @@
         }
       },
       {
+        "label": "图形推理：旋转、翻转与遍历",
+        "key": "civil-sprint-figure-rotate-flip",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-17",
+        "quickRead": {
+          "text": "分清旋转和翻转靠不对称的小部件，两步变换一步一步做，九宫格遍历分开看形状和个数，配三道图形题。"
+        }
+      },
+      {
+        "label": "图形推理：样式与属性（叠加、黑白运算、曲直、对称轴方向）",
+        "key": "civil-sprint-figure-style-attribute",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-17",
+        "quickRead": {
+          "text": "叠加的四种算法、黑白运算要先找全四种组合，属性看曲直、开闭和对称轴方向，配四道图形题。"
+        }
+      },
+      {
+        "label": "图形推理：分组分类（六图分两组）",
+        "key": "civil-sprint-figure-classify",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-17",
+        "quickRead": {
+          "text": "找能均分成三加三的特征，按面数、笔画、轴对称与中心对称分组，配三道图形题。"
+        }
+      },
+      {
         "label": "逻辑填空三步法：找对应、辨侧重、查搭配",
         "key": "civil-sprint-fill-blank",
         "isLeaf": true,

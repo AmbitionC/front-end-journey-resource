@@ -82,6 +82,7 @@ JDK 21 的 [`Comparator`](https://docs.oracle.com/en/java/javase/21/docs/api/jav
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [淘天 AI 应用开发暑期实习二面：RAG 评测、工具与成本控制](../../../interview/alibaba/ai/alibaba-ai-31.md)
 - [商盟支付 Java 开发实习一面：交易去重、并发与消息](../../../interview/shangmeng/ai/shangmeng-ai-1.md)
 - [快手效果营销实习一面：意图路由、模型容错与业务校验](../../../interview/kuaishou/ai/kuaishou-ai-18.md)
 <!-- interview-source-history:end -->

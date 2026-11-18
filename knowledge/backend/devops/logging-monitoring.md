@@ -273,6 +273,20 @@ groups:
           summary: "工具调用错误率 > 10%"
 ```
 
+## 用 grep 统计日志：匹配行数与错误事件数不同
+
+对一个已确定的普通文本日志文件，若问题是“包含小写字面量 `error` 的行有多少”，可以直接写：
+
+```bash
+grep -Fc -- 'error' app.log
+```
+
+`-F` 按固定字符串匹配，`-c` 统计匹配的行；默认区分大小写。同一行出现两次 `error` 仍只计一行，`errors` 或 `errorCode` 中的子串也会命中，`ERROR` 则不会。若明确要忽略大小写，可使用 `grep -Fic -- 'error' app.log`。这些选项的语义见 [GNU grep 的模式、匹配与输出控制](https://www.gnu.org/software/grep/manual/grep.html#Command_002dline-Options)。
+
+例如四行分别为 `error error`、`ERROR`、`errorCode=1`、`ok`，第一条命令输出 `2`，忽略大小写后输出 `3`。这是文本检索口径；若要统计日志级别为 ERROR 的记录，应按实际格式解析 level 字段。`-w` 只增加单词边界条件，仍不能证明命中的是日志级别；一个异常还可能有多行堆栈，行数不等于错误事件数。
+
+文件不存在或读取失败也不能当成“零错误”。GNU grep 在没有匹配行时输出计数 `0`，但退出状态为 `1`；通常匹配成功为 `0`、错误为 `2`，其他实现的错误码需核对。脚本应分别处理无匹配与执行失败，不宜用一条笼统的成功兜底吞掉读取错误。[GNU grep 退出状态](https://www.gnu.org/software/grep/manual/grep.html#Exit-Status)
+
 ## 没有错误日志时怎样继续定位
 
 没有找到错误日志，只能说明当前查询没有观察到事件。日志级别、采样、关联标识、采集链路和业务埋点都可能存在缺口；某些业务错误也不会抛异常。先核对用户实际看到的失败，再判断是服务没有执行、执行结果错误，还是观测数据没有到达。[Google SRE 的监控章节](https://sre.google/sre-book/monitoring-distributed-systems/)区分用户视角的黑盒检测与系统内部白盒信号，两者可以相互校验。
@@ -435,10 +449,12 @@ function shouldSample(statusCode: number, durationMs: number): boolean {
 - [腾讯 CDG 金融科技二面：Agent 评估、协程与存储基础](../../../interview/tencent/ai/tencent-ai-29.md)
 - [腾讯云智武汉多轮：运行时、索引、锁与消息消费](../../../interview/tencent/base/tencent-base-4.md)
 - [腾讯后端多轮复盘：热 Key、缓存一致性与库存](../../../interview/tencent/base/tencent-base-2.md)
+- [快手商业化 Java 实习一二面：缓存、JVM 与 AI Coding](../../../interview/kuaishou/ai/kuaishou-ai-25.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
 
+- [GNU grep：选项、匹配行计数与退出状态](https://www.gnu.org/software/grep/manual/grep.html)
 - [Docker CLI: logs and bounded output](https://docs.docker.com/reference/cli/docker/container/logs/)
 - [Docker CLI: inspect and format](https://docs.docker.com/reference/cli/docker/inspect/)
 - [Docker CLI: one-shot stats and memory accounting](https://docs.docker.com/reference/cli/docker/container/stats/)
