@@ -575,14 +575,14 @@
             "isLeaf": true,
             "filePath": "llm/dev",
             "contentStatus": "published",
-            "heat": 14,
+            "heat": 15,
             "currRank": 5,
             "updatedAt": "2026-10-29",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "模型提出结构化工具请求，宿主负责参数校验、授权、执行与结果回送。调用能力只是 Agent 的一个环节，仍需状态、次数、超时与终止合同，格式正确也不等于动作安全。"
             },
-            "interviewCount": 8,
+            "interviewCount": 9,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1300,14 +1300,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 65,
+            "heat": 66,
             "currRank": 5,
-            "updatedAt": "2026-11-15",
+            "updatedAt": "2026-11-18",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Coding Agent 围绕仓库事实完成检索、补丁和验证闭环；编辑器补全则可从光标前后文与相关代码生成候选，并处理取消和文档版本变化。两者都需用任务、静态检查、测试与人工审查检验正确性，采纳率或生成代码量不能代替交付质量。 生命周期 Hook 的事件、输入输出和权限应按宿主合同核对，不能等同于模型推理或绕过权限。"
             },
-            "interviewCount": 59,
+            "interviewCount": 60,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -2046,6 +2046,21 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
+            "label": "Agent 单元、集成、场景与端到端测试",
+            "key": "agent-test-pyramid",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "published",
+            "heat": 12,
+            "currRank": 5,
+            "updatedAt": "2026-11-15",
+            "quickRead": {
+              "text": "将确定性逻辑、工具契约、受控Agent场景与端到端旅程分层验证，用最便宜且足以证伪的测试定位问题；模型评分器需人工校准，少量真实集成与最终验收不能由模型自评替代。"
+            },
+            "interviewBaseHeat": 6,
+            "interviewCount": 6
+          },
+          {
             "label": "Agent Benchmark 的设计与解读",
             "key": "agent-benchmark",
             "isLeaf": true,
@@ -2076,21 +2091,6 @@
             "quickRead": {
               "text": "Trace关联一次任务中的多个Span，根Span只是入口操作；按模型、检索、工具与状态迁移拆耗时、错误、版本和用量。跨服务传播上下文，脱敏并验证采样与导出，日志成功不等于任务目标完成。"
             }
-          },
-          {
-            "label": "Agent 单元、集成、场景与端到端测试",
-            "key": "agent-test-pyramid",
-            "isLeaf": true,
-            "filePath": "llm/production",
-            "contentStatus": "published",
-            "heat": 11,
-            "currRank": 5,
-            "updatedAt": "2026-11-15",
-            "quickRead": {
-              "text": "将确定性逻辑、工具契约、受控Agent场景与端到端旅程分层验证，用最便宜且足以证伪的测试定位问题；模型评分器需人工校准，少量真实集成与最终验收不能由模型自评替代。"
-            },
-            "interviewBaseHeat": 6,
-            "interviewCount": 5
           },
           {
             "label": "AI 应用限流、配额与背压",
@@ -2589,13 +2589,13 @@
             "key": "java-runtime-memory",
             "isLeaf": true,
             "filePath": "backend/java",
-            "updatedAt": "2026-11-15",
+            "updatedAt": "2026-11-18",
             "quickRead": {
               "text": "先区分 JVM 运行时数据区与线程可见性的 Java 内存模型：程序计数器和栈服务线程执行，堆、方法区与常量池保存共享运行时数据。规范区域与 HotSpot 元空间、直接内存等实现资源不能简单画等号；内存故障应按资源区域和证据定位。"
             },
             "interviewBaseHeat": 0,
-            "interviewCount": 9,
-            "heat": 9,
+            "interviewCount": 10,
+            "heat": 10,
             "currRank": 5,
             "interviewCountBasis": "verified-public-posts"
           },
@@ -3140,14 +3140,14 @@
             "isLeaf": true,
             "filePath": "backend/database",
             "contentStatus": "published",
-            "heat": 38,
+            "heat": 39,
             "currRank": 5,
             "updatedAt": "2026-10-31",
             "interviewBaseHeat": 10,
             "quickRead": {
               "text": "Cache-aside 以数据库为权威，读缓存未命中后回填，写数据库后失效缓存。TTL、失效通知和并发请求合并分别约束旧值、传播与负载，却不能保证跨层强一致或阻止旧请求回填；关键决策仍须在权威数据上校验，并设计失效失败的恢复路径。"
             },
-            "interviewCount": 28,
+            "interviewCount": 29,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -3183,6 +3183,22 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
+            "label": "Redis 分布式锁：租约、续期与故障边界",
+            "key": "redis-distributed-lock",
+            "isLeaf": true,
+            "filePath": "backend/database",
+            "contentStatus": "published",
+            "heat": 17,
+            "currRank": 5,
+            "updatedAt": "2026-10-28",
+            "interviewBaseHeat": 1,
+            "quickRead": {
+              "text": "Redis 租约锁用原子 NX、随机持有者 token 和过期时间，释放或续期原子核对身份。租约失效、暂停和故障切换可能破坏排他，重要写入需资源端版本或 fencing，watchdog 不自动消除风险。"
+            },
+            "interviewCount": 16,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
             "label": "Agent 会话、检查点与任务状态存储",
             "key": "agent-state-storage",
             "isLeaf": true,
@@ -3196,22 +3212,6 @@
               "text": "持久状态区分会话消息、执行检查点、任务与事件，按身份与版本更新并限制访问。客户端缓存不是唯一真相，恢复、保留、删除与外部副作用对账要分别定义。"
             },
             "interviewCount": 10,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "Redis 分布式锁：租约、续期与故障边界",
-            "key": "redis-distributed-lock",
-            "isLeaf": true,
-            "filePath": "backend/database",
-            "contentStatus": "published",
-            "heat": 16,
-            "currRank": 5,
-            "updatedAt": "2026-10-28",
-            "interviewBaseHeat": 1,
-            "quickRead": {
-              "text": "Redis 租约锁用原子 NX、随机持有者 token 和过期时间，释放或续期原子核对身份。租约失效、暂停和故障切换可能破坏排他，重要写入需资源端版本或 fencing，watchdog 不自动消除风险。"
-            },
-            "interviewCount": 15,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -3400,11 +3400,11 @@
             "isLeaf": true,
             "filePath": "backend/devops",
             "contentStatus": "published",
-            "heat": 12,
+            "heat": 13,
             "currRank": 5,
-            "updatedAt": "2026-11-06",
+            "updatedAt": "2026-11-18",
             "interviewBaseHeat": 1,
-            "interviewCount": 11,
+            "interviewCount": 12,
             "interviewCountBasis": "verified-public-posts",
             "quickRead": {
               "text": "排障从用户可见故障、时间线和请求标识入手，交叉核对日志、指标、追踪及资源信号；退出码与 OOM 标记只是线索。Go 链路还需核对 SDK 初始化、库插桩覆盖、业务 Span、context 传递和导出，不能把加了日志当成全链路可观测。"
@@ -4303,14 +4303,14 @@
             "isLeaf": true,
             "filePath": "cs/os",
             "contentStatus": "published",
-            "heat": 4,
-            "currRank": 3,
-            "updatedAt": "2026-10-19",
+            "heat": 5,
+            "currRank": 4,
+            "updatedAt": "2026-11-18",
             "quickRead": {
               "text": "追踪式 GC 从栈、全局和运行时根沿引用标记可达对象，再回收不可达内存；没有根路径的循环仍可回收。分代、增量、并发和并行描述不同优化维度。GC 无法按业务意图清理仍可达的对象，也不能代替文件、连接等资源的显式关闭。"
             },
             "interviewBaseHeat": 1,
-            "interviewCount": 3,
+            "interviewCount": 4,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -4319,14 +4319,14 @@
             "isLeaf": true,
             "filePath": "cs/os",
             "contentStatus": "published",
-            "heat": 3,
+            "heat": 4,
             "currRank": 3,
-            "updatedAt": "2026-10-19",
+            "updatedAt": "2026-11-18",
             "quickRead": {
               "text": "IPC比较数据边界、复制与同步、是否跨机和故障恢复。共享内存可减少复制但不保证任何负载都最快；本机Unix Socket与网络Socket有不同边界，HTTP、RPC和消息中间件是更高层的通信选择。"
             },
             "interviewBaseHeat": 1,
-            "interviewCount": 2
+            "interviewCount": 3
           },
           {
             "label": "操作系统的用户态、内核态与切换",
