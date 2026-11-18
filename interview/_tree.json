@@ -2961,6 +2961,30 @@
             "updatedAt": "2026-11-15"
           }
         ]
+      },
+      {
+        "key": "kuaishou-department-business-platform-commercial",
+        "label": "业务中台-商业化",
+        "children": [
+          {
+            "label": "快手商业化 Java 实习一二面：缓存、JVM 与 AI Coding",
+            "key": "kuaishou-ai-25",
+            "isLeaf": true,
+            "filePath": "kuaishou/ai",
+            "tags": [
+              "Java",
+              "Redis",
+              "JVM",
+              "Agent",
+              "AI Coding"
+            ],
+            "contentFormat": "short-qa-v2",
+            "department": "业务中台-商业化",
+            "role": "Java 开发实习生",
+            "updatedAt": "2026-11-18"
+          }
+        ],
+        "nodeType": "department"
       }
     ],
     "nodeType": "company"
