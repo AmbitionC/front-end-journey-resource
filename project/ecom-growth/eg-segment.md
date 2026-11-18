@@ -98,7 +98,8 @@ class SimUser:
     id: int
     segment_id: int              # 属于哪类目标人群（合成）
     behavior: dict               # 行为特征，从真实用户中抽样得到
-    price_sensitivity: float     # 个体差异（合成）
+    price_sensitivity: float     # 个体差异（合成），0 到 1
+    noise: float                 # 个体差异（合成），点击意愿的固定随机偏移
     persona: str                 # 一段人物描述，由上述字段渲染而成
 ```
 

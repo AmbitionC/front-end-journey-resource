@@ -65,19 +65,31 @@ flowchart LR
 - **回归集选当前版本稳定通过的任务。** 它的作用是报警，一条本来就时过时不过的任务报不了警。
 
 ```python
-def split(tasks: list[Task], seed: int) -> dict[str, list[Task]]:
+def split(tasks: list[Task], seed: int, stable_ids: set[str]) -> dict[str, list[Task]]:
     groups = group_by_similarity(tasks)          # 相似任务捆在一起
-    by_stratum = defaultdict(list)
-    for g in groups:
-        by_stratum[(g.source, g.difficulty)].append(g)
     rng = random.Random(seed)
     out = {"evolve": [], "accept": [], "regress": []}
+
+    # 回归集：只从当前版本每次都通过的任务组里抽，约占四分之一
+    stable = [g for g in groups if all(t.id in stable_ids for t in g.tasks)]
+    rng.shuffle(stable)
+    regress = stable[: len(groups) // 4]
+    for g in regress:
+        out["regress"].extend(g.tasks)
+
+    # 其余的按来源和难度分层，再按 2:1 分给进化集和验收集
+    by_stratum = defaultdict(list)
+    for g in groups:
+        if g not in regress:
+            by_stratum[(g.source, g.difficulty)].append(g)
     for stratum in by_stratum.values():
         rng.shuffle(stratum)
         for i, g in enumerate(stratum):
-            out[("evolve", "evolve", "accept", "regress")[i % 4]].extend(g.tasks)
+            out[("evolve", "evolve", "accept")[i % 3]].extend(g.tasks)
     return out
 ```
+
+`stable_ids` 来自当前版本的一次重复评测：每次都通过的任务才算稳定。稳定的任务多半偏简单，所以回归集的难度分布会和另外两套不一样。这没有关系，回归集只用来看有没有退步，不拿它的通过率和别的集合比。
 
 划分用固定的随机种子并记录下来，结果才能复现。
 
