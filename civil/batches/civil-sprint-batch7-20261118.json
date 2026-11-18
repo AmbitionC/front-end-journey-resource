@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "batchId": "civil-sprint-batch7-20261118",
+  "date": "2026-11-18",
+  "branch": "claude/project-thread-dcj9w6",
+  "basedOn": "master e888d6a",
+  "scope": {
+    "module": "civil",
+    "topLevelLabel": "国考冲刺速查",
+    "articleCount": 2,
+    "mergeAuthorized": false
+  },
+  "workflow": "Claude 撰写、另一个独立 Claude 会话审核；题目标「高频考点题」。选题来自网盘资料吸收核对剩余项：言语易混实词第二组、结构化面试（网盘无面试材料，按通行题型自行编写）。",
+  "status": "content-ready-for-owner-review",
+  "originality": {
+    "body": "自行编写，不引用任何机构、老师或书目的讲义内容。",
+    "questions": "题干、选项、解析、参考思路全部自拟；面试题情境均为虚构。",
+    "figures": "本批无图片。"
+  },
+  "sourcesNote": "实词与成语释义以《现代汉语词典》通行释义为准；面试篇不含具体时长、题量、分数折算等事实性数字，明确以各机关面试公告为准。",
+  "notWritten": [
+    "资料分析：年均增长率与隔年增长（云端环境连不上 stats.gov.cn，需 owner 放开网络）",
+    "常识：政治与时政（需逐条对照 gov.cn 官方原文核实，同上）"
+  ],
+  "items": [
+    {
+      "key": "civil-sprint-fill-blank-words-2",
+      "label": "逻辑填空：易混实词与易错成语（第二组）",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-fill-blank-words-2.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 6737,
+      "sha256": "d60280be7115be33c338efd1fb410344852ddf57bbf141fe3e7da6923050c2b2"
+    },
+    {
+      "key": "civil-sprint-interview-structured",
+      "label": "结构化面试：六类题型与答题骨架",
+      "filePath": "sprint",
+      "outputPath": "civil/sprint/civil-sprint-interview-structured.md",
+      "action": "create",
+      "status": "ready-for-owner-review",
+      "bytes": 7444,
+      "sha256": "30a4654116ce89c1fbf4a407b7292d431ddcbe7a529e1d4c6f21b5d251fd0ca3"
+    }
+  ]
+}
