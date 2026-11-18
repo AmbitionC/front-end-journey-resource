@@ -633,6 +633,21 @@ flowchart TD
     style REFL2 fill:#dc2626,color:#fff
 ```
 
+## CoT、Plan-and-Execute、RAG 与原生 Thinking 怎样比较
+
+这几个名称经常一起出现在方案讨论里，却回答不同问题。不要把它们排成从低级到高级的一条线，也不要把“边检索边思考”当作所有 RAG 的定义：一次检索后生成和多轮按需检索，都可以采用外部证据。
+
+| 选择维度 | 核心作用 | 适用情形与边界 |
+| --- | --- | --- |
+| CoT / 推理提示 | 用分解要求或示范引导多步求解 | 普通模型的多步题可作实验；不补充未知事实，不保证步骤正确 |
+| Plan-and-Execute | 显式组织计划、执行和可选重规划 | 多步目标与依赖需要管理时使用；计划仍需验收，变化后可能重规划 |
+| RAG | 取回外部资料并让回答使用证据 | 知识需要更新、溯源或受权限约束时；取回资料不等于完成推理或验证 |
+| 原生 Thinking / 推理模型 | 用模型训练与推理时计算支持多步求解 | 数学、代码等可验证复杂任务可评估；实际接口、预算与可见输出依具体模型合同 |
+
+[CoT 原论文](https://arxiv.org/abs/2201.11903)研究的是推理示范提示；[ReAct](https://arxiv.org/abs/2210.03629)研究推理与行动交替，以外部知识库等环境的观察支持后续步骤；[DeepSeek-R1](https://arxiv.org/abs/2501.12948)则展示了训练阶段强化推理行为的具体路线。它们分别提供提示、执行交互和训练层面的依据，不证明任意冠以 Thinking 的模型具有相同能力。更多机制见[推理提示策略](../prompt/prompt-cot.md)、[RAG 流程](../rag/rag-pipeline.md)和[推理模型与预算](../basics/llm-reasoning-models.md)。
+
+例如，教学任务“核对多份现行规则并提出迁移方案”，可以先规划要核对的事项，逐步检索有权访问的规则，再让合适模型比较约束，最后用引用与可执行检查验收。这个组合是工程设计示例：规划不能替代证据，更多思考不能弥补漏检，模型自省也不能替代外部验收。固定相同任务、证据范围和总预算，与直接回答、固定检索等简单基线比较，才知道新增环节是否有价值。
+
 ## 混合范式：组合使用
 
 三种范式并不互斥，高质量的生产系统往往是组合的：
@@ -658,13 +673,14 @@ RLHF 在训练阶段利用人类偏好信号更新模型；这些权重变化会
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节抖音研发一面：Agent 执行范式与缓存恢复](../../../interview/bytedance/base/bytedance-base-69.md)
 - [百度 Agent 秋招二三面：记忆、工具可靠性与运行循环](../../../interview/baidu/ai/baidu-ai-6.md)
 - [字节 AI 应用开发一、二面：规划、结构化输出与部署取舍](../../../interview/bytedance/base/bytedance-base-65.md)
+- [小红书 PE 一面：订单号、上下文摘要与执行范式](../../../interview/redbook/ai/redbook-ai-14.md)
 - [阿里 Token Foundry AI 应用研发一面：Critic、上下文与幂等](../../../interview/alibaba/ai/alibaba-ai-17.md)
 - [小红书 AI 后端一面：执行模式、Memory、意图与 RAG](../../../interview/redbook/ai/redbook-ai-8.md)
-- [小红书 PE 一面：订单号、上下文摘要与执行范式](../../../interview/redbook/ai/redbook-ai-14.md)
+- [字节抖音研发一面：Agent 执行范式与缓存恢复](../../../interview/bytedance/base/bytedance-base-69.md)
 - [快手大模型应用 Java 实习一面：Agent、SkillHub 与 Vibe Coding](../../../interview/kuaishou/ai/kuaishou-ai-1.md)
+- [淘天 AI 应用研发实习：后端基础、Transformer 与训练](../../../interview/alibaba/ai/alibaba-ai-32.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
@@ -677,3 +693,7 @@ RLHF 在训练阶段利用人类偏好信号更新模型；这些权重变化会
 - [Plan-and-Solve Prompting](https://arxiv.org/abs/2305.04091)
 - [Toolformer: Language Models Can Teach Themselves to Use Tools](https://arxiv.org/abs/2302.04761)
 - [Self-Refine 官方项目页：停止条件与评估方式](https://selfrefine.info/)
+
+- [Wei et al.：Chain-of-Thought Prompting](https://arxiv.org/abs/2201.11903)
+- [Yao et al.：ReAct](https://arxiv.org/abs/2210.03629)
+- [DeepSeek-AI：DeepSeek-R1](https://arxiv.org/abs/2501.12948)

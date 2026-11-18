@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "Nginx 转发 SSE 响应",
+    "locale": "zh-CN",
+    "output": "images/diagram-sources/nginx-proxy-sse-sequence-v2.html",
+    "quality_profile": "showcase"
+  },
+  "participants": [
+    {
+      "id": "client",
+      "type": "external",
+      "label": "客户端",
+      "sublabel": "HTTPS 请求"
+    },
+    {
+      "id": "nginx",
+      "type": "backend",
+      "label": "Nginx",
+      "sublabel": "反向代理"
+    },
+    {
+      "id": "agent",
+      "type": "backend",
+      "label": "Agent 实例",
+      "sublabel": "本次选中实例"
+    }
+  ],
+  "messages": [
+    {
+      "id": "req",
+      "from": "client",
+      "to": "nginx",
+      "y": 160,
+      "label": "HTTPS /v1/chat",
+      "variant": "emphasis"
+    },
+    {
+      "id": "upstream",
+      "from": "nginx",
+      "to": "agent",
+      "y": 218,
+      "label": "转发 HTTP 请求",
+      "note": "终止 TLS，选择一个 upstream"
+    },
+    {
+      "id": "headers",
+      "from": "agent",
+      "to": "nginx",
+      "y": 290,
+      "label": "200 · text/event-stream",
+      "variant": "return"
+    },
+    {
+      "id": "headers-client",
+      "from": "nginx",
+      "to": "client",
+      "y": 338,
+      "label": "转发响应头",
+      "variant": "return"
+    },
+    {
+      "id": "events",
+      "from": "agent",
+      "to": "nginx",
+      "y": 386,
+      "label": "多次输出 SSE 事件",
+      "variant": "return"
+    },
+    {
+      "id": "events-client",
+      "from": "nginx",
+      "to": "client",
+      "y": 434,
+      "label": "陆续转发事件",
+      "variant": "return",
+      "note": "关闭响应缓冲可降低积攒延迟；仍可能有其他缓冲"
+    },
+    {
+      "id": "finish",
+      "from": "agent",
+      "to": "nginx",
+      "y": 506,
+      "label": "应用完成，结束响应",
+      "variant": "return"
+    },
+    {
+      "id": "finish-client",
+      "from": "nginx",
+      "to": "client",
+      "y": 554,
+      "label": "结束本次 HTTP 响应",
+      "variant": "return"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "本图边界",
+      "items": [
+        "示例为 SSE 响应，不包含 WebSocket 升级。",
+        "响应结束不等于 TCP 连接关闭。"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "缓冲边界",
+      "items": [
+        "proxy_buffering off 不保证全链路完全无缓冲。",
+        "应用刷新、网络与客户端读取也会影响延迟。"
+      ]
+    }
+  ]
+}

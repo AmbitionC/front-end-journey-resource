@@ -53,6 +53,16 @@ risk = task_impact
 
 高风险医疗、身份、安全或财务图像即使结果“看似确定”也应满足专业复核要求。低风险内容标签可以只抽样复核。
 
+## 商品图文自动分类怎样落地
+
+先定义分类合同：是一个主类目、多个属性标签，还是逐层选择的类目树？保存类目 ID、定义、互斥关系与版本，并允许“信息不足／不在目录内”，避免把所有商品硬塞进最相似类别。训练和评测按商品或近重复图片组隔离，不能让同一商品的换角度照片分别出现在训练与测试中。
+
+以“保温杯”和“杯套”容易混淆为例，输入应关联同一商品的标题、属性、主图与必要细节图，检查缺图、错绑和营销文字；图片显示杯体但标题说明仅出售杯套时，需要冲突规则或人工复核。候选输出包含类目 ID、支持的图文依据与待核实项，再由应用校验类目是否有效、上下级是否一致。
+
+模型选择从可测的简单基线开始：文本分类、纯图分类，再比较图文联合方案。[CLIP 原论文](https://arxiv.org/abs/2103.00020)展示了通过图文配对学习表示、用类别文字描述进行零样本图像分类的路线；这不等于已经联合理解某件商品的标题和图片，也不证明电商细粒度类目一定准确。可以把这种图文相似度方案作为候选基线，与监督分类器或视觉语言模型比较；融合方式与是否微调由标注集验证。
+
+冻结类目版本后，报告逐类 Precision/Recall、宏平均 F1、混淆矩阵，以及未知类、图文冲突、缺图和低质量图切片；同时看延迟、单次成本与人工复核量。若允许拒判，应同时报告自动覆盖率和被自动接收样本的错误率，防止只挑容易商品造成高分。阈值在验证集校准，线上错误和新增类目经复核后进入下一版数据。这是系统设计示例，不是任何原帖项目的已知实现。
+
 ## 图像生成管线
 
 生成不是只保存一段 prompt。生产请求应包含：业务意图、主体与不变量、构图、输出用途、参考资产、必须避免内容、安全等级和候选数量。编辑时尤其要区分编辑目标与风格参考，并明确“只改什么、哪些必须不变”。
@@ -140,6 +150,7 @@ Anthropic 的[视觉指南](https://platform.claude.com/docs/en/build-with-claud
 
 <!-- interview-source-history:start -->
 - [百度网盘后端二面：图生图工作流、任务管理与缓存一致性](../../../interview/baidu/ai/baidu-ai-5.md)
+- [淘天 AI 应用开发暑期实习二面：RAG 评测、工具与成本控制](../../../interview/alibaba/ai/alibaba-ai-31.md)
 - [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
 <!-- interview-source-history:end -->
 
@@ -150,3 +161,5 @@ Anthropic 的[视觉指南](https://platform.claude.com/docs/en/build-with-claud
 - [Anthropic — Vision](https://platform.claude.com/docs/en/build-with-claude/vision)
 - [Gemini API — Image understanding](https://ai.google.dev/gemini-api/docs/generate-content/image-understanding)
 - [Gemini API — Image generation](https://ai.google.dev/gemini-api/docs/image-generation)
+
+- [Radford et al.：CLIP 图文监督与零样本分类](https://arxiv.org/abs/2103.00020)

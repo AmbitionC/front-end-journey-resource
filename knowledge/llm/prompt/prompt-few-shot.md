@@ -125,6 +125,7 @@ Zero-Shot 只给任务说明和当前输入；Few-Shot 额外提供若干示例�
 
 <!-- interview-source-history:start -->
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../../interview/bytedance/base/bytedance-base-48.md)
+- [淘天 AI 应用研发实习：后端基础、Transformer 与训练](../../../interview/alibaba/ai/alibaba-ai-32.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

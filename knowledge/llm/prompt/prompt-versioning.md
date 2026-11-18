@@ -165,6 +165,7 @@ Prompt 版本管理的核心是可复现：把模板、模型、工具、检索�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [淘天 AI 应用开发暑期实习二面：RAG 评测、工具与成本控制](../../../interview/alibaba/ai/alibaba-ai-31.md)
 - [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
 <!-- interview-source-history:end -->
 
