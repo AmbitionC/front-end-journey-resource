@@ -11,7 +11,7 @@ $ evo eval --agent ./my-agent --suite coding-v3 --repeat 5
   至少成功一次      85.0%
   每次都成功        50.0%
   平均每条花费      ¥0.19    平均耗时 71 秒
-  不稳定的任务      10 条（见 report/flaky.md）
+  不稳定的任务      14 条（见 report/flaky.md）
 
 $ evo evolve --level prompt --rounds 6
 
