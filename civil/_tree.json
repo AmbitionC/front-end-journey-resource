@@ -166,6 +166,18 @@
         }
       },
       {
+        "label": "逻辑填空：易混实词与易错成语（第二组）",
+        "key": "civil-sprint-fill-blank-words-2",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "考查与考察、度过与渡过、法制与法治、期间与其间，以及万人空巷、登堂入室等望文生义的成语，配五道练习题。"
+        }
+      },
+      {
         "label": "片段阅读：主旨题和意图题怎么找重点句",
         "key": "civil-sprint-reading-main-idea",
         "isLeaf": true,
@@ -451,6 +463,18 @@
         "updatedAt": "2026-11-10",
         "quickRead": {
           "text": "2027 年度笔试时间，行测和申论的时间分配建议、跳题规则，以及每套模考的复盘清单。"
+        }
+      },
+      {
+        "label": "结构化面试：六类题型与答题骨架",
+        "key": "civil-sprint-interview-structured",
+        "isLeaf": true,
+        "filePath": "sprint",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "综合分析、计划组织、应急应变、人际关系、自我认知、情景模拟各有固定骨架，配五道题的参考思路。"
         }
       }
     ]
