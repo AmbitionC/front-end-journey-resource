@@ -1,5 +1,10 @@
 # Editable technical diagrams
 
+> **2026-11-19 更新（owner 决定）：新画和重画的配图一律走 `aj-diagrams` skill**（`.claude/skills/aj-diagrams/SKILL.md`）。
+> 原因：Archify/Excalidraw 默认样式与网站主题（黑底鼠尾草绿 / 浅色灰绿）不搭，部分 Archify 静态图字太小。
+> 下面 2026-10-29 的 Archify/Excalidraw 路由只适用于：保留现有交互式 Archify 嵌入、或保留已工整的 Excalidraw 图时的维护。
+> 发布、台账、不得退回位图生成模型等其余规则继续有效。
+
 User policy for Agent Journey, effective 2026-10-29. This policy overrides the broader diagram capabilities advertised by either tool.
 
 | Meaning to explain | Renderer | Editable source |

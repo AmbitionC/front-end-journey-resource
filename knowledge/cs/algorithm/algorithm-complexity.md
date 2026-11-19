@@ -1,7 +1,7 @@
 复杂度分析是在输入规模增长时预测资源需求的模型。它不替代 benchmark，也不是只背 `O(n log n)`：需要先定义 n，数清关键操作，再区分最坏、平均、期望与摊还成本，最后把增长率换算成真实延迟、内存和 I/O 预算。
 
-![不同复杂度增长曲线与输入规模、延迟、内存和 I/O 资源预算的对应关系](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/algorithm-complexity-growth-budget-v1.webp)
-*图：渐近模型解释增长趋势；在具体机器、数据分布和并发下仍需测量常数与资源瓶颈。*
+![对数坐标下 O(1)、O(log n)、O(n)、O(n log n)、O(n²) 的操作次数随 n 增长；n 等于一百万时，n² 约一万亿次、n log n 约两千万次](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/algorithm-complexity-growth-v1.dark.png)
+*图：两轴都是对数刻度。n 小时几条曲线差别不大；到 n = 100 万，n² 约一万亿次，n log n 约两千万次。渐近模型只说趋势，常数和资源瓶颈仍要实测。*
 
 ## 先定义输入规模
 

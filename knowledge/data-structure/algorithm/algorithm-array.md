@@ -1,5 +1,5 @@
-![一个有序数组上 left/right 双指针向中间移动，每步展示不变量“已排除区间不可能含答案”；下方滑动窗口用 expand/shrink 保持约束，并区分 mutable array 与 immutable string](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/array-string-two-pointer-invariants-v1.webp)
-*图：沿图中的节点与箭头阅读，重点是从连续序列、索引、原地更新、字符串不可变性和双指针不变量渐进展开。*
+![有序数组 1 3 4 6 8 11 找两数之和 10：left 和 right 从两端向中间移动，每一步都排除一个不可能的数，第五步找到 4 和 6；下方滑动窗口在出现重复字符时收缩左边界](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/algorithm-array-two-pointers-v1.dark.png)
+*图：在有序数组 [1, 3, 4, 6, 8, 11] 里找和为 10 的两个数：和太大就左移 right，太小就右移 left，每一步都排除一个不可能的位置。下方滑动窗口先扩张、出了重复再收缩左边。*
 
 ---
 

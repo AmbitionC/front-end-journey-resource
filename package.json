@@ -10,7 +10,8 @@
     "migrate:tree": "node scripts/migrate-tree.mjs",
     "validate:tree": "node scripts/validate-tree.mjs",
     "validate:release": "node scripts/validate-release.mjs",
-    "build:materials": "node scripts/build-materials.mjs"
+    "build:materials": "node scripts/build-materials.mjs",
+    "diagram": "node scripts/diagram-kit/render.mjs"
   },
   "devDependencies": {
     "tsx": "^4.19.0"

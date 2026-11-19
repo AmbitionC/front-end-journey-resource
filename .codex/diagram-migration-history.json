@@ -37,7 +37,7 @@
       "label": "Token、Context Window 与 KV Cache",
       "articlePath": "knowledge/llm/basics/llm-token-context.md",
       "baselineArticleSha256": "e981202e098398d315d27e3c004652f37fb3760a3cfce37a2e7c8fe3648bacc1",
-      "status": "provenance_pending",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/llm-token-context-kv-cache-v3.webp",
@@ -45,17 +45,27 @@
           "provenance": "legacy_raster_provenance_pending"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-pilot-2026-11-19",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/llm-token-context-kv-cache-v1.aj.mjs",
+          "sourceSha256": "b914b750ead0729632c81dbce9f730b9aa552f835a380e5039dc03b532d0b75c",
+          "darkPng": "images/llm-token-context-kv-cache-v1.dark.png",
+          "lightPng": "images/llm-token-context-kv-cache-v1.light.png",
+          "darkSha256": "2ad102e8a827ab951723e6c297080447782ad5226a9574f67cf58476daacb4d3",
+          "lightSha256": "b334aa6e48d93f388630efc7df8eb0678416181739d4c92417132e5cc9ae60cc"
+        }
+      ]
     },
     {
       "key": "llm-capability-boundaries",
       "label": "大模型的能力边界、幻觉与不确定性",
       "articlePath": "knowledge/llm/basics/llm-capability-boundaries.md",
       "baselineArticleSha256": "9ec1ff36fe0576b517d368c75b2bb35c90fa35e47d05ea53bc7083a4153cf0e3",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/llm-capability-boundaries-relative-token-boundary-v2.png",
@@ -63,10 +73,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-pilot-2026-11-19",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/llm-capability-boundaries-confidence-loop-v1.aj.mjs",
+          "sourceSha256": "bec10aa5d7447295d70694c127c1d38911fc1f271f2c3a1df1e5ed132e36fc28",
+          "darkPng": "images/llm-capability-boundaries-confidence-loop-v1.dark.png",
+          "lightPng": "images/llm-capability-boundaries-confidence-loop-v1.light.png",
+          "darkSha256": "e4f3cbf264a3234264e7d5387da8adaba90178e22ceb5b4f76923c7bf039ed37",
+          "lightSha256": "b640fe54f193461ff9de042de9d00f653b10c2b21b1f04dcef9ecf316b0866d7"
+        }
+      ]
     },
     {
       "key": "llm-training-overview",
@@ -127,7 +147,7 @@
       "label": "Transformer 架构原理",
       "articlePath": "knowledge/llm/basics/transformer-arch.md",
       "baselineArticleSha256": "29fe70bcba61d40828e5c05465131bb449f725c172c482baa19a1ba13ed7f7bd",
-      "status": "provenance_pending",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/transformer-arch-modern-decoder-block-v4.webp",
@@ -140,10 +160,28 @@
           "provenance": "legacy_raster_provenance_pending"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-pilot-2026-11-19",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/transformer-arch-causal-attention-v1.aj.mjs",
+          "sourceSha256": "35ff65b211dab04529cc1212836203e7eaf09863de37b3f5e820d0ae147549b2",
+          "darkPng": "images/transformer-arch-causal-attention-v1.dark.png",
+          "lightPng": "images/transformer-arch-causal-attention-v1.light.png",
+          "darkSha256": "341c03949e30c1de49c8c677b85c578b69a237e99ac2837721486f1194f65468",
+          "lightSha256": "4fa90bc1364c3b9b96e0b99212a478d390bd9d4a02ffcab3aa2097d25050da88"
+        },
+        {
+          "source": "images/diagram-sources/transformer-arch-decoder-block-v1.aj.mjs",
+          "sourceSha256": "da1b03cf88ec202094e3b298731a35c62070a96aee0d7530ed2d95862876d7df",
+          "darkPng": "images/transformer-arch-decoder-block-v1.dark.png",
+          "lightPng": "images/transformer-arch-decoder-block-v1.light.png",
+          "darkSha256": "f81aff9677142fbd062f3bb73335a994ce1d20289b00dde9ce5ab3438dc18769",
+          "lightSha256": "98f1a4e006751a6485f55bd0bc6ebba5f166f0e45dfd6359bd27fb72dbfa204b"
+        }
+      ]
     },
     {
       "key": "llm-rlhf-dpo",
@@ -4438,7 +4476,7 @@
       "label": "哈希表、缓存与去重",
       "articlePath": "knowledge/data-structure/algorithm/algorithm-hash.md",
       "baselineArticleSha256": "d18a578a4c9dd4525c1b5c959c7e4f922d179115108c37133630a368380298ab",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/hash-table-bucket-collision-resize-v1.webp",
@@ -4446,10 +4484,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-pilot-2026-11-19",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/algorithm-hash-buckets-resize-v1.aj.mjs",
+          "sourceSha256": "af727c45ccea7293f8b66f54349a29f06b3d8b3bbb3875c05f3339b6733e5d76",
+          "darkPng": "images/algorithm-hash-buckets-resize-v1.dark.png",
+          "lightPng": "images/algorithm-hash-buckets-resize-v1.light.png",
+          "darkSha256": "a9c160b9de15a28604a1421663e5e9aa87011fb333e8bfcd96df26d114491b3d",
+          "lightSha256": "d6a752f386059279b7c9cddefb584d5f33cff308974f879e89ef469db139de2f"
+        }
+      ]
     },
     {
       "key": "algorithm-loop",
@@ -4492,7 +4540,7 @@
       "label": "BFS、DFS、最短路与拓扑排序",
       "articlePath": "knowledge/cs/algorithm/algorithm-graph.md",
       "baselineArticleSha256": "088665173ceb4df411fb2f91f88a44873051fd6beff57cf3d2af7fcdff2979ed",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/algorithm-graph-traversal-dependency-order-v2.png",
@@ -4500,17 +4548,27 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-pilot-2026-11-19",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/algorithm-graph-traversal-topo-v1.aj.mjs",
+          "sourceSha256": "66a49be3205606bd09ed703a8625030c404e52c619298f4f81d44e9e44ff8c04",
+          "darkPng": "images/algorithm-graph-traversal-topo-v1.dark.png",
+          "lightPng": "images/algorithm-graph-traversal-topo-v1.light.png",
+          "darkSha256": "d18de49f1813fd1bfdb52663ed9643bdb081a781219f9e05d6ab546a2c25d466",
+          "lightSha256": "bce9fd0c4c4074d0b635b2e3c1038c4a70c17d418e3591e2636ce5e43340835f"
+        }
+      ]
     },
     {
       "key": "algorithm-complexity",
       "label": "时间复杂度、空间复杂度与性能估算",
       "articlePath": "knowledge/cs/algorithm/algorithm-complexity.md",
       "baselineArticleSha256": "345b37aaf077c13c910ecae60192e432b3ff9c71757dc8abd500ee8f15d12840",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/algorithm-complexity-growth-budget-v1.webp",
@@ -4518,17 +4576,27 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-pilot-2026-11-19",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/algorithm-complexity-growth-v1.aj.mjs",
+          "sourceSha256": "f2c8c2b95e6a27e2572ff0be2aa926a9669145c7df06a5df55369d3ea76afdb3",
+          "darkPng": "images/algorithm-complexity-growth-v1.dark.png",
+          "lightPng": "images/algorithm-complexity-growth-v1.light.png",
+          "darkSha256": "9e0b9af87ce1a707e492825251bf844ac3a46e15f4cf3db96322ed68c1f8f7e5",
+          "lightSha256": "9b99bce99252bd2542ac020f62e418d069831ef4269b1e9aff97871abcdea79c"
+        }
+      ]
     },
     {
       "key": "algorithm-array",
       "label": "数组、字符串与双指针",
       "articlePath": "knowledge/data-structure/algorithm/algorithm-array.md",
       "baselineArticleSha256": "3add66644877cf9c4cd43eebbee3fcd94f75ad6e1579bafe9323dc66fe340bc1",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/array-string-two-pointer-invariants-v1.webp",
@@ -4536,17 +4604,27 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-pilot-2026-11-19",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/algorithm-array-two-pointers-v1.aj.mjs",
+          "sourceSha256": "059259fa699dd4ed270b34defad55e1e3fd00fbba33dfc6798d45eb4c4993641",
+          "darkPng": "images/algorithm-array-two-pointers-v1.dark.png",
+          "lightPng": "images/algorithm-array-two-pointers-v1.light.png",
+          "darkSha256": "19d897135952d426c1929e0236b7fdbcc90ce2c37f669e68465f47d440cd81dd",
+          "lightSha256": "ec6b71dce6614b9b3f2c7a141cea03c67e7836565e0fb64e24bf8fe836c3389e"
+        }
+      ]
     },
     {
       "key": "algorithm-tree",
       "label": "树、图与遍历",
       "articlePath": "knowledge/data-structure/algorithm/algorithm-tree.md",
       "baselineArticleSha256": "895bd0c17adc5f381132a6e8097acbcd594bfe5735d2a74da4684fa49fae9106",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/tree-graph-bfs-dfs-frontiers-v1.webp",
@@ -4554,17 +4632,27 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-pilot-2026-11-19",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/algorithm-tree-bfs-dfs-v1.aj.mjs",
+          "sourceSha256": "1dbea0367b04641e04cd99bbe13d2525ad5923d485ddb83deacec77d8bbceefe",
+          "darkPng": "images/algorithm-tree-bfs-dfs-v1.dark.png",
+          "lightPng": "images/algorithm-tree-bfs-dfs-v1.light.png",
+          "darkSha256": "db03eb3e13e02337c1f01c925fae0030169ac2d50bfd4c1dc0e168f7c16b700f",
+          "lightSha256": "e4f1c2a73f988dfd88699bbc3d156078cab000c4667b5806f73d5d7fd0e0da7e"
+        }
+      ]
     },
     {
       "key": "algorithm-stack-queue",
       "label": "栈、队列与任务调度",
       "articlePath": "knowledge/cs/algorithm/algorithm-stack-queue.md",
       "baselineArticleSha256": "f56928ef362cb5ac7749a264c9430ec8655c6cfdd5c427fe2b81987706ce61e8",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/algorithm-stack-queue-operation-model-v1.webp",
@@ -4572,17 +4660,27 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-pilot-2026-11-19",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/algorithm-stack-queue-model-v1.aj.mjs",
+          "sourceSha256": "f0f3317431e36ece0ec6391d6ec6b2ae5e27e92f728c1373192caaad0c0caeb5",
+          "darkPng": "images/algorithm-stack-queue-model-v1.dark.png",
+          "lightPng": "images/algorithm-stack-queue-model-v1.light.png",
+          "darkSha256": "d06469df36f30cdd560752205a24cdaa9b6c971c55ec850100a4f66656e15b77",
+          "lightSha256": "dd7a62486993e030e631180fbc317e1542534626ed6dfd8b30315d8c84734af6"
+        }
+      ]
     },
     {
       "key": "algorithm-backtracking",
       "label": "回溯、剪枝与组合搜索",
       "articlePath": "knowledge/cs/algorithm/algorithm-backtracking.md",
       "baselineArticleSha256": "0594c8ef0d5a4132cb43a6fb4883648c35786edb42405a8f712d0c4e6e84728e",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/algorithm-backtracking-decision-tree-pruning-v1.webp",
@@ -4590,10 +4688,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-pilot-2026-11-19",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/algorithm-backtracking-four-queens-v1.aj.mjs",
+          "sourceSha256": "e011693b6fe57d077c0e2667f9f02d8d0ddbe15b863e5bf814ebed3447c1ae90",
+          "darkPng": "images/algorithm-backtracking-four-queens-v1.dark.png",
+          "lightPng": "images/algorithm-backtracking-four-queens-v1.light.png",
+          "darkSha256": "e5136a3a4c8fccee52a193ab427c8f113c7ed2b443d4c6e855e76488e2b72265",
+          "lightSha256": "6ab075bb1fcdf9218d15f2af501cc27a201eef1e907bdacdd44ade75e1f903d6"
+        }
+      ]
     },
     {
       "key": "algorithm-string",

@@ -1,7 +1,7 @@
 哈希表把“按 key 查找”转化为“计算桶位置，再解决冲突”。平均 O(1) 不是魔法，也不是无条件保证；它依赖哈希函数、负载因子、冲突策略和扩容行为。
 
-![键经过哈希函数进入桶，碰撞由链或探测序列解决，负载因子升高后扩容并重新分布](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/hash-table-bucket-collision-resize-v1.webp)
-*图：两个标注 index=5 的 key 都进入高亮的 5 号桶形成碰撞，上方箭头的绘制高度不表示进入 2/3 号桶。扩容后需按新容量重新确定位置，不能直接沿用旧下标；具体实现可以利用已存哈希拆分桶，不一定重新计算原始 hash。*
+![key 经过哈希函数取模落进桶；apple 和 grape 都落在 5 号桶发生碰撞，拉链法串成链，开放寻址则探测下一个空槽；负载因子到阈值后扩容，并按新容量重新定位](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/algorithm-hash-buckets-resize-v1.dark.png)
+*图：apple 和 grape 都落进 5 号桶形成碰撞：拉链法把它们串在同一个桶里，开放寻址让 grape 探测到下一个空槽。负载因子到阈值后扩容，所有 key 要按新容量重新定位，不能沿用旧下标。*
 
 ---
 

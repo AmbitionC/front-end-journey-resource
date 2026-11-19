@@ -16,8 +16,8 @@ $$
 
 解码器再根据这个分布选择一个 token，重复执行，最终形成整段文本。训练目标主要奖励“预测训练数据中的后续 token”，并不直接验证一句话是否对应现实、引用是否存在或结论是否满足业务规则。
 
-![候选 token 的相对倾向示意与事实核验闭环，明确模型置信不等于答案正确](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-capability-boundaries-relative-token-boundary-v2.png)
-*图：候选柱只示意相对倾向，没有概率读数或实测数据。较高 token 概率不等于整句事实正确，仍需检索、工具核验、校准与必要的人工复核。*
+![模型按候选 token 的相对倾向生成答案；有证据支撑的可以使用，无依据的断言进入检索、工具核验、校准与人工复核的闭环](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-capability-boundaries-confidence-loop-v1.dark.png)
+*图：柱高只示意候选 token 的相对倾向，没有概率读数或实测数据。模型“很有把握”不等于整句事实正确，有依据的才能直接用，其余要经检索、工具核验、校准和必要的人工复核再修正。*
 
 这也解释了两个常见误区：
 
