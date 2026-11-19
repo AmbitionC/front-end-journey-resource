@@ -109,5 +109,3 @@
 没做过另外两个项目也可以直接做这个，涉及的概念在各章会再讲一遍要点。
 
 延伸阅读：知识库的 [Supervisor 监督者模式](../../knowledge/llm/agent/agent-supervisor.md)、[用户模拟器与环境模拟测试](../../knowledge/llm/production/agent-simulation.md)。
-
-延伸阅读：知识库的 [Supervisor 监督者模式](../../knowledge/llm/agent/agent-supervisor.md)、[用户模拟器与环境模拟测试](../../knowledge/llm/production/agent-simulation.md)。
