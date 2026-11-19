@@ -44,7 +44,7 @@ type RagEvalCase = {
 
 将评测集分成开发集和冻结回归集。调参时反复观察同一小组样本会产生“对测试集过拟合”，所以还需要保留未参与调优的样本。
 
-![评测集同时喂给检索层、生成层和端到端三层指标：检索看 Recall@K、Precision@K、MRR 与 nDCG，生成看忠实度和答案相关性，端到端看任务成功率、延迟与成本；三层结果汇入错误切片，每次只改一个主要变量，在冻结回归集上对比，再把新失败样本加回评测集](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-evaluation-diagnostic-loop-v3.dark.png)
+![评测集同时喂给检索层、生成层和端到端三层指标：检索看 Recall@K、Precision@K、MRR 与 nDCG，生成看忠实度和答案相关性，端到端看任务成功率、延迟与成本；三层结果汇入错误切片，每次只改一个主要变量，在冻结回归集上和基线对比，人工复核校准 Judge、抽查争议样本，再把新失败样本加回评测集；另留不参与调优的 holdout 做最终结论](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-evaluation-diagnostic-loop-v3.dark.png)
 
 这张图强调一件事：自动指标、LLM Judge 和人工复核是互补关系，不应压成一个看似精确的总分。
 

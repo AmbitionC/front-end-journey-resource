@@ -101,7 +101,7 @@ export function createKit(theme) {
   /** 实线面板：内放图表或多个元素，label 写在左上角。 */
   k.panel = ({ x, y, w, h, label, tone = 'default' }) => {
     const id = `p${++uid}`;
-    let s = `<rect data-box-id="${id}" x="${r1(x)}" y="${r1(y)}" width="${r1(w)}" height="${r1(h)}" rx="10" fill="${fill(tone)}" stroke="${color(tone)}" stroke-width="1.5"/>`;
+    let s = `<rect data-panel="1" data-box-id="${id}" x="${r1(x)}" y="${r1(y)}" width="${r1(w)}" height="${r1(h)}" rx="10" fill="${fill(tone)}" stroke="${color(tone)}" stroke-width="1.5"/>`;
     if (label) s += k.text({ x: x + 14, y: y + 26, text: label, size: 'label', tone: 'muted', box: id });
     return s;
   };
@@ -226,7 +226,10 @@ export function createKit(theme) {
     s += `<rect width="${width}" height="${h}" rx="14" fill="${t.bg}"/>`;
     if (title) s += k.text({ x: 40, y: 50, text: title, size: 'title', weight: 600 });
     if (subtitle) s += k.text({ x: 40, y: 80, text: subtitle, size: 'label', tone: 'muted' });
-    return s + body + '</svg>';
+    // 面板是底板：不管源码里先写哪个，面板矩形一律最先画，免得盖住穿进面板的箭头
+    const panels = [];
+    const rest = body.replace(/<rect data-panel="1"[^>]*\/>/g, (m) => { panels.push(m); return ''; });
+    return s + panels.join('') + rest + '</svg>';
   };
 
   return k;

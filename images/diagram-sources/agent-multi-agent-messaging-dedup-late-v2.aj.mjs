@@ -1,7 +1,7 @@
 export const meta = {
   name: 'agent-multi-agent-messaging-dedup-late-v2',
   article: 'knowledge/llm/agent/agent-multi-agent-messaging.md',
-  alt: 'Planner 经消息中间件向 Researcher 发出 task.requested，信封带 messageId、correlationId、causationId、type 和 planVersion；Researcher 回 received 只表示收到；中间件重投同一条消息，Researcher 按 source 加 messageId 去重丢弃；随后回报 running；Planner 改计划到版本 6 后，按版本 5 生成的结果迟到，只记录不覆盖新计划',
+  alt: 'Planner 经消息中间件向 Researcher 发出 task.requested，信封带 messageId、correlationId、causationId、type 和 planVersion；Researcher 回 received 只表示收到；中间件重投同一条消息，Researcher 按 messageId 去重丢弃；随后回报 running；Planner 改计划到版本 6 后，按版本 5 生成的结果迟到，只记录不覆盖新计划',
 };
 
 const A = 120, M = 370, B = 600;

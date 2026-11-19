@@ -39,6 +39,6 @@ export default (k) => k.figure({
     k.arrow({ points: [[855, 242], [855, 282]] }),
     k.box({ x: 790, y: 286, w: 130, h: 90, title: '组装上下文', sub: '去重、控 token\n保留来源', titleSize: 'body', tone: 'ok' }),
 
-    k.note({ x: 40, y: 476, w: 880, h: 58, lead: '不要直接把两种分数相加：', text: 'BM25 可能十几分，余弦相似度在 0 到 1，单位不同；RRF 只看名次。' }),
+    k.note({ x: 40, y: 476, w: 880, h: 58, lead: '不要直接把两种分数相加：', text: 'BM25 可能十几分，余弦相似度在 -1 到 1，量纲不同；RRF 只看名次。' }),
   ].join(''),
 });

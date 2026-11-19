@@ -1,4 +1,4 @@
-![最小 Agent 运行时：运行循环依次调用模型、权限检查、执行工具、校验结果、写回状态、装配下一轮上下文；模型只提出动作，策略决定允许、拒绝或要确认，工具注册表提供 Schema 和超时，记忆在装配上下文时按需检索，状态保存进度和恢复点，遇到完成、失败、取消或超预算就终止](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/build-agent-framework-runtime-boundaries-v2.dark.png)
+![最小 Agent 运行时：运行循环依次调用模型、权限检查、执行工具、校验结果、写回状态、装配下一轮上下文；模型只提出动作，策略决定允许、拒绝或要确认，工具注册表提供 Schema 和超时，记忆在装配上下文时按需检索，状态保存进度和恢复点，遇到完成、失败或超预算就终止](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/build-agent-framework-runtime-boundaries-v2.dark.png)
 *图：先看运行循环、工具与结果校验如何配合，再看 State、Memory 和策略输入；这是职责关系示意，预算、审批和轨迹记录仍须按正文另行实现。*
 
 ---

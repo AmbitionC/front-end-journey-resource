@@ -1,13 +1,13 @@
 export const meta = {
   name: 'multi-agent-orchestrator-worker-tradeoffs-v2',
   article: 'knowledge/llm/agent/multi-agent.md',
-  alt: '主智能体持有目标并提出子任务，运行时校验任务契约、权限和预算后创建流量、支付两个独立执行会话；两者可并行，各自交回观察、证据和未完成项；汇总时先核对口径和证据，缺证据就退回补查，最后由运行时检查不变量后输出报告',
+  alt: '主智能体持有目标并提出子任务，运行时校验任务契约、权限和预算后创建流量、支付两个独立执行会话；两者可并行，各自交回观察和证据；汇总时先核对口径和出处，缺证据就退回补查，最后输出含不确定项的报告',
 };
 
 export default (k) => k.figure({
   h: 540,
   title: '多智能体：契约派出去，证据收回来',
-  subtitle: '以“店铺 GMV 为什么下降”为例：主智能体分工，运行时把关，专项智能体各查一支',
+  subtitle: '以“店铺支付金额为什么下降”为例：主智能体分工，运行时把关，专项智能体各查一支',
   body: [
     k.box({ x: 40, y: 200, w: 150, h: 90, title: '主智能体', sub: '持有目标与进度', titleSize: 'body' }),
     k.arrow({ points: [[190, 245], [216, 245]], label: '' }),

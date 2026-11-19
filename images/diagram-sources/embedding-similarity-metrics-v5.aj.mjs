@@ -1,7 +1,7 @@
 export const meta = {
   name: 'embedding-similarity-metrics-v5',
   article: 'knowledge/llm/rag/embedding-basics.md',
-  alt: '用二维玩具向量演示：同一个编码器把“猫在休息”“小猫在窗边睡觉”“数据库索引优化”映射成单位向量 q、a、b；q 和 a 方向接近，余弦相似度 0.96、欧氏距离 0.28，q 和 b 余弦 -0.35、距离 1.64；向量已 L2 归一化，所以点积与余弦相同',
+  alt: '用二维玩具向量演示：共享编码器把“猫在休息”“小猫在窗边睡觉”“数据库索引优化”映射成单位向量 q、a、b；q 和 a 方向接近，余弦相似度 0.96、欧氏距离 0.28，q 和 b 余弦 -0.35、距离 1.64；向量已 L2 归一化，所以点积与余弦相同',
 };
 
 // 单位向量：q=(0.8,0.6) a=(0.6,0.8) b=(0.28,-0.96)
@@ -11,7 +11,7 @@ const P = (v) => [O[0] + v[0] * S, O[1] - v[1] * S];
 
 export default (k) => {
   const s = [];
-  s.push(k.panel({ x: 40, y: 110, w: 220, h: 340, label: '同一个编码器' }));
+  s.push(k.panel({ x: 40, y: 110, w: 220, h: 340, label: '共享编码器（示例）' }));
   [['q', '猫在休息', 'accent'], ['a', '小猫在窗边睡觉', 'accent'], ['b', '数据库索引优化', 'info']].forEach(([id, t, tone], i) => {
     s.push(k.box({ x: 56, y: 150 + i * 70, w: 188, h: 52, title: `${id}  ${t}`, titleSize: 'label', tone }));
   });
@@ -48,6 +48,6 @@ export default (k) => {
     h: 552,
     title: 'Embedding：语义相近，向量方向就相近',
     subtitle: '二维玩具向量；真实模型是几百到几千维，度量要和模型文档、索引配置一致',
-    body: s.join('') + k.note({ x: 40, y: 476, w: 880, h: 52, lead: '距离近 ≠ 事实正确：', text: '查询和文档必须用同一套经过验证的编码器与预处理约定。' }),
+    body: s.join('') + k.note({ x: 40, y: 476, w: 880, h: 52, lead: '距离近 ≠ 事实正确：', text: '查询和文档要按经过验证的编码器组合和各自的输入约定成对使用。' }),
   });
 };

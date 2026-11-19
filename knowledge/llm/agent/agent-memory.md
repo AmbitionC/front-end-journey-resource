@@ -1,5 +1,5 @@
-![左侧是记忆分层：上下文窗口内的工作记忆，窗口外长期存储里的情景记忆、语义记忆和程序性记忆；右侧是生命周期：从长期存储按需检索、装入上下文、使用，产生写入候选后先校验授权、事实和保留政策，通过才更新，过期或不可信的被遗忘](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-memory-tiered-read-write-v2.dark.png)
-*图：工作记忆在上下文窗口内，情景、语义、程序性记忆存在窗口外；检索后装入上下文使用，新内容先校验再写回，不是所有历史都叫长期记忆。*
+![左侧是记忆分层：上下文窗口内的工作记忆，窗口外长期存储里的情景记忆、语义记忆和感知记忆；右侧是生命周期：从长期存储按需检索、装入上下文、使用，产生写入候选后先校验授权、事实和保留政策，通过才更新，过期或不可信的被遗忘](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-memory-tiered-read-write-v2.dark.png)
+*图：工作记忆在上下文窗口内，情景、语义、感知记忆存在窗口外；检索后装入上下文使用，新内容先校验再写回，不是所有历史都叫长期记忆。*
 
 ---
 

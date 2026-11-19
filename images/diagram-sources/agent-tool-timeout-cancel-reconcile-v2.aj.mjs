@@ -23,6 +23,7 @@ export default (k) => {
   s.push(k.box({ x: 740, y: R3, w: 180, h: H, title: '状态未知', sub: '隔离，对账或转人工', tone: 'bad' }));
   s.push(k.box({ x: 540, y: R3, w: 160, h: H, title: '确认已取消', sub: '远端没有产生效果' }));
   s.push(k.arrow({ points: [[700, R2 + 32], [740, R2 + 32]], tone: 'info' }));
+  s.push(k.arrow({ points: [[830, R2], [830, 204], [620, 204], [620, R1 + H]], tone: 'info', label: '取回后同样校验', labelAt: [725, 198], labelAnchor: 'middle' }));
   s.push(k.arrow({ points: [[700, R2 + 52], [720, R2 + 52], [720, R3 + 32], [740, R3 + 32]], tone: 'bad' }));
   s.push(k.arrow({ points: [[620, R2 + H], [620, R3]] }));
 

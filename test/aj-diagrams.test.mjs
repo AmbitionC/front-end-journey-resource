@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { existsSync, readdirSync } from 'node:fs';
 import { buildHtml, preferLightDiagrams } from '../scripts/build-materials.mjs';
+import { createKit } from '../scripts/diagram-kit/kit.mjs';
 
 const OSS = 'https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com';
 
@@ -27,4 +28,11 @@ test('每份 aj-diagrams 源码都有深浅两版产物', () => {
     for (const theme of ['dark', 'light'])
       assert.ok(existsSync(new URL(`../images/${name}.${theme}.png`, import.meta.url)), `缺 ${name}.${theme}.png`);
   }
+});
+
+test('面板一律最先画，不会盖住先写的箭头', () => {
+  const k = createKit('dark');
+  const svg = k.figure({ h: 300, body: k.arrow({ points: [[100, 40], [100, 200]] }) + k.panel({ x: 40, y: 100, w: 200, h: 150, label: '面板' }) });
+  const panelAt = svg.indexOf('data-panel="1"'), arrowAt = svg.indexOf('marker-end');
+  assert.ok(panelAt > 0 && arrowAt > 0 && panelAt < arrowAt, '面板矩形应排在箭头之前');
 });

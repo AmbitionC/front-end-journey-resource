@@ -66,7 +66,7 @@ export default (k) => k.figure({
 - `k.text({x,y,text,size,tone,anchor,weight})`：size 只用 `title/heading/body/label/note`（24/19/17/16/15），**不要写数字字号**
 - `k.box({x,y,w,h,title,sub,tone,strong,titleSize,dashed})`：圆角框，文字自动垂直居中
 - `k.arrow({points,tone,dashed,label,labelAt,labelAnchor,head,both})`：折线箭头，只走水平/垂直段
-- `k.frame` 虚线分组；`k.panel` 实线面板（左上角标签）
+- `k.frame` 虚线分组；`k.panel` 实线面板（左上角标签）。面板底板会自动最先画，穿进面板的箭头不会被盖住
 - `k.node` / `k.edge`：圆节点与连线（树、图），`badge` 标访问顺序
 - `k.cells`：数组格子，`mark` 高亮、`pointers` 指针、`dim` 置灰、`textSize`
 - `k.matrix`：方格矩阵（掩码、DP 表）

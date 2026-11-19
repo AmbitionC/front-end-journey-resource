@@ -1,4 +1,4 @@
-![Agent 工程师五个方向围绕产品交付分工：应用做面向用户的功能，平台和运行时做模型接入、工具服务与推理基础设施，评估和质量做评测集与回归门禁，安全和治理做权限、审批与审计，研究工程做数据、训练与微调；每个方向列出核心产出和可核验的证据](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-engineer-role-landscape-v2.dark.png)
+![Agent 工程师五个方向围绕产品交付分工：应用做面向用户的功能，平台和运行时做模型接入、状态恢复、推理与成本，评估和质量做评测集与回归门禁，安全和治理做权限、审批与审计，研究工程做数据、训练与微调；每个方向列出核心产出和可核验的证据](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-engineer-role-landscape-v2.dark.png)
 *图：按产出和可核验的证据区分五个方向；评估与安全单列，是因为每个方向都要对它们负责。职责可以交叉，不代表统一的岗位分级或职业路径。*
 
 ---

@@ -1,7 +1,7 @@
 export const meta = {
   name: 'prompt-context-compression-budget-pipeline-v2',
   article: 'knowledge/llm/prompt/prompt-context-compression.md',
-  alt: '原始上下文分成保护区和候选区：系统指令、用户目标、关键事实与引文、权限与来源 ID 原样进入预算；重复历史、寒暄、低相关片段等候选先排序，再删除、抽取，必要时才摘要；组成预算内上下文后做任务评估和保真检查，不过就降低压缩率或重新检索',
+  alt: '原始上下文分成保护区和候选区：系统指令、用户目标、关键事实与引文、权限与来源 ID 优先进入预算，可以缩短但语义和出处不能丢；重复历史、寒暄、低相关片段等候选先排序，再删除、抽取，必要时才摘要；组成预算内上下文后做任务评估和保真检查，不过就降低压缩率或重新检索',
 };
 
 const seg = (k, x, y, w, h, label, tone, dashed = false) =>

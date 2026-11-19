@@ -1,7 +1,7 @@
 export const meta = {
   name: 'rag-evaluation-diagnostic-loop-v3',
   article: 'knowledge/llm/rag/rag-evaluation.md',
-  alt: '评测集同时喂给检索层、生成层和端到端三层指标：检索看 Recall@K、Precision@K、MRR 与 nDCG，生成看忠实度和答案相关性，端到端看任务成功率、延迟与成本；三层结果汇入错误切片，每次只改一个主要变量，在冻结回归集上对比，再把新失败样本加回评测集',
+  alt: '评测集同时喂给检索层、生成层和端到端三层指标：检索看 Recall@K、Precision@K、MRR 与 nDCG，生成看忠实度和答案相关性，端到端看任务成功率、延迟与成本；三层结果汇入错误切片，每次只改一个主要变量，在冻结回归集上和基线对比，人工复核校准 Judge、抽查争议样本，再把新失败样本加回评测集；另留不参与调优的 holdout 做最终结论',
 };
 
 const layers = [
@@ -15,7 +15,7 @@ export default (k) => k.figure({
   title: 'RAG 评估：分层定位，再单变量回归',
   subtitle: '自动指标、LLM Judge 和人工复核互补，不要压成一个看似精确的总分',
   body: [
-    k.box({ x: 300, y: 106, w: 360, h: 60, title: '评测集', sub: '开发集 + 冻结回归集', titleSize: 'body', tone: 'accent' }),
+    k.box({ x: 300, y: 106, w: 360, h: 60, title: '评测集', sub: '开发集、冻结回归集、holdout', titleSize: 'body', tone: 'accent' }),
     k.arrow({ points: [[480, 166], [480, 194]] }),
     `<path d="M180,180 H780" fill="none" stroke="${k.t.line}" stroke-width="1.7"/>`,
     k.arrow({ points: [[180, 180], [180, 194]] }),
@@ -32,8 +32,9 @@ export default (k) => k.figure({
     k.arrow({ points: [[340, 500], [304, 500]] }),
     k.box({ x: 40, y: 470, w: 260, h: 60, title: '回归测试', sub: '在冻结集上和基线对比', titleSize: 'body', tone: 'ok' }),
     k.arrow({ points: [[40, 500], [24, 500], [24, 136], [296, 136]], tone: 'accent', dashed: true, label: '新失败样本加回评测集', labelAt: [150, 128] }),
+    k.arrow({ points: [[660, 500], [624, 500]], dashed: true }),
     k.box({ x: 660, y: 470, w: 260, h: 60, title: '人工复核', sub: '校准 Judge，抽查争议样本', titleSize: 'body', dashed: true }),
 
-    k.note({ x: 40, y: 550, w: 880, h: 52, lead: '调参会过拟合评测集：', text: '保留一份不参与调优的冻结集，结论以它为准。' }),
+    k.note({ x: 40, y: 550, w: 880, h: 52, lead: '调参会过拟合评测集：', text: '冻结回归集用来和基线对比；另留一份不参与调优的 holdout，结论以它为准。' }),
   ].join(''),
 });

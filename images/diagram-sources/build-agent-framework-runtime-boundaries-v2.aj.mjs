@@ -1,7 +1,7 @@
 export const meta = {
   name: 'build-agent-framework-runtime-boundaries-v2',
   article: 'knowledge/llm/agent/build-agent-framework.md',
-  alt: '最小 Agent 运行时：运行循环依次调用模型、权限检查、执行工具、校验结果、写回状态、装配下一轮上下文；模型只提出动作，策略决定允许、拒绝或要确认，工具注册表提供 Schema 和超时，记忆在装配上下文时按需检索，状态保存进度和恢复点，遇到完成、失败、取消或超预算就终止',
+  alt: '最小 Agent 运行时：运行循环依次调用模型、权限检查、执行工具、校验结果、写回状态、装配下一轮上下文；模型只提出动作，策略决定允许、拒绝或要确认，工具注册表提供 Schema 和超时，记忆在装配上下文时按需检索，状态保存进度和恢复点，遇到完成、失败或超预算就终止',
 };
 
 const R1 = 228, R2 = 344;

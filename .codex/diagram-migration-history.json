@@ -433,7 +433,7 @@
       "replacementAssets": [
         {
           "source": "images/diagram-sources/prompt-context-compression-budget-pipeline-v2.aj.mjs",
-          "sourceSha256": "04258f3d89eae0458c688ab4ac8c00051c0f952a9db03aba4236d86c123f78ad",
+          "sourceSha256": "7a9a43e3c6ae8fb031a18144cb0ad52955a1542fe6c189ed5ed11be1e91b3f91",
           "darkPng": "images/prompt-context-compression-budget-pipeline-v2.dark.png",
           "lightPng": "images/prompt-context-compression-budget-pipeline-v2.light.png",
           "darkSha256": "512dd870ba24d8c1c87eb64094fe2b7bfd36760058670d6be2722a1b6d715049",
@@ -1172,8 +1172,8 @@
           "sourceSha256": "7fdbcb7669893116d7f32b734f3033e9fa4a4de933e6b2a86d3b1726e0592ea6",
           "darkPng": "images/rag-pipeline-production-loop-v4.dark.png",
           "lightPng": "images/rag-pipeline-production-loop-v4.light.png",
-          "darkSha256": "1a336b03363033dc6ef377d3f6fdf139dbed0e9c42a492c133407a488640ae1a",
-          "lightSha256": "ab07493c5b3e57e8a4bfdc697a72679c84a225a5837dc8c2d796958bd496b8f8"
+          "darkSha256": "2e071a6bde095a534649f844ad5cc866de4a80c0097d5dfe197575427e04ac1e",
+          "lightSha256": "83c1c1f40f9a89fd8c499bfd468066cef9b14e5bbb30b942a757349a5947c3cd"
         }
       ]
     },
@@ -1197,11 +1197,11 @@
       "replacementAssets": [
         {
           "source": "images/diagram-sources/rag-hybrid-search-pipeline-v3.aj.mjs",
-          "sourceSha256": "e4caf5e17eb3f057212d16df4012acf00486a7b4de0fec1b8b62d2ac5b881daa",
+          "sourceSha256": "6f4679df4fc6206dda9410cbee8f84c9feae57fd63a529a6bb652b840d10ed81",
           "darkPng": "images/rag-hybrid-search-pipeline-v3.dark.png",
           "lightPng": "images/rag-hybrid-search-pipeline-v3.light.png",
-          "darkSha256": "e4b742b6f5a029275a66709e81bf80c4091401be79fd095d51426577670598af",
-          "lightSha256": "0931df909b9094d7416f25b3adeb03c4dc27542e8fc918e601d5cd5494ddadd5"
+          "darkSha256": "a297cb1065a754c36413a8ce5645d8d52524ae14d213e8ea4a80dbe5762e8809",
+          "lightSha256": "41dc48008ff043fab5489f1575f0be004858bee6abe5634d48948550c6c4116e"
         }
       ]
     },
@@ -1225,11 +1225,11 @@
       "replacementAssets": [
         {
           "source": "images/diagram-sources/rag-evaluation-diagnostic-loop-v3.aj.mjs",
-          "sourceSha256": "9b2da54d32e89498e9942fc74a0343cb710918584ef553308aeff52a8cff100b",
+          "sourceSha256": "d725670b956288d489560a5e7201f3a90a3a5f21daff9c938270f1dd815e7ba8",
           "darkPng": "images/rag-evaluation-diagnostic-loop-v3.dark.png",
           "lightPng": "images/rag-evaluation-diagnostic-loop-v3.light.png",
-          "darkSha256": "015056038412b47cb3b26b3815ace5659f8bb1dec3b409ddabbba68661793041",
-          "lightSha256": "35e3c951cc8a857cf5c750395b1073a083b9fee9425825dfa7792f2b255aea64"
+          "darkSha256": "06d48b10b4d679fcea3e49b3597edd71c6a271a9730da43728c49114a9ecf5b5",
+          "lightSha256": "ed4eb96535b8177f5f0574bd0e5be86184af0783f6c81b0c120278fb1dee80b1"
         }
       ]
     },
@@ -1299,11 +1299,11 @@
       "replacementAssets": [
         {
           "source": "images/diagram-sources/embedding-similarity-metrics-v5.aj.mjs",
-          "sourceSha256": "a3b929416a6efbef2f9c5eab2fc4ed940eb17c16262d782203f7e8b75b1c4632",
+          "sourceSha256": "831961bddf4efe450d17a2e263057193a652416689172c81cff0a8b52bebd030",
           "darkPng": "images/embedding-similarity-metrics-v5.dark.png",
           "lightPng": "images/embedding-similarity-metrics-v5.light.png",
-          "darkSha256": "fed844a4f01897567f1ed58a7b1b5eb699ac7b5c74aa62c515d5ba9ced525e47",
-          "lightSha256": "745144d36335b491bbc4745eccec3c48dc4a6bdf780b6f8ccb31847a94e50174"
+          "darkSha256": "10243dbe1fdaaf7e87bbd50b8cfc8f83456d9cc6ffae7842961e430b8f277d05",
+          "lightSha256": "283bfdd1c64c7a4d408573e57f6e4b72682e11e8186f1cfd41f5ec37621991b7"
         }
       ]
     },
@@ -1723,11 +1723,11 @@
       "replacementAssets": [
         {
           "source": "images/diagram-sources/mcp-a2a-protocol-boundaries-v2.aj.mjs",
-          "sourceSha256": "cf0728706899ac7bd36ad4dc9f810449a8b6f52635bda5ed3cde757bb3fa3245",
+          "sourceSha256": "3e438f06754d255f1e2a0aff4ab38031f2b9b28cac98bfc8f98e9f73b8e61702",
           "darkPng": "images/mcp-a2a-protocol-boundaries-v2.dark.png",
           "lightPng": "images/mcp-a2a-protocol-boundaries-v2.light.png",
-          "darkSha256": "d8a832be4d03f8e29827e73cc95568d8705352b6c62ac56e929f6adadbaece9d",
-          "lightSha256": "c403f396ef292169bfbbc1116290abc05c6d178ffc1a76ac5bdc10e42f2d56e0"
+          "darkSha256": "b0a23b6bc648c2a13a53461e46773bc6a9173ee54cefdeb077315d58f95b0778",
+          "lightSha256": "47cd94e8d465cc3ef6f1d1c063fe32ca53f997c16c9dca01d63961dc02eec452"
         }
       ]
     },
@@ -1751,11 +1751,11 @@
       "replacementAssets": [
         {
           "source": "images/diagram-sources/multi-agent-orchestrator-worker-tradeoffs-v2.aj.mjs",
-          "sourceSha256": "1dc996395e3e76b7c62e2cb2d72ecc2cc148615781562a35b3ba6e3c799275c3",
+          "sourceSha256": "b33384982f1e7cddc549d7bb417e642492232f0ed44b82c07cd93b216bceeeae",
           "darkPng": "images/multi-agent-orchestrator-worker-tradeoffs-v2.dark.png",
           "lightPng": "images/multi-agent-orchestrator-worker-tradeoffs-v2.light.png",
-          "darkSha256": "807fabd82390cc9169bca744dc4015e148b0b013488d1dd6660edfad8e5eb6ce",
-          "lightSha256": "3fefc665c421fd3b8fafac54fad193ace99327fb1ad2c5acb5bc726f4a64f675"
+          "darkSha256": "db0c523919920cd97c17060b023ea3a519d4cc0a57c47b5a7c8018882d908205",
+          "lightSha256": "e7487cf4430c161f709c7c7d5e1e9419739ea115464a48cc052a254f4f3887b2"
         }
       ]
     },
@@ -1779,11 +1779,11 @@
       "replacementAssets": [
         {
           "source": "images/diagram-sources/build-agent-framework-runtime-boundaries-v2.aj.mjs",
-          "sourceSha256": "5f65bb874daf6ad83300e9aa39a88d73a371011fb0ea52e551565e2026f1d26a",
+          "sourceSha256": "298d8aa7f1995dd51619de7d44dcbec62c41418b4156603d87fbeca882dc5dc1",
           "darkPng": "images/build-agent-framework-runtime-boundaries-v2.dark.png",
           "lightPng": "images/build-agent-framework-runtime-boundaries-v2.light.png",
-          "darkSha256": "ad51428418707e057d75e1042ac3096928396340bd0dec2f7cebfe68e9c09317",
-          "lightSha256": "59559b2056f590b8109127c9767b0ce33489f58502813f780730b0d881c9c3c7"
+          "darkSha256": "26b8d32de0ce6c0774fcc167d6356b4fc4a8f3f173ad3bab18995baaee4ece94",
+          "lightSha256": "4007359dc4725f3061df78bab48388c2abb9a467220f8d3b2c006e077994ba34"
         }
       ]
     },
@@ -1835,11 +1835,11 @@
       "replacementAssets": [
         {
           "source": "images/diagram-sources/agent-memory-tiered-read-write-v2.aj.mjs",
-          "sourceSha256": "3165da3e216d4837cce3b1daf4be2aa8ccc687a0fb605ec90821288b0792add7",
+          "sourceSha256": "704387b940a80c890b101505b1ca88f95a57e6d62be7fe6dec476dadc429600f",
           "darkPng": "images/agent-memory-tiered-read-write-v2.dark.png",
           "lightPng": "images/agent-memory-tiered-read-write-v2.light.png",
-          "darkSha256": "39e9eccdc9dd6f56845cb5cb23fe17359aeffb0f3decdadd7e195fe95fef6e39",
-          "lightSha256": "cdb586cbc91b80622b942ebdbb502e06ed89b00181836915c535754650748fdc"
+          "darkSha256": "ce25d006180f57c4a077d8a2aceb8abaa0079fc8e2c95c0552cd4fa265cf0c87",
+          "lightSha256": "8ceecff9cecfde4041a1b4b601a1a28a1636d6dcb758747e624afcd181c83b51"
         }
       ]
     },
@@ -1919,7 +1919,7 @@
       "replacementAssets": [
         {
           "source": "images/diagram-sources/agent-multi-agent-messaging-dedup-late-v2.aj.mjs",
-          "sourceSha256": "bc08ef0ba1a4049ca6d877b1cea8296779174817616183647253aa116b99a970",
+          "sourceSha256": "91e964d0b2eca2831cd39e2cdde30b63357bf27274717c5ca1a722515502baa6",
           "darkPng": "images/agent-multi-agent-messaging-dedup-late-v2.dark.png",
           "lightPng": "images/agent-multi-agent-messaging-dedup-late-v2.light.png",
           "darkSha256": "827c5b9715311f20d98d4d0a9647688740fd5b7c69b919977ef08bf71f3f1b82",
@@ -1947,11 +1947,11 @@
       "replacementAssets": [
         {
           "source": "images/diagram-sources/agent-tool-timeout-cancel-reconcile-v2.aj.mjs",
-          "sourceSha256": "5f6b3a252babc6cf0e14d3986714fe6a2408e4fb4b30d01ce80663d61fe7cf68",
+          "sourceSha256": "90abeeb18831ed80494138a04c25777166fe024c5d4b5197d437eebbf4931c9f",
           "darkPng": "images/agent-tool-timeout-cancel-reconcile-v2.dark.png",
           "lightPng": "images/agent-tool-timeout-cancel-reconcile-v2.light.png",
-          "darkSha256": "2ca08632eef884b576c9feec0e3f287850ad8890229e115d79dbc768a379550e",
-          "lightSha256": "bb41c63e56c86a67871194af5ccff2d7685a8163bf976832bad079dc9918f6c6"
+          "darkSha256": "9b22827376d6f68c42b5300c5faeeaeda246146cb39666b6a5085ae46423c9f0",
+          "lightSha256": "57d3882bee50a0ceca7908d945650a4c1462f3d4e69362afd88aa47e1b6f51f4"
         }
       ]
     },
@@ -4749,11 +4749,11 @@
       "replacementAssets": [
         {
           "source": "images/diagram-sources/recursion-divide-conquer-memo-v2.aj.mjs",
-          "sourceSha256": "c38115cf32f40bd53c5268517b2f6a85a6e1bc52233dea609f6885cf5b9806ab",
+          "sourceSha256": "ae5285e4deb2a9a07c93df3a7ef61a406aaafeea92c916ab5833a08ccf546a02",
           "darkPng": "images/recursion-divide-conquer-memo-v2.dark.png",
           "lightPng": "images/recursion-divide-conquer-memo-v2.light.png",
-          "darkSha256": "6aea6afce18c1d3caa1dee09549b1682396bed915647cd5a057a5a6826920b6f",
-          "lightSha256": "2f2ccc265807b671ce5609845f18409ef2e904708b86a438a80740bf71ff5257"
+          "darkSha256": "bce84fd096f2665432194d8207d5527a410f249f802156228184e7c07e82d56b",
+          "lightSha256": "94933feb42b5b06dbed8af8bdf9cee2cd2b5b0469451d292485aa2c5667d190b"
         }
       ]
     },
@@ -5416,8 +5416,8 @@
           "sourceSha256": "09e09ba23a9b6e2cbde8f0a4f21ed33e917b16990f4bcbae481878c0c0f997b5",
           "darkPng": "images/agent-resume-interview-evidence-funnel-v2.dark.png",
           "lightPng": "images/agent-resume-interview-evidence-funnel-v2.light.png",
-          "darkSha256": "cf17daa20157b34e93d2a6c227d2d9f2b84afaef7dbe258947be1e7bcdd8aaf3",
-          "lightSha256": "78849aacd64ad8041f1504c703bfe361c297adbe25a49f9654d6d16d0f74538b"
+          "darkSha256": "1631548468f2709fc277692a80e00fdd934a5903c2c9cbcbbbfbb4b1dc7dd9b0",
+          "lightSha256": "8cc39ce71f3597fbb9582cdfb171dbc71372b318a115d0cc8915d5b0b92f4e7a"
         }
       ]
     },
@@ -5497,7 +5497,7 @@
       "replacementAssets": [
         {
           "source": "images/diagram-sources/agent-engineer-role-landscape-v2.aj.mjs",
-          "sourceSha256": "1f63c1e45c52c6209b9b72ce351b67342355c7ded80d111c2aae50f79ef59cb0",
+          "sourceSha256": "499f8ea02a0e3a48628d4488832cc9ed7e3f209c4b8cf7cbb2f3887bbe1542da",
           "darkPng": "images/agent-engineer-role-landscape-v2.dark.png",
           "lightPng": "images/agent-engineer-role-landscape-v2.light.png",
           "darkSha256": "c07b13a8f3e99260e164639529ffbeccae537690f8c9ab62838e940ff8ae54c4",
