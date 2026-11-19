@@ -50,7 +50,7 @@ Embedding 模型、距离函数、索引配置必须匹配。文档向量和查�
 
 ## 三、一条可落地的混合检索流水线
 
-![混合检索将关键词与语义结果通过 RRF 融合、重排后送入 RAG 上下文](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-hybrid-search-pipeline-v2.png)
+![混合检索流水线：查询先按租户、权限、版本和时间过滤，再并行走 BM25 和向量检索；示例中 BM25 排名 A、B、C，向量排名 C、A、D，用 RRF（k=60）按名次融合得到 A、C、B、D，再重排并组装上下文](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-hybrid-search-pipeline-v3.dark.png)
 
 图中最重要的不是“两条线”，而是五个顺序约束：
 

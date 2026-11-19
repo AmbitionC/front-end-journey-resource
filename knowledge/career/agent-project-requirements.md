@@ -1,6 +1,6 @@
 一个值得做的 Agent 项目，不是“把模型接到聊天框”，而是把真实工作流中高成本、重复、需要语言理解的一段，改造成可衡量的人机协作。需求阶段先定义 actor、当前基线、价值、数据与工具权限、失败代价和明确不做什么，再决定 Agent 形态。
 
-![从真实工作流、用户痛点、业务价值与风险出发收敛 Agent 项目范围和验收标准](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-project-requirements-value-risk-scope-v1.webp)
+![定义 Agent 项目先摸清六件事：工作流痛点、谁在用、现状基线、可衡量价值、数据与权限、风险；再收敛成带验收标准的最小闭环，第一版只做流程可观察、数据权限已确认、成功标准可量化的部分，其余明确先不做](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-project-requirements-value-risk-scope-v2.dark.png)
 *图：先选择一段可观察流程，建立 baseline 与约束，再定义最小闭环；能力清单不能替代结果标准。*
 
 ## 从工作流访谈开始

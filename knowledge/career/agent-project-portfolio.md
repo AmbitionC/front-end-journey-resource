@@ -1,5 +1,5 @@
-![一个 Agent 作品条目的证据栈：清晰问题→live demo→README 架构→eval dataset/results→trace/observability→failure analysis→security/limits→reproducible setup；GitHub profile 汇总多个项目](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-portfolio-evidence-stack-v1.webp)
-*图：沿图中的节点与箭头阅读，重点是作品集从截图集合升级为可运行项目、架构/权衡、评估证据、可复现说明和安全边界。*
+![GitHub 主页汇总多个项目，展开其中一个 Agent 作品，它的证据栈包括：清晰问题、在线演示、README 架构、评测集与结果、Trace 可观测、失败分析、安全与局限、可复现设置](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-portfolio-evidence-stack-v2.dark.png)
+*图：主页让人找到项目；展开单个项目，从问题定义到可复现设置，每一层都是面试官能核对的证据。*
 
 ---
 

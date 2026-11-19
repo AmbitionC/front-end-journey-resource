@@ -1152,7 +1152,7 @@
       "label": "Hybrid Search 混合检索",
       "articlePath": "knowledge/llm/rag/rag-hybrid-search.md",
       "baselineArticleSha256": "bf207f30dd58d5fee4a266121aef7d906974637981ae9ba947442c23d2fb175a",
-      "status": "provenance_pending",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/rag-hybrid-search-pipeline-v2.png",
@@ -1160,17 +1160,27 @@
           "provenance": "legacy_raster_provenance_pending"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-top10-batch2",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/rag-hybrid-search-pipeline-v3.aj.mjs",
+          "sourceSha256": "e4caf5e17eb3f057212d16df4012acf00486a7b4de0fec1b8b62d2ac5b881daa",
+          "darkPng": "images/rag-hybrid-search-pipeline-v3.dark.png",
+          "lightPng": "images/rag-hybrid-search-pipeline-v3.light.png",
+          "darkSha256": "e4b742b6f5a029275a66709e81bf80c4091401be79fd095d51426577670598af",
+          "lightSha256": "0931df909b9094d7416f25b3adeb03c4dc27542e8fc918e601d5cd5494ddadd5"
+        }
+      ]
     },
     {
       "key": "rag-evaluation",
       "label": "RAG 评估与优化",
       "articlePath": "knowledge/llm/rag/rag-evaluation.md",
       "baselineArticleSha256": "5bbe1552ed77ad050b29360f25919f9eface26d816796e679474b0807695e0e7",
-      "status": "provenance_pending",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/rag-evaluation-diagnostic-loop-v2.png",
@@ -1178,10 +1188,20 @@
           "provenance": "legacy_raster_provenance_pending"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-top10-batch2",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/rag-evaluation-diagnostic-loop-v3.aj.mjs",
+          "sourceSha256": "9b2da54d32e89498e9942fc74a0343cb710918584ef553308aeff52a8cff100b",
+          "darkPng": "images/rag-evaluation-diagnostic-loop-v3.dark.png",
+          "lightPng": "images/rag-evaluation-diagnostic-loop-v3.light.png",
+          "darkSha256": "015056038412b47cb3b26b3815ace5659f8bb1dec3b409ddabbba68661793041",
+          "lightSha256": "35e3c951cc8a857cf5c750395b1073a083b9fee9425825dfa7792f2b255aea64"
+        }
+      ]
     },
     {
       "key": "rag-chunking",
@@ -1694,7 +1714,7 @@
       "label": "从零构建 Agent 运行时",
       "articlePath": "knowledge/llm/agent/build-agent-framework.md",
       "baselineArticleSha256": "2cc7448ba414a1fa7a6e84ac4e61da457e0203a7ada08a02c7e642b4df2de647",
-      "status": "provenance_pending",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/build-agent-framework-runtime-boundaries-v1.webp",
@@ -1702,10 +1722,20 @@
           "provenance": "legacy_raster_provenance_pending"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-top10-batch2",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/build-agent-framework-runtime-boundaries-v2.aj.mjs",
+          "sourceSha256": "5f65bb874daf6ad83300e9aa39a88d73a371011fb0ea52e551565e2026f1d26a",
+          "darkPng": "images/build-agent-framework-runtime-boundaries-v2.dark.png",
+          "lightPng": "images/build-agent-framework-runtime-boundaries-v2.light.png",
+          "darkSha256": "ad51428418707e057d75e1042ac3096928396340bd0dec2f7cebfe68e9c09317",
+          "lightSha256": "59559b2056f590b8109127c9767b0ce33489f58502813f780730b0d881c9c3c7"
+        }
+      ]
     },
     {
       "key": "agent-react",
@@ -1730,7 +1760,7 @@
       "label": "短期记忆、长期记忆与检索",
       "articlePath": "knowledge/llm/agent/agent-memory.md",
       "baselineArticleSha256": "866ee9f5002121f09d88561af4158975693b63e411ba8b0587c7ac02b2205b00",
-      "status": "provenance_pending",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-memory-tiered-read-write-v1.webp",
@@ -1738,10 +1768,20 @@
           "provenance": "legacy_raster_provenance_pending"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-top10-batch2",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-memory-tiered-read-write-v2.aj.mjs",
+          "sourceSha256": "3165da3e216d4837cce3b1daf4be2aa8ccc687a0fb605ec90821288b0792add7",
+          "darkPng": "images/agent-memory-tiered-read-write-v2.dark.png",
+          "lightPng": "images/agent-memory-tiered-read-write-v2.light.png",
+          "darkSha256": "39e9eccdc9dd6f56845cb5cb23fe17359aeffb0f3decdadd7e195fe95fef6e39",
+          "lightSha256": "cdb586cbc91b80622b942ebdbb502e06ed89b00181836915c535754650748fdc"
+        }
+      ]
     },
     {
       "key": "agent-sandbox",
@@ -1766,7 +1806,7 @@
       "label": "Agent 工具契约、Schema 与错误语义",
       "articlePath": "knowledge/llm/agent/agent-tool-design.md",
       "baselineArticleSha256": "8f4093c8f09befe6e960e10fd694c64872f239cfa5e6a9d306a0bf4eeb011e57",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-tool-design-contract-v1.webp",
@@ -1774,10 +1814,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-top10-batch2",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-tool-design-contract-v2.aj.mjs",
+          "sourceSha256": "07746ce9afd2ee91d2dcde82377bd7412502524a7b501b602295becb8c71953e",
+          "darkPng": "images/agent-tool-design-contract-v2.dark.png",
+          "lightPng": "images/agent-tool-design-contract-v2.light.png",
+          "darkSha256": "8eb119cc4d3c9262809472a8b7561bd7e27b5f47d05460ae8a75c4e318d6e69a",
+          "lightSha256": "e33273e938e594358dbf6b2235b5de13296e0e2baeb22f2c0a845e9cc1965aaa"
+        }
+      ]
     },
     {
       "key": "agent-multi-agent-messaging",
@@ -5246,7 +5296,7 @@
       "label": "Agent 项目与作品集设计",
       "articlePath": "knowledge/career/agent-project-portfolio.md",
       "baselineArticleSha256": "fbcd70598080e7140b607ea9995bfe438ed92ad48a628a619ecbf590457053cc",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-portfolio-evidence-stack-v1.webp",
@@ -5254,17 +5304,27 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-top10-batch2",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-portfolio-evidence-stack-v2.aj.mjs",
+          "sourceSha256": "2d668e4d025aeee57e37156ee98331bcb9461174e673922ded22eeff8baeb29a",
+          "darkPng": "images/agent-portfolio-evidence-stack-v2.dark.png",
+          "lightPng": "images/agent-portfolio-evidence-stack-v2.light.png",
+          "darkSha256": "8e74a7072c3e2afe25e9ccb8cb78a973c11c667884c999cd4b846c26fad447da",
+          "lightSha256": "9e50db3fa06c38cfb0638c6868cfd4bca2ceb1b7c268c0aa1bbbef19b990444f"
+        }
+      ]
     },
     {
       "key": "agent-project-requirements",
       "label": "从真实需求定义 Agent 项目",
       "articlePath": "knowledge/career/agent-project-requirements.md",
       "baselineArticleSha256": "4efdf3728e7c86871c38bd4763b1e3ec57acd9e5d187d17d0b10fc6258ec5c89",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-project-requirements-value-risk-scope-v1.webp",
@@ -5272,10 +5332,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-top10-batch2",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-project-requirements-value-risk-scope-v2.aj.mjs",
+          "sourceSha256": "a4980da55a6949a61e5e151492bfe768ad48dec8036f53239b17406170196c5d",
+          "darkPng": "images/agent-project-requirements-value-risk-scope-v2.dark.png",
+          "lightPng": "images/agent-project-requirements-value-risk-scope-v2.light.png",
+          "darkSha256": "076aa60aa07f08650db57eadf331bc90ba6a0f0aca2988815df6155a62eb90f2",
+          "lightSha256": "5d1fa3e764b294fe9aa48e4690c01b8385907ab3701bfc35ff3a2265e7574a10"
+        }
+      ]
     },
     {
       "key": "agent-role-landscape",
