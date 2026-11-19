@@ -113,7 +113,7 @@ def order_prob(rel: Relevance, user: SimUser, base_cvr: float) -> float:
 
 ### 环境本身要检验
 
-用第二个项目的思路，拿已知答案去考这个环境：
+用「Agent 评测与自进化平台」项目的思路，拿已知答案去考这个环境：
 
 | 检验 | 做法 | 期望 |
 |---|---|---|

@@ -4,15 +4,15 @@
     "key": "project-general-agent",
     "children": [
       {
-        "label": "项目总览：一套内核，两种模式",
+        "label": "背景、目标与预期结果",
         "key": "ga-overview",
         "isLeaf": true,
         "filePath": "general-agent",
         "heat": 0,
         "currRank": 0,
-        "updatedAt": "2026-11-18",
+        "updatedAt": "2026-11-19",
         "quickRead": {
-          "text": "做完能得到什么、为什么不用框架、技术选型和三段路线。"
+          "text": "为什么自己写一遍、做成什么样、分哪五件事、做完手里有什么。"
         }
       },
       {
@@ -130,9 +130,147 @@
         "filePath": "general-agent",
         "heat": 0,
         "currRank": 10,
-        "updatedAt": "2026-11-18",
+        "updatedAt": "2026-11-19",
         "quickRead": {
           "text": "任务集、评分器、多次运行和失败归类，以及怎样把结果写进简历。"
+        }
+      }
+    ]
+  },
+  {
+    "label": "电商营销增长助手",
+    "key": "project-ecom-growth",
+    "children": [
+      {
+        "label": "背景、目标与预期结果",
+        "key": "eg-overview",
+        "isLeaf": true,
+        "filePath": "ecom-growth",
+        "heat": 0,
+        "currRank": 0,
+        "updatedAt": "2026-11-19",
+        "quickRead": {
+          "text": "为什么选电商营销、做成什么样、分哪五件事、做完手里有什么，以及模拟数据的边界。"
+        }
+      },
+      {
+        "label": "系统架构：生产、试投与数据层",
+        "key": "eg-architecture",
+        "isLeaf": true,
+        "filePath": "ecom-growth",
+        "heat": 0,
+        "currRank": 1,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "活动主管怎样调度各环节，审核为什么是唯一通道，人在哪里介入。"
+        }
+      },
+      {
+        "label": "商品理解：卖点、证据与声明等级",
+        "key": "eg-product",
+        "isLeaf": true,
+        "filePath": "ecom-growth",
+        "heat": 0,
+        "currRank": 2,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "先提取卖点再写文案，依据逐字校验，哪些话需要证据才能说。"
+        }
+      },
+      {
+        "label": "人群分层：行为数据与模拟用户池",
+        "key": "eg-segment",
+        "isLeaf": true,
+        "filePath": "ecom-growth",
+        "heat": 0,
+        "currRank": 3,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "公开行为数据能提供什么，目标人群怎么定义，哪些是真实的、哪些是合成的。"
+        }
+      },
+      {
+        "label": "素材生成：先定方案，再写正文",
+        "key": "eg-creative",
+        "isLeaf": true,
+        "filePath": "ecom-growth",
+        "heat": 0,
+        "currRank": 4,
+        "updatedAt": "2026-11-19",
+        "quickRead": {
+          "text": "让多版素材有实质差异，素材为什么要带标签，批量生成的工程问题。"
+        }
+      },
+      {
+        "label": "合规与调性审核：规则、模型、人工三层",
+        "key": "eg-compliance",
+        "isLeaf": true,
+        "filePath": "ecom-growth",
+        "heat": 0,
+        "currRank": 5,
+        "updatedAt": "2026-11-19",
+        "quickRead": {
+          "text": "各层负责什么，漏放率和误拦率怎么取舍，拦截后怎么改。"
+        }
+      },
+      {
+        "label": "试投环境：模拟用户及其可信边界",
+        "key": "eg-simulation",
+        "isLeaf": true,
+        "filePath": "ecom-growth",
+        "heat": 0,
+        "currRank": 6,
+        "updatedAt": "2026-11-19",
+        "quickRead": {
+          "text": "模型能不能模拟真实用户，行为模型怎么设计，循环论证怎么缓解。"
+        }
+      },
+      {
+        "label": "预算分配：探索与利用",
+        "key": "eg-allocation",
+        "isLeaf": true,
+        "filePath": "ecom-growth",
+        "heat": 0,
+        "currRank": 7,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "汤普森采样、最低曝光、优化点击还是下单、什么时候可以下结论。"
+        }
+      },
+      {
+        "label": "效果归因：哪个卖点、哪种写法有效",
+        "key": "eg-attribution",
+        "isLeaf": true,
+        "filePath": "ecom-growth",
+        "heat": 0,
+        "currRank": 8,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "素材、属性、原因三层归因，三个常见的坑，结论的置信等级。"
+        }
+      },
+      {
+        "label": "素材进化：淘汰、改写、补缺",
+        "key": "eg-evolve",
+        "isLeaf": true,
+        "filePath": "ecom-growth",
+        "heat": 0,
+        "currRank": 9,
+        "updatedAt": "2026-11-19",
+        "quickRead": {
+          "text": "怎样读归因结论改写素材，怎样防止越改越偏，最终报告怎么写。"
+        }
+      },
+      {
+        "label": "工程化：成本、并发与断点续跑",
+        "key": "eg-production",
+        "isLeaf": true,
+        "filePath": "ecom-growth",
+        "heat": 0,
+        "currRank": 10,
+        "updatedAt": "2026-11-18",
+        "quickRead": {
+          "text": "先按环节算账，再讲缓存、分级用模型、限流和可重入。"
         }
       }
     ]
@@ -142,15 +280,15 @@
     "key": "project-eval-evolve",
     "children": [
       {
-        "label": "项目总览：先造尺子，再谈进化",
+        "label": "背景、目标与预期结果",
         "key": "ee-overview",
         "isLeaf": true,
         "filePath": "eval-evolve",
         "heat": 0,
         "currRank": 0,
-        "updatedAt": "2026-11-18",
+        "updatedAt": "2026-11-19",
         "quickRead": {
-          "text": "平台做什么、每一章依据哪篇论文、规模和结论的边界。"
+          "text": "为什么先评测再进化、做成什么样、分哪五件事、做完手里有什么，以及规模上的边界。"
         }
       },
       {
@@ -271,144 +409,6 @@
         "updatedAt": "2026-11-18",
         "quickRead": {
           "text": "学新忘旧怎么观察，准入的四条规则，闸门挡不住什么，怎样回退。"
-        }
-      }
-    ]
-  },
-  {
-    "label": "电商营销增长助手",
-    "key": "project-ecom-growth",
-    "children": [
-      {
-        "label": "项目总览：从素材生产到投放优化的闭环",
-        "key": "eg-overview",
-        "isLeaf": true,
-        "filePath": "ecom-growth",
-        "heat": 0,
-        "currRank": 0,
-        "updatedAt": "2026-11-18",
-        "quickRead": {
-          "text": "为什么选营销场景，模拟数据的三条约束，四段路线。"
-        }
-      },
-      {
-        "label": "系统架构：生产、试投与数据层",
-        "key": "eg-architecture",
-        "isLeaf": true,
-        "filePath": "ecom-growth",
-        "heat": 0,
-        "currRank": 1,
-        "updatedAt": "2026-11-18",
-        "quickRead": {
-          "text": "活动主管怎样调度各环节，审核为什么是唯一通道，人在哪里介入。"
-        }
-      },
-      {
-        "label": "商品理解：卖点、证据与声明等级",
-        "key": "eg-product",
-        "isLeaf": true,
-        "filePath": "ecom-growth",
-        "heat": 0,
-        "currRank": 2,
-        "updatedAt": "2026-11-18",
-        "quickRead": {
-          "text": "先提取卖点再写文案，依据逐字校验，哪些话需要证据才能说。"
-        }
-      },
-      {
-        "label": "人群分层：行为数据与模拟用户池",
-        "key": "eg-segment",
-        "isLeaf": true,
-        "filePath": "ecom-growth",
-        "heat": 0,
-        "currRank": 3,
-        "updatedAt": "2026-11-18",
-        "quickRead": {
-          "text": "公开行为数据能提供什么，目标人群怎么定义，哪些是真实的、哪些是合成的。"
-        }
-      },
-      {
-        "label": "素材生成：先定方案，再写正文",
-        "key": "eg-creative",
-        "isLeaf": true,
-        "filePath": "ecom-growth",
-        "heat": 0,
-        "currRank": 4,
-        "updatedAt": "2026-11-18",
-        "quickRead": {
-          "text": "让多版素材有实质差异，素材为什么要带标签，批量生成的工程问题。"
-        }
-      },
-      {
-        "label": "合规与调性审核：规则、模型、人工三层",
-        "key": "eg-compliance",
-        "isLeaf": true,
-        "filePath": "ecom-growth",
-        "heat": 0,
-        "currRank": 5,
-        "updatedAt": "2026-11-18",
-        "quickRead": {
-          "text": "各层负责什么，漏放率和误拦率怎么取舍，拦截后怎么改。"
-        }
-      },
-      {
-        "label": "试投环境：模拟用户及其可信边界",
-        "key": "eg-simulation",
-        "isLeaf": true,
-        "filePath": "ecom-growth",
-        "heat": 0,
-        "currRank": 6,
-        "updatedAt": "2026-11-18",
-        "quickRead": {
-          "text": "模型能不能模拟真实用户，行为模型怎么设计，循环论证怎么缓解。"
-        }
-      },
-      {
-        "label": "预算分配：探索与利用",
-        "key": "eg-allocation",
-        "isLeaf": true,
-        "filePath": "ecom-growth",
-        "heat": 0,
-        "currRank": 7,
-        "updatedAt": "2026-11-18",
-        "quickRead": {
-          "text": "汤普森采样、最低曝光、优化点击还是下单、什么时候可以下结论。"
-        }
-      },
-      {
-        "label": "效果归因：哪个卖点、哪种写法有效",
-        "key": "eg-attribution",
-        "isLeaf": true,
-        "filePath": "ecom-growth",
-        "heat": 0,
-        "currRank": 8,
-        "updatedAt": "2026-11-18",
-        "quickRead": {
-          "text": "素材、属性、原因三层归因，三个常见的坑，结论的置信等级。"
-        }
-      },
-      {
-        "label": "素材进化：淘汰、改写、补缺",
-        "key": "eg-evolve",
-        "isLeaf": true,
-        "filePath": "ecom-growth",
-        "heat": 0,
-        "currRank": 9,
-        "updatedAt": "2026-11-18",
-        "quickRead": {
-          "text": "怎样读归因结论改写素材，怎样防止越改越偏，最终报告怎么写。"
-        }
-      },
-      {
-        "label": "工程化：成本、并发与断点续跑",
-        "key": "eg-production",
-        "isLeaf": true,
-        "filePath": "ecom-growth",
-        "heat": 0,
-        "currRank": 10,
-        "updatedAt": "2026-11-18",
-        "quickRead": {
-          "text": "先按环节算账，再讲缓存、分级用模型、限流和可重入。"
         }
       }
     ]
