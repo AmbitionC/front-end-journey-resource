@@ -1631,6 +1631,22 @@
             "contentFormat": "short-qa-v2",
             "department": "其他",
             "updatedAt": "2026-11-15"
+          },
+          {
+            "label": "腾讯元宝风控实习一面：内容安全评测与 RAG 切分",
+            "key": "tencent-ai-33",
+            "isLeaf": true,
+            "filePath": "tencent/ai",
+            "tags": [
+              "Agent",
+              "RAG",
+              "内容安全",
+              "评测"
+            ],
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "role": "风控实习岗位",
+            "updatedAt": "2026-11-18"
           }
         ]
       },

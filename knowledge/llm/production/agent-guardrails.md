@@ -51,12 +51,33 @@ Parallel guardrail 失败时必须能取消尚未发生的工作，并确认不�
 
 记录 guardrail 名称/版本、输入类别、结论、延迟、覆盖的 action、人工结果和后续事件，敏感原文使用受控引用。指标包括拦截率、误报/漏报、审批通过、绕过尝试、parallel race、副作用前阻断比例和规则漂移。定期用生产失败更新评估集。
 
+## 内容安全：检测指标与评测集怎样一起设计
+
+面向线上问答产品，先约定检测对象是用户输入、模型输出还是整段多轮会话，再定义各风险类别、严重程度和处置方式。下面是通用设计建议，不代表任何具体产品已经采用这些规则。标签应描述“内容是否违反当前策略”，另记系统实际放行、拦截或转人工的动作；请求中出现敏感词不一定意味着应拒答，正常求助、引用讨论与恶意请求需要按上下文区分。
+
+以“违规”为正类、检测器报违规为预测正类，固定策略版本和阈值后，分开报告：
+
+| 指标 | 分母与含义 | 帮助回答的问题 |
+|---|---|---|
+| Precision | TP / (TP + FP)，被报违规中确实违规的比例 | 审核队列中有多少误报？ |
+| Recall | TP / (TP + FN)，真实违规中被发现的比例 | 违规内容漏掉多少？ |
+| FPR | FP / (FP + TN)，真实合规内容中被误报的比例 | 正常使用受到多大干扰？ |
+| 端到端违规放行率 | 最终仍向用户交付违规结果的样本 / 当前验收范围内的全部样本 | 整条防线的最终结果如何？ |
+
+前三项是分类指标，其定义见 [scikit-learn 分类评测文档](https://scikit-learn.org/stable/modules/model_evaluation.html#classification-metrics)。最后一项是应用层验收口径：必须说明评的是全部请求、实际交付的回答还是定向风险集，三者不能混报；它也不等于分类器的漏报率。分母为零时注明未定义或约定处理，不用一个总体准确率掩盖严重风险切片。分类阈值与数据不平衡的进一步推导见[不平衡分类评估](../../data/analysis/imbalanced-classification-evaluation.md)。
+
+评测集建议分成两部分：经过授权与脱敏的代表性流量抽样，用于估计目标分布下的表现；单列的风险挑战集，用于发现低频但严重的失败。挑战集应同时含应拦截的内容、表达相近但合规的难负例，以及适用场景中的多轮、跨语言、隐晦表达和提示注入。不要把刻意提高违规比例的挑战集直接当线上总体分布；阈值选择还应结合误报代价、漏报严重性、人工容量和检测延迟。[NIST 生成式 AI 风险概况](https://doi.org/10.6028/NIST.AI.600-1)强调结合使用情境、人类反馈、红队和上线监测评估风险；这里的双集合划分是据此形成的工程建议。
+
+每条样本保留必要上下文、风险类别、策略版本、标注依据和来源；使用统一标注指南并复核分歧，不把被拦截本身当成真实违规标签。按会话和近重复族分组，再结合时间划分开发、验证和最终验收范围，避免同一改写样本跨集合；阈值只在验证范围选择。报告各类别与语言切片的样本数、混淆矩阵和不确定性，并分别核查检测器判断与最终交付结果。线上新增失败经复核进入下一版回归集，同时监控过度拒答、转人工量与延迟；补进回归集后不能再把它称为从未见过的独立测试集。
+
 ## 小结
 
 Guardrails 是贯穿 Agent 数据与动作路径的控制平面：输入标记信任，模型只提议，工具前做 schema/权限/审批/沙箱，结果重新验证，输出防泄露，观测和评估持续校准。防御有效性来自多层独立边界，而不是某个“安全提示词”。
 
 ## 参考资料
 
+- [scikit-learn — Classification metrics](https://scikit-learn.org/stable/modules/model_evaluation.html#classification-metrics)
+- [NIST — Generative Artificial Intelligence Profile（AI 600-1）](https://doi.org/10.6028/NIST.AI.600-1)
 - [OpenAI — Guardrails and human approvals](https://developers.openai.com/api/docs/guides/agents/guardrails-approvals)
 - [OpenAI — Safety in building agents](https://developers.openai.com/api/docs/guides/agent-builder-safety)
 - [OWASP — Securing Agentic Applications Guide](https://genai.owasp.org/resource/securing-agentic-applications-guide-1-0/)
@@ -68,4 +89,5 @@ Guardrails 是贯穿 Agent 数据与动作路径的控制平面：输入标记�
 - [美团后端 Agent 暑期一面：约束、工作流与 AI 开发验证](../../../interview/meituan/ai/meituan-ai-16.md)
 - [百度后端二面：Agent 风险、缓存与索引](../../../interview/baidu/ai/baidu-ai-9.md)
 - [腾讯 CSIG 元宝内容安全日常实习：评测集、输出校验与问题归因](../../../interview/tencent/ai/tencent-ai-15.md)
+- [腾讯元宝风控实习一面：内容安全评测与 RAG 切分](../../../interview/tencent/ai/tencent-ai-33.md)
 <!-- interview-source-history:end -->

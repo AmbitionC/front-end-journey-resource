@@ -2,6 +2,14 @@ RAG（Retrieval-Augmented Generation，检索增强生成）把大模型的参�
 
 它主要解决知识更新、私有数据和来源追踪问题，但不会自动消除幻觉。一个生产级 RAG 是数据、检索、权限、生成和评测组成的闭环，不是“向量库 + Prompt”两个接口。
 
+## LangChain 与 RAG 分别负责什么
+
+LangChain 是组装大模型应用与 Agent 的框架；RAG 是在生成时引入外部检索证据的方法。两者处在不同层次：可以用 LangChain 实现 RAG，也可以直接用模型、搜索或数据库 API 实现同样的检索—生成链路。使用了框架、向量库或某个类名，不能单独证明系统具备高质量 RAG。[LangChain 概览](https://docs.langchain.com/oss/python/langchain/overview)介绍其模型、工具与运行支撑；[官方 Retrieval 文档](https://docs.langchain.com/oss/python/deepagents/retrieval)则说明检索组件和 RAG 的关系。
+
+把框架组件映射到职责更容易解释实现：document loader 负责读取资料，splitter 负责划分可检索单元，embedding 与索引负责表示和存储，retriever 根据查询返回候选，后续再完成证据装配与生成。已有 SQL 或搜索知识源也可以直接接入，无须为了使用 RAG 先重建向量库。框架帮助组织这些步骤，权限、资料版本、引用核验和效果验收仍要由应用设计。
+
+还要区分固定的“先检索、后生成”与由 Agent 决定何时检索的方式：前者路径明确，后者允许按任务多次检索，但调用次数、延迟和停止条件需要额外约束。本文下面主要展开固定检索—生成链路；不能因为接入了 LangChain，就把所有应用都描述成自主 Agent。
+
 ## 一、两条流水线
 
 RAG 可以拆成两条相互关联的路径：
@@ -413,6 +421,7 @@ async function answerWithRag(question: string, session: Session) {
 - [网易云音乐全栈一面：JavaScript、排序与 RAG](../../../interview/netease/fullstack/netease-fullstack-2.md)
 - [腾讯混元后台开发二面：推理调度、队列与缓存故障](../../../interview/tencent/ai/tencent-ai-30.md)
 - [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
+- [腾讯元宝风控实习一面：内容安全评测与 RAG 切分](../../../interview/tencent/ai/tencent-ai-33.md)
 - [阿里国际 Java 二面：RAG 数据评测、微调与代码生成](../../../interview/alibaba/ai/alibaba-ai-26.md)
 - [腾讯后台开发暑期一面：Java 内存、并发与检索](../../../interview/tencent/ai/tencent-ai-31.md)
 - [蚂蚁 Agent 实习一面：缓存、消息与 RAG](../../../interview/antfin/ai/antfin-ai-6.md)
@@ -428,6 +437,8 @@ async function answerWithRag(question: string, session: Session) {
 
 ## 参考资料
 
+- [LangChain — Overview](https://docs.langchain.com/oss/python/langchain/overview)
+- [LangChain — Retrieval](https://docs.langchain.com/oss/python/deepagents/retrieval)
 - [Retrieval-Augmented Generation 原始论文](https://arxiv.org/abs/2005.11401)
 - [Dense Passage Retrieval 论文](https://arxiv.org/abs/2004.04906)
 - [Lost in the Middle：长上下文信息利用研究](https://arxiv.org/abs/2307.03172)
