@@ -4,8 +4,8 @@ Token、上下文窗口和 KV Cache 分别回答三个问题：模型怎样切�
 
 一次请求并不是“把字符串交给模型”这么简单。服务端先用与模型匹配的 tokenizer 把文本、工具定义和多模态占位等内容编码成 Token ID；模型在有限的上下文窗口内处理这些 Token；自回归生成时，KV Cache 保存各层已经算出的 Key 和 Value，后续每一步只追加新位置对应的数据。
 
-![文本被编码为 Token，并在 Prefill 与 Decode 阶段读写 KV Cache](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-token-context-kv-cache-v3.webp)
-*图：Prefill 并行处理输入并写入缓存；Decode 每次生成一个 Token，读取历史 K/V 后追加新 K/V。*
+![文本经分词器变成 Token，输入与输出共用上下文窗口；Prefill 并行处理输入并写入各层 KV Cache，Decode 每步只计算新位置并追加 K、V](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-token-context-kv-cache-v1.dark.png)
+*图：Prefill 并行处理整段输入并写入 KV Cache；Decode 每次只生成一个 Token，读取历史 K/V 后追加新的 K/V。输入和输出共用同一个上下文窗口。*
 
 ## Token：模型处理的离散符号
 

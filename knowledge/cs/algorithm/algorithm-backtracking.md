@@ -1,7 +1,7 @@
 回溯是对决策树的深度优先搜索：选择一个候选，更新状态；若部分解已经违反约束，就剪掉整棵子树；否则继续，完成后撤销选择。它不会消除组合爆炸，但把约束尽早应用、把更可能失败的选择提前，可以让实际搜索量下降几个数量级。
 
-![回溯决策树中的选择、约束检查、剪枝、得到解与撤销状态](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/algorithm-backtracking-decision-tree-pruning-v1.webp)
-*图：每个可行完整解对应一条根到叶路径；剪枝只能删除已证明不可能产生合法或更优解的分支。*
+![四皇后的回溯决策树：每层选一行的列，冲突的列直接剪掉，走不通就撤销回到上一层，最终找到解 1 3 0 2](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/algorithm-backtracking-four-queens-v1.dark.png)
+*图：四皇后逐行放置：冲突的列当场剪掉，走不通就撤销回上一层，最终得到解 [1, 3, 0, 2]（第 i 个数是第 i 行皇后所在列）。剪枝只能删掉已证明不可能出解的分支。*
 
 ## 通用框架
 

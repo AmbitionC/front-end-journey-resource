@@ -26,7 +26,7 @@ Transformer 出现前，RNN/LSTM 是处理文本等序列的主流方案。它�
 
 下面这张图给出一类常见的现代 Decoder-only 结构。它不是所有模型的唯一实现，但能覆盖理解主流自回归语言模型所需的核心部件。
 
-![现代 Decoder-only Transformer 从 Token Embedding 经过重复的 Pre-Norm Attention 与 SwiGLU FFN，最终输出下一个 Token 概率的结构图](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/transformer-arch-modern-decoder-block-v4.webp)
+![现代 Decoder-only 模型：Token ID 经 Embedding、N 个 Decoder Block、Final RMSNorm 和 LM Head 输出下一个 token 的概率；每个 Block 先 RMSNorm 后做因果自注意力和 SwiGLU FFN，两处都有残差旁路](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/transformer-arch-decoder-block-v1.dark.png)
 
 *图：残差旁路绕过 Attention 和 FFN；RoPE 在 Attention 内作用于 Q、K，而不是直接加到 Token Embedding 上。*
 
@@ -95,7 +95,7 @@ $$
 
 Softmax 后，上三角被屏蔽位置的权重变为 0。这样，即使训练时整段文本一次送入模型，每个位置也无法看到未来 Token。
 
-![Token 向量投影为 Q、K、V，QK 点积经过因果掩码和 Softmax 后形成下三角注意力权重，再对 V 加权求和](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/transformer-arch-causal-attention-v4.webp)
+![Token 向量投影为 Q、K、V；Q 与 K 打分后经过因果掩码和 Softmax 得到下三角注意力权重，再对 V 加权求和得到每个位置的新表示](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/transformer-arch-causal-attention-v1.dark.png)
 
 *图：V 不参与 QK 相似度计算，而是在注意力权重确定后被加权聚合。*
 

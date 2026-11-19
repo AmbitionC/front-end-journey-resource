@@ -1,7 +1,7 @@
 栈和队列都是限制访问顺序的线性抽象：栈后进先出，队列先进先出。理解它们的关键不是记 API，而是维护不变量，并知道顺序如何对应解析、遍历、缓冲和调度。生产队列还要增加容量、确认、公平和背压，不能把 FIFO 数组直接当消息系统。
 
-![栈的 LIFO、队列的 FIFO、两栈队列及任务调度中的操作模型](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/algorithm-stack-queue-operation-model-v1.webp)
-*图：抽象数据类型规定可观察操作；具体数组、链表或双栈实现决定边界成本。*
+![栈只在 top 一端 push 和 pop，后进先出；队列从 tail 入队、head 出队，先进先出；两个栈实现队列时，out 栈为空才把 in 栈全部倒入](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/algorithm-stack-queue-model-v1.dark.png)
+*图：栈只在 top 一端进出，队列 tail 进、head 出；两个栈实现队列时，out 栈空了才把 in 栈整体倒过去，每个元素最多搬两次，所以均摊 O(1)。*
 
 ## 栈：只操作一端
 

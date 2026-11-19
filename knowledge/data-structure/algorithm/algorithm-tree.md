@@ -1,5 +1,5 @@
-![同一图从节点 A 出发：左侧 BFS 用 queue 按层扩展 frontier，右侧 DFS 用 stack 深入回溯；visited set 阻止环重复，树结构作为无环特例](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/tree-graph-bfs-dfs-frontiers-v1.webp)
-*图：沿图中的节点与箭头阅读，重点是区分 tree 与 general graph、DFS/BFS、visited、递归/显式栈和遍历复杂度，避免在有环图上无限访问。*
+![同一张图从 A 出发：左侧 BFS 用队列按层扩展，访问顺序 A B C D F E；右侧 DFS 用递归或栈一路深入再回退，访问顺序 A B D C F E；图中有环，靠 visited 避免重复访问](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/algorithm-tree-bfs-dfs-v1.dark.png)
+*图：同一张带环的图：BFS 用队列按层扩展，DFS 一条路走到底再回溯；角标是访问顺序。visited 阻止绕环重复访问，树是无环的特例。*
 
 ---
 
