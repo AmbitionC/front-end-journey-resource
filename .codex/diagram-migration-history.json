@@ -436,7 +436,7 @@
       "label": "上下文工程（Context Engineering）",
       "articlePath": "knowledge/llm/agent/context-engineering.md",
       "baselineArticleSha256": "556bfe71b949bb257f8010d5c5db9595c85b73ba462ffe4d3fdd948f7a7ca0f1",
-      "status": "provenance_pending",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/context-engineering-gather-select-compress-verify-v1.webp",
@@ -444,10 +444,20 @@
           "provenance": "legacy_raster_provenance_pending"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-top10-batch3",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/context-engineering-gather-select-compress-verify-v2.aj.mjs",
+          "sourceSha256": "63c6a84d867894c58a8448d0b3dbff25666480d2c4769e4521b76f338f18dcfc",
+          "darkPng": "images/context-engineering-gather-select-compress-verify-v2.dark.png",
+          "lightPng": "images/context-engineering-gather-select-compress-verify-v2.light.png",
+          "darkSha256": "ef2d6d3b6597f46a03d1475e826ca6251de6fbcd16dc0d0fa2222d661b9c7146",
+          "lightSha256": "6f0562e0a455914a44df58c522874a87a0215cc7cc1d3854b8624838140a1dbc"
+        }
+      ]
     },
     {
       "key": "prompt-structured-output",
@@ -688,7 +698,7 @@
       "label": "SSE 流式响应与增量渲染",
       "articlePath": "knowledge/llm/dev/llm-sse-streaming.md",
       "baselineArticleSha256": "032e7e9a8e28625d545a10a2ae9a4cf68b1d89be414ca5193a1f224e3c4180d4",
-      "status": "provenance_pending",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/llm-sse-streaming-boundaries-v3.webp",
@@ -696,10 +706,20 @@
           "provenance": "legacy_raster_provenance_pending"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-top10-batch3",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/llm-sse-chunk-vs-event-boundaries-v4.aj.mjs",
+          "sourceSha256": "958c488558b7d255e44ace540318fd2dfdf0ef027f572ea61bf9bf11261c7017",
+          "darkPng": "images/llm-sse-chunk-vs-event-boundaries-v4.dark.png",
+          "lightPng": "images/llm-sse-chunk-vs-event-boundaries-v4.light.png",
+          "darkSha256": "7f39c32c9e1f484c03d62087895f68ea393fe0051f9fdada36418ba1e27ee326",
+          "lightSha256": "49e50d33357be7e4331e467130d8f388d0d3830c68438209d3a60c8f3ef0cee4"
+        }
+      ]
     },
     {
       "key": "function-calling",
@@ -1742,7 +1762,7 @@
       "label": "ReAct：推理与行动框架",
       "articlePath": "knowledge/llm/agent/agent-react.md",
       "baselineArticleSha256": "d3e10a3f43b8406ad8483a3fad6c2ab872ca2313da5e18533d59bd21f2d34390",
-      "status": "provenance_pending",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-react-reason-act-observe-loop-v1.webp",
@@ -1750,10 +1770,20 @@
           "provenance": "legacy_raster_provenance_pending"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-top10-batch3",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-react-loop-runtime-boundary-v2.aj.mjs",
+          "sourceSha256": "a6103eee57930b08523a8af215611d4adc0b13cb368a53c3a43adb22fe5c6e29",
+          "darkPng": "images/agent-react-loop-runtime-boundary-v2.dark.png",
+          "lightPng": "images/agent-react-loop-runtime-boundary-v2.light.png",
+          "darkSha256": "da62c85f36459171b2ad4bccbe2aac90978ecd89be6f4ef8bdb86c1ddfe26490",
+          "lightSha256": "623fb1b96fa51fadee63f9912aa037421e9f98e6bc9a28ac2db408feecf247ac"
+        }
+      ]
     },
     {
       "key": "agent-memory",
@@ -2144,7 +2174,7 @@
       "label": "最小权限、授权与工具调用确认",
       "articlePath": "knowledge/llm/production/agent-permission-model.md",
       "baselineArticleSha256": "825f8989c30ca9365882a22e5b0b1a37e3e577b5f70c7bae4f1ede837e902f62",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-permission-model-capability-approval-v1.webp",
@@ -2152,10 +2182,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-top10-batch3",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-permission-model-capability-approval-v2.aj.mjs",
+          "sourceSha256": "d7f6fba6a084ec7d8ac7472d7d43b77dbde0fd01015829760f8a3b2e6f99c7ac",
+          "darkPng": "images/agent-permission-model-capability-approval-v2.dark.png",
+          "lightPng": "images/agent-permission-model-capability-approval-v2.light.png",
+          "darkSha256": "131285da27f84e5f044c39afd178ff683a05b0b6bb0776aa5b508fd0494b88ba",
+          "lightSha256": "bbcc7105ce29b7140c10ddf4395f3febe2b35eb4d6cc4c13eaaf431d538c2e0e"
+        }
+      ]
     },
     {
       "key": "agent-failure-recovery",
@@ -4366,7 +4406,7 @@
       "label": "TCP 建连、断开与连接状态",
       "articlePath": "knowledge/network/tcpIp/tcp-handshake.md",
       "baselineArticleSha256": "2b2c29ff2ceec951c4781b8b84484261b5a2b94d2a49941c4e8cc7eb01394e80",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/tcp-active-close-time-wait-v3.png",
@@ -4374,14 +4414,24 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": "archify",
-      "diagramType": "sequence",
-      "batchId": null,
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-top10-batch3",
       "publishedEvidence": null,
       "priority": 5,
       "reason": "Preserve active/passive close states, ACK order and TIME-WAIT ownership.",
       "plannedWave": "first-10",
-      "resumeExistingDiagramMigration": false
+      "resumeExistingDiagramMigration": false,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/tcp-active-close-time-wait-v4.aj.mjs",
+          "sourceSha256": "4710f7583d314755c88776bce1b9388807a8a5dff3d43be7e1d5023b8cebb15c",
+          "darkPng": "images/tcp-active-close-time-wait-v4.dark.png",
+          "lightPng": "images/tcp-active-close-time-wait-v4.light.png",
+          "darkSha256": "60986e8eb722f15341ec66aaaf4fe1438b7660e47ec16c139c1b8959d9d2ce6e",
+          "lightSha256": "2a7c03892840c11c49e0845a915e3ad216a87f36492398e199eefc86d9de64c3"
+        }
+      ]
     },
     {
       "key": "http-message",
@@ -4614,7 +4664,7 @@
       "label": "递归、分治与搜索",
       "articlePath": "knowledge/data-structure/algorithm/algorithm-loop.md",
       "baselineArticleSha256": "804ada705f548c573f60c102f0875515f0ae14be3bcd63213aa3098c09a82f6a",
-      "status": "provenance_pending",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/recursion-divide-conquer-search-tree-v1.webp",
@@ -4622,10 +4672,20 @@
           "provenance": "legacy_raster_provenance_pending"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-top10-batch3",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/recursion-divide-conquer-memo-v2.aj.mjs",
+          "sourceSha256": "c38115cf32f40bd53c5268517b2f6a85a6e1bc52233dea609f6885cf5b9806ab",
+          "darkPng": "images/recursion-divide-conquer-memo-v2.dark.png",
+          "lightPng": "images/recursion-divide-conquer-memo-v2.light.png",
+          "darkSha256": "6aea6afce18c1d3caa1dee09549b1682396bed915647cd5a057a5a6826920b6f",
+          "lightSha256": "2f2ccc265807b671ce5609845f18409ef2e904708b86a438a80740bf71ff5257"
+        }
+      ]
     },
     {
       "key": "algorithm-sorting",
@@ -5352,7 +5412,7 @@
       "label": "Agent 工程师的职责与岗位方向",
       "articlePath": "knowledge/career/agent-role-landscape.md",
       "baselineArticleSha256": "e56e1f0d4b1b1928ec070755b92b66f658ccb7476b76b98da698cd5aea836964",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-engineer-role-landscape-v1.webp",
@@ -5360,10 +5420,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-top10-batch3",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-engineer-role-landscape-v2.aj.mjs",
+          "sourceSha256": "1f63c1e45c52c6209b9b72ce351b67342355c7ded80d111c2aae50f79ef59cb0",
+          "darkPng": "images/agent-engineer-role-landscape-v2.dark.png",
+          "lightPng": "images/agent-engineer-role-landscape-v2.light.png",
+          "darkSha256": "c07b13a8f3e99260e164639529ffbeccae537690f8c9ab62838e940ff8ae54c4",
+          "lightSha256": "05ffe815087827ec3d039fbf88daeaa0263a82e8d29eeaddae9a6b48da0e4bd4"
+        }
+      ]
     },
     {
       "key": "agent-project-evaluation",

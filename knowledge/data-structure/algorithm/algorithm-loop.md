@@ -1,7 +1,7 @@
 递归、分治、回溯和 memoization 不是四个互不相干的技巧。它们都在描述子问题图：怎样缩小问题、何时停止、怎样组合答案，以及是否会重复到达同一状态。
 
-![问题递归拆分到 base case 后向上合并，另一侧搜索树在 choice point 失败时 prune、undo 并尝试下一分支](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/recursion-divide-conquer-search-tree-v1.webp)
-*图：左侧递归树强调规模严格下降与 combine；右侧回溯强调选择、约束、撤销；重复子问题用 memo 汇合。*
+![左侧归并排序把 [5,2,4,1] 一路对半拆到长度 1 的 base case，再两两合并成 [1,2,4,5]；右侧 fib(5) 的朴素递归树有 15 次调用，fib(3)、fib(2) 被重复求解，加 memo 后重复节点直接命中缓存，只剩 9 次调用、6 个状态各算一次](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/recursion-divide-conquer-memo-v2.dark.png)
+*图：左边看分治：规模每次减半直到长度 1，再逐层合并；右边看重复子问题：fib(5) 朴素递归调用 15 次，加 memo 后只剩 9 次。*
 
 ---
 

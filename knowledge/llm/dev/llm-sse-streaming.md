@@ -4,7 +4,8 @@
 
 它适合“请求一次、服务端持续向客户端推送”的场景，例如聊天回答、任务进度和日志。它不是双向协议：如果客户端和服务端都需要高频主动发送消息，WebSocket 往往更合适。
 
-![SSE 中网络分块与事件边界的区别](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-sse-streaming-boundaries-v3.webp)
+![网络收到的三个 chunk 边界是随机的：第一个 chunk 在“好”字的 UTF-8 字节中间断开，第二个 chunk 才补齐并结束事件 1，又带上事件 2 的开头；解析器先做 UTF-8 增量解码、追加到缓冲区，遇到空行才切出事件，最后交给界面的是完整的三个事件](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-sse-chunk-vs-event-boundaries-v4.dark.png)
+*图：看第一行：chunk 1 停在“好”字的半个字节上，解析器要先增量解码、拼进缓冲区，遇到空行才交出完整事件。*
 
 ## 一、先理解协议帧
 

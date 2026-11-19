@@ -1,5 +1,5 @@
-![从左到右展示上下文工程闭环：Gather 收集候选信息，Select 按相关性与可信度筛选，Compress 压缩并保留出处，Verify 在模型调用前后校验；同时画出固定 context budget 与被丢弃的噪声](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/context-engineering-gather-select-compress-verify-v1.webp)
-*图：沿图中的节点与箭头阅读，重点是收集、筛选、压缩、验证串成可执行机制。*
+![上下文工程四步：收集检索、工具和记忆里的候选信息，按相关性与可信度筛选，压缩时保留出处，调用前后校验；候选量逐步下降到上下文预算以内，重复、过期、无权限的内容被丢弃，缺证据时回到收集](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/context-engineering-gather-select-compress-verify-v2.dark.png)
+*图：四步串成一条管线：候选信息先筛掉重复、过期和无权限的，再压缩并保留出处；校验发现缺证据，就回到收集。*
 
 ---
 
