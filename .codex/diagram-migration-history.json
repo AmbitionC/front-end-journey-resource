@@ -1807,11 +1807,11 @@
       "replacementAssets": [
         {
           "source": "images/diagram-sources/agent-react-loop-runtime-boundary-v2.aj.mjs",
-          "sourceSha256": "a6103eee57930b08523a8af215611d4adc0b13cb368a53c3a43adb22fe5c6e29",
+          "sourceSha256": "b924fa8deb814ece848fc301a3aa5556f886889149c9d84066d44e0b44850556",
           "darkPng": "images/agent-react-loop-runtime-boundary-v2.dark.png",
           "lightPng": "images/agent-react-loop-runtime-boundary-v2.light.png",
-          "darkSha256": "da62c85f36459171b2ad4bccbe2aac90978ecd89be6f4ef8bdb86c1ddfe26490",
-          "lightSha256": "623fb1b96fa51fadee63f9912aa037421e9f98e6bc9a28ac2db408feecf247ac"
+          "darkSha256": "8f825fff82fb37b437f14267d956d29ff2dfa24d92d8f287381c8d3206beea32",
+          "lightSha256": "a0c0f4cae532b91b4ec872970f0b3489f4d32a0fc6d3dddc57b1e8ebe502d6e2"
         }
       ]
     },
@@ -1919,11 +1919,11 @@
       "replacementAssets": [
         {
           "source": "images/diagram-sources/agent-multi-agent-messaging-dedup-late-v2.aj.mjs",
-          "sourceSha256": "91e964d0b2eca2831cd39e2cdde30b63357bf27274717c5ca1a722515502baa6",
+          "sourceSha256": "fcdc3c104061f9027cd486dbce3dbdacfa6e0dc4f17d7a1241dd7cec6f8b3807",
           "darkPng": "images/agent-multi-agent-messaging-dedup-late-v2.dark.png",
           "lightPng": "images/agent-multi-agent-messaging-dedup-late-v2.light.png",
-          "darkSha256": "827c5b9715311f20d98d4d0a9647688740fd5b7c69b919977ef08bf71f3f1b82",
-          "lightSha256": "addd7ef85bf342fe8bc1a8970323286e22de6a92fe0ff19a94e4bad8005362b0"
+          "darkSha256": "d5c754eb7cdebddd89c05a7e169ce06952770fffb0b34136c6c1591da69fa2f2",
+          "lightSha256": "997f79f928464fa3aaad48da8f26b9999de25bfc260fc37890adaac117a0a11e"
         }
       ]
     },

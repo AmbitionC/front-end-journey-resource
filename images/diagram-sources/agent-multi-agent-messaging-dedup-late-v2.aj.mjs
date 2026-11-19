@@ -27,7 +27,7 @@ export default (k) => {
   msg(B, A, 450, 'result（plan v5）迟到', 'bad', { at: (A + M) / 2 });
   s.push(k.text({ x: A + 14, y: 470, text: 'v5 < v6：只记录，不覆盖新计划', size: 'note', tone: 'bad' }));
 
-  s.push(k.panel({ x: 700, y: 108, w: 220, h: 206, label: '消息信封' }));
+  s.push(k.panel({ x: 700, y: 108, w: 220, h: 222, label: '消息信封' }));
   [['messageId', 'msg-01'], ['correlationId', 'task-42'], ['causationId', 'msg-00'], ['type', 'task.requested'], ['planVersion', '5']]
     .forEach(([key, v], i) => {
       s.push(k.text({ x: 716, y: 166 + i * 36, text: key, size: 'note', tone: 'muted', mono: true }));
