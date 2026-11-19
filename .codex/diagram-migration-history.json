@@ -93,7 +93,7 @@
       "label": "大模型训练全流程概览",
       "articlePath": "knowledge/llm/basics/llm-training-overview.md",
       "baselineArticleSha256": "68558efd8776534b1f75d2f9fc3a93dcfc1bd4f85690e1059d144f1010145f70",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/llm-training-overview-lifecycle-v1.webp",
@@ -101,10 +101,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-top10-batch4",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/llm-training-lifecycle-v2.aj.mjs",
+          "sourceSha256": "6277a262ee7f6ff0c8f3a783e4e7f38951d190725e16d69a5b6f588a82df4999",
+          "darkPng": "images/llm-training-lifecycle-v2.dark.png",
+          "lightPng": "images/llm-training-lifecycle-v2.light.png",
+          "darkSha256": "0f8686f69e95ff86c7864bc141a47dbdda8abbd69c0456880158b89d828f903d",
+          "lightSha256": "ac65d2f6339d14251eb1e2576366ac8bd88277690856ad388da6868e6868f025"
+        }
+      ]
     },
     {
       "key": "llm-model-selection",
@@ -1228,7 +1238,7 @@
       "label": "文本分块策略（Chunking）",
       "articlePath": "knowledge/llm/rag/rag-chunking.md",
       "baselineArticleSha256": "e279b657d9f82d303511de1f845679c991e7051addba942de9208e3f933819d0",
-      "status": "provenance_pending",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/rag-chunking-strategies-v3.webp",
@@ -1236,10 +1246,20 @@
           "provenance": "legacy_raster_provenance_pending"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-top10-batch4",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/rag-chunking-boundaries-overlap-v4.aj.mjs",
+          "sourceSha256": "19d5731d372b023f34766d4339dd64bd9330e59c60ea69eb7153f045b9d703b4",
+          "darkPng": "images/rag-chunking-boundaries-overlap-v4.dark.png",
+          "lightPng": "images/rag-chunking-boundaries-overlap-v4.light.png",
+          "darkSha256": "3df50b7622da6e6b12626e36dc188c9b9181607912ddc0ed633739d903a520e9",
+          "lightSha256": "8c3e17b07b09b28c009e159d829d37febde0e53e2cb030c01023fb22a5f84cb7"
+        }
+      ]
     },
     {
       "key": "rag-citation-grounding",
@@ -1264,7 +1284,7 @@
       "label": "Embedding 原理与向量相似度",
       "articlePath": "knowledge/llm/rag/embedding-basics.md",
       "baselineArticleSha256": "2b1bb7d510c08264a90dddd2c21442aa9dedfa2b1a98d14d579a82418514aad1",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/embedding-similarity-space-v4.png",
@@ -1272,10 +1292,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-top10-batch4",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/embedding-similarity-metrics-v5.aj.mjs",
+          "sourceSha256": "a3b929416a6efbef2f9c5eab2fc4ed940eb17c16262d782203f7e8b75b1c4632",
+          "darkPng": "images/embedding-similarity-metrics-v5.dark.png",
+          "lightPng": "images/embedding-similarity-metrics-v5.light.png",
+          "darkSha256": "fed844a4f01897567f1ed58a7b1b5eb699ac7b5c74aa62c515d5ba9ced525e47",
+          "lightSha256": "745144d36335b491bbc4745eccec3c48dc4a6bdf780b6f8ccb31847a94e50174"
+        }
+      ]
     },
     {
       "key": "rag-cache",
@@ -1818,7 +1848,7 @@
       "label": "代码执行、浏览器与文件操作沙箱",
       "articlePath": "knowledge/llm/agent/agent-sandbox.md",
       "baselineArticleSha256": "97118fb1045c4e2f1e4899c159076bfd482b0a64b4de848c803ca45c932ec692",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-sandbox-capability-boundary-v1.webp",
@@ -1826,10 +1856,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-top10-batch4",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-sandbox-capability-boundary-v2.aj.mjs",
+          "sourceSha256": "aa20afc67851dd0e7ca6b171b2507b18b4afe99c05def00dfdb948b0eb04c6e0",
+          "darkPng": "images/agent-sandbox-capability-boundary-v2.dark.png",
+          "lightPng": "images/agent-sandbox-capability-boundary-v2.light.png",
+          "darkSha256": "b27536fe02415bd7724092df87c5fc248140ebd9f7ef13aca7c86a325cb04149",
+          "lightSha256": "328b44e0d41daa289ffb19a8f5a18389f3bea84fe993cdacf91ae54b1565aad6"
+        }
+      ]
     },
     {
       "key": "agent-tool-design",
@@ -1864,7 +1904,7 @@
       "label": "多智能体消息、协议与状态同步",
       "articlePath": "knowledge/llm/agent/agent-multi-agent-messaging.md",
       "baselineArticleSha256": "b60bbd344c531f9617684d5b379e9174163fc4175c18c89b3fd3f13a8a05d0b3",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-multi-agent-messaging-protocol-state-v1.webp",
@@ -1872,17 +1912,27 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-top10-batch4",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-multi-agent-messaging-dedup-late-v2.aj.mjs",
+          "sourceSha256": "bc08ef0ba1a4049ca6d877b1cea8296779174817616183647253aa116b99a970",
+          "darkPng": "images/agent-multi-agent-messaging-dedup-late-v2.dark.png",
+          "lightPng": "images/agent-multi-agent-messaging-dedup-late-v2.light.png",
+          "darkSha256": "827c5b9715311f20d98d4d0a9647688740fd5b7c69b919977ef08bf71f3f1b82",
+          "lightSha256": "addd7ef85bf342fe8bc1a8970323286e22de6a92fe0ff19a94e4bad8005362b0"
+        }
+      ]
     },
     {
       "key": "agent-tool-timeout",
       "label": "工具超时、取消与重试",
       "articlePath": "knowledge/llm/agent/agent-tool-timeout.md",
       "baselineArticleSha256": "6e8791a9dd54002ca1bd6b743346b1ed6a1f034370e6226b5c78a88bb7138c12",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-tool-timeout-deadline-retry-v1.webp",
@@ -1890,10 +1940,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-top10-batch4",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-tool-timeout-cancel-reconcile-v2.aj.mjs",
+          "sourceSha256": "5f6b3a252babc6cf0e14d3986714fe6a2408e4fb4b30d01ce80663d61fe7cf68",
+          "darkPng": "images/agent-tool-timeout-cancel-reconcile-v2.dark.png",
+          "lightPng": "images/agent-tool-timeout-cancel-reconcile-v2.light.png",
+          "darkSha256": "2ca08632eef884b576c9feec0e3f287850ad8890229e115d79dbc768a379550e",
+          "lightSha256": "bb41c63e56c86a67871194af5ccff2d7685a8163bf976832bad079dc9918f6c6"
+        }
+      ]
     },
     {
       "key": "agent-evaluation",
@@ -4438,7 +4498,7 @@
       "label": "HTTP 请求、响应与报文结构",
       "articlePath": "knowledge/network/http/http-message.md",
       "baselineArticleSha256": "e2219ce008b1a9a40e1a7d1464794e0aea2bac9bf655ab17c85bdfdb2c20d9f2",
-      "status": "provenance_pending",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/http-message-semantics-framing-v1.webp",
@@ -4446,10 +4506,20 @@
           "provenance": "legacy_raster_provenance_pending"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-top10-batch4",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/http-message-semantics-framing-v2.aj.mjs",
+          "sourceSha256": "131423beb44af045a338b5b1278e1f74eb22bfa465119fe1ca3663c3f665a045",
+          "darkPng": "images/http-message-semantics-framing-v2.dark.png",
+          "lightPng": "images/http-message-semantics-framing-v2.light.png",
+          "darkSha256": "eeb513e4c28ac883341409556145b9e6e085996fec9d8398dac17c6b8dbe8f84",
+          "lightSha256": "cf57ad8c83aeaf5c1491546c31ebefd57591e0ec86046f93b4bd70d32bed5ffa"
+        }
+      ]
     },
     {
       "key": "tcp-udp",

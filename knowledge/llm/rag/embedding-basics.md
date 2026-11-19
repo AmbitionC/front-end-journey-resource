@@ -14,7 +14,7 @@ $$
 
 其中 $d$ 是向量维度。实际维度可能是数百或数千；图中的二维空间只是帮助理解的投影。
 
-![Embedding 的语义空间与相似度度量](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/embedding-similarity-space-v4.png)
+![用二维玩具向量演示：同一个编码器把“猫在休息”“小猫在窗边睡觉”“数据库索引优化”映射成单位向量 q、a、b；q 和 a 方向接近，余弦相似度 0.96、欧氏距离 0.28，q 和 b 余弦 -0.35、距离 1.64；向量已 L2 归一化，所以点积与余弦相同](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/embedding-similarity-metrics-v5.dark.png)
 *图：左侧展示共享编码器的示例；独立双编码器也可以检索。兼容性取决于经过验证的编码器组合、各自输入约定和检索度量，并不要求两侧权重或前缀始终相同。*
 
 Sentence-BERT 等双编码器方法的关键工程优势，是文档向量可以提前计算并存入索引。查询到来时只编码查询，再做近邻搜索，不需要把查询与每篇文档成对送入一个大模型。

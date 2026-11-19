@@ -2,7 +2,7 @@
 
 ## 先看全生命周期
 
-![从数据预训练到后训练安全评估和部署监控的大模型生命周期](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-training-overview-lifecycle-v1.webp)
+![大模型生命周期分两段：预训练段依次是目标与数据契约、清洗去重、Tokenizer 与样本构造、预训练、预训练评估，评估结果会回头调整数据配比和清洗规则；后训练与上线段依次是监督微调、偏好优化、安全评估与发布门禁、部署与监控，安全评估和线上问题再回流到数据、后训练或检索等不同环节](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-training-lifecycle-v2.dark.png)
 *图：预训练获得通用预测能力，后训练塑造交互行为；评估与线上反馈会反向推动数据和训练策略迭代。*
 
 一个典型流程可以拆成九步：数据收集、清洗去重、tokenize、预训练、基础能力评估、监督微调、偏好优化、安全评估、部署与监控。真实团队会交叉迭代这些步骤，而不是严格只走一遍。
