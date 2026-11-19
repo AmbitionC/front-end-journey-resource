@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "failedAfterSha": "5bc6914c1d68b978652da895b2402bcdc37aaba4",
-  "baselineSha": "204a08972afb62986627f01ab91fdbeef4e8170d",
-  "failedRunId": 42994152880,
-  "publicationDigest": "5dbd529a823c83bdd7a7b6279d33f367d7c039335906e4ae0ab56fbabec892bb",
-  "reason": "PR #89 and PR #90 were each reviewed and authorized against base 204a089, then merged 30 seconds apart. Each release receipt binds only its own snapshot, so the combined master 5bc6914 had no covering receipt and sync run 42994152880 refused it. Recover 204a089..next reviewed release commit with the same public bytes."
+  "failedAfterSha": "cd0589a59c12b71c58bc4a85b225cee37a889674",
+  "baselineSha": "9303741e5073a8eae85a12d310f92c33fd3d4c20",
+  "failedRunId": 44548652280,
+  "publicationDigest": "5eacf6b39224c12b04cfb638646d571e04d4043bea8e8dd2f9a9b1e2cf7fa473",
+  "reason": "PR #118 (aj-diagrams skill + 10 sample diagrams) was merged without the release-review v3 receipt and owner authorization, so sync run 44548652280 refused cd0589a. Recover 9303741..next reviewed release commit with the same public bytes."
 }
