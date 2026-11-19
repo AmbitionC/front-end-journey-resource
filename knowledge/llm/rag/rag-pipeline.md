@@ -19,7 +19,8 @@ RAG 可以拆成两条相互关联的路径：
 
 线上日志和离线评测再反馈到切块、检索和 Prompt，形成持续优化。
 
-![生产级 RAG 的离线索引、在线回答与评测闭环](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-pipeline-production-loop-v3.webp)
+![离线索引把数据源解析清洗、切块并带上元数据和权限、做 Embedding 后写入向量和关键词索引；在线回答对问题改写、按权限过滤、混合召回、重排、组装上下文后生成带引用的答案；评测集和线上日志再反馈去调切块、检索和 Prompt](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-pipeline-production-loop-v4.dark.png)
+*图：上面离线建好索引，下面每个问题都走一遍；权限在检索阶段就过滤，评测集和线上日志再反过来调切块、检索和 Prompt。*
 
 ## 二、先定义数据契约
 

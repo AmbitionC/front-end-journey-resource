@@ -107,13 +107,16 @@ const wrapHtml = (body) => `<!doctype html><html lang="zh-CN"><head><meta charse
  * appendix 集中到本册末尾；separate 另返回一册 answersBook。
  */
 // aj-diagrams 配图一份源码出 .dark.png / .light.png 两版；文章引用深色版，PDF 是白纸，换浅色版。
+// 作用在渲染后的 HTML 上（src="...dark.png"），也兼容 Markdown 写法。
 const RESOURCE_IMAGE_HOSTS = ['https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com', 'https://fe-static-oss.ai-fe-nexus.com'];
 export function preferLightDiagrams(mdText) {
   return mdText.replace(/(https:\/\/[a-z0-9.-]+)(\/images\/[A-Za-z0-9._-]+)\.dark\.png(?=[)\s"'])/g,
     (all, origin, path) => (RESOURCE_IMAGE_HOSTS.includes(origin) ? `${origin}${path}.light.png` : all));
 }
 
-export function buildHtml(sub, parentLabel, readArticle=readLeafMd, renderArticle=(_leaf,text)=>md.render(text), {answers='inline'}={}) {
+export function buildHtml(sub, parentLabel, readArticle=readLeafMd, renderMarkdown=(_leaf,text)=>md.render(text), {answers='inline'}={}) {
+  // 在渲染后的 HTML 上换浅色图：已固定的文章要按原文哈希核验，不能先改 Markdown
+  const renderArticle = (leaf, text) => preferLightDiagrams(renderMarkdown(leaf, text));
   const out = [];
   collectLeaves(sub, [], out);
   if (!out.length) return null;
@@ -132,7 +135,7 @@ export function buildHtml(sub, parentLabel, readArticle=readLeafMd, renderArticl
       articles += `<h2 class="section">${esc(section)}</h2>`;
       lastSection = section;
     }
-    let mdText = preferLightDiagrams(readArticle(leaf));
+    let mdText = readArticle(leaf);
     if (answers !== 'inline') {
       const split = splitQuestionAnswers(mdText, { hint });
       mdText = split.body;

@@ -116,7 +116,7 @@ npm run diagram -- images/diagram-sources/<name>.aj.mjs --preview /tmp/preview.p
    - PDF 导出自动用 `.light.png`（`scripts/build-materials.mjs`）
 2. 图下一行用斜体写一句说明，告诉读者看哪里（不是重复标题）。
 3. 删除被替换的旧图引用；旧图文件先留着，等发布和回滚确认后再清。
-4. `.png` 是普通静态图，不需要在 `knowledge/pdf-static-images.json` 登记。
+4. `.png` 是普通静态图，不需要在 `knowledge/pdf-static-images.json` 新增登记。但如果这篇文章**本来就有登记**（里面有 mermaid/SVG 等），改了正文后要把该文章条目的 `articleSha256` 更新成新哈希（只改哈希，mermaid 源码和行号不变时其余字段不动），否则 `npm test` 的 PDF 固定映射检查会失败。
 5. 更新 `.codex/diagram-migration-history.json` 里对应旧图的状态。
 6. 跑 `npm test` 和 `npm run validate:tree`。
 

@@ -404,7 +404,7 @@
       "label": "上下文压缩、摘要与裁剪",
       "articlePath": "knowledge/llm/prompt/prompt-context-compression.md",
       "baselineArticleSha256": "3cf808eb6463220b4e225f047c6e3160a29d50618af7be66cdc9a838a06fc20a",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/prompt-context-compression-budget-pipeline-v1.webp",
@@ -412,14 +412,24 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": "archify",
-      "diagramType": "workflow",
-      "batchId": null,
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-top10-batch1",
       "publishedEvidence": null,
       "priority": 3,
       "reason": "Explain protected content, compression options, budget and verification in order.",
       "plannedWave": "first-10",
-      "resumeExistingDiagramMigration": false
+      "resumeExistingDiagramMigration": false,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/prompt-context-compression-budget-pipeline-v2.aj.mjs",
+          "sourceSha256": "04258f3d89eae0458c688ab4ac8c00051c0f952a9db03aba4236d86c123f78ad",
+          "darkPng": "images/prompt-context-compression-budget-pipeline-v2.dark.png",
+          "lightPng": "images/prompt-context-compression-budget-pipeline-v2.light.png",
+          "darkSha256": "512dd870ba24d8c1c87eb64094fe2b7bfd36760058670d6be2722a1b6d715049",
+          "lightSha256": "ac7db2ad35ca3abeb8555d15dad722173131f6c01a4ea0eec43eb7edb836ee31"
+        }
+      ]
     },
     {
       "key": "context-engineering",
@@ -1114,7 +1124,7 @@
       "label": "RAG 完整流程实战",
       "articlePath": "knowledge/llm/rag/rag-pipeline.md",
       "baselineArticleSha256": "0a660910c74c961b30d59c070b85d8ccca4b7ba890c0a525828fa8f977e9b0fd",
-      "status": "provenance_pending",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/rag-pipeline-production-loop-v3.webp",
@@ -1122,10 +1132,20 @@
           "provenance": "legacy_raster_provenance_pending"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-top10-batch1",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/rag-pipeline-production-loop-v4.aj.mjs",
+          "sourceSha256": "7fdbcb7669893116d7f32b734f3033e9fa4a4de933e6b2a86d3b1726e0592ea6",
+          "darkPng": "images/rag-pipeline-production-loop-v4.dark.png",
+          "lightPng": "images/rag-pipeline-production-loop-v4.light.png",
+          "darkSha256": "1a336b03363033dc6ef377d3f6fdf139dbed0e9c42a492c133407a488640ae1a",
+          "lightSha256": "ab07493c5b3e57e8a4bfdc697a72679c84a225a5837dc8c2d796958bd496b8f8"
+        }
+      ]
     },
     {
       "key": "rag-hybrid-search",
@@ -1586,7 +1606,7 @@
       "label": "Coding Agent 的架构与执行循环",
       "articlePath": "knowledge/llm/agent/agent-coding.md",
       "baselineArticleSha256": "b24f36ec0658557e9e2f41c40fc6eba7dbd01057368c7eb2dad9cbf71bc71ee4",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-coding-repo-loop-v1.webp",
@@ -1594,21 +1614,31 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": "archify",
-      "diagramType": "workflow",
-      "batchId": null,
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-top10-batch1",
       "publishedEvidence": null,
       "priority": 2,
       "reason": "Frequent interview-linked topic; explain inspect/patch/test/review and failure return.",
       "plannedWave": "first-10",
-      "resumeExistingDiagramMigration": false
+      "resumeExistingDiagramMigration": false,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-coding-repo-loop-v2.aj.mjs",
+          "sourceSha256": "2153a27b428c5fdd1c8b17d3fd39ba7f694f3b1280e784811cb09e3ae28e195e",
+          "darkPng": "images/agent-coding-repo-loop-v2.dark.png",
+          "lightPng": "images/agent-coding-repo-loop-v2.light.png",
+          "darkSha256": "32c4c86a3510d80c96c0d2f4c8369871c5aff0bb6c6aea3acd66b69415feed82",
+          "lightSha256": "4d5d26d5913037f0f324d0eb6f4a7d8d3dea7ff022ff4977bb605354160311d6"
+        }
+      ]
     },
     {
       "key": "mcp-protocol",
       "label": "MCP / A2A 智能体通信协议",
       "articlePath": "knowledge/llm/agent/mcp-protocol.md",
       "baselineArticleSha256": "fc0eec4c19cba2a2759d883232063582d2f04e69acb59d388b3f71b043e6f1d7",
-      "status": "provenance_pending",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/mcp-a2a-protocol-boundaries-v1.webp",
@@ -1616,17 +1646,27 @@
           "provenance": "legacy_raster_provenance_pending"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-top10-batch1",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/mcp-a2a-protocol-boundaries-v2.aj.mjs",
+          "sourceSha256": "cf0728706899ac7bd36ad4dc9f810449a8b6f52635bda5ed3cde757bb3fa3245",
+          "darkPng": "images/mcp-a2a-protocol-boundaries-v2.dark.png",
+          "lightPng": "images/mcp-a2a-protocol-boundaries-v2.light.png",
+          "darkSha256": "d8a832be4d03f8e29827e73cc95568d8705352b6c62ac56e929f6adadbaece9d",
+          "lightSha256": "c403f396ef292169bfbbc1116290abc05c6d178ffc1a76ac5bdc10e42f2d56e0"
+        }
+      ]
     },
     {
       "key": "multi-agent",
       "label": "多智能体协作与适用边界",
       "articlePath": "knowledge/llm/agent/multi-agent.md",
       "baselineArticleSha256": "10e3e6dcda2f941bbb24255c9da66aadddf0eaa2a427bb440c810ec057e0cb64",
-      "status": "provenance_pending",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/multi-agent-orchestrator-worker-tradeoffs-v1.webp",
@@ -1634,10 +1674,20 @@
           "provenance": "legacy_raster_provenance_pending"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-top10-batch1",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/multi-agent-orchestrator-worker-tradeoffs-v2.aj.mjs",
+          "sourceSha256": "1dc996395e3e76b7c62e2cb2d72ecc2cc148615781562a35b3ba6e3c799275c3",
+          "darkPng": "images/multi-agent-orchestrator-worker-tradeoffs-v2.dark.png",
+          "lightPng": "images/multi-agent-orchestrator-worker-tradeoffs-v2.light.png",
+          "darkSha256": "807fabd82390cc9169bca744dc4015e148b0b013488d1dd6660edfad8e5eb6ce",
+          "lightSha256": "3fefc665c421fd3b8fafac54fad193ace99327fb1ad2c5acb5bc726f4a64f675"
+        }
+      ]
     },
     {
       "key": "build-agent-framework",
@@ -3212,7 +3262,7 @@
       "label": "Redis 缓存策略与一致性",
       "articlePath": "knowledge/backend/database/redis-cache.md",
       "baselineArticleSha256": "feab09d8fa7c44d47afbccf8099db237f50d3cb8c2a32d6078a587266fc4dca9",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/redis-cache-aside-consistency-window-v1.webp",
@@ -3220,10 +3270,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-top10-batch1",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/redis-cache-aside-consistency-window-v2.aj.mjs",
+          "sourceSha256": "faea28d760b0df4a82b1073ef4d84ad16866094c31e3ae5905bf60243a7eec43",
+          "darkPng": "images/redis-cache-aside-consistency-window-v2.dark.png",
+          "lightPng": "images/redis-cache-aside-consistency-window-v2.light.png",
+          "darkSha256": "f92ea26443f7439faa475af8c307888172bef38ac0b789da658683853e8002e6",
+          "lightSha256": "63982aa273b368f41408fec8b5ccff77a75413e3bc283a1c5a2e26674f76258d"
+        }
+      ]
     },
     {
       "key": "agent-state-storage",
@@ -5158,7 +5218,7 @@
       "label": "AI / Agent 岗位简历与面试",
       "articlePath": "knowledge/career/agent-resume-interview.md",
       "baselineArticleSha256": "a3452e69c54a505ae57e5f0f52d71cbc064d3c63464191e064e641faf47a04e9",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-resume-interview-evidence-funnel-v1.webp",
@@ -5166,10 +5226,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-top10-batch1",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-resume-interview-evidence-funnel-v2.aj.mjs",
+          "sourceSha256": "09e09ba23a9b6e2cbde8f0a4f21ed33e917b16990f4bcbae481878c0c0f997b5",
+          "darkPng": "images/agent-resume-interview-evidence-funnel-v2.dark.png",
+          "lightPng": "images/agent-resume-interview-evidence-funnel-v2.light.png",
+          "darkSha256": "cf17daa20157b34e93d2a6c227d2d9f2b84afaef7dbe258947be1e7bcdd8aaf3",
+          "lightSha256": "78849aacd64ad8041f1504c703bfe361c297adbe25a49f9654d6d16d0f74538b"
+        }
+      ]
     },
     {
       "key": "agent-project-portfolio",

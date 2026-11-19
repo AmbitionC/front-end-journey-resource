@@ -1,5 +1,5 @@
-![候选人证据漏斗：resume outcome bullets→portfolio artifacts→technical screen→Agent system design→eval/debug exercise→behavioral collaboration；每层都回连到同一项目事实，禁止夸大无法验证指标](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-resume-interview-evidence-funnel-v1.webp)
-*图：沿图中的节点与箭头阅读，重点是能力框架和正式招聘流程校准简历证据、项目量化、系统设计、行为面试和现场验证。*
+![求职证据漏斗：简历成果要点、作品集、技术筛选、Agent 系统设计、评测调试练习、行为面试逐层加深，每一层验证的能力不同，但都要回到同一个项目的可验证事实](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-resume-interview-evidence-funnel-v2.dark.png)
+*图：面试从简历一路追问到调试和协作，每一轮验证的能力不同，但证据都要回到同一个项目事实。*
 
 ---
 

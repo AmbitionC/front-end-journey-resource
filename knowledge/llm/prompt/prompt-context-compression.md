@@ -21,7 +21,7 @@
 
 ## 预算流水线
 
-![原始上下文分离保护信息与可压缩候选，经多种策略组成预算内上下文并做任务评估](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/prompt-context-compression-budget-pipeline-v1.webp)
+![原始上下文分成保护区和候选区：系统指令、用户目标、关键事实与引文、权限与来源 ID 原样进入预算；重复历史、寒暄、低相关片段等候选先排序，再删除、抽取，必要时才摘要；组成预算内上下文后做任务评估和保真检查，不过就降低压缩率或重新检索](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/prompt-context-compression-budget-pipeline-v2.dark.png)
 *图：压缩后必须检查证据、顺序与引用；缺失时回到选择阶段，而不是继续回答。*
 
 先为固定指令、用户问题、期望输出和安全余量预留 token，再给证据与历史分配预算。一个可执行顺序是：
