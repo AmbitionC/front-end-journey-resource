@@ -1,5 +1,5 @@
-![评估金字塔：底层单步工具与格式校验，中层完整轨迹与恢复能力，上层端到端任务成功，侧边贯穿延迟、token 成本、安全与人工复核；标出离线回放和线上监控](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-evaluation-metric-layers-v1.webp)
-*图：沿图中的节点与箭头阅读，重点是任务成功、轨迹质量、工具正确性、成本与安全拆成可复现指标。*
+![Agent 评估按任务、轨迹、结果三层记录和判定：任务层固定输入、初始状态和允许的工具，轨迹层记录工具名、参数、返回值、重试和副作用，结果层检查环境终态和用户看到的输出；在同一任务集上同时比较任务成功、鲁棒性、效率、成本与延迟，不只看准确率](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-evaluation-task-trace-result-v2.dark.png)
+*图：上半部分逐行读：每一层记录什么、用什么判定；下半部分是在同一任务集上要一起比较的指标。*
 
 ---
 

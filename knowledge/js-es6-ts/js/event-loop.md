@@ -1,6 +1,6 @@
 浏览器事件循环协调 JavaScript、事件、网络回调、microtask 与渲染。它不会让长时间同步代码“自动异步”；一个 long task 会占住主线程，直到调用栈返回，用户输入和页面更新都只能等待。
 
-![浏览器选择一个 task 执行 JavaScript，清空本次 microtask checkpoint，然后才获得可能的 rendering update，之后进入下一轮](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/browser-event-loop-task-microtask-render-v1.webp)
+![浏览器一轮事件循环：取一个 task，执行 JavaScript 直到调用栈为空，清空 microtask 队列且期间新加入的也在本轮执行，然后宿主可能更新渲染，再进入下一轮；示例代码同步阶段输出 A F，microtask 阶段输出 C E D，下一个 task 输出 B](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/browser-event-loop-round-order-v2.dark.png)
 *图：task → microtask checkpoint → possible render 是一轮关键顺序；microtask 中继续入队会延迟后续 task 与绘制。*
 
 ---

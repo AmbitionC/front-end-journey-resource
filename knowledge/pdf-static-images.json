@@ -1111,7 +1111,7 @@
       "id": "agent-evaluation:mermaid:157",
       "kind": "mermaid",
       "articlePath": "knowledge/llm/agent/agent-evaluation.md",
-      "articleSha256": "eabe57df86b14ec5ac9bd1d173956bc7a427cab7d0396726e032fed67512eeb1",
+      "articleSha256": "0dfe5b678d2d09a87a6973512636903b2eacf6e7068db3b265a8707c6e597238",
       "line": 157,
       "sourceText": "flowchart LR\n    A[冻结任务集与环境版本] --> B[运行 Agent\\n记录输出与轨迹]\n    B --> C[规则判定环境终态]\n    C --> D[必要时运行校准后的 Judge]\n    D --> E[按场景与风险切片]\n    E --> F[比较质量、成本与延迟]\n    F --> G[保存运行配置与失败样本]\n",
       "sourceSha256": "025b70f2881d6e39ddac2ee1abed5e9636924d99532da31fa39b5355f404c780",
