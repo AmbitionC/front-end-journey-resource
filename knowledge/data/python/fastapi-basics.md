@@ -7,14 +7,13 @@
 
 ## 为什么 FastAPI 适合 AI 后端
 
-LLM 调用的本质是高延迟的网络 I/O（通常 1–30 秒），这与数据库查询的毫秒级延迟有本质差异。在同步框架（如 Flask、Django 默认模式）里，一个请求在等待 LLM 响应时会占住一个线程，100 个并发请求就需要 100 个线程。FastAPI 基于 Starlette 和 asyncio，路由函数可以是 `async def`，等待 LLM 时不占线程，事件循环可以继续处理其他请求，这对 AI 后端是根本性的架构优势。
+调用远端模型服务时，等待网络响应通常属于 I/O 等待；在 FastAPI 的 `async def` 路由中，如果客户端提供可等待的非阻塞接口，`await` 可以把控制权交还事件循环，让同一事件循环处理其他就绪任务。线程仍然存在，只是不必让每个等待中的请求独占一个阻塞线程；若在异步路由里直接调用同步阻塞 SDK，仍会阻塞该事件循环。普通 `def` 路由则由 FastAPI 放入外部线程池执行。实际并发能力还受 worker 数、连接池、线程池容量和上游限制影响，不能仅从并发请求数推导线程数。[FastAPI 异步执行说明](https://fastapi.tiangolo.com/async/)
 
-| 特性 | FastAPI | Flask | Django |
-|------|---------|-------|--------|
-| 原生 async/await | ✅ 一等公民 | ⚠️ 2.x 支持但生态偏同步 | ⚠️ 3.x ASGI 但历史包袱重 |
-| 请求体自动校验 | ✅ Pydantic 内置 | ❌ 需 marshmallow 等 | ❌ 需 DRF Serializer |
-| 自动生成 OpenAPI 文档 | ✅ `/docs` `/redoc` | ❌ 需插件 | ❌ 需 drf-spectacular |
-| 适合 AI 微服务 | ✅ 轻量，专注 HTTP | ✅ 但 async 体验差 | ❌ 全栈框架过重 |
+比较框架时，应检查实际部署与调用链，而不是给出统一的性能或适用性排名：
+
+- **FastAPI**：ASGI 应用可组合异步 I/O，类型声明、Pydantic 和 OpenAPI 集成有助于 API 开发；同步依赖、阻塞客户端与 CPU 密集任务仍需单独安排执行资源。
+- **Flask**：官方文档中的 WSGI 模式即使使用异步视图，一个请求仍占用一个 worker；视图内可并发等待 I/O，但这不等于增加 worker 可同时处理的请求数。具体并发方式取决于部署配置。[Flask async/await](https://flask.palletsprojects.com/en/stable/async-await/)
+- **Django 5.2**：支持异步视图与 ASGI 请求栈；要获得完整异步栈的收益，还需检查中间件及同步组件，不能把它概括成不适合 AI 服务。[Django 5.2 异步支持](https://docs.djangoproject.com/en/5.2/topics/async/)
 
 三个核心优势对 AI/RAG/Agent 工程师的具体意义：
 
@@ -400,3 +399,6 @@ A：两个作用：1) 文档生成，Swagger UI 会展示响应体的字段和�
 - [Python 3.13：gather 的并发运行合同](https://docs.python.org/3.13/library/asyncio-task.html#asyncio.gather)
 
 - [HTTPX：四类超时与默认值配置](https://www.python-httpx.org/advanced/timeouts/)
+
+- [Flask：异步视图的 worker 占用边界](https://flask.palletsprojects.com/en/stable/async-await/)
+- [Django 5.2：ASGI 异步栈与同步适配边界](https://docs.djangoproject.com/en/5.2/topics/async/)

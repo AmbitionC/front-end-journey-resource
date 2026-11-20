@@ -41,6 +41,6 @@
 <details data-knowledge-key="fastapi-basics"><summary>（13）FastAPI 是什么，主要用来解决哪些 Web 服务开发问题？</summary></details>
 <p>FastAPI 是用于构建 Python API 的 Web 框架，基于 Starlette 的 ASGI 能力，并用 Python 类型声明与 Pydantic 支持数据校验和序列化。它提供路由、依赖注入以及基于 OpenAPI 的自动接口文档，常用于把业务逻辑或模型调用包装成 HTTP 服务。async 路由适合配合非阻塞 I/O，但同步阻塞调用和 CPU 密集工作仍需按执行模型处理，框架不会自动把所有任务变成并行计算。</p>
 
-<details data-knowledge-key="spring-mvc-request-routing"><summary>（14）在 Spring Boot 的 Servlet/MVC 应用中，HTTP 请求怎样按地址进入对应业务方法；若自己设计分派机制，应如何实现通用匹配与调用？</summary></details>
+<details data-knowledge-key="spring-mvc-request-routing"><summary>（14）在 Spring Boot 的 Servlet/MVC 应用中，HTTP 请求怎样按地址进入对应业务方法？若自己设计分派机制，哈希定位类后怎样通用调用，业务控制器必须继承统一基类吗？</summary></details>
 <p>Servlet 容器先接收请求，经适用的 Filter 链后交给 DispatcherServlet；后者用 HandlerMapping 找到处理器，再选择 HandlerAdapter 解析参数并调用控制器方法。注解式控制器通过 RequestMapping/GetMapping 等声明路径、HTTP 方法和其他匹配条件，返回值再按消息转换或视图协议处理。若设计简化分派器，应分开注册元数据、匹配条件、参数绑定与适配调用；哈希找类只是局部手段，注解路由并不要求每个业务控制器继承统一基类。</p>
 
