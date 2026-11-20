@@ -9,7 +9,7 @@
 
 一个链接可能归属正确却定位太宽；定位准确也可能与声明无关；多个局部支持的句子还可能被模型组合成来源没有表达的结论。因此四层要分别记录和评测。
 
-![来源被切成带稳定标识和版本的证据片段，答案声明逐一连接并检查覆盖、蕴含与时效](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-citation-grounding-evidence-chain-v1.webp)
+![答案“产品支持功能 A，并且所有地区默认开启”先拆成两个原子声明，再逐条绑定来源账本里带文档版本和字符区间的证据片段：声明 1 被“功能 A 已发布”的片段支持，声明 2 的证据只说部分企业客户可开启，范围不符，要删掉、改写或拒答；另外分别统计覆盖率和引用正确率](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-citation-claim-evidence-ledger-v2.dark.png)
 *图：引用在 claim 级别连接到精确 evidence span；不受支持的声明进入拒答，而不是附上相邻链接。*
 
 ## 摄取时建立来源账本

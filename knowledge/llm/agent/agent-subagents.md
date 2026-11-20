@@ -21,7 +21,7 @@ type SubagentContract<I, O> = {
 
 [OpenAI 的 Agent orchestration 文档](https://developers.openai.com/api/docs/guides/agents/orchestration)区分 handoff 与 agents-as-tools：前者转移当前会话所有权，后者由管理者调用专家并继续负责最终回答。本篇讨论的是后者；若专家直接接管用户交互，责任、状态和退出协议都不同。
 
-![主 Agent 以目标、输入、工具、限制和完成条件合同调用隔离的 Subagent，Subagent 观察、工作、验证后返回带证据、状态和风险的结果](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-subagents-contract-lifecycle-v1.webp)
+![用户只和主 Agent 交互；主 Agent 用调用合同委派 Subagent，合同写明目标和验收标准、输入快照、最小工具集、预算、完成条件和输出 schema；Subagent 在隔离上下文里观察、工作、验证，返回带状态、证据、产物、风险和未完成项的结果信封；主 Agent 重新校验 schema、来源和副作用后再合并交付，Subagent 不获得用户所有权](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-subagent-contract-envelope-v2.dark.png)
 *图：Subagent 返回结果，不获得直接的用户所有权；主 Agent 仍负责合并和交付。*
 
 ## 上下文隔离不是上下文缺失

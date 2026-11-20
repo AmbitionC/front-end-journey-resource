@@ -1,5 +1,5 @@
-![中心为 use case，分支到 String 计数、Hash 对象、List 队列、Set 去重、Sorted Set 排名、Stream 消息日志；每类显示核心操作与顺序/唯一性属性](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/redis-data-types-access-patterns-v1.webp)
-*图：沿图中的节点与箭头阅读，重点是命令语义和访问模式比较 string、hash、list、set、sorted set、stream，而不是仅列名称。*
+![按顺序性、唯一性、典型命令和适合场景比较 Redis 六种类型：String 存单个值，INCR 和 GET 为 O(1)，适合计数和缓存值；Hash 字段唯一，HSET 和 HGET 为 O(1)，适合对象的多个字段；List 保持插入顺序且可重复，单元素 LPUSH 和 RPOP 为 O(1)，适合队列和最近 N 条；Set 无序且成员唯一，SADD 和 SISMEMBER 为 O(1)，适合去重和标签；Sorted Set 按 score 排序且成员唯一，单元素 ZADD 和 ZRANK 为 O(log N)，适合排行榜和优先级队列；Stream 按 ID 追加，用 XADD 和 XREADGROUP，适合消息日志和消费组](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/redis-data-types-order-uniqueness-v2.dark.png)
+*图：逐行读：顺序、唯一性和典型命令决定这种类型适合的访问模式；表中复杂度只对所列的单元素命令成立，批量和范围命令另算。*
 
 ---
 

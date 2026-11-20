@@ -1286,7 +1286,7 @@
       "label": "引用溯源、Grounding 与事实一致性",
       "articlePath": "knowledge/llm/rag/rag-citation-grounding.md",
       "baselineArticleSha256": "6b2b911d4e3ecc702116454e6af38fffe96d37e8f187c7fbaefe2b97b4841210",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/rag-citation-grounding-evidence-chain-v1.webp",
@@ -1294,10 +1294,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-20pct-batch2",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/rag-citation-claim-evidence-ledger-v2.aj.mjs",
+          "sourceSha256": "3afc15c173010133ac012c1384436ac02f2278130a425aae50af87c5316239a7",
+          "darkPng": "images/rag-citation-claim-evidence-ledger-v2.dark.png",
+          "lightPng": "images/rag-citation-claim-evidence-ledger-v2.light.png",
+          "darkSha256": "4d9d40e643706bd860b8c6d91a5b58d07e541ea31c74b8994f8cd003322b891d",
+          "lightSha256": "1d7694704f5fec046f7b8efbe3f90d7044f688f362a00e2e632fee301e5f1363"
+        }
+      ]
     },
     {
       "key": "embedding-basics",
@@ -2008,7 +2018,7 @@
       "label": "Subagent 子智能体设计",
       "articlePath": "knowledge/llm/agent/agent-subagents.md",
       "baselineArticleSha256": "73b6076eaf26460e9a4efa432a48452d55aa8691e2aed1826671def1ea166265",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-subagents-contract-lifecycle-v1.webp",
@@ -2016,10 +2026,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-20pct-batch2",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-subagent-contract-envelope-v2.aj.mjs",
+          "sourceSha256": "38e69486c4a4bf4d029ba2d785d0516082407b306686928c916ffbd6fdc3fcd4",
+          "darkPng": "images/agent-subagent-contract-envelope-v2.dark.png",
+          "lightPng": "images/agent-subagent-contract-envelope-v2.light.png",
+          "darkSha256": "474d46039ff6d35cf6f59afdba7c016a7316a7cbbe97f2d8750db1b88d6bd5f6",
+          "lightSha256": "382fd94de535ceb372276522e94c8ec4e82ac79fd49a0768ae48325414831254"
+        }
+      ]
     },
     {
       "key": "agent-event-driven",
@@ -2402,7 +2422,7 @@
       "label": "线上反馈、评估集与持续改进闭环",
       "articlePath": "knowledge/llm/production/agent-feedback-loop.md",
       "baselineArticleSha256": "1b5b5abdf6794901f2ce03538fad9fae17abea2990e5c02890af77533af249b5",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-feedback-loop-eval-flywheel-v1.webp",
@@ -2410,10 +2430,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-20pct-batch2",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-feedback-case-eval-canary-v2.aj.mjs",
+          "sourceSha256": "a8e4573103a50a6a5320c98783182aa698fff25390cbd3f437dfd910c06b7ed6",
+          "darkPng": "images/agent-feedback-case-eval-canary-v2.dark.png",
+          "lightPng": "images/agent-feedback-case-eval-canary-v2.light.png",
+          "darkSha256": "7b094a790ab3522f18e04f877a51904552f405c8bb7c5b8b13ab86cc483558dd",
+          "lightSha256": "f80f07f98055720b400e619757a1fdafb5799d143d4c293e8a5c54952c616205"
+        }
+      ]
     },
     {
       "key": "agent-cache",
@@ -2442,7 +2472,7 @@
       "label": "并发控制、资源隔离与公平调度",
       "articlePath": "knowledge/llm/production/agent-concurrency.md",
       "baselineArticleSha256": "d3fd9f75daf699b9cfb8e432e0b72b18909d2ebf866a19e673661f86f1b097bd",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-concurrency-fair-scheduler-v1.webp",
@@ -2450,10 +2480,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-20pct-batch2",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-concurrency-admission-fair-backpressure-v2.aj.mjs",
+          "sourceSha256": "baacda9b5592c59c48b54e7e4fcaf2a36c45e6cf95cb53d354f580985a1ad10a",
+          "darkPng": "images/agent-concurrency-admission-fair-backpressure-v2.dark.png",
+          "lightPng": "images/agent-concurrency-admission-fair-backpressure-v2.light.png",
+          "darkSha256": "a99b21e29febd2069e08f9ea9c6bf4846f3200ae2f09c1ee507fc71704626925",
+          "lightSha256": "39fd18042d90d70ba7d0b549be2f2848009ae6d9ba25a36dba0e62c38e145c6f"
+        }
+      ]
     },
     {
       "key": "agent-trace-model",
@@ -3536,7 +3576,7 @@
       "label": "Redis 数据结构与使用场景",
       "articlePath": "knowledge/backend/database/redis-data-structure.md",
       "baselineArticleSha256": "79b26fa692692f6a284b96c4494a0a74ef37f88c97211cbd60ed0b6956473fbd",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/redis-data-types-access-patterns-v1.webp",
@@ -3544,10 +3584,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-20pct-batch2",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/redis-data-types-order-uniqueness-v2.aj.mjs",
+          "sourceSha256": "a5b2fabd6b5a31e9d7bf38b0f10edf21762daee272de2bbecf499aa3614acc1d",
+          "darkPng": "images/redis-data-types-order-uniqueness-v2.dark.png",
+          "lightPng": "images/redis-data-types-order-uniqueness-v2.light.png",
+          "darkSha256": "a185137917313d2decdb3030ac4dde10682b32b2924a7bc43b98af97070eb94a",
+          "lightSha256": "f1d18de7d064b6f299636d009c1207ead2046fe7221b6ab70bf2d701720d694c"
+        }
+      ]
     },
     {
       "key": "object-storage",
@@ -4640,7 +4690,7 @@
       "label": "进程、线程与协程",
       "articlePath": "knowledge/cs/os/os-process-thread.md",
       "baselineArticleSha256": "272e06c9d7ae2cd4afb100f4dc6848ae78d4f568244b002c06c5315744896c8e",
-      "status": "provenance_pending",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/process-thread-coroutine-scheduling-v2.png",
@@ -4648,17 +4698,27 @@
           "provenance": "legacy_raster_provenance_pending"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-20pct-batch2",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/process-thread-coroutine-boundaries-v3.aj.mjs",
+          "sourceSha256": "5bc957c00e009ca85580b5bb4106abfd214278d561c2cd31964b21a1c90cc979",
+          "darkPng": "images/process-thread-coroutine-boundaries-v3.dark.png",
+          "lightPng": "images/process-thread-coroutine-boundaries-v3.light.png",
+          "darkSha256": "e084c9ef20e87707cd1e0d575454e0f7ecee2dd92017f4f81fa5f382cb9c24be",
+          "lightSha256": "b90bda71a5dcb58a2bba4e0dc745d349483eba6d6f3dfa924a3926770bb4165b"
+        }
+      ]
     },
     {
       "key": "os-thread-sync",
       "label": "锁、信号量与并发同步",
       "articlePath": "knowledge/cs/os/os-thread-sync.md",
       "baselineArticleSha256": "568ecc910bc09969f7e8005e16669452e75a53d8c90c8438e5763f5595a14890",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/thread-synchronization-happens-before-v1.webp",
@@ -4666,10 +4726,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-20pct-batch2",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/thread-sync-mutex-condvar-semaphore-v2.aj.mjs",
+          "sourceSha256": "edf6b1183e1119d2fb39456d830584df6ecadba7ef8b46604d81540f8074cc0c",
+          "darkPng": "images/thread-sync-mutex-condvar-semaphore-v2.dark.png",
+          "lightPng": "images/thread-sync-mutex-condvar-semaphore-v2.light.png",
+          "darkSha256": "79c21863918664084b839d6c185d38172481d9a3e518fc868a52bba30890a73d",
+          "lightSha256": "6e78683f19c2c1f82ff6ee5ac53c3d44bafbf27f68730e2510c6be8db85ce2c5"
+        }
+      ]
     },
     {
       "key": "os-deadlock",
