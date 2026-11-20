@@ -1647,6 +1647,23 @@
             "department": "其他",
             "role": "风控实习岗位",
             "updatedAt": "2026-11-18"
+          },
+          {
+            "label": "腾讯游戏安全后台一面：进程、Agent 与请求路由",
+            "key": "tencent-ai-34",
+            "isLeaf": true,
+            "filePath": "tencent/ai",
+            "department": "其他",
+            "role": "游戏安全后台开发",
+            "roleCategory": "后端工程与AI应用",
+            "tags": [
+              "Agent",
+              "操作系统",
+              "Spring MVC",
+              "FastAPI"
+            ],
+            "contentFormat": "short-qa-v2",
+            "updatedAt": "2026-11-20"
           }
         ]
       },

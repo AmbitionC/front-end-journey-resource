@@ -100,6 +100,22 @@ function nextStep(
 
 即使共用一次模型调用，也要分别校验意图枚举、必填槽位与改写结果，保护实体、数字、否定、时间和版本。信息仍有歧义时先澄清，不让改写器以猜测填成用户事实。比较同模与分模方案时，先看路由和槽位是否正确、原问约束是否保留，再看检索证据及最终任务结果；保留相同任务切片，不能只按一个分类准确率或查询相似度决定架构。
 
+## 关键词规则如何与模型路由配合
+
+已知订单编号、稳定命令或边界清楚的短语，可以先由确定性规则提出路由候选；表达多样、存在否定或多意图的请求，再交给分类器、模型或澄清分支。规则命中也要经过原有授权和槽位检查，不能看到“退款”两个字就执行退款。[Anthropic 的 Routing 说明](https://www.anthropic.com/research/building-effective-agents#workflow-routing)允许模型与传统分类算法承担分类，具体级联策略仍需按业务样本验证。
+
+先说明“命中”的含义：完整命令相等、词边界匹配、任意子串与正则匹配并不等价。以 Python 正则为例，`re.search` 查找字符串中的匹配位置，`re.fullmatch` 要求整段字符串符合模式；它们都不会自动理解否定或真实意图。[Python 正则函数文档](https://docs.python.org/3/library/re.html#re.fullmatch)说明了这些接口边界。大量词典规则还可比较 Trie 等方法，但不要仅因使用正则就断言更快，匹配范围、规则规模和输入分布都影响选择。
+
+把每条规则的标识、匹配方式、目标意图、冲突优先级和版本一起维护。新增或修改时，回归肯定表达、否定表达、多意图、近义词、规则重叠及未命中样本；记录最后被采用的规则版本和路由结果，才能定位一次误分流并回滚。这是一种可审计的工程组织方式，并非所有框架内置的统一配置格式。
+
+| 检查项 | 应怎样说明 |
+|---|---|
+| 规则覆盖率 | 同一时间窗、同一版本下，采用规则路径的合格请求数 / 全部合格请求数；先固定重试去重和排除口径 |
+| 命中后的正确性 | 在独立标注样本中检查选中意图是否正确，按否定、多意图和新业务切片；覆盖率高不代表准确 |
+| 是否值得保留规则层 | 在相同任务集与质量底线下比较规则、模型及混合方案的错误、延迟与调用成本 |
+
+回答项目追问时展示实际日志、样本及版本；没有真实测量就说明待测，不能从“加了规则”推断一个命中比例。模型路径也不能默认兜底成功：遇到槽位缺失或候选冲突，仍回到前文的澄清与停止条件。
+
 ## 失败边界：不确定时不要伪装确定
 
 - **置信度校准失真**：模型说“很确定”不等于正确。用分桶校准图和按任务类型的错误样本调阈值，不把单一全局阈值用于所有动作。
@@ -122,15 +138,16 @@ function nextStep(
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [小红书一面：检索评测、上下文压缩与任务幂等](../../../interview/redbook/ai/redbook-ai-4.md)
-- [小红书大模型平台全栈一面：写边界、Harness 与意图澄清](../../../interview/redbook/ai/redbook-ai-7.md)
-- [小红书 AI 后端一面：执行模式、Memory、意图与 RAG](../../../interview/redbook/ai/redbook-ai-8.md)
 - [网易云全栈一面：评估闭环、异步任务与数据查询](../../../interview/netease/fullstack/netease-fullstack-1.md)
 - [字节全栈：多智能体导购、客户端与系统评测](../../../interview/bytedance/base/bytedance-base-43.md)
 - [腾讯混元后台一面：Java 并发、限流与 Agent 工程](../../../interview/tencent/ai/tencent-ai-28.md)
+- [小红书 AI 后端一面：执行模式、Memory、意图与 RAG](../../../interview/redbook/ai/redbook-ai-8.md)
 - [字节 Agent 后端实习一面：LangGraph、评测集与混合检索](../../../interview/bytedance/base/bytedance-base-22.md)
+- [小红书大模型平台全栈一面：写边界、Harness 与意图澄清](../../../interview/redbook/ai/redbook-ai-7.md)
 - [快手 AI 应用开发一面：意图澄清、评测与 MCP 故障处理](../../../interview/kuaishou/ai/kuaishou-ai-3.md)
 - [快手效果营销实习一面：意图路由、模型容错与业务校验](../../../interview/kuaishou/ai/kuaishou-ai-18.md)
+- [小红书一面：检索评测、上下文压缩与任务幂等](../../../interview/redbook/ai/redbook-ai-4.md)
+- [腾讯游戏安全后台一面：进程、Agent 与请求路由](../../../interview/tencent/ai/tencent-ai-34.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
@@ -139,3 +156,6 @@ function nextStep(
 - [OpenAI Agents SDK：Running agents](https://openai.github.io/openai-agents-python/running_agents/)
 - [OpenAI Agents SDK：Testing](https://openai.github.io/openai-agents-python/testing/)
 - [Ma et al.：Query Rewriting in Retrieval-Augmented Large Language Models](https://aclanthology.org/2023.emnlp-main.322/)
+
+- [Anthropic：Routing 工作流](https://www.anthropic.com/research/building-effective-agents#workflow-routing)
+- [Python：正则表达式搜索与完整匹配](https://docs.python.org/3/library/re.html#re.fullmatch)

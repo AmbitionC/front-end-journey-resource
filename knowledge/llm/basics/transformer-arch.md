@@ -210,6 +210,14 @@ Pre-Norm 往往更容易稳定训练很深的网络，但不能简单理解为�
 
 因此，“Transformer 可以并行”主要描述训练时对已知序列的处理，不代表自回归生成能一次并行产出所有未知 Token。
 
+### 从下一个 Token 到结束：EOS 也是预测目标
+
+对常见自回归文本生成，模型根据当前前缀计算词表上的 logits；解码器按配置取最大概率项，或从调整后的分布采样。选出的 Token 追加到前缀，再预测下一步。Temperature、Top-P 等控制的是选择过程，详见[推理参数](./llm-inference-params.md)，并不是模型一次先写好整段答案再逐字显示。
+
+EOS（End of Sequence）是约定的特殊 Token ID。在以 EOS 标记结束边界、并把该位置纳入训练目标的数据中，模型也学习在适当的前缀后预测这个 ID；推理时它和普通 Token 一样得到分数，经解码选出后，由生成循环识别并停止。对话模型的结束标记还须与聊天模板、生成配置一致，不能把所有模型的序列结束、消息结束和轮次结束当作同一种标记。[TRL 的指令微调说明](https://huggingface.co/docs/trl/sft_trainer#instruction-tuning-example)强调了 EOS 与聊天模板对齐的必要性。
+
+**停止输出不一定意味着生成了 EOS。** 达到最大生成长度、命中停止字符串或触发其他停止条件，也可能结束生成；例如 [Transformers GenerationConfig](https://huggingface.co/docs/transformers/main/en/main_classes/text_generation)分别提供 `eos_token_id`、`max_new_tokens` 和 `stop_strings`。判断答案是否自然完成，要结合具体配置和服务返回的结束原因，不能只凭文本最后有句号。
+
 ## 现代 Transformer 相比原始论文变了什么
 
 | 组件 | 2017 原始 Transformer | 现代 Decoder-only 常见选择 |
@@ -294,6 +302,7 @@ Attention 负责“从哪里读取信息”，FFN 负责“如何变换当前位
 - [阿里云后端与 Agent 二面：领域建模、训练并行与 Java 基础](../../../interview/alibaba/ai/alibaba-ai-28.md)
 - [饿了么 AIGC 实习一面：Attention、训练与扩散模型](../../../interview/alibaba/ai/alibaba-ai-23.md)
 - [字节 Agent 后端一面：进程线程、Transformer 与训练](../../../interview/bytedance/base/bytedance-base-31.md)
+- [腾讯游戏安全后台一面：进程、Agent 与请求路由](../../../interview/tencent/ai/tencent-ai-34.md)
 - [淘天 AI 应用研发实习：后端基础、Transformer 与训练](../../../interview/alibaba/ai/alibaba-ai-32.md)
 <!-- interview-source-history:end -->
 
@@ -307,5 +316,7 @@ Attention 负责“从哪里读取信息”，FFN 负责“如何变换当前位
 - [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135)
 - [The Llama 3 Herd of Models](https://arxiv.org/abs/2407.21783)
 - [PyTorch scaled_dot_product_attention](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html)
+- [Hugging Face Transformers：GenerationConfig 与停止条件](https://huggingface.co/docs/transformers/main/en/main_classes/text_generation)
+- [Hugging Face TRL：指令微调与 EOS / 聊天模板对齐](https://huggingface.co/docs/trl/sft_trainer#instruction-tuning-example)
 
 <!-- content-sync: 2026-07-13-verified -->
