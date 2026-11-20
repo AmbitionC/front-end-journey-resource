@@ -29,14 +29,14 @@
             "isLeaf": true,
             "filePath": "llm/basics",
             "contentStatus": "published",
-            "heat": 18,
+            "heat": 19,
             "currRank": 5,
-            "updatedAt": "2026-08-23",
+            "updatedAt": "2026-11-20",
             "interviewBaseHeat": 11,
             "quickRead": {
-              "text": "模型按 token 消费上下文并自回归生成，窗口限制影响可放入的指令、证据与历史。KV Cache 保存既有注意力计算的键值，增长会占显存；它不是长期业务记忆，也不证明模型输出事实正确。PD 分离将输入计算与逐步生成解耦，但 KV 交接、调度与回收有成本，Mooncake 等方案须按真实负载评测。"
+              "text": "模型按token消费上下文并自回归生成，KV Cache保存各层已处理位置的键值以复用前缀计算。标准全量因果注意力与滑动窗口的可见范围、缓存长度不同；缓存不是长期业务记忆，延续对话仍需要显式上下文。"
             },
-            "interviewCount": 7,
+            "interviewCount": 8,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -61,14 +61,14 @@
             "isLeaf": true,
             "filePath": "llm/basics",
             "contentStatus": "published",
-            "heat": 16,
+            "heat": 17,
             "currRank": 5,
-            "updatedAt": "2026-07-14",
+            "updatedAt": "2026-11-20",
             "interviewBaseHeat": 6,
             "quickRead": {
-              "text": "Transformer 用 Attention 聚合位置间的信息、FFN 变换每个位置，并以残差与归一化堆叠。Q、K 决定匹配权重，V 提供被聚合内容；长距离可见不等于可靠记忆，标准全量 Attention 仍有长度相关成本。"
+              "text": "Transformer以嵌入、位置表示、注意力与前馈层处理序列；常见自回归模型按前缀计算下一token分布，再由解码器选择。EOS可以是学到的结束token，长度上限或停止串等运行时条件也可终止；因果掩码、KV缓存及窗口结构须按具体模型区分。"
             },
-            "interviewCount": 10,
+            "interviewCount": 11,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -575,14 +575,14 @@
             "isLeaf": true,
             "filePath": "llm/dev",
             "contentStatus": "published",
-            "heat": 15,
+            "heat": 16,
             "currRank": 5,
             "updatedAt": "2026-10-29",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "模型提出结构化工具请求，宿主负责参数校验、授权、执行与结果回送。调用能力只是 Agent 的一个环节，仍需状态、次数、超时与终止合同，格式正确也不等于动作安全。"
             },
-            "interviewCount": 9,
+            "interviewCount": 10,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1396,14 +1396,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 28,
+            "heat": 29,
             "currRank": 5,
             "updatedAt": "2026-07-14",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "智能体围绕目标感知、行动并读取结果，模型只是可能的决策组件。用PEAS界定绩效、环境、执行器和观察，循环还需状态、权限、预算与终止条件；路径固定时普通工作流也可能更可靠。"
             },
-            "interviewCount": 22,
+            "interviewCount": 23,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1730,14 +1730,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 9,
+            "heat": 10,
             "currRank": 5,
-            "updatedAt": "2026-11-04",
+            "updatedAt": "2026-11-20",
             "interviewBaseHeat": 0,
             "quickRead": {
-              "text": "意图处理先显式化目标、对象、约束与授权，结合缺槽和候选分歧决定澄清，再按风险和权限路由。意图识别与查询改写可按任务合同组合，模型数量不是正确性依据；应验证路由、改写保真和错误执行边界。"
+              "text": "意图处理先确认目标、槽位、候选分歧与权限，再决定澄清和路由。边界明确的关键词规则可与模型组合，但匹配方式、版本、冲突及命中后正确性要分别验证，覆盖率不能代替准确率或真实项目统计。"
             },
-            "interviewCount": 9,
+            "interviewCount": 10,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -2711,9 +2711,14 @@
             "isLeaf": true,
             "filePath": "data/python",
             "contentStatus": "published",
-            "heat": 3,
+            "heat": 4,
             "currRank": 3,
-            "updatedAt": "2026-07-18"
+            "updatedAt": "2026-11-20",
+            "quickRead": {
+              "text": "FastAPI用Python类型声明、Pydantic与Starlette构建ASGI接口，提供路由、数据校验、依赖注入和OpenAPI文档。async路由需使用非阻塞I/O；同步流迭代可在线程池执行，gather不会消除数据依赖，exclude_unset也不等于关闭响应模型校验。"
+            },
+            "interviewBaseHeat": 3,
+            "interviewCount": 1
           },
           {
             "key": "chain-of-responsibility-validation",
@@ -2934,6 +2939,20 @@
             "quickRead": {
               "text": "装饰器以同接口包装对象，通过inner委托和逐层组合增加职责；顺序会改变结果，同接口不保证所有组合语义正确。它不等于Python/TypeScript语法装饰器，和代理需按主要意图区分，并明确资源、异常与性能边界。"
             }
+          },
+          {
+            "key": "spring-mvc-request-routing",
+            "label": "Spring MVC 请求分派与注解路由",
+            "filePath": "backend/java",
+            "isLeaf": true,
+            "updatedAt": "2026-11-20",
+            "interviewBaseHeat": 0,
+            "quickRead": {
+              "text": "Servlet容器把请求交给DispatcherServlet，后者通过HandlerMapping选择处理器，再由HandlerAdapter绑定参数并调用业务方法。注解声明路径、HTTP方法等条件，返回值按消息转换或视图协议处理；通用分派不只是URL查类，也不要求业务控制器继承统一基类。"
+            },
+            "heat": 1,
+            "interviewCount": 1,
+            "currRank": 1
           }
         ]
       },
@@ -4194,14 +4213,14 @@
             "isLeaf": true,
             "filePath": "cs/os",
             "contentStatus": "published",
-            "heat": 15,
+            "heat": 16,
             "currRank": 5,
-            "updatedAt": "2026-11-04",
+            "updatedAt": "2026-11-20",
             "interviewBaseHeat": 1,
             "quickRead": {
-              "text": "进程承载地址空间与资源，内核线程是系统调度的执行流；协程由语言或运行时挂起与恢复。C++20提供promise、awaiter、状态与handle机制，I/O循环和公平调度由库或应用另行实现，不能把Go GMP当C++标准。任务过多先区分等待与就绪积压，并限制内存、队列和下游并发。"
+              "text": "进程承载地址空间与资源，内核线程是系统调度的执行流，协程由语言运行时挂起与恢复。Linux/POSIX经典启动路径中fork创建子进程，exec替换映像且不改变PID；普通Python脚本与JVM业务代码在运行时所在进程内执行。C++20协程机制与调度器职责、等待和就绪积压仍需分别理解。"
             },
-            "interviewCount": 14,
+            "interviewCount": 15,
             "interviewCountBasis": "verified-public-posts"
           },
           {
