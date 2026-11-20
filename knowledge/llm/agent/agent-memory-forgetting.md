@@ -11,8 +11,8 @@ Agent 的“遗忘”不是数据库里随便删一行，而是让无效、过�
 
 把四者都实现成 `DELETE FROM memory` 会丢失冲突历史，也无法区分“过时”与“从未存在”。反过来，只标软删除却继续让向量索引召回，也不是真正退出使用。
 
-![四条独立的记忆动作：衰减降低检索排序；过期退出当前视图；替代保留旧版本链并建立新当前版本；删除移除内容与派生副本，仅保留最小审计标识](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-memory-forgetting-four-actions-v2.png)
-*图：四行表示可分别执行的策略，不是顺序流水线。Decay 后记录仍可能被召回；Expire 后退出 Current View，存储保留按政策处理；Supersede 仅让新版本进入当前视图；Delete 移除原文及派生内容，tombstone 仅保留最小标识和状态。当前检索还必须同时满足 active、授权与有效期条件。*
+![四种可以分别执行的遗忘动作：衰减用于可能有用但近期不重要的记忆，原记录不变，仍能进入当前视图但排序靠后；过期在超过有效期后触发，原记录按保留政策处理，不再进入当前视图；替代在用户更正或权威来源更新时触发，旧版本保留并和新版本组成版本链，只有新版本进入当前视图；删除由用户请求、政策或撤回同意触发，原文和向量、索引、缓存、派生摘要都要删掉，只留不含原文的 tombstone 记录最小标识和状态。当前视图必须同时满足 active、已授权和在有效期内；运行中的 Agent 可能已读入旧记忆，高风险调用前要按快照版本复查](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-memory-forgetting-four-actions-v3.dark.png)
+*图：逐行读：每种动作对原记录、当前视图和留痕的影响不同；当前检索还必须同时满足 active、授权与有效期条件。*
 
 ## 状态模型
 

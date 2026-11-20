@@ -1416,7 +1416,7 @@
       "label": "查询路由与多索引选择",
       "articlePath": "knowledge/llm/rag/rag-routing.md",
       "baselineArticleSha256": "9a0b2e3932a06426de3124ca0985c1c76721fead75db94a8cf87b75afc3d754e",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/rag-routing-multi-index-v1.webp",
@@ -1424,10 +1424,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-20pct-batch4",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/rag-routing-gate-confidence-merge-v2.aj.mjs",
+          "sourceSha256": "768b7e682a631aeaa2620ae3b6952b961572fb47f5581984595cfbd893d6e251",
+          "darkPng": "images/rag-routing-gate-confidence-merge-v2.dark.png",
+          "lightPng": "images/rag-routing-gate-confidence-merge-v2.light.png",
+          "darkSha256": "8eae37f654360a67653cdafe7b739e18ac2028da7bf207d31037ae9578aa4cdc",
+          "lightSha256": "a3f651c446c58b2b2e11076d98a21066f48045647217ebd7e228ac85908a1dd3"
+        }
+      ]
     },
     {
       "key": "rag-image-retrieval",
@@ -1452,7 +1462,7 @@
       "label": "查询改写、分解与扩展",
       "articlePath": "knowledge/llm/rag/rag-query-rewrite.md",
       "baselineArticleSha256": "f2e2716e99b99e52ac8dca400888a722fb24442e0b5d67438b2ba1ad21b050e6",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/rag-query-rewrite-routing-tree-v1.webp",
@@ -1460,17 +1470,27 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-20pct-batch4",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/rag-query-rewrite-diagnose-guard-v2.aj.mjs",
+          "sourceSha256": "d12c4265bc142fc4199869c1f720c747443129e9c7db73f4c4b416dbf7a7d3be",
+          "darkPng": "images/rag-query-rewrite-diagnose-guard-v2.dark.png",
+          "lightPng": "images/rag-query-rewrite-diagnose-guard-v2.light.png",
+          "darkSha256": "7e51f4b0366e03ab5a90079876911e6b0d52547bd2f0d5e2798f3b3c55dd287d",
+          "lightSha256": "6d9f413171f40a028f8d35d3c274ac0d963a97623d107a2231094b0ca8d568e9"
+        }
+      ]
     },
     {
       "key": "rag-latency-cost",
       "label": "RAG 延迟、吞吐与成本优化",
       "articlePath": "knowledge/llm/rag/rag-latency-cost.md",
       "baselineArticleSha256": "b98d334e5db6f172c23506972792de8e4fc8950edac68e7e38c14e05a9440e63",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/rag-latency-cost-budget-v1.webp",
@@ -1478,17 +1498,27 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-20pct-batch4",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/rag-latency-budget-degrade-v2.aj.mjs",
+          "sourceSha256": "4f77410908f36c4c145ec6400ccd88eadc55c76635a59582d5998a764e26fb74",
+          "darkPng": "images/rag-latency-budget-degrade-v2.dark.png",
+          "lightPng": "images/rag-latency-budget-degrade-v2.light.png",
+          "darkSha256": "f4609195ffffb6a8bbd874938b2f8e0617ab044a6296088d8c51e229e57ecd64",
+          "lightSha256": "2f18137397a9a8de01474830c8d98a584c6ab53f913429b584b52001d68df7e1"
+        }
+      ]
     },
     {
       "key": "rag-testing",
       "label": "RAG 测试集、Golden Set 与回归测试",
       "articlePath": "knowledge/llm/rag/rag-testing.md",
       "baselineArticleSha256": "0af791b9a918c08992263cd7dab03fede1aafbaf8dd416ae6927a77e309db7ad",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/rag-testing-golden-set-pyramid-v1.webp",
@@ -1496,10 +1526,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-20pct-batch4",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/rag-testing-layers-golden-gate-v2.aj.mjs",
+          "sourceSha256": "53035127c8bd4e40cb6676dc5a93c1ca806967824b19bd641301fed4d66fbdb1",
+          "darkPng": "images/rag-testing-layers-golden-gate-v2.dark.png",
+          "lightPng": "images/rag-testing-layers-golden-gate-v2.light.png",
+          "darkSha256": "9dad5f3138b8fe469bf6f76f2c0d42f7c0695884f48635e076078880d2adb268",
+          "lightSha256": "651c404342e39dbcfa3ba0e78ec7e977e2d794de2ab270bfb3123eeeeb00f247"
+        }
+      ]
     },
     {
       "key": "rag-table-retrieval",
@@ -2066,7 +2106,7 @@
       "label": "事件驱动 Agent 与异步编排",
       "articlePath": "knowledge/llm/agent/agent-event-driven.md",
       "baselineArticleSha256": "02ca0db25310843e85e2ae875d4bbfcad747474d2fdb01f7d5f4522216e8ce7b",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-event-driven-async-correlation-v1.webp",
@@ -2074,17 +2114,27 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-20pct-batch4",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-event-driven-envelope-consumer-dlq-v2.aj.mjs",
+          "sourceSha256": "87df16026b04a3d4c26a1d2ba2a2c5f87f942d869923991b5f6d082cc855471e",
+          "darkPng": "images/agent-event-driven-envelope-consumer-dlq-v2.dark.png",
+          "lightPng": "images/agent-event-driven-envelope-consumer-dlq-v2.light.png",
+          "darkSha256": "2ea11366ced7ea4b4f8a7c4e1b52f5c905fca44d7f6213f26ebbd4ee33e1fca1",
+          "lightSha256": "600e6f0988d2c30552a4def7eb0c051f88745ea8f6640b142b7bc0aaa9359d05"
+        }
+      ]
     },
     {
       "key": "agent-memory-forgetting",
       "label": "遗忘策略、冲突处理与记忆更新",
       "articlePath": "knowledge/llm/agent/agent-memory-forgetting.md",
       "baselineArticleSha256": "6ad23ae82014db60ad386ad540ad0c13b82db032468f534b14ee412d2459e02c",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-memory-forgetting-four-actions-v2.png",
@@ -2092,17 +2142,27 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-20pct-batch4",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-memory-forgetting-four-actions-v3.aj.mjs",
+          "sourceSha256": "608779b9f72f3c88bf4816fc1b33fa6e629a13ad53fbfd7e7413a9e9c1221eed",
+          "darkPng": "images/agent-memory-forgetting-four-actions-v3.dark.png",
+          "lightPng": "images/agent-memory-forgetting-four-actions-v3.light.png",
+          "darkSha256": "1047aad9ab2f6c3a9b98659ae3c0a17dd56103b4def549dc6f51cc38b0de6e3a",
+          "lightSha256": "e067e242433dbc350f3c884403111d1ea38fda9f867576c07a94abe2bb460ffe"
+        }
+      ]
     },
     {
       "key": "agent-workflow-state",
       "label": "工作流状态、检查点与断点续跑",
       "articlePath": "knowledge/llm/agent/agent-workflow-state.md",
       "baselineArticleSha256": "ac72c6937fdc0a9087bf1002ffa845e8d05748edccc70ef2c692335f5810cb0c",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-workflow-state-checkpoint-v1.webp",
@@ -2110,10 +2170,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-20pct-batch4",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-workflow-side-effect-checkpoint-v2.aj.mjs",
+          "sourceSha256": "103166e5d50522b124081d1ee1f2ddacf4cf0bf70e05ae4d2d189d9df30f4a78",
+          "darkPng": "images/agent-workflow-side-effect-checkpoint-v2.dark.png",
+          "lightPng": "images/agent-workflow-side-effect-checkpoint-v2.light.png",
+          "darkSha256": "ec32af553ba1c417cbc6c028079186e684e30a095c815d8e333c2d787e763415",
+          "lightSha256": "97651f411b8b557b4f813c256abe02d474c8b4d04c57acf87792e42f8daf74f6"
+        }
+      ]
     },
     {
       "key": "agent-parallel-tools",

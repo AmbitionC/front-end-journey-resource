@@ -20,8 +20,8 @@ type WorkflowEvent = {
 
 [Temporal Workflow Execution](https://docs.temporal.io/workflow-execution)将工作流描述为持久、可靠的函数执行；失败后通过 Event History replay 从最近记录位置恢复。这揭示核心：恢复依赖确定事件，而不是恢复某个进程内存快照。
 
-![事件日志驱动步骤状态，副作用步骤按写意图、幂等键、执行、提交结果和检查点推进，崩溃后查询既有结果再恢复](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-workflow-state-checkpoint-v1.webp)
-*图：副作用之后存在 COMMIT RESULT 与 CHECKPOINT；Replay 不应重复外部效果。*
+![一个带副作用的工作流步骤按五步推进：先写意图，记录操作、参数 hash、授权和目标；再生成 runId、stepId 加逻辑操作的幂等键；然后执行付款、发信等外部效果；接着把结果提交到 operation 表；最后 checkpoint 下一节点、版本和事件序号。最危险的崩溃点在效果已发生、结果还没提交之间。恢复时先按幂等键查外部系统或 operation 表：已存在就复用结果，确定未执行才重试，状态未知转人工或补偿；同一个 run 用带 fencing token 的 lease 保证只有一个 worker 推进，过期 worker 不能覆盖。Retry 是重新执行某个失败操作，Resume 是从持久状态继续未完成流程，Replay 是按事件历史重建状态，不重做真实副作用](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-workflow-side-effect-checkpoint-v2.dark.png)
+*图：上排是一个副作用步骤的五步顺序，红色虚线是最危险的崩溃点；恢复时先按幂等键查结果，再决定复用、重试还是转人工，lease 保证同一个 run 只有一个 worker 推进。*
 
 ## Checkpoint 保存可继续的边界
 

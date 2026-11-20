@@ -14,7 +14,7 @@
 
 不要每次同时运行所有策略。先用规则与轻量分类识别错误码、引号短语、实体、时间、否定词和多问题结构，再路由到最小必要变换。
 
-![原始查询经不同改写策略产生检索查询，只有真实语料返回的文档才是答案证据](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-query-rewrite-routing-tree-v1.webp)
+![原始查询先被保留，再用规则和轻量分类诊断缺陷，只选最小必要变换：规范化要保护错误码和 SKU，多跳问题分解为继承过滤、按依赖先后执行的子查询，召回不足用有限数量的多查询并按排名融合，HyDE 假设文档只用来找邻居，指代不清就请求澄清并回到用户；改写结果先做漂移检查，确认实体、数字、否定、时间和版本都还在，再带着由代码构造的租户、权限、版本、时间硬过滤去真实语料检索，按排名融合并按块 ID 去重，只有真实文档才是答案证据；规范化查询、多查询和假设文档等生成文本只用于检索，不能被引用](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-query-rewrite-diagnose-guard-v2.dark.png)
 *图：生成的规范化查询、多查询或 HyDE 文档只用于寻找真实语料，不直接进入答案证据链。*
 
 ## 永远保留原始查询与硬约束
