@@ -41,8 +41,8 @@ key = hash(prompt_version, model_version, user_intent,
 
 个性化、会话状态、时间敏感或高风险问题通常不适合长时间答案缓存。
 
-![Embedding、召回、重排和答案缓存使用不同键，并由来源、ACL、模型与 Prompt 变化触发对应失效](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-cache-layered-keys-v1.webp)
-*图：每层都有 TTL、Stampede Lock、Stale 检查和 Hit/Miss 指标；命中不等于新鲜。*
+![RAG 五层缓存各有自己的键：Embedding 键含文本、模型和预处理版本；召回键含 tenant、ACL 摘要、索引版本、query、filter 和 top_k；重排键含 query、候选顺序、reranker 版本和截断策略；上下文键含候选、token 预算、压缩器、引用策略和 ACL；答案键含 Prompt、模型版本、证据 hash、索引版本、tenant 和 ACL。下方矩阵列出事件让哪些层失效：来源变更或删除、ACL 变化走高优先级通道立即失效召回、上下文和答案；索引切换让召回之后全部换键；reranker 升级影响重排；生成模型升级影响答案；Prompt 变化影响上下文和答案；Embedding 模型变化影响 Embedding 并重建索引。TTL 只做兜底上限](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-cache-layer-keys-invalidation-v2.dark.png)
+*图：上排是五层缓存各自的键，下方矩阵是哪些事件让哪些层失效：删除和 ACL 变化立即删，版本类变化靠键里的版本自然 miss，TTL 只兜底。*
 
 ## TTL 只是最后一道上限
 

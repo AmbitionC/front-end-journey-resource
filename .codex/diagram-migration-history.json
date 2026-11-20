@@ -198,7 +198,7 @@
       "label": "RLHF、RLAIF 与 DPO 的差异",
       "articlePath": "knowledge/llm/basics/llm-rlhf-dpo.md",
       "baselineArticleSha256": "38aa9b5e752e94f82d5c8ed76b13bdf71b8b4e170346068c446ec363258e402a",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/llm-rlhf-dpo-preference-paths-v1.webp",
@@ -206,10 +206,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-20pct-batch3",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/llm-rlhf-rlaif-dpo-paths-v2.aj.mjs",
+          "sourceSha256": "76f9a9049ec92ff076475041352b0fe492464804cf16a91fba1d36ae10b58e40",
+          "darkPng": "images/llm-rlhf-rlaif-dpo-paths-v2.dark.png",
+          "lightPng": "images/llm-rlhf-rlaif-dpo-paths-v2.light.png",
+          "darkSha256": "c75a0b6e4d326cfb5292b4274f1c4cdbc12f7fdc1a3173f7734a449f93812209",
+          "lightSha256": "86f43a1085289a2b499919e1d3d68a52038299412e9bc66b91db5d8471c1fb71"
+        }
+      ]
     },
     {
       "key": "llm-long-context",
@@ -1342,7 +1352,7 @@
       "label": "Embedding、检索与答案缓存",
       "articlePath": "knowledge/llm/rag/rag-cache.md",
       "baselineArticleSha256": "c59cf6b2caf2790b87025607e71ffc7085edd02aec6007b30bb8c88a1b97df09",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/rag-cache-layered-keys-v1.webp",
@@ -1350,10 +1360,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-20pct-batch3",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/rag-cache-layer-keys-invalidation-v2.aj.mjs",
+          "sourceSha256": "1d00bebe7de1e7bef0a58d939f85da5fc651895dd11120e15d7409d6764dd4c5",
+          "darkPng": "images/rag-cache-layer-keys-invalidation-v2.dark.png",
+          "lightPng": "images/rag-cache-layer-keys-invalidation-v2.light.png",
+          "darkSha256": "edd3ca232bdf06f4e24117f051c9756b53bf0ebba93409bf06fcb39279c5dfe3",
+          "lightSha256": "c562554820c27921f11cd1bcc1c803e28e6a03372fca997d0baa81ebdc1cb0a6"
+        }
+      ]
     },
     {
       "key": "vector-db-selection",
@@ -3730,7 +3750,7 @@
       "label": "日志、指标、Tracing 与告警",
       "articlePath": "knowledge/backend/devops/logging-monitoring.md",
       "baselineArticleSha256": "f3f45d9c9bdec5291bcf17efc90d272b1b4288a560d2bb0f522030e42e0b61e9",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/observability-signals-correlation-alerting-v1.webp",
@@ -3738,10 +3758,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-20pct-batch3",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/observability-signals-correlate-alert-v2.aj.mjs",
+          "sourceSha256": "12102068eb4448b496204a6d4240b2f222db08e53d7895627624a023070e75b5",
+          "darkPng": "images/observability-signals-correlate-alert-v2.dark.png",
+          "lightPng": "images/observability-signals-correlate-alert-v2.light.png",
+          "darkSha256": "7b250fbe1ef5284f18385919f09de2f6ef1a991782b1e22007803c2ad1e192ef",
+          "lightSha256": "64fe4568b236e0fb82484871b8fb0318c7ce7013bed753e28d932cf466249bd8"
+        }
+      ]
     },
     {
       "key": "oauth2",
@@ -4636,7 +4666,7 @@
       "label": "TCP、UDP 与传输场景",
       "articlePath": "knowledge/network/tcpIp/tcp-udp.md",
       "baselineArticleSha256": "d697d16af9e6e633c5aac6a8993e298ac5c1f1fd8eabde35f154c398631ab3d8",
-      "status": "provenance_pending",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/tcp-udp-transport-semantics-comparison-v1.webp",
@@ -4644,10 +4674,20 @@
           "provenance": "legacy_raster_provenance_pending"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-20pct-batch3",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/tcp-udp-stream-vs-datagram-v2.aj.mjs",
+          "sourceSha256": "08fdaf6103f27cf6aaa175077aaa83ece96203f0e208688e11c18adfdee0006b",
+          "darkPng": "images/tcp-udp-stream-vs-datagram-v2.dark.png",
+          "lightPng": "images/tcp-udp-stream-vs-datagram-v2.light.png",
+          "darkSha256": "446e422baedebca1b0ff37495db112d4bea7783bc8e062274b8c720716e73bc1",
+          "lightSha256": "5133de0b0c194d8fd10ceeb8c505ab6020e5d94f3733e480f3849923662edfda"
+        }
+      ]
     },
     {
       "key": "dns-analysis",
@@ -5178,7 +5218,7 @@
       "label": "Cookie、Storage 与浏览器状态",
       "articlePath": "knowledge/network/others/localStorage-sessionStorage.md",
       "baselineArticleSha256": "4a670f603dc42607075b054a5996714ce1dd06578b0699ccc78de8d3f6e6261d",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/browser-state-cookie-storage-boundaries-v1.webp",
@@ -5186,17 +5226,27 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-20pct-batch3",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/browser-state-where-to-store-v2.aj.mjs",
+          "sourceSha256": "c6c3c289cf2af65f4e2bb7b016479138b57b092973d996e9567d1793e22cedb9",
+          "darkPng": "images/browser-state-where-to-store-v2.dark.png",
+          "lightPng": "images/browser-state-where-to-store-v2.light.png",
+          "darkSha256": "ec665e9184863e4acd72bd27e3f4b6c72b3f3ccdc3ca868e2f48d7eaaf1a9adc",
+          "lightSha256": "19b1d6dc95ff09714e4d96588213aad609f606207f6b8167f8120e36d8dd37ee"
+        }
+      ]
     },
     {
       "key": "promise",
       "label": "Promise、async/await 与异步控制流",
       "articlePath": "knowledge/js-es6-ts/es6/promise.md",
       "baselineArticleSha256": "7c3edf8f24dca189cf136438df156ed8d384bd180d0890fbb218832b30f22da1",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/promise-async-control-flow-v1.webp",
@@ -5204,10 +5254,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-20pct-batch3",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/promise-state-chain-combinators-cancel-v2.aj.mjs",
+          "sourceSha256": "36f385bf2f747fec8d7dd4743437f6d6539121d873aef5206e35e9cf4e3190e3",
+          "darkPng": "images/promise-state-chain-combinators-cancel-v2.dark.png",
+          "lightPng": "images/promise-state-chain-combinators-cancel-v2.light.png",
+          "darkSha256": "38e4a14041018d8908d68bf4ab1e208cc66601ec00c1f93ec4ea63574fb8e02c",
+          "lightSha256": "5a07e571427e7acfbd36b5ed2a54ec4e1a79cc38d38dafab4757b04fe807f208"
+        }
+      ]
     },
     {
       "key": "responsive-layout",
@@ -5707,7 +5767,7 @@
       "label": "从零到 Agent 工程师的学习路线",
       "articlePath": "knowledge/career/agent-learning-roadmap.md",
       "baselineArticleSha256": "d8ca8ceca75a1e2cf0cc2bbe8ee9951c20be82d70d8f70257cf03e451d1bbce1",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-engineer-learning-dependency-roadmap-v1.webp",
@@ -5715,10 +5775,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-20pct-batch3",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-learning-dependency-stages-v2.aj.mjs",
+          "sourceSha256": "7f54e80a2b60d6b75cb08e307e51d2a48682a305d6d6a120effe38b4047f164b",
+          "darkPng": "images/agent-learning-dependency-stages-v2.dark.png",
+          "lightPng": "images/agent-learning-dependency-stages-v2.light.png",
+          "darkSha256": "d0261a66df1a0abb5cf8d1b9ec4c8b001d7c5ef231dae6ae35df513658f027ad",
+          "lightSha256": "426f4300915e1b6012e846c4634f762c85e8137249cef370c4331635845eed88"
+        }
+      ]
     },
     {
       "key": "agent-open-source-contribution",
