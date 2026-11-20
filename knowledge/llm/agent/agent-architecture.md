@@ -254,6 +254,7 @@ AIMA 常用以下类型帮助理解能力递进：
 - [快手后端 AI 实习一面：Agent 与幻觉控制](../../../interview/kuaishou/ai/kuaishou-ai-17.md)
 - [字节搜广推引擎架构一面：JSON 输出、并发与系统基础](../../../interview/bytedance/base/bytedance-base-74.md)
 - [字节 Agent 全栈一面：工具、评测与编码](../../../interview/bytedance/base/bytedance-base-40.md)
+- [腾讯游戏安全后台一面：进程、Agent 与请求路由](../../../interview/tencent/ai/tencent-ai-34.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)
 <!-- interview-source-history:end -->
 

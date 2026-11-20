@@ -44,12 +44,18 @@ $$
 
 ## KV Cache：缓存的是每层历史 Token 的 K 和 V
 
-在因果自注意力中，第 $t$ 个位置只关注自己和之前的位置。若每生成一个 Token 都重算完整前缀，会重复计算历史位置的 Key、Value 投影。KV Cache 把这些历史结果保留下来：
+以标准全量因果自注意力为例，第 $t$ 个位置可关注自己和此前未被掩码屏蔽的位置，不能读取未来。若每生成一个 Token 都重算完整前缀，会重复计算历史位置的 Key、Value 投影。KV Cache 把这些历史结果保留下来：
 
 - **Prefill**：并行处理输入序列，生成每层的 K/V，并得到第一个待生成 Token 的分布。
 - **Decode**：输入最新 Token，计算它在每层的新 Q/K/V；Q 与历史 K 做匹配，用注意力权重汇总历史 V；随后把新 K/V 追加到缓存。
 
-KV Cache 消除了历史 K/V 投影的重复计算，但没有让长序列“免费”。每个新 Token 仍需读取越来越长的缓存并与历史位置做注意力计算。
+KV Cache 消除了历史 K/V 投影的重复计算，但没有让长序列“免费”。在这种全量注意力设置下，每个新位置仍需读取随有效前缀增长的 K/V 并做注意力计算。
+
+### 为什么不能只看上一个 Token
+
+自回归指的是下一步以已有前缀为条件，不是“只依赖紧邻的一个 Token”。例如“会议从周二改到周四，请提醒我新的日期”，决定后续输出的信息可能位于更早的位置。Decode 即使只输入最新 Token，模型仍能通过历史 KV 读取前缀信息；只传最新 Token 又不提供相应缓存，会改变模型实际可用的上下文。因果掩码使历史位置不受后来 Token 影响，因此固定前缀的 K/V 可以复用，而新位置的 Q 要重新计算。[Hugging Face 的缓存原理](https://huggingface.co/docs/transformers/main/en/cache_explanation)按层解释了这个过程。
+
+“看前面所有 Token”描述的是标准全量因果注意力的可见范围，不表示每个位置都同等重要，也不是所有模型的共同要求。滑动窗口、分块或稀疏注意力会改变各层直接可见的位置；滑动窗口层的缓存达到窗口大小后可以淘汰旧位置，不再无限增长。应按具体模型和层的注意力配置判断范围，不能从“自回归”直接推出“每层必须保留全部历史 KV”。[Transformers 缓存策略](https://huggingface.co/docs/transformers/kv_cache)明确区分了全量增长与滑动窗口、分块层的缓存限制。
 
 ### 缓存大小怎么估算
 
@@ -59,7 +65,7 @@ $$
 2\times L\times S\times H_{kv}\times D_h\times B
 $$
 
-其中 $2$ 代表 K 和 V，$L$ 是层数，$S$ 是已缓存序列长度，$H_{kv}$ 是 KV 头数，$D_h$ 是每头维度，$B$ 是每个元素的字节数。它说明缓存随序列长度线性增长，也解释了量化 KV、分页注意力和减少 KV 头数为什么有效。
+其中 $2$ 代表 K 和 V，$L$ 是层数，$S$ 是已缓存序列长度，$H_{kv}$ 是 KV 头数，$D_h$ 是每头维度，$B$ 是每个元素的字节数。该式假设各层保存相同长度的 KV，且不计分配器等额外开销；滑动窗口或混合注意力模型应按各层实际缓存长度分别求和。它说明全量缓存随序列长度线性增长，也解释了量化 KV、分页注意力和减少 KV 头数为什么有效。
 
 ### MHA、GQA 与 MQA
 
@@ -119,12 +125,14 @@ Token 决定序列如何表示和计量；Context Window 规定一次请求的�
 - [阿里云后端与 Agent 二面：领域建模、训练并行与 Java 基础](../../../interview/alibaba/ai/alibaba-ai-28.md)
 - [字节 Agent 暑期实习一面：摘要、工具预算与链表](../../../interview/bytedance/base/bytedance-base-27.md)
 - [字节 Agent 实习：推理、微调与工具编排](../../../interview/bytedance/base/bytedance-base-51.md)
+- [腾讯游戏安全后台一面：进程、Agent 与请求路由](../../../interview/tencent/ai/tencent-ai-34.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
 
 - [OpenAI tiktoken](https://github.com/openai/tiktoken)
 - [Hugging Face Transformers：KV cache strategies](https://huggingface.co/docs/transformers/kv_cache)
+- [Hugging Face Transformers：How caching works](https://huggingface.co/docs/transformers/main/en/cache_explanation)
 - [GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints](https://arxiv.org/abs/2305.13245)
 - [Lost in the Middle: How Language Models Use Long Contexts](https://arxiv.org/abs/2307.03172)
 - [OpenAI API：Prompt caching](https://developers.openai.com/api/docs/guides/prompt-caching)

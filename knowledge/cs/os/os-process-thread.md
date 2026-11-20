@@ -39,6 +39,25 @@ graph TB
 
 进程交换数据需要明确通信机制，如管道、消息队列、共享内存或 socket。代价取决于复制、序列化、系统调用与同步；共享内存建立映射后不要求每次读写都陷入内核，但仍须处理并发和生命周期。
 
+### 从一条命令到运行中的进程
+
+“进程拥有资源”还没有回答程序怎样启动。以 Linux/POSIX 上的普通外部命令为例，shell 先解析命令、准备参数与重定向，再通过创建进程和装入程序的机制启动它。经典路径是 `fork()` 创建子进程、子进程再调用 `execve()`；真实 shell 也可能采用 `posix_spawn` 或优化路径，不能断言每条命令必定先 fork。[posix_spawn 接口](https://man7.org/linux/man-pages/man3/posix_spawn.3.html)提供创建子进程并执行指定文件的合同。
+
+`fork()` 返回后，父子进程有不同 PID，子进程从调用返回处继续；Linux 通常用写时复制管理私有内存页，而非立刻把所有物理页完整复制一遍。`execve()` 则**替换调用进程的程序映像，不创建另一个 PID**；成功时不返回原调用点，原程序的代码、数据与栈被新映像替换。可执行文件、参数、环境及文件描述符的继承规则共同影响新程序的运行。[Linux fork](https://man7.org/linux/man-pages/man2/fork.2.html)、[Linux execve](https://man7.org/linux/man-pages/man2/execve.2.html)
+
+![shell 通过 fork 创建具有新 PID 的子进程，子进程 execve 装入 Python 后保持 PID，由解释器在该进程内执行脚本；父 shell 可等待退出](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/os-process-thread-launch-exec-v1.dark.png)
+*图：创建进程和替换映像是两件事；示意经典 fork/exec 路径，不规定所有 shell 的实现。*
+
+装入映像也不等于程序立即独占 CPU。内核建立相应执行环境、把可运行执行流交给调度；用户态启动代码和必要的动态链接器完成启动工作后进入程序入口。运行中线程可能计算、因 I/O 等待阻塞，再在条件满足后被唤醒；程序最终退出，父进程可用[等待接口](https://man7.org/linux/man-pages/man2/wait.2.html)取得退出状态。装载和运行也不意味着全部代码页已一次性驻留物理内存。[execve 的解释器与动态链接说明](https://man7.org/linux/man-pages/man2/execve.2.html)
+
+### Python 解释器、JVM 与业务代码是什么关系
+
+执行 `python3 app.py` 时，操作系统装入的是解释器可执行程序；解释器在该进程内读取、解析并执行脚本。**脚本不是天然再对应一个独立进程**，CPU 最终执行解释器和本地库等机器指令，而不是由内核直接理解 Python 语法。这里按 CPython 3.13 的命令行合同说明；嵌入式解释器、其他 Python 实现，以及程序主动启动子进程的情形另论。[CPython 3.13 命令行](https://docs.python.org/3.13/using/cmdline.html)
+
+类似地，普通 `java Main` 启动方式由 Java 启动器启动 JVM、加载指定类并调用入口方法；业务字节码在同一 JVM 进程中执行，不是“Java 程序一个进程、JVM 再一个进程”。解释执行、JIT 编译和 GC 是运行时内部机制，具体策略依实现；它们不能替代对进程创建、装载与调度的回答。[JDK 25 java 启动器说明](https://docs.oracle.com/en/java/javase/25/docs/specs/man/java.html)给出了这种启动方式；JVM 数据区与类加载可继续阅读 [JVM 内存、类加载与 OOM 定位](../../backend/java/java-runtime-memory.md)。
+
+若被要求设计一种语言的运行机制，可以先明确由宿主进程装入解释器或虚拟机，再划分代码读取、运行时状态、执行、系统调用与退出清理职责。它是教学设计思路，不能当成某个候选人的实际实现；也不需要先虚构两个进程来区分运行时和业务代码。
+
 ## 二、线程:CPU 调度的基本单位
 
 [POSIX 线程通用概念](https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap02.html#tag_02_09) 定义同一进程内线程共享的执行环境以及各线程独有状态；协程则是语言/运行时的协作调度抽象，不能等同于 POSIX 线程。
@@ -175,6 +194,7 @@ sequenceDiagram
 - [蚂蚁暑期面经：线程池、数据来源与多 Agent 评测](../../../interview/antfin/ai/antfin-ai-14.md)
 - [蚂蚁 Agent 实习一面：缓存、消息与 RAG](../../../interview/antfin/ai/antfin-ai-6.md)
 - [字节搜广推引擎架构一面：JSON 输出、并发与系统基础](../../../interview/bytedance/base/bytedance-base-74.md)
+- [腾讯游戏安全后台一面：进程、Agent 与请求路由](../../../interview/tencent/ai/tencent-ai-34.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)
 - [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../../interview/bytedance/base/bytedance-base-47.md)
 <!-- interview-source-history:end -->
@@ -189,3 +209,11 @@ sequenceDiagram
 - [Python3.13：asyncio Task协作调度](https://docs.python.org/3.13/library/asyncio-task.html#task-object)
 - [Python3.13：实验性free-threading构建](https://docs.python.org/3.13/howto/free-threading-python.html)
 - [Go FAQ：goroutine与线程、并行性](https://go.dev/doc/faq#goroutines)
+
+- [Linux man-pages：fork 创建进程](https://man7.org/linux/man-pages/man2/fork.2.html)
+- [Linux man-pages：execve 替换进程映像](https://man7.org/linux/man-pages/man2/execve.2.html)
+- [CPython 3.13：脚本启动合同](https://docs.python.org/3.13/using/cmdline.html)
+- [JDK 25：java 命令启动应用](https://docs.oracle.com/en/java/javase/25/docs/specs/man/java.html)
+
+- [Linux man-pages：posix_spawn 创建并执行子进程](https://man7.org/linux/man-pages/man3/posix_spawn.3.html)
+- [Linux man-pages：wait 与退出状态](https://man7.org/linux/man-pages/man2/wait.2.html)

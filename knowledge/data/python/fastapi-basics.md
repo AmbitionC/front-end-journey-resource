@@ -192,7 +192,7 @@ async def stream_chat(req: ChatRequest, settings: Settings = Depends(get_setting
     )
 ```
 
-关键注意点：生成器必须是 `async def` + `yield`，使用 `httpx.AsyncClient` 而非同步的 `requests`，否则整个事件循环在等待 LLM 期间会被阻塞，服务实际退化为单并发。
+关键注意点：这个异步代理示例使用 `async def` + `yield` 与 `httpx.AsyncClient`，避免在事件循环中直接执行同步阻塞请求。StreamingResponse 也支持普通同步迭代器；Starlette 会通过线程池迭代它，并非只要写成 `def` 就阻塞事件循环。线程池容量与其中的阻塞工作仍需控制。[Starlette 0.41.3 StreamingResponse 实现](https://github.com/Kludex/starlette/blob/0.41.3/starlette/responses.py)
 
 ## 后台任务（BackgroundTasks）与异步 LLM 调用
 
@@ -321,7 +321,7 @@ graph TD
 1. 客户端发起请求，经中间件完成 CORS 检查、请求 ID 注入、速率限制
 2. FastAPI 路由层完成 Pydantic 校验，参数非法立即返回 422
 3. 依赖注入层提供鉴权结果、数据库连接、配置对象
-4. 业务层并发调用 LLM 和 Vector DB（`asyncio.gather`）
+4. 业务层按数据依赖调用 LLM 和 Vector DB；只有互不依赖的工作才用 `asyncio.gather` 并发
 5. 流式场景通过 StreamingResponse 或 WebSocket 实时返回
 6. 后台任务异步处理 embedding、日志、统计等副作用
 
@@ -330,8 +330,8 @@ graph TD
 **1. 在 async 路由里使用同步阻塞调用**
 `requests.get()`、同步 ORM 查询、`time.sleep()` 等都会阻塞事件循环。应替换为 `httpx.AsyncClient`、异步 ORM（SQLAlchemy async / Tortoise），或用 `asyncio.get_event_loop().run_in_executor()` 将同步代码推到线程池。
 
-**2. StreamingResponse 生成器用了 `def` 而非 `async def`**
-同步生成器在 FastAPI 的 ASGI 上下文中会被当作普通迭代器处理，无法在 yield 之间让出事件循环，导致流式返回退化为阻塞。
+**2. 把生成器类型直接等同于是否阻塞事件循环**
+StreamingResponse 同时支持异步迭代器和普通同步迭代器；Starlette 0.41.3 对后者使用 `iterate_in_threadpool`。真正要避免的是在异步生成器里直接运行同步阻塞工作；同步迭代器则要考虑线程池占用、取消与资源清理，不能仅凭 `def` 判定不能流式返回。[实现依据](https://github.com/Kludex/starlette/blob/0.41.3/starlette/responses.py)
 
 **3. CORS 在生产用 `allow_origins=["*"]`**
 允许所有来源会绕过浏览器的同源保护，且与 `allow_credentials=True` 组合时 CORS 规范要求浏览器拒绝请求，会造成诡异的跨域失败。
@@ -347,7 +347,7 @@ graph TD
 - **统一响应格式**：定义 `APIResponse[T]` 泛型模型，所有路由通过 `response_model=APIResponse[YourModel]` 保证格式一致
 - **版本化路由**：用 `APIRouter(prefix="/v1")` 和 `APIRouter(prefix="/v2")` 隔离版本，避免破坏性变更
 - **依赖分层**：基础依赖（配置、DB）放 `dependencies.py`，业务依赖（当前用户、权限检查）放对应的 router 文件
-- **LLM 调用超时**：`httpx.AsyncClient(timeout=httpx.Timeout(connect=5, read=120))` 分别设置连接超时和读取超时，LLM 首 token 可能需要 10–30s
+- **LLM 调用超时**：示例 `httpx.AsyncClient(timeout=httpx.Timeout(connect=5, read=120, write=5, pool=5))` 显式设置连接、读取、写入与连接池等待四项预算；HTTPX 要求提供默认值或完整四项，实际预算按服务约束调整。[HTTPX 超时配置](https://www.python-httpx.org/advanced/timeouts/)
 - **结构化日志**：用 `structlog` 或 `loguru` 输出 JSON 日志，结合请求追踪中间件的 `request_id`，在分布式系统中快速定位问题
 - **Lifespan 管理连接池**：用 `@asynccontextmanager` 的 lifespan 在应用启动时初始化 DB 连接池、LLM 客户端，关闭时释放，避免每次请求重建连接
 
@@ -377,13 +377,26 @@ A：三个核心优势：1) 依赖可以嵌套，FastAPI 自动推导执行顺�
 A：SSE（Server-Sent Events）是单向的服务端推送，基于普通 HTTP，实现简单，天然支持自动重连，适合 LLM 流式输出。WebSocket 是全双工，需要协议升级，适合 Agent 对话（需要客户端实时发送工具执行结果给服务端）。如果只是 LLM token 流式返回，SSE + StreamingResponse 足够，且对代理、CDN 的兼容性更好。
 
 **Q：如何在 FastAPI 中实现 RAG 接口？**
-A：典型流程：① Pydantic 校验请求（问题 + 可选的上下文窗口大小）→ ② `Depends` 注入 Vector DB 客户端和 LLM 客户端 → ③ 异步调用 embedding API 将问题向量化 → ④ 异步查询 Vector DB 得到相关文档 → ⑤ 构造带上下文的 prompt → ⑥ 调用 LLM，用 `StreamingResponse` 流式返回答案。关键：步骤 ③④ 可用 `asyncio.gather` 并发执行以降低延迟。
+A：典型流程：① Pydantic 校验请求（问题 + 可选的上下文窗口大小）→ ② `Depends` 注入 Vector DB 客户端和 LLM 客户端 → ③ 异步调用 embedding API 将问题向量化 → ④ 异步查询 Vector DB 得到相关文档 → ⑤ 构造带上下文的 prompt → ⑥ 调用 LLM，用 `StreamingResponse` 流式返回答案。关键：该向量检索依赖步骤 ③ 产出的 embedding，③④ 必须按依赖顺序执行；只有独立检索或其他互不依赖的 I/O 才可考虑用 `asyncio.gather` 重叠等待。这是由本例数据依赖推导出的约束，异步语法不会消除依赖；[Python 3.13 gather 文档](https://docs.python.org/3.13/library/asyncio-task.html#asyncio.gather)描述的是对已给定 awaitable 的并发运行，并不替应用消除前置结果依赖。
 
 **Q：`response_model` 的作用是什么？**
-A：两个作用：1) 文档生成，Swagger UI 会展示响应体的字段和类型；2) 数据过滤，FastAPI 会按 `response_model` 的字段裁剪响应，即使 handler 返回了多余字段也不会输出，防止内部数据泄露。如果需要关闭校验只保留文档，可用 `response_model_exclude_unset=True` 或设置 `response_model=None`。
+A：两个作用：1) 文档生成，Swagger UI 会展示响应体的字段和类型；2) 数据过滤，FastAPI 会按 `response_model` 的字段裁剪响应，即使 handler 返回了多余字段也不会输出，防止内部数据泄露。`response_model_exclude_unset=True` 只控制序列化时是否省略未显式设置的字段，不关闭响应校验。`response_model=None` 则关闭这条路径的自动响应模型处理，也不会自动保留原模型的 OpenAPI 响应结构；若有独立文档需求，应另行明确声明。[FastAPI 响应模型与编码参数](https://fastapi.tiangolo.com/tutorial/response-model/)
+
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [腾讯游戏安全后台一面：进程、Agent 与请求路由](../../../interview/tencent/ai/tencent-ai-34.md)
+<!-- interview-source-history:end -->
 
 ## 参考资料
 
 - [FastAPI request body tutorial](https://fastapi.tiangolo.com/tutorial/body/)
 - [FastAPI concurrency and async/await](https://fastapi.tiangolo.com/async/)
 - [Uvicorn deployment documentation](https://github.com/Kludex/uvicorn/blob/main/docs/deployment/index.md)
+
+- [Starlette 0.41.3：StreamingResponse 的异步迭代与线程池迭代实现](https://github.com/Kludex/starlette/blob/0.41.3/starlette/responses.py)
+- [FastAPI：响应模型、关闭响应模型与 exclude_unset](https://fastapi.tiangolo.com/tutorial/response-model/)
+
+- [Python 3.13：gather 的并发运行合同](https://docs.python.org/3.13/library/asyncio-task.html#asyncio.gather)
+
+- [HTTPX：四类超时与默认值配置](https://www.python-httpx.org/advanced/timeouts/)
