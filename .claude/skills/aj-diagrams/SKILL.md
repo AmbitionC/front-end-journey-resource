@@ -66,7 +66,7 @@ export default (k) => k.figure({
 - `k.text({x,y,text,size,tone,anchor,weight})`：size 只用 `title/heading/body/label/note`（24/19/17/16/15），**不要写数字字号**
 - `k.box({x,y,w,h,title,sub,tone,strong,titleSize,dashed})`：圆角框，文字自动垂直居中
 - `k.arrow({points,tone,dashed,label,labelAt,labelAnchor,head,both})`：折线箭头，只走水平/垂直段
-- `k.frame` 虚线分组；`k.panel` 实线面板（左上角标签）
+- `k.frame` 虚线分组；`k.panel` 实线面板（左上角标签）。面板底板会自动最先画，穿进面板的箭头不会被盖住
 - `k.node` / `k.edge`：圆节点与连线（树、图），`badge` 标访问顺序
 - `k.cells`：数组格子，`mark` 高亮、`pointers` 指针、`dim` 置灰、`textSize`
 - `k.matrix`：方格矩阵（掩码、DP 表）
@@ -116,7 +116,7 @@ npm run diagram -- images/diagram-sources/<name>.aj.mjs --preview /tmp/preview.p
    - PDF 导出自动用 `.light.png`（`scripts/build-materials.mjs`）
 2. 图下一行用斜体写一句说明，告诉读者看哪里（不是重复标题）。
 3. 删除被替换的旧图引用；旧图文件先留着，等发布和回滚确认后再清。
-4. `.png` 是普通静态图，不需要在 `knowledge/pdf-static-images.json` 登记。
+4. `.png` 是普通静态图，不需要在 `knowledge/pdf-static-images.json` 新增登记。但如果这篇文章**本来就有登记**（里面有 mermaid/SVG 等），改了正文后要把该文章条目的 `articleSha256` 更新成新哈希（只改哈希，mermaid 源码和行号不变时其余字段不动），否则 `npm test` 的 PDF 固定映射检查会失败。
 5. 更新 `.codex/diagram-migration-history.json` 里对应旧图的状态。
 6. 跑 `npm test` 和 `npm run validate:tree`。
 

@@ -17,8 +17,8 @@ type CodingTask = {
 };
 ```
 
-![Coding Agent 从 issue 与验收标准出发，检查仓库状态后在隔离 worktree 中计划、建立检查点、打补丁，依次格式化、类型检查、测试和 diff 审查，失败则修复重测](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-coding-repo-loop-v1.webp)
-*图：测试通过后仍要 Diff Review；Handoff 携带实际变更与验证证据。返回 Patch 的回路仅表示验收后仍需修改的分支；满足验收条件后，交付即结束。*
+![Coding Agent 从任务和验收标准出发，先读仓库、做计划、建检查点，再进入隔离 worktree 打补丁；依次格式化、类型检查、单元测试和集成测试，失败就修复重测，通过后还要做 diff 审查，最后带着实际改动和验证证据交付](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-coding-repo-loop-v2.dark.png)
+*图：测试通过后仍要做 Diff 审查；交付时附上实际改动和验证证据。验证失败就回到打补丁，修完重跑全部检查。*
 
 ## Inspect—Plan—Patch—Verify
 

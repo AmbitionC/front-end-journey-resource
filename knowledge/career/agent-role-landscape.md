@@ -1,5 +1,5 @@
-![岗位地图以产品交付为中心，分成 Agent application、platform/runtime、evaluation/quality、security/governance、research engineering 五条轨道；每条标出核心产出、协作对象和证据类型](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-engineer-role-landscape-v1.webp)
-*图：以产品交付为中心，示意应用、平台/运行时、评估/质量、安全/治理与研究工程的产出、协作对象和证据；这些职责可以交叉，不代表统一的岗位分级或职业路径。*
+![Agent 工程师五个方向围绕产品交付分工：应用做面向用户的功能，平台和运行时做模型接入、状态恢复、推理与成本，评估和质量做评测集与回归门禁，安全和治理做权限、审批与审计，研究工程做数据、训练与微调；每个方向列出核心产出和可核验的证据](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-engineer-role-landscape-v2.dark.png)
+*图：按产出和可核验的证据区分五个方向；评估与安全单列，是因为每个方向都要对它们负责。职责可以交叉，不代表统一的岗位分级或职业路径。*
 
 ---
 

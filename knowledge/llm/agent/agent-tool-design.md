@@ -25,7 +25,7 @@ Schema 提供类型、必填、枚举、范围和额外字段策略。[JSON Sche
 
 当前 [OpenAI Function Calling](https://developers.openai.com/api/docs/guides/function-calling)建议启用 strict mode，使函数参数遵循 schema；截至 2026-07-15，其严格模式要求对象关闭额外属性并把字段列入 required（可用 nullable 表达可选）。这些是当前 API 行为，不能替代服务端校验。
 
-![Agent 工具调用依次经过输入 Schema、授权与执行预算，副作用之后返回结构化成功、部分成功、可重试或终止错误](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-tool-design-contract-v1.webp)
+![工具调用依次经过输入 Schema 校验、授权、执行预算（超时、限流、幂等键）后才执行副作用；Schema 不合格直接拒绝，授权失败直接拒权；执行结果分为成功、部分成功、可重试错误和终止错误，都带结构化输出和 trace id，契约测试覆盖每一条路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-tool-design-contract-v2.dark.png)
 *图：Schema 失败 REJECT，授权失败 DENY；Schema 不授予权限。*
 
 ## Authorization 是独立硬门禁

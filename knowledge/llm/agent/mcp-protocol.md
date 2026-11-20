@@ -1,5 +1,5 @@
-![MCP Host 中的 Client 与 Server 之间交换 Initialize、Capabilities、List Tools、Call Tool 与 Result，旁侧标示 Auth 与 Validate 概念边界](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/mcp-a2a-protocol-boundaries-v1.webp)
-*图：此图仅示意 MCP 2025-11-25 的初始化、能力发现与工具调用交互；A2A 的职责和对象由下文说明，图中没有 A2A 区域。2026-07-28 的无状态发现另见本文版本说明。*
+![左侧 MCP：Host 内有模型、策略与授权和 MCP Client（每个 Server 各一个），Client 与文件系统、GitHub、数据库等 MCP Server 依次 initialize、initialized 通知、tools/list、tools/call；右侧 A2A：委托方读取 Agent Card 后把 Task 交给远程智能体，对方返回 Artifact，远程智能体内部仍可用 MCP 调工具](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/mcp-a2a-protocol-boundaries-v2.dark.png)
+*图：左边是 MCP 2025-11-25 的初始化、能力发现与工具调用；右边是 A2A 的任务委托，对象与发现方式以下文和规范为准。两者可以组合，不是必须叠加的协议栈。*
 
 ---
 

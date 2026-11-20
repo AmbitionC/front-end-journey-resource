@@ -18,8 +18,8 @@ Linux namespace 可以让进程看到不同的进程树、挂载点、网络、�
 
 资源预算至少包含 wall time、CPU time、内存、进程/线程数、磁盘字节、inode、输出大小和网络流量。超限应由宿主监督器终止整个进程组，而不是依赖子进程自行退出。网络默认 deny，只允许解析并访问批准域名、端口与协议；对解析后的 IP 再检查，屏蔽 loopback、链路本地、私网和云元数据地址。
 
-![Agent 的执行请求先经过身份、审批、能力和预算策略，再凭最小能力令牌进入限制文件、网络、进程与时间的沙箱](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-sandbox-capability-boundary-v1.webp)
-*图：策略代理在执行前发放窄能力，沙箱输出还要经过扫描和审计才能返回。*
+![Agent 的执行请求先由策略服务校验身份、租户、审批和预算，发出只读三个文件、只访问一个 HTTPS origin、写 20 MB 临时目录、运行 30 秒且绑定 job ID 的窄能力；代码在非特权用户和 namespace、seccomp、资源预算、网络默认拒绝层层收口的沙箱里运行；输出先限字节、剥控制字符并当作数据处理，才返回调用方并记审计](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-sandbox-capability-boundary-v2.dark.png)
+*图：策略服务在执行前只发窄能力；沙箱输出也要先检查、写进审计，才能返回。*
 
 ## Capability 比环境继承更安全
 

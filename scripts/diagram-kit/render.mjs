@@ -69,14 +69,11 @@ function lint(minFont) {
     for (const b of boxes) {
       if (ownId && b.t.getAttribute('data-box') === ownId) continue;
       if (b.t.hasAttribute('data-badge')) continue;
-      const inset = 1.5;
-      if (pts.some((p) => p.x > b.x + inset && p.x < b.x + b.w - inset && p.y > b.y + inset && p.y < b.y + b.h - inset)) {
-        // 文字本来就画在填充的格子/节点里不算（格子、节点、柱子内部的文字）
-        const r = g.getBBox();
-        const inside = b.x >= r.x - 1 && b.x + b.w <= r.x + r.width + 1 && b.y >= r.y - 1 && b.y + b.h <= r.y + r.height + 1;
-        if (inside && g.tagName !== 'path' && g.tagName !== 'line') continue;
+      // 用字形的实际上下沿（基线上 0.82em、基线下 0.28em）而不是行框，贴着字走的边框也要报
+      const fs = parseFloat(b.t.getAttribute('font-size')), base = parseFloat(b.t.getAttribute('y'));
+      const top = base - fs * 0.82, bottom = base + fs * 0.28, left = b.x + 0.5, right = b.x + b.w - 0.5;
+      if (pts.some((p) => p.x > left && p.x < right && p.y > top && p.y < bottom))
         problems.push(`线条压字：「${b.s}」（${g.tagName} ${Math.round(g.getBBox().x)},${Math.round(g.getBBox().y)} ${Math.round(g.getBBox().width)}×${Math.round(g.getBBox().height)}）`);
-      }
     }
   }
   return { W, H, problems: [...new Set(problems)] };

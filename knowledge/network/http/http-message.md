@@ -1,5 +1,5 @@
-![请求与响应报文并排：request/status line、field section、空行、content；再分离 message semantics 与 HTTP/1.1 framing，标出 Content-Length/Transfer-Encoding 冲突会导致解析差异](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/http-message-semantics-framing-v1.webp)
-*图：请求与响应都按 start-line → field section → 空行 → content 读取；右侧把 HTTP 语义与 HTTP/1.1 framing 分开，并标出长度字段冲突。*
+![请求和响应报文并排：都由起始行、字段区、一个空行和可选内容组成，请求例子是 POST /orders 带 13 字节 JSON，响应例子是 201 Created 带 16 字节 JSON；下方把 RFC 9110 的语义层和 RFC 9112 的 HTTP/1.1 定界层分开，并标出同时带 Content-Length 和 Transfer-Encoding 会让前后节点切出不同边界，需要拒绝或规范化](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/http-message-semantics-framing-v2.dark.png)
+*图：上半部分按 起始行 → 字段区 → 空行 → 内容 读报文；下半部分把 HTTP 语义与 HTTP/1.1 定界分开，并标出两个长度字段同时出现的后果。*
 
 HTTP 报文承载一次请求或响应的控制数据、字段和可选内容。理解报文时要分开两层：方法、状态码、字段和内容属于 HTTP 语义；字节如何分行、定界和传输则由具体 HTTP 版本规定。
 

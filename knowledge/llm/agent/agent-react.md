@@ -1,5 +1,5 @@
-![ReAct 循环：Reason→Act→Observe→Update；Tool经Evidence返回观察，目标完成或预算耗尽指向Stop。](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-react-reason-act-observe-loop-v1.webp)
-*图：沿图中的节点与箭头阅读；Thought 是原论文描述推理轨迹的记号，生产接口应只暴露结构化 Action、Observation 与经过安全处理的状态。*
+![ReAct 循环：模型根据目标和历史推理出下一步行动，运行时校验参数并执行工具，整理后的结果作为观察写回上下文，再进入下一轮；模型给出 finish 行动，或运行时发现步数、时间、token 预算耗尽时停止](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-react-loop-runtime-boundary-v2.dark.png)
+*图：左边是模型决定下一步，右边是运行时真正执行和把关；Thought 是原论文描述推理轨迹的记号，生产接口只暴露结构化 Action、Observation 与经过安全处理的状态。*
 
 ---
 

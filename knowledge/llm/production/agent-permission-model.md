@@ -15,7 +15,7 @@ Agent 权限模型把“模型想做什么”转换为“当前主体在特定�
 
 策略返回 permit/deny/review，以及义务：字段过滤、时间限制、审批、审计、只读模式或最大金额。完整规范的 [NIST PDF](https://nvlpubs.nist.gov/nistpubs/specialpublications/NIST.SP.800-162.pdf)还讨论策略执行与属性来源等组件；生产实现要让关键属性来自受信任身份/资源服务，而不是模型自报。
 
-![Agent 请求中的主体、资源、操作和环境属性进入策略决策；低风险读取获得绑定工具、目标、模式、TTL 与预算的能力票据，高风险写入还需绑定精确参数的升级审批，再由执行点 Permit 或 Deny 并审计](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-permission-model-capability-approval-v1.webp)
+![Agent 请求的主体、资源、操作和环境属性进入策略决策；低风险读取拿到绑定工具、目标、模式、TTL 和预算的能力票据，高风险写入还要经过绑定精确参数的升级审批；执行点在调用前重新校验票据和参数，放行或拒绝都写进审计](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-permission-model-capability-approval-v2.dark.png)
 *图：可见工具不等于可调用；最终执行点重新校验 capability 与参数。*
 
 ## 最小权限的维度
