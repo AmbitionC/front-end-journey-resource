@@ -354,14 +354,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 22,
+            "heat": 21,
             "currRank": 5,
             "updatedAt": "2026-10-14",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "上下文工程决定模型此刻能看到哪些指令、工具、历史、记忆和检索证据。按任务与预算选择内容，保留来源与权限，压缩后做回归；提供更多文本并不自动让回答更可靠。"
             },
-            "interviewCount": 16,
+            "interviewCount": 15,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1154,11 +1154,11 @@
             "isLeaf": true,
             "filePath": "llm/rag",
             "contentStatus": "published",
-            "heat": 9,
+            "heat": 8,
             "currRank": 5,
             "updatedAt": "2026-10-19",
             "interviewBaseHeat": 6,
-            "interviewCount": 3,
+            "interviewCount": 2,
             "interviewCountBasis": "verified-public-posts",
             "quickRead": {
               "text": "先按权限投影Schema，再用语义层确定指标和关联，生成受限计划或SQL并校验执行范围、参数和预算。聚合结果与表格证据保留版本、主键及口径，语法正确不保证业务数值正确。"
@@ -1300,14 +1300,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 67,
+            "heat": 66,
             "currRank": 5,
             "updatedAt": "2026-11-20",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Coding Agent 让模型在循环里反复读代码、改代码、跑命令、看结果，由执行循环、工具、项目说明文件（AGENTS.md / CLAUDE.md）、权限沙箱和验证五块组成。判断它做对没有，看测试结果和最终 diff，不看它自称完成。"
             },
-            "interviewCount": 61,
+            "interviewCount": 60,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1460,11 +1460,11 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 24,
+            "heat": 23,
             "currRank": 5,
             "updatedAt": "2026-11-21",
             "interviewBaseHeat": 6,
-            "interviewCount": 18,
+            "interviewCount": 17,
             "interviewCountBasis": "verified-public-posts",
             "quickRead": {
               "text": "记忆分三层：窗口内的工作记忆、窗口外按需检索的长期记忆、每次会话注入的小索引。写入要过授权和事实校验；记忆变多后，在空闲时回看日志做合并与纠错（dreaming），比堆写入规则更有效。"
@@ -2014,22 +2014,6 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
-            "label": "发布质量门禁与回归阻断",
-            "key": "agent-quality-gates",
-            "isLeaf": true,
-            "filePath": "llm/production",
-            "contentStatus": "published",
-            "heat": 12,
-            "currRank": 5,
-            "updatedAt": "2026-10-02",
-            "interviewBaseHeat": 6,
-            "interviewCount": 6,
-            "interviewCountBasis": "verified-public-posts",
-            "quickRead": {
-              "text": "发布质量门禁把“评估结果”变成明确动作：通过、人工复核、阻断、灰度或回滚。它不是 CI 页面上一排绿色图标，而是一套版本化策略，说明使用哪些证据、阈值和样本，谁有权例外，例外何时失效。"
-            }
-          },
-          {
             "label": "Agent 身份、用户身份与委托授权",
             "key": "agent-identity-auth",
             "isLeaf": true,
@@ -2059,6 +2043,22 @@
             },
             "interviewBaseHeat": 6,
             "interviewCount": 6
+          },
+          {
+            "label": "发布质量门禁与回归阻断",
+            "key": "agent-quality-gates",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "published",
+            "heat": 11,
+            "currRank": 5,
+            "updatedAt": "2026-10-02",
+            "interviewBaseHeat": 6,
+            "interviewCount": 5,
+            "interviewCountBasis": "verified-public-posts",
+            "quickRead": {
+              "text": "发布质量门禁把“评估结果”变成明确动作：通过、人工复核、阻断、灰度或回滚。它不是 CI 页面上一排绿色图标，而是一套版本化策略，说明使用哪些证据、阈值和样本，谁有权例外，例外何时失效。"
+            }
           },
           {
             "label": "Agent Benchmark 的设计与解读",
@@ -2329,22 +2329,6 @@
             }
           },
           {
-            "label": "在线评估、抽样与质量监控",
-            "key": "agent-online-eval",
-            "isLeaf": true,
-            "filePath": "llm/production",
-            "contentStatus": "published",
-            "heat": 8,
-            "currRank": 5,
-            "updatedAt": "2026-07-17",
-            "interviewBaseHeat": 6,
-            "interviewCount": 2,
-            "interviewCountBasis": "verified-public-posts",
-            "quickRead": {
-              "text": "在线评估从经过隐私处理的生产 Run 中进行随机、风险与触发采样，结合自动评分和人工复核，用 Trace 关联任务、版本与失败原因。分开报告总体估计与定向发现，反馈经治理后进入离线评测集；监测趋势不能单独证明因果收益，必要时用随机对照实验验证。"
-            }
-          },
-          {
             "label": "敏感数据、日志脱敏与隐私保护",
             "key": "agent-data-privacy",
             "isLeaf": true,
@@ -2374,6 +2358,22 @@
             },
             "interviewBaseHeat": 6,
             "interviewCount": 2
+          },
+          {
+            "label": "在线评估、抽样与质量监控",
+            "key": "agent-online-eval",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "published",
+            "heat": 7,
+            "currRank": 4,
+            "updatedAt": "2026-07-17",
+            "interviewBaseHeat": 6,
+            "interviewCount": 1,
+            "interviewCountBasis": "verified-public-posts",
+            "quickRead": {
+              "text": "在线评估从经过隐私处理的生产 Run 中进行随机、风险与触发采样，结合自动评分和人工复核，用 Trace 关联任务、版本与失败原因。分开报告总体估计与定向发现，反馈经治理后进入离线评测集；监测趋势不能单独证明因果收益，必要时用随机对照实验验证。"
+            }
           },
           {
             "label": "用户模拟器与环境模拟测试",
@@ -3223,14 +3223,14 @@
             "isLeaf": true,
             "filePath": "backend/storage",
             "contentStatus": "published",
-            "heat": 16,
+            "heat": 15,
             "currRank": 5,
             "updatedAt": "2026-10-29",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "持久状态区分会话消息、执行检查点、任务与事件，按身份与版本更新并限制访问。客户端缓存不是唯一真相，恢复、保留、删除与外部副作用对账要分别定义。"
             },
-            "interviewCount": 10,
+            "interviewCount": 9,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -3553,11 +3553,11 @@
             "isLeaf": true,
             "filePath": "backend/auth",
             "contentStatus": "published",
-            "heat": 1,
-            "currRank": 1,
+            "heat": 2,
+            "currRank": 2,
             "updatedAt": "2026-07-18",
             "interviewBaseHeat": 1,
-            "interviewCount": 0,
+            "interviewCount": 1,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -3687,11 +3687,11 @@
             "isLeaf": true,
             "filePath": "data/processing",
             "contentStatus": "published",
-            "heat": 2,
-            "currRank": 2,
+            "heat": 3,
+            "currRank": 3,
             "updatedAt": "2026-07-17",
             "interviewBaseHeat": 1,
-            "interviewCount": 1,
+            "interviewCount": 2,
             "interviewCountBasis": "verified-public-posts",
             "quickRead": {
               "text": "Schema 演进要同时推演两个方向：新程序读旧数据、旧程序读新数据。兼容规则取决于 Avro、Protobuf 或 JSON 格式；字段类型没变但单位、时区或枚举含义变了，同样会让结果出错。"
@@ -3833,11 +3833,11 @@
             "isLeaf": true,
             "filePath": "data/sql",
             "contentStatus": "published",
-            "heat": 6,
+            "heat": 5,
             "currRank": 4,
             "updatedAt": "2026-10-28",
             "interviewBaseHeat": 1,
-            "interviewCount": 5,
+            "interviewCount": 4,
             "interviewCountBasis": "verified-public-posts",
             "quickRead": {
               "text": "数据库索引以有序键、哈希等结构辅助定位，仍须计算取结果、回表、排序和传输成本。先固定查询与一致性合同，用执行计划和实际工作量验证候选索引；容量、读负载或写竞争确实成为瓶颈时，再比较副本、分片与冷热归档，并承担其一致性和运维代价。"
@@ -4280,11 +4280,11 @@
             "isLeaf": true,
             "filePath": "network/tcpIp",
             "contentStatus": "published",
-            "heat": 11,
+            "heat": 10,
             "currRank": 5,
             "updatedAt": "2026-07-17",
             "interviewBaseHeat": 10,
-            "interviewCount": 1,
+            "interviewCount": 0,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -4356,11 +4356,11 @@
             "isLeaf": true,
             "filePath": "cs/os",
             "contentStatus": "published",
-            "heat": 2,
-            "currRank": 2,
+            "heat": 1,
+            "currRank": 1,
             "updatedAt": "2026-08-29",
             "interviewBaseHeat": 0,
-            "interviewCount": 2,
+            "interviewCount": 1,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -4507,22 +4507,6 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
-            "label": "时间复杂度、空间复杂度与性能估算",
-            "key": "algorithm-complexity",
-            "isLeaf": true,
-            "filePath": "cs/algorithm",
-            "contentStatus": "published",
-            "heat": 8,
-            "currRank": 5,
-            "updatedAt": "2026-07-17",
-            "interviewBaseHeat": 6,
-            "quickRead": {
-              "text": "复杂度依输入规模、允许操作、数据结构与数值表示计算，不能只机械数循环。题意或图片缺失时先澄清规格，普通整数与受限数字构造不是同一题，未知内容不猜算法变体。"
-            },
-            "interviewCount": 2,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
             "label": "堆、优先队列与 Top-K",
             "key": "algorithm-heap",
             "isLeaf": true,
@@ -4536,6 +4520,22 @@
               "text": "堆只保证父子顺序，适合极值、优先队列和 Top-K。固定小堆处理流式候选，实时变更已有商品销量还需支持定位更新的索引堆或有序集合；分布式 Top-K 要定义分片合并与同分规则。二维接雨水则用边界最小堆维护有效水位。"
             },
             "interviewCount": 7,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
+            "label": "时间复杂度、空间复杂度与性能估算",
+            "key": "algorithm-complexity",
+            "isLeaf": true,
+            "filePath": "cs/algorithm",
+            "contentStatus": "published",
+            "heat": 7,
+            "currRank": 4,
+            "updatedAt": "2026-07-17",
+            "interviewBaseHeat": 6,
+            "quickRead": {
+              "text": "复杂度依输入规模、允许操作、数据结构与数值表示计算，不能只机械数循环。题意或图片缺失时先澄清规格，普通整数与受限数字构造不是同一题，未知内容不猜算法变体。"
+            },
+            "interviewCount": 1,
             "interviewCountBasis": "verified-public-posts"
           },
           {

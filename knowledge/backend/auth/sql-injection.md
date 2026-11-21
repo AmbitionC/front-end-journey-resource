@@ -273,6 +273,7 @@ const systemPrompt = `
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [阿里云 Agent Infra 一面：SGX、吞吐与日志写入](../../../interview/alibaba/ai/alibaba-ai-8.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
