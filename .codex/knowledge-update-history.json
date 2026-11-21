@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
-  "updatedAt": "2026-11-20",
+  "updatedAt": "2026-11-21",
   "records": [
     {
       "key": "transformer-arch",
@@ -5547,17 +5547,28 @@
       "label": "HTTP 请求、响应与报文结构",
       "filePath": "network/http",
       "status": "pending",
-      "action": "audited",
-      "recordedAt": "2026-10-28",
-      "batch": "historical-source-bindings-20261028",
-      "previousPublication": {
-        "status": "published",
-        "batch": "next-twenty-source-increments-20261004",
-        "recordedAt": "2026-10-04",
-        "publishedAt": "2026-10-05T09:27:13Z",
-        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-        "publishedBySyncRun": 37289136872
-      }
+      "action": "update",
+      "recordedAt": "2026-11-21",
+      "batch": "daily-content-20261120-b05",
+      "reason": "Source-grounded actual skill processing: class-loading contract / HTTP1.0 comparison; final review and publication pending.",
+      "previousRecord": {
+        "key": "http-message",
+        "label": "HTTP 请求、响应与报文结构",
+        "filePath": "network/http",
+        "status": "pending",
+        "action": "audited",
+        "recordedAt": "2026-10-28",
+        "batch": "historical-source-bindings-20261028",
+        "previousPublication": {
+          "status": "published",
+          "batch": "next-twenty-source-increments-20261004",
+          "recordedAt": "2026-10-04",
+          "publishedAt": "2026-10-05T09:27:13Z",
+          "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+          "publishedBySyncRun": 37289136872
+        }
+      },
+      "processingDate": "2026-11-21"
     },
     {
       "key": "os-ipc",
@@ -6601,52 +6612,63 @@
       "label": "JVM 内存、类加载与 OOM 定位",
       "filePath": "backend/java",
       "status": "pending",
-      "action": "updated",
-      "recordedAt": "2026-11-18",
-      "batch": "daily-content-20261118-b01",
-      "reason": "Source-grounded actual processing; awaiting reviewed publication.",
+      "action": "update",
+      "recordedAt": "2026-11-21",
+      "batch": "daily-content-20261120-b05",
+      "reason": "Source-grounded actual skill processing: class-loading contract / HTTP1.0 comparison; final review and publication pending.",
       "previousRecord": {
         "key": "java-runtime-memory",
         "label": "JVM 内存、类加载与 OOM 定位",
         "filePath": "backend/java",
         "status": "pending",
         "action": "updated",
-        "recordedAt": "2026-11-15",
-        "batch": "daily-content-20261115-reviewed-cohorts",
-        "reason": "Source-grounded actual knowledge processing; pending reviewed release.",
+        "recordedAt": "2026-11-18",
+        "batch": "daily-content-20261118-b01",
+        "reason": "Source-grounded actual processing; awaiting reviewed publication.",
         "previousRecord": {
           "key": "java-runtime-memory",
           "label": "JVM 内存、类加载与 OOM 定位",
           "filePath": "backend/java",
           "status": "pending",
           "action": "updated",
-          "recordedAt": "2026-11-14",
-          "batch": "daily-content-20261114-reviewed-cohorts",
-          "reason": "Source-grounded actual semantic processing and primary-source teaching supplement; current release pending.",
+          "recordedAt": "2026-11-15",
+          "batch": "daily-content-20261115-reviewed-cohorts",
+          "reason": "Source-grounded actual knowledge processing; pending reviewed release.",
           "previousRecord": {
             "key": "java-runtime-memory",
             "label": "JVM 内存、类加载与 OOM 定位",
             "filePath": "backend/java",
             "status": "pending",
             "action": "updated",
-            "recordedAt": "2026-11-04",
-            "batch": "daily-content-20261104",
-            "reason": "Actual interview-question driven teaching additions or accuracy corrections; final release and synchronization pending.",
+            "recordedAt": "2026-11-14",
+            "batch": "daily-content-20261114-reviewed-cohorts",
+            "reason": "Source-grounded actual semantic processing and primary-source teaching supplement; current release pending.",
             "previousRecord": {
               "key": "java-runtime-memory",
               "label": "JVM 内存、类加载与 OOM 定位",
               "filePath": "backend/java",
-              "status": "published",
-              "action": "created",
-              "recordedAt": "2026-10-04",
-              "batch": "next-twenty-source-increments-20261004",
-              "publishedAt": "2026-10-05T09:27:13Z",
-              "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-              "publishedBySyncRun": 37289136872
+              "status": "pending",
+              "action": "updated",
+              "recordedAt": "2026-11-04",
+              "batch": "daily-content-20261104",
+              "reason": "Actual interview-question driven teaching additions or accuracy corrections; final release and synchronization pending.",
+              "previousRecord": {
+                "key": "java-runtime-memory",
+                "label": "JVM 内存、类加载与 OOM 定位",
+                "filePath": "backend/java",
+                "status": "published",
+                "action": "created",
+                "recordedAt": "2026-10-04",
+                "batch": "next-twenty-source-increments-20261004",
+                "publishedAt": "2026-10-05T09:27:13Z",
+                "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+                "publishedBySyncRun": 37289136872
+              }
             }
           }
         }
-      }
+      },
+      "processingDate": "2026-11-21"
     },
     {
       "key": "spring-container",

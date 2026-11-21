@@ -2313,6 +2313,24 @@
             ],
             "updatedAt": "2026-11-04",
             "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "阿里 Java 研发一面：Agent 协作、Kafka 与 Redis",
+            "key": "alibaba-ai-33",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "tags": [
+              "Java",
+              "Agent",
+              "Kafka",
+              "Redis",
+              "网络"
+            ],
+            "updatedAt": "2026-11-21",
+            "department": "其他",
+            "role": "Java研发工程师",
+            "roleCategory": "后端与 AI 应用",
+            "contentFormat": "short-qa-v2"
           }
         ]
       },

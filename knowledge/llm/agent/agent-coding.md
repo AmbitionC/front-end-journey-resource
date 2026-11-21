@@ -219,6 +219,7 @@ Coding Agent 接到一个修 bug 的任务，发现工作区里有几个用户�
 - [蚂蚁智能体与大模型应用一面：幻觉、Skill 与 RAG](../../../interview/antfin/ai/antfin-ai-5.md)
 - [阿里淘天 AI 应用研发一面：RAG、限流 Top-K 与优惠策略](../../../interview/alibaba/ai/alibaba-ai-5.md)
 - [VAST 后端一面：可观测性、AI Coding 与节点调度](../../../interview/vast/ai/vast-ai-1.md)
+- [阿里 Java 研发一面：Agent 协作、Kafka 与 Redis](../../../interview/alibaba/ai/alibaba-ai-33.md)
 - [蚂蚁数字支付 AI 应用研发二面：数据分层、迁移与微调](../../../interview/antfin/ai/antfin-ai-13.md)
 - [淘天 AI 应用开发暑期实习二面：RAG 评测、工具与成本控制](../../../interview/alibaba/ai/alibaba-ai-31.md)
 - [美团后端 Agent 暑期一面：约束、工作流与 AI 开发验证](../../../interview/meituan/ai/meituan-ai-16.md)

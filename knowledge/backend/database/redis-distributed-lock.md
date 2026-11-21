@@ -108,6 +108,7 @@ Redis 主从复制通常是异步的。主节点写入锁后、复制到从节�
 - [百度北京后端秋招一面：Agent 安全、检索与存储](../../../interview/baidu/ai/baidu-ai-3.md)
 - [字节一面：线程池、分布式锁与数字构造](../../../interview/bytedance/base/bytedance-base-58.md)
 - [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
+- [阿里 Java 研发一面：Agent 协作、Kafka 与 Redis](../../../interview/alibaba/ai/alibaba-ai-33.md)
 - [字节后端开发秋招二面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-6.md)
 - [阿里云后端与 Agent 二面：领域建模、训练并行与 Java 基础](../../../interview/alibaba/ai/alibaba-ai-28.md)
 - [腾讯云智武汉多轮：运行时、索引、锁与消息消费](../../../interview/tencent/base/tencent-base-4.md)

@@ -1300,14 +1300,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 66,
+            "heat": 67,
             "currRank": 5,
             "updatedAt": "2026-11-20",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Coding Agent 让模型在循环里反复读代码、改代码、跑命令、看结果，由执行循环、工具、项目说明文件（AGENTS.md / CLAUDE.md）、权限沙箱和验证五块组成。判断它做对没有，看测试结果和最终 diff，不看它自称完成。"
             },
-            "interviewCount": 60,
+            "interviewCount": 61,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1332,14 +1332,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 33,
+            "heat": 34,
             "currRank": 5,
             "updatedAt": "2026-10-20",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "MCP 约定宿主、客户端与服务端之间的能力发现和调用，工具、资源与提示各有合同且可按能力实现。先固定协议版本和传输，再校验参数、授权、错误与实际结果；模型提出调用、协议返回成功都不自动证明业务完成。"
             },
-            "interviewCount": 27,
+            "interviewCount": 28,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1460,11 +1460,11 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 23,
+            "heat": 24,
             "currRank": 5,
             "updatedAt": "2026-11-04",
             "interviewBaseHeat": 6,
-            "interviewCount": 17,
+            "interviewCount": 18,
             "interviewCountBasis": "verified-public-posts",
             "quickRead": {
               "text": "Agent 记忆分开管理当前上下文、可恢复状态和跨任务持久事实，按查询选择文件、数据库与检索索引。OpenClaw 示例以笔记保存信息、以索引支持按需召回；存得下、搜得到与本轮已加载不同，权限、来源、时效和删除仍须治理。"
@@ -2559,16 +2559,6 @@
         "key": "server-runtime",
         "children": [
           {
-            "label": "Node.js 事件循环与异步 I/O",
-            "key": "node-event-loop-deep",
-            "isLeaf": true,
-            "filePath": "backend/nodejs",
-            "contentStatus": "published",
-            "heat": 10,
-            "currRank": 5,
-            "updatedAt": "2026-07-18"
-          },
-          {
             "label": "Java线程池：容量、排队与拒绝",
             "key": "java-thread-pool",
             "isLeaf": true,
@@ -2579,8 +2569,8 @@
               "text": "ThreadPoolExecutor 的核心数、最大数、队列和拒绝策略共同决定容量：核心数不足先建线程，否则优先排队，队列满才扩容。拆分业务池仍需限制总资源并确认 RPC 回调的执行位置；动态改参数与替换池不同，shutdown 仅发起关闭，shutdownNow 仅尽力中断，须观察任务实际结束与终止状态。"
             },
             "interviewBaseHeat": 0,
-            "interviewCount": 10,
-            "heat": 10,
+            "interviewCount": 11,
+            "heat": 11,
             "currRank": 5,
             "interviewCountBasis": "verified-public-posts"
           },
@@ -2589,15 +2579,25 @@
             "key": "java-runtime-memory",
             "isLeaf": true,
             "filePath": "backend/java",
-            "updatedAt": "2026-11-18",
+            "updatedAt": "2026-11-21",
             "quickRead": {
-              "text": "先区分 JVM 运行时数据区与线程可见性的 Java 内存模型：程序计数器和栈服务线程执行，堆、方法区与常量池保存共享运行时数据。规范区域与 HotSpot 元空间、直接内存等实现资源不能简单画等号；内存故障应按资源区域和证据定位。"
+              "text": "JVM 问题先区分运行时数据区与 Java 内存模型，并按资源区域定位 OOM。类加载再区分加载、链接和初始化：父委派是 ClassLoader 默认策略，类身份由二进制名称与定义加载器共同确定，读到 class 文件不等于执行了静态初始化。"
             },
             "interviewBaseHeat": 0,
-            "interviewCount": 10,
-            "heat": 10,
+            "interviewCount": 11,
+            "heat": 11,
             "currRank": 5,
             "interviewCountBasis": "verified-public-posts"
+          },
+          {
+            "label": "Node.js 事件循环与异步 I/O",
+            "key": "node-event-loop-deep",
+            "isLeaf": true,
+            "filePath": "backend/nodejs",
+            "contentStatus": "published",
+            "heat": 10,
+            "currRank": 5,
+            "updatedAt": "2026-07-18"
           },
           {
             "label": "Node.js 运行时与核心模块",
@@ -2789,6 +2789,26 @@
             "currRank": 2
           },
           {
+            "label": "Lua 脚本与宿主运行边界",
+            "key": "lua-host-runtime",
+            "isLeaf": true,
+            "filePath": "backend/runtime",
+            "contentStatus": "published",
+            "tags": [
+              "Lua",
+              "运行时",
+              "资源预算"
+            ],
+            "interviewBaseHeat": 0,
+            "interviewCount": 2,
+            "heat": 2,
+            "currRank": 2,
+            "updatedAt": "2026-10-28",
+            "quickRead": {
+              "text": "长脚本的风险取决于实际计算、输入规模、内存和宿主调用成本。先确认宿主如何调度，再设置有界批次、资源预算和终止恢复合同；协程是协作式让出，hook不能替代原生调用超时，终止也不自动回滚外部动作。Redis的串行执行与脚本终止限制只属于特定宿主。"
+            }
+          },
+          {
             "label": "请求上下文与洋葱模型",
             "key": "koa-middleware",
             "isLeaf": true,
@@ -2812,26 +2832,6 @@
             "heat": 1,
             "currRank": 1,
             "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "Lua 脚本与宿主运行边界",
-            "key": "lua-host-runtime",
-            "isLeaf": true,
-            "filePath": "backend/runtime",
-            "contentStatus": "published",
-            "tags": [
-              "Lua",
-              "运行时",
-              "资源预算"
-            ],
-            "interviewBaseHeat": 0,
-            "interviewCount": 1,
-            "heat": 1,
-            "currRank": 1,
-            "updatedAt": "2026-10-28",
-            "quickRead": {
-              "text": "长脚本的风险取决于实际计算、输入规模、内存和宿主调用成本。先确认宿主如何调度，再设置有界批次、资源预算和终止恢复合同；协程是协作式让出，hook不能替代原生调用超时，终止也不自动回滚外部动作。Redis的串行执行与脚本终止限制只属于特定宿主。"
-            }
           },
           {
             "key": "python-model-serving-workers",
@@ -2966,14 +2966,14 @@
             "isLeaf": true,
             "filePath": "backend/api",
             "contentStatus": "published",
-            "heat": 24,
+            "heat": 25,
             "currRank": 5,
             "updatedAt": "2026-11-16",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "先确认延迟范围、到期误差、任务存续量、故障丢失容忍度与取消语义，再设计任务记录、到期索引和有界调度。提交率不等于到期执行率；多实例通过条件状态更新获取执行权，副作用还需幂等和可查询结果。 取消与开始执行须竞争同一权威状态：尚未开始时，以条件更新把任务转为已取消；运行中则记录取消请求并在安全点协作停止。只删除时间索引不能证明 Worker 没拿到任务，已经发生的副作用也不能被取消请求抹去。"
             },
-            "interviewCount": 23,
+            "interviewCount": 24,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -3098,6 +3098,26 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
+            "label": "Kafka 日志、分区与可靠消费",
+            "key": "kafka-core",
+            "isLeaf": true,
+            "filePath": "backend/api",
+            "tags": [
+              "Kafka",
+              "消息队列",
+              "可靠性"
+            ],
+            "contentStatus": "published",
+            "updatedAt": "2026-11-13",
+            "interviewBaseHeat": 0,
+            "interviewCount": 2,
+            "heat": 2,
+            "currRank": 2,
+            "quickRead": {
+              "text": "Kafka 把事件保存在可重读的分区日志中，普通消费组按分区分担处理并保存各自位置。可靠性需分别核对生产确认与幂等重试、Broker 副本与选主、消费进度和业务幂等；Kafka 内部事务的恰好一次不能直接扩展到外部业务。"
+            }
+          },
+          {
             "label": "RESTful API 设计规范",
             "key": "restful-design",
             "isLeaf": true,
@@ -3126,26 +3146,6 @@
             "heat": 1,
             "currRank": 1,
             "updatedAt": "2026-07-17"
-          },
-          {
-            "label": "Kafka 日志、分区与可靠消费",
-            "key": "kafka-core",
-            "isLeaf": true,
-            "filePath": "backend/api",
-            "tags": [
-              "Kafka",
-              "消息队列",
-              "可靠性"
-            ],
-            "contentStatus": "published",
-            "updatedAt": "2026-11-13",
-            "interviewBaseHeat": 0,
-            "interviewCount": 1,
-            "heat": 1,
-            "currRank": 1,
-            "quickRead": {
-              "text": "Kafka 把事件保存在可重读的分区日志中，普通消费组按分区分担处理并保存各自位置。可靠性需分别核对生产确认与幂等重试、Broker 副本与选主、消费进度和业务幂等；Kafka 内部事务的恰好一次不能直接扩展到外部业务。"
-            }
           }
         ]
       },
@@ -3159,14 +3159,14 @@
             "isLeaf": true,
             "filePath": "backend/database",
             "contentStatus": "published",
-            "heat": 39,
+            "heat": 40,
             "currRank": 5,
             "updatedAt": "2026-10-31",
             "interviewBaseHeat": 10,
             "quickRead": {
               "text": "Cache-aside 以数据库为权威，读缓存未命中后回填，写数据库后失效缓存。TTL、失效通知和并发请求合并分别约束旧值、传播与负载，却不能保证跨层强一致或阻止旧请求回填；关键决策仍须在权威数据上校验，并设计失效失败的恢复路径。"
             },
-            "interviewCount": 29,
+            "interviewCount": 30,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -3207,14 +3207,14 @@
             "isLeaf": true,
             "filePath": "backend/database",
             "contentStatus": "published",
-            "heat": 17,
+            "heat": 18,
             "currRank": 5,
             "updatedAt": "2026-10-28",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "Redis 租约锁用原子 NX、随机持有者 token 和过期时间，释放或续期原子核对身份。租约失效、暂停和故障切换可能破坏排他，重要写入需资源端版本或 fencing，watchdog 不自动消除风险。"
             },
-            "interviewCount": 16,
+            "interviewCount": 17,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -4181,14 +4181,14 @@
             "isLeaf": true,
             "filePath": "network/tcpIp",
             "contentStatus": "published",
-            "heat": 20,
+            "heat": 21,
             "currRank": 5,
             "updatedAt": "2026-10-31",
             "interviewBaseHeat": 10,
             "quickRead": {
               "text": "TCP 建连、关闭、状态与拥塞控制各有合同，经典握手和挥手不是 TLS 握手。丢失后的重传与窗口调整依算法和信号决定，不能认为窗口始终翻倍或所有错误同样恢复。"
             },
-            "interviewCount": 10,
+            "interviewCount": 11,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -4197,14 +4197,14 @@
             "isLeaf": true,
             "filePath": "network/http",
             "contentStatus": "published",
-            "heat": 17,
+            "heat": 18,
             "currRank": 5,
-            "updatedAt": "2026-07-18",
+            "updatedAt": "2026-11-21",
             "interviewBaseHeat": 10,
             "quickRead": {
-              "text": "HTTP 方法、状态码、头与内容共同表达请求响应语义，GET 与 POST 不按名称决定性能。HTTPS 在 TLS 下保护传输，HTTP/2 和 HTTP/3 有不同承载与流机制，业务授权仍独立执行。"
+              "text": "HTTP 语义与报文字节定界分开理解：HTTP/1.x 使用文本报文，HTTP/2 用二进制帧、stream 与 HPACK。比较 1.0 时须保留其连接行为起点；多路复用不消除 TCP 丢包恢复造成的等待。"
             },
-            "interviewCount": 7,
+            "interviewCount": 8,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -4245,14 +4245,14 @@
             "isLeaf": true,
             "filePath": "network/tcpIp",
             "contentStatus": "published",
-            "heat": 13,
+            "heat": 14,
             "currRank": 5,
             "updatedAt": "2026-07-18",
             "interviewBaseHeat": 10,
             "quickRead": {
               "text": "TCP 提供有序可靠字节流，UDP 提供数据报；QUIC 在 UDP 上自行实现可靠流、恢复与拥塞控制。HTTP/2 的 TCP 丢包可阻塞后续字节交付，QUIC 独立流仍共享部分连接资源。"
             },
-            "interviewCount": 3,
+            "interviewCount": 4,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -4413,14 +4413,14 @@
             "isLeaf": true,
             "filePath": "data-structure/algorithm",
             "contentStatus": "published",
-            "heat": 25,
+            "heat": 26,
             "currRank": 5,
             "updatedAt": "2026-11-15",
             "interviewBaseHeat": 10,
             "quickRead": {
               "text": "哈希表通过哈希定位桶，再用相等性和冲突处理确定映射。Java 实现须注明版本：JDK 8 的 HashMap 结合链表、条件树化和扩容桶拆分；OpenJDK 25 的并发容器另有 CAS、桶级协调和协助扩容，容器安全不等于复合业务原子。"
             },
-            "interviewCount": 15,
+            "interviewCount": 16,
             "interviewCountBasis": "verified-public-posts"
           },
           {
