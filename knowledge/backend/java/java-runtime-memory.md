@@ -69,6 +69,16 @@ JVM 栈保存方法调用帧、局部变量与中间计算结果；本地方法�
 
 可沿“类加载器持有类 → 类关联元数据与静态状态 → 是否仍有可达引用”排查动态加载场景。不停生成或加载新类、保留旧加载器，都可能阻止对应资源释放；仅观察普通业务对象不足以定位。
 
+### 先分清加载、链接和初始化
+
+以 Java SE 21 为准，加载把二进制表示带入运行时；链接中的验证检查结构与约束，准备创建静态字段并赋默认值，解析把符号引用关联到实际的类、字段或方法。准备阶段不执行普通静态字段初始化表达式，显式赋值和静态初始化块属于初始化；解析的时机允许实现灵活安排，不能把所有阶段画成每次使用前都完整重跑的一条直线。[JVMS 21 §5.4–5.5](https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-5.html#jvms-5.4)
+
+常说的“双亲委派”描述 `ClassLoader.loadClass` 的默认查找策略：先检查已加载类，再交给父加载器，父级找不到才调用自身 `findClass`。这是类加载器 API 的默认合同，不能说成所有自定义加载器都被 JVM 强制使用的唯一算法。[Java 21 ClassLoader](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ClassLoader.html#loadClass(java.lang.String,boolean))说明了委派与覆盖边界。
+
+类的运行时身份由**二进制名称与定义它的加载器**共同确定，不只看类名。不同定义加载器各自定义同名类，不会因此成为同一个类型；父委派最终拿到同一个已定义类则是另一种情况。[JVMS 21 §5.3](https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-5.html#jvms-5.3)
+
+初始化也不等于“已经读到了 class 文件”。创建实例、调用静态方法或访问相应静态字段等操作可触发规范规定的初始化，反射等入口另有规则；初始化过程还要处理并发请求和失败状态。面试时沿“谁加载、类是否相同、何时执行静态初始化”解释，便能把委派与阶段机制串起来，而不是只背三个加载器名称。[JVMS 21 §5.5](https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-5.html#jvms-5.5)
+
 ## 从证据选择工具
 
 堆快照适合检查对象数量和保留链；线程快照适合分析递归、阻塞与线程数量。HotSpot NMT 可以在启动时开启，结合 `jcmd` 查看 VM 内部本地内存类别与基线差异；它不能覆盖所有第三方或应用本地分配，不能把 NMT 总数直接等同进程全部内存。[Java 21 NMT 文档](https://docs.oracle.com/en/java/javase/21/vm/native-memory-tracking.html)明确说明了覆盖范围。
@@ -111,6 +121,7 @@ jstat -gcutil -t <pid> 1000 10
 <!-- interview-source-history:start -->
 - [腾讯云智二面：Spring、Java 内存模型与 IO 多路复用](../../../interview/tencent/ai/tencent-ai-32.md)
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
+- [阿里 Java 研发一面：Agent 协作、Kafka 与 Redis](../../../interview/alibaba/ai/alibaba-ai-33.md)
 - [阿里云后端与 Agent 二面：领域建模、训练并行与 Java 基础](../../../interview/alibaba/ai/alibaba-ai-28.md)
 - [字节后端与 Agent 开发三面：领域建模、项目评测与基础](../../../interview/bytedance/base/bytedance-base-80.md)
 - [字节后端实习一面：Agent 取舍、线程池与索引](../../../interview/bytedance/base/bytedance-base-78.md)

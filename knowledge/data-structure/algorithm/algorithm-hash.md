@@ -219,6 +219,7 @@ while iterator.hasNext():
 - [蚂蚁后端一面：多级缓存、库存容灾与消息选型](../../../interview/antfin/base/antfin-base-1.md)
 - [字节全栈一面：RAG、Java 与线程池](../../../interview/bytedance/base/bytedance-base-37.md)
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)
+- [阿里 Java 研发一面：Agent 协作、Kafka 与 Redis](../../../interview/alibaba/ai/alibaba-ai-33.md)
 - [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)
 - [腾讯混元后台一面：Java 并发、限流与 Agent 工程](../../../interview/tencent/ai/tencent-ai-28.md)
 - [字节 Agent Infra 校招：运行时、MySQL 与 LRU](../../../interview/bytedance/base/bytedance-base-25.md)

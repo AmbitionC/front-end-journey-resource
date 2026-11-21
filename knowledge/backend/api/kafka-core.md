@@ -67,6 +67,7 @@ Kafka 内部的读—处理—写链路可以将输出记录与消费 offset 纳
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [阿里 Java 研发一面：Agent 协作、Kafka 与 Redis](../../../interview/alibaba/ai/alibaba-ai-33.md)
 - [快手 Agent 开发实习一面：MySQL、Kafka 与 RAG](../../../interview/kuaishou/ai/kuaishou-ai-21.md)
 <!-- interview-source-history:end -->
 

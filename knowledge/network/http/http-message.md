@@ -58,6 +58,12 @@ HTTP/1.1 不允许 `request-target` 包含空白字符；收到畸形请求行�
 
 [RFC 9112](https://www.rfc-editor.org/rfc/rfc9112.html) 专门规定 HTTP/1.1 报文语法、连接管理和 framing；`Content-Length` 与 `Transfer-Encoding` 的冲突会造成解析差异，必须按规范拒绝或处理。
 
+## 从 HTTP/1.0 比较到 HTTP/2
+
+比较时先固定起点：原题若问 HTTP/1.0，就不能只背 HTTP/1.1 与 HTTP/2 的差别。[RFC 1945 §1.3](https://www.rfc-editor.org/rfc/rfc1945.html#section-1.3)记录的 HTTP/1.0 常见行为是每次请求前建连接、响应后关闭，报文以文本起始行和字段表达；这不意味着所有历史实现都没有连接复用扩展。HTTP/1.1 的持久连接演进又是另一层比较，不能把它的默认行为倒算给 1.0。
+
+HTTP/2 保留 HTTP 的方法、状态等语义，改用二进制帧，把不同请求与响应放到可在同一连接上交错的 stream，并用 HPACK 压缩字段。[RFC 9113 §4–5、§8.2](https://www.rfc-editor.org/rfc/rfc9113.html#section-4)分别规定分帧、多路复用和字段编码；HPACK 不是把所有响应内容统一压缩。它减少应用层串行等待与重复字段开销，但下层 TCP 的丢失恢复仍可能阻塞该连接上的数据交付，不能说“升级到 HTTP/2 就没有队头阻塞”，也不能承诺每个请求必然更快。
+
 ## HTTP/2 与 HTTP/3：应用语义延续，传输边界不同
 
 [RFC 9113](https://www.rfc-editor.org/rfc/rfc9113)定义 HTTP/2 的二进制分帧与多路复用：多条 stream 可以共用一个 TCP 连接，流控和头部压缩按协议处理。TCP 向上提供有序字节流，一段丢失仍可能让该连接后续数据等待；应用 stream 多路复用不消除所有传输队头阻塞。
@@ -71,6 +77,7 @@ HTTP/1.1 不允许 `request-target` 包含空白字符；收到畸形请求行�
 <!-- interview-source-history:start -->
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
 - [字节 Agent 实习：模型选择与可信通信](../../../interview/bytedance/base/bytedance-base-54.md)
+- [阿里 Java 研发一面：Agent 协作、Kafka 与 Redis](../../../interview/alibaba/ai/alibaba-ai-33.md)
 - [OPPO AI 全栈一面：Prompt 到 UI、RAG 与前端性能](../../../interview/oppo/ai/oppo-ai-2.md)
 - [字节全栈实习：Session、权限与前端基础](../../../interview/bytedance/base/bytedance-base-46.md)
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
@@ -82,3 +89,6 @@ HTTP/1.1 不允许 `request-target` 包含空白字符；收到畸形请求行�
 
 - [RFC 9110: HTTP Semantics](https://www.rfc-editor.org/rfc/rfc9110.html)
 - [RFC 9112: HTTP/1.1](https://www.rfc-editor.org/rfc/rfc9112.html)
+
+- [RFC 1945：HTTP/1.0 的报文与连接行为](https://www.rfc-editor.org/rfc/rfc1945.html)
+- [RFC 9113：HTTP/2 分帧、stream 与 HPACK](https://www.rfc-editor.org/rfc/rfc9113.html)
