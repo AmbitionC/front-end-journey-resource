@@ -63,10 +63,10 @@
             "contentStatus": "published",
             "heat": 17,
             "currRank": 5,
-            "updatedAt": "2026-11-20",
+            "updatedAt": "2026-11-21",
             "interviewBaseHeat": 6,
             "quickRead": {
-              "text": "Transformer以嵌入、位置表示、注意力与前馈层处理序列；常见自回归模型按前缀计算下一token分布，再由解码器选择。EOS可以是学到的结束token，长度上限或停止串等运行时条件也可终止；因果掩码、KV缓存及窗口结构须按具体模型区分。"
+              "text": "Transformer 由相同的层堆成：Self-Attention 让每个位置按相关度读取其他位置，FFN 再逐位置做变换，外面套残差和归一化。训练时整段并行，生成时逐 Token 串行，所以推理要靠 KV Cache。"
             },
             "interviewCount": 11,
             "interviewCountBasis": "verified-public-posts"
@@ -884,10 +884,10 @@
             "contentStatus": "published",
             "heat": 42,
             "currRank": 5,
-            "updatedAt": "2026-11-18",
+            "updatedAt": "2026-11-21",
             "interviewBaseHeat": 6,
             "quickRead": {
-              "text": "RAG 将离线解析、切分和索引，与在线授权、召回、证据装配和生成连接起来；LangChain 是可用来组装这些环节的框架。保留来源与版本，分层评测检索和生成；使用框架或有引用都不能单独证明回答可靠。"
+              "text": "RAG 分离线和在线两条线：离线解析、切块、Embedding、建索引；在线改写问题、按权限过滤、混合召回、重排、按证据生成并标出处。效果不好就分段查：没召回查切块和召回，召回了答错查重排和生成。"
             },
             "interviewCount": 36,
             "interviewCountBasis": "verified-public-posts"
@@ -1350,10 +1350,10 @@
             "contentStatus": "published",
             "heat": 33,
             "currRank": 5,
-            "updatedAt": "2026-10-02",
+            "updatedAt": "2026-11-21",
             "interviewBaseHeat": 6,
             "quickRead": {
-              "text": "多Agent让执行者分别持有上下文、工具与证据，由协调者合并。是否值得分工要用同一任务、数据、权限和预算与单Agent或普通代码比较；角色增多不保证正确，通信、共享状态和合并失败都需要验证。"
+              "text": "默认用一个 Agent 加按需加载的技能，只有上下文装不下、需要并行、或要隔离权限时才拆子 Agent；按上下文切分，不按部门分工。Anthropic 的对比里，单 Agent 加技能常在质量和成本上都更好。"
             },
             "interviewCount": 27,
             "interviewCountBasis": "verified-public-posts"
@@ -1366,10 +1366,10 @@
             "contentStatus": "published",
             "heat": 31,
             "currRank": 5,
-            "updatedAt": "2026-11-13",
+            "updatedAt": "2026-11-21",
             "interviewBaseHeat": 6,
             "quickRead": {
-              "text": "Agent Harness以运行循环、工具、状态、上下文、权限与停止出口支撑模型执行任务，框架提供可组合组件。需区分Agent运行支撑与评测Harness；模型声称完成、检查点或框架名称都不能代替实际产物、权限和终态验收。"
+              "text": "Agent 的核心是一个循环：发上下文和工具给模型，调工具前过权限，结果作为观察塞回下一轮，不再调工具或预算用完就停。生产里用原生工具调用代替文本解析，评测同时看通过率和 Token、耗时。"
             },
             "interviewCount": 25,
             "interviewCountBasis": "verified-public-posts"
@@ -1462,12 +1462,12 @@
             "contentStatus": "published",
             "heat": 24,
             "currRank": 5,
-            "updatedAt": "2026-11-04",
+            "updatedAt": "2026-11-21",
             "interviewBaseHeat": 6,
             "interviewCount": 18,
             "interviewCountBasis": "verified-public-posts",
             "quickRead": {
-              "text": "Agent 记忆分开管理当前上下文、可恢复状态和跨任务持久事实，按查询选择文件、数据库与检索索引。OpenClaw 示例以笔记保存信息、以索引支持按需召回；存得下、搜得到与本轮已加载不同，权限、来源、时效和删除仍须治理。"
+              "text": "记忆分三层：窗口内的工作记忆、窗口外按需检索的长期记忆、每次会话注入的小索引。写入要过授权和事实校验；记忆变多后，在空闲时回看日志做合并与纠错（dreaming），比堆写入规则更有效。"
             }
           },
           {

@@ -3,7 +3,11 @@
 
 ---
 
-Agent 框架是连接大语言模型（LLM）与真实世界任务的工程骨架。理解它的核心抽象，不仅能让你更好地使用 LangChain、AutoGen 这样的成熟框架，更能在它们满足不了需求时，有能力自己动手裁剪一套。（参见 [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents)）
+「如果不用框架，你会怎么自己写一个 Agent」是 Agent 岗的高频题，站内 25 场面经问到过。面试官想听的不是某个框架的 API，而是你清不清楚循环里每一步谁负责。
+
+> **30 秒答法**：核心是一个循环：把上下文和工具定义发给模型；模型要调工具，就先过权限检查再执行，把结果作为观察塞回下一轮；模型不再调工具或预算用完就停。外围再补四样东西：工具注册表（名字、参数 Schema、超时）、状态与进度持久化、上下文压缩、终态校验。生产里工具调用用模型原生的 function calling，不靠正则解析文本；判断改动好坏，同时看通过率和花了多少 Token、多少时间。
+
+下面先讲 Harness 的职责划分，再用五块积木拼出一个能跑的最小框架，最后讲从教学版走到生产版要改哪几处。（参见 [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents)）
 
 ---
 
@@ -21,7 +25,7 @@ Agent Harness（也称 scaffold）是让模型作为 Agent 工作的运行支撑
 
 ## 为什么要自己搭框架
 
-成熟框架（LangChain、AutoGen 等）提供了极大的便利，但也带来了代价：
+成熟框架（LangChain、LangGraph、OpenAI Agents SDK 等）提供了极大的便利，但也带来了代价：
 
 - **抽象是否合适**：任务很小时，额外组件可能增加理解与调试成本；复杂任务也可能因此减少重复实现。
 - **升级成本**：应固定实际版本、读取变更并运行契约回归，不能只按框架名称推定兼容性。
@@ -320,6 +324,29 @@ class ReActExecutor:
         return "已达最大步数，无法得出结论。"
 ```
 
+### 生产里换成原生工具调用
+
+上面的文本协议适合理解循环，但靠正则从文本里抠 `Action` 很脆：模型多写一个换行、参数里带一个 `]`，解析就错。现在主流模型都支持原生工具调用：把工具的名字、描述和 JSON Schema 作为 `tools` 传进去，模型返回结构化的调用请求，参数已经是 JSON。循环本身不变，只是不再解析文本：
+
+```python
+import json
+
+def run(client, model, messages, tools, registry, max_steps=8):
+    for _ in range(max_steps):
+        resp = client.chat.completions.create(model=model, messages=messages, tools=tools)
+        msg = resp.choices[0].message
+        if not msg.tool_calls:          # 不再调工具，就是最终回答
+            return msg.content
+        messages.append(msg)            # 先把模型的调用请求放回历史
+        for call in msg.tool_calls:
+            args = json.loads(call.function.arguments)
+            result = registry.execute(call.function.name, args)   # 这里传参数字典；权限、校验、超时都在 execute 里
+            messages.append({"role": "tool", "tool_call_id": call.id, "content": str(result)})
+    return "预算用完，任务未完成。"
+```
+
+两处要注意：每个工具结果都要带上对应的 `tool_call_id` 放回去，否则模型对不上是哪次调用的结果；`arguments` 是模型生成的，仍然要按 Schema 校验，不能因为格式是 JSON 就当成可信输入。
+
 ---
 
 ## 拼装一个最小可用框架
@@ -403,7 +430,7 @@ print(react.run("(15 * 8 + 32) / 4 等于多少？"))
 | v0 最小框架 | 单轮对话 | LLM + Message |
 | v1 基础 Agent | 多轮记忆 + 工具调用 | Memory + ToolRegistry |
 | v2 规划执行 | 复杂任务分解 | Planner + ReAct |
-| v3 多 Agent | 角色分工协作 | A2A / GroupChat |
+| v3 多 Agent | 上下文隔离与并行 | Subagent / A2A |
 | v4 通信协议 | 工具生态互联 | MCP / Function Calling |
 
 ---
@@ -419,8 +446,11 @@ ReAct 循环不收敛时，高上限会放大无效调用。按任务评测选�
 **误区三：Memory 无限增长**
 Context Window 有限，不做裁剪会导致调用失败。滑动窗口、摘要压缩是标配。
 
-**误区四：把框架当银弹**
-复杂框架（LangChain/AutoGen）适合特定场景，但它们也增加了调试难度。原型阶段用裸 LLM + 少量工具往往更快。
+**误区四：只看通过率，不看成本**
+改 Prompt、加工具、换循环之后，除了看任务通过率，还要记录每个任务花了多少 Token、多少轮、多少秒。通过率涨 2 个点、成本翻倍的改动，未必值得上线。能写成测试的验收条件（文件是否生成、接口是否返回预期值）优先用确定性测试判定，比让另一个模型打分稳定，也更便宜。
+
+**误区五：把框架当银弹**
+复杂框架（LangChain 等）适合特定场景，但它们也增加了调试难度。原型阶段用裸 LLM + 少量工具往往更快。
 
 ---
 
