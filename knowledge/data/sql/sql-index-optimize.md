@@ -381,7 +381,6 @@ MySQL 的 Index Merge 合并代价不低；改写为 UNION 时还须处理两侧
 <!-- interview-source-history:start -->
 - [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)
 - [字节 Agent Infra 校招：运行时、MySQL 与 LRU](../../../interview/bytedance/base/bytedance-base-25.md)
-- [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../../interview/bytedance/base/bytedance-base-24.md)
 - [快手主站 SRE 一二三面：Agent Skill、性能排障与数据链路](../../../interview/kuaishou/ai/kuaishou-ai-5.md)
 - [阿里云可观测存储 AI Agent 工程岗一面：存储性能与查询优化](../../../interview/alibaba/ai/alibaba-ai-7.md)
 <!-- interview-source-history:end -->
