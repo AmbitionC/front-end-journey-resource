@@ -3,13 +3,17 @@
 
 ---
 
-Agent 的记忆系统决定了它能否跨轮次保持上下文、积累经验、从历史中学习。没有记忆，每次对话都是一次性的——Agent 不知道你是谁，也不记得上一轮说过什么。本文从认知科学的类比出发，系统梳理 Agent 记忆的分类、存储与召回机制、向量检索的核心原理，以及记忆压缩与遗忘策略。
+「Agent 的记忆怎么设计」是 Agent 岗的必考题，站内 18 场面经问到过，追问通常落在三处：短期和长期记忆怎么分、什么时候检索、记忆越来越多怎么办。
+
+> **30 秒答法**：我把记忆分三层。上下文窗口里的是工作记忆，靠摘要和裁剪控制长度；窗口外的是长期记忆，按需检索再装回来；还有一层很小的常驻索引，每次会话开头直接注入，告诉模型「我知道什么、去哪找」。写入要过授权和事实校验，不是什么都存。记忆变多以后，与其设计复杂的写入规则，不如在空闲时让模型回看日志、合并和纠错，Anthropic 把这一步叫 dreaming。
+
+没有记忆，每次对话都是一次性的：Agent 不知道你是谁，也不记得上一轮说过什么。下面依次讲记忆的分层、存储与召回、向量检索，最后讲记忆变多以后怎么整理和遗忘。
 
 ---
 
 ## 记忆的分层模型
 
-[MemGPT](https://arxiv.org/abs/2310.08560) 将上下文窗口内外的状态组织成分层存储，并由运行时决定信息的换入与换出，而不是把所有历史永久塞进一次推理。
+[MemGPT](https://arxiv.org/abs/2310.08560)（项目后来改名为 Letta）将上下文窗口内外的状态组织成分层存储，并由运行时决定信息的换入与换出，而不是把所有历史永久塞进一次推理。
 
 
 工程文章常借用工作记忆、情景记忆和语义记忆这些认知术语来区分信息用途；这里使用的是设计类比，不主张 Agent 与人类记忆机制等同。
@@ -225,6 +229,18 @@ memory_tool.execute("consolidate",
 )
 ```
 
+### 记忆要少而准：Anthropic 的 dreaming 实验
+
+2026 年 11 月，Anthropic 发表了一篇 [记忆实验总结](https://www.anthropic.com/research/components-of-agent-memory)，几个结论可以直接用在面试里：
+
+- **记得多不等于记得好**。让模型玩宝可梦时，Sonnet 3.7 常常给每场战斗、每个道具、每个 NPC 单独建文件，最后写了 225 个文件夹、413 个文件，只拿到 1 枚徽章；Fable 5 只写了 2 个文件夹里的 9 个文件，外加一个顶层的 `global.md`，拿到 4 枚。游戏状态一直在变，堆起来的旧记录反而成了噪音。
+- **告诉模型记忆是干什么的，别规定怎么记**。只告诉 Opus 4.7 和 Opus 5「有一个记忆文件夹可用」，它们就能用好；加一条「只记录失败」的硬规则，记忆带来的提升反而丢了很大一部分。模型越强，越应该让它自己判断什么值得记。
+- **离线整理（dreaming）能纠错**。和 Letta、UC Berkeley 提出的 sleep-time compute 是同一个思路：在两次任务之间，让模型回看原始日志，把记忆合并、改正、删掉。宝可梦里模型曾把地标的方向记反，写下「月见山已通过」，结果走下单向台阶回到了来时的路；dreaming 对照日志改正这条笔记后，模型就知道要回去重新进洞。
+- **整理成 wiki 再配合搜索最好**。让多个会话接力把大量内部文档整理成 wiki，会话数从 2 个加到 128 个，只用 wiki 的得分从 13% 涨到 48%；只用搜索是 53%，搜索加 wiki 从 54% 提到 61%，每题还省约 2 万 Token。但 wiki 也会失控：有一次整理出来的 wiki 比原始文件还大，等于什么都没抽象。
+- **常驻层要小**。每次会话都注入的那层记忆会占 Token，错一条就会带进每次会话，指令越长模型越不容易照做。Claude Code 的自动记忆只加载 `MEMORY.md` 的前 200 行或 25 KB，内容是一份索引，细节放在下层文件里按需读取。
+
+落到设计上就是三条：日志是事实来源，记忆是从日志里提炼出的结论，提炼要能对照日志纠错；常驻层只放索引和当前目标；整理放在离线做，不占用户等待的时间。
+
 ---
 
 ## 记忆压缩与遗忘
@@ -369,6 +385,7 @@ memory_tool.execute("forget", strategy="capacity_based", threshold=policy.capaci
 ## 参考资料
 
 - [MemGPT: Towards LLMs as Operating Systems](https://arxiv.org/abs/2310.08560)
+- [Anthropic — The components of agent memory](https://www.anthropic.com/research/components-of-agent-memory)（2026-11-06）
 - [Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/abs/2304.03442)
 - [LangGraph — Persistence：checkpointer 与 store](https://docs.langchain.com/oss/python/langgraph/persistence)
 - [OpenClaw — Memory：笔记、加载预算与记忆工具](https://docs.openclaw.ai/concepts/memory)（滚动文档，2026-11-04 核验）。

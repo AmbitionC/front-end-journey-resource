@@ -7300,6 +7300,56 @@
       "recordedAt": "2026-11-20",
       "status": "pending",
       "reason": "Hot-article readability rewrite for free-to-paid conversion: interview-ready summary up front, hedges and reviewer notes removed, current practice added; final independent review and same-SHA publication pending."
+    },
+    {
+      "key": "multi-agent",
+      "label": "多智能体协作与适用边界",
+      "filePath": "llm/agent",
+      "action": "update",
+      "batch": "conversion-polish-20261121",
+      "recordedAt": "2026-11-21",
+      "status": "pending",
+      "reason": "Hot-article conversion polish: speakable 30-second answer up front; absorbed Anthropic guidance on folding subagents into a single agent with skills; reviewer-facing hedges removed. Final independent review and same-SHA publication pending."
+    },
+    {
+      "key": "agent-memory",
+      "label": "短期记忆、长期记忆与检索",
+      "filePath": "llm/agent",
+      "action": "update",
+      "batch": "conversion-polish-20261121",
+      "recordedAt": "2026-11-21",
+      "status": "pending",
+      "reason": "Hot-article conversion polish: speakable 30-second answer up front; absorbed Anthropic agent-memory research (dreaming/offline consolidation, small injected index layer, steering by purpose not rules). Final independent review and same-SHA publication pending."
+    },
+    {
+      "key": "build-agent-framework",
+      "label": "从零构建 Agent 运行时",
+      "filePath": "llm/agent",
+      "action": "update",
+      "batch": "conversion-polish-20261121",
+      "recordedAt": "2026-11-21",
+      "status": "pending",
+      "reason": "Hot-article conversion polish: speakable 30-second answer up front; native tool-calling loop replaces regex parsing for production; cost tracked alongside pass rate; outdated AutoGen recommendation removed. Final independent review and same-SHA publication pending."
+    },
+    {
+      "key": "transformer-arch",
+      "label": "Transformer 架构原理",
+      "filePath": "llm/basics",
+      "action": "update",
+      "batch": "conversion-polish-20261121",
+      "recordedAt": "2026-11-21",
+      "status": "pending",
+      "reason": "Hot-article conversion polish (top real views): interview hook and speakable 30-second answer added. Final independent review and same-SHA publication pending."
+    },
+    {
+      "key": "rag-pipeline",
+      "label": "RAG 完整流程实战",
+      "filePath": "llm/rag",
+      "action": "update",
+      "batch": "conversion-polish-20261121",
+      "recordedAt": "2026-11-21",
+      "status": "pending",
+      "reason": "Hot-article conversion polish (top real views): interview hook and speakable 30-second answer added. Final independent review and same-SHA publication pending."
     }
   ],
   "deliveryEvidence": {
