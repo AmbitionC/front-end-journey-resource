@@ -63,6 +63,7 @@ Redis 脚本在执行期间阻止其他普通命令穿插，因此长循环、�
 
 <!-- interview-source-history:start -->
 - [快手 AI 应用服务端秋招三面：分布式 Agent、通信与 Lua](../../../interview/kuaishou/ai/kuaishou-ai-6.md)
+- [阿里 Java 研发一面：Agent 协作、Kafka 与 Redis](../../../interview/alibaba/ai/alibaba-ai-33.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
