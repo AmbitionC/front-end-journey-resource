@@ -349,6 +349,7 @@ memory_tool.execute("forget", strategy="capacity_based", threshold=policy.capaci
 - [拼多多 AI Agent 岗两轮技术面：RAG、多 Agent 与系统能力](../../../interview/pinduoduo/ai/pinduoduo-ai-1.md)
 - [字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)
 - [字节 Agent 开发二面（2026 年 7 月）](../../../interview/bytedance/base/bytedance-base-7.md)
+- [阿里 Java 研发一面：Agent 协作、Kafka 与 Redis](../../../interview/alibaba/ai/alibaba-ai-33.md)
 - [OPPO AI 全栈一面：Prompt 到 UI、RAG 与前端性能](../../../interview/oppo/ai/oppo-ai-2.md)
 - [美团 AI 全栈日常实习一面：记忆、Skill 与链表合并](../../../interview/meituan/ai/meituan-ai-11.md)
 - [淘天 AI 应用开发暑期实习二面：RAG 评测、工具与成本控制](../../../interview/alibaba/ai/alibaba-ai-31.md)

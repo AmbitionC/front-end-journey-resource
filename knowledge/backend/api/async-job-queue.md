@@ -231,6 +231,7 @@ RabbitMQ 的 TTL 限制消息存活期，死信交换机路由过期、拒收等
 - [百度搜索框架 Agent 日常实习一二面：上下文、工程选型与评测](../../../interview/baidu/ai/baidu-ai-14.md)
 - [腾讯 WXG 一面：跨语言 RAG、消息幂等与算法](../../../interview/tencent/base/tencent-base-3.md)
 - [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)
+- [阿里 Java 研发一面：Agent 协作、Kafka 与 Redis](../../../interview/alibaba/ai/alibaba-ai-33.md)
 - [快手 AI 应用实习面试：模型服务、RAG 与分类评估](../../../interview/kuaishou/ai/kuaishou-ai-15.md)
 - [字节后端与 Agent 开发二面：本体平台、延迟任务与注意力](../../../interview/bytedance/base/bytedance-base-81.md)
 - [字节 Agent 实习：异步消息、上下文与容器隔离](../../../interview/bytedance/base/bytedance-base-41.md)
