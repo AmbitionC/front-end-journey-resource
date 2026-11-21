@@ -2,7 +2,7 @@
 
 > **30 秒答法**：JS 是单线程的，浏览器用事件循环调度代码。每一轮先从任务队列取一个 task（比如 script 整体、setTimeout 回调、点击事件）执行完，接着清空所有 microtask（Promise 的 then、await 之后的代码、queueMicrotask），然后浏览器视情况渲染一帧，再开始下一轮。所以当前 task 里已经入队的 microtask（比如已 resolve 的 Promise 的 then）一定在下一个 task（比如 setTimeout 回调）之前执行；如果 microtask 不停地产生新的 microtask，页面就会卡死。
 
-![浏览器选择一个 task 执行 JavaScript，清空本次 microtask checkpoint，然后才获得可能的 rendering update，之后进入下一轮](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/browser-event-loop-task-microtask-render-v1.webp)
+![浏览器一轮事件循环：取一个 task，执行 JavaScript 直到调用栈为空，清空 microtask 队列且期间新加入的也在本轮执行，然后宿主可能更新渲染，再进入下一轮；示例代码同步阶段输出 A F，microtask 阶段输出 C E D，下一个 task 输出 B](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/browser-event-loop-round-order-v2.dark.png)
 *图：task → microtask checkpoint → possible render 是一轮关键顺序；microtask 中继续入队会延迟后续 task 与绘制。*
 
 ---

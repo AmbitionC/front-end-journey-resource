@@ -4,8 +4,8 @@
 
 它让模型从“只会说话”扩展到查询订单、搜索知识库、调用计算器或生成工单，但并没有自动解决权限、安全和业务正确性。
 
-![模型提出工具调用，应用校验并执行，带 call_id 的工具结果回到模型后继续调用或回答](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/function-calling-execution-loop-v4.png)
-*图：工具结果绑定原 call_id 回到模型，模型可以继续提出调用或回答。校验与授权由应用执行；副作用路径复用有效授权，并按策略做必要确认。图中 tool_result 泛指工具输出，Responses API 使用 function_call_output；最终回答仍需按业务目标验收。*
+![应用把消息和工具定义发给模型，模型要么直接给出最终回答，要么提出带工具名、JSON 参数和 call_id 的工具调用；应用依次做结构、业务和权限三层校验，不通过就返回可枚举的错误，通过后按风险等级执行，只读直接执行、可撤销写入给预览、高风险写入确认最终参数；结果绑定原 call_id 作为数据回到模型，模型继续调用或回答](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/function-calling-propose-validate-execute-v5.dark.png)
+*图：左边模型只提议，右边应用校验并执行；工具结果绑定原 call_id 回到模型，模型可以继续调用或回答。副作用按风险分级处理，最终回答仍需按业务目标验收。*
 
 ## 一、完整闭环，而不是一次函数调用
 

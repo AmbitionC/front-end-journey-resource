@@ -1,7 +1,7 @@
 TCP 与 UDP 提供不同的传输语义，不是简单的“可靠但慢”和“不可靠但快”。正确选型要回答：应用传递的是连续字节还是独立消息、过期数据是否还有价值、谁负责重传与拥塞控制，以及能否承受乱序和重复。
 
-![同一网络路径上 TCP 通过连接状态、确认、重传和拥塞控制交付有序字节流，UDP 保留独立数据报边界并把可靠性策略交给上层](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/tcp-udp-transport-semantics-comparison-v1.webp)
-*图：左侧是 TCP 的 byte stream 与 ACK/retransmit，右侧是 UDP datagram；底部按可靠交付、实时过期和成熟上层协议选择。*
+![TCP 把应用两次写入的 100 字节和 50 字节当成连续字节流，用累计 ACK、重传、接收窗口和拥塞控制保证有序；中间一段丢失时后面已到的字节也要等重传，接收端读到的边界可能是 120 加 30 字节，需要自己定义帧格式；UDP 每次发送是一个独立数据报，边界保留，但可能丢失、乱序或重复，可靠性由上层负责；要完整有序选 TCP，旧数据过期宁可丢选 RTP 或 WebRTC 等成熟协议，要可靠又要多条独立流可用跑在 UDP 上的 QUIC](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/tcp-udp-stream-vs-datagram-v2.dark.png)
+*图：TCP 只承诺有序字节流，应用写入的边界不保留，要自己定义帧格式；UDP 保留每个数据报的边界，但丢失、乱序和重复都交给上层。选型先问：数据过期后还要不要重传。*
 
 ---
 

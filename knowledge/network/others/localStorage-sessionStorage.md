@@ -1,6 +1,6 @@
 浏览器状态不能只按“容量和过期时间”选择。localStorage、sessionStorage、Cookie、IndexedDB 与 URL 的关键差异是作用域、生命周期、同步/异步、是否自动随请求发送，以及谁能读取。
 
-![URL、内存、sessionStorage、localStorage、IndexedDB 与 Cookie 按 origin、标签页会话、服务器请求和敏感性分层](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/browser-state-cookie-storage-boundaries-v1.webp)
+![按状态语义选择浏览器存储：可分享、可回退的筛选放 URL；组件瞬时交互放内存 state；当前标签页的短期草稿放 sessionStorage，作用域是 origin 加页面会话；非敏感偏好放 localStorage，同源跨标签页持久；大量离线结构化数据放异步的 IndexedDB；服务器会话标识放 Secure、HttpOnly Cookie，脚本读不到但会按 Domain 和 Path 自动随请求发送；除 HttpOnly Cookie 外，同源脚本都能读到](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/browser-state-where-to-store-v2.dark.png)
 *图：导航状态优先进入 URL，短期 UI 状态留在内存；Web Storage 属于脚本可读区域，HttpOnly Cookie 位于脚本边界之外并随匹配请求发送。*
 
 ---

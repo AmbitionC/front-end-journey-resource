@@ -47,7 +47,7 @@ rejected: 事务就是让数据库更快……
 
 ## 三条常见训练路径
 
-![RLHF、RLAIF 与 DPO 从偏好数据到策略模型的不同训练路径](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-rlhf-dpo-preference-paths-v1.webp)
+![三条路径都从同一 prompt 的 chosen 优于 rejected 的偏好数据出发：RLHF 由人工排序训练奖励模型，再采样当前策略用 PPO 加 KL 约束更新；RLAIF 由人定原则、AI 比较回答产生偏好，再训练奖励模型做强化学习；DPO 用 chosen、rejected 对和参考策略直接计算偏好损失更新策略，不需要显式奖励模型和 rollout；三者分别有奖励投机、放大反馈偏差、离线覆盖不足的风险，都依赖偏好质量和独立评估](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-rlhf-rlaif-dpo-paths-v2.dark.png)
 *图：RLHF 与 RLAIF 通常先训练奖励模型再用强化学习更新策略；DPO 直接用 chosen/rejected 对优化策略，但三者都依赖偏好质量与独立评估。*
 
 ## RLHF：人工反馈加奖励模型

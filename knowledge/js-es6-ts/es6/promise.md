@@ -1,6 +1,6 @@
 Promise 表示一个未来会 settle 的结果：只能从 pending 变为 fulfilled 或 rejected，一旦确定就不可改变。它不是线程、任务队列或取消令牌。理解 `then` reaction 的 microtask 顺序、thenable adoption、错误传播和并发组合，才能避免“加几个 await 就能顺序正确”的错觉。
 
-![JavaScript Promise、async/await、微任务、错误传播、并发限制与 AbortSignal 的异步控制流](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/promise-async-control-flow-v1.webp)
+![Promise 四件事：状态从 pending 只能 settle 一次，resolve 变 fulfilled，reject 或抛错变 rejected，resolve 一个 thenable 会跟随它的最终状态；then 总返回新 Promise，返回普通值则下一步 fulfilled，抛错则 rejected，忘了 return 下一步拿到 undefined；组合器中 all 全部成功才成功、任一失败立即失败且不取消其余操作，allSettled 逐项报告，race 取第一个 settle，any 取第一个成功；Promise 本身不能取消，要把 AbortSignal 传给每一层，并用池子限制同时在途的任务数](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/promise-state-chain-combinators-cancel-v2.dark.png)
 *图：settlement 不可变，reaction 进入 microtask；取消是独立协作协议，并发需要显式调度。*
 
 ## 状态与 Resolution

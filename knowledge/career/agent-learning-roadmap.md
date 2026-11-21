@@ -1,5 +1,5 @@
-![学习依赖 DAG：编程/网络/数据库→LLM 与 embeddings→tool use 与 RAG→Agent runtime/state→evals/observability/security→production project；每阶段配一个可验证作品和进入条件](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-engineer-learning-dependency-roadmap-v1.webp)
-*图：沿图中的节点与箭头阅读学习依赖；评估安全阶段用于深化，权限、工具副作用和失败边界从第一次工具练习就应出现，并贯穿后续阶段。*
+![Agent 工程师学习依赖六步：编程、网络和数据库基础，LLM 调用与 embedding，工具调用与 RAG，Agent 运行时与状态，评估观测与安全，生产项目；每一步配一个可验证作品，从待办应用、本地文档问答、带工具的 RAG 助手、多轮有状态 Agent、可观测且有安全护栏的 Agent，到上线项目；权限、工具副作用和失败边界从第一次工具练习开始就要出现并贯穿后续](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-learning-dependency-stages-v2.dark.png)
+*图：上排是六步学习依赖，下排是每一步对应的可验证作品；权限、工具副作用和失败边界从第一次工具练习就要出现，并贯穿后续阶段。*
 
 ---
 

@@ -21,8 +21,8 @@ type GoldenCase = {
 
 问题、gold docs、gold answer 和来源快照一起版本化。语料更新后，旧题可能不再有唯一答案；不要直接覆盖标签，创建新 dataset version 并保留变更原因。
 
-![单元、组件、Golden Set、端到端与线上监控组成测试金字塔，数据切片贯穿各层，漂移经复核后更新下一版本](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-testing-golden-set-pyramid-v1.webp)
-*图：线上监控不会直接写入当前冻结的 Golden Set；Drift Refresh 经复核产生新版本。*
+![RAG 测试分四层：最底层是不调模型也能跑的确定性契约，测分块、ACL、缓存键、引用 span 和 schema；组件层把召回、排名和路由分开测，看 Recall@K、MRR、nDCG 和路由准确率；端到端层把答案和引用一起评，无答案题要说证据不足，权限题检查候选和 trace；最上层线上监控只有零结果、fallback、用户纠正等代理信号。当前版本的 Golden Set 保持冻结，包含问题、gold 证据、gold 答案、来源快照和代表性、难例、对抗三类切片，驱动组件和端到端测试；线上样本先进候选池脱敏、去重、补快照和专家标签，复核后才成为下一版。发布门禁三条：越权、泄露、删除残留必须为零，关键切片不退化，同一批 case 新旧配对比较并看置信区间](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-testing-layers-golden-gate-v2.dark.png)
+*图：左边四层从下往上越来越接近真实；右边当前版本的 Golden Set 保持冻结，线上样本经候选池复核后才成为下一版；底部三条门禁任一不过就不发布。*
 
 ## 样本来源与切片
 

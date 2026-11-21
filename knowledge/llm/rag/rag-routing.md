@@ -17,8 +17,8 @@ type RouteContext = {
 
 路由只在 `allowedIndexes` 内选择。即使分类器认为“工资数据库”最相关，授权集合不含它时也不可发起查询。Fallback 也不得绕过这一步。
 
-![用户查询先经过授权与数据类型门禁，路由器再选择文档、表格、代码或图索引，并提供 Fan Out、Fallback 与 Abstain](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-routing-multi-index-v1.webp)
-*图：DENY 在路由前终止；所有候选最终在 Merge + Rerank 中统一比较。*
+![查询先过授权门禁，只能在 allowedIndexes 内选择，拒绝时直接终止且没有 fallback；路由器先用确定性规则，模糊请求再交给分类器，参考意图、实体、数据形态、时效和复杂度；高置信走单路，中置信做有界 fan-out，低置信 abstain 并提一个最小澄清问题；单路和 fan-out 只查授权范围内的文档、表格、代码或图索引，索引故障可退回关键词检索并标记 degraded，实时数据缺失不能用旧文档代替；多路候选用 RRF 融合后按原问题 rerank，每条候选保留 route ID 和来源](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-routing-gate-confidence-merge-v2.dark.png)
+*图：授权拒绝在路由前直接终止；高、中置信分别走单路和有界 fan-out，低置信 abstain 并提澄清问题；所有候选最后统一融合，再按原问题 rerank。*
 
 ## 路由信号
 

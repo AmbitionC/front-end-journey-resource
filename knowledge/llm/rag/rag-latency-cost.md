@@ -14,8 +14,8 @@ online latency = route
 
 并行分支取最大等待，不是简单相加；队列等待也要计入，而不只测服务执行时间。
 
-![离线摄取与在线查询分别计量，在线链路按路由、召回、重排和生成划分延迟成本，并在队列压力下按策略降级](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-latency-cost-budget-v1.webp)
-*图：Latency、Cost、Quality 是三个独立轴；Full、Degraded、Abstain 构成显式策略。*
+![一次在线 RAG 查询按阶段记延迟：排队时间也要计入，路由示例预算 40 毫秒，关键词、向量和表格检索并行、共用 160 毫秒的 deadline，关键路径取最慢一路，重排 220 毫秒，再组装上下文，生成的首 token 900 毫秒，总预算 5000 毫秒，这些数只是示例；容量压力下按显式阶梯降级：Full 是多路召回加重排和完整模型，Degraded 减少变体和候选、走快路径或缓存，Abstain 在高风险或证据不足时拒答，响应要标明 degraded 和证据时间；离线摄取的解析、OCR、分块、embedding 和建索引另记一本账，看新鲜度延迟和吞吐，删除与 ACL 更新优先于批量回填](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-latency-budget-degrade-v2.dark.png)
+*图：上半是一次在线查询的示例预算，并行检索共用 deadline、取最慢一路；下半左边是容量压力下的显式降级阶梯，右边是离线摄取的独立账本。*
 
 ## 为每阶段建立预算
 

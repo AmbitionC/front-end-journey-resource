@@ -1,5 +1,5 @@
-![进程A和B分别具有虚拟地址空间，A的两个内核线程共享堆并各有执行状态；只放大A1的单线程事件循环，两个任务等待时让出；进程通过协议与同步访问显式共享资源](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/process-thread-coroutine-scheduling-v2.png)
-*图：地址空间边界与共享资源协议分别标出；左侧只放大线程A1的单线程事件循环，不代表所有协程运行时都只能单线程。图为机制示意，不包含调度耗时或容量实测。*
+![进程 A 和进程 B 各有独立的虚拟地址空间；进程 A 里的两个内核线程各有执行状态、共享堆和全局数据，由内核调度；放大线程 A1 看到单线程事件循环一次运行一个任务，任务等待 IO 时让出；两个进程要访问文件、数据库或共享内存等显式共享资源时，都要按协议和同步来](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/process-thread-coroutine-boundaries-v3.dark.png)
+*图：先看边界：地址空间属于进程，线程由内核调度并共享进程内的堆；左下只放大线程 A1 的单线程事件循环，不代表所有协程运行时都只能单线程。图为机制示意，不包含调度耗时或容量实测。*
 
 ---
 

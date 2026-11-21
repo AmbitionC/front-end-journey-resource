@@ -25,7 +25,7 @@
 
 event ID 标识这一个事实；correlation ID 关联同一业务流程；causation ID 指向导致当前事件的上一个消息。三者不能合并：同一流程包含许多唯一事件，重放时又要保留因果链。
 
-![事件驱动 Agent 用标准事件信封进入持久队列，经 source 与 id 去重后更新状态投影，并把重试失败转入死信队列](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-event-driven-async-correlation-v1.webp)
+![生产者发出带标准信封的事件：event id 标识这一个事实，correlation id 关联同一业务流程，causation id 指向上一条消息；事件进入持久队列，按至少一次交付，可能重复、乱序或迟到；消费者在同一事务里按 source 加 id 去重并用唯一约束挡竞态，比对 expectedVersion 不让迟到的旧版本覆盖，再写投影并标记已处理，结果成为已验证的 observation，由调度器决定是否开启下一轮，而不是直接触发模型；处理失败先分类，暂时性错误退避加 jitter 后重试，永久错误和毒消息进入死信队列，修好根因后用新的 event id 重放并保留原 id 和 correlation](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-event-driven-envelope-consumer-dlq-v2.dark.png)
 *图：交付按至少一次设计，消费者依靠幂等效果与去重表抵御重复，而不是假设 exactly once。*
 
 ## 至少一次与幂等消费者

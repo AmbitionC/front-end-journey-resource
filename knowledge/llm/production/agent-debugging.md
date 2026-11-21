@@ -2,9 +2,10 @@
 
 [NIST 的 AI TEVV 工作](https://www.nist.gov/ai-test-evaluation-validation-and-verification-tevv)强调，可靠测量需要定义任务、挑战问题、测试床、数据集和方法局限。Agent 调试也遵循同一原则：没有可描述的失败条件和受控测试环境，就不能判断修复是否真的改变了原因。
 
-![Agent 失败从证据冻结、沙箱重放到回归测试的调试闭环](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-debugging-reproduction-loop-v1.webp)
+![Agent 调试七步：把失败写成可观察断言，冻结输入、不可变版本、状态和随机种子等复现快照，按 Trace 对齐找最早差异，在隔离副作用的沙箱里先用记录回放重放，最小化失败案例，只修最早可控的原因，最后把案例变成回归用例；跳过冻结直接改 Prompt 只是在追随机波动](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-debugging-freeze-replay-regress-v2.dark.png)
+*图：上排是取证和定位，下排是修复和固化；底部示意概率性失败要比较多次运行的通过率，单次成功不算修好。*
 
-图中的顺序不能倒置：Capture Failure 之后先 Freeze Inputs 与 Pin Versions，然后才 Replay。若修复前后使用了不同模型别名、工具 Schema 或知识索引，即使输出变好，也无法归因给这次修改。
+图中的顺序不能倒置：定义失败之后先冻结快照（输入、不可变版本、状态），然后才重放。若修复前后使用了不同模型别名、工具 Schema 或知识索引，即使输出变好，也无法归因给这次修改。
 
 ## 第一步：定义“失败”
 

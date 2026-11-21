@@ -14,8 +14,8 @@
 
 在支持该能力的模型和接口中，原生结构化输出可约束结果匹配所支持的 JSON Schema 子集。OpenAI 的同一指南将其与仅保证语法的 JSON mode 区分，并列出拒答、输出不完整和不支持的 Schema 等需要处理的状态。它加强的是结构合同，不是事实正确性；接口、模型或兼容层变化后，支持范围需要重新验证。
 
-![Prompt 和 JSON Schema 经过约束解码、Schema 校验与业务校验后得到可信对象](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/prompt-structured-output-pipeline-v3.webp)
-*图：上方约束解码节点适用于已确认支持原生结构化输出的路径；Prompt-only 生成仍从解析和校验开始。Schema 合法只证明结构符合约束，事实、权限和业务规则仍需单独验证。*
+![Prompt-only 或 JSON mode 的输出和原生结构化输出都要在应用端依次检查：响应是否完整（拒答、截断、出错）、JSON 能否解析、是否通过 Schema 校验、是否通过语义和业务校验，全部通过才得到可信对象；拒答或截断按状态处理，格式错误带错误信息重试一次后降级，高风险语义错误降级或转人工](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/prompt-structured-output-validation-path-v4.dark.png)
+*图：上排是两种输出来源，都要进入中间四道校验；下排是每道失败后的去向。Schema 合法只证明结构符合约束，事实、权限和业务规则仍需单独验证。*
 
 ## 先设计数据合同
 

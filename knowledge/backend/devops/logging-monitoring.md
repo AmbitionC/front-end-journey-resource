@@ -1,5 +1,5 @@
-![一个用户请求产生 trace spans、structured logs 和 RED metrics，三类信号通过 trace_id/service/version 关联；SLI 计算进入 SLO burn-rate alert，再链接到对应 trace。高基数字段单独标警告](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/observability-signals-correlation-alerting-v1.webp)
-*图：从一次用户请求追踪 spans、structured logs 与 RED metrics，再沿 trace_id/service/version 汇聚到 SLI、SLO burn-rate 告警和对应 trace。*
+![一次用户请求同时产生 trace span、结构化日志和 RED 指标；日志和 trace 按 trace_id 关联，指标只带 service、version、route 这类有界标签；指标算出 SLI，与 SLO 允许的坏事件比例相除得到燃烧速率并触发告警，告警再回溯到同一服务、同一时段的 trace，再按 trace_id 读日志；user_id、session_id、原始 URL、IP、trace_id 这类高基数字段不能做指标标签](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/observability-signals-correlate-alert-v2.dark.png)
+*图：三类信号来自同一次请求：日志和 trace 用 trace_id 关联，指标只挂 service、version、route 这类有界标签；告警由 SLI 与 SLO 燃烧速率触发，排查时先回到同服务、同时段的 trace，再按 trace_id 读日志。*
 
 ---
 
