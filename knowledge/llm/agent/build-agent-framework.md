@@ -340,10 +340,12 @@ def run(client, model, messages, tools, registry, max_steps=8):
         messages.append(msg)            # 先把模型的调用请求放回历史
         for call in msg.tool_calls:
             args = json.loads(call.function.arguments)
-            result = registry.execute(call.function.name, args)   # 这里传参数字典；权限、校验、超时都在 execute 里
+            result = registry.execute(call.function.name, args)   # 生产版 execute 接收参数字典
             messages.append({"role": "tool", "tool_call_id": call.id, "content": str(result)})
     return "预算用完，任务未完成。"
 ```
+
+这里的 `registry` 是生产版注册表，和上文教学版不同：`execute(self, name: str, args: dict) -> str` 接收参数字典，先按该工具的 JSON Schema 校验，再做权限检查、带超时执行。上文教学版收的是字符串，两段代码不能直接拼在一起用。
 
 两处要注意：每个工具结果都要带上对应的 `tool_call_id` 放回去，否则模型对不上是哪次调用的结果；`arguments` 是模型生成的，仍然要按 Schema 校验，不能因为格式是 JSON 就当成可信输入。
 

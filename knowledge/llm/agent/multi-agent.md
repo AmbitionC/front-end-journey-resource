@@ -4,7 +4,7 @@
 
 ## 先说结论：业界正在把子 Agent 往回收
 
-2026 年 10 月，Anthropic 的应用 AI 团队总结了一批企业 Agent 项目的经验（[When to fold subagents into your main agent loop](https://claude.com/resources/articles/building-agents-when-to-fold-subagents-into-your-main-agent-loop)）：在他们对比的多个企业部署里，**一个 Agent 加技能**的方案经常在质量上胜过「每个领域一个子 Agent」的方案，而且单个任务的成本和延迟往往更低。有一家客户把多 Agent 架构换成单 Agent 循环后，运行速度快了约一倍。
+2026 年 10 月，Anthropic 的应用 AI 团队总结了一批企业 Agent 项目的经验（[When to fold subagents into your main agent loop](https://claude.com/resources/articles/building-agents-when-to-fold-subagents-into-your-main-agent-loop)）：在他们对比的多个企业部署里，**一个 Agent 加技能**的方案经常在质量上胜过「每个领域一个子 Agent」的方案，而且单个任务的成本和延迟往往更低。有一家客户把自己的多 Agent 方案和单 Agent 循环做对比，单 Agent 的运行速度快了约一倍。
 
 原因有三条，面试里可以直接用：
 
@@ -16,7 +16,7 @@
 
 需要注意，这不是说多 Agent 没用。研究类任务里多条独立的探索路径、接口清晰的独立组件、黑盒式的结果验证，仍然适合交给子 Agent。关键是**按上下文拆，不按问题类型拆**：给子 Agent 的任务要尽量不依赖系统其他部分，交回一个紧凑的结果。
 
-**如果已经拆多了，怎么收回来**：一次只折叠一个子 Agent，把它的说明改写成主循环可以按需加载的技能；每改一步都用同一套评测集跑多次对比，效果和成本都不退步再继续。
+**如果已经拆多了，怎么收回来**：一次只折叠一个子 Agent，把它的说明改写成主循环可以按需加载的技能；每改一步都用同一套评测集跑多次对比，效果不退步再继续，成本最好也一起看。
 
 下面用一个具体任务，看多 Agent 什么时候真的有用、怎么设计才不出错。
 
