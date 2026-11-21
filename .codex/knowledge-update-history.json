@@ -7260,6 +7260,46 @@
       "recordedAt": "2026-11-20",
       "status": "pending",
       "reason": "Actual source-question processing; final independent review and same-SHA publication pending."
+    },
+    {
+      "key": "llm-capability-boundaries",
+      "label": "大模型的能力边界、幻觉与不确定性",
+      "filePath": "llm/basics",
+      "action": "update",
+      "batch": "conversion-polish-20261120",
+      "recordedAt": "2026-11-20",
+      "status": "pending",
+      "reason": "Hot-article readability rewrite for free-to-paid conversion: interview-ready summary up front, hedges and reviewer notes removed, current practice added; final independent review and same-SHA publication pending."
+    },
+    {
+      "key": "llm-token-context",
+      "label": "Token、Context Window 与 KV Cache",
+      "filePath": "llm/basics",
+      "action": "update",
+      "batch": "conversion-polish-20261120",
+      "recordedAt": "2026-11-20",
+      "status": "pending",
+      "reason": "Hot-article readability rewrite for free-to-paid conversion: interview-ready summary up front, hedges and reviewer notes removed, current practice added; final independent review and same-SHA publication pending."
+    },
+    {
+      "key": "event-loop",
+      "label": "浏览器事件循环、任务与渲染时机",
+      "filePath": "js-es6-ts/js",
+      "action": "update",
+      "batch": "conversion-polish-20261120",
+      "recordedAt": "2026-11-20",
+      "status": "pending",
+      "reason": "Hot-article readability rewrite for free-to-paid conversion: interview-ready summary up front, hedges and reviewer notes removed, current practice added; final independent review and same-SHA publication pending."
+    },
+    {
+      "key": "agent-coding",
+      "label": "Coding Agent 的架构与执行循环",
+      "filePath": "llm/agent",
+      "action": "update",
+      "batch": "conversion-polish-20261120",
+      "recordedAt": "2026-11-20",
+      "status": "pending",
+      "reason": "Hot-article readability rewrite for free-to-paid conversion: interview-ready summary up front, hedges and reviewer notes removed, current practice added; final independent review and same-SHA publication pending."
     }
   ],
   "deliveryEvidence": {

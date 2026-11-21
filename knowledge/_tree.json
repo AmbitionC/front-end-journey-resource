@@ -15,10 +15,10 @@
             "contentStatus": "published",
             "heat": 25,
             "currRank": 5,
-            "updatedAt": "2026-10-28",
+            "updatedAt": "2026-11-20",
             "interviewBaseHeat": 6,
             "quickRead": {
-              "text": "大模型生成符合上下文的文本，却不自动验证事实、引用或业务结果。按失败层补证据、工具校验、输出约束和拒答，再用固定任务及独立证据比较效果；低温度、RAG 和自报置信都不是正确性保证。"
+              "text": "大模型按概率生成「最像下一句」的内容，训练和评测又更奖励猜测而不是说不知道，所以会自信地编造。治理靠系统：检索提供证据、工具负责计算和执行、输出做格式与引用校验、高风险动作由人确认，再用失败样本持续评测。"
             },
             "interviewCount": 19,
             "interviewCountBasis": "verified-public-posts"
@@ -34,7 +34,7 @@
             "updatedAt": "2026-11-20",
             "interviewBaseHeat": 11,
             "quickRead": {
-              "text": "模型按token消费上下文并自回归生成，KV Cache保存各层已处理位置的键值以复用前缀计算。标准全量因果注意力与滑动窗口的可见范围、缓存长度不同；缓存不是长期业务记忆，延续对话仍需要显式上下文。"
+              "text": "Token 是分词器切出的单位，计费、窗口和延迟都按它算；上下文窗口是一次请求的总预算，输入输出共用；KV Cache 缓存每层历史的 Key 和 Value 让生成只算新位置，代价是显存随长度线性增长。"
             },
             "interviewCount": 8,
             "interviewCountBasis": "verified-public-posts"
@@ -1302,10 +1302,10 @@
             "contentStatus": "published",
             "heat": 67,
             "currRank": 5,
-            "updatedAt": "2026-11-18",
+            "updatedAt": "2026-11-20",
             "interviewBaseHeat": 6,
             "quickRead": {
-              "text": "Coding Agent 围绕仓库事实完成检索、补丁和验证闭环；编辑器补全则可从光标前后文与相关代码生成候选，并处理取消和文档版本变化。两者都需用任务、静态检查、测试与人工审查检验正确性，采纳率或生成代码量不能代替交付质量。 生命周期 Hook 的事件、输入输出和权限应按宿主合同核对，不能等同于模型推理或绕过权限。"
+              "text": "Coding Agent 让模型在循环里反复读代码、改代码、跑命令、看结果，由执行循环、工具、项目说明文件（AGENTS.md / CLAUDE.md）、权限沙箱和验证五块组成。判断它做对没有，看测试结果和最终 diff，不看它自称完成。"
             },
             "interviewCount": 61,
             "interviewCountBasis": "verified-public-posts"
@@ -4677,9 +4677,9 @@
             "contentStatus": "published",
             "heat": 16,
             "currRank": 5,
-            "updatedAt": "2026-07-18",
+            "updatedAt": "2026-11-20",
             "quickRead": {
-              "text": "浏览器执行一个任务后，在微任务检查点处理微任务，再在合适时机更新渲染。Promise 回调不会打断当前同步代码，零延时计时器也不立即执行；不断追加微任务会推迟后续任务和绘制。具体顺序要按入队时机推导，浏览器与 Node.js 的调度不能混为一谈。"
+              "text": "浏览器每轮执行一个 task，接着清空所有 microtask（Promise.then、await 之后的代码），然后才可能渲染，再进入下一轮。所以当前 task 里已入队的 microtask（如已 resolve 的 Promise 的 then）一定在下一个 task（如 setTimeout 回调）之前执行；microtask 无限追加会卡死页面。"
             },
             "interviewBaseHeat": 10,
             "interviewCount": 6,
