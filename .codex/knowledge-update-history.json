@@ -7350,6 +7350,16 @@
       "recordedAt": "2026-11-21",
       "status": "pending",
       "reason": "Hot-article conversion polish (top real views): interview hook and speakable 30-second answer added. Final independent review and same-SHA publication pending."
+    },
+    {
+      "key": "data-schema-evolution",
+      "label": "数据 Schema 演进与兼容性",
+      "filePath": "data/processing",
+      "action": "update",
+      "batch": "conversion-polish-20261121b",
+      "recordedAt": "2026-11-21",
+      "status": "pending",
+      "reason": "Added the missing quickRead so the knowledge leaf can be bound to the short-qa-v2 Bytedance Feishu interview; article body unchanged. Final independent review and same-SHA publication pending."
     }
   ],
   "deliveryEvidence": {

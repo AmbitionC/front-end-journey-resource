@@ -3692,7 +3692,10 @@
             "updatedAt": "2026-07-17",
             "interviewBaseHeat": 1,
             "interviewCount": 1,
-            "interviewCountBasis": "verified-public-posts"
+            "interviewCountBasis": "verified-public-posts",
+            "quickRead": {
+              "text": "Schema 演进要同时推演两个方向：新程序读旧数据、旧程序读新数据。兼容规则取决于 Avro、Protobuf 或 JSON 格式；字段类型没变但单位、时区或枚举含义变了，同样会让结果出错。"
+            }
           },
           {
             "label": "数据质量评估与异常检测",
