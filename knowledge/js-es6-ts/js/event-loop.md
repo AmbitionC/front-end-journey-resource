@@ -1,4 +1,6 @@
-浏览器事件循环协调 JavaScript、事件、网络回调、microtask 与渲染。它不会让长时间同步代码“自动异步”；一个 long task 会占住主线程，直到调用栈返回，用户输入和页面更新都只能等待。
+事件循环几乎是前端面试的必考题，最常见的形式是给一段代码让你写输出顺序。真正要掌握的只有一条规则：**每执行完一个 task，就把 microtask 队列清空，然后浏览器才有机会渲染，再进入下一个 task**。记住这条，再难的输出题也能一步步推出来。
+
+> **30 秒答法**：JS 是单线程的，浏览器用事件循环调度代码。每一轮先从任务队列取一个 task（比如 script 整体、setTimeout 回调、点击事件）执行完，接着清空所有 microtask（Promise 的 then、await 之后的代码、queueMicrotask），然后浏览器视情况渲染一帧，再开始下一轮。所以当前 task 里已经入队的 microtask（比如已 resolve 的 Promise 的 then）一定在下一个 task（比如 setTimeout 回调）之前执行；如果 microtask 不停地产生新的 microtask，页面就会卡死。
 
 ![浏览器一轮事件循环：取一个 task，执行 JavaScript 直到调用栈为空，清空 microtask 队列且期间新加入的也在本轮执行，然后宿主可能更新渲染，再进入下一轮；示例代码同步阶段输出 A F，microtask 阶段输出 C E D，下一个 task 输出 B](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/browser-event-loop-round-order-v2.dark.png)
 *图：task → microtask checkpoint → possible render 是一轮关键顺序；microtask 中继续入队会延迟后续 task 与绘制。*
@@ -37,7 +39,41 @@ console.log('F');
 
 同步阶段输出 `A F`。task 结束后按入队顺序运行 `C`、`E`；C 新增的 D 仍在同一个 checkpoint 继续运行；计时器在后续 task 才运行。结果是 `A F C E D B`。
 
-推导顺序时记录“哪段同步代码在何时向哪个队列入队”，不要背“Promise 永远比 setTimeout 快”。如果 Promise 是在后续 task 中才创建，时间关系自然不同。
+推导时盯住「哪段代码在什么时候进了哪个队列」，而不是背「Promise 比 setTimeout 快」：如果 Promise 是在某个 setTimeout 回调里才创建的，它的 then 自然排在那个回调之后。
+
+## 必考题：async/await 混合输出
+
+```javascript
+async function async1() {
+  console.log('async1 start');
+  await async2();
+  console.log('async1 end');
+}
+async function async2() {
+  console.log('async2');
+}
+console.log('script start');
+setTimeout(() => console.log('setTimeout'), 0);
+async1();
+new Promise((resolve) => {
+  console.log('promise1');
+  resolve();
+}).then(() => console.log('promise2'));
+console.log('script end');
+```
+
+输出：`script start → async1 start → async2 → promise1 → script end → async1 end → promise2 → setTimeout`
+
+一步步推：
+
+1. 整段 script 是第一个 task，同步代码按顺序执行：打印 `script start`，setTimeout 的回调进入任务队列。
+2. 调用 `async1`，打印 `async1 start`；`await async2()` 会**先同步执行** `async2`，打印 `async2`，然后把 `await` 之后的代码放进 microtask 队列。
+3. `new Promise` 的执行器是同步的，打印 `promise1`；`resolve()` 后 `then` 回调进入 microtask 队列。
+4. 打印 `script end`，第一个 task 结束。
+5. 清空 microtask：按入队顺序打印 `async1 end`、`promise2`。
+6. 下一个 task：打印 `setTimeout`。
+
+最容易错的两点：`await` 右边的函数是同步执行的，只有 `await` **后面**的代码才变成 microtask；`new Promise` 里的代码也是同步的。
 
 ## Microtask starvation
 
@@ -59,7 +95,16 @@ function starve() {
 
 ## 浏览器与 Node.js 不同
 
-ECMAScript 只定义语言级 Job 等抽象，具体事件循环由宿主提供。Node.js 基于 libuv，拥有 timers、poll、check 等阶段，并有 `process.nextTick` 的特殊队列。浏览器中的“task/microtask/render”顺序不能原样套到 Node I/O 示例；讨论前先写明运行时和版本。
+ECMAScript 只定义 Promise Job 这类语言层面的概念，事件循环由宿主环境实现。Node.js 基于 libuv，一轮循环分成多个阶段，面试常问的区别：
+
+| | 浏览器 | Node.js |
+| --- | --- | --- |
+| 循环结构 | task → 清空 microtask → 可能渲染 | timers → poll（I/O）→ check（setImmediate）等阶段 |
+| 特殊队列 | 无 | `process.nextTick`，优先级高于 Promise microtask |
+| 渲染 | 有 requestAnimationFrame 和渲染时机 | 无渲染 |
+| 典型追问 | Promise 和 setTimeout 谁先 | setTimeout(0) 和 setImmediate 谁先 |
+
+Node 11 起，每执行完一个 timer 或 immediate 回调就会清空一次 microtask，和浏览器表现一致了。`setTimeout(0)` 和 `setImmediate` 在主模块里的先后不确定，但放在 I/O 回调里时 `setImmediate` 一定先执行，因为 poll 阶段之后紧接着就是 check 阶段。
 
 ## 排查卡顿
 
