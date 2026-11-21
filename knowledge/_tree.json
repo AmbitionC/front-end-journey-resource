@@ -4679,7 +4679,7 @@
             "currRank": 5,
             "updatedAt": "2026-11-20",
             "quickRead": {
-              "text": "浏览器每轮执行一个 task，接着清空所有 microtask（Promise.then、await 之后的代码），然后才可能渲染，再进入下一轮。所以 Promise 回调总在当前 task 结束后、下一个 setTimeout 之前执行；microtask 无限追加会卡死页面。"
+              "text": "浏览器每轮执行一个 task，接着清空所有 microtask（Promise.then、await 之后的代码），然后才可能渲染，再进入下一轮。所以当前 task 里已入队的 microtask（如已 resolve 的 Promise 的 then）一定在下一个 task（如 setTimeout 回调）之前执行；microtask 无限追加会卡死页面。"
             },
             "interviewBaseHeat": 10,
             "interviewCount": 6,

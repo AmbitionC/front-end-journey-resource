@@ -1,4 +1,4 @@
-Claude Code、Codex、Cursor 这类 Coding Agent 已经是很多团队的日常工具，「你怎么用 AI 写代码」「Coding Agent 是怎么工作的」也成了 Agent 岗和后端岗的高频题，站内收录的面经里有 60 场问到。这篇把它拆开讲：一个 Coding Agent 由哪几块组成，每块解决什么问题，面试时怎么讲出深度。
+Claude Code、Codex、Cursor 这类 Coding Agent 已经是很多团队的日常工具，「你怎么用 AI 写代码」「Coding Agent 是怎么工作的」也成了 Agent 岗和后端岗的高频题，站内收录的面经里有 61 场问到。这篇把它拆开讲：一个 Coding Agent 由哪几块组成，每块解决什么问题，面试时怎么讲出深度。
 
 > **30 秒答法**：Coding Agent 就是让模型在一个循环里反复「读代码、改代码、跑命令、看结果」，直到任务完成。它由五块组成：执行循环、工具（读文件、搜索、编辑、执行命令）、项目说明文件（AGENTS.md / CLAUDE.md）、权限与沙箱、验证（测试和 diff 审查）。模型负责决策，运行时负责执行和把关。判断它做得好不好，不看它说没说完成，看测试结果和最终的 diff。
 
@@ -42,7 +42,7 @@ Coding Agent 的工具集通常很小：读文件、搜索（按文件名和内�
 
 ## 项目说明文件：AGENTS.md 与 CLAUDE.md
 
-每次会话都从零了解仓库太慢，也容易漏掉团队约定。现在的通行做法是在仓库根目录放一份给 Agent 看的说明文件，会话开始时自动加载。[AGENTS.md](https://agents.md/) 是多家工具（OpenAI Codex、Cursor 等）支持的开放格式，Claude Code 读的是 [CLAUDE.md](https://code.claude.com/docs/en/memory)。一个最小的例子：
+每次会话都从零了解仓库太慢，也容易漏掉团队约定。现在的通行做法是在仓库根目录放一份给 Agent 看的说明文件，会话开始时自动加载。[AGENTS.md](https://agents.md/) 是多家工具（OpenAI Codex、Cursor 等）支持的开放格式，Claude Code 读的是 [CLAUDE.md](https://code.claude.com/docs/en/memory)（没有 CLAUDE.md 时也会读 AGENTS.md）。一个最小的例子：
 
 ```markdown
 # AGENTS.md
@@ -92,7 +92,7 @@ Claude Code 的 [Hooks](https://code.claude.com/docs/en/hooks) 允许在 Agent �
 | `PostToolUse` | 工具成功执行之后 | 改完文件自动跑格式化或 lint，把结果反馈给模型 |
 | `Stop` | Agent 准备结束回复时 | 检查测试是否跑过，没跑就让它继续 |
 
-关键区别：想**阻止**某个动作，必须在 `PreToolUse` 里做；`PostToolUse` 只能事后检查和反馈，挡不住已经发生的副作用。
+关键区别：想**阻止**某个动作，要在它执行之前拦（`PreToolUse`，或处理权限确认的 `PermissionRequest`）；`PostToolUse` 只能事后检查和反馈，挡不住已经发生的副作用。
 
 ## 验证：怎么证明它真的做对了
 
