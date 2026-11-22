@@ -44,4 +44,3 @@
 
 <details data-binding-status="pending_semantic_verification"><summary>（13）Java 相关的理论对吧？相比于 Go 和 Java 来说有啥区别？</summary><p>关联知识点待核实。</p></details>
 <p>原文只保留了这句笼统比较，没有说明比较的是语言、并发、内存还是其他机制，比较对象和范围仍待确认。这里保留问题，暂不把它扩写成某个运行时或调度模型的考点，也不增加知识热度。</p>
-
