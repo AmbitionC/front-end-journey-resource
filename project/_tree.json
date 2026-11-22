@@ -82,7 +82,7 @@
         "filePath": "general-agent",
         "heat": 0,
         "currRank": 6,
-        "updatedAt": "2026-11-18",
+        "updatedAt": "2026-11-22",
         "quickRead": {
           "text": "三种“记住”各存什么，写入前查重，遗忘规则，以及记忆为什么是攻击面。"
         }
@@ -124,12 +124,24 @@
         }
       },
       {
+        "label": "计划模式、斜杠命令与钩子",
+        "key": "ga-workflow",
+        "isLeaf": true,
+        "filePath": "general-agent",
+        "heat": 0,
+        "currRank": 10,
+        "updatedAt": "2026-11-22",
+        "quickRead": {
+          "text": "先出计划再动手怎么靠闸门保证，固定流程怎么存成命令，项目规矩怎么写成每次都执行的钩子。"
+        }
+      },
+      {
         "label": "评测：用数字说明它好不好",
         "key": "ga-eval",
         "isLeaf": true,
         "filePath": "general-agent",
         "heat": 0,
-        "currRank": 10,
+        "currRank": 11,
         "updatedAt": "2026-11-19",
         "quickRead": {
           "text": "任务集、评分器、多次运行和失败归类，以及怎样把结果写进简历。"
@@ -272,6 +284,18 @@
         "quickRead": {
           "text": "先按环节算账，再讲缓存、分级用模型、限流和可重入。"
         }
+      },
+      {
+        "label": "对照实验：多 Agent 还是一个上下文加 Skill",
+        "key": "eg-single-vs-multi",
+        "isLeaf": true,
+        "filePath": "ecom-growth",
+        "heat": 0,
+        "currRank": 11,
+        "updatedAt": "2026-11-22",
+        "quickRead": {
+          "text": "把同一次活动用两种做法各跑一遍，量花费、并行和审核独立性，回答为什么要拆。"
+        }
       }
     ]
   },
@@ -310,7 +334,7 @@
         "filePath": "eval-evolve",
         "heat": 0,
         "currRank": 2,
-        "updatedAt": "2026-11-18",
+        "updatedAt": "2026-11-22",
         "quickRead": {
           "text": "一条好任务的标准，进化集、验收集、回归集怎么划分，验收集为什么会被用旧。"
         }
@@ -406,7 +430,7 @@
         "filePath": "eval-evolve",
         "heat": 0,
         "currRank": 10,
-        "updatedAt": "2026-11-18",
+        "updatedAt": "2026-11-22",
         "quickRead": {
           "text": "学新忘旧怎么观察，准入的四条规则，闸门挡不住什么，怎样回退。"
         }
