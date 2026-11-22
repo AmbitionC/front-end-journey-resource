@@ -379,6 +379,7 @@ memory_tool.execute("forget", strategy="capacity_based", threshold=policy.capaci
 - [蚂蚁大模型应用秋招一面：记忆评测、事务日志与消息积压](../../../interview/antfin/ai/antfin-ai-11.md)
 - [快手二面：事务快照、缓存与 Agent 项目复盘](../../../interview/kuaishou/ai/kuaishou-ai-23.md)
 - [海康威视 AI Agent 开发一面：可靠工具与任务状态](../../../interview/hikvision/ai/hikvision-ai-1.md)
+- [科大讯飞 Java 开发一面：Agent 项目与 AI 编程复盘](../../../interview/iflytek/java/iflytek-java-1.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

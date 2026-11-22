@@ -1300,14 +1300,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 66,
+            "heat": 67,
             "currRank": 5,
-            "updatedAt": "2026-11-20",
+            "updatedAt": "2026-11-22",
             "interviewBaseHeat": 6,
             "quickRead": {
-              "text": "Coding Agent 让模型在循环里反复读代码、改代码、跑命令、看结果，由执行循环、工具、项目说明文件（AGENTS.md / CLAUDE.md）、权限沙箱和验证五块组成。判断它做对没有，看测试结果和最终 diff，不看它自称完成。"
+              "text": "Coding Agent 让模型在循环里反复读代码、改代码、跑命令、看结果，由执行循环、工具、项目说明文件（AGENTS.md / CLAUDE.md）、权限沙箱和验证五块组成。判断它做对没有，看测试结果和最终 diff，不看它自称完成。企业使用还要核对获准的账号、入口、模型和数据去向；内容排除不等同于文件系统隔离。"
             },
-            "interviewCount": 60,
+            "interviewCount": 61,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1460,11 +1460,11 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 23,
+            "heat": 24,
             "currRank": 5,
             "updatedAt": "2026-11-21",
             "interviewBaseHeat": 6,
-            "interviewCount": 17,
+            "interviewCount": 18,
             "interviewCountBasis": "verified-public-posts",
             "quickRead": {
               "text": "记忆分三层：窗口内的工作记忆、窗口外按需检索的长期记忆、每次会话注入的小索引。写入要过授权和事实校验；记忆变多后，在空闲时回看日志做合并与纠错（dreaming），比堆写入规则更有效。"
@@ -2050,11 +2050,11 @@
             "isLeaf": true,
             "filePath": "llm/production",
             "contentStatus": "published",
-            "heat": 11,
+            "heat": 12,
             "currRank": 5,
             "updatedAt": "2026-10-02",
             "interviewBaseHeat": 6,
-            "interviewCount": 5,
+            "interviewCount": 6,
             "interviewCountBasis": "verified-public-posts",
             "quickRead": {
               "text": "发布质量门禁把“评估结果”变成明确动作：通过、人工复核、阻断、灰度或回滚。它不是 CI 页面上一排绿色图标，而是一套版本化策略，说明使用哪些证据、阈值和样本，谁有权例外，例外何时失效。"
@@ -5057,14 +5057,14 @@
             "isLeaf": true,
             "filePath": "career",
             "contentStatus": "published",
-            "heat": 42,
+            "heat": 43,
             "currRank": 5,
             "updatedAt": "2026-11-13",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "简历围绕问题、个人决策和可核验结果叙述项目，区分个人贡献与团队帮助。技术面解释系统边界、选型、评测与失败处理，HR面用真实经历说明协作、压力和求职动机；不补造指标、承诺或未发生的成果。"
             },
-            "interviewCount": 36,
+            "interviewCount": 37,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -5089,14 +5089,14 @@
             "isLeaf": true,
             "filePath": "career",
             "contentStatus": "published",
-            "heat": 23,
+            "heat": 24,
             "currRank": 5,
             "updatedAt": "2026-11-04",
             "quickRead": {
               "text": "从具体用户流程、痛点、基线和风险收敛最小可验收产品。KANO 分析功能满足与满意的关系，四象限须先定义两轴，再结合成本、依赖与证据验证排序；员工反馈报告还需防小群体与自由文本重新识别。"
             },
             "interviewBaseHeat": 6,
-            "interviewCount": 17,
+            "interviewCount": 18,
             "interviewCountBasis": "verified-public-posts"
           },
           {

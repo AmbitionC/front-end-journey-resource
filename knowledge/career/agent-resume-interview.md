@@ -215,6 +215,7 @@ AI/Agent 岗位面试通常覆盖以下几个方向。学长不列具体题目�
 - [字节前端全栈实习一面：渲染、Worker 与认证](../../interview/bytedance/base/bytedance-base-38.md)
 - [滴滴后端二面：CR Agent、Spec 与 AI Coding 场景](../../interview/didi/ai/didi-ai-1.md)
 - [字节 Agent 全栈一面：工具、评测与编码](../../interview/bytedance/base/bytedance-base-40.md)
+- [科大讯飞 Java 开发一面：Agent 项目与 AI 编程复盘](../../interview/iflytek/java/iflytek-java-1.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信](../../interview/tencent/ai/tencent-ai-10.md)
 - [字节 Agent：AI Coding、技能设计与模型工程](../../interview/bytedance/base/bytedance-base-49.md)
 - [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../interview/bytedance/base/bytedance-base-47.md)

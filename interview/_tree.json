@@ -4924,5 +4924,35 @@
         ]
       }
     ]
+  },
+  {
+    "label": "科大讯飞",
+    "key": "Iflytek",
+    "nodeType": "company",
+    "children": [
+      {
+        "key": "iflytek-department-other",
+        "label": "其他",
+        "nodeType": "department",
+        "children": [
+          {
+            "label": "科大讯飞 Java 开发一面：Agent 项目与 AI 编程复盘",
+            "key": "iflytek-java-1",
+            "isLeaf": true,
+            "filePath": "iflytek/java",
+            "tags": [
+              "Java",
+              "Agent",
+              "AI Coding"
+            ],
+            "updatedAt": "2026-11-22",
+            "department": "其他",
+            "roleCategory": "后端与 AI 应用",
+            "role": "Java开发",
+            "contentFormat": "short-qa-v2"
+          }
+        ]
+      }
+    ]
   }
 ]
