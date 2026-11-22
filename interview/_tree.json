@@ -2332,6 +2332,23 @@
             "role": "Java研发工程师",
             "roleCategory": "后端与 AI 应用",
             "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "阿里控股 Agent 开发一面：项目设计、Harness 与会话状态",
+            "key": "alibaba-ai-34",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "tags": [
+              "Agent",
+              "Harness",
+              "TDD",
+              "State"
+            ],
+            "updatedAt": "2026-11-22",
+            "department": "其他",
+            "roleCategory": "AI 与 Agent 工程",
+            "role": "Agent 开发",
+            "contentFormat": "short-qa-v2"
           }
         ]
       },

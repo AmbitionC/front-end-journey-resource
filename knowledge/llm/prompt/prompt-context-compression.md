@@ -201,6 +201,7 @@ usage 是提供商对这次调用的计量结果，tokenizer 的事前估算用�
 - [百度搜索框架 Agent 日常实习一二面：上下文、工程选型与评测](../../../interview/baidu/ai/baidu-ai-14.md)
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../../interview/bytedance/base/bytedance-base-48.md)
 - [字节全栈：多智能体导购、客户端与系统评测](../../../interview/bytedance/base/bytedance-base-43.md)
+- [阿里控股 Agent 开发一面：项目设计、Harness 与会话状态](../../../interview/alibaba/ai/alibaba-ai-34.md)
 - [大疆创新 AI Agent 开发面经：容错、Token 与后端基础](../../../interview/dji/ai/dji-ai-1.md)
 - [快手 AI 应用一面：沙箱中的 Skill、工具调用与记忆压缩](../../../interview/kuaishou/ai/kuaishou-ai-12.md)
 - [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)

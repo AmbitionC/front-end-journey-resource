@@ -151,6 +151,7 @@ Orchestrator 解析 PR diff，分发给各专项 Agent，收集结果后合并�
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../interview/bytedance/base/bytedance-base-48.md)
 - [字节后端与 Agent：运行链路、数据库与网络](../../interview/bytedance/base/bytedance-base-55.md)
 - [字节全栈：多智能体导购、客户端与系统评测](../../interview/bytedance/base/bytedance-base-43.md)
+- [阿里控股 Agent 开发一面：项目设计、Harness 与会话状态](../../interview/alibaba/ai/alibaba-ai-34.md)
 - [京东 AI 应用开发日常实习二面：项目表达与产品场景](../../interview/jd/ai/jd-ai-7.md)
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../interview/bytedance/base/bytedance-base-50.md)
 - [字节 Agent 实习：异步消息、上下文与容器隔离](../../interview/bytedance/base/bytedance-base-41.md)
