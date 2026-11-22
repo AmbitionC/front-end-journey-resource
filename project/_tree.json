@@ -146,6 +146,18 @@
         "quickRead": {
           "text": "任务集、评分器、多次运行和失败归类，以及怎样把结果写进简历。"
         }
+      },
+      {
+        "label": "用 AI 编程工具做出这个项目",
+        "key": "ga-build-with-ai",
+        "isLeaf": true,
+        "filePath": "general-agent",
+        "heat": 0,
+        "currRank": 12,
+        "updatedAt": "2026-11-22",
+        "quickRead": {
+          "text": "需求文档、任务清单和项目说明文件怎么写，按里程碑推进，每一步怎么验收和检查。"
+        }
       }
     ]
   },
@@ -296,6 +308,18 @@
         "quickRead": {
           "text": "把同一次活动用两种做法各跑一遍，量花费、并行和审核独立性，回答为什么要拆。"
         }
+      },
+      {
+        "label": "用 AI 编程工具做出这个项目",
+        "key": "eg-build-with-ai",
+        "isLeaf": true,
+        "filePath": "ecom-growth",
+        "heat": 0,
+        "currRank": 12,
+        "updatedAt": "2026-11-22",
+        "quickRead": {
+          "text": "需求文档、任务清单和项目说明文件怎么写，按里程碑推进，每一步怎么验收和检查。"
+        }
       }
     ]
   },
@@ -433,6 +457,18 @@
         "updatedAt": "2026-11-22",
         "quickRead": {
           "text": "学新忘旧怎么观察，准入的四条规则，闸门挡不住什么，怎样回退。"
+        }
+      },
+      {
+        "label": "用 AI 编程工具做出这个项目",
+        "key": "ee-build-with-ai",
+        "isLeaf": true,
+        "filePath": "eval-evolve",
+        "heat": 0,
+        "currRank": 11,
+        "updatedAt": "2026-11-22",
+        "quickRead": {
+          "text": "需求文档、任务清单和项目说明文件怎么写，按里程碑推进，每一步怎么验收和检查。"
         }
       }
     ]
