@@ -82,6 +82,27 @@ Coding Agent 能执行命令，所以权限设计是面试常问的点：
 - **用户改动不能碰**：工作区里用户没提交的修改属于用户，`git checkout .`、`git reset --hard` 这类会丢改动的命令必须经过明确同意。
 - **外部操作单独授权**：推送、开 PR、合并、部署、发评论都不因为「代码写完了」就自动获得许可。
 
+## 企业项目里，怎样说明 AI 工具的使用边界
+
+被问到“用了哪些工具，公司有什么限制”时，先把工具名称落到实际用途：补全、解释代码、生成补丁、运行命令或辅助审查分别由谁完成。接着核对企业允许的账号、功能、模型和使用入口；同一个品牌的 IDE、CLI 和云端 Agent，权限与数据流可能不同。[GitHub 的企业策略文档](https://docs.github.com/en/copilot/concepts/enterprise/policies)明确说明，策略可以控制功能、Agent 和模型，但并非每项策略都适用于所有入口，不能从“团队买了许可证”推断所有用法都获准。
+
+准备一次真实使用案例时，可以按下面四项说明约束。这是工程核对方法，不代表某家公司的实际制度；只填写自己确认过的内容。
+
+| 要核对的边界 | 回答需要说清什么 |
+| --- | --- |
+| 输入 | 哪些代码、日志和业务数据允许发送，是否需要脱敏；不能因方便复现就上传密钥或未经授权的客户数据 |
+| 数据去向 | 请求发往哪个服务，仓库索引、会话记录和日志怎样保留，谁可以访问；具体约定查实际产品配置和企业政策 |
+| 执行 | Agent 可以读写哪些目录、运行哪些命令、访问哪些网络，继承了什么凭据，哪些动作另需授权 |
+| 交付 | 谁核对需求、测试和 Diff，哪些发布与合并门禁仍须满足，失败如何停止或回退 |
+
+内容排除规则也不能替代隔离。以 2026-11-22 核验的 [GitHub Copilot 内容排除说明](https://docs.github.com/en/copilot/concepts/security-governance-and-network-settings/content-exclusion)为例，它不是文件系统安全边界，间接访问或第三方 MCP 工具仍有局限；敏感文件的访问还要由操作系统权限、受限运行环境和工具授权控制。没有确认某项策略是否覆盖当前入口时，先缩小任务到允许的材料和动作，不能把个人工具的可用性当成企业授权。
+
+### “让代码更高级”应怎样落到质量
+
+把“更高级”改写为能复核的要求：符合现有接口和命名，正常、边界与错误路径行为正确，必要的权限与资源处理明确，并能被下一位维护者理解。比如给一个现有接口补功能，先提供调用方、输入输出约定、已有测试和允许修改的范围，再要求最小补丁及验证结果；新增抽象应解决实际重复或变化点，不能用更多层级代替需求正确。
+
+让模型解释关键取舍，并把建议对照代码与测试核验；本人仍要能说明为什么这样改。[GitHub 的 Agent 使用说明](https://docs.github.com/en/copilot/responsible-use/agents)要求审查和测试生成代码，并提醒生成建议可能不准确或不安全。它支持的是验证责任，不能据此声称 AI 已让某个项目更快、更安全；提效或质量提升仍要有同一任务范围内的实际比较。
+
 ## Hooks：在固定时机插入检查
 
 Claude Code 的 [Hooks](https://code.claude.com/docs/en/hooks) 允许在 Agent 生命周期的固定时机运行你自己的脚本，常用的有：
@@ -247,6 +268,7 @@ Coding Agent 接到一个修 bug 的任务，发现工作区里有几个用户�
 - [快手 AI 全栈一面：Skill 成本、Agent 链路与开发验收](../../../interview/kuaishou/ai/kuaishou-ai-9.md)
 - [美团 AI 全栈二面：AI Coding 复盘与测试边界](../../../interview/meituan/ai/meituan-ai-14.md)
 - [滴滴后端二面：CR Agent、Spec 与 AI Coding 场景](../../../interview/didi/ai/didi-ai-1.md)
+- [科大讯飞 Java 开发一面：Agent 项目与 AI 编程复盘](../../../interview/iflytek/java/iflytek-java-1.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)
 - [字节 Agent：AI Coding、技能设计与模型工程](../../../interview/bytedance/base/bytedance-base-49.md)
 - [字节 Agent 一面：生成代码质量与限时 AI Coding](../../../interview/bytedance/base/bytedance-base-67.md)
@@ -259,6 +281,8 @@ Coding Agent 接到一个修 bug 的任务，发现工作区里有几个用户�
 - [Claude Code：项目记忆与 CLAUDE.md](https://code.claude.com/docs/en/memory)
 - [Claude Code：Hooks reference](https://code.claude.com/docs/en/hooks)
 - [GitHub：Copilot Agents 的局限与生成内容审查建议](https://docs.github.com/en/copilot/responsible-use/agents)
+- [GitHub：企业与组织的 Copilot 策略及生效入口](https://docs.github.com/en/copilot/concepts/enterprise/policies)
+- [GitHub：Copilot 内容排除的适用范围与局限](https://docs.github.com/en/copilot/concepts/security-governance-and-network-settings/content-exclusion)
 - [Jimenez et al. — SWE-bench](https://arxiv.org/abs/2310.06770)
 - [SWE-bench — Original benchmark](https://www.swebench.com/original.html)
 - [Git — git-worktree](https://git-scm.com/docs/git-worktree)

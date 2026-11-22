@@ -154,6 +154,7 @@ Review 队列有 SLA、所需角色和决策模板。人工批准记录理由、
 - [蚂蚁一面：交付门禁、准确率口径与商品问答](../../../interview/antfin/ai/antfin-ai-10.md)
 - [蚂蚁财富技术部一面：协作式 Agent、交付门禁与后端基础](../../../interview/antfin/ai/antfin-ai-4.md)
 - [蚂蚁 Agent 开发一面：多 Agent 并发与质量保障](../../../interview/antfin/ai/antfin-ai-1.md)
+- [科大讯飞 Java 开发一面：Agent 项目与 AI 编程复盘](../../../interview/iflytek/java/iflytek-java-1.md)
 <!-- interview-source-history:end -->
 
 ## 相关机制阅读（不计专题频次）
