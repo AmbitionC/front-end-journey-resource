@@ -2,7 +2,7 @@ Agent 测试的难点在于：同一个“答案错误”，可能来自纯函�
 
 [NIST AI RMF 附录 A 的 TEVV 职责说明](https://airc.nist.gov/airmf-resources/airmf/appendices/app-a-descriptions-of-ai-actor-tasks/)将测试、评估、验证和确认放在整个 AI 生命周期中，并说明可在设计阶段按需求规划测试，在部署阶段验证系统集成。Agent 的金字塔不是某个标准规定的固定形状，而是把这些活动按隔离性和现实性组织起来的工程方法。
 
-![Agent 单元契约、工具集成、场景与端到端测试金字塔](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-test-pyramid-layered-strategy-v1.webp)
+![Agent 测试金字塔四层：最底层单元与契约测试覆盖 Prompt 构造、Schema、权限、状态机和脱敏，毫秒级、不调模型和网络；工具集成测试用真实协议或高保真替身，注入 429、超时、旧 Schema 等故障；场景测试在沙箱里跑完整 Agent 循环，断言状态和工具轨迹；端到端测试走真实部署链路，数量要少。分配一条测试时从下往上问：不调模型和网络就能确定地证伪的放单元层，只涉及一个外部工具契约的放集成层，需要完整循环和世界状态但不需要生产设施的放场景层，只有跨组件部署、身份和队列才能验证的放端到端层。评估是横向能力，每层都可能用到确定性规则、模型评分器和人工评审，评分器本身也要用标注集校准](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-test-pyramid-layer-routing-v2.dark.png)
 
 越往上，环境越真实、成本越高、失败归因越难；越往下，执行越快、隔离越强、覆盖越广。健康的策略不是“尽量少做上层”，而是让每层只承担它能回答的问题。
 

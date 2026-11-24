@@ -1,7 +1,7 @@
 模型输出必须视为不可信输入。Markdown、代码高亮和图表渲染会把文本送入不同解析器与 DOM 上下文，任何一个允许任意 HTML、URL 或脚本，都可能把“回答内容”升级为页面权限。安全管线应是 parse → policy → sanitize → render，并让代码保持 inert。
 
-![Agent Markdown、代码与图表从解析、白名单策略、消毒、隔离到安全 DOM 的渲染管线](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-markdown-code-ui-safe-render-pipeline-v1.webp)
-*图：Markdown、语法高亮和 Mermaid 是独立信任边界；链接、图片和 HTML 都经过目标上下文策略。*
+![Agent 输出的安全渲染管线：parse、policy、sanitize、render。模型输出是不可信输入，先交给 CommonMark 解析器生成 AST，而不是用正则替换；AST 节点带稳定 ID；节点策略按类型执行白名单，允许段落、列表、表格和代码，拒绝原始 HTML。之后分四条线处理：代码块当文本渲染，复制按钮复制原始代码，运行代码只能进 sandbox 并经用户审批，不能在页面 origin 里 eval；Mermaid 图表用 strict 安全级别，禁用 HTML 标签和点击回调，限制节点数和布局时间，失败时显示原文；链接和图片用标准 URL API 比较规范化 host，禁止 javascript: 和 data:text/html 等协议，远程图片默认点击加载或经受控代理；原始 HTML 尽量不进 innerHTML，确实需要时在写 DOM 前用 sanitizer 白名单，并加 CSP 和 Trusted Types 做纵深防御。最终目标：无论模型输出什么文本，都拿不到应用脚本、会话凭据或任意网络能力。流式输出时，已完成的 block 固化，只重新解析最后一个未完成的 block，高亮和图表等 fence 结束后再异步渲染](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-markdown-code-ui-safe-render-pipeline-v2.dark.png)
+*图：模型输出先解析成 AST、按节点类型过白名单，再分四条线处理代码、图表、链接图片和原始 HTML；目标是无论模型写什么，都拿不到应用脚本、会话凭据或网络能力。*
 
 ## 解析不是字符串替换
 

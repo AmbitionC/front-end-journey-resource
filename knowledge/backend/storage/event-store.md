@@ -1,7 +1,7 @@
 事件存储、事务 outbox 和消息队列经常被混成一个概念。事件存储保存领域事实并可重建状态；outbox 解决“业务状态和待发布消息如何原子记录”；消息系统负责把记录交付给消费者；投影则把事件转换为适合查询的读模型。边界分清，重放和故障恢复才不会重复执行真实副作用。
 
-![事件存储、事务 Outbox、消息投递和幂等投影的写入与重建流程](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/event-store-outbox-rebuild-flow-v1.webp)
-*图：领域事件按聚合追加，outbox 与业务写同事务提交；投影按事件 ID 去重，重建使用隔离的回放通道。*
+![事件存储、事务 outbox、消息投递、幂等投影与重建。命令（如 PlaceOrder）可能失败，通过规则后才产生事件。事件来源有两条：事件溯源系统把事件按聚合追加到事件存储，用 expectedVersion 条件写入，版本冲突就重读再判断；普通 CRUD 系统把业务表和 outbox 行写进同一事务，提交后由 relay 或 CDC 发布。消息投递至少一次，可能重复和乱序。消费者分两类：投影把 checkpoint、已处理 eventId 与读模型写在同一事务；邮件、支付、Webhook 等副作用消费者用 operationId 查幂等账本。重建走隔离的回放通道：从起点回放到新版本投影 orders_v2，追平实时增量，校验行数与业务摘要，再原子切换读别名；副作用消费者默认不接回放通道。快照只是性能优化，坏了要能回到完整事件流](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/event-store-outbox-rebuild-flow-v2.dark.png)
+*图：事件溯源系统直接追加事件存储，普通 CRUD 系统用 outbox 与业务同事务；投递可能重复，投影和副作用消费者都要幂等，重建走隔离的回放通道。*
 
 ## 事件是事实，不是调试日志
 

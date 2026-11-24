@@ -1,7 +1,7 @@
 TypeScript 类型系统的目标，是在 JavaScript 运行前描述值之间的关系并排除不可能状态。它主要采用结构化类型，并允许部分有意的不健全性来兼容 JavaScript；类型注解最终会擦除，不能替代运行时校验。
 
-![两个对象按成员结构建立兼容关系，联合类型经过控制流守卫缩小到具体分支，泛型保持输入与输出的关联，运行时数据位于类型擦除边界之外](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/typescript-structural-narrowing-model-v1.webp)
-*图：左侧是 structural compatibility，中间是 union narrowing，右侧 generic 保存关系；底部提醒外部数据需要 runtime parser。*
+![TypeScript 类型系统的三件事和一条边界。结构化兼容：pixel 有 x、y、color，Point 只要 x、y，成员够就能赋值；但对象字面量直接赋值时仍会做额外属性检查。判别联合缩小：LoadState 按 status 区分，switch 进入 idle 分支什么也没有，loading 分支才能用 requestId，success 分支才能用 data，error 分支才能用 error；default 分支把值赋给 never 做穷尽检查，新增状态时编译器会提醒。泛型保留关系：first<T> 输入 readonly T[]，返回 T | undefined；mapValue<T, U> 接收 T 和从 T 到 U 的转换，返回 U；T 从实参推断并贯穿输入和输出，只用一次的类型参数不要硬泛型化。类型擦除边界：网络响应、用户输入、本地存储这些外部数据在运行时没有类型，先用 unknown 接收，经过 parser 校验，才得到 User 这样的领域类型；as User 断言只改变编译器视角，不检查字段，any 会沿调用链传播，只适合当迁移逃生口](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/typescript-structural-narrowing-model-v2.dark.png)
+*图：上排依次是结构化兼容、判别联合缩小和泛型关系；下排是类型擦除边界，外部数据要从 unknown 经过 parser 才变成领域类型。*
 
 ---
 

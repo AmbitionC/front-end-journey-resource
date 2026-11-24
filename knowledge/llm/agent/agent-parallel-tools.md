@@ -19,8 +19,8 @@ type ToolTask = {
 
 [LangGraph 的工作流文档](https://docs.langchain.com/oss/python/langgraph/workflows-agents)把 parallelization 与 orchestrator-worker 分开：前者适合预先可判断的独立子任务，后者适合运行时才确定的工作集合。这个区分比“是否使用 async”更重要。
 
-![三个独立工具各自汇入 Join，等待必需结果后校验；仅符合条件的失败任务可重试，未知副作用先对账](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-parallel-tools-dependency-dag-v2.png)
-*图：三个独立分支各自汇入 Join，等待的是必需结果；Validate 后按既定策略继续。失败只重试符合条件的任务，副作用状态未知时先对账；图中的三格预算仅为示意。*
+![输入已冻结的计划带着 planVersion 同时发出三个互不依赖的工具调用：读取数据源 A 和 B 是只读的，失败可以退避重试；工具 C 有副作用且结果未知，要先对账，不能盲目重发。三路结果汇入 Join，Join 是校验器：检查必需分支是否到齐、是否仍对应当前 planVersion、数据是否符合 schema 且有证据、迟到和重复结果怎么处理、结果是否互相矛盾。之后按执行前写定的策略继续：All-or-nothing 任一必需分支失败就取消同组，Quorum 达到法定数量即可继续，Best-effort 返回成功部分并附缺失清单；通过后才进入生成报告、校验审批和发布这些有依赖的步骤。并行度由下游容量决定，用 semaphore 和速率限制控制，fan-out 前先预留成本预算](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-parallel-tools-fanout-join-v3.dark.png)
+*图：互不依赖的三个调用同时发出，Join 先校验再按写定的策略继续；只读失败可退避重试，副作用结果未知先对账，有依赖的步骤等 Join 通过后再跑。*
 
 ## 使用结构化并发
 
