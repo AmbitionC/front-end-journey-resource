@@ -1,7 +1,7 @@
 export const meta = {
   name: 'ai-observability-trace-waterfall-v2',
   article: 'knowledge/llm/production/ai-observability.md',
-  alt: '一次 Agent 请求的 trace 瀑布图：根 span 是用户请求，带全局 trace_id；下面有规划和回答两个 agent step；规划步骤里有一次模型调用，记录模型版本、token、首 token 延迟和成本；回答步骤里依次是检索（记录索引版本和 top_k）、工具调用 search（记录状态和重试次数，其下还有一次数据库查询）和生成答案的模型调用。缩进表示父子关系，横条表示各 span 在时间线上的起止。指标按 trace_id 和模型版本切分，看首 token 延迟 P95、每请求 token、每会话成本和工具调用次数；日志带 trace_id 和 span_id 关联，prompt 和正文等敏感字段要先脱敏再记录',
+  alt: '一次 Agent 请求的 trace 瀑布图：根 span 是用户请求，带全局 trace_id；下面有规划和回答两个 agent step；规划步骤里有一次模型调用，记录模型版本、token、首 token 延迟和成本；回答步骤里依次是检索（记录索引版本和 top_k）、工具调用 search（记录状态和重试次数，其下还有一次数据库查询）和生成答案的模型调用。缩进表示父子关系，横条表示各 span 在时间线上的起止。指标按用户和功能拆分，看首 token 延迟 P95、每请求 token、每会话成本和工具调用次数；日志带 trace_id 和 span_id 关联，prompt 和正文等敏感字段要先脱敏再记录',
 };
 
 export default (k) => {
@@ -26,7 +26,7 @@ export default (k) => {
   });
   s.push(`<line x1="${BX}" y1="${Y0 + rows.length * RP + 4}" x2="${BX + BW}" y2="${Y0 + rows.length * RP + 4}" stroke="${k.t.line}" stroke-width="1"/>`);
 
-  s.push(k.box({ x: 40, y: 478, w: 430, h: 84, title: 'Metrics：按 trace_id、模型版本切分', sub: 'TTFT P95、token / 请求、成本 / 会话\n工具调用次数（识别失控循环）', titleSize: 'body', tone: 'info' }));
+  s.push(k.box({ x: 40, y: 478, w: 430, h: 84, title: 'Metrics：按用户、功能拆分', sub: 'TTFT P95、token / 请求、成本 / 会话\n工具调用次数（识别失控循环）', titleSize: 'body', tone: 'info' }));
   s.push(k.box({ x: 490, y: 478, w: 430, h: 84, title: 'Logs：带 trace_id、span_id 关联', sub: 'prompt、正文等敏感字段\n先脱敏（redact）再记录', titleSize: 'body', tone: 'warn' }));
 
   return k.figure({

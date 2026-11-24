@@ -29,7 +29,7 @@ export default (k) => {
     s.push(k.box({ x, y: 418, w: 190, h: 44, title: t, titleSize: 'label', tone: 'info' }));
     if (i < 3) s.push(k.arrow({ points: [[x + 190, 440], [x + 215, 440]] }));
   });
-  s.push(k.text({ x: 480, y: 484, text: '浏览器、JVM、连接池还有自己的缓存；已有 TCP 连接比 TTL 活得更久', size: 'note', anchor: 'middle', tone: 'muted' }));
+  s.push(k.text({ x: 480, y: 484, text: '浏览器、JVM、连接池还有自己的缓存；已有 TCP 连接可能比 TTL 活得更久', size: 'note', anchor: 'middle', tone: 'muted' }));
 
   [
     ['误删后恢复', '递归器仍按负 TTL\n返回不存在'],

@@ -1,7 +1,7 @@
 export const meta = {
   name: 'event-store-outbox-rebuild-flow-v2',
   article: 'knowledge/backend/storage/event-store.md',
-  alt: '事件存储、事务 outbox、消息投递、幂等投影与重建。命令（如 PlaceOrder）可能失败，通过规则后才产生事件。事件来源有两条：事件溯源系统把事件按聚合追加到事件存储，用 expectedVersion 条件写入，版本冲突就重读再判断；普通 CRUD 系统把业务表和 outbox 行写进同一事务，提交后由 relay 或 CDC 发布。消息投递至少一次，可能重复和乱序，死信要可见。消费者分两类：投影把 checkpoint、已处理 eventId 与读模型写在同一事务；邮件、支付、Webhook 等副作用消费者用 operationId 查幂等账本。重建走隔离的回放通道：从起点回放到新版本投影 orders_v2，追平实时增量，校验行数与业务摘要，再原子切换读别名；副作用消费者默认不接回放通道。快照只是性能优化，坏了要能回到完整事件流',
+  alt: '事件存储、事务 outbox、消息投递、幂等投影与重建。命令（如 PlaceOrder）可能失败，通过规则后才产生事件。事件来源有两条：事件溯源系统把事件按聚合追加到事件存储，用 expectedVersion 条件写入，版本冲突就重读再判断；普通 CRUD 系统把业务表和 outbox 行写进同一事务，提交后由 relay 或 CDC 发布。消息投递至少一次，可能重复和乱序。消费者分两类：投影把 checkpoint、已处理 eventId 与读模型写在同一事务；邮件、支付、Webhook 等副作用消费者用 operationId 查幂等账本。重建走隔离的回放通道：从起点回放到新版本投影 orders_v2，追平实时增量，校验行数与业务摘要，再原子切换读别名；副作用消费者默认不接回放通道。快照只是性能优化，坏了要能回到完整事件流',
 };
 
 export default (k) => {

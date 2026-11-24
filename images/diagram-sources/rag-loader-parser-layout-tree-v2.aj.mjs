@@ -26,7 +26,7 @@ export default (k) => {
     ['图像', '第 2 页 · 资产 ID + 说明', 'info'],
     ['脚注', '第 2 页 · OCR + 置信度 · 回指段落', 'warn'],
   ];
-  s.push(`<path d="M 425 196 V ${232 + 4 * 52 + 20}" fill="none" stroke="${k.t.faint}" stroke-width="1.5"/>`);
+  s.push(`<path d="M 425 196 V ${214 + 4 * 52 + 20}" fill="none" stroke="${k.t.faint}" stroke-width="1.5"/>`);
   els.forEach(([t, meta, tone], i) => {
     const y = 214 + i * 52;
     s.push(`<path d="M 425 ${y + 20} H 445" fill="none" stroke="${k.t.faint}" stroke-width="1.5"/>`);
@@ -39,6 +39,6 @@ export default (k) => {
     h: 620,
     title: 'Loader 与 Parser：先可靠取回，再恢复结构',
     subtitle: 'Loader 建立可信的字节边界，Parser 输出可审计的元素树，而不是一长串文本',
-    body: s.join('') + k.note({ x: 40, y: 540, w: 880, h: 52, lead: '质量门禁：', text: '不看退出码，看覆盖率和顺序；失败记错误码，绝不交空文档去 embedding。' }),
+    body: s.join('') + k.note({ x: 40, y: 540, w: 880, h: 52, lead: '质量门禁：', text: '不能只看退出码，要看覆盖率和顺序；失败记错误码，绝不交空文档去 embedding。' }),
   });
 };

@@ -25,8 +25,8 @@ export default (k) => {
   const lanes = [
     ['代码块', '当文本渲染，不当 HTML\n复制原始代码\n运行只进 sandbox + 审批', 'accent'],
     ['Mermaid 图表', 'strict 模式，禁 HTML 标签\n限节点数和布局时间\n失败就显示原文', 'accent'],
-    ['链接与图片', '标准 URL API 比 host\n禁 javascript: / data:\n远程图默认点击加载', 'warn'],
-    ['原始 HTML', '尽量不进 innerHTML\n确需时 sanitizer 白名单\n加 CSP / Trusted Types', 'bad'],
+    ['链接与图片', '标准 URL API 比 host\n禁 javascript: 等协议\n远程图默认点击加载', 'warn'],
+    ['确需子集 HTML', '尽量不进 innerHTML\n确需时 sanitizer 白名单\n加 CSP / Trusted Types', 'bad'],
   ];
   lanes.forEach(([t, sub, tone], i) => s.push(k.box({ x: lanesX[i], y: 252, w: 200, h: 112, title: t, sub, titleSize: 'body', tone })));
   s.push(`<path d="M 140 364 V 392 M 370 364 V 392 M 600 364 V 392 M 830 364 V 392 M 140 392 H 830" fill="none" stroke="${k.t.faint}" stroke-width="1.5"/>`);

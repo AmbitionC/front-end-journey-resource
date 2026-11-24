@@ -1,4 +1,4 @@
-![Agent 工程师技能图谱，七层自底向上。最底层 L1 大模型基础：Transformer、Token、推理参数、模型选型。L1 之上并列两层：L2 Prompt 与上下文工程（System Prompt、CoT、Few-shot、上下文管理）和 L3 RAG 与数据管道（Embedding、向量数据库、Chunking、检索）。两者共同汇入核心层 L4 Agent 范式与核心能力：ReAct、记忆、规划、工具调用。再往上依次是 L5 框架与工具链（LangChain-JS、Vercel AI SDK、MCP 协议）、L6 评估与调试（Tracing、评估框架、调试技巧）、L7 工程化与部署（容错、监控、成本控制）。右侧说明怎么用这张图：它不是逐条打勾的清单，而是用来找出自己最薄弱的一层有针对性地补；能力按可观察的产出分级，不按会几个工具品牌；SFIA 用自主性、复杂度、影响和责任四个维度描述成熟度](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-engineer-skill-map-layers-v2.dark.png)
+![Agent 工程师技能图谱，七层自底向上。最底层 L1 大模型基础：Transformer、Token、推理参数、模型选型。L1 之上并列两层：L2 Prompt 与上下文工程（System Prompt、CoT、Few-shot）和 L3 RAG 与数据管道（Embedding、向量数据库、Chunking）。两者共同汇入核心层 L4 Agent 范式与核心能力：ReAct、记忆、规划、工具调用。再往上依次是 L5 框架与工具链（LangChain-JS、Vercel AI SDK、MCP 协议）、L6 评估与调试（Tracing、评估框架、调试技巧）、L7 工程化与部署（容错、监控、成本控制）。右侧说明怎么用这张图：它不是逐条打勾的清单，而是用来找出自己最薄弱的一层有针对性地补；能力按可观察的产出分级，不按会几个工具品牌；SFIA 用自主性、复杂度、影响和责任四个维度描述成熟度](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-engineer-skill-map-layers-v2.dark.png)
 *图：七层自底向上：L2 和 L3 都建在 L1 上，一起汇到核心层 L4；右边是这张图的用法，它不是打勾清单，而是用来找薄弱层。*
 
 ---

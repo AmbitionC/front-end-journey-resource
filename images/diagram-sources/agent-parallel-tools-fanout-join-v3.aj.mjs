@@ -31,7 +31,7 @@ export default (k) => {
     s.push(k.box({ x: 740, y, w: 180, h: 68, title: t, sub, titleSize: 'label', tone: 'info' }));
   });
   s.push(k.arrow({ points: [[700, 246], [740, 246]], tone: 'accent' }));
-  s.push(k.arrow({ points: [[830, 376], [830, 412]], tone: 'ok' }));
+  s.push(k.arrow({ points: [[830, 360], [830, 412]], tone: 'ok' }));
   s.push(k.box({ x: 480, y: 412, w: 440, h: 56, title: '有依赖的步骤：生成报告 → 校验审批 → 发布', titleSize: 'label', tone: 'ok' }));
   s.push(k.box({ x: 40, y: 412, w: 400, h: 56, title: '并行度由下游容量定，不由模型一次发几个', titleSize: 'label', tone: 'warn', dashed: true }));
 

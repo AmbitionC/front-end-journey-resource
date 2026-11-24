@@ -1,6 +1,6 @@
 现代响应式布局不应依赖“手机 375、平板 768、桌面 1440”三张截图。页面级结构可响应 viewport，组件应优先响应自己的容器；Grid/Flex 的 intrinsic layout 与 `minmax()`、`clamp()` 让内容在很多宽度上自然适配，只在真正失败处添加断点。
 
-![媒体查询和容器查询各管一层。左侧是一个 viewport：@media 根据视口和媒体特征决定页面结构，比如分几栏、导航怎么排。同一个视口里，主栏容器宽、侧栏容器窄；同一个卡片组件放进两处，用 @container 看自己的父容器宽度：在宽容器里图文横排，在窄容器里图文竖排，而不是猜设备。右侧是四条配套规则：一条轴的内容分配用 Flex，两条轴对齐用 Grid；用 min-inline-size: 0 和 minmax(0, 1fr) 让元素允许缩小、防止长文本撑破；字号和间距用 clamp() 在上下限之间平滑缩放；用 hover 和 pointer 判断输入方式，不用宽度猜是不是触屏。底部提示：断点来自内容失败点，而不是设备名单；连续拖动宽度找溢出，放大到 400% 也不该出现横向滚动，视觉顺序要和 DOM 顺序一致](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/responsive-layout-container-breakpoint-v2.dark.png)
+![媒体查询和容器查询各管一层。左侧是一个 viewport：@media 根据视口和媒体特征决定页面结构，比如分几栏、导航怎么排。同一个视口里，主栏容器宽、侧栏容器窄；同一个卡片组件放进两处，用 @container 看自己的父容器宽度：在宽容器里图文横排，在窄容器里图文竖排，而不是猜设备。右侧是四条配套规则：一条轴的内容分配用 Flex，两条轴对齐用 Grid；用 min-inline-size: 0 和 minmax(0, 1fr) 让元素允许缩小、防止长文本撑破；字号和间距用 clamp() 在上下限之间平滑缩放；用 hover 和 pointer 判断输入方式，不用宽度猜是不是触屏。底部提示：断点来自内容失败点，而不是设备名单；连续拖动宽度找溢出，窄屏和放大时不该出现二维滚动（具有二维意义的内容例外），视觉顺序要和 DOM 顺序一致](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/responsive-layout-container-breakpoint-v2.dark.png)
 *图：同一个视口里主栏宽、侧栏窄，同一个卡片组件按自己的容器宽度变形；右边是 Flex/Grid、防撑破、clamp 和输入方式四条配套规则。*
 
 ## 先让布局具有内在弹性
