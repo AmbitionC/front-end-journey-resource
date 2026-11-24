@@ -1,3 +1,7 @@
+「大模型的回答为什么能一个字一个字地出来」「SSE 和 WebSocket 有什么区别」是 AI 应用岗和前端岗的高频题。追问通常落在：为什么聊天用 fetch 而不用 EventSource、数据被切成半截怎么办、怎么中途停止生成。
+
+> **30 秒答法**：用 SSE。服务端在一个 HTTP 响应里不断写 `data: ...` 加空行这样的事件，模型每生成一段就推一段，前端边收边渲染。聊天要用 POST 带请求体和鉴权头，原生 EventSource 只支持 GET，所以一般用 `fetch` 读 `response.body` 这个流，自己按空行切事件。网络给的数据块边界是随机的，可能把一个中文字或一个事件切成两半，所以要用 TextDecoder 流式解码、攒到缓冲区里，遇到空行才算一个完整事件。用户点停止就调用 AbortController 的 `abort()`，服务端也要跟着停掉模型调用。SSE 是单向推送，真正需要双向高频通信时才用 WebSocket。
+
 ## SSE 解决什么问题
 
 大模型生成通常需要数秒甚至更久。如果等完整结果生成后再返回，用户会面对一段无反馈的空白。SSE（Server-Sent Events）允许服务端在一个 HTTP 响应中持续发送文本事件，前端收到增量后立即更新界面。
@@ -105,7 +109,7 @@ export async function POST(request: Request) {
     headers: {
       "Content-Type": "text/event-stream; charset=utf-8",
       "Cache-Control": "no-cache, no-transform",
-      "Connection": "keep-alive",
+      // 不要手动写 Connection 头：HTTP/2 禁止这个连接级首部，HTTP/1.1 默认就是长连接
     },
   });
 }
@@ -322,3 +326,4 @@ class ToolArguments {
 - [WHATWG HTML：Server-sent events](https://html.spec.whatwg.org/multipage/server-sent-events.html)
 - [WHATWG Streams Standard](https://streams.spec.whatwg.org/)
 - [OpenAI：Streaming API responses](https://developers.openai.com/api/docs/guides/streaming-responses)
+- [Claude API：Streaming Messages](https://platform.claude.com/docs/en/build-with-claude/streaming)
