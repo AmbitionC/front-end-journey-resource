@@ -1,5 +1,5 @@
-![一棵分布式 trace 树：根 span 为用户请求，子 span 包括 agent step、model call、retrieval、tool call、database；右侧关联 metrics 与 logs，敏感 prompt/content 字段显示为 redact](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/ai-observability-agent-trace-tree-v1.webp)
-*图：沿图中的节点与箭头阅读，重点是OpenTelemetry 信号模型统一 request、model、tool、retrieval 与 agent step 的 trace 关系，并避免记录敏感正文。*
+![一次 Agent 请求的 trace 瀑布图：根 span 是用户请求，带全局 trace_id；下面有规划和回答两个 agent step；规划步骤里有一次模型调用，记录模型版本、token、首 token 延迟和成本；回答步骤里依次是检索（记录索引版本和 top_k）、工具调用 search（记录状态和重试次数，其下还有一次数据库查询）和生成答案的模型调用。缩进表示父子关系，横条表示各 span 在时间线上的起止。指标按 trace_id 和模型版本切分，看首 token 延迟 P95、每请求 token、每会话成本和工具调用次数；日志带 trace_id 和 span_id 关联，prompt 和正文等敏感字段要先脱敏再记录](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/ai-observability-trace-waterfall-v2.dark.png)
+*图：图：缩进表示父子 span，横条是各自的起止时间；token、成本和版本挂在对应 span 上，指标和日志都靠 trace_id 关联，敏感正文先脱敏再记录。*
 
 ---
 

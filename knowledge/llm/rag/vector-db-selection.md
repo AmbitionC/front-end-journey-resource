@@ -15,8 +15,8 @@ ANN（近似最近邻）用部分召回换取速度和资源。选择数据库�
 - 数据驻留、备份、审计和合规要求。
 - 团队能承担多少运维，以及预算如何计量。
 
-![按已有 PostgreSQL、本地原型或自托管、托管弹性形成起始候选；过滤、多租户、ACL、运维能力与总成本对三个候选统一评估](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/vector-db-selection-matrix-v4.png)
-*图：箭头只形成起始候选，复杂过滤与多租户不能单独决定产品，三个候选都要验证 ACL、运维与总成本。右表仅比较自行管理的 PostgreSQL、自托管 Chroma 与托管 Pinecone，不覆盖全部部署形态；联结和扩展标记是方向性示意，不是性能评分或容量保证。*
+![向量库选型先按现状形成起始候选：核心数据已在 PostgreSQL、需要关系联结和强一致删除时从 pgvector 开始；原型、个人工具或想自己控制部署时从 Chroma 开始；不想运维、需要托管弹性时从 Pinecone 开始。起点只是候选，三者都要用同一套 PoC 验证：严格过滤后召回是否还够 top-k，多租户与 ACL 隔离，更新和删除的一致性与延迟，P95 延迟、吞吐和写入，运维能力与总成本；复杂过滤和多租户不能单独决定产品，要用真实数据和查询跑完 PoC 再定](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/vector-db-selection-start-poc-v5.dark.png)
+*图：图：左边按现状形成起始候选，箭头只是起点；三个候选都要用右边同一套 PoC 验证过滤后召回、多租户与 ACL、删除一致性、性能和总成本。*
 
 ## 二、共同核心：距离、索引和过滤
 

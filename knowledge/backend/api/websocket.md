@@ -1,5 +1,5 @@
-![客户端与服务端时序图：HTTP Upgrade/101→双向 data frames→ping/pong→close frame/close response；旁边拆解 frame header、payload 与 fragmentation，标出代理和背压边界](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/websocket-handshake-frame-lifecycle-v1.webp)
-*图：沿图中的节点与箭头阅读，重点是准确描述 HTTP Upgrade 握手、frame、消息分片、ping/pong、关闭握手和应用层背压。*
+![WebSocket 连接生命周期与帧结构。左侧时序：客户端发送带 Upgrade: websocket 和 Sec-WebSocket-Key 的 GET 请求；服务端返回 101 Switching Protocols 和 Sec-WebSocket-Accept，Accept 由 Key 拼接 GUID 后做 SHA-1 再 Base64 得到，只证明服务端理解握手，不是身份认证；之后双方收发文本或二进制数据帧，客户端发往服务端的帧必须掩码；Ping 控制帧由对端回 Pong，只说明连接存活，不代表业务消息已处理；关闭时一方发 Close 帧（如 1000），另一方回 Close 帧。右侧帧头：FIN 1 位标记消息最后一帧，opcode 4 位表示帧类型，MASK 1 位，Payload len 7 位、126 和 127 时扩展为 16 或 64 位。一条消息可以分片：首帧 opcode 0x1 且 FIN=0，中间是 0x0 延续帧 FIN=0，最后一帧 0x0 且 FIN=1。协议之外归应用负责：升级前核对身份和 Origin、逐条消息授权、用 bufferedAmount 观察排队并自定背压阈值、断线后用游标重放恢复](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/websocket-handshake-frame-lifecycle-v2.dark.png)
+*图：图：左边是一条连接从握手、收发、心跳到关闭的时序，右边是帧头关键字段和消息分片；身份、授权、背压和重连恢复都要应用自己做。*
 
 ---
 
