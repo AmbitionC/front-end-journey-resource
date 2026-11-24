@@ -1,4 +1,4 @@
-Claude Code、Codex、Cursor 这类 Coding Agent 已经是很多团队的日常工具，「你怎么用 AI 写代码」「Coding Agent 是怎么工作的」也成了 Agent 岗和后端岗的高频题，站内收录的面经里有 61 场问到。这篇把它拆开讲：一个 Coding Agent 由哪几块组成，每块解决什么问题，面试时怎么讲出深度。
+Claude Code、Codex、Cursor 这类 Coding Agent 已经是很多团队的日常工具，站内整理的多篇面试自述也涉及「你怎么用 AI 写代码」「Coding Agent 是怎么工作的」等问题。这篇把它拆开讲：一个 Coding Agent 由哪几块组成，每块解决什么问题，面试时怎么讲出深度。
 
 > **30 秒答法**：Coding Agent 就是让模型在一个循环里反复「读代码、改代码、跑命令、看结果」，直到任务完成。它由五块组成：执行循环、工具（读文件、搜索、编辑、执行命令）、项目说明文件（AGENTS.md / CLAUDE.md）、权限与沙箱、验证（测试和 diff 审查）。模型负责决策，运行时负责执行和把关。判断它做得好不好，不看它说没说完成，看测试结果和最终的 diff。
 
@@ -42,7 +42,7 @@ Coding Agent 的工具集通常很小：读文件、搜索（按文件名和内�
 
 ## 项目说明文件：AGENTS.md 与 CLAUDE.md
 
-每次会话都从零了解仓库太慢，也容易漏掉团队约定。现在的通行做法是在仓库根目录放一份给 Agent 看的说明文件，会话开始时自动加载。[AGENTS.md](https://agents.md/) 是多家工具（OpenAI Codex、Cursor 等）支持的开放格式，Claude Code 读的是 [CLAUDE.md](https://code.claude.com/docs/en/memory)（没有 CLAUDE.md 时也会读 AGENTS.md）。一个最小的例子：
+每次会话都从零了解仓库太慢，也容易漏掉团队约定。现在的通行做法是在仓库根目录放一份给 Agent 看的说明文件，会话开始时自动加载。[AGENTS.md](https://agents.md/) 是多家工具（OpenAI Codex、Cursor 等）支持的开放格式；Claude Code 如何加载 [CLAUDE.md 或 AGENTS.md](https://code.claude.com/docs/en/memory)，取决于当前版本、支持可用性和 Project instructions 配置，应按官方说明核对实际加载的文件，不能仅因缺少 CLAUDE.md 就推断 AGENTS.md 已生效。一个最小的例子：
 
 ```markdown
 # AGENTS.md
@@ -70,7 +70,7 @@ Coding Agent 的工具集通常很小：读文件、搜索（按文件名和内�
 
 子 Agent 有自己独立的上下文。主 Agent 把「在整个仓库里找出所有调用这个函数的地方」这类任务交给它，它自己翻几十个文件，最后只交回一段结论，主 Agent 的上下文不会被大量搜索结果占满。
 
-但子 Agent 不是越多越好。Anthropic 在 2026 年的工程分享里总结：一个主循环加按需加载的技能，在多数场景里效果和成本都好过一堆子 Agent。值得拆的情况主要有三种：上下文太长、效果已经能测出变差；需要并行探索、而且用完就丢的独立上下文；工具太多导致模型选错。多个子 Agent 同时改同一批文件更要避免，冲突很难收拾。
+但子 Agent 不是越多越好。[Anthropic 的架构指南](https://www.anthropic.com/research/building-effective-agents)建议从能满足任务的简单方案开始，只有在任务确实需要时才增加复杂度；拆分独立上下文前，应明确子任务边界，并用实际质量、时延和成本比较收益与协调开销。值得拆的情况主要有三种：上下文太长、效果已经能测出变差；需要并行探索、而且用完就丢的独立上下文；工具太多导致模型选错。多个子 Agent 同时改同一批文件更要避免，冲突很难收拾。
 
 ## 权限、沙箱与隔离工作区
 
@@ -237,6 +237,7 @@ Coding Agent 接到一个修 bug 的任务，发现工作区里有几个用户�
 - [字节 AI 全栈一面：Pipeline 质量、Doris 与消息轮播](../../../interview/bytedance/base/bytedance-base-23.md)
 - [小红书与百度 Agent 面试合并记录：LangGraph 子图、Skill 与工程校验](../../../interview/redbook/ai/redbook-ai-2.md)
 - [字节 Managed Agent 校招一面：评测、运行链路与后端基础](../../../interview/bytedance/base/bytedance-base-26.md)
+- [阿里控股 Agent 开发一面：项目设计、Harness 与会话状态](../../../interview/alibaba/ai/alibaba-ai-34.md)
 - [蚂蚁智能体与大模型应用一面：幻觉、Skill 与 RAG](../../../interview/antfin/ai/antfin-ai-5.md)
 - [阿里淘天 AI 应用研发一面：RAG、限流 Top-K 与优惠策略](../../../interview/alibaba/ai/alibaba-ai-5.md)
 - [VAST 后端一面：可观测性、AI Coding 与节点调度](../../../interview/vast/ai/vast-ai-1.md)

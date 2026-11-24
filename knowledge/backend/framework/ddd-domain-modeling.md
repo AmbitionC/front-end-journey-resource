@@ -35,6 +35,7 @@ DDD 不要求一张表对应一个实体，不要求一个上下文必定一个�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [阿里控股 Agent 开发一面：项目设计、Harness 与会话状态](../../../interview/alibaba/ai/alibaba-ai-34.md)
 - [阿里云后端与 Agent 二面：领域建模、训练并行与 Java 基础](../../../interview/alibaba/ai/alibaba-ai-28.md)
 - [美团业务后台综合面：本体建模、Agent 评测与一致性](../../../interview/meituan/ai/meituan-ai-13.md)
 <!-- interview-source-history:end -->
