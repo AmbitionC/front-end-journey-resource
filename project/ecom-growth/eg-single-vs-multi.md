@@ -23,7 +23,7 @@ class ThreadStage:
     async def ask(self, system: str, user: str, *, data=None) -> str:
         async with self.thread.lock:        # 一条对话一次只能做一件事
             prompt = self.thread.render(self.stage, system, user)
-            reply = await self.base.ask(SINGLE_SYSTEM + skill_catalog, prompt, data=data)   # 系统提示词后面跟着各 Skill 的一行简介
+            reply = await self.base.ask(SINGLE_SYSTEM + skill_catalog, prompt, data=data)   # skill_catalog：各 Skill 的一行简介，拼在系统提示词后面
             self.thread.steps.append((self.stage, user, reply))
             return reply
 ```
@@ -74,7 +74,7 @@ python -m growth.cli compare --max-calls 1500     # 接真模型，两边各跑�
 | 指标 | 你的结果 | 怎么读 |
 |---|---|---|
 | 用时 | 【多环节】秒 对【单上下文】秒 | 排队带来的差距 |
-| 首次送审被拦的比例（只算第 1 轮） | 【】对【】 | 第 1 轮写稿时审核的 Skill 还没加载，两边条件基本相同。想看「写的时候看得到审核细则」有没有帮助，要比后面几轮的拦截情况 |
+| 首次送审被拦的比例（只算第 1 轮） | 【】对【】 | 第 1 轮写稿时审核的 Skill 还没加载，写稿这一侧两边条件基本相同；但单上下文里审核时看得到自己的写稿过程，这个比例里已经混着一点「自己审自己」。想看「写的时候看得到审核细则」有没有帮助，要比后面几轮的拦截情况 |
 | 独立复查拦下的版数 | 【】对【】 | 两边之差是「自己审自己」多放过去的 |
 
 这张表请用你自己的运行记录填。同一种做法跑两遍，结果也会不一样，所以每边至少跑三次再下结论，只差一两版的不要当成结论。
@@ -97,9 +97,9 @@ python -m growth.cli compare --max-calls 1500     # 接真模型，两边各跑�
 ## 自己动手时的检查点
 
 1. 离线跑一遍 `compare`，确认两边调用次数相同、输入量差距在一个量级以上。
-2. 把 `growth/single.py` 里 `max_chars` 的默认值从 60_000 改成 20_000 再跑一遍，看折叠次数怎么变；想一想被折叠掉的步骤里有哪些是后面还会用到的。
+2. 把 `growth/single.py` 里 `SingleModels.__init__` 的 `max_chars` 默认值从 60_000 改成 20_000 再跑一遍（文件里还有一处 `Thread.max_chars`，只改那一处不生效），看折叠次数怎么变；想一想被折叠掉的步骤里有哪些是后面还会用到的。
 3. 接上真模型，每边跑三次，填出上面那张表，写一段不超过五句话的结论。
-4. 只把审核一个环节放回独立上下文（在 `growth/single.py` 的 `OUTSIDE` 里加上 `"review"`），其余留在单上下文里，再量一次。这种混合做法常常是实际项目的答案。
+4. 只把审核一个环节放回独立上下文，其余留在单上下文里，再量一次。注意不能直接往 `growth/single.py` 的 `OUTSIDE` 里加 `"review"`：这个集合同时决定哪些调用不计入用量，加进去之后审核的调用会从两边的统计里一起消失，量出来的数字没法比。要另建一个集合（比如 `SEPARATE = {"review"}`），只在 `SingleModels.stage` 里用它决定「不进这条对话」，计量照旧。这种混合做法常常是实际项目的答案。
 
 ## 面试常见追问
 
