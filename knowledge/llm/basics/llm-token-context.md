@@ -1,4 +1,4 @@
-Token、上下文窗口和 KV Cache 是大模型面试的「基础三件套」，站内收录的面经里有 8 场直接问到，问 Agent 上下文管理、推理成本时也绕不开它们。三者分别回答：模型怎样切分输入、一次请求最多装多少、生成时怎样避免重复计算历史。连起来理解，才答得出「长对话为什么又贵又慢」「缓存到底缓存了什么」。
+Token、上下文窗口和 KV Cache 是大模型面试的「基础三件套」，站内不少面经直接问到，问 Agent 上下文管理、推理成本时也绕不开它们。三者分别回答：模型怎样切分输入、一次请求最多装多少、生成时怎样避免重复计算历史。连起来理解，才答得出「长对话为什么又贵又慢」「缓存到底缓存了什么」。
 
 > **30 秒答法**：Token 是分词器按模型词表切出来的单位，计费、窗口和延迟都按它算，不等于字数。上下文窗口是一次请求的总预算，系统提示、历史、工具定义、检索结果和输出都要占。KV Cache 把每一层已经算过的 Key 和 Value 存下来，生成新 Token 时只算新位置，代价是显存随序列长度线性增长，所以才有 GQA、KV 量化和分页注意力这些优化。
 
@@ -67,7 +67,7 @@ $$
 2\times L\times S\times H_{kv}\times D_h\times B
 $$
 
-其中 $2$ 代表 K 和 V，$L$ 是层数，$S$ 是已缓存序列长度，$H_{kv}$ 是 KV 头数，$D_h$ 是每头维度，$B$ 是每个元素的字节数。该式假设各层保存相同长度的 KV，且不计分配器等额外开销；滑动窗口或混合注意力模型应按各层实际缓存长度分别求和。它说明全量缓存随序列长度线性增长，也解释了量化 KV、分页注意力和减少 KV 头数为什么有效。
+其中 $2$ 代表 K 和 V，$L$ 是层数，$S$ 是已缓存序列长度，$H_{kv}$ 是 KV 头数，$D_h$ 是每头维度，$B$ 是每个元素的字节数。该式假设各层保存相同长度的 KV，且不计分配器等额外开销；滑动窗口或混合注意力模型应按各层实际缓存长度分别求和。它说明全量缓存随序列长度线性增长，也解释了量化 KV 和减少 KV 头数（GQA、MQA）为什么能省显存。分页注意力（PagedAttention）不减少每个 Token 的缓存量，它解决的是按最大长度预留造成的显存碎片和浪费。
 
 **算一个真实的数**：以 Llama 3 8B 为例，32 层、8 个 KV 头、每头 128 维，用 FP16 存储（每个元素 2 字节）：
 
@@ -117,7 +117,7 @@ Prefill 一次性处理整段输入，计算量大、可以充分并行；Decode
 
 所以一些大规模推理系统把两个阶段拆到不同的机器上，Prefill 算完后把 KV Cache 传给 Decode 集群。Kimi 背后的 [Mooncake](https://arxiv.org/abs/2407.00079) 是代表，它以 KV Cache 为中心设计整个服务，还把缓存放到 CPU 内存和 SSD 上扩大容量、提高复用。代价是多了一段 KV 传输，值不值得要在实际负载下比较首 Token 延迟、逐 Token 延迟和吞吐。
 
-![PD 分离与 KV 交接](https://fe-static-oss.ai-fe-nexus.com/images/prefill-decode-split-archify-v1.png)
+![PD 分离与 KV 交接](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/prefill-decode-split-archify-v1.png)
 
 ## 小结
 
@@ -144,3 +144,4 @@ Token 决定序列如何表示和计量；Context Window 规定一次请求的�
 - [GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints](https://arxiv.org/abs/2305.13245)
 - [Lost in the Middle: How Language Models Use Long Contexts](https://arxiv.org/abs/2307.03172)
 - [OpenAI API：Prompt caching](https://developers.openai.com/api/docs/guides/prompt-caching)
+- [Mooncake: A KVCache-centric Disaggregated Architecture for LLM Serving](https://arxiv.org/abs/2407.00079)

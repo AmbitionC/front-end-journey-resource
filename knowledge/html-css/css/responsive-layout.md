@@ -1,9 +1,21 @@
+「怎么做响应式布局」「移动端适配有哪些方案」是前端面试的常见题，尤其在一面的 CSS 环节。只答「用媒体查询」是不够的，面试官会接着问 rem 和 vw 怎么选、组件放在侧栏里怎么办。
+
+> **30 秒答法**：先加 `<meta name="viewport" content="width=device-width, initial-scale=1">`，让页面按设备宽度布局。然后先靠弹性布局本身适配：Flex 管一维、Grid 管二维，宽度用百分比和 `max-width`，字号和间距用 `clamp()` 平滑缩放。页面级的大结构用媒体查询在内容放不下的地方切换；可复用的组件用容器查询，按它所在容器的宽度变化，而不是按屏幕宽度。最后图片用 `srcset` 按实际显示宽度加载，并在 320px 宽和放大 400% 下检查不出现横向滚动。
+
 现代响应式布局不应依赖“手机 375、平板 768、桌面 1440”三张截图。页面级结构可响应 viewport，组件应优先响应自己的容器；Grid/Flex 的 intrinsic layout 与 `minmax()`、`clamp()` 让内容在很多宽度上自然适配，只在真正失败处添加断点。
 
 ![Media Query 与 Container Query 分别控制页面和组件，并结合 Grid、Flex 与 clamp 的响应式布局](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/responsive-layout-container-breakpoint-v1.webp)
 *图：同一 viewport 中容器宽度可不同；可复用卡片根据 container 改变内部结构，而非猜设备。*
 
 ## 先让布局具有内在弹性
+
+移动端第一步是 viewport meta。没有它，手机浏览器会按一个较宽的虚拟宽度（常见是 980px 左右）排版再整体缩小，后面写的媒体查询都对不上：
+
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1">
+```
+
+不要加 `user-scalable=no` 或 `maximum-scale=1` 禁止缩放，这会让需要放大阅读的用户无法使用。
 
 设置流式宽度、合理 max-width、可换行文本和弹性媒体。图片使用 `max-inline-size: 100%; block-size: auto`；容器用 `width: min(100% - 2rem, 72rem)`；避免固定像素高度截断放大文本。
 
@@ -46,7 +58,7 @@ Flex item 默认 `min-width:auto` 可能拒绝缩小，长文本导致溢出；�
 
 ## Container Query 控制组件
 
-同一卡片可能在主栏很宽、侧栏很窄，viewport query 无法知道局部空间。[CSS Containment Level 3](https://www.w3.org/TR/css-contain-3/)定义 size/style container queries。先为父容器设置 `container-type: inline-size`，再查询它：
+同一卡片可能在主栏很宽、侧栏很窄，viewport query 无法知道局部空间。容器查询现在定义在 [CSS Conditional Rules Level 5](https://www.w3.org/TR/css-conditional-5/) 里（早期草案放在 CSS Containment Level 3）。先为父容器设置 `container-type: inline-size`，再查询它：
 
 ```css
 .card-host { container-type: inline-size; }
@@ -84,6 +96,16 @@ CSS 隐藏的大图仍可能下载，需正确响应式图片标记。不同 DPR
 
 响应式设计的成熟标准是：内容和组件在一段连续条件空间中保持可理解、可操作，断点只是修复约束失败的少数工具，而不是设备名单。
 
+## 面试常问
+
+**rem、em、vw 怎么选？** rem 相对根元素字号，适合整体间距和字号；只要根字号没有写死成 px，用户调大浏览器字号时它会一起放大；em 相对当前元素字号，适合按钮内边距这类要跟着自身文字缩放的地方；vw 相对视口宽度，适合做 `clamp()` 中间的那一项，单独使用会让字号在大屏上失控、在小屏上过小。早年用 JS 动态改根字号（类似 flexible.js）的方案，现在多数场景可以用 vw 加 `clamp()` 代替。
+
+**媒体查询和容器查询有什么区别？** 媒体查询看的是视口和设备特性，适合页面整体结构；容器查询看的是某个祖先容器的尺寸，适合同一个卡片既可能出现在宽主栏、也可能出现在窄侧栏的情况。
+
+**移动端 1px 边框为什么看起来粗？** 在设备像素比为 2 或 3 的屏幕上，1 个 CSS 像素对应 2 到 3 个物理像素。常见做法是用伪元素画 1px 边框，再按设备像素比缩放：DPR 为 2 时 `transform: scaleY(0.5)`，DPR 为 3 时约 `scaleY(0.333)`，可以用 `@media (min-resolution: 3dppx)` 区分。这是横线的写法，竖线改用 `scaleX`；四条边都要细线时，常把伪元素宽高设为 200%、画好边框后整体 `scale(0.5)`，并设好 `transform-origin`；也可以在支持的浏览器里直接写 `0.5px`。先确认设计稿是否真的需要物理 1px，再选方案。
+
+**断点设多少合适？** 没有标准答案。从窄到宽连续拖动，在内容开始挤压、换行难看的地方加断点，而不是按某几款设备的宽度来设。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
@@ -95,5 +117,5 @@ CSS 隐藏的大图仍可能下载，需正确响应式图片标记。不同 DPR
 - [W3C：CSS Flexible Box Layout](https://www.w3.org/TR/css-flexbox-1/)
 - [W3C：CSS Grid Layout Level 2](https://www.w3.org/TR/css-grid-2/)
 - [W3C：Media Queries Level 5](https://www.w3.org/TR/mediaqueries-5/)
-- [W3C：CSS Containment Level 3](https://www.w3.org/TR/css-contain-3/)
+- [W3C：CSS Conditional Rules Level 5（容器查询）](https://www.w3.org/TR/css-conditional-5/)
 - [W3C WAI：Understanding Reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html)
