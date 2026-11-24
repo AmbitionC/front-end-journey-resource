@@ -1,3 +1,7 @@
+Promise 是前端面试里出现频率最高的 JavaScript 考点之一，常见形式有三种：讲原理、看代码说输出顺序、手写 `Promise.all` 或并发控制。
+
+> **30 秒答法**：Promise 表示一个将来才有结果的值，有 pending、fulfilled、rejected 三种状态，只能从 pending 变一次，变了就不能再改。`then` 总是返回一个新的 Promise，回调里返回普通值，下一步就成功；抛错，下一步就失败。所以链式调用能把异步写成顺序的样子，错误也会一路传到最近的 `catch`。`then` 的回调放在微任务里执行：如果 Promise 已经完成，回调会在当前同步代码跑完后、下一个宏任务（比如 setTimeout 回调）之前执行；如果还没完成，要等它完成后才排进微任务队列。`async/await` 是它的语法糖。注意 Promise 本身不能取消，要取消得配合 AbortController。
+
 Promise 表示一个未来会 settle 的结果：只能从 pending 变为 fulfilled 或 rejected，一旦确定就不可改变。它不是线程、任务队列或取消令牌。理解 `then` reaction 的 microtask 顺序、thenable adoption、错误传播和并发组合，才能避免“加几个 await 就能顺序正确”的错觉。
 
 ![Promise 四件事：状态从 pending 只能 settle 一次，resolve 变 fulfilled，reject 或抛错变 rejected，resolve 一个 thenable 会跟随它的最终状态；then 总返回新 Promise，返回普通值则下一步 fulfilled，抛错则 rejected，忘了 return 下一步拿到 undefined；组合器中 all 全部成功才成功、任一失败立即失败且不取消其余操作，allSettled 逐项报告，race 取第一个 settle，any 取第一个成功；Promise 本身不能取消，要把 AbortSignal 传给每一层，并用池子限制同时在途的任务数](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/promise-state-chain-combinators-cancel-v2.dark.png)
@@ -89,6 +93,32 @@ async function load(url, { signal }) {
 用可控 deferred Promise 测顺序，不依赖真实 sleep；覆盖同步 executor 异常、thenable、组合器空输入、部分拒绝、Abort、超时竞态和并发上限。fake timer 要同时推进 microtask。
 
 判断异步代码是否可靠，可以问四个问题：谁等待它、错误到哪里、能否取消、最多并发多少。Promise 只回答第一个问题的一部分，其余需要显式协议。
+
+## 手写 Promise.all
+
+面试最常让手写的是 `Promise.all`。要点有五个：入参必须可迭代，否则返回一个被拒绝的 Promise；结果按输入顺序放，不按完成顺序；任意一个失败就整体失败；输入里可以有普通值，所以要先用 `Promise.resolve` 包一层；空数组直接成功。
+
+```javascript
+function promiseAll(iterable) {
+  return new Promise((resolve, reject) => {
+    const items = [...iterable];          // 传入不可迭代的值会抛 TypeError，和原生一样变成 rejected
+    const results = new Array(items.length);
+    let remaining = items.length;
+    if (remaining === 0) return resolve(results);
+    items.forEach((item, i) => {
+      Promise.resolve(item).then(value => {
+        results[i] = value;              // 按下标放，保证顺序
+        if (--remaining === 0) resolve(results);
+      }, reject);                        // 第一个失败就 reject，之后的结果被忽略
+    });
+  });
+}
+
+promiseAll([1, Promise.resolve(2), new Promise(r => setTimeout(() => r(3), 10))])
+  .then(console.log); // [1, 2, 3]
+```
+
+追问常见两个：为什么不用 `results.push`（完成顺序和输入顺序不一样）；一个失败后其他请求还在跑吗（还在跑，`Promise.all` 不会取消它们，要取消得另外传 AbortSignal）。如果要求「全部跑完、逐个报告成败」，那就是 `Promise.allSettled`。
 
 ## 手写并发上限：惰性任务与结果策略
 

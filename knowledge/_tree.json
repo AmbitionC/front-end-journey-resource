@@ -561,10 +561,10 @@
             "contentStatus": "published",
             "heat": 18,
             "currRank": 5,
-            "updatedAt": "2026-11-06",
+            "updatedAt": "2026-11-24",
             "interviewBaseHeat": 10,
             "quickRead": {
-              "text": "网络 chunk 不等于 SSE 事件，完整事件也可能只含工具参数 delta。先增量解码和分帧，再按调用标识累计参数，完成后解析、校验和授权；断流与重复事件不能导致错误执行。"
+              "text": "大模型流式输出用 SSE：服务端持续写以空行结尾的事件。聊天要 POST，所以用 fetch 读流而不是 EventSource；数据块会切断字符和事件，要增量解码、攒缓冲区按空行切；停止生成要 abort 并传到上游。"
             },
             "interviewCount": 8,
             "interviewCountBasis": "verified-public-posts"
@@ -4712,9 +4712,9 @@
             "contentStatus": "published",
             "heat": 13,
             "currRank": 5,
-            "updatedAt": "2026-10-03",
+            "updatedAt": "2026-11-24",
             "quickRead": {
-              "text": "Promise 表达未来结果，async/await组织等待，微任务与宿主task决定续接机会。组合器不自动限流或取消；并发调度应接收惰性任务、限制在途数并明确错误和结果顺序。AbortSignal只传递协作取消意图，后台副作用还需自己的完成协议。"
+              "text": "Promise 只能从 pending 变一次；then 总返回新 Promise。已完成的 Promise，其 then 回调在微任务里执行，早于下一个 setTimeout 回调。手写 Promise.all 要按下标放结果、任一失败即失败、普通值先 Promise.resolve；它本身不能取消。"
             },
             "interviewBaseHeat": 10,
             "interviewCount": 3,
@@ -4728,9 +4728,9 @@
             "contentStatus": "published",
             "heat": 11,
             "currRank": 5,
-            "updatedAt": "2026-07-17",
+            "updatedAt": "2026-11-24",
             "quickRead": {
-              "text": "Flexbox 适合一维分布，Grid 适合二维轨道，响应式约束按内容和容器决定布局。避免只按固定设备宽度设计，检查溢出、文本放大与可访问性，视觉完成不等于交互可用。"
+              "text": "先加 viewport meta，再靠 Flex、Grid、百分比宽度和 clamp() 让布局自然伸缩；页面大结构用媒体查询在内容放不下处切换，可复用组件用容器查询按所在容器宽度变化。"
             },
             "interviewBaseHeat": 10,
             "interviewCount": 1,
@@ -5059,10 +5059,10 @@
             "contentStatus": "published",
             "heat": 43,
             "currRank": 5,
-            "updatedAt": "2026-11-13",
+            "updatedAt": "2026-11-24",
             "interviewBaseHeat": 6,
             "quickRead": {
-              "text": "简历围绕问题、个人决策和可核验结果叙述项目，区分个人贡献与团队帮助。技术面解释系统边界、选型、评测与失败处理，HR面用真实经历说明协作、压力和求职动机；不补造指标、承诺或未发生的成果。"
+              "text": "介绍项目按「问题、我负责什么、关键取舍、指标和基线、踩过的坑」五步讲，每个数字都要能说清来源。跟着教程做的项目别说成自己从零设计，重点讲你在教程之外改了什么、测了什么。"
             },
             "interviewCount": 37,
             "interviewCountBasis": "verified-public-posts"

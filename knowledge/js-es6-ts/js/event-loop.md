@@ -1,4 +1,4 @@
-事件循环几乎是前端面试的必考题，最常见的形式是给一段代码让你写输出顺序。真正要掌握的只有一条规则：**每执行完一个 task，就把 microtask 队列清空，然后浏览器才有机会渲染，再进入下一个 task**。记住这条，再难的输出题也能一步步推出来。
+事件循环几乎是前端面试的必考题，最常见的形式是给一段代码让你写输出顺序。最核心的一条规则是：**每当调用栈清空（比如一个 task 执行完），就把 microtask 队列清空，然后浏览器才有机会渲染，再进入下一个 task**。抓住这条，大多数输出题都能一步步推出来。
 
 > **30 秒答法**：JS 是单线程的，浏览器用事件循环调度代码。每一轮先从任务队列取一个 task（比如 script 整体、setTimeout 回调、点击事件）执行完，接着清空所有 microtask（Promise 的 then、await 之后的代码、queueMicrotask），然后浏览器视情况渲染一帧，再开始下一轮。所以当前 task 里已经入队的 microtask（比如已 resolve 的 Promise 的 then）一定在下一个 task（比如 setTimeout 回调）之前执行；如果 microtask 不停地产生新的 microtask，页面就会卡死。
 
@@ -100,7 +100,7 @@ ECMAScript 只定义 Promise Job 这类语言层面的概念，事件循环由�
 | | 浏览器 | Node.js |
 | --- | --- | --- |
 | 循环结构 | task → 清空 microtask → 可能渲染 | timers → poll（I/O）→ check（setImmediate）等阶段 |
-| 特殊队列 | 无 | `process.nextTick`，优先级高于 Promise microtask |
+| 特殊队列 | 无 | `process.nextTick` 队列：在 CommonJS 脚本里通常先于 Promise 回调执行；在 ES 模块（.mjs）顶层，Promise 回调会先执行 |
 | 渲染 | 有 requestAnimationFrame 和渲染时机 | 无渲染 |
 | 典型追问 | Promise 和 setTimeout 谁先 | setTimeout(0) 和 setImmediate 谁先 |
 
