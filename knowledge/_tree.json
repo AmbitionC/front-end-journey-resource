@@ -338,14 +338,14 @@
             "isLeaf": true,
             "filePath": "llm/prompt",
             "contentStatus": "published",
-            "heat": 32,
+            "heat": 33,
             "currRank": 5,
             "updatedAt": "2026-11-04",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "上下文压缩先保护目标、约束、事实与出处，再通过裁剪、抽取或摘要控制预算。OpenClaw 示例区分持久摘要、请求内工具结果裁剪与可选记忆写入；磁盘保留不等于本轮已读，压缩仍需验证保真和继续任务的效果。"
             },
-            "interviewCount": 26,
+            "interviewCount": 27,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1300,14 +1300,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 67,
+            "heat": 68,
             "currRank": 5,
             "updatedAt": "2026-11-22",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Coding Agent 让模型在循环里反复读代码、改代码、跑命令、看结果，由执行循环、工具、项目说明文件（AGENTS.md / CLAUDE.md）、权限沙箱和验证五块组成。判断它做对没有，看测试结果和最终 diff，不看它自称完成。企业使用还要核对获准的账号、入口、模型和数据去向；内容排除不等同于文件系统隔离。"
             },
-            "interviewCount": 61,
+            "interviewCount": 62,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1375,6 +1375,22 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
+            "label": "智能体定义、类型、PEAS 与 Agent Loop",
+            "key": "agent-architecture",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published",
+            "heat": 30,
+            "currRank": 5,
+            "updatedAt": "2026-07-14",
+            "interviewBaseHeat": 6,
+            "quickRead": {
+              "text": "智能体围绕目标感知、行动并读取结果，模型只是可能的决策组件。用PEAS界定绩效、环境、执行器和观察，循环还需状态、权限、预算与终止条件；路径固定时普通工作流也可能更可靠。"
+            },
+            "interviewCount": 24,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
             "label": "Agent 记忆系统架构设计",
             "key": "agent-memory-architecture",
             "isLeaf": true,
@@ -1386,22 +1402,6 @@
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Agent记忆按用途管理当前状态、可恢复checkpoint、长期事实和证据，写入与检索都有来源和权限边界。LangGraph按super-step提交完整快照，并保存步内成功节点写入；挂checkpointer不会自动写入任意变量。Claude Code持久文件仅在加载后进入当前上下文，文件格式不等于通用记忆架构。"
-            },
-            "interviewCount": 23,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "智能体定义、类型、PEAS 与 Agent Loop",
-            "key": "agent-architecture",
-            "isLeaf": true,
-            "filePath": "llm/agent",
-            "contentStatus": "published",
-            "heat": 29,
-            "currRank": 5,
-            "updatedAt": "2026-07-14",
-            "interviewBaseHeat": 6,
-            "quickRead": {
-              "text": "智能体围绕目标感知、行动并读取结果，模型只是可能的决策组件。用PEAS界定绩效、环境、执行器和观察，循环还需状态、权限、预算与终止条件；路径固定时普通工作流也可能更可靠。"
             },
             "interviewCount": 23,
             "interviewCountBasis": "verified-public-posts"
@@ -2014,6 +2014,21 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
+            "label": "Agent 单元、集成、场景与端到端测试",
+            "key": "agent-test-pyramid",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "published",
+            "heat": 13,
+            "currRank": 5,
+            "updatedAt": "2026-11-22",
+            "quickRead": {
+              "text": "将确定性逻辑、工具契约、受控Agent场景与端到端旅程分层验证，用最便宜且足以证伪的测试定位问题；模型评分器需人工校准，少量真实集成与最终验收不能由模型自评替代。TDD 用一次一个可运行失败推动最小实现与必要重构；确定性代码测试不能替代 Agent 任务评估。"
+            },
+            "interviewBaseHeat": 6,
+            "interviewCount": 7
+          },
+          {
             "label": "Agent 身份、用户身份与委托授权",
             "key": "agent-identity-auth",
             "isLeaf": true,
@@ -2028,21 +2043,6 @@
             "interviewBaseHeat": 10,
             "interviewCount": 2,
             "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "Agent 单元、集成、场景与端到端测试",
-            "key": "agent-test-pyramid",
-            "isLeaf": true,
-            "filePath": "llm/production",
-            "contentStatus": "published",
-            "heat": 12,
-            "currRank": 5,
-            "updatedAt": "2026-11-15",
-            "quickRead": {
-              "text": "将确定性逻辑、工具契约、受控Agent场景与端到端旅程分层验证，用最便宜且足以证伪的测试定位问题；模型评分器需人工校准，少量真实集成与最终验收不能由模型自评替代。"
-            },
-            "interviewBaseHeat": 6,
-            "interviewCount": 6
           },
           {
             "label": "发布质量门禁与回归阻断",
@@ -2740,6 +2740,23 @@
             "updatedAt": "2026-11-06"
           },
           {
+            "label": "DDD：限界上下文、聚合与领域行为",
+            "key": "ddd-domain-modeling",
+            "isLeaf": true,
+            "filePath": "backend/framework",
+            "tags": [
+              "面试知识"
+            ],
+            "updatedAt": "2026-11-12",
+            "interviewBaseHeat": 0,
+            "quickRead": {
+              "text": "从业务语言和不变量确定模型边界；实体依赖身份，值对象依赖值，聚合控制事务一致性，应用层编排用例。"
+            },
+            "interviewCount": 3,
+            "heat": 3,
+            "currRank": 3
+          },
+          {
             "label": "Spring 外部配置：优先级、刷新与版本对账",
             "key": "spring-external-config",
             "isLeaf": true,
@@ -2753,23 +2770,6 @@
             "heat": 2,
             "currRank": 2,
             "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "DDD：限界上下文、聚合与领域行为",
-            "key": "ddd-domain-modeling",
-            "isLeaf": true,
-            "filePath": "backend/framework",
-            "tags": [
-              "面试知识"
-            ],
-            "updatedAt": "2026-11-12",
-            "interviewBaseHeat": 0,
-            "quickRead": {
-              "text": "从业务语言和不变量确定模型边界；实体依赖身份，值对象依赖值，聚合控制事务一致性，应用层编排用例。"
-            },
-            "interviewCount": 2,
-            "heat": 2,
-            "currRank": 2
           },
           {
             "label": "Java 动态代理：JDK、CGLIB 与字节码",
@@ -3223,14 +3223,14 @@
             "isLeaf": true,
             "filePath": "backend/storage",
             "contentStatus": "published",
-            "heat": 15,
+            "heat": 16,
             "currRank": 5,
             "updatedAt": "2026-10-29",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "持久状态区分会话消息、执行检查点、任务与事件，按身份与版本更新并限制访问。客户端缓存不是唯一真相，恢复、保留、删除与外部副作用对账要分别定义。"
             },
-            "interviewCount": 9,
+            "interviewCount": 10,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -5073,14 +5073,14 @@
             "isLeaf": true,
             "filePath": "career",
             "contentStatus": "published",
-            "heat": 28,
+            "heat": 29,
             "currRank": 5,
             "updatedAt": "2026-11-04",
             "quickRead": {
               "text": "用真实问题、个人职责、关键取舍和可核验产物介绍项目。评估需给任务、基线、样本与分母；展示脱敏的工具和状态轨迹，不把固定题数、工具数量或虚构收益当作能力证明。"
             },
             "interviewBaseHeat": 6,
-            "interviewCount": 22,
+            "interviewCount": 23,
             "interviewCountBasis": "verified-public-posts"
           },
           {

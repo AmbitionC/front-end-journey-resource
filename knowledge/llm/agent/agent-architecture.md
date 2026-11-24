@@ -238,6 +238,7 @@ AIMA 常用以下类型帮助理解能力递进：
 - [蚂蚁 Agent 一二面：Code Agent 与应用开发](../../../interview/antfin/ai/antfin-ai-2.md)
 - [OPPO IT 开发一面：ReAct、MCP 与智能问数](../../../interview/oppo/ai/oppo-ai-3.md)
 - [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
+- [阿里控股 Agent 开发一面：项目设计、Harness 与会话状态](../../../interview/alibaba/ai/alibaba-ai-34.md)
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../../interview/bytedance/base/bytedance-base-50.md)
 - [大疆创新 AI Agent 开发面经：容错、Token 与后端基础](../../../interview/dji/ai/dji-ai-1.md)
 - [小米秋招二面：Agent 项目说明与 TCP 状态](../../../interview/xiaomi/ai/xiaomi-ai-3.md)
