@@ -144,4 +144,5 @@ Token 决定序列如何表示和计量；Context Window 规定一次请求的�
 - [GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints](https://arxiv.org/abs/2305.13245)
 - [Lost in the Middle: How Language Models Use Long Contexts](https://arxiv.org/abs/2307.03172)
 - [OpenAI API：Prompt caching](https://developers.openai.com/api/docs/guides/prompt-caching)
+- [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180)
 - [Mooncake: A KVCache-centric Disaggregated Architecture for LLM Serving](https://arxiv.org/abs/2407.00079)
