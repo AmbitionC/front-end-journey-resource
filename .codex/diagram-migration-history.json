@@ -121,7 +121,7 @@
       "label": "模型能力评估与选型",
       "articlePath": "knowledge/llm/basics/llm-model-selection.md",
       "baselineArticleSha256": "9ac0e583da26682a6bdecaeaa6172d6c4a60ea4c8e6e4781a5a47fc9f8c419c5",
-      "status": "provenance_pending",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/llm-model-selection-eval-loop-v3.webp",
@@ -129,17 +129,27 @@
           "provenance": "legacy_raster_provenance_pending"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-30pct-batch1",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/llm-model-selection-six-step-loop-v4.aj.mjs",
+          "sourceSha256": "58d3674e4b08a03cd39e012dfe0a9d5529092e4d426e504655cf354fdb847d2f",
+          "darkPng": "images/llm-model-selection-six-step-loop-v4.dark.png",
+          "lightPng": "images/llm-model-selection-six-step-loop-v4.light.png",
+          "darkSha256": "c5840d9bfba67288949e7d85671f3343102c149b8bcaa0544091d2acd6bc01d6",
+          "lightSha256": "8a27b2dcc77f6a0e188d6d8e75ad619e679f7e5aa819c2de7ba5aa83be3d32fe"
+        }
+      ]
     },
     {
       "key": "llm-open-source-deployment",
       "label": "开源模型选型、推理与本地部署",
       "articlePath": "knowledge/llm/basics/llm-open-source-deployment.md",
       "baselineArticleSha256": "9b38d8b09222d938c192064219d6460ac2ace23eefa8ed25a01ca00c21ef3623",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/llm-open-source-deployment-serving-stack-v1.webp",
@@ -147,10 +157,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-30pct-batch1",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/llm-open-source-deployment-stack-v2.aj.mjs",
+          "sourceSha256": "58a3bd5943b886b7bb606282f08b7ae922f247724cb2e194e07bbc7e6ade7b33",
+          "darkPng": "images/llm-open-source-deployment-stack-v2.dark.png",
+          "lightPng": "images/llm-open-source-deployment-stack-v2.light.png",
+          "darkSha256": "98e712c425f78f17aeb12c33e6386e1cd5adb5fc38f0e1157960a5d65b045317",
+          "lightSha256": "3ad5fee5f8e7e2a4ef6eef33c738483dc229f17751445454cdd3ecfb2a3d3537"
+        }
+      ]
     },
     {
       "key": "transformer-arch",
@@ -244,7 +264,7 @@
       "label": "模型对齐：SFT、偏好数据与安全",
       "articlePath": "knowledge/llm/basics/llm-alignment.md",
       "baselineArticleSha256": "779e1a8e2a5878c48f221296f870b17bbe2ee6a0c9b08cb95e3ca46b6e0e2460",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/llm-alignment-post-training-stack-v1.webp",
@@ -252,10 +272,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-30pct-batch1",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/llm-alignment-four-layers-v2.aj.mjs",
+          "sourceSha256": "c5178cccc24a3560dfda6d5ca3bab196cd6a46d8694e0efb32063931b9e8793c",
+          "darkPng": "images/llm-alignment-four-layers-v2.dark.png",
+          "lightPng": "images/llm-alignment-four-layers-v2.light.png",
+          "darkSha256": "6b3500a2f22cda27236ef8caa6063aa377b1c57e913de297d2a88e54c5238b5d",
+          "lightSha256": "c10623a75da210e00e5ea974bc007ac6930e148d5ef6ce429ac99c519a39620a"
+        }
+      ]
     },
     {
       "key": "llm-multimodal-basics",
@@ -806,7 +836,7 @@
       "label": "大模型与前端产品的结合场景",
       "articlePath": "knowledge/fe/aigc/aigc-frontend.md",
       "baselineArticleSha256": "a14abce743324512040fa85b0b12eeab6c4eee1081ae1d476bbf7aa33fe63988",
-      "status": "provenance_pending",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/aigc-frontend-scenarios-v3.webp",
@@ -814,10 +844,20 @@
           "provenance": "legacy_raster_provenance_pending"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-30pct-batch1",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/aigc-frontend-gate-six-scenarios-v4.aj.mjs",
+          "sourceSha256": "facbd376e231176be9352be755a4ce97b6ea74d3ff5a016c1f95fd75c079864e",
+          "darkPng": "images/aigc-frontend-gate-six-scenarios-v4.dark.png",
+          "lightPng": "images/aigc-frontend-gate-six-scenarios-v4.light.png",
+          "darkSha256": "daf221adfe1d4b78305fc7e245b49acbf3fffb0b16df275d8ce733185ab51d73",
+          "lightSha256": "bd81e160e0e9375184f6ed381d800927b71eb4d17610ddf6094ffd83fd398512"
+        }
+      ]
     },
     {
       "key": "llm-stream-cancel-resume",
@@ -2430,7 +2470,7 @@
       "label": "发布质量门禁与回归阻断",
       "articlePath": "knowledge/llm/production/agent-quality-gates.md",
       "baselineArticleSha256": "a404665dc41adbb52d18666896680425a34c076345a844b9f21a7acacfcbe34b",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-quality-gates-release-ladder-v1.webp",
@@ -2438,10 +2478,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-30pct-batch1",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-quality-gates-evidence-ladder-v2.aj.mjs",
+          "sourceSha256": "a7f512313bb5a8e5e75c7bc0ead26180d84d483bcf343ae8d057869ee0140695",
+          "darkPng": "images/agent-quality-gates-evidence-ladder-v2.dark.png",
+          "lightPng": "images/agent-quality-gates-evidence-ladder-v2.light.png",
+          "darkSha256": "9e9ccb87367e00253ee4e2061b8f44e930258f40f6bd913c4cebd241b94479d4",
+          "lightSha256": "b5a3dc0a835c37f1454f6c135e664e5c7fdd0a827174e052c3fcbd71ebc62c01"
+        }
+      ]
     },
     {
       "key": "agent-debugging",
@@ -2476,7 +2526,7 @@
       "label": "Agent 身份、用户身份与委托授权",
       "articlePath": "knowledge/llm/production/agent-identity-auth.md",
       "baselineArticleSha256": "108ba1a57e26c59376f63a6f66d0ab82cba49e7ed73c5d9dcf786abc4243cdf2",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-identity-auth-delegation-chain-v1.webp",
@@ -2484,10 +2534,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-30pct-batch1",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-identity-auth-token-exchange-v2.aj.mjs",
+          "sourceSha256": "b54e4cc67d9bdb770ac575a76f916f40264761874e14156eee2d42837ee1fa7b",
+          "darkPng": "images/agent-identity-auth-token-exchange-v2.dark.png",
+          "lightPng": "images/agent-identity-auth-token-exchange-v2.light.png",
+          "darkSha256": "317ac34b7b5e846bc1590f21dacbf818d7353bee57f6f404ee097efb5d6cbeff",
+          "lightSha256": "f3dc09bd31e3f43d7aa119c4aa31fc873120b2307eefef8f5072ef17ac195226"
+        }
+      ]
     },
     {
       "key": "agent-benchmark",
@@ -2788,7 +2848,7 @@
       "label": "Agent 单元、集成、场景与端到端测试",
       "articlePath": "knowledge/llm/production/agent-test-pyramid.md",
       "baselineArticleSha256": "05195b446687698554ab103556dd3ece8b42c42695f35f9fa91f785c665ef3a6",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-test-pyramid-layered-strategy-v1.webp",
@@ -2796,10 +2856,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-30pct-batch1",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-test-pyramid-layer-routing-v2.aj.mjs",
+          "sourceSha256": "d80cddd4afadba8f4f83021dbfe44cacd04a0364d98da50a213153a4783438b7",
+          "darkPng": "images/agent-test-pyramid-layer-routing-v2.dark.png",
+          "lightPng": "images/agent-test-pyramid-layer-routing-v2.light.png",
+          "darkSha256": "d276a8411b720da134f5c4cbb6b19adb0e11327acb085b1e66d8b5c6125fcfe3",
+          "lightSha256": "e1cbd7b3ae6b359c304d86d4b79b24296c26364388c81dfbfb3f2e2b3987be21"
+        }
+      ]
     },
     {
       "key": "agent-model-fallback",
