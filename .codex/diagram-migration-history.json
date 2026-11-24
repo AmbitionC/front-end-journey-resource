@@ -542,7 +542,7 @@
       "label": "Prompt Cache 与稳定前缀设计",
       "articlePath": "knowledge/llm/prompt/prompt-cache-design.md",
       "baselineArticleSha256": "3760263b6c6bd02fc1e79fc8b51811bb20c44db976742b3262cfc8e0f80e3b10",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/prompt-cache-design-stable-prefix-v1.webp",
@@ -550,17 +550,27 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-30pct-batch4",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/prompt-cache-design-stable-prefix-v2.aj.mjs",
+          "sourceSha256": "4badcfccfcf3c28098cf6004148a578558548e138994e3b770442043c99ba594",
+          "darkPng": "images/prompt-cache-design-stable-prefix-v2.dark.png",
+          "lightPng": "images/prompt-cache-design-stable-prefix-v2.light.png",
+          "darkSha256": "3c7ce56bef32498d15511d9f5e5e2ddf1cc16bb5ff8ec34a93be6816d2cde4d5",
+          "lightSha256": "6359cd9a548a80eb6ea022e96c784d1fd0ed6f2dba3faf7e4568778a6f8ddad4"
+        }
+      ]
     },
     {
       "key": "prompt-basics",
       "label": "Prompt 设计基础与原则",
       "articlePath": "knowledge/llm/prompt/prompt-basics.md",
       "baselineArticleSha256": "3975fbdf5b1dabafb113fa1e0d845955d6c2217fd6ef6ebc36c66ad1e492d009",
-      "status": "provenance_pending",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/prompt-basics-contract-v3.webp",
@@ -568,10 +578,20 @@
           "provenance": "legacy_raster_provenance_pending"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-30pct-batch4",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/prompt-basics-contract-v4.aj.mjs",
+          "sourceSha256": "648a9b8fa428e659d67a0747468cb2e24a421c70cc9f3df9ec88b81e0501da0f",
+          "darkPng": "images/prompt-basics-contract-v4.dark.png",
+          "lightPng": "images/prompt-basics-contract-v4.light.png",
+          "darkSha256": "2ccf27e5e68637ad6e1e5288bdda65118cbb4d391adf582953401533405a08b1",
+          "lightSha256": "ced2ecf2d91db88171ce0a1a9c648900a33da838b5181f36c4651532d1546039"
+        }
+      ]
     },
     {
       "key": "prompt-system",
@@ -596,7 +616,7 @@
       "label": "Prompt 模板、变量与复用设计",
       "articlePath": "knowledge/llm/prompt/prompt-template-design.md",
       "baselineArticleSha256": "c39fe833682e26d213b6909f939dc3c9834223c843d65fb9d934071743a7a557",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/prompt-template-design-render-pipeline-v1.webp",
@@ -604,10 +624,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-30pct-batch4",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/prompt-template-design-render-pipeline-v2.aj.mjs",
+          "sourceSha256": "1dcf608b36deefcbd06b98852a4b6d6526e5758fb8392c3b47a1bb963b7b3fcf",
+          "darkPng": "images/prompt-template-design-render-pipeline-v2.dark.png",
+          "lightPng": "images/prompt-template-design-render-pipeline-v2.light.png",
+          "darkSha256": "79fde0211a58247eaa63565af3ddd89d4859f8e09c4686596c0358788c9dbb42",
+          "lightSha256": "61ab79b6b81798421a289413ca5da6dfccd80b50d3b7edbb61b31a713e695a6b"
+        }
+      ]
     },
     {
       "key": "prompt-testing-debugging",
@@ -818,7 +848,7 @@
       "label": "OpenAI API 调用基础",
       "articlePath": "knowledge/fe/aigc/aigc-openai.md",
       "baselineArticleSha256": "0fda196c98e74848dff1dbf4d11219261adb8257db22bdfa2663ed5e08d5ea1a",
-      "status": "provenance_pending",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/aigc-openai-responses-minimal-v3.webp",
@@ -826,10 +856,20 @@
           "provenance": "legacy_raster_provenance_pending"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-30pct-batch4",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/aigc-openai-responses-request-chain-v4.aj.mjs",
+          "sourceSha256": "d7edc87accc028f3f4658ee4a7eebf2d24131dd399b86c90ed3524a68a08fc11",
+          "darkPng": "images/aigc-openai-responses-request-chain-v4.dark.png",
+          "lightPng": "images/aigc-openai-responses-request-chain-v4.light.png",
+          "darkSha256": "578c705f34c630f2820256f0069350d1eac362901087cfb55d7433208d72ee3e",
+          "lightSha256": "90ab5a4f2b3da217180035318e0cee35fac32bb76c620e27cf56cfad35066a3e"
+        }
+      ]
     },
     {
       "key": "aigc-frontend",
@@ -1448,7 +1488,7 @@
       "label": "文档 Loader、Parser 与版面解析",
       "articlePath": "knowledge/llm/rag/rag-loader-parser.md",
       "baselineArticleSha256": "6182947262f45492190072dfe670d63963ef6ca9d294fc3055d1fd3036f39353",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/rag-loader-parser-layout-tree-v1.webp",
@@ -1456,10 +1496,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-30pct-batch4",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/rag-loader-parser-layout-tree-v2.aj.mjs",
+          "sourceSha256": "19b5020e5f0cd4cab34d0663da330738e443b78675ee4f70d3b7b5a643dce1a0",
+          "darkPng": "images/rag-loader-parser-layout-tree-v2.dark.png",
+          "lightPng": "images/rag-loader-parser-layout-tree-v2.light.png",
+          "darkSha256": "51169d3ab3f46a90f7d8bacd79cd48ed8f04c7e95d08c4c4acfa16509d9aa967",
+          "lightSha256": "c7e03715a782eda68a9be71616396d3d2f265e721b30b0bf6e6ca41a1058e819"
+        }
+      ]
     },
     {
       "key": "rag-routing",
@@ -5752,7 +5802,7 @@
       "label": "Markdown、代码块、图表与安全渲染",
       "articlePath": "knowledge/frontend/agent-ui/agent-markdown-code-ui.md",
       "baselineArticleSha256": "5ffeb7960bcc6bed7281da9f4e1cb9f98186d4ca3a33e35727419c4510334595",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-markdown-code-ui-safe-render-pipeline-v1.webp",
@@ -5760,10 +5810,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-30pct-batch4",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-markdown-code-ui-safe-render-pipeline-v2.aj.mjs",
+          "sourceSha256": "84ba4a4a7b7563737ea26cd90a75b3dabf44a36c090dffe373407ec5ee0b7a1f",
+          "darkPng": "images/agent-markdown-code-ui-safe-render-pipeline-v2.dark.png",
+          "lightPng": "images/agent-markdown-code-ui-safe-render-pipeline-v2.light.png",
+          "darkSha256": "1973472483616a4c3cc546a0bfae659bbeb28ad48dc2849db5138df4d568905a",
+          "lightSha256": "c9a789f699e422b0e6efb388a9ca877162b4ac222212742df9690a04b5b9f063"
+        }
+      ]
     },
     {
       "key": "agent-chat-ui",
@@ -6029,7 +6089,7 @@
       "label": "Agent 工程师技能图谱",
       "articlePath": "knowledge/career/agent-skill-map.md",
       "baselineArticleSha256": "e58b0716f7c4ea11d75a66ace7c016e6e1ec5bfb224d1655de1d8839af9da920",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-engineer-skill-map-domains-v1.webp",
@@ -6037,10 +6097,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-30pct-batch4",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-engineer-skill-map-layers-v2.aj.mjs",
+          "sourceSha256": "a84f491c0cb355feeba5ce2f25abad5873747a4090dea7698cb076cf05c47e21",
+          "darkPng": "images/agent-engineer-skill-map-layers-v2.dark.png",
+          "lightPng": "images/agent-engineer-skill-map-layers-v2.light.png",
+          "darkSha256": "a96815380358fdc821a676bec02613505cd4f90de37927a5e675009c777429a4",
+          "lightSha256": "31ef652fe579a9ac723b63f2e855109e0b35399db504fe076543cfa6dd4a96d5"
+        }
+      ]
     },
     {
       "key": "agent-learning-roadmap",

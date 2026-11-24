@@ -6374,7 +6374,7 @@
       "id": "agent-skill-map:mermaid:89",
       "kind": "mermaid",
       "articlePath": "knowledge/career/agent-skill-map.md",
-      "articleSha256": "e58b0716f7c4ea11d75a66ace7c016e6e1ec5bfb224d1655de1d8839af9da920",
+      "articleSha256": "0ed896be00d6f47f15d88ed3633a4b3beb2656ae48f6fc89d5aeecae9a1d6932",
       "line": 89,
       "sourceText": "flowchart TD\n    L1[\"🧱 Layer 1\\n大模型基础\\nTransformer · Token · 推理参数 · 模型选型\"]\n    L2[\"✍️ Layer 2\\nPrompt & 上下文工程\\nSystem Prompt · CoT · Few-shot · 上下文管理\"]\n    L3[\"🔍 Layer 3\\nRAG & 数据管道\\nEmbedding · 向量数据库 · Chunking · 检索\"]\n    L4[\"🤖 Layer 4\\nAgent 范式与核心能力\\nReAct · 记忆 · 规划 · 工具调用\"]\n    L5[\"🛠️ Layer 5\\n框架与工具链\\nLangChain-JS · Vercel AI SDK · MCP 协议\"]\n    L6[\"🔬 Layer 6\\n评估与调试\\nTracing · 评估框架 · 调试技巧\"]\n    L7[\"🚀 Layer 7\\n工程化与部署\\n容错 · 监控 · 成本控制\"]\n\n    L1 --> L2\n    L1 --> L3\n    L2 --> L4\n    L3 --> L4\n    L4 --> L5\n    L5 --> L6\n    L6 --> L7\n",
       "sourceSha256": "c1266837f2dcf0a7958ef82b4cb1b0e2b6ffcae7fc32fe797b13a13bc8be3e19",
