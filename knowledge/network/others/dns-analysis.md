@@ -1,7 +1,7 @@
 DNS 把域名映射为资源记录，是带委派和缓存的分布式数据库，不是一次“问某台服务器要 IP”的调用。排障要沿 stub resolver、recursive resolver、root、TLD 和 authoritative server 追踪，并同时考虑 TTL、负缓存、多个记录、DNSSEC、传输与应用连接复用。
 
-![DNS 从 Stub、递归解析器、Root、TLD 到权威服务器的解析、缓存、负缓存与故障切换](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/dns-analysis-resolution-cache-failover-v1.webp)
-*图：递归 resolver 缓存委派和答案；NXDOMAIN 也会负缓存；权威或递归节点故障的用户时延受重试与缓存影响。*
+![DNS 解析、缓存与容灾。应用调用操作系统的 stub resolver，stub 把递归查询交给递归解析器。递归解析器缓存未命中时依次询问：Root 返回 TLD 的委派，TLD 返回该域权威服务器的 NS 和必要的 glue，权威服务器返回答案记录和 TTL。递归解析器会缓存三类东西：按 TTL 缓存的答案、委派 NS 与 glue、以及 NXDOMAIN 和 NODATA 等负答案。TTL 是缓存可复用的上限，不是全球生效时间：换记录要提前至少一个旧 TTL 先降 TTL，等旧缓存过期再切记录，稳定后恢复 TTL；操作系统、浏览器、JVM 和连接池还有自己的缓存，已有 TCP 连接活得更久。常见故障：误删记录后即使立刻恢复，递归器仍按负 TTL 返回不存在；多个权威要放在独立故障域，切换取决于递归器自己的超时和重试，并非无感；DNSSEC 验签失败返回 SERVFAIL，不会退回未验证的答案；健康检查式 failover 改了答案，旧地址在 TTL 内仍会被用。排障顺序：dig 看 status、答案和 TTL，直接问权威，用 +trace 看委派链，比较多个递归器，最后查应用缓存和连接池](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/dns-analysis-resolution-cache-failover-v2.dark.png)
+*图：递归解析器沿 Root、TLD、权威逐级拿委派和答案并缓存；TTL 只是缓存上限，换记录要提前降 TTL；下排是四种常见的故障情形。*
 
 ## 角色与递归过程
 

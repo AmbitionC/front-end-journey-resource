@@ -41,8 +41,8 @@ type Element = {
 
 `page`、`bbox` 与 `order` 是引用和调试的关键。只有文本没有坐标，表格单元格和脚注很难回到原页；只有坐标没有阅读顺序，多栏 PDF 会被交叉拼接。
 
-![Loader 负责格式识别、解码与解密，Parser 在质量门禁和 OCR 回退后重建带页码坐标的版面树](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-loader-parser-layout-tree-v1.webp)
-*图：解析出的标题、段落、表格、图像和脚注都携带 PAGE、BBOX 与 ORDER；OCR 只是带置信度的回退路径。*
+![RAG 的 Loader 与 Parser 分两层。Loader 负责把外部对象可靠取回并解码：下载超时、大小上限、校验和，MIME 靠内容探测而不信扩展名，处理字符集和解密，流式读取不把整个文件读进内存；它输出带来源、版本、校验和的 LoadedAsset。Parser 先用原生文本层提取，再做质量检查（字符覆盖率、乱码比例、坐标是否大量重叠或越界）；质量够就直接进入版面树，只有低质量的页面或区域才走 OCR，OCR 结果带置信度，是观测而不是源事实。Parser 的输出是版面树而不是长字符串：文档下面依次是标题、段落、表格、图像和脚注，每个元素都带页码、坐标和阅读顺序，并标出来源是原生、OCR 还是推断；表格保留行列、表头和合并单元格，图像保留资产 ID，段落和脚注双向链接。只有坐标没有阅读顺序时，多栏 PDF 会被交叉拼接。质量门禁：解析成功不能只看退出码，要看覆盖率和元素顺序；损坏、加密、超限、格式伪装和解析器崩溃分别记错误码，绝不能返回空文档继续做 embedding](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-loader-parser-layout-tree-v2.dark.png)
+*图：左边 Loader 取回解码、Parser 先用原生文本层并做质量检查，只有低质量页才 OCR；右边是版面树，每个元素都带页码、坐标和阅读顺序。*
 
 [Unstructured 的 partition 文档](https://docs.unstructured.io/open-source/core-functionality/partitioning)把原始文档拆成 `Title`、`NarrativeText`、`ListItem` 等元素，说明结构化元素比“按固定字符切文本”更适合作为后续分块输入。元素类型仍是解析器的推断，应保留解析版本与置信信号。
 

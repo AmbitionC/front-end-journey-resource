@@ -2,7 +2,7 @@ Agent 发起动作时，系统至少要回答三个身份问题：哪个用户�
 
 [OAuth 2.0 Token Exchange（RFC 8693）](https://www.rfc-editor.org/info/rfc8693/)定义了 subject token、actor token 与委托/模拟语义，可以在令牌中同时表示“代表谁”和“由谁执行”。这为 Agent 的用户身份、工作负载身份和下游授权提供了标准构件，但具体信任与策略仍由部署决定。
 
-![用户身份、Agent 工作负载身份与下游服务之间的委托授权链](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-identity-auth-delegation-chain-v1.webp)
+![用户提出目标，是 subject；Agent 工作负载持有短期工作负载凭证，是 actor，模型本身不接触 token；Agent 用自身身份向授权服务器发起交换请求，声明 subject、actor、目标服务和最小 scope，授权服务器检查用户授权、Agent 角色和风险后签发短期委托 token，里面同时保留 sub 和 act，并绑定 aud、scope 和 exp；Agent 带这个 token 调用目标服务，目标服务先验签名、issuer 和 token 类型，再确认 aud 是自己且未过期、scope 足够，最后按 subject 对具体资源授权以防 confused deputy，批量或不可逆动作还要 step-up 或人工批准；委托不是模拟，审计同时记录 subject 和 actor，子 Agent 要换更窄的 token 而不是转发原 token](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-identity-auth-token-exchange-v2.dark.png)
 
 图中的短期 delegated token 同时保留 Subject 与 Actor，并绑定 Audience、Scope 和 Expiry。目标服务在资源动作前验证签名、受众、范围、subject、actor 和策略，不能只验证 token“格式正确”。
 

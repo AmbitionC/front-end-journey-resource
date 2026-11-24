@@ -4,7 +4,7 @@
 
 对于新建文本应用，OpenAI 官方推荐 Responses API。Chat Completions 仍受支持，但不应再作为新教程的默认起点。
 
-![从浏览器到 OpenAI Responses API 的请求链路](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/aigc-openai-responses-minimal-v3.webp)
+![从浏览器到 OpenAI Responses API 的请求链路。浏览器只调用自己的 /api/chat，不接触密钥；你的 API 路由先确认登录、校验输入（比如消息不超过 8000 字）、检查用户配额；服务端通过官方 SDK 调用 Responses API，model 从配置读取，instructions 写行为规则，input 放用户输入，并设置超时和有限重试；返回时取 output_text，不要假设 output[0] 一定是文本，并把响应 id 和 request id 记进日志。OPENAI_API_KEY 只存在服务端，不能用 VITE_ 或 NEXT_PUBLIC_ 这类会注入浏览器的前缀。三个进阶点：流式输出时把提供方事件转换成自己的 start、delta、done、error 协议再经 SSE 发给浏览器，取消要用 AbortController 一直传到服务端和 SDK；多轮对话可以用 previous_response_id 连接上下文，但 instructions 不会继承，每轮都要给，也可以由应用自己保存消息并管理 token 预算；结构化输出把结果绑定到 Schema，不用正则抠 JSON，但 Schema 合规不等于业务事实正确。错误按状态码处理：400 和 422 修参数、不盲目重试；401 和 403 查密钥与项目权限；429 指数退避加随机抖动并限制自身并发；5xx 有限重试后降级。写操作只有带幂等键才自动重试，对浏览器只暴露稳定错误码和可重试标志](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/aigc-openai-responses-request-chain-v4.dark.png)
 
 ## 一、准备服务端环境
 
