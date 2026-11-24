@@ -29,6 +29,12 @@ it('rejects a write without delegated scope', () => {
 });
 ```
 
+### 用 TDD 驱动一小步实现
+
+测试分层回答“把验证放在哪里”，TDD（测试驱动开发）回答“怎样用测试推动下一小步代码”。先从需求与接口合同列出待覆盖场景，每次只挑一个，写成可运行测试并确认它因目标行为尚未实现而失败；再补足让新旧测试通过的最小实现，必要时整理设计，重构时保持测试通过，然后处理下一个场景。这是常说的 Red–Green–Refactor 小循环，不是先把所有测试写完，再一次性实现全部功能。[Kent Beck 的 Canon TDD](https://newsletter.kentbeck.com/p/canon-tdd)明确把场景清单、一次一个可运行测试和保持既有测试通过串在一起。
+
+例如，为工具参数校验增加“缺少必填字段应拒绝”的行为，先独立确定应返回的错误和不得执行的副作用，再写失败用例、实现校验、确认其他合法输入仍通过，最后按需要整理重复逻辑。失败若来自依赖未安装或夹具损坏，应先修测试环境，不能当作目标行为的失败证据。模型输出质量仍需场景评估和人工校准；给确定性代码做了 TDD，不等于已经验证整个 Agent 的真实任务效果。
+
 ## 第二层：工具集成测试
 
 这一层验证 Agent 与真实协议或高保真替身之间的契约：HTTP 状态、认证、分页、速率限制、Schema 版本、超时、重试、幂等和错误映射。可以运行本地容器、测试数据库、录制回放服务或官方沙箱，但不要碰生产数据。
@@ -138,6 +144,7 @@ Agent 测试金字塔从单元契约、工具集成、受控场景到端到端�
 
 <!-- interview-source-history:start -->
 - [快手测开二面：Agent 交接、轨迹评测与业务测试](../../../interview/kuaishou/ai/kuaishou-ai-24.md)
+- [阿里控股 Agent 开发一面：项目设计、Harness 与会话状态](../../../interview/alibaba/ai/alibaba-ai-34.md)
 - [百度 AI 测开一面：LLM 评测、压测与有序链表](../../../interview/baidu/ai/baidu-ai-13.md)
 - [美团后端 Agent 暑期一面：约束、工作流与 AI 开发验证](../../../interview/meituan/ai/meituan-ai-16.md)
 - [理想汽车 IT 全栈交付培养生一面：Skill、测试与工作流](../../../interview/liauto/fullstack/liauto-fullstack-1.md)
@@ -147,6 +154,7 @@ Agent 测试金字塔从单元契约、工具集成、受控场景到端到端�
 
 ## 参考资料
 
+- [Kent Beck：Canon TDD，一次一个场景的小步循环](https://newsletter.kentbeck.com/p/canon-tdd)
 - [pytest：参数化测试的输入与预期组织](https://docs.pytest.org/en/stable/how-to/parametrize.html)
 - [PIT：变异、检测结果与等价变异](https://pitest.org/quickstart/basic_concepts/)
 - [NIST AI RMF：TEVV tasks throughout the lifecycle](https://airc.nist.gov/airmf-resources/airmf/appendices/app-a-descriptions-of-ai-actor-tasks/)
