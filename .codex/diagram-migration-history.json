@@ -3924,7 +3924,7 @@
       "label": "JWT 认证机制",
       "articlePath": "knowledge/backend/auth/jwt-auth.md",
       "baselineArticleSha256": "8bf01d15b8c49a61c618a54173f394754374255e4d1a6cb3fd46da7d27241a45",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/jwt-validation-trust-boundary-v1.webp",
@@ -3932,10 +3932,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-30pct-batch3",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/jwt-validation-trust-boundary-v2.aj.mjs",
+          "sourceSha256": "34977792fe058623037202d97d8a1c3cd81e14ed327746f4da27dcb52ae56e77",
+          "darkPng": "images/jwt-validation-trust-boundary-v2.dark.png",
+          "lightPng": "images/jwt-validation-trust-boundary-v2.light.png",
+          "darkSha256": "ab52e3a5f230751aaa722136413bb7b082995b4461b3f0c694404a4fb74822e3",
+          "lightSha256": "ee6bc7530099f05c92fd391c8e1597ef94a64f4e810045d20bb509c3e8019022"
+        }
+      ]
     },
     {
       "key": "rate-limit-circuit",
@@ -4420,7 +4430,7 @@
       "label": "向量数据库索引、过滤与一致性",
       "articlePath": "knowledge/data/storage/vector-database-internals.md",
       "baselineArticleSha256": "9d7327e071be24fd0e9ecd9a9416ec066d5595e079951a74faed1ed5f1f2613d",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/vector-database-internals-filter-index-consistency-v1.webp",
@@ -4428,10 +4438,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-30pct-batch3",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/vector-database-internals-filter-index-consistency-v2.aj.mjs",
+          "sourceSha256": "81daec541282477d312a1ef24d60daae85c1055e3f213fa9c5b29ab932764324",
+          "darkPng": "images/vector-database-internals-filter-index-consistency-v2.dark.png",
+          "lightPng": "images/vector-database-internals-filter-index-consistency-v2.light.png",
+          "darkSha256": "6dc996a2a13e1760da2a8a09212ac4286c887248e3e137fd6d7104d9224d2831",
+          "lightSha256": "6c5ce3afe3b1f2695651be04cc8abbcef86c157b555616b75302b0ac032d4c3a"
+        }
+      ]
     },
     {
       "key": "ann-hnsw",
@@ -4904,7 +4924,7 @@
       "label": "DNS 解析、缓存与容灾",
       "articlePath": "knowledge/network/others/dns-analysis.md",
       "baselineArticleSha256": "3800592c6e7734376624c460ca231e258bdfbb55669d6d22ae4cd9df4e6f4acd",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/dns-analysis-resolution-cache-failover-v1.webp",
@@ -4912,17 +4932,27 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-30pct-batch3",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/dns-analysis-resolution-cache-failover-v2.aj.mjs",
+          "sourceSha256": "b6c5f216156ec85d5d7e15236e719182dc6afd3dbf37b27d7381df1db688e9ca",
+          "darkPng": "images/dns-analysis-resolution-cache-failover-v2.dark.png",
+          "lightPng": "images/dns-analysis-resolution-cache-failover-v2.light.png",
+          "darkSha256": "957bf450053da038784f54ce193b5891a926530bd9df0b9c918dafc2af432baf",
+          "lightSha256": "ef421988cd7c529f6323087fad75dc24f884f0ec52f4a41a38d4e9b3d7be6bee"
+        }
+      ]
     },
     {
       "key": "tcpIp-model",
       "label": "OSI、TCP/IP 与端到端通信",
       "articlePath": "knowledge/network/tcpIp/tcpIp-model.md",
       "baselineArticleSha256": "02ba8fab7b2e0728e4a2e8c165f936d63823059d5db01aaa3c9a3c4426f096fa",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/tcpip-model-encapsulation-path-v1.webp",
@@ -4930,10 +4960,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-30pct-batch3",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/tcpip-model-encapsulation-path-v2.aj.mjs",
+          "sourceSha256": "0df0e9b0e79b36b0e8219ba6656febd4a341e2d772cea71aa7e135540bf77de7",
+          "darkPng": "images/tcpip-model-encapsulation-path-v2.dark.png",
+          "lightPng": "images/tcpip-model-encapsulation-path-v2.light.png",
+          "darkSha256": "03e1576630d26821c772c5da5e7b0ceffdc6b58aa652f15c42a4f0a9fde4962a",
+          "lightSha256": "36855e31a45773c7ec680761d84c8f19b286e81fbc70a5577d6e7258f9c8fd23"
+        }
+      ]
     },
     {
       "key": "os-process-thread",
@@ -5484,7 +5524,7 @@
       "label": "现代 CSS 布局与响应式设计",
       "articlePath": "knowledge/html-css/css/responsive-layout.md",
       "baselineArticleSha256": "37346d45a2515f029e6ce64c522decd5e7ffecb93a48692b4f23d58da5fe8d02",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/responsive-layout-container-breakpoint-v1.webp",
@@ -5492,10 +5532,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-30pct-batch3",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/responsive-layout-container-breakpoint-v2.aj.mjs",
+          "sourceSha256": "e9ce4026e2743601a09bc98a889338e27129e6c14a941833d974cfe211173f20",
+          "darkPng": "images/responsive-layout-container-breakpoint-v2.dark.png",
+          "lightPng": "images/responsive-layout-container-breakpoint-v2.light.png",
+          "darkSha256": "217c79d0ec1a0a22d5d48374dd3852fa348470a3750003304e30eb96c4f3f8e9",
+          "lightSha256": "31dc02354cca91b92153fa7c6e315651825fca4f2271b61c24df2670f60a13cd"
+        }
+      ]
     },
     {
       "key": "web-attack",
@@ -5556,7 +5606,7 @@
       "label": "TypeScript 类型系统与类型建模",
       "articlePath": "knowledge/js-es6-ts/ts/type-system.md",
       "baselineArticleSha256": "e2e33246e34c07cdfec6927beba1d967535a0c73b9afb6d20321eb88755d5338",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/typescript-structural-narrowing-model-v1.webp",
@@ -5564,17 +5614,27 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-30pct-batch3",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/typescript-structural-narrowing-model-v2.aj.mjs",
+          "sourceSha256": "35bbd206ac4797fb50b979715dcc2409a5c1d572c323ce081c55ebfb3316af19",
+          "darkPng": "images/typescript-structural-narrowing-model-v2.dark.png",
+          "lightPng": "images/typescript-structural-narrowing-model-v2.light.png",
+          "darkSha256": "d12fea67e6b74b9b552b7bea2f4284a341258b2ca6abeabfbbd1c1cf4907623e",
+          "lightSha256": "db7a80419f71627cd5dea1ece209c71fd5889dab857095564c292206cd4a658e"
+        }
+      ]
     },
     {
       "key": "react-hooks",
       "label": "React 函数组件、Hooks 与状态",
       "articlePath": "knowledge/framework/react/react-hooks.md",
       "baselineArticleSha256": "d5429ae2fa97d9e4faed11b4916ceac3b132f87d4ac4b5604ce377b8ec5a6d8a",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/react-render-state-effect-cycle-v1.webp",
@@ -5582,10 +5642,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-30pct-batch3",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/react-render-state-effect-cycle-v2.aj.mjs",
+          "sourceSha256": "6ad912145dee6661ba2de8f936538ad75f155c9cfdc30c8b1177204eca4cc19b",
+          "darkPng": "images/react-render-state-effect-cycle-v2.dark.png",
+          "lightPng": "images/react-render-state-effect-cycle-v2.light.png",
+          "darkSha256": "c226d9b002766f5d496fc1ab723e4e0f5dc8105119eda462aae6b1042e2c2827",
+          "lightSha256": "81e005ebe6f5ce686015c6a8a77fec7f1b923a99ca8c320b52948c2809e3f87a"
+        }
+      ]
     },
     {
       "key": "ts-generics",

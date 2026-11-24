@@ -1,7 +1,7 @@
 React 函数组件每次渲染都用当次 props 与 state 计算 UI 快照。Hook 让 React 在多次渲染之间关联状态槽位，并在 commit 后与外部系统同步；它们不是普通工具函数，也不能按条件随意调用。
 
-![事件处理器把 state update 加入队列，React render 生成快照并 commit DOM，Effect 随后 setup 外部同步且在依赖变化或卸载时 cleanup](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/react-render-state-effect-cycle-v1.webp)
-*图：event → update queue → render snapshot → commit → effect；顶部固定 Hook 调用顺序，底部区分纯派生数据与外部系统。*
+![React 函数组件的一轮更新。顶部：Hook 只能在组件或自定义 Hook 顶层调用，React 按调用顺序认出第一个 useState、第二个 useState、useEffect、自定义 Hook 各自的状态槽位，所以不能放进条件、循环或提前 return 之后。主流程：事件处理器调用 setter，只是请求下一次渲染；更新进入队列，函数式 updater 依次拿到最新待处理值；render 用当次 props 和 state 算出 UI 快照，是纯计算；commit 把变化更新到 DOM；之后 Effect 先用旧值运行 cleanup，再用新值运行 setup。同一次 render 里 count 是快照，写两次 setCount(count + 1) 只加 1。下方区分两类：不需要 Effect 的情况，render 里能算的直接算、贵了再 memo，用户点击引发的提交放进事件处理器，不写「A 变了就 set B」的 Effect；需要 Effect 的是同步外部系统，比如连 WebSocket、订阅浏览器 API、控制非 React 组件、发曝光事件，setup 做什么 cleanup 就撤销什么。其他 Hook：useRef 改值不触发重新渲染，useReducer 适合多个事件驱动同一个状态机，useMemo 和 useCallback 只是性能优化，要先用 Profiler 证明值得](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/react-render-state-effect-cycle-v2.dark.png)
+*图：顶部是 Hook 顺序和状态槽位；中间是一次更新从事件到 Effect 的顺序；下面区分可以直接计算的数据和真正需要 Effect 同步的外部系统。*
 
 ---
 
