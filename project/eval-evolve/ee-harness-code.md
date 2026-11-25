@@ -76,24 +76,9 @@ history/ 目录是只读的，里面有历史版本的源码、它们在一组�
 
 ## 一轮搜索
 
-```mermaid
-sequenceDiagram
-    participant O as 搜索控制器
-    participant P as 提案器（你的编程 Agent）
-    participant S as 沙箱
-    participant E as 评测链路
-    participant H as 历史目录
-    O->>S: 创建沙箱，挂载只读的历史目录
-    O->>P: 在沙箱里启动，给出任务说明
-    P->>H: 查找、阅读源码、得分、轨迹
-    P->>S: 写出新的外壳代码和 note.md
-    S-->>O: 候选代码
-    O->>O: 静态检查：改动范围、接口、禁止修改的文件
-    O->>E: 在进化集上评测候选
-    E-->>O: 得分和轨迹
-    O->>H: 写入历史（无论好坏）
-    O->>O: 更新前沿
-```
+![第四级进化的一轮搜索：提案器在无外网的沙箱里查阅只读的历史目录，写出新的外壳代码和 note.md；候选代码先过静态检查，再在进化集上评测，结果无论好坏都写回历史目录供下一轮查阅](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-ee-harness-code-sandbox-search-v1.dark.png)
+
+*图：虚线框里是沙箱。提案器对历史目录只能读；候选的评测结果由沙箱外的控制器写回历史。*
 
 每轮可以并行启动几个提案器，各自独立工作，得到几个不同方向的候选。
 
