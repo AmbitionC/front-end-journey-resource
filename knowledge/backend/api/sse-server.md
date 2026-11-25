@@ -366,6 +366,41 @@ Nginx也可按上游响应头 `X-Accel-Buffering: no` 控制缓冲，但 `proxy_
 
 HTTP/2可在同一连接承载多个流，但并发流上限、代理连接和服务端资源仍有限。不要把HTTP/1.1浏览器常见的连接数经验值当作统一协议上限，也不因多路复用取消连接预算。
 
+## 练一练
+
+### 高频考点题 1：SSE 响应头
+
+SSE 响应的 Content-Type 应该是？
+
+- A. `application/json`
+- B. `text/event-stream`
+- C. `text/plain`
+- D. `application/octet-stream`
+
+**答案：B。** 每条事件由字段行组成，以空行结束。
+
+### 高频考点题 2：EventSource 的限制
+
+浏览器原生 EventSource 的一个重要限制是？
+
+- A. 不能自动重连
+- B. 只能 GET，不能带请求体
+- C. 不能接收中文等非 ASCII 内容
+- D. 只能接收一条消息
+
+**答案：B。** 需要 POST 和自定义头时，通常用 fetch 读取流。
+
+### 高频考点题 3：选型
+
+只需要服务端向浏览器单向推送 LLM 生成的文本，优先评估哪种方案？
+
+- A. SSE
+- B. WebSocket
+- C. 短轮询
+- D. FTP
+
+**答案：A。** 单向文本事件先评估 SSE，持续双向消息再考虑 WebSocket。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->

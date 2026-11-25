@@ -284,6 +284,41 @@ OAuth2 是授权框架（你有没有权限访问某资源），OIDC 是认证�
 **Q：refresh_token 如何安全存储？**
 服务端存数据库（加密存储），通过 HttpOnly Secure Cookie 下发 session 标识，绝不直接将 refresh_token 返回给前端 JavaScript 环境。
 
+## 练一练
+
+### 高频考点题 1：state 参数
+
+OAuth 授权请求里的 `state` 参数主要防什么？
+
+- A. 防止授权码过期
+- B. 防止用户重复点击授权按钮
+- C. 防止 access_token 泄露到日志
+- D. 防 CSRF
+
+**答案：D。** 每次生成随机字符串，回调时严格比对，不一致就拒绝。
+
+### 高频考点题 2：PKCE
+
+PKCE 主要解决什么问题？
+
+- A. 公共客户端存不住密钥时，防授权码被截获滥用
+- B. 让 access_token 的有效期变得更长
+- C. 让服务端不再需要验证 redirect_uri
+- D. 让用户可以不登录就直接完成授权
+
+**答案：A。** 客户端用 code_verifier 生成 code_challenge，换 token 时出示 verifier，截获授权码的人换不了。
+
+### 高频考点题 3：redirect_uri
+
+为什么 `redirect_uri` 必须与注册时一致？
+
+- A. 防止授权码被劫持到恶意地址
+- B. 为了让回调页面加载更快
+- C. 因为浏览器只允许跳转到注册过的地址
+- D. 为了统计每个回调地址的访问量
+
+**答案：A。** 授权码一次性、有效期短（通常 10 分钟），但被送到恶意地址就会被立即兑换。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
