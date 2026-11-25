@@ -5,3 +5,4 @@ node_modules/
 _inbox/_reports/
 _inbox/*
 !_inbox/README.md
+dist/
