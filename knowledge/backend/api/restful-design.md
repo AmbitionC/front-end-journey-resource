@@ -461,6 +461,41 @@ Idempotency-Key: uuid-1234-5678
 
 - **如何设计对 LLM Agent 友好的 REST API？** 核心是：规范化的错误码（便于 Agent 决策分支）、稳定的 Envelope 响应格式（便于统一解析）、枚举约束参数（减少幻觉），以及幂等操作标注（允许 Agent 安全重试）。
 
+## 练一练
+
+### 高频考点题 1：资源命名
+
+下面哪个 URL 最符合 RESTful 资源命名？
+
+- A. `/getUserList`
+- B. `/user-list-query`
+- C. `/User/GetAll`
+- D. `/users`
+
+**答案：D。** URL 是资源地址而不是动作描述，用名词复数、小写和连字符。
+
+### 高频考点题 2：都返回 200
+
+所有请求都返回 200，再在 body 里写 `code: 500`。主要问题是？
+
+- A. 响应体会变大，增加一点网络传输的开销
+- B. 浏览器会拒绝解析这样的响应
+- C. 外部无法按状态码判断成败
+- D. 没有问题，很多公司都这么做
+
+**答案：C。** 状态码是 REST 自描述的核心，缓存、重试和告警都依赖它。
+
+### 高频考点题 3：幂等方法
+
+下面哪个 HTTP 方法不是幂等的？
+
+- A. GET
+- B. DELETE
+- C. PUT
+- D. POST
+
+**答案：D。** 需要可安全重试的 POST，要靠幂等键在应用层实现。
+
 ## 参考资料
 
 - [Architectural Styles and the Design of Network-based Software Architectures](https://ics.uci.edu/~fielding/pubs/dissertation/top.htm)

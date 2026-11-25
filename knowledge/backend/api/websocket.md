@@ -478,6 +478,41 @@ const wss = new WebSocketServer({ port: 8080, maxPayload: 1024 * 1024 }); // 1MB
 
 - **WebSocket 在 HTTP/2 下如何工作？** RFC 8441定义HTTP/2扩展CONNECT来建立WebSocket流，与HTTP/1.1 Upgrade/101不同。是否可用取决于客户端、服务和代理支持，不能只因HTTP/2已启用就假设自动使用。
 
+## 练一练
+
+### 高频考点题 1：怎么建立连接
+
+WebSocket 连接是怎样建立的？
+
+- A. 直接建立一个新的 TCP 协议，与 HTTP 无关
+- B. 通过 HTTP/1.1 Upgrade 握手升级
+- C. 先发一个 SSE 请求，再切换过去
+- D. 由浏览器插件单独建立
+
+**答案：B。** 客户端带 Sec-WebSocket-Key，服务端返回由 Key 拼接 GUID 计算出的 Sec-WebSocket-Accept。
+
+### 高频考点题 2：Sec-WebSocket-Accept 的作用
+
+服务端返回 Sec-WebSocket-Accept 主要是为了？
+
+- A. 对之后传输的所有消息进行加密
+- B. 证明服务端理解握手
+- C. 作为用户的登录凭证
+- D. 限制连接的最大时长
+
+**答案：B。** 它不是安全认证机制，鉴权要另外做。
+
+### 高频考点题 3：选型
+
+协作编辑需要持续双向、低延迟的消息。优先评估哪种方案？
+
+- A. SSE
+- B. 邮件通知
+- C. 每 10 秒轮询一次
+- D. WebSocket
+
+**答案：D。** 双向持续通信是 WebSocket 的典型场景，还要处理心跳、重连和背压。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->

@@ -530,6 +530,41 @@ Subscription 适合双向通信需求、客户端需精确控制订阅字段（�
 **Fragment 与 Inline Fragment 区别？**
 Fragment（命名片段）是可跨查询复用的字段集合，定义在查询外部；Inline Fragment（内联片段）用 `... on TypeName` 语法在查询内部对接口/联合类型做条件字段展开，不可复用。
 
+## 练一练
+
+### 高频考点题 1：N+1 问题
+
+查询 100 个用户及其文章时，GraphQL 常见的 N+1 问题怎么解决？
+
+- A. 给每个 Resolver 加更长的超时
+- B. 把所有数据一次性全部返回给客户端
+- C. 禁止客户端在查询里使用任何嵌套字段
+- D. 用 DataLoader 合并成批量查询
+
+**答案：D。** DataLoader 还提供请求级缓存，同一请求内同一 key 只查一次。
+
+### 高频考点题 2：认证信息放哪
+
+GraphQL 里认证用户信息通常放在哪里传给各个 Resolver？
+
+- A. 每个查询字段各自的参数里
+- B. Schema 的类型定义里
+- C. 全局变量，所有请求共享
+- D. 每个请求创建的 context
+
+**答案：D。** context 每个请求一份，所有 Resolver 共享；放全局变量会串用户。
+
+### 高频考点题 3：非空修饰符
+
+SDL 里 `[Post!]!` 表示什么？
+
+- A. 数组非空，元素也非空
+- B. 数组可以为 null，元素不能为 null
+- C. 数组和元素都可以为 null
+- D. 数组至少要有一个元素
+
+**答案：A。** `!` 是非空修饰符；空数组 `[]` 是允许的，它不是 null。
+
 ## 参考资料
 
 - [GraphQL Specification September 2025](https://spec.graphql.org/September2025/)
