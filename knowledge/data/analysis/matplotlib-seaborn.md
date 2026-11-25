@@ -604,6 +604,41 @@ ax.legend()
 
 三个高频场景：一是训练监控——绘制 loss/accuracy 曲线，及早发现过拟合（val_loss 上升而 train_loss 继续下降）或梯度消失（loss 停止下降）；二是模型比较——用分组柱状图或热力图对比多个模型在多个数据集上的指标，避免用表格难以看出差异；三是数据管道调试——在特征工程和 embedding 提取后，用 pairplot 检查特征间相关性，用箱线图检查异常值，用直方图检查数值分布是否符合预期（正态 vs 偏态），可以快速定位数据质量问题。
 
+## 练一练
+
+### 高频考点题 1：Figure 和 Axes
+
+Matplotlib 里 Figure 和 Axes 的关系是？
+
+- A. 画布和其中的一个坐标系
+- B. 两者是同一个东西
+- C. Axes 是外层容器，里面包含多个 Figure
+- D. Figure 只能有一个 Axes
+
+**答案：A。** 一个 Figure 可以有多个 Axes（子图）。
+
+### 高频考点题 2：多子图用哪种 API
+
+画多个子图的报告图表，推荐用哪种写法？
+
+- A. 面向对象 API，显式操作 fig 和 ax
+- B. pyplot 状态机 API，依赖「当前图」
+- C. 每个子图单独保存成一个文件再拼起来
+- D. 用 print 输出数据代替画图
+
+**答案：A。** 状态机 API 在多图时容易画到错误的坐标系上。
+
+### 高频考点题 3：选型
+
+快速探索数据分布和变量关系，优先用哪个？
+
+- A. Seaborn
+- B. 手写 SVG
+- C. Excel 截图
+- D. 只用 print
+
+**答案：A。** Seaborn 统计图开箱即用；需要精细控制的报告图再用 Matplotlib 调整。
+
 ## 参考资料
 
 - [Matplotlib quick start guide](https://matplotlib.org/stable/users/explain/quick_start.html)
