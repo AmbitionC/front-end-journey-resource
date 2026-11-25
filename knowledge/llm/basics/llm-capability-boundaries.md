@@ -78,6 +78,21 @@ OpenAI 等作者在 2025 年的论文 [Why Language Models Hallucinate](https://
 - **“RAG 能消灭幻觉。”** 检索可能召回错误、过时或无关片段，生成阶段也可能误读证据。
 - **“更大的模型没有边界。”** 扩展通常改善平均能力，但不会自动解决最新性、权限、可追溯性和责任归属。
 
+## AI 会取代程序员吗：人负责什么
+
+这个问题要把「写代码」和「对结果负责」分开看。按前面的四层边界，生成代码属于表达与变换，模型已经很强；但需求是否正确、改动会不会伤到别处、出事由谁承担，分别落在推理与行动这两层，模型给不出保证。所以短期内更像是分工变了，而不是岗位消失；更长期会怎样没有可靠定论，面试时不要下绝对判断。
+
+| 环节 | 适合交给 AI | 必须由人负责 |
+| --- | --- | --- |
+| 需求 | 整理访谈、列边界情况、起草验收条件 | 判断该不该做、做到什么程度、哪些条件不能破 |
+| 实现 | 样板代码、迁移、补测试、解释旧代码 | 选方案和取舍，划定允许改动的范围 |
+| 验证 | 跑测试、找可疑点、生成边界用例 | 确认测试验的是真实需求，逐行看关键 diff |
+| 上线与事故 | 汇总日志、提出排查假设 | 授权有副作用的操作、决定回滚、承担责任 |
+
+**例子**：让 AI 写一个数据导入脚本，样例数据能跑通，看起来就完成了。人在审查时要追问：同一份文件导入两次会不会重复写入？写到一半失败能不能回滚？这些条件没写进需求，模型就不会自动保证；补上去重键、事务和对应测试，才算做完。
+
+**提效也要测，不能凭感觉**。一项 2025 年的随机对照实验发现，有经验的开源开发者在自己熟悉的仓库里使用当时的 AI 工具，完成时间反而增加了 19%，而他们自己以为缩短了 20%（[METR，2025](https://arxiv.org/abs/2507.09089)）。它只说明那批人、那些仓库和那一代工具，不能推广成「AI 没用」；它提醒的是，价值要用同类任务的实际结果衡量。GitHub 的 [Copilot Agent 说明](https://docs.github.com/en/copilot/responsible-use/agents)同样要求使用者仔细审查并测试生成的代码。
+
 ## 小结
 
 大模型是概率生成器，不是事实数据库、执行环境或责任主体。可靠系统的关键不是幻想模型永不出错，而是让证据、工具、权限、评估和人工复核共同包住模型的边界。
@@ -146,4 +161,6 @@ OpenAI 等作者在 2025 年的论文 [Why Language Models Hallucinate](https://
 - [NIST AI 600-1：Generative AI Profile](https://doi.org/10.6028/NIST.AI.600-1)
 - [OpenAI：Why Language Models Hallucinate（2025）](https://arxiv.org/abs/2509.04664)
 - [Training language models to follow instructions with human feedback](https://arxiv.org/abs/2203.02155)
+- [METR：Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity](https://arxiv.org/abs/2507.09089)
+- [GitHub：Copilot Agents 的局限与审查建议](https://docs.github.com/en/copilot/responsible-use/agents)
 - [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165)
