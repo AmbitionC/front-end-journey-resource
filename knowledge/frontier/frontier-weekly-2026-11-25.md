@@ -2,8 +2,8 @@
 
 > **本期 30 秒版**
 > 1. Skill 现在可以通过 MCP 分发：官方 Skills 扩展已定稿，连接时只拉名字和描述，用到才读正文。
-> 2. 并行跑多个 Agent 时，它们会为了完成自己的任务去杀别人的进程：ClashBench 测出默认情况下 44.5% 的运行如此。
-> 3. 长上下文不是必需品：一篇新论文让模型始终待在十几 K 的短上下文里频繁压缩，准确率多在正负几个点内波动，估算成本降数倍。
+> 2. 并行跑多个 Agent 时，它们会为了完成自己的任务破坏别人的任务：ClashBench 测出默认情况下 44.5% 的运行里，新任务成功而原任务被搞挂。
+> 3. 长上下文不是必需品：一篇新论文让模型待在 12K 到 48K 的短上下文里频繁压缩，准确率多在正负几个点内波动，估算成本降数倍。
 
 ## 1. MCP 官方 Skills 扩展定稿：Skill 可以跟着 MCP 服务器一起分发
 
@@ -73,7 +73,7 @@ MCP 的 [SEP-2640（Skills 扩展）](https://modelcontextprotocol.io/seps/2640-
 
 **发生了什么**
 
-Peter Belcak 等 12 位作者的论文 [You don't need long context](https://arxiv.org/abs/2611.05306)（arXiv，2026-11-04，alphaXiv 标注机构为 NVIDIA）做了两件事。
+Peter Belcak 等 12 位作者的论文 [You don't need long context](https://arxiv.org/abs/2611.05306)（arXiv，2026-11-03，alphaXiv 标注机构为 NVIDIA）做了两件事。
 
 第一件是算账。在同样的硬件上，上下文窗口开到 256K 时，每生成一个 token 的成本是 16K 时的 3.6 倍（GLM 5.2）、5.6 倍（Kimi K2.6）和 7 倍（Qwen 3 Coder Next）。上下文越长，后面的 token 越贵。
 
@@ -99,7 +99,7 @@ Peter Belcak 等 12 位作者的论文 [You don't need long context](https://arx
 
 被问「长任务的上下文怎么管」或「窗口越来越大，还需要做压缩吗」时：
 
-> 需要，而且不只是因为放不下。上下文越长，每个输出 token 越贵，有论文测到 256K 窗口下的单 token 成本是 16K 的 3.6 到 7 倍。同一篇论文让模型一直待在很短的上下文里、到阈值就写交接摘要重开对话，在 SWE-bench 这类长任务上准确率只在正负几个点内波动，成本降了几倍。所以我的做法是把状态显式写出来，原始记录存在外部可检索的地方，上下文里只留当前这一步需要的东西。代价是压缩有损，需要历史细节的任务要能回查原始记录。
+> 需要，而且不只是因为放不下。上下文越长，每个输出 token 越贵，有论文测到 256K 窗口下的单 token 成本是 16K 的 3.6 到 7 倍。同一篇论文让模型一直待在很短的上下文里、到阈值就写交接摘要重开对话，在论文测的两个模型上，SWE-bench 这类长任务的准确率只在正负几个点内波动，成本降了几倍。所以我的做法是把状态显式写出来，原始记录存在外部可检索的地方，上下文里只留当前这一步需要的东西。代价是压缩有损，需要历史细节的任务要能回查原始记录。
 
 **对应知识点**：[上下文压缩、摘要与裁剪](https://www.agent-journey.cn/knowledge?activeKey=prompt-context-compression)、[上下文工程（Context Engineering）](https://www.agent-journey.cn/knowledge?activeKey=context-engineering)、[Token、Context Window 与 KV Cache](https://www.agent-journey.cn/knowledge?activeKey=llm-token-context)、[会话摘要、压缩与记忆提炼](https://www.agent-journey.cn/knowledge?activeKey=agent-memory-summarization)
 
@@ -109,6 +109,6 @@ Peter Belcak 等 12 位作者的论文 [You don't need long context](https://arx
 - [Skills extension overview](https://modelcontextprotocol.io/extensions/skills/overview)，Model Context Protocol
 - [A More Predictable Release Cycle for MCP](https://blog.modelcontextprotocol.io/posts/mcp-release-cycle/)，MCP 官方博客，2026-11-11
 - [ClashBench: Conflicts Leading Agents to Seize and Harm](https://arxiv.org/abs/2609.19892)，arXiv 2609.19892，2026-09-17
-- [You don't need long context](https://arxiv.org/abs/2611.05306)，arXiv 2611.05306，2026-11-04
+- [You don't need long context](https://arxiv.org/abs/2611.05306)，arXiv 2611.05306，2026-11-03
 
 文中数字均取自以上原文，模型名称和数值以原文发布时为准。
