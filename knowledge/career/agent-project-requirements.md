@@ -117,7 +117,6 @@ AI 功能还要计入检索和模型费用、人工复核、失败处理与维�
 - [京东金融推荐算法实习一面：画像图谱与研究选题](../../interview/jd/ai/jd-ai-6.md)
 - [阿里国际 Java 二面：RAG 数据评测、微调与代码生成](../../interview/alibaba/ai/alibaba-ai-26.md)
 - [字节前端全栈实习一面：渲染、Worker 与认证](../../interview/bytedance/base/bytedance-base-38.md)
-- [字节全栈：预请求、列表复用与 ThreadLocal](../../interview/bytedance/base/bytedance-base-44.md)
 - [科大讯飞 Java 开发一面：Agent 项目与 AI 编程复盘](../../interview/iflytek/java/iflytek-java-1.md)
 - [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../interview/bytedance/base/bytedance-base-47.md)
 - [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../interview/bytedance/base/bytedance-base-42.md)

@@ -50,7 +50,7 @@ combine(4, 2)  # [[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]
 **加分点：现在业界的做法**
 
 - 把记忆做成分层的：最底层是原始记录，上面是整理过的笔记，再上面是结构化知识，每次只往上下文里放一个很小的索引，需要时再按索引去取。
-- 空闲时做**离线整理**：合并重复、删掉过时的、用原始记录核对有没有记错。Anthropic 在 2026 年的工程分享里把这个过程叫做 dreaming。
+- 空闲时做**离线整理**：合并重复、删掉过时的、用原始记录核对有没有记错。Anthropic 在 2026 年 11 月的[记忆实验总结](https://www.anthropic.com/research/components-of-agent-memory)里把这个过程叫做 dreaming。
 - **记得少比记得多好**。记忆越堆越多，模型反而更容易被过时信息带偏。
 
 
@@ -96,7 +96,7 @@ combine(4, 2)  # [[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]
 **参考回答**：
 
 - **架构**：一个主 Agent 加几个受限的查询工具就够了。主 Agent 负责确定口径和提出查询；运行时负责校验租户、只读权限、参数和结果大小；数据库返回聚合结果；差值和比例由程序算，不让模型心算。
-- **Agent 数量**：默认一个。只有在三种情况下才拆子 Agent：上下文太长、效果已经可以测出变差；需要并行探索、而且用完就丢的独立上下文；工具太多导致选错。这也是 Anthropic 在 2026 年分享的经验：一个主循环加按需加载的技能，在很多场景里效果和成本都好过一堆子 Agent。
+- **Agent 数量**：默认一个。只有在三种情况下才拆子 Agent：上下文太长、效果已经可以测出变差；需要并行探索、而且用完就丢的独立上下文；工具太多导致选错。这也是 Anthropic 在 2026 年 10 月[一篇文章](https://claude.com/resources/articles/building-agents-when-to-fold-subagents-into-your-main-agent-loop)里分享的经验：一个主循环加按需加载的技能，在很多场景里效果和成本都好过一堆子 Agent。
 - **context**：只放当前的口径、待验证的假设和最近的证据；大的查询结果存到外面，上下文里只留引用。
 - **memory**：长期记忆存的是验证过的指标定义和适用范围，不存「店铺今天多少钱」这种会变的数。
 - **落地难点**：口径对不齐、权限、数据延迟，以及下一题要说的表结构变化。
@@ -125,7 +125,7 @@ combine(4, 2)  # [[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]
 
 **常见的不走索引的情况**：
 
-- 跳过了最左列，比如只按 b 查（MySQL 8.0 起在部分情况下能用 skip scan，但不能指望）。
+- 跳过了最左列，比如只按 b 查（MySQL 8.0.13 起在部分情况下能用 skip scan，但不能指望）。
 - 在索引列上做了函数运算或隐式类型转换，比如 `WHERE DATE(paid_at) = ...`、字符串列和数字比较。
 - `LIKE '%xx'` 以通配符开头。
 - 优化器估算后觉得全表扫描更便宜，比如要取的数据占了大部分。
@@ -151,7 +151,7 @@ combine(4, 2)  # [[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]
 
 知识导航：[事务、隔离级别与锁](../../../knowledge/backend/database/db-transaction-lock.md)
 
-<details data-knowledge-key="tcp-udp"><summary>（11）数据包从网卡到应用的路径是怎样的？TCP 窗口怎么随拥塞调整？</summary></details>
+<details data-knowledge-key="tcp-handshake"><summary>（11）数据包从网卡到应用的路径是怎样的？TCP 窗口怎么随拥塞调整？</summary></details>
 <p>网卡收到数据后通过 DMA 放进内存里的接收队列，触发中断；驱动用 NAPI 轮询把包取出来交给内核协议栈；IP 层判断是发给本机的，TCP 层按序号重组、发 ACK，把数据放进 socket 的接收缓冲区；应用调用 <code>read</code>/<code>recv</code> 把字节读走，再按自己的协议（比如 HTTP）解析。注意 TCP 是字节流，一个包不等于一条业务消息。</p>
 
 窗口有两个，别混在一起：
@@ -159,14 +159,14 @@ combine(4, 2)  # [[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]
 - **接收窗口 rwnd**：接收方告诉发送方「我还能收多少」，是流量控制。应用读得慢，缓冲区满了，rwnd 就变小。
 - **拥塞窗口 cwnd**：发送方自己估计「网络能承受多少」，是拥塞控制。
 
-发送方能发的量取两者的较小值。cwnd 的经典调整过程：**慢启动**阶段每收到一个 ACK 加一个报文段，一个 RTT 大约翻倍；到阈值后进入**拥塞避免**，每个 RTT 只加一个段；**超时**说明拥塞严重，cwnd 降到 1 重新慢启动；**收到三个重复 ACK** 说明只是丢了个别包，走快重传和快恢复，cwnd 减半后继续拥塞避免。
+发送方能发的量取两者的较小值。cwnd 的经典调整过程：**慢启动**阶段每收到一个 ACK 最多加一个报文段，一个 RTT 大约翻倍；到阈值后进入**拥塞避免**，每个 RTT 只加一个段；**超时**说明拥塞严重，cwnd 降到 1 重新慢启动；**收到三个重复 ACK** 说明只是丢了个别包，走快重传和快恢复，cwnd 减半后继续拥塞避免。
 
 **加分点**：这是 Reno 的经典过程。Linux 默认用 CUBIC，增长曲线不同；BBR 则是按带宽和 RTT 估算来控制，不以丢包为主要信号。
 
 
-知识导航：[OSI、TCP/IP 与端到端通信](../../../knowledge/network/tcpIp/tcpIp-model.md)、[TCP、UDP 与传输场景](../../../knowledge/network/tcpIp/tcp-udp.md)
+知识导航：[TCP 建连、断开与连接状态](../../../knowledge/network/tcpIp/tcp-handshake.md)、[OSI、TCP/IP 与端到端通信](../../../knowledge/network/tcpIp/tcpIp-model.md)、[TCP、UDP 与传输场景](../../../knowledge/network/tcpIp/tcp-udp.md)
 
-<details data-knowledge-key="os-process-thread"><summary>（12）协程和线程有什么区别？G 阻塞了怎么办？一万个 G 会怎样？</summary></details>
+<details data-knowledge-key="go-gmp-scheduling"><summary>（12）协程和线程有什么区别？G 阻塞了怎么办？一万个 G 会怎样？</summary></details>
 <p>Go 用 GMP 模型：G 是 goroutine，M 是操作系统线程，P 是执行 Go 代码需要的处理器资源，数量由 GOMAXPROCS 决定，默认等于可用的 CPU 核数（Go 1.25 起还会考虑容器的 CPU 限额）。G 要绑到 P 上、由 M 来执行。goroutine 切换在用户态完成，只保存几个寄存器，栈初始只有几 KB，所以比线程切换便宜得多。</p>
 
 G 阻塞分两种情况：
@@ -179,7 +179,7 @@ G 阻塞分两种情况：
 一万个 G 是否合适，取决于每个任务的栈增长、堆对象、I/O 等待和下游容量；不能只按初始栈大小推算总内存，应通过实际负载测试确认。但同一时刻真正在跑的最多只有 P 个。如果这一万个 G 都在做 CPU 计算，速度不会因为 G 多而变快；如果它们都去打同一个下游，还会把连接池和下游打满，所以要限并发、做背压。
 
 
-知识导航：[进程、线程与协程](../../../knowledge/cs/os/os-process-thread.md)、[操作系统的用户态、内核态与切换](../../../knowledge/cs/os/os-user-kernel-mode.md)
+知识导航：[Go GMP 调度：G、M、P 与阻塞恢复](../../../knowledge/backend/runtime/go-gmp-scheduling.md)、[进程、线程与协程](../../../knowledge/cs/os/os-process-thread.md)、[操作系统的用户态、内核态与切换](../../../knowledge/cs/os/os-user-kernel-mode.md)
 
 ## 复盘：这场面试透露的三个信号
 

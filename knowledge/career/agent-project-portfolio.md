@@ -166,7 +166,6 @@ Orchestrator 解析 PR diff，分发给各专项 Agent，收集结果后合并�
 - [华为 AI 应用三面：工程项目与 AI 编程](../../interview/huawei/ai/huawei-ai-5.md)
 - [腾讯元宝风控实习一面：内容安全评测与 RAG 切分](../../interview/tencent/ai/tencent-ai-33.md)
 - [字节前端全栈实习一面：渲染、Worker 与认证](../../interview/bytedance/base/bytedance-base-38.md)
-- [字节全栈：预请求、列表复用与 ThreadLocal](../../interview/bytedance/base/bytedance-base-44.md)
 - [字节 Agent 实习：缓存一致性、定时任务与后端基础](../../interview/bytedance/base/bytedance-base-47.md)
 - [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../interview/bytedance/base/bytedance-base-42.md)
 <!-- interview-source-history:end -->
