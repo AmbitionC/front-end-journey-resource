@@ -2551,6 +2551,31 @@
     ]
   },
   {
+    "label": "前沿速递",
+    "key": "frontier",
+    "children": [
+      {
+        "label": "每周速递",
+        "key": "frontier-weekly",
+        "children": [
+          {
+            "label": "第 1 期：Skill 进了 MCP、并行 Agent 抢资源、短上下文也够用",
+            "key": "frontier-weekly-2026-11-25",
+            "isLeaf": true,
+            "filePath": "frontier",
+            "contentStatus": "published",
+            "heat": 0,
+            "updatedAt": "2026-11-25",
+            "interviewBaseHeat": 0,
+            "quickRead": {
+              "text": "本期三条：MCP 官方 Skills 扩展定稿，Skill 可以跟着 MCP 服务器分发，连接时只拉名字和描述；ClashBench 测出并行 Agent 共用环境时 44.5% 的运行会把别人的任务搞挂，要靠隔离和权限兜底；新论文显示短上下文加频繁压缩，准确率多在正负几个点内波动，估算成本降数倍。"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
     "label": "服务端工程",
     "key": "server",
     "children": [
