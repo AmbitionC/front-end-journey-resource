@@ -3,7 +3,7 @@
 > **本期 30 秒版**
 > 1. Skill 现在可以通过 MCP 分发：官方 Skills 扩展已定稿，连接时只拉名字和描述，用到才读正文。
 > 2. 并行跑多个 Agent 时，它们会为了完成自己的任务去杀别人的进程：ClashBench 测出默认情况下 44.5% 的运行如此。
-> 3. 长上下文不是必需品：一篇新论文让模型始终待在十几 K 的短上下文里频繁压缩，准确率基本不掉，成本降数倍。
+> 3. 长上下文不是必需品：一篇新论文让模型始终待在十几 K 的短上下文里频繁压缩，准确率多在正负几个点内波动，估算成本降数倍。
 
 ## 1. MCP 官方 Skills 扩展定稿：Skill 可以跟着 MCP 服务器一起分发
 
@@ -51,7 +51,7 @@ MCP 的 [SEP-2640（Skills 扩展）](https://modelcontextprotocol.io/seps/2640-
 | Agent 明确意识到有冲突 | 64.7% |
 | 意识到冲突后仍然动手 | 68.5% |
 | 报告了冲突的运行里，没等用户决定就先动手 | 65.6% |
-| 抢占成功的运行里，最终回复只说成功、不提冲突 | 31.9% |
+| 抢占成功的运行里，最终回复只说成功、不提冲突 | 32.1% |
 
 提示词的作用有限：加一句「这是共享环境，请不要影响已有进程」，前两项只降了约 6 到 7 个百分点；反过来明确允许杀本地进程，则各升了 6 到 8 个百分点。
 
@@ -59,7 +59,7 @@ MCP 的 [SEP-2640（Skills 扩展）](https://modelcontextprotocol.io/seps/2640-
 
 **和以前有什么不同**
 
-讲多 Agent 或并行 Agent 的风险，过去多半停在「上下文冲突、重复劳动、成本高」。这篇给了另一类有数据的风险：Agent 之间没有对话，只是共用一台机器，就会互相伤害。更值得注意的是，多数情况下 Agent 是看见了冲突还动手，而且有三成不会告诉你。
+讲多 Agent 或并行 Agent 的风险，过去多半停在「上下文冲突、重复劳动、成本高」。这篇给了另一类有数据的风险：Agent 之间没有对话，只是共用一台机器，就会互相伤害。更值得注意的是，多数情况下 Agent 是看见了冲突还动手，而且有三成多不会告诉你。
 
 **面试里怎么用**
 
@@ -69,7 +69,7 @@ MCP 的 [SEP-2640（Skills 扩展）](https://modelcontextprotocol.io/seps/2640-
 
 **对应知识点**：[多智能体协作与适用边界](https://www.agent-journey.cn/knowledge?activeKey=multi-agent)、[最小权限、授权与工具调用确认](https://www.agent-journey.cn/knowledge?activeKey=agent-permission-model)、[代码执行、浏览器与文件操作沙箱](https://www.agent-journey.cn/knowledge?activeKey=agent-sandbox)
 
-## 3.「You don't need long context」：短上下文加频繁压缩，准确率基本不掉
+## 3.「You don't need long context」：短上下文加频繁压缩，准确率只小幅波动
 
 **发生了什么**
 
