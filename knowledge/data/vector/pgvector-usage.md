@@ -420,6 +420,41 @@ IVFFlat 依赖 k-means 对现有数据聚类，表为空或行数过少时（< `
 - **pgvector 与专用向量数据库如何决策？**
   核心三要素：向量规模（百万以内 pgvector 足够）、是否需要关系查询（需要则强烈倾向 pgvector）、团队运维能力（已有 PostgreSQL 运维经验则无需引入新组件）。不是非此即彼，可先用 pgvector 验证业务价值，规模压力显现后再评估迁移收益。
 
+## 练一练
+
+### 高频考点题 1：余弦距离值域
+
+pgvector 中余弦距离的值域是？
+
+- A. [-1, 1]
+- B. [0, 2]
+- C. [0, 1]
+- D. [0, ∞)
+
+**答案：B。** 0 表示方向完全相同，2 表示完全相反。
+
+### 高频考点题 2：启用扩展
+
+迁移脚本里启用 pgvector，推荐写法是？
+
+- A. `CREATE EXTENSION vector WITH SCHEMA public;`
+- B. `CREATE EXTENSION IF NOT EXISTS vector;`
+- C. `CREATE OR REPLACE EXTENSION vector;`
+- D. `ENABLE vector;`
+
+**答案：B。** `IF NOT EXISTS` 保证脚本幂等，重复执行不会报错。
+
+### 高频考点题 3：pgvector 的优势
+
+已有 PostgreSQL 的团队选 pgvector，最大的好处是？
+
+- A. 向量检索速度一定比专用向量库快
+- B. 不再需要嵌入模型
+- C. 不需要建任何索引，查询就已经足够快
+- D. 关系过滤和向量检索写进一条 SQL
+
+**答案：D。** 比如按 session_id、角色和时间过滤后再做语义检索，并复用已有的事务和备份。
+
 ## 参考资料
 
 - [pgvector official documentation](https://github.com/pgvector/pgvector)

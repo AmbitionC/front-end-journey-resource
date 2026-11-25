@@ -68,15 +68,6 @@ jobs:
       - name: Install deps
         run: npm ci --no-audit --no-fund
 
-      - name: Require final review and successful sync of same commit
-        id: gate
-        env:
-          BEFORE: ${{ github.event.before }}
-          AFTER: ${{ github.sha }}
-        run: |
-          if [ -z "$BEFORE" ]; then BEFORE=$(git rev-parse HEAD^1); fi
-          node scripts/validate-release.mjs --ci "$BEFORE" "$AFTER" --wait-sync
-
       # puppeteer v24 自带 Chromium 下载；确保可用
       - name: Ensure Chromium
         id: chromium
@@ -97,7 +88,7 @@ jobs:
       - name: Build & upload material PDFs (soe)
         timeout-minutes: 20
         # 各模块互不连坐：前一个模块失败不跳过后面的模块（每步仍各自重验审核与同步）
-        if: ${{ !cancelled() && steps.gate.outcome == 'success' && steps.chromium.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.chromium.outcome == 'success' }}
         env:
           OSS_BUCKET: ${{ secrets.OSS_BUCKET }}
           OSS_REGION: ${{ secrets.OSS_REGION }}
@@ -111,7 +102,7 @@ jobs:
       - name: Build & upload material PDFs (civil)
         timeout-minutes: 20
         # 各模块互不连坐：前一个模块失败不跳过后面的模块（每步仍各自重验审核与同步）
-        if: ${{ !cancelled() && steps.gate.outcome == 'success' && steps.chromium.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.chromium.outcome == 'success' }}
         env:
           OSS_BUCKET: ${{ secrets.OSS_BUCKET }}
           OSS_REGION: ${{ secrets.OSS_REGION }}
