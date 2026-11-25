@@ -6360,46 +6360,56 @@
       "label": "AI / Agent 岗位简历与面试",
       "filePath": "career",
       "status": "pending",
-      "action": "update",
-      "recordedAt": "2026-11-24",
-      "batch": "conversion-polish-20261124",
-      "reason": "Hot-article conversion polish (batch 3, by real views): interview hook and speakable 30-second answer up front, common interview follow-ups added, reviewer-facing citations trimmed. Final independent review and same-SHA publication pending.",
+      "action": "updated",
+      "recordedAt": "2026-11-25",
+      "batch": "daily-content-20261125-b04",
+      "reason": "补充简历附件与口头经历对齐方法：确认实际版本、核对时间线、个人贡献与交付阶段；示例明确虚构并保留材料与隐私边界。",
       "previousRecord": {
         "key": "agent-resume-interview",
         "label": "AI / Agent 岗位简历与面试",
         "filePath": "career",
         "status": "pending",
-        "action": "updated",
-        "recordedAt": "2026-11-13",
-        "batch": "daily-content-20261113-reviewed-cohorts",
-        "reason": "Actual HR source-grounded contribution, collaboration, pressure and motivation teaching supplement; final release pending.",
+        "action": "update",
+        "recordedAt": "2026-11-24",
+        "batch": "conversion-polish-20261124",
+        "reason": "Hot-article conversion polish (batch 3, by real views): interview hook and speakable 30-second answer up front, common interview follow-ups added, reviewer-facing citations trimmed. Final independent review and same-SHA publication pending.",
         "previousRecord": {
           "key": "agent-resume-interview",
           "label": "AI / Agent 岗位简历与面试",
           "filePath": "career",
           "status": "pending",
           "action": "updated",
-          "recordedAt": "2026-10-28",
-          "batch": "historical-source-bindings-20261028",
-          "reason": "Actual per-question skill execution findings: bounded factual/teaching/quickRead corrections; preserve useful content and media.",
-          "publishedByPdfRun": 38639074189,
-          "publicationAcceptanceSha256": "db119149ffa5eb1e77b36d8139d5afe3fd90bb3d4530967cd52749e28fa6b38d",
-          "previousPublication": {
-            "status": "published",
-            "batch": "title-body2-quality-20261014",
-            "recordedAt": "2026-10-14",
-            "publishedAt": "2026-10-14T22:17:17.306Z",
-            "publishedByCommit": "0c66885813a50113c1a22e42f381cca14119b63d",
-            "publishedBySyncRun": 38639074103
-          },
+          "recordedAt": "2026-11-13",
+          "batch": "daily-content-20261113-reviewed-cohorts",
+          "reason": "Actual HR source-grounded contribution, collaboration, pressure and motivation teaching supplement; final release pending.",
           "previousRecord": {
             "key": "agent-resume-interview",
             "label": "AI / Agent 岗位简历与面试",
             "filePath": "career",
             "status": "pending",
             "action": "updated",
-            "recordedAt": "2026-07-18",
-            "batch": "complete-remaining-91-2026-07-18"
+            "recordedAt": "2026-10-28",
+            "batch": "historical-source-bindings-20261028",
+            "reason": "Actual per-question skill execution findings: bounded factual/teaching/quickRead corrections; preserve useful content and media.",
+            "publishedByPdfRun": 38639074189,
+            "publicationAcceptanceSha256": "db119149ffa5eb1e77b36d8139d5afe3fd90bb3d4530967cd52749e28fa6b38d",
+            "previousPublication": {
+              "status": "published",
+              "batch": "title-body2-quality-20261014",
+              "recordedAt": "2026-10-14",
+              "publishedAt": "2026-10-14T22:17:17.306Z",
+              "publishedByCommit": "0c66885813a50113c1a22e42f381cca14119b63d",
+              "publishedBySyncRun": 38639074103
+            },
+            "previousRecord": {
+              "key": "agent-resume-interview",
+              "label": "AI / Agent 岗位简历与面试",
+              "filePath": "career",
+              "status": "pending",
+              "action": "updated",
+              "recordedAt": "2026-07-18",
+              "batch": "complete-remaining-91-2026-07-18"
+            }
           }
         }
       }
@@ -7495,6 +7505,16 @@
       "recordedAt": "2026-11-20",
       "status": "pending",
       "reason": "Actual source-question processing; final independent review and same-SHA publication pending."
+    },
+    {
+      "key": "frontier-weekly-2026-11-25",
+      "label": "第 1 期：Skill 进了 MCP、并行 Agent 抢资源、短上下文也够用",
+      "filePath": "frontier",
+      "action": "create",
+      "batch": "frontier-weekly-20261125",
+      "recordedAt": "2026-11-25",
+      "status": "pending",
+      "reason": "Weekly frontier digest issue 1; sources read at origin; self-checked per owner instruction, no separate independent review."
     }
   ],
   "deliveryEvidence": {
