@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
-  "updatedAt": "2026-11-24",
+  "updatedAt": "2026-11-25",
   "records": [
     {
       "key": "transformer-arch",
@@ -7465,6 +7465,16 @@
       "recordedAt": "2026-11-20",
       "status": "pending",
       "reason": "Actual source-question processing; final independent review and same-SHA publication pending."
+    },
+    {
+      "key": "frontier-weekly-2026-11-25",
+      "label": "第 1 期：Skill 进了 MCP、并行 Agent 抢资源、短上下文也够用",
+      "filePath": "frontier",
+      "action": "create",
+      "batch": "frontier-weekly-20261125",
+      "recordedAt": "2026-11-25",
+      "status": "pending",
+      "reason": "Weekly frontier digest issue 1; sources read at origin; self-checked per owner instruction, no separate independent review."
     }
   ],
   "deliveryEvidence": {
