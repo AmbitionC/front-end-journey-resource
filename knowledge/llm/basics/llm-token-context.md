@@ -130,9 +130,9 @@ Token 决定序列如何表示和计量；Context Window 规定一次请求的�
 KV Cache 缓存的是什么？
 
 - A. 模型最终输出的文本
-- B. 每层历史 token 的 Key 和 Value，Decode 时新 token 的 Query 直接和它们做注意力
+- B. 每层历史 token 的 Key 和 Value
 - C. 用户的历史对话原文
-- D. 每个 token 的 Query 向量
+- D. 每个历史 token 的 Query 向量，供新 token 复用
 
 **答案：B。** Prefill 一次算出输入序列每层的 K/V，Decode 每步只算新 token 的 Q/K/V，再把新 K/V 追加进缓存。它省掉了重复计算，但每步仍要读取随前缀增长的整份缓存。
 
@@ -152,8 +152,8 @@ Llama 3 8B 有 32 层、8 个 KV 头、每头 128 维，用 FP16 存储。每个
 关于 MHA、MQA、GQA，下面哪种说法正确？
 
 - A. MQA 的 KV Cache 最大
-- B. GQA 让每个 Query 头都有独立的 K/V 头
-- C. GQA 把 Query 头分组共享 K/V，在质量和缓存大小之间折中
+- B. GQA 让每个 Query 头都有独立的 K/V 头，质量最好
+- C. GQA 让多个 Query 头分组共享 K/V
 - D. 三者的 KV Cache 大小完全一样
 
 **答案：C。** MHA 每个 Query 头配一组 K/V，缓存最大；MQA 所有 Query 头共享一组 K/V，缓存最省但可能影响质量；GQA 分组共享，原论文报告质量接近 MHA、速度接近 MQA。
