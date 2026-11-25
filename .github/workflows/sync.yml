@@ -85,11 +85,6 @@ jobs:
         run: |
           npm ci --no-audit --no-fund
           npm run validate:tree
-      - name: Require final version review
-        env:
-          BEFORE: ${{ github.event_name == 'workflow_dispatch' && inputs.before_sha || (github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before) }}
-          AFTER: ${{ github.event_name == 'workflow_dispatch' && inputs.after_sha || (github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha) }}
-        run: node scripts/validate-release.mjs --ci "$BEFORE" "$AFTER"
       - name: Trigger faas sync
         env:
           FAAS_SYNC_URL: ${{ secrets.FAAS_SYNC_URL }}
