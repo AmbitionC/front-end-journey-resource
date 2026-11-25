@@ -103,6 +103,41 @@ Parent 权限不能比 child 更宽。检索前在 child index 过滤 ACL，回�
 
 Parent-Child Retrieval 通过职责分离化解分块矛盾：child 为召回优化，parent 为上下文完整性优化。稳定 parent ID、更新原子性、去重预算和权限复核是工程关键；效果要与小块、大块和相邻窗口基线逐类比较。
 
+## 练一练
+
+### 高频考点题 1：什么进入向量检索
+
+Parent-Child 检索中，哪部分进入向量索引？
+
+- A. 只有 child 进向量索引，命中后按 parentId 回填 parent
+- B. 只有 parent 进入向量检索，child 只在回答时展示
+- C. parent 和 child 都不进入
+- D. 把 parent 和 child 拼在一起做一个向量，兼顾精度和上下文
+
+**答案：A。** 小块的向量主题集中，容易和问题精确匹配；回填 parent 补上限定词、表头和前后步骤。两套单位分工，各自优化。
+
+### 高频考点题 2：多个 child 指向同一 parent
+
+top-k 里有 4 个 child 都属于同一个 parent，该怎么处理？
+
+- A. 把这个 parent 按命中次数重复放入上下文，强调它的重要性
+- B. 先按 parentId 去重，再按相关性和来源多样性分配 token 预算
+- C. 只保留分数最低的那个 child，给其他文档留出空间
+- D. 丢掉这个 parent
+
+**答案：B。** 重复回填同一个 parent 会占满上下文。问题有多个子意图时，按子问题各保留至少一个 parent，比单纯取总分前几名更稳。
+
+### 高频考点题 3：parent 的权限
+
+parent 和 child 的权限关系应该是怎样的？
+
+- A. parent 可以比 child 宽，这样回填时能带出更多有用的上下文
+- B. 只需要在 child 上检查权限
+- C. parent 权限不能比 child 宽，回填时还要再校验一次
+- D. 权限只在最终答案生成后检查一次，中间环节不需要过滤
+
+**答案：C。** 如果 parent 包含 child 之外的受限段落，只检查 child 就会在回填时泄露。两处都要验证。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
