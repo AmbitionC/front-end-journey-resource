@@ -19,8 +19,8 @@ type RagTrace = {
 
 没有这些版本，事故复现会误用当前索引和 Prompt，得到“我这里没问题”的假结论。
 
-![从答案症状沿 Generation、Context、Rerank、Recall、Index、Source 逐级逆向检查，Trace ID 连接回放、反事实实验和责任归属](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-failure-debugging-stage-funnel-v1.webp)
-*图：最终答案是症状，不是默认根因；示例 Root Cause 可以落在任一阶段。*
+![RAG 故障诊断是一条逆向证据链。先冻结可回放现场：记录 query、用户权限摘要、route、source 与 index version、候选与分数、rerank、最终 context、Prompt 与 model、答案和 citation，用 Trace ID 关联。然后从答案往回逐层检查，每层做一个单变量反事实实验：Generation 换确定性抽取答案或换 Prompt，context 完整而多个生成器都失败才是生成问题；Context 装配强制插入 gold evidence、保持生成配置不变，恢复说明装配或上游选择有问题；Rerank 跳过重排或把 gold 放第一，gold 根本没召回时不要调 rerank；Recall 用 gold query、分别跑 BM25 和向量，绝不为诊断绕过 ACL；Index 按 ID 直读、新旧索引分别查询、重算单条 embedding；Source 与 Parser 看原文件、换 parser、对比 checksum，事实本来不在语料时补数据或 abstain，而不是让模型猜。最终根因以反事实证据确认，并把事故固化进 Golden Set](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-failure-debugging-reverse-chain-v2.dark.png)
+*图：最终答案是症状，不是默认根因；从 Generation 往回查到 Source，每层只改一个变量，根因可能落在任一层。*
 
 ## Stage 1：Generation
 
@@ -101,6 +101,41 @@ gold evidence 是否在候选中但被重排到截断线以下？保存 reranker
 ## 小结
 
 RAG 调试是一条逆向证据链：先冻结可回放 trace，从 generation 回看 context、rerank、recall、index 和 source；每层做单变量反事实实验。可观测性连接版本与阶段，Golden Set 固化事故，团队才能从“调 Prompt 试试”转向可验证的根因修复。
+
+## 练一练
+
+### 高频考点题 1：答错了先做什么
+
+RAG 线上给出错误答案，第一步应该做什么？
+
+- A. 先直接改 Prompt 再试一次，确认是不是提示词的问题
+- B. 换一个更大的模型
+- C. 先把 top-k 调大，看更多候选能不能把答案找回来
+- D. 先冻结可回放的现场：查询、权限、索引版本、候选和最终上下文
+
+**答案：D。** 没有这些版本，复现时会用到当前的索引和 Prompt，得出「我这里没问题」的假结论。直接改 Prompt 是在最后一层猜原因。
+
+### 高频考点题 2：强制插入正确证据
+
+把正确证据强制插入上下文、其他配置不变后，答案恢复正确了。这说明问题在哪？
+
+- A. 问题在生成阶段，模型读不懂这份证据
+- B. 上下文装配或更上游的检索、重排没把证据送进来
+- C. 问题在数据源，这条事实本来就不在库里
+- D. 说明不了任何问题
+
+**答案：B。** 这是反事实实验：证据在时能答对，说明模型能用好它，问题出在证据没进上下文。接着再往上查重排、召回和索引。
+
+### 高频考点题 3：一次改几个变量
+
+做反事实排查时，下面哪种做法正确？
+
+- A. 同时换模型、Prompt、索引和 top-k，看组合起来能不能恢复
+- B. 每次只改变一个变量
+- C. 随机调整几个参数，挑效果最好的那组上线
+- D. 先上线再说
+
+**答案：B。** 同时改多个变量，即使恢复了也不知道是哪项起作用，修复无法沉淀成回归用例。
 
 ## 出现于（热度来源）
 

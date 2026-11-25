@@ -113,9 +113,9 @@ trace 将 workflow/run、decision、activity、approval 和 operation ID 关联�
 
 在 Temporal 这类确定性工作流引擎里，调用大模型、写数据库、发邮件应该放在哪里？
 
-- A. 直接写在 workflow 决策代码里
+- A. 直接写在 workflow 决策代码里，保证每次重放都能拿到最新结果
 - B. 放在前端
-- C. 放进 activity，workflow 只负责编排；恢复时已完成的 activity 读取历史结果，不重复执行
+- C. 放进 activity，workflow 只负责编排
 - D. 放在哪里都一样
 
 **答案：C。** 工作流引擎通过重放历史事件重建状态，决策代码必须是确定的。模型调用、网络请求、读当前时间都不确定，放进 workflow 代码会导致重放时结果不一致或重复副作用。
@@ -126,8 +126,8 @@ trace 将 workflow/run、decision、activity、approval 和 operation ID 关联�
 
 - A. 直接执行它选的分支
 - B. 解析失败时默认走第一个选项
-- C. 置信度低于 0.9 就随机选一个分支
-- D. 由确定性节点校验：choice 是否在允许列表、参数是否符合 Schema、证据是否来自本次运行、策略是否允许、置信度是否过阈值，通过后再执行
+- C. 置信度低于 0.9 时随机选一个分支，避免流程卡住
+- D. 交给确定性节点校验选项、参数、证据、策略和阈值，通过后再执行
 
 **答案：D。** Agent 输出是候选，不是命令。解析失败要走明确的失败出口，不能默认成某个选项。
 
@@ -135,8 +135,8 @@ trace 将 workflow/run、decision、activity、approval 和 operation ID 关联�
 
 工作流已经给用户扣了款，后面的步骤失败了。下面哪种说法正确？
 
-- A. 数据库事务回滚就能撤销扣款
-- B. 已经发生的外部副作用要用业务补偿 activity 处理，比如退款，补偿本身也要幂等
+- A. 依靠数据库事务回滚，把扣款和后续步骤一起撤销
+- B. 用幂等的业务补偿 activity 处理，比如退款
 - C. 重试整个工作流就好
 - D. 让 Agent 决定要不要退款
 

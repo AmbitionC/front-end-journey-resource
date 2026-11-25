@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "failedAfterSha": "cd0589a59c12b71c58bc4a85b225cee37a889674",
-  "baselineSha": "9303741e5073a8eae85a12d310f92c33fd3d4c20",
-  "failedRunId": 44548652280,
-  "publicationDigest": "5eacf6b39224c12b04cfb638646d571e04d4043bea8e8dd2f9a9b1e2cf7fa473",
-  "reason": "PR #118 (aj-diagrams skill + 10 sample diagrams) was merged without the release-review v3 receipt and owner authorization, so sync run 44548652280 refused cd0589a. Recover 9303741..next reviewed release commit with the same public bytes."
+  "failedAfterSha": "0724c1c4187d895382f295a98c1bddea06816ce6",
+  "baselineSha": "35b56145624ebcb1d48d3adb768563766b70a2c9",
+  "failedRunId": 45603053917,
+  "publicationDigest": "c88d0256d580c9b0105eb0225fd705272572418f1b4ccf12ce35f775e520feac",
+  "reason": "PR #136 renamed 12 diagram sources (git mv v2->v3). sync-content-batches.mjs listed deletions with rename detection on, so the 12 old paths showed as renames and were never sent, while the expected totals counted 12 deletions; run 45603053917 failed on the count check. Fixed with --no-renames; recover 35b5614..next reviewed release commit with the same public bytes."
 }

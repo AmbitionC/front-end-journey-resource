@@ -13,7 +13,7 @@
 | 瞬时服务故障 | 部分 5xx、网关连接失败 | 有界退避重试 |
 | 超时/断线 | 未收到终态、流中断 | 结果可能未知，先查状态或按幂等策略处理 |
 
-![错误先分类，再由超时预算、幂等保护和重试预算控制退避、降级或人工处理](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-error-retry-fallback-reliability-ladder-v1.webp)
+![大模型调用出错时先分类，再决定动作。请求错误不重试，修正请求；身份与权限错误不重试，告警或重新授权；资源与策略问题按策略换能力或安全失败；限流 429 遵守 Retry-After 再试；瞬时 5xx 做有界指数退避加抖动重试；超时或断线时结果未知，先查状态。右边说明重试和降级都在同一个预算里：总 deadline 例如 20 秒，再分给连接 2 秒、首 token 8 秒、空闲 5 秒，每次重试继承同一个绝对 deadline。降级前先过硬门禁：数据能否发往备用供应商、区域是否合规、工具和输出 Schema 是否支持、质量是否达到任务最低线。通过后按顺序降级：同供应商其他健康部署、评测通过的备用模型、关掉非关键功能、返回缓存的安全信息或转为异步，最后清楚地失败并允许稍后重试。左下说明四种 ID 要分开记录：logical_request_id 代表用户一次意图，attempt_id 代表每次网络尝试，tool_operation_id 代表一次外部副作用，provider_request_id 是供应商追踪标识。只保留一层主要重试，网关、服务和 SDK 各自重试会把一次请求按乘法放大成重试风暴](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-error-retry-fallback-ladder-v2.dark.png)
 *图：可靠性是一条受预算与安全门禁控制的阶梯，并非所有错误都走向重试。*
 
 同一个 HTTP 状态不总能决定动作。流式响应可能已经返回 200，随后在事件中报告错误；网关 504 可能表示上游仍在执行。必须同时解析 HTTP、供应商错误类型、流事件和本地取消原因。

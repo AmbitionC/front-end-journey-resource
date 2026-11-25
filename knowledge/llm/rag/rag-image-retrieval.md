@@ -28,8 +28,8 @@ type ImageAsset = {
 
 派生记录通过 `assetId + regionId` 返回原图，不覆盖原图字段。这样 OCR 修正或模型升级时，可以只重建对应通道。
 
-![原图先经过隐私过滤，再派生 OCR 区域、Caption 与视觉向量，多模态融合结果保留 Asset ID 和坐标](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-image-retrieval-multimodal-evidence-v1.webp)
-*图：OCR、caption 和向量均标为 DERIVED；证据最终回到原始图片与 PAGE/BBOX。*
+![图像 RAG 以原图为根对象，派生出多条检索通道。原图 asset 记录 assetId、sourceVersion、contentHash 和 aclVersion，所有派生记录都指回它。原图先经过隐私与授权过滤：这一步要在 OCR、caption、视觉向量和缓存之前完成，敏感内容先遮挡或拒绝索引。之后派生出四条通道，都是观测而不是原始证据：OCR 区域保存文字、bbox 和置信度，适合精确编号；Caption 是生成的描述，用来补召回，不能直接当事实；视觉向量分整图和区域，外观相似不等于同一事实；版面关系记录图片与标题、段落、表格、页码的关系。四条通道分别检索后做晚融合，用 RRF 或在标注集上校准的权重，不直接相加不同模型的原始分数，并按问题类型调整权重。最终引用回到原图，带 assetId、页码、bbox，并标明来自像素、OCR 还是 caption。图里的文字也是不可信数据，截图里写的「忽略指令」只能当检索证据，不能升级为系统指令](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-image-retrieval-derived-channels-v2.dark.png)
+*图：原图是根，先过隐私与授权过滤，再派生 OCR、caption、视觉向量和版面关系四条通道；晚融合后的引用要回到原图的页码和 bbox。*
 
 ## OCR 检索：精确文字与空间位置
 
@@ -132,6 +132,41 @@ type VisualCitation = {
 ## 小结
 
 图像 RAG 应围绕原始 asset 建立多条派生通道：OCR 提供文字和坐标，caption 提供可检索语义，视觉 embedding 提供外观匹配。隐私与权限先于派生和检索，融合结果始终保留 asset/page/bbox，使模型的视觉断言可以回到原始像素。
+
+## 练一练
+
+### 高频考点题 1：图像检索的数据组织
+
+做图像 RAG，下面哪种数据组织方式更合理？
+
+- A. 只做 OCR，把识别出的文字存进向量库，图片本身不需要保存
+- B. 只存一张整图的向量
+- C. 每次查询时让多模态模型临时为图片生成描述，避免离线处理成本
+- D. 以原图为根，派生 OCR、caption、视觉向量，并都关联回原图
+
+**答案：D。** 一张图同时有像素、空间区域、文字和视觉语义，单一通道会漏信息。派生记录独立，OCR 修正或模型升级时只需重建对应部分。
+
+### 高频考点题 2：caption 的风险
+
+用模型生成的图片描述（caption）做检索，需要注意什么？
+
+- A. caption 可能编出图里没有的细节，只靠它作答要标明来源
+- B. caption 一定比 OCR 准确，因为它理解了整张图的语义
+- C. caption 可以替代原图作为最终证据，原图只在需要展示时再取
+- D. caption 不需要记录模型版本
+
+**答案：A。** caption 能补充 OCR 拿不到的视觉关系，但它是模型生成的。涉及细小文字、计数和数值时，要回到原图或区域核对。
+
+### 高频考点题 3：晚融合的好处
+
+分别检索 OCR、视觉向量和 caption 再用 RRF 融合（晚融合），相比把它们拼成一段再 embedding（早融合），主要好处是？
+
+- A. 部署更简单，三路检索可以共用一个向量索引
+- B. 能看出哪条通道命中，并按问题类型调整各路权重
+- C. 不需要任何评测
+- D. 存储更少，因为不需要为拼接后的文本单独建索引
+
+**答案：B。** 早融合部署简单，但出问题时分不清是哪条通道的噪声。晚融合更容易观测和调权，但多了检索和融合的成本。
 
 ## 出现于（热度来源）
 

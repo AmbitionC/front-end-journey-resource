@@ -1,7 +1,7 @@
 模型 Fallback 不是主模型报错后随便换一个便宜模型。不同模型在上下文、工具调用、结构化输出、地区、数据处理和安全能力上并不等价；静默切换可能把“依赖不可用”变成更隐蔽的质量或合规事故。正确做法是预先定义有界降级阶梯，并在每一步检查能力、策略和质量底线。
 
-![上方断路器在 Closed、Open、Half-Open 之间按失败阈值、冷却与探测结果转移；下方请求只有通过能力、策略和质量门禁才进入备用模型](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-model-fallback-circuit-state-v1.webp)
-*图：熔断负责停止攻击故障依赖，Fallback 负责在约束内选择替代能力，两者不是同一件事。*
+![主模型失败后按顺序判断要不要切到备用模型。第一问：错误是否短暂、调用尚未提交、deadline 还够，是的话在同一模型上有限重试。第二问：主依赖的断路器是否已经打开，是的话跳过重试，直接看备用模型。第三问：备用模型是否通过能力、地区、数据和安全策略，否则显式失败。第四问：输入能否适配备用模型的上下文和 Schema 而不丢关键约束，否则显式失败或请用户缩小范围。第五问：该任务的评测是否达到质量底线，底线是绝对值，否则显式失败。第六问：切换是否会重复工具调用或外部副作用，是的话停下来先对账。全部通过才切到备用模型，并记录降级原因、bundle 版本，给用户可见的降级标识。降级链要短：primary、已批准的备用、异步或人工，请求带 routeHistory，禁止两个模型互相 fallback。恢复要防抖：Half-Open 探测通过后逐步放量，设置最小稳定窗口，避免在主备之间来回振荡。断路器按 provider、model、region、operation 的组合拆分，一个接口失败不拖垮全部模型](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-model-fallback-decision-v2.dark.png)
+*图：熔断负责停止调用故障依赖，Fallback 负责在能力、策略和质量约束内选择替代，两者不是同一件事。*
 
 ## 先区分 Retry、Fallback 与降级
 

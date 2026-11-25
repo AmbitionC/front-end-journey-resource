@@ -1,5 +1,5 @@
-![Node.js 事件循环环形阶段图：timers→pending callbacks→poll→check→close；阶段间显示 nextTick 与 microtask 清空，旁边分出 libuv thread pool 完成 CPU/文件任务后回到回调队列](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/node-event-loop-libuv-phases-v1.webp)
-*图：沿图中的节点与箭头阅读，重点是准确区分事件循环阶段、microtask/nextTick 队列、线程池与 I/O 回调。*
+![Node.js 事件循环每一轮按顺序经过六个阶段：timers 执行到期的 setTimeout 和 setInterval 回调；pending callbacks 执行上一轮推迟的 I/O 错误回调；idle 和 prepare 只供 libuv 内部使用；poll 获取新 I/O 事件并执行回调，队列空了就等待；check 执行 setImmediate 回调；close callbacks 执行 socket close 等关闭回调；还有待处理任务就进入下一轮。阶段之间的圆点表示清空微任务：每个阶段结束后，以及 timers 里每个回调执行完，都先清空 process.nextTick 队列，再清空 Promise 队列。递归调用 nextTick 会让清空永不结束，I/O 和定时器永远轮不到，需要递归时改用 setImmediate 让出。libuv 线程池处理文件系统、dns.lookup、部分 crypto 和原生插件，做完把回调交回 poll 阶段；网络 I/O 不占线程池，用非阻塞 socket 加 epoll、kqueue 或 IOCP，由内核通知，同样在 poll 阶段回调。在主模块顶层，setTimeout 0 和 setImmediate 的先后不确定；在 I/O 回调里，setImmediate 一定先执行](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/node-event-loop-phases-v2.dark.png)
+*图：左边按顺序读一轮循环的六个阶段，圆点是清空微任务的时机；右边是 nextTick 饥饿、线程池和网络 I/O 怎样把回调交回 poll 阶段。*
 
 ---
 

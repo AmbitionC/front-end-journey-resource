@@ -301,8 +301,8 @@ Attention 负责“从哪里读取信息”，FFN 负责“如何变换当前位
 缩放点积注意力里，$QK^\top$ 要除以 $\sqrt{d_k}$。主要原因是？
 
 - A. 减少参数量
-- B. 让注意力只看前面的 token
-- C. 控制点积的数值尺度，避免维度变大后 Softmax 过早饱和、梯度变小
+- B. 让注意力只看前面的 token，实现因果约束
+- C. 控制点积尺度，避免 Softmax 过早饱和
 - D. 把注意力变成线性复杂度
 
 **答案：C。** 维度越大，点积的方差越大，Softmax 会趋向 one-hot，梯度很小。只看前文靠的是 Causal Mask（B），缩放不改变复杂度（D）。
@@ -311,8 +311,8 @@ Attention 负责“从哪里读取信息”，FFN 负责“如何变换当前位
 
 Transformer 训练时能并行处理整段序列，但生成时还是一个 token 一个 token 出。原因是？
 
-- A. 生成时没有 Causal Mask
-- B. 训练时完整序列已知，Mask 保证每个位置只读合法前缀；生成时下一个 token 依赖上一个 token 的结果
+- A. 生成时没有 Causal Mask，所以必须逐个生成
+- B. 训练时序列已知，生成时下一个 token 依赖上一个
 - C. 生成时模型参数会变化
 - D. 训练时不用 Attention
 
@@ -322,10 +322,10 @@ Transformer 训练时能并行处理整段序列，但生成时还是一个 toke
 
 关于 FlashAttention，下面哪种说法正确？
 
-- A. 它是一种稀疏近似 Attention，牺牲精度换速度
+- A. 一种稀疏近似 Attention，用少量精度换取速度
 - B. 它把复杂度从 $O(n^2)$ 降到 $O(n)$
 - C. 它去掉了 Softmax
-- D. 它是精确 Attention，通过分块计算减少显存和片上缓存之间的数据搬运来提速
+- D. 精确 Attention，靠分块减少显存数据搬运来提速
 
 **答案：D。** FlashAttention 是 IO-aware 的精确算法，数学结果和标准 Attention 一致，省的是 HBM 与 SRAM 之间的读写和 $n\times n$ 中间矩阵的显存。它和稀疏、线性近似 Attention 不是一回事。
 
