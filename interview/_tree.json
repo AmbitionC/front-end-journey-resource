@@ -4541,7 +4541,10 @@
               "项目面试"
             ],
             "updatedAt": "2026-11-25",
-            "contentFormat": "short-qa-v2"
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "roleCategory": "AI 与 Agent 工程",
+            "originalLabel": "华为 AI 应用三面：工程项目与 AI 编程"
           }
         ]
       },

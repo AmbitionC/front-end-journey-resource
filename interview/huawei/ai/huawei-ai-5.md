@@ -48,4 +48,3 @@
 
 <details data-knowledge-key="agent-coding"><summary>（15）对 AI Coding 发展、下一阶段方向有哪些了解？</summary></details>
 <p>先区分代码补全、交互辅助和能调用工具并验证结果的 Coding Agent，再结合公开资料说明可观察的变化。对未来方向给出假设、验证方式和限制，不把预测说成既定事实。</p>
-
