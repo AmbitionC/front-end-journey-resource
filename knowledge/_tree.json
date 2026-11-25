@@ -2559,6 +2559,32 @@
         "key": "frontier-weekly",
         "children": [
           {
+            "label": "DeepSeek Super-agent：一个 Router 带一群 Worker，让人少盯会话",
+            "key": "frontier-deepseek-super-agent",
+            "isLeaf": true,
+            "filePath": "frontier",
+            "contentStatus": "published",
+            "heat": 0,
+            "updatedAt": "2026-11-25",
+            "interviewBaseHeat": 0,
+            "quickRead": {
+              "text": "DeepSeek Harness 团队 10 月 31 日的长文认为多任务的瓶颈是人的注意力，一个人通常只能同时跟进 3 到 5 个活跃会话。解法是常驻的 Router 只做对人交互和分派，隔离的 Worker 负责执行，整体由事件驱动。作者的初步实验里，和中性提示词的单会话比，完成时间中位数从 20.4 分钟降到 12.4 分钟，读缓存的 token 约为 3.8 倍；开源原型对主动揽的活默认只记录不执行。"
+            }
+          },
+          {
+            "label": "RSI 递归自我改进：让 Agent 自己改自己的 Harness",
+            "key": "frontier-rsi-self-improving-harness",
+            "isLeaf": true,
+            "filePath": "frontier",
+            "contentStatus": "published",
+            "heat": 0,
+            "updatedAt": "2026-11-25",
+            "interviewBaseHeat": 0,
+            "quickRead": {
+              "text": "RSI 现阶段主要是模型权重不动、让 Agent 改自己的 Harness，流程是诊断、提案、验证、部署四步，评分和验证数据要放在 Agent 碰不到的地方。Google 的 RRSI 给改进过程加正则化，在没见过的 5 个基准上最多提升 4.3 分并少用 30% 的 token；Flex-RSI 测了 18 个模型，效果看任务和模型，开源模型在检查严格的任务上落后最多。"
+            }
+          },
+          {
             "label": "评测专题：需求不清时的交付、评测作弊与评测方法",
             "key": "frontier-agent-eval",
             "isLeaf": true,
