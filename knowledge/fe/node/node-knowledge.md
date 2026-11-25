@@ -66,6 +66,41 @@ V8 heap 只是 RSS 一部分，Buffer/native addon 可能在 heap 外。缓存�
 
 理解 Node 的关键是为每类工作选择正确子系统：等待型 I/O 留给 event loop，增量数据交给 Stream，CPU 计算交给 Worker，持久状态交给数据库，进程生命周期交给可观测的 supervisor。
 
+## 练一练
+
+### 高频考点题 1：阻塞事件循环
+
+Node 服务中对一个 200MB 的 JSON 做同步解析，会怎样？
+
+- A. 只影响当前这个请求
+- B. 所有连接都会停顿
+- C. Node 会自动转到线程池
+- D. 没有影响，V8 解析很快
+
+**答案：B。** JavaScript 主要在一个事件循环上执行；巨大 JSON 解析、灾难性正则、同步 fs 都会阻塞所有请求。
+
+### 高频考点题 2：Backpressure
+
+可写流的 write() 返回 false，表示什么？
+
+- A. 写入失败，这次的数据已经丢了
+- B. 流已经关闭
+- C. 缓冲已满，应等 drain 再写
+- D. 对端拒绝了连接
+
+**答案：C。** 不理会会让数据堆积在内存；pipeline() 连接流时能自动处理背压并传播错误。
+
+### 高频考点题 3：CPU 密集任务
+
+Node 中有大量图片压缩计算，应该怎样处理？
+
+- A. 写成 async 函数就不会阻塞
+- B. 用 process.nextTick 拆开
+- C. 增大 libuv 线程池就够了
+- D. 放到 worker_threads 执行
+
+**答案：D。** async 只改变调度，计算仍在主线程上跑；worker_threads 在独立 V8 isolate 中执行，适合 CPU 密集任务。
+
 ## 参考资料
 
 - [Node.js：The Event Loop, Timers, and nextTick](https://nodejs.org/en/learn/asynchronous-work/event-loop-timers-and-nexttick)

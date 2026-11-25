@@ -84,6 +84,41 @@ Effect 适合连接 WebSocket、订阅浏览器 API、控制非 React widget、�
 
 这套顺序把 Hook 从 API 清单变成渲染模型：state 驱动下一快照，commit 更新宿主，Effect 只负责外部同步。
 
+## 练一练
+
+### 高频考点题 1：连续 setCount
+
+count 为 0 时，点击事件里连续写两次 setCount(count + 1)，结果是？
+
+- A. 变成 2
+- B. 抛出错误
+- C. 变成 0
+- D. 变成 1
+
+**答案：D。** 两次表达式捕获的是同一次渲染的 count；改用函数式 updater，两次会依次累加得到 2。
+
+### 高频考点题 2：Hook 放在条件里
+
+为什么不能在 if 语句里调用 useState？
+
+- A. React 依赖调用顺序关联状态槽位
+- B. 会让组件变慢
+- C. useState 只能在 class 组件中用
+- D. if 语句里不能写函数调用
+
+**答案：A。** Hook 必须在函数组件或自定义 Hook 顶层调用，保证每次渲染调用顺序一致。
+
+### 高频考点题 3：ref 和 state
+
+计时器 ID 应该存在 useRef 还是 useState？
+
+- A. useRef，修改不会触发渲染
+- B. useState，因为它会持久化
+- C. 都不行，只能存在模块级的全局变量里
+- D. useMemo，因为它会缓存
+
+**答案：A。** 屏幕上要响应变化的数据才放 state；DOM、计时器 ID 和外部实例适合放 ref。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->

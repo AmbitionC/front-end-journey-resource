@@ -148,6 +148,41 @@ async function settleLimit(taskFns, limit) {
 
 测试应使用可控 deferred Promise：让后启动的先完成，检查最大在途数、任务只启动一次、结果仍按输入顺序；再混入同步 throw 和异步 reject，并覆盖空输入与非法 limit。只测最终数组无法证明并发上限。
 
+## 练一练
+
+### 高频考点题 1：Promise.all 的失败
+
+Promise.all 中有一个 Promise 被 rejected，其他还在进行的请求会怎样？
+
+- A. 被自动取消
+- B. 立即抛出同步异常，中断后面的代码
+- C. 全部回滚
+- D. 继续执行，结果不再被使用
+
+**答案：D。** 组合 Promise 立即 rejected，但底层操作不会自动取消；需要取消时把 AbortSignal 传给实际请求。
+
+### 高频考点题 2：then 里忘了 return
+
+then 的回调用了花括号，内部发了请求却没有 return，下一个 then 收到什么？
+
+- A. undefined
+- B. 请求的结果
+- C. 一个 rejected 的 Promise
+- D. 上一个 then 的参数
+
+**答案：A。** 每个 then 返回新 Promise，回调返回值决定它的结果；忘了 return 的请求变成没人等待的浮动 Promise。
+
+### 高频考点题 3：独立请求的写法
+
+两个互不依赖的请求，用两行 await 依次等待，会有什么问题？
+
+- A. 没问题，会自动并行
+- B. 第二个请求要等页面空闲时才会发出
+- C. 变成串行，总耗时变长
+- D. 会抛出语法错误
+
+**答案：C。** 应先创建两个 Promise 再用 Promise.all 等待；有依赖关系时串行才正确。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->

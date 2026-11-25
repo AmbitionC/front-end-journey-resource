@@ -455,6 +455,41 @@ SELECT node FROM reachable ORDER BY node;
 
 10. **子查询 vs CTE**：CTE 提供命名和分层；内联或物化取决于数据库、查询及引用方式，不能保证计划相同或必然更快。参见 [PostgreSQL 18 的 CTE 物化规则](https://www.postgresql.org/docs/18/queries-with.html)。
 
+## 练一练
+
+### 高频考点题 1：WHERE 里用别名
+
+SELECT price * qty AS total ... WHERE total > 100 为什么常常报错？
+
+- A. WHERE 先于 SELECT，别名还不存在
+- B. 别名不能包含英文字母
+- C. WHERE 只能比较字符串
+- D. 乘法表达式不能出现在 SELECT 列表里，只能放在 WHERE
+
+**答案：A。** 逻辑处理顺序是 FROM、WHERE、GROUP BY、HAVING、SELECT、ORDER BY、LIMIT；别名可见性也受方言影响。
+
+### 高频考点题 2：按聚合结果筛选
+
+要筛出订单数大于 10 的客户，条件应写在哪里？
+
+- A. WHERE
+- B. ORDER BY
+- C. HAVING
+- D. LIMIT
+
+**答案：C。** 同一查询层的 WHERE 在分组前执行，不能按组聚合结果筛选。
+
+### 高频考点题 3：稳定分页
+
+ORDER BY created_at LIMIT 10 分页，偶尔出现重复或漏行，怎样改？
+
+- A. 去掉 ORDER BY
+- B. 排序再追加唯一主键
+- C. 把 LIMIT 改大
+- D. 改用 DISTINCT 去掉重复的行
+
+**答案：B。** 多行 created_at 相同时，它们之间的顺序不确定，每次分页可能取到不同的行。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->

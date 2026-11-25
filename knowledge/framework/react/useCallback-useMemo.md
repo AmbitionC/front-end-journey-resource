@@ -80,6 +80,41 @@ React 文档指出 React Compiler 可自动 memoize 值和函数，减少手写 
 
 判断是否使用两个 Hook 的简短路径是：这里真的慢吗？昂贵的是哪个计算/子树？下游是否依赖引用相等？依赖是否正确？Profiler 是否证明净收益？任一答案不清楚，就先保持简单。
 
+## 练一练
+
+### 高频考点题 1：useCallback 缓存什么
+
+useCallback 缓存的是什么？
+
+- A. 函数调用的返回值
+- B. 组件的渲染结果
+- C. 函数本身的引用
+- D. 网络请求的响应
+
+**答案：C。** useMemo 缓存计算结果，useCallback 缓存函数身份；它们都只在依赖不变时复用。
+
+### 高频考点题 2：单独使用 useCallback
+
+子组件没有用 React.memo 包裹，父组件给它传了 useCallback 包过的函数，子组件还会随父组件重新渲染吗？
+
+- A. 不会，useCallback 阻止了渲染
+- B. 不会，函数引用没变就不渲染
+- C. 会，没有 memo 时引用稳定没有用
+- D. 只有首次会渲染
+
+**答案：C。** memo 浅比较 props 和稳定引用需要配套才有效果。
+
+### 高频考点题 3：遗漏依赖
+
+useCallback 的依赖数组漏写了它读取的 state，会怎样？
+
+- A. 没有影响
+- B. 组件会无限重新渲染
+- C. 回调捕获旧值，形成过期闭包
+- D. React 会自动补上依赖
+
+**答案：C。** 回调内读取的响应式值都应进入依赖；只有逻辑确实基于最新状态时，才可以改用函数式 updater 去掉依赖。
+
 ## 参考资料
 
 - [React：useMemo](https://react.dev/reference/react/useMemo)
