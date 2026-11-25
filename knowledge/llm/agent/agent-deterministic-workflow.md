@@ -142,22 +142,6 @@ trace 将 workflow/run、decision、activity、approval 和 operation ID 关联�
 
 **答案：B。** 补偿是新的业务动作，不是原子回滚。写 activity 要带 operation ID，重复 attempt 复用同一个 key，避免重复扣款或重复退款。
 
-### 面试题 4：自己用 Workflow 搭 Agent，和 Harness + Skill 方案比哪个好？
-
-> 出自：[腾讯企业微信测开实习一面：工作流取舍与离线评测](../../../interview/tencent/ai/tencent-ai-26.md)
-
-面试官问：自己用 Workflow 搭 Agent，和用现成的 Harness 加 Skill 的方案相比，哪个更好？
-
-**参考答案：** ①**先对齐概念**：说清 Harness 指哪些运行能力（模型循环、上下文、工具），Skill 封装哪些任务做法。②**没有通用胜者**：在同一任务上比较质量、失败恢复、权限、延迟和维护成本。③**各有所长**：稳定步骤和业务不变量适合 Workflow 显式控制；现成运行时能承接模型循环和工具调用，Skill 复用执行方法。④**可以组合**：固定骨架用 Workflow，模型只在受控节点里做选择，授权、状态、预算和验收仍由程序约束。
-
-### 面试题 5：多模块 Agent 和多 Agent 怎么取舍？
-
-> 出自：[字节 AI 全栈开发一面：Agent 项目与算法](../../../interview/bytedance/base/bytedance-base-13.md)
-
-面试官问：一个 Agent 加多个模块，和拆成多个 Agent，你怎么取舍？
-
-**参考答案：** ①**共享就合**：模块共享同一目标、权限和上下文时，一个运行时加确定性工作流通常更直接。②**差异大才拆**：角色、权限或上下文明显不同时多 Agent 才有价值，但会增加通信、协商、重复推理和延迟。③**框架按需求选**：看状态持久化、分支循环、调试和恢复需求，而不是看名气。④**自研要显式**：定义状态 Schema、节点输入输出和转换条件，不能只靠消息文本在节点之间传数据。
-
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
