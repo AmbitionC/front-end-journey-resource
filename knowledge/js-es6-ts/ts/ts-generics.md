@@ -108,6 +108,41 @@ type EventHandlers<T> = {
 
 泛型设计最重要的问题是“我要保留哪条关系”。先用一句自然语言写出关系，再选择 T、constraint、keyof 或 conditional；如果说不清，就先用更简单的具体类型。
 
+## 练一练
+
+### 高频考点题 1：any 还是泛型
+
+identity 函数写成参数和返回值都是 any，与写成泛型 T 相比，丢失了什么？
+
+- A. 运行时的执行速度
+- B. 函数的名称和注释
+- C. 输入与输出的类型关系
+- D. 参数个数
+
+**答案：C。** 泛型保留调用者传入的具体类型；any 会切断关系，联合类型也无法表达输入 number 对应输出 number。
+
+### 高频考点题 2：约束的作用
+
+泛型函数要读取参数的 length，T 应该怎样声明？
+
+- A. 约束 T 具有 length 属性
+- B. 不需要声明，直接读
+- C. 把 T 改成 any
+- D. 把参数类型改成 string，只接收字符串
+
+**答案：A。** 约束说明最低能力；返回 T 仍保留具体类型，返回约束接口则会丢掉额外字段。
+
+### 高频考点题 3：keyof 的用途
+
+函数签名中 K 约束为 keyof T，返回 T[K]，有什么好处？
+
+- A. K 可以是任意字符串，返回值是 any
+- B. K 只能是 T 的键，返回精确类型
+- C. 返回值总是 string
+- D. 运行时会自动校验 key
+
+**答案：B。** 类型只在编译期生效；key 来自运行时字符串输入时，必须先验证再缩窄。
+
 ## 参考资料
 
 - [TypeScript Handbook：Generics](https://www.typescriptlang.org/docs/handbook/2/generics.html)

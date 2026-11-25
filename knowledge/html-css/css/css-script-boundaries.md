@@ -71,6 +71,41 @@ JavaScript 通过 DOM 修改类，或通过 CSSOM 的 `style.setProperty()` 等�
 
 遇到具体片段，先问四件事：文件最终交给哪个解析器，语法属于哪份规范或工具，在哪个阶段处理，宿主授予了什么 API。对布局能力可继续阅读[现代 CSS 布局与响应式设计](responsive-layout.md)；对浏览器处理职责可阅读[导航到页面呈现](../../fe/browser/browser-navigation-rendering.md)。
 
+## 练一练
+
+### 高频考点题 1：CSS 能执行 JS 吗
+
+能不能在标准 CSS 声明里直接写一段 JavaScript，让浏览器执行？
+
+- A. 不能，CSS 不是脚本执行器
+- B. 能，calc() 里可以写任意函数
+- C. 能，只要放在 @supports 规则里就会执行
+- D. 能，现代浏览器都支持
+
+**答案：A。** CSS 可以声明状态、条件和动画，但由浏览器负责匹配与更新；calc()、var() 等函数有特定输入和含义，不是任意脚本。
+
+### 高频考点题 2：用 JS 改样式
+
+JavaScript 点击时给元素加一个类，CSS 根据类改变颜色。这说明什么？
+
+- A. 脚本改类名，CSS 按结果匹配
+- B. CSS 执行了 JavaScript
+- C. 样式解析器在这一刻变成了脚本引擎
+- D. 类名里包含了脚本代码
+
+**答案：A。** 脚本在自己的宿主里执行，通过 DOM 或 CSSOM 改变状态；样式解析器没有因此变成脚本执行器。
+
+### 高频考点题 3：看似反例
+
+CSS Paint Worklet 能用 JavaScript 绘制背景，这是否说明 CSS 声明在执行脚本？
+
+- A. 不是，脚本在 worklet 中运行
+- B. 是，CSS 声明本身执行了脚本
+- C. 是，所有 CSS 函数都会执行 JavaScript
+- D. 不是，Paint Worklet 只是某个框架的私有语法
+
+**答案：A。** 它是浏览器提供的扩展接口，需要单独注册；判断时要看文件交给哪个解析器、属于哪份规范、在哪个阶段处理。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->

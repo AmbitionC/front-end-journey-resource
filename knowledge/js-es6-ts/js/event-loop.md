@@ -116,6 +116,41 @@ Node 11 起，每执行完一个 timer 或 immediate 回调就会清空一次 mi
 
 浏览器每轮执行一个 task、完成 microtask checkpoint，并在合适时机更新渲染。同步长任务和无限 microtask 都会阻塞 UI。正确推导依赖实际入队时机与宿主规则，而不是“宏任务/微任务优先级”的口号。
 
+## 练一练
+
+### 高频考点题 1：输出顺序
+
+下面代码依次执行 console.log(1)、setTimeout 打印 2、Promise.resolve().then 打印 3、console.log(4)，输出顺序是？
+
+- A. 1 2 3 4
+- B. 1 4 3 2
+- C. 1 3 4 2
+- D. 1 4 2 3
+
+**答案：B。** 同步代码先执行；当前 task 结束后清空微任务；setTimeout 回调在之后的 task 中运行。
+
+### 高频考点题 2：await 之后
+
+async 函数中执行 await foo()，foo 是同步函数，await 之后的代码何时执行？
+
+- A. foo 执行完立即同步执行
+- B. 放到下一个 setTimeout 里执行
+- C. 作为微任务，在当前同步代码结束后执行
+- D. 等页面渲染完成后执行
+
+**答案：C。** foo 会先同步执行，await 之后的代码被放进微任务队列。
+
+### 高频考点题 3：微任务里加微任务
+
+微任务执行时又创建了新的微任务，新的微任务什么时候执行？
+
+- A. 下一轮事件循环
+- B. 同一个检查点里接着执行
+- C. 等页面完成下一次渲染之后再执行
+- D. 永远不会执行
+
+**答案：B。** checkpoint 会持续处理新加入的微任务，所以无限递归创建微任务会饿死 timer 和渲染。
+
 ## 参考资料
 
 - [HTML Standard: Event loops](https://html.spec.whatwg.org/multipage/webappapis.html#event-loops)

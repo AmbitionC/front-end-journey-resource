@@ -77,6 +77,41 @@ export function savePreferences(preferences) {
 }
 ```
 
+## 练一练
+
+### 高频考点题 1：sessionStorage 的作用域
+
+同一个网站在两个新标签页打开，sessionStorage 的数据是否共享？
+
+- A. 共享，同源就共享
+- B. 共享，但只读
+- C. 通常不共享，各有独立会话
+- D. 只有关闭整个浏览器之后才会共享
+
+**答案：C。** sessionStorage 还与顶层浏览上下文的页面会话相关；localStorage 才在同源标签页间共享。
+
+### 高频考点题 2：HttpOnly
+
+给会话 Cookie 设置 HttpOnly，能起到什么作用？
+
+- A. 彻底防止 XSS
+- B. 脚本无法读取该 Cookie
+- C. Cookie 不会随请求发送
+- D. Cookie 只在 HTTP 下发送
+
+**答案：B。** 它降低会话值被直接窃取的风险，但恶意脚本仍能以用户身份发请求，并不能防止 XSS。
+
+### 高频考点题 3：token 放哪
+
+把长期有效的 token 放进 localStorage，主要风险是？
+
+- A. 同源任何脚本都能读取，XSS 时会泄露
+- B. 容量不够
+- C. 刷新页面后 token 会丢失
+- D. localStorage 不能存字符串
+
+**答案：A。** Web Storage 没有 HttpOnly 属性；成功运行在该源的脚本都能读到。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->

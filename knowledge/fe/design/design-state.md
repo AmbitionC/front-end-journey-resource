@@ -143,6 +143,41 @@ React 官方把过程分为[触发、渲染、提交](https://react.dev/learn/re
 
 [Vue 3 响应式核心 API](https://vuejs.org/api/reactivity-core.html)中 ref 用 `.value` 包装值，reactive 为对象建立响应式代理；computed 从依赖计算派生值，变化后由框架调度相关消费更新。reactive 不是任意原始值的包装器，把对象字段解构成普通变量可能失去响应式连接，应按需要保留引用或使用对应接口。共享 composable 代码不意味着每次调用共享同一状态实例；持久化又是独立合同，刷新后恢复需要序列化、版本与授权边界。
 
+## 练一练
+
+### 高频考点题 1：筛选条件放哪
+
+列表的筛选条件和分页需要可分享、能用浏览器前进后退，应该放在？
+
+- A. 组件的 local state
+- B. 全局 Redux store
+- C. URL
+- D. localStorage
+
+**答案：C。** URL state 天然支持分享、书签和前进后退；状态要先按所有权分类再选存放位置。
+
+### 高频考点题 2：多个布尔值
+
+用 isLoading、isSuccess、hasError 三个布尔值表示请求状态，问题是？
+
+- A. 布尔值太占内存
+- B. 可能出现互相矛盾的非法组合
+- C. 布尔值无法触发渲染
+- D. React 不支持布尔 state
+
+**答案：B。** 用判别联合或状态机把状态和可用字段绑定，事件定义允许的迁移。
+
+### 高频考点题 3：总价存不存
+
+购物车的总价应该怎样处理？
+
+- A. 由商品列表算出，不另存 state
+- B. 单独存一份 state，每次改动同步更新
+- C. 存到后端，每次刷新页面时再重新获取
+- D. 存进 Context，供全局修改
+
+**答案：A。** 过滤后的列表、总价、完成数量通常是 selector；memo 可以缓存，但派生值不拥有真相。
+
 ## 参考资料
 
 - [React choosing the state structure](https://react.dev/learn/choosing-the-state-structure)

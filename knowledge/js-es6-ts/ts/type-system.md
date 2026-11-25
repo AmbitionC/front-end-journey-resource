@@ -110,6 +110,41 @@ ECMAScript 的运行时类型包括 Undefined、Null、Boolean、String、Symbol
 
 这与 TypeScript 的 any、unknown、never 等静态建模概念不同。网络返回值没有自动附带可信类型；运行时判空、Array.isArray 与字段解析，才把实际数据转换为应用可用对象。不要因注解写了 number 就认为外部字符串已转成数字。
 
+## 练一练
+
+### 高频考点题 1：结构化类型
+
+一个有 x、y、color 三个字段的变量，能赋给只声明了 x、y 的 Point 类型吗？
+
+- A. 不能，类型名不同
+- B. 只有 class 实例才能赋值给 Point 类型
+- C. 不能，多了一个字段
+- D. 能，它拥有 Point 所需成员
+
+**答案：D。** TypeScript 按成员结构判断兼容；但对象字面量直接赋值时会做额外属性检查。
+
+### 高频考点题 2：unknown 与 any
+
+处理外部输入时，为什么推荐用 unknown 而不是 any？
+
+- A. unknown 使用前必须先缩小类型
+- B. unknown 运行速度更快
+- C. any 不能接收对象
+- D. unknown 会自动校验 JSON
+
+**答案：A。** any 关闭静态检查并沿调用链传播；unknown 表示尚未验证，迫使你先检查。
+
+### 高频考点题 3：类型断言
+
+把网络响应写成 payload as User，运行时会检查字段吗？
+
+- A. 会，字段缺失时抛错
+- B. 会自动补全缺失字段
+- C. 会，但只检查标记为必填的字段
+- D. 不会，只改变编译器视角
+
+**答案：D。** 类型在运行时被擦除；外部数据要用 schema 校验后再当作 User 使用。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
