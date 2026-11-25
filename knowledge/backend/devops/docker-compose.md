@@ -316,6 +316,41 @@ docker compose config
 - **Volume bind mount 和 named volume 的区别**：bind mount 映射宿主机目录，适合开发热重载；named volume 由 Docker 管理，适合生产数据持久化，容器重建后数据不丢失。
 - **`docker compose down -v` 的风险**：会同时删除 named volumes，数据库数据永久丢失，生产环境严禁随意执行。
 
+## 练一练
+
+### 高频考点题 1：Compose 的定位
+
+Docker Compose 最核心的使用场景是？
+
+- A. 本地开发和集成测试的多容器编排
+- B. 大规模生产集群编排
+- C. 替代 Kubernetes 做自动扩缩容
+- D. 只能运行单个容器
+
+**答案：A。** 生产大规模编排通常交给 Kubernetes 等平台。
+
+### 高频考点题 2：服务间怎么访问
+
+同一个 Compose 项目里，API 服务访问 Redis 应该用什么地址？
+
+- A. 宿主机的 IP 地址
+- B. 127.0.0.1
+- C. 服务名，比如 redis
+- D. Redis 容器每次启动后随机分配的 IP
+
+**答案：C。** Compose 为项目创建共享网络，服务名自动解析。容器里的 127.0.0.1 指的是容器自己。
+
+### 高频考点题 3：依赖就绪
+
+希望 agent-api 在数据库真正可用后才启动，应该怎么配置？
+
+- A. 只写 depends_on 服务名就够了
+- B. 在 API 的启动命令前面加一句 sleep 30
+- C. 加 service_healthy 条件并配 healthcheck
+- D. 手动先启动数据库，再启动 API
+
+**答案：C。** 只写服务名只保证启动顺序，不保证依赖已经可以接受连接。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->

@@ -353,6 +353,41 @@ flowchart TD
 - **Q：在构建 AI Agent 工具服务时，Express 有哪些注意事项？**  
   A：工具调用的参数校验要做严格的 schema 验证（防止 Prompt Injection 带来的恶意参数）；工具执行失败应返回结构化结果而非 5xx，让 Agent 能自主决策是否重试；LLM 流式响应端点需要在路由层手动管理 `res.write` 和 `res.end`，或考虑迁移到 Koa（`ctx.body = stream`）获得更好的流处理体验。
 
+## 练一练
+
+### 高频考点题 1：错误处理中间件
+
+Express 通过什么识别错误处理中间件？
+
+- A. 函数名里带 error
+- B. 放在 app.js 的最后一行
+- C. 函数声明了四个参数
+- D. 使用 async 关键字
+
+**答案：C。** 签名是 `(err, req, res, next)`，少写一个参数就会被当作普通中间件。
+
+### 高频考点题 2：中间件忘记调用 next
+
+一个中间件既没有发送响应，也没有调用 `next()`，会怎样？
+
+- A. 请求一直挂起，直到超时
+- B. Express 自动进入下一个中间件
+- C. 自动返回 404
+- D. 自动返回 500
+
+**答案：A。** 中间件要么结束响应，要么调用 next 传递控制权。
+
+### 高频考点题 3：Router
+
+`express.Router()` 的作用是？
+
+- A. 启动一个新的 HTTP 服务器
+- B. 只能用于处理静态文件
+- C. 替代数据库连接
+- D. 迷你应用，可独立挂中间件和路由
+
+**答案：D。** 用来按模块拆分路由，再挂载到主应用的路径下。
+
 ## 参考资料
 
 - [Express using middleware](https://expressjs.com/en/guide/using-middleware/)

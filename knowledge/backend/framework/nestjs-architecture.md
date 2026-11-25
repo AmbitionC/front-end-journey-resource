@@ -338,6 +338,41 @@ NestJS 的模块化架构与 Agent 系统的多工具设计天然契合：
 - **`@Module` 的 `exports` 字段作用？** 控制本模块哪些 Provider 对外可见；未 export 的 Provider 仅在本模块内可注入，是依赖封装的关键机制。
 - **如何在全局注册 Guard/Interceptor？** 两种方式：`main.ts` 中 `app.useGlobalGuards(new Guard())` （无法注入依赖），或在 Module 中用 `{ provide: APP_GUARD, useClass: Guard }` （可享受 DI，推荐）。
 
+## 练一练
+
+### 高频考点题 1：IoC 容器
+
+NestJS 的 IoC 容器解决的是什么？
+
+- A. 根据实体自动生成数据库表结构
+- B. 让代码运行得更快
+- C. 框架管理依赖，只需声明
+- D. 替代 TypeScript 编译器
+
+**答案：C。** 依赖通过构造函数注入，便于替换和测试。
+
+### 高频考点题 2：共享模块
+
+一个 Service 要给多个 Feature Module 使用，应该怎么做？
+
+- A. 放进共享模块并 exports 导出
+- B. 在每个模块里各复制一份
+- C. 写成一个全局变量，各个模块直接读取
+- D. 直接 import 文件，不经过模块系统
+
+**答案：A。** 导入方 import 这个模块后就能注入它导出的 provider。
+
+### 高频考点题 3：设计理念来源
+
+NestJS 的设计理念主要受哪个框架启发？
+
+- A. Django
+- B. Angular
+- C. jQuery 和 Backbone
+- D. Flask
+
+**答案：B。** 装饰器驱动、IoC 容器和强制模块化都来自 Angular 的思路。
+
 ## 参考资料
 
 - [NestJS modules](https://docs.nestjs.com/modules)

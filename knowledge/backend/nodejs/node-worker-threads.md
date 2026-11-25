@@ -374,6 +374,41 @@ Worker 脚本与普通模块相同，可以使用 `__dirname`、`__filename`。�
 5. **Worker Threads 中能使用所有 Node.js 模块吗？** 大部分可以，但 `cluster` 模块仅主线程有效；`process.exit()` 会终止整个进程（包括所有 Worker），Worker 内应使用 `process.exitCode` + 正常退出。
 6. **AI Agent 场景下为何需要 Worker Threads？** 本地 embedding 计算、向量相似度搜索、文本分词等 CPU 密集操作如果在主线程执行，会阻塞所有并发 LLM 请求的调度。
 
+## 练一练
+
+### 高频考点题 1：CPU 密集任务
+
+Node.js 主线程跑一个耗时 5 秒的 CPU 计算，会怎样？
+
+- A. 不影响其他请求，因为 Node.js 是异步的
+- B. Node.js 会自动把它放到其他线程
+- C. 事件循环被阻塞，其他请求都要等
+- D. 只会让这一个请求变慢
+
+**答案：C。** 异步只对 I/O 有效，CPU 计算会占住主线程。
+
+### 高频考点题 2：选型
+
+需要运行不受信任的外部脚本，优先用哪种方式？
+
+- A. Child Process
+- B. Worker Threads
+- C. 直接在主线程 eval
+- D. Cluster
+
+**答案：A。** 独立进程隔离更强；需要共享大块内存的计算才更适合 Worker Threads。
+
+### 高频考点题 3：线程间共享内存
+
+Worker 之间要共享一大块数据而不复制，可以用什么？
+
+- A. SharedArrayBuffer
+- B. workerData
+- C. 全局变量
+- D. 先 JSON.stringify 再通过 postMessage 传递
+
+**答案：A。** workerData 和 postMessage 默认是结构化克隆，会复制数据。
+
 ## 参考资料
 
 - [Node.js worker_threads API](https://nodejs.org/api/worker_threads.html)

@@ -318,6 +318,41 @@ Stream 的主要价值是增量处理和控制内存峰值，不保证总 I/O �
 5. **`highWaterMark` 在对象模式和 Buffer 模式下单位有何不同？** 对象模式是对象数，Buffer 模式是字节数。
 6. **增量输出在 AI 服务中的实现选择**：提供商可能返回事件、delta、chunk、async iterable 或 Web Stream；根据下游协议与背压需求决定直接迭代、写 SSE，还是适配为经典 Node Stream。
 
+## 练一练
+
+### 高频考点题 1：为什么用 Stream
+
+处理一个 10GB 的文件，用 Stream 而不是整体读入，主要好处是？
+
+- A. 文件内容会被自动压缩
+- B. 读取速度一定会快上十倍以上
+- C. 内存不随文件变大
+- D. 不需要磁盘
+
+**答案：C。** 按块处理，内存占用和文件大小解耦，还能边读边处理。
+
+### 高频考点题 2：Duplex 和 Transform
+
+Duplex 和 Transform 的区别是？
+
+- A. 两者完全一样
+- B. 前者读写独立，后者由输入变换出输出
+- C. Transform 只能读，Duplex 只能写入数据
+- D. Duplex 只能用于文件
+
+**答案：B。** TCP socket 是典型的 Duplex，gzip 压缩是典型的 Transform。
+
+### 高频考点题 3：Paused 模式
+
+Readable Stream 默认处于什么模式？
+
+- A. Flowing 模式，自动推送数据
+- B. Paused，需主动读取
+- C. 关闭模式，必须手动打开才能读
+- D. 没有模式之分
+
+**答案：B。** 绑定 data 事件或调用 pipe 等会切换到 Flowing 模式。
+
 ## 参考资料
 
 - [Node.js Stream API](https://nodejs.org/api/stream.html)

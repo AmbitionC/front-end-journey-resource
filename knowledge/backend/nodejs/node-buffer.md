@@ -310,6 +310,41 @@ A：通过 `Buffer.from(float32arr.buffer, float32arr.byteOffset, float32arr.byt
 **Q：`Buffer.allocUnsafe` 的安全风险是什么，何时可以使用？**
 A：`allocUnsafe` 分配的内存未清零，可能包含旧进程数据（密码、密钥等敏感信息）。当且仅当分配后**立即**用业务数据覆盖全部内容时才安全使用，例如将网络数据包写入 Buffer、从文件读取数据到 Buffer 等场景。绝不能在写入之前读取 `allocUnsafe` 的内容。
 
+## 练一练
+
+### 高频考点题 1：alloc 和 allocUnsafe
+
+`Buffer.allocUnsafe` 和 `Buffer.alloc` 的区别是？
+
+- A. allocUnsafe 不初始化，可能含旧数据
+- B. allocUnsafe 只能分配 1KB 以内
+- C. alloc 不初始化内存，所以速度最快
+- D. 两者完全一样，只是名字不同
+
+**答案：A。** alloc 把字节初始化为 0 更安全；allocUnsafe 更快，但必须马上完整覆盖再使用。
+
+### 高频考点题 2：Buffer 的本质
+
+Node.js 的 Buffer 和 JavaScript 标准类型是什么关系？
+
+- A. 和 String 完全一样
+- B. 是一种特殊的 Array，可以自由改变长度
+- C. 是 Uint8Array 的子类
+- D. 是 JSON 对象的一种别名
+
+**答案：C。** Buffer 创建后长度固定，数据可能位于 V8 堆外。
+
+### 高频考点题 3：为什么需要 Buffer
+
+Node.js 为什么需要 Buffer？
+
+- A. JS 缺少原生二进制类型
+- B. 为了让字符串运算更快
+- C. 为了替代所有数组
+- D. 为了在浏览器页面里显示图片和视频
+
+**答案：A。** 文件、网络、加密等场景都要处理原始字节。
+
 ## 参考资料
 
 - [Node.js Buffer API](https://nodejs.org/api/buffer.html)
