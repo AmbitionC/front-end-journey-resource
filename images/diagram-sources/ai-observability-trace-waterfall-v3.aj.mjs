@@ -1,7 +1,7 @@
 export const meta = {
-  name: 'ai-observability-trace-waterfall-v2',
+  name: 'ai-observability-trace-waterfall-v3',
   article: 'knowledge/llm/production/ai-observability.md',
-  alt: '一次 Agent 请求的 trace 瀑布图：根 span 是用户请求，带全局 trace_id；下面有规划和回答两个 agent step；规划步骤里有一次模型调用，记录模型版本、token、首 token 延迟和成本；回答步骤里依次是检索（记录索引版本和 top_k）、工具调用 search（记录状态和重试次数，其下还有一次数据库查询）和生成答案的模型调用。缩进表示父子关系，横条表示各 span 在时间线上的起止。指标按用户和功能拆分，看首 token 延迟 P95、每请求 token、每会话成本和工具调用次数；日志带 trace_id 和 span_id 关联，prompt 和正文等敏感字段要先脱敏再记录',
+  alt: '一次 Agent 请求的 trace 瀑布图：根 span 是用户请求，带全局 trace_id；下面有规划和回答两个 agent step；规划步骤里有一次模型调用，记录模型版本、token、首 token 延迟和成本；回答步骤里依次是检索 rag-retrieval（记录配置的 top_k 和返回文档数）、工具调用 tool-search（记录输入校验、执行状态和耗时）和生成答案的模型调用。缩进表示父子关系，横条表示各 span 在时间线上的起止。指标按用户和功能拆分，看首 token 延迟 P95、每请求 token、每会话成本和工具调用次数；手机号、身份证号等 PII 不直接写进 span 输入，上报前脱敏或配置字段过滤',
 };
 
 export default (k) => {
@@ -12,9 +12,8 @@ export default (k) => {
     [1, 'agent step · 规划', 2, 30, 'accent', ''],
     [2, 'model call · llm-plan', 4, 28, 'info', '模型版本、token、TTFT、成本'],
     [1, 'agent step · 回答', 32, 98, 'accent', ''],
-    [2, 'retrieval · rag', 34, 50, 'info', '索引版本、top_k'],
-    [2, 'tool call · search', 52, 72, 'warn', '状态、重试次数'],
-    [3, 'db query', 56, 68, 'muted', ''],
+    [2, 'rag-retrieval', 34, 50, 'info', '配置的 top_k、返回文档数'],
+    [2, 'tool-search', 52, 72, 'warn', '输入校验、执行状态、耗时'],
     [2, 'model call · llm-answer', 74, 97, 'info', '模型版本、token、成本'],
   ];
   rows.forEach(([d, label, a, b, tone, attr], i) => {
@@ -27,7 +26,7 @@ export default (k) => {
   s.push(`<line x1="${BX}" y1="${Y0 + rows.length * RP + 4}" x2="${BX + BW}" y2="${Y0 + rows.length * RP + 4}" stroke="${k.t.line}" stroke-width="1"/>`);
 
   s.push(k.box({ x: 40, y: 478, w: 430, h: 84, title: 'Metrics：按用户、功能拆分', sub: 'TTFT P95、token / 请求、成本 / 会话\n工具调用次数（识别失控循环）', titleSize: 'body', tone: 'info' }));
-  s.push(k.box({ x: 490, y: 478, w: 430, h: 84, title: 'Logs：带 trace_id、span_id 关联', sub: 'prompt、正文等敏感字段\n先脱敏（redact）再记录', titleSize: 'body', tone: 'warn' }));
+  s.push(k.box({ x: 490, y: 478, w: 430, h: 84, title: 'Span 输入：PII 先脱敏', sub: '手机号、身份证号等不直接进 trace\n上报前脱敏，或配置字段过滤', titleSize: 'body', tone: 'warn' }));
 
   return k.figure({
     h: 600,

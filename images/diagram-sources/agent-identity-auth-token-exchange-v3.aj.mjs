@@ -1,7 +1,7 @@
 export const meta = {
-  name: 'agent-identity-auth-token-exchange-v2',
+  name: 'agent-identity-auth-token-exchange-v3',
   article: 'knowledge/llm/production/agent-identity-auth.md',
-  alt: '用户提出目标，是 subject；Agent 工作负载持有短期工作负载凭证，是 actor，模型本身不接触 token；Agent 用自身身份向授权服务器发起交换请求，声明 subject、actor、目标服务和最小 scope，授权服务器检查用户授权、Agent 角色和风险后签发短期委托 token，里面同时保留 sub 和 act，并绑定 aud、scope 和 exp；Agent 带这个 token 调用目标服务，目标服务先验签名、issuer 和 token 类型，再确认 aud 是自己且未过期、scope 足够，最后按 subject 对具体资源授权以防 confused deputy，批量或不可逆动作还要 step-up 或人工批准；委托不是模拟，审计同时记录 subject 和 actor，子 Agent 要换更窄的 token 而不是转发原 token',
+  alt: '用户提出目标，是 subject；Agent 工作负载持有短期工作负载凭证，是 actor，模型本身不接触 token；Agent 用自身身份向授权服务器发起交换请求，声明 subject、actor、目标服务和最小 scope，授权服务器检查用户授权、Agent 角色和风险后签发短期委托 token，里面同时保留 sub 和 act，并绑定 aud、scope 和 exp；Agent 带这个 token 调用目标服务，目标服务先验签名、issuer 和 token 类型，再确认 aud 是自己且未过期、scope 足够，最后按 subject 和 actor 的委托上下文对具体资源授权以防 confused deputy，批量或不可逆动作还要求 step-up 或人工批准；委托不是模拟，审计同时记录 subject 和 actor，子 Agent 要换更窄的 token 而不是转发原 token',
 };
 
 export default (k) => {
@@ -20,6 +20,7 @@ export default (k) => {
   s.push(k.arrow({ points: [[500, 176], [460, 176]], tone: 'accent' }));
   s.push(k.text({ x: 480, y: 168, text: '③', size: 'label', tone: 'accent', anchor: 'middle' }));
   s.push(k.arrow({ points: [[355, 196], [355, 232], [825, 232], [825, 196]], tone: 'info' }));
+  s.push(k.text({ x: 40, y: 254, text: '① 提目标  ② 交换请求  ③ 签发 token', size: 'note', tone: 'muted' }));
   s.push(k.text({ x: 590, y: 254, text: '④ 带短期委托 token 调用', size: 'note', tone: 'info', anchor: 'middle' }));
 
   s.push(k.panel({ x: 40, y: 274, w: 420, h: 196, label: '③ 签发的短期委托 token' }));
@@ -28,7 +29,7 @@ export default (k) => {
     ['act: expense-agent/pod-7', '谁在执行'],
     ['aud: billing-api', '只给这个服务'],
     ['scope: invoice:read', '最小权限'],
-    ['exp: 5 分钟', '短期，可撤销'],
+    ['exp: 5 分钟', '很快过期'],
   ];
   rows.forEach(([c, d], i) => {
     s.push(k.text({ x: 60, y: 330 + i * 30, text: c, size: 'label', mono: true, tone: i < 2 ? 'accent' : undefined }));
@@ -40,8 +41,8 @@ export default (k) => {
     ['签名、issuer、token 类型', undefined],
     ['aud 是不是我，有没有过期', undefined],
     ['scope 够不够这个动作', undefined],
-    ['sub 对这条资源有没有权', 'warn'],
-    ['批量、不可逆 → step-up 或人工批准', 'bad'],
+    ['sub + act 对这条资源有没有权', 'warn'],
+    ['批量、不可逆 → 要求 step-up 或人工批准', 'bad'],
   ].forEach(([t, tone], i) => s.push(k.text({ x: 500, y: 330 + i * 30, text: `${i + 1}. ${t}`, size: 'label', tone })));
 
   return k.figure({

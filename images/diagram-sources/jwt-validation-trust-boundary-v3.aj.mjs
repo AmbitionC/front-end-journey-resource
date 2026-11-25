@@ -1,5 +1,5 @@
 export const meta = {
-  name: 'jwt-validation-trust-boundary-v2',
+  name: 'jwt-validation-trust-boundary-v3',
   article: 'knowledge/backend/auth/jwt-auth.md',
   alt: '签名 JWT 的三段结构与验证管线。三段是 header、payload、signature：header 声明算法，payload 只是 Base64URL 编码不是加密，谁拿到都能读，不能放密码和密钥；signature 覆盖前两段，篡改任一段都会验签失败。服务端按顺序验证：先用写死的算法白名单（如 RS256，不能含 none），不信 token 自己声明的 alg；再从受信密钥集合里选公钥，轮换时可按 kid 支持多把；然后验签；再校验 claims：iss、aud、exp、sub 和 token_use 等用途字段，并做运行时 schema 检查；最后查当前授权，验签通过不等于有权执行。任一步失败都终止请求，签名或受众无效不能靠刷新重试掩盖。两个常见错误：把 jwt.decode 当验证，以及在 payload 里放敏感明文。令牌生命周期：Access Token 短期，Refresh Token 在服务端维护会话族，原子轮换、旧凭据只消费一次，发现重放按策略撤销；撤销有三种取舍：短过期在到期前仍然有效，即时撤销需要额外状态，比如 jti 黑名单或 tokenVersion',
 };
@@ -38,7 +38,7 @@ export default (k) => {
   s.push(k.text({ x: 480, y: 388, text: '签名或受众无效不能靠刷新重试掩盖；jwt.decode 只是解码，不是验证', size: 'note', anchor: 'middle', tone: 'bad' }));
 
   // 生命周期与撤销
-  s.push(k.box({ x: 40, y: 426, w: 280, h: 88, title: 'Access Token', sub: '期限按资源风险设得短\n只在资源入口验证', titleSize: 'body', tone: 'info' }));
+  s.push(k.box({ x: 40, y: 426, w: 280, h: 88, title: 'Access Token', sub: '期限按资源风险设得短\n资源请求入口验证并授权', titleSize: 'body', tone: 'info' }));
   s.push(k.box({ x: 340, y: 426, w: 280, h: 88, title: 'Refresh Token', sub: '服务端维护会话族，原子轮换\n旧凭据只用一次，重放按策略撤销', titleSize: 'body', tone: 'info' }));
   s.push(k.box({ x: 640, y: 426, w: 280, h: 88, title: '撤销的三种取舍', sub: '短过期：到期前仍有效\n即时：jti 黑名单 · tokenVersion', titleSize: 'body', tone: 'warn' }));
 

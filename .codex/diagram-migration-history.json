@@ -163,12 +163,18 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/llm-open-source-deployment-stack-v2.aj.mjs",
-          "sourceSha256": "58a3bd5943b886b7bb606282f08b7ae922f247724cb2e194e07bbc7e6ade7b33",
-          "darkPng": "images/llm-open-source-deployment-stack-v2.dark.png",
-          "lightPng": "images/llm-open-source-deployment-stack-v2.light.png",
-          "darkSha256": "98e712c425f78f17aeb12c33e6386e1cd5adb5fc38f0e1157960a5d65b045317",
-          "lightSha256": "3ad5fee5f8e7e2a4ef6eef33c738483dc229f17751445454cdd3ecfb2a3d3537"
+          "source": "images/diagram-sources/llm-open-source-deployment-stack-v3.aj.mjs",
+          "sourceSha256": "cdacc045ae473258373adaa11d766f96b8187c11a67510f5bf7d67a147d3a697",
+          "darkPng": "images/llm-open-source-deployment-stack-v3.dark.png",
+          "lightPng": "images/llm-open-source-deployment-stack-v3.light.png",
+          "darkSha256": "a46af43236890fa11b079056a921f25c39f036f1c7879f96a034f9447d9c05f7",
+          "lightSha256": "9a375900972e6eaca77672df9519bde28f0958dd0120cee588b7b3b2e8fc78b2"
+        }
+      ],
+      "followUps": [
+        {
+          "batchId": "aj-diagrams-pr131-followups",
+          "note": "按 #131 独立审核的非阻塞意见修图，换新版本名，不覆盖已发布图片"
         }
       ]
     },
@@ -288,12 +294,18 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/llm-alignment-four-layers-v2.aj.mjs",
-          "sourceSha256": "c5178cccc24a3560dfda6d5ca3bab196cd6a46d8694e0efb32063931b9e8793c",
-          "darkPng": "images/llm-alignment-four-layers-v2.dark.png",
-          "lightPng": "images/llm-alignment-four-layers-v2.light.png",
-          "darkSha256": "6b3500a2f22cda27236ef8caa6063aa377b1c57e913de297d2a88e54c5238b5d",
-          "lightSha256": "c10623a75da210e00e5ea974bc007ac6930e148d5ef6ce429ac99c519a39620a"
+          "source": "images/diagram-sources/llm-alignment-four-layers-v3.aj.mjs",
+          "sourceSha256": "8b4c9b09f6250c8f4e24b8f71d3c1b73b1f66ae12996817e1bc1b02ea09992ea",
+          "darkPng": "images/llm-alignment-four-layers-v3.dark.png",
+          "lightPng": "images/llm-alignment-four-layers-v3.light.png",
+          "darkSha256": "9abc2852bac531a9cad458ca95f1eaf7a3d24e1dae6aba4b719d14557b930ff5",
+          "lightSha256": "219ce5c47646e116c3592f89ea4f77214a81286c93c6e7ef56e0a7ce106d1dca"
+        }
+      ],
+      "followUps": [
+        {
+          "batchId": "aj-diagrams-pr131-followups",
+          "note": "按 #131 独立审核的非阻塞意见修图，换新版本名，不覆盖已发布图片"
         }
       ]
     },
@@ -566,12 +578,18 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/prompt-cache-design-stable-prefix-v2.aj.mjs",
-          "sourceSha256": "4da272bcf54c9ef75589d42f7fd3716fa25fc4589c4b41c0a41ddfe9abca429e",
-          "darkPng": "images/prompt-cache-design-stable-prefix-v2.dark.png",
-          "lightPng": "images/prompt-cache-design-stable-prefix-v2.light.png",
-          "darkSha256": "7981251d4f10bef24e6457d106c2bd2ffdbca73c35ffbf56a1a6ebb6c483d4df",
-          "lightSha256": "214f3d4683b2f4bc245a62536af3662981438d988a65e0cedf38e05204ef1d92"
+          "source": "images/diagram-sources/prompt-cache-design-stable-prefix-v3.aj.mjs",
+          "sourceSha256": "8f14b4e40383bd7e69e400f8e53d84d9611865279fa2c16448f40132732e7f68",
+          "darkPng": "images/prompt-cache-design-stable-prefix-v3.dark.png",
+          "lightPng": "images/prompt-cache-design-stable-prefix-v3.light.png",
+          "darkSha256": "eab121a413ff447ad86ded5b9de4c12a46d2c1386a280a67cdc6b8ac83d6eb5b",
+          "lightSha256": "4eeff7cbe2a01e65c2c73877ccbd8a4d200e30aa8a45187a2762b5824cbf6034"
+        }
+      ],
+      "followUps": [
+        {
+          "batchId": "aj-diagrams-pr131-followups",
+          "note": "按 #131 独立审核的非阻塞意见修图，换新版本名，不覆盖已发布图片"
         }
       ]
     },
@@ -640,12 +658,18 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/prompt-template-design-render-pipeline-v2.aj.mjs",
-          "sourceSha256": "1dcf608b36deefcbd06b98852a4b6d6526e5758fb8392c3b47a1bb963b7b3fcf",
-          "darkPng": "images/prompt-template-design-render-pipeline-v2.dark.png",
-          "lightPng": "images/prompt-template-design-render-pipeline-v2.light.png",
-          "darkSha256": "79fde0211a58247eaa63565af3ddd89d4859f8e09c4686596c0358788c9dbb42",
-          "lightSha256": "61ab79b6b81798421a289413ca5da6dfccd80b50d3b7edbb61b31a713e695a6b"
+          "source": "images/diagram-sources/prompt-template-design-render-pipeline-v3.aj.mjs",
+          "sourceSha256": "94d36eb661c6cbd476a3bf81a73d6f2139a6d828096f846f5cb62d482880a525",
+          "darkPng": "images/prompt-template-design-render-pipeline-v3.dark.png",
+          "lightPng": "images/prompt-template-design-render-pipeline-v3.light.png",
+          "darkSha256": "db05c013d3cefa3d52324ccef456b85647764320c728c21cac9ffeafb6bf39c0",
+          "lightSha256": "be96cdd6daca7ccf5394ca72bcb05181b5274ed12f96a36187832606c3eba385"
+        }
+      ],
+      "followUps": [
+        {
+          "batchId": "aj-diagrams-pr131-followups",
+          "note": "按 #131 独立审核的非阻塞意见修图，换新版本名，不覆盖已发布图片"
         }
       ]
     },
@@ -2368,12 +2392,18 @@
       "resumeExistingDiagramMigration": false,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/agent-parallel-tools-fanout-join-v3.aj.mjs",
-          "sourceSha256": "8284530b6840961fcfa099f61cb8c8356bb555dc17e3e16f026436c9d7db4462",
-          "darkPng": "images/agent-parallel-tools-fanout-join-v3.dark.png",
-          "lightPng": "images/agent-parallel-tools-fanout-join-v3.light.png",
-          "darkSha256": "69e0bf19e41d42a956399be788a6a0af45538fd4a5f9e55d501379906d95e08b",
-          "lightSha256": "150c3d2cec20fa4706c3945cc1be5b682d8e1481c0afc71fb9ae402b763f4f47"
+          "source": "images/diagram-sources/agent-parallel-tools-fanout-join-v4.aj.mjs",
+          "sourceSha256": "e1c6f1ffcf985fcfae15f8fcbec150f77b6e91a788bf5da2720f7ed4ae925e46",
+          "darkPng": "images/agent-parallel-tools-fanout-join-v4.dark.png",
+          "lightPng": "images/agent-parallel-tools-fanout-join-v4.light.png",
+          "darkSha256": "2a3079e9f563fe7e4f1b4aa04fd858ceedffb2393986ae91e5a20ce6fa0047d3",
+          "lightSha256": "277f76cc56c6209d8ed7d10c24667471d85fafd05b1998e9189368ed7e4756d1"
+        }
+      ],
+      "followUps": [
+        {
+          "batchId": "aj-diagrams-pr131-followups",
+          "note": "按 #131 独立审核的非阻塞意见修图，换新版本名，不覆盖已发布图片"
         }
       ]
     },
@@ -2670,12 +2700,18 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/agent-identity-auth-token-exchange-v2.aj.mjs",
-          "sourceSha256": "b54e4cc67d9bdb770ac575a76f916f40264761874e14156eee2d42837ee1fa7b",
-          "darkPng": "images/agent-identity-auth-token-exchange-v2.dark.png",
-          "lightPng": "images/agent-identity-auth-token-exchange-v2.light.png",
-          "darkSha256": "317ac34b7b5e846bc1590f21dacbf818d7353bee57f6f404ee097efb5d6cbeff",
-          "lightSha256": "f3dc09bd31e3f43d7aa119c4aa31fc873120b2307eefef8f5072ef17ac195226"
+          "source": "images/diagram-sources/agent-identity-auth-token-exchange-v3.aj.mjs",
+          "sourceSha256": "9b30f1f56deb74469c481350bf02cffce39ad0f5f0c5bfa09cacf233b25ce995",
+          "darkPng": "images/agent-identity-auth-token-exchange-v3.dark.png",
+          "lightPng": "images/agent-identity-auth-token-exchange-v3.light.png",
+          "darkSha256": "92846837080444c8c349b89e29800402bf440114ee1e6cc0bfbb33e24cc93953",
+          "lightSha256": "8ecde559e7bf1362e71baa8e883e7fc3fd4d6c09222d5ad08b73f259cac3c135"
+        }
+      ],
+      "followUps": [
+        {
+          "batchId": "aj-diagrams-pr131-followups",
+          "note": "按 #131 独立审核的非阻塞意见修图，换新版本名，不覆盖已发布图片"
         }
       ]
     },
@@ -2698,12 +2734,18 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/agent-benchmark-contract-report-v2.aj.mjs",
-          "sourceSha256": "6b617e93fb0774573dcb4537454cdea7079e1f4c36e79e3f3cdccd39366b41c1",
-          "darkPng": "images/agent-benchmark-contract-report-v2.dark.png",
-          "lightPng": "images/agent-benchmark-contract-report-v2.light.png",
-          "darkSha256": "2a66ac29f71ec8117e98e03ed45d32f2175d46c294d2f7f9b6130cec68818fbb",
-          "lightSha256": "b6b384a249e62a7db92a57ffe92ebe4277f7773fedf1ef9da8af5a16275c8f87"
+          "source": "images/diagram-sources/agent-benchmark-contract-report-v3.aj.mjs",
+          "sourceSha256": "91b38d14204b87f9e33119d2225107b5625b8ae31ba2074ae3100a72cd476fe5",
+          "darkPng": "images/agent-benchmark-contract-report-v3.dark.png",
+          "lightPng": "images/agent-benchmark-contract-report-v3.light.png",
+          "darkSha256": "5d5f9eaf937953e22e2a6fbb1bb5a9e01c990a1b50bd32cc8caf0222ed1a9043",
+          "lightSha256": "c23ae31743d3ff714bb63a022e59d0a443da6aa878815cb036233483a01843e6"
+        }
+      ],
+      "followUps": [
+        {
+          "batchId": "aj-diagrams-pr131-followups",
+          "note": "按 #131 独立审核的非阻塞意见修图，换新版本名，不覆盖已发布图片"
         }
       ]
     },
@@ -2870,12 +2912,18 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/ai-observability-trace-waterfall-v2.aj.mjs",
-          "sourceSha256": "1b57394b4635831c75ee08763af025378bbc100270f800ddef8f21c40b5f8359",
-          "darkPng": "images/ai-observability-trace-waterfall-v2.dark.png",
-          "lightPng": "images/ai-observability-trace-waterfall-v2.light.png",
-          "darkSha256": "d2e6dab8fb599acad6b2d68f2065060fd374545dce94ea3c7af1392e381f34d0",
-          "lightSha256": "40a1339464d23473709c1b0f482f757bb93964f750bed18b2eb699c21f404c25"
+          "source": "images/diagram-sources/ai-observability-trace-waterfall-v3.aj.mjs",
+          "sourceSha256": "362eb456fff36c8602d35ff26754dac8f2052e5feb332cb14c968c71304da7cb",
+          "darkPng": "images/ai-observability-trace-waterfall-v3.dark.png",
+          "lightPng": "images/ai-observability-trace-waterfall-v3.light.png",
+          "darkSha256": "19cbcb99ee0609c7d98af9a1af86c91db585277f08644e1ed94b7c7f83d284d0",
+          "lightSha256": "d04388e097897bcada5a931fe713d2b8f1d964ac3989bbb840ddf45ed11cd668"
+        }
+      ],
+      "followUps": [
+        {
+          "batchId": "aj-diagrams-pr131-followups",
+          "note": "按 #131 独立审核的非阻塞意见修图，换新版本名，不覆盖已发布图片"
         }
       ]
     },
@@ -4198,12 +4246,18 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/jwt-validation-trust-boundary-v2.aj.mjs",
-          "sourceSha256": "4615298119d8ed74f21ab62d633175bbab70b403c216c1320677604f7f9ddff4",
-          "darkPng": "images/jwt-validation-trust-boundary-v2.dark.png",
-          "lightPng": "images/jwt-validation-trust-boundary-v2.light.png",
-          "darkSha256": "cb84501e18ac0a9473a7b97db0c25c008b113e0fc081a4a232a1769eca774caa",
-          "lightSha256": "843a8598e3dc57c5fc0e77d4fa0be50366f2db80c7bdb7d4fa7dae5f2d89cd14"
+          "source": "images/diagram-sources/jwt-validation-trust-boundary-v3.aj.mjs",
+          "sourceSha256": "945e70e3a2ba9cb68cd46df5cdf7465e04bff4b9a4ad0326d0ec9c4cf08e35de",
+          "darkPng": "images/jwt-validation-trust-boundary-v3.dark.png",
+          "lightPng": "images/jwt-validation-trust-boundary-v3.light.png",
+          "darkSha256": "32963ae1615d5f163e1a817e4e764919ec039b37cfedfa7373de42e0fea1dcd6",
+          "lightSha256": "462ded0037e38780531479e6fc0c07c1891905d43899b11e1efff09ae0ab5054"
+        }
+      ],
+      "followUps": [
+        {
+          "batchId": "aj-diagrams-pr131-followups",
+          "note": "按 #131 独立审核的非阻塞意见修图，换新版本名，不覆盖已发布图片"
         }
       ]
     },
@@ -5218,12 +5272,18 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/dns-analysis-resolution-cache-failover-v2.aj.mjs",
-          "sourceSha256": "f8e21c89b9d383cb363c325658fee658d74f29beb70a55a32aed3417a9f041eb",
-          "darkPng": "images/dns-analysis-resolution-cache-failover-v2.dark.png",
-          "lightPng": "images/dns-analysis-resolution-cache-failover-v2.light.png",
-          "darkSha256": "73dc6be4c6c9f710d15fcdf063e6f8aede85a84b2094f3c08ba94bc5fbe722d3",
-          "lightSha256": "984b5a869432589f3a3e925e5013a9bd9b3ec73ee852e749c91868f8e5d02012"
+          "source": "images/diagram-sources/dns-analysis-resolution-cache-failover-v3.aj.mjs",
+          "sourceSha256": "f775ac7b6821aff3f80a5a6a38cde5c2b4f5cb976265d70722ec2d913d4611d4",
+          "darkPng": "images/dns-analysis-resolution-cache-failover-v3.dark.png",
+          "lightPng": "images/dns-analysis-resolution-cache-failover-v3.light.png",
+          "darkSha256": "07dd87277b0fe8e1b701ac8659dfdfb33dbb0994d13ec83972b4628314c958ab",
+          "lightSha256": "2f3d3b807e2bfbb40d236814deb2e7e099e0078ea44009094c77b7524f47daea"
+        }
+      ],
+      "followUps": [
+        {
+          "batchId": "aj-diagrams-pr131-followups",
+          "note": "按 #131 独立审核的非阻塞意见修图，换新版本名，不覆盖已发布图片"
         }
       ]
     },
@@ -5246,12 +5306,18 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/tcpip-model-encapsulation-path-v2.aj.mjs",
-          "sourceSha256": "aecf5463b6529960810e6ee657209555d8f86ec1aa1902744c5b486c5c3a6618",
-          "darkPng": "images/tcpip-model-encapsulation-path-v2.dark.png",
-          "lightPng": "images/tcpip-model-encapsulation-path-v2.light.png",
-          "darkSha256": "440b538828da0ab6f2a38a1a12db9e8120a69bcdcb3e7c6a010f7fa04b4003d0",
-          "lightSha256": "f2014f4973534ac0469dde7a14b2b3ea0bb3f14cbcc1b28f1081f5ebf0458d5f"
+          "source": "images/diagram-sources/tcpip-model-encapsulation-path-v3.aj.mjs",
+          "sourceSha256": "d38c50b2a287bbaba7def06a04db15c74f2f597584e5b297392bfbff5ed3f0a6",
+          "darkPng": "images/tcpip-model-encapsulation-path-v3.dark.png",
+          "lightPng": "images/tcpip-model-encapsulation-path-v3.light.png",
+          "darkSha256": "c86c1ce2c88ad676fc57c153d7538c02bd691ad13500c73f54ead258726baaa7",
+          "lightSha256": "a50fcd03c0e28ab3c5ac8b53703150a9d4471078c0e064f520395bff85c5692b"
+        }
+      ],
+      "followUps": [
+        {
+          "batchId": "aj-diagrams-pr131-followups",
+          "note": "按 #131 独立审核的非阻塞意见修图，换新版本名，不覆盖已发布图片"
         }
       ]
     },
@@ -6086,12 +6152,18 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/agent-markdown-code-ui-safe-render-pipeline-v2.aj.mjs",
-          "sourceSha256": "5ce0f7565a374ff753fc18462fc186dfe4eea16a1de329011186b32636497c20",
-          "darkPng": "images/agent-markdown-code-ui-safe-render-pipeline-v2.dark.png",
-          "lightPng": "images/agent-markdown-code-ui-safe-render-pipeline-v2.light.png",
-          "darkSha256": "78120b12fdd3c928df9706fa6e6baaecfae684decc162d3e3b17c86ad4daa2c2",
-          "lightSha256": "72b22c9cf78a04eec50f56128105ca66d4218b69c56582e599d7f733910f22d7"
+          "source": "images/diagram-sources/agent-markdown-code-ui-safe-render-pipeline-v3.aj.mjs",
+          "sourceSha256": "b46e781058816ed28efce25f321f4a1724b7151835724e9e10d5a0b682bb1bcb",
+          "darkPng": "images/agent-markdown-code-ui-safe-render-pipeline-v3.dark.png",
+          "lightPng": "images/agent-markdown-code-ui-safe-render-pipeline-v3.light.png",
+          "darkSha256": "1d26683f76a78b24b7e02a748e9ba846e3be0c7ea9e44234b6ec43b735d1755a",
+          "lightSha256": "e33f35d26ea582e9ed4dd5b59466bb0e87ef1b47165ccbba7455954f82f11467"
+        }
+      ],
+      "followUps": [
+        {
+          "batchId": "aj-diagrams-pr131-followups",
+          "note": "按 #131 独立审核的非阻塞意见修图，换新版本名，不覆盖已发布图片"
         }
       ]
     },

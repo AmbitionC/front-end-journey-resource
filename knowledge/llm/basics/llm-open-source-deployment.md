@@ -34,7 +34,7 @@
 
 ## 运行时选择：吞吐还是本地适配
 
-![开源大模型部署栈自下而上六层：模型审查看模型卡、许可证、来源和哈希；格式与兼容要逐项核对 safetensors 或 GGUF、架构、tokenizer、聊天模板和量化类型；运行时在 vLLM 类 GPU 服务（连续批处理、KV Cache 管理）和 llama.cpp 类本地运行时（CPU、消费级 GPU、可移植）之间按硬件选择；硬件预算要算三本内存账：权重、随上下文和并发增长的 KV Cache、激活与工作区，还要留余量；服务入口负责认证、限流、token 上限、超时取消、背压和版本记录；最上层是可观测与验收，看首 token 延迟、P95、KV 占用，在业务集上比较高精度和量化版本，并能回滚到已知组合](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-open-source-deployment-stack-v2.dark.png)
+![开源大模型部署栈自下而上六层：模型审查看模型卡、许可证、来源和哈希；格式与兼容要逐项核对 safetensors 或 GGUF、架构、tokenizer、聊天模板和量化类型；运行时在 vLLM 类 GPU 服务（连续批处理、KV Cache 管理）和 llama.cpp 类本地运行时（CPU、消费级 GPU、可移植）之间按硬件选择；硬件预算要算三本内存账：权重、随上下文和并发增长的 KV Cache、激活与工作区，还要留余量；服务入口负责认证、限流、token 上限、超时取消、背压和版本记录；最上层是可观测与验收，看首 token 延迟、P95、KV 占用，在业务集上比较高精度和量化版本，并能回滚到已知组合](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-open-source-deployment-stack-v3.dark.png)
 *图：模型文件只是部署栈的一层；硬件预算、服务控制和验收共同决定能否上线。*
 
 以两类常见路线为例：

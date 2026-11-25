@@ -1,5 +1,5 @@
 export const meta = {
-  name: 'tcpip-model-encapsulation-path-v2',
+  name: 'tcpip-model-encapsulation-path-v3',
   article: 'knowledge/network/tcpIp/tcpIp-model.md',
   alt: 'TCP/IP 的封装与端到端路径。左侧是发送端逐层封装：应用层只有应用字节；传输层加 TCP 头，含源和目的端口、序号和 flags；网络层再加 IP 头，含源和目的地址、Hop Limit；链路层最外面加帧头（下一跳链路地址）和末尾校验。接收端逐层验证和解封装，把字节交给正确进程。右侧是路径：客户端把帧交给默认网关，路由器按目的 IP 选下一跳，每一跳帧头都会换；NAT 会改写地址和端口并维护有超时的映射；服务器逐层解封装。源和目的 IP 通常端到端保持，除非 NAT 或隧道改写。三个要点：TCP 连接由协议加源、目的 IP 和端口标识，是有序字节流，一次 write 不等于对端一次 read，可靠也不等于请求只处理一次；QUIC 在 UDP 上实现加密和可靠 stream，仍受 MTU、NAT 和防火墙影响；应用 payload 加上各层头部可能超过路径 MTU，挡掉必要的 ICMP 会造成能连接但大包卡住。排障顺序：DNS、路由、ARP 或 NDP、TCP 或 QUIC 握手、TLS 证书和 SNI、HTTP 状态、应用下游；ping 通只说明某类 ICMP 路径可达',
 };
@@ -47,11 +47,11 @@ export default (k) => {
     ['MTU', 'payload 加各层头部可能超 MTU\n挡掉必要 ICMP，大包会卡住'],
   ].forEach(([t, sub], i) => s.push(k.box({ x: 40 + i * 300, y: 412, w: 280, h: 84, title: t, sub, titleSize: 'body', tone: i === 2 ? 'warn' : 'info' })));
 
-  s.push(k.panel({ x: 40, y: 520, w: 880, h: 104, label: '一次 HTTPS 请求出问题，按层往上查', tone: 'accent' }));
-  ['DNS', '路由', 'ARP/NDP', 'TCP 握手', 'TLS/SNI', 'HTTP 状态', '应用下游'].forEach((t, i) => {
+  s.push(k.panel({ x: 40, y: 520, w: 880, h: 104, label: '一次 HTTPS 请求出问题，按这个顺序排查', tone: 'accent' }));
+  ['DNS', '路由', 'ARP/NDP', 'TCP/QUIC\n握手', 'TLS/SNI', 'HTTP 状态', '应用下游'].forEach((t, i) => {
     const x = 56 + i * 124;
-    s.push(k.box({ x, y: 560, w: 106, h: 44, title: t, titleSize: 'label', tone: 'info' }));
-    if (i < 6) s.push(k.arrow({ points: [[x + 106, 582], [x + 124, 582]] }));
+    s.push(k.box({ x, y: 556, w: 106, h: 54, title: t, titleSize: 'label', tone: 'info' }));
+    if (i < 6) s.push(k.arrow({ points: [[x + 106, 583], [x + 124, 583]] }));
   });
 
   return k.figure({

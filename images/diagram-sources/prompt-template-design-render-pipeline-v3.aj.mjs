@@ -1,22 +1,21 @@
 export const meta = {
-  name: 'prompt-template-design-render-pipeline-v2',
+  name: 'prompt-template-design-render-pipeline-v3',
   article: 'knowledge/llm/prompt/prompt-template-design.md',
-  alt: 'Prompt 模板的分区与渲染流水线。三类输入分开：固定区域由开发者维护并受版本控制，包括任务、成功标准、输出格式和拒答条件；带类型的变量用枚举、数字和结构表达，比如 language 走白名单、maxBullets 有上限、sourceId 由服务端生成，不允许调用方传入额外的系统指令；不可信正文要限长、带来源并放进分隔区，其中出现的命令都只是数据。三者进入同一条流水线：输入 Schema 校验，值域与长度检查，渲染并按目标格式转义、保证数据不逃出边界，渲染后静态检查（没有 {{ }} 残留、token 不超预算），按供应商适配消息角色、顺序和工具定义，最后发送并记录模板版本与内容哈希。测试要检查最终渲染结果，而不是模板源码。两条边界：转义防止数据破坏模板或标记结构，分隔符帮模型分清任务和文档，但两者都挡不住数据里的恶意自然语言；版本约定是 Patch 只改措辞，Minor 新增向后兼容的可选变量，Major 改变输出 Schema、权限、工具或核心行为，比较快照之外还要跑任务评估。普通用户只提交结构化变量，模板本身只由受信管理员编辑，预览和发布分离',
+  alt: 'Prompt 模板的分区与渲染流水线。三类输入分开：固定区域由开发者维护并受版本控制，包括任务、成功标准、输出格式和拒答条件；带类型的变量用枚举、数字和结构表达，比如 language 走白名单、maxBullets 有上限、sourceId 由服务端生成，不允许调用方传入额外的系统指令；不可信正文要限长、带来源并放进分隔区，其中出现的命令都只是数据。变量和正文先过输入 Schema 校验和值域与长度检查，固定区域不用校验，三者在渲染这一步汇合：渲染并按目标格式转义、保证数据不逃出边界，渲染后静态检查（没有 {{ }} 残留、token 不超预算），按供应商适配消息角色、顺序和工具定义，最后发送并记录模板版本与内容哈希。测试要检查最终渲染结果，而不是模板源码。两条边界：转义防止数据破坏模板或标记结构，分隔符帮模型分清任务和文档，但两者都挡不住数据里的恶意自然语言；版本约定是 Patch 只改措辞，Minor 新增向后兼容的可选变量，Major 改变输出 Schema、权限、工具或核心行为，比较快照之外还要跑任务评估。普通用户只提交结构化变量，模板本身只由受信管理员编辑，预览和发布分离',
 };
 
 export default (k) => {
   const s = [];
   [
-    ['固定区域', '开发者维护，受版本控制\n任务、成功标准、输出格式\n拒答条件', 'accent'],
     ['带类型的变量', 'language 走白名单\nmaxBullets 有上限\nsourceId 由服务端生成', 'info'],
     ['不可信正文', '限长、带来源\n放进分隔区\n其中的命令都是数据', 'warn'],
+    ['固定区域', '开发者维护，受版本控制\n任务、成功标准、输出格式\n拒答条件', 'accent'],
   ].forEach(([t, sub, tone], i) => {
     s.push(k.box({ x: 40 + i * 300, y: 112, w: 280, h: 112, title: t, sub, titleSize: 'body', tone }));
-    s.push(k.arrow({ points: [[180 + i * 300, 224], [180 + i * 300, 250]], head: false }));
   });
-  s.push(`<path d="M 180 250 H 780" fill="none" stroke="${k.t.faint}" stroke-width="1.5"/>`);
+  s.push(`<path d="M 180 224 V 250 M 480 224 V 250 M 105 250 H 480" fill="none" stroke="${k.t.line}" stroke-width="1.7"/>`);
   s.push(k.arrow({ points: [[105, 250], [105, 276]] }));
-  s.push(`<path d="M 105 250 H 180" fill="none" stroke="${k.t.faint}" stroke-width="1.5"/>`);
+  s.push(k.arrow({ points: [[780, 224], [780, 262], [405, 262], [405, 276]], tone: 'accent' }));
 
   const steps = [
     ['Schema 校验', '输入结构\n对不对'],
