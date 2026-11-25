@@ -2555,11 +2555,76 @@
     "key": "frontier",
     "children": [
       {
-        "label": "每周速递",
+        "label": "专题速递",
         "key": "frontier-weekly",
         "children": [
           {
-            "label": "第 1 期：Skill 进了 MCP、并行 Agent 抢资源、短上下文也够用",
+            "label": "评测专题：需求不清时的交付、评测作弊与评测方法",
+            "key": "frontier-agent-eval",
+            "isLeaf": true,
+            "filePath": "frontier",
+            "contentStatus": "published",
+            "heat": 0,
+            "updatedAt": "2026-11-25",
+            "interviewBaseHeat": 0,
+            "quickRead": {
+              "text": "本期三条：FDE-Gym 模拟真实客户交付，只给客户原话的最难一档没有模型解决超过 95 个任务中的 15 个；Agent4Sci 让 Agent 自己提升指标，前期试验 12 个任务有 5 个出现评测作弊，所以干活和打分要分开；Anthropic 的评测指南给出样本量下限和评分器做法，核心是先写清楚测什么、用人工标注校验评分器、报告不确定性。"
+            }
+          },
+          {
+            "label": "记忆专题：分层记忆、离线整理与记忆带偏答案",
+            "key": "frontier-agent-memory",
+            "isLeaf": true,
+            "filePath": "frontier",
+            "contentStatus": "published",
+            "heat": 0,
+            "updatedAt": "2026-11-25",
+            "interviewBaseHeat": 0,
+            "quickRead": {
+              "text": "本期三条：Anthropic 把 Agent 记忆拆成原始记录、笔记、知识页和每次加载的一小段，并用离线整理在几层之间提炼；MemAdapter 论文测到加入准确且相关的记忆后，一组题的准确率从 96.0% 掉到 77.3%，召回后还要判断该不该用；一篇多模态记忆综述梳理 297 个记忆架构，按更新方式分为静态、动态、自演化三档。"
+            }
+          },
+          {
+            "label": "多 Agent 与 Skill 专题：子 Agent 往回收、Skill 路由成瓶颈",
+            "key": "frontier-multi-agent-skill",
+            "isLeaf": true,
+            "filePath": "frontier",
+            "contentStatus": "published",
+            "heat": 0,
+            "updatedAt": "2026-11-25",
+            "interviewBaseHeat": 0,
+            "quickRead": {
+              "text": "本期三条：Anthropic 建议少用子 Agent，改用单 Agent 加按需加载的 Skill，并给出仍该拆子 Agent 的三种情况和迁移步骤；Skill Adapter 论文测到 Skill 池从 50 个涨到 1000 个时成功率明显下降，选对 Skill 需要专门设计；Skill2Env 从 Skill 自动生成 2963 个可执行任务用于训练。"
+            }
+          },
+          {
+            "label": "Harness 与长任务专题：三角色分工、大脑和手分离、只改 Harness 省 token",
+            "key": "frontier-harness-long-running",
+            "isLeaf": true,
+            "filePath": "frontier",
+            "contentStatus": "published",
+            "heat": 0,
+            "updatedAt": "2026-11-25",
+            "interviewBaseHeat": 0,
+            "quickRead": {
+              "text": "本期三条：Anthropic 用规划、生成、评估三个角色让 Agent 连续几小时做出完整应用，并提醒 Harness 要随模型升级精简；Managed Agents 把模型循环、执行环境和会话日志拆开，首个 token 等待时间的中位数降了约 60%；SoL-Pi 不训练模型只改 Harness，在 EdgeBench 上少用 49.0% 的 token，保住 93.7% 的得分。"
+            }
+          },
+          {
+            "label": "权限与沙箱专题：分类器代替弹窗、隔离强度、凭证不进沙箱",
+            "key": "frontier-permission-sandbox",
+            "isLeaf": true,
+            "filePath": "frontier",
+            "contentStatus": "published",
+            "heat": 0,
+            "updatedAt": "2026-11-25",
+            "interviewBaseHeat": 0,
+            "quickRead": {
+              "text": "本期三条：Claude Code 的 auto mode 用分类器逐个审动作，真实流量误拦率 0.4%，但真实的过度热心危险动作仍漏掉 17%；Anthropic 三个产品分别用容器、系统级沙箱和虚拟机隔离，出网白名单曾被用来外传文件；OpenAI Agents SDK 把循环和执行环境分开，凭证不进运行模型生成代码的环境。"
+            }
+          },
+          {
+            "label": "MCP 与上下文：Skill 进了 MCP、并行 Agent 抢资源、短上下文也够用",
             "key": "frontier-weekly-2026-11-25",
             "isLeaf": true,
             "filePath": "frontier",
