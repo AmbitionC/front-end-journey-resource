@@ -596,6 +596,41 @@ JupyterLab 是 Jupyter Notebook 的下一代界面，采用多面板布局，支
 
 推荐的工作流：用一个 Notebook 作为模板（Template），用 `parameters` tag 标记可变参数（模型名、提示词版本、数据集路径等）；用 Papermill CLI 或 Python API 批量执行，每个实验生成独立的输出 Notebook；用 nbconvert 将结果转为 HTML 便于分享；将实验参数和指标存入 JSON 或 CSV 便于程序化对比。如果规模更大，可以引入 MLflow 或 Weights & Biases 等专业实验追踪平台（Experiment Tracking Platform）与 Notebook 配合使用。
 
+## 练一练
+
+### 高频考点题 1：隐藏状态
+
+Jupyter 的「隐藏状态」问题是指？
+
+- A. 代码被加密看不到
+- B. 文件太大，编辑器打不开
+- C. 图表不能显示
+- D. 乱序执行，依赖未保存的历史
+
+**答案：D。** 交付前应 Restart & Run All，确认从头能复现。
+
+### 高频考点题 2：版本控制
+
+Notebook 放进 Git，常见的噪音来源是？
+
+- A. 输出内容和执行计数
+- B. Markdown 文字
+- C. 文件名
+- D. 代码缩进
+
+**答案：A。** 可以提交前清理输出，或用 jupytext 等工具配对成纯文本脚本。
+
+### 高频考点题 3：何时迁出 Notebook
+
+探索性代码要变成定时生产任务时，应该怎么做？
+
+- A. 直接定时运行这个 Notebook
+- B. 抽成模块和脚本，加测试和参数
+- C. 复制粘贴到另一个 Notebook
+- D. 截图保存运行结果
+
+**答案：B。** Notebook 适合探索和报告，生产流程需要可测试、可复现的代码。
+
 ## 参考资料
 
 - [Jupyter Notebook documentation](https://jupyter-notebook.readthedocs.io/en/stable/notebook.html)

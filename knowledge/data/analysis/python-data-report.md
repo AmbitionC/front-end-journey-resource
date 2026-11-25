@@ -517,6 +517,41 @@ display_time = datetime.now(tz=tz_cn).strftime("%Y-%m-%d %H:%M %Z")
 # 输出示例：2026-06-19 08:00 CST
 ```
 
+## 练一练
+
+### 高频考点题 1：自动化报告的价值
+
+把手工报告改成 Python 自动化，核心价值是？
+
+- A. 让报告看起来更花哨
+- B. 不再需要任何数据
+- C. 流程编码化、可复现
+- D. 完全不需要人再去看报告了
+
+**答案：C。** 每层职责单一：处理层只关心 DataFrame，可视化层只负责图表。
+
+### 高频考点题 2：多列不同聚合
+
+想对 sales 求和、对 price 求平均，pandas 里比较简洁的写法是？
+
+- A. groupby 后 agg 传字典
+- B. 分别写两个 groupby 再手动合并
+- C. 用 for 循环逐行累加
+- D. 先 describe 再手动挑数
+
+**答案：A。** 例如 `agg({'sales':'sum','price':'mean'})`。
+
+### 高频考点题 3：多维交叉分析
+
+按地区和月份交叉统计销售额，适合用？
+
+- A. pivot_table
+- B. describe()
+- C. head() 取前几行
+- D. dropna()
+
+**答案：A。** pivot_table 指定行、列、值和聚合函数。
+
 ## 参考资料
 
 - [nbconvert documentation](https://nbconvert.readthedocs.io/en/latest/)

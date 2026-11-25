@@ -355,6 +355,41 @@ df.loc[df['age'] > 30, 'score'] = 0
 **Q：如何处理 pandas 读取 GB 级 CSV 文件内存溢出的问题？**
 三个方向：① `chunksize` 分批读取后聚合；② `usecols` + `dtype` 减少单次加载体积；③ 换用 Polars 或 DuckDB 直接 SQL 查询，彻底绕开 pandas 的内存模型。
 
+## 练一练
+
+### 高频考点题 1：merge 后行数变多
+
+两张表按 file_id 做 merge，结果行数比两张表都多，最可能的原因是？
+
+- A. merge 默认是 outer join
+- B. 索引没有排序导致数据错位
+- C. pandas 自动补齐了缺失的行
+- D. 键列有重复值，产生了笛卡尔积
+
+**答案：D。** merge 默认是 inner join；键有重复时一对多、多对多会放大行数，合并后要立即检查行数是否合理。
+
+### 高频考点题 2：省内存
+
+一列存的是来源文件名，取值只有几十种但有几百万行，怎样省内存？
+
+- A. 改成 category 类型
+- B. 把整张表转成 Python 列表
+- C. 改用 iterrows 逐行处理
+- D. 把这一列转成 float64
+
+**答案：A。** object 列本质是 Python 字符串指针数组，重复值多的类别列改用 category 能大幅减少内存。
+
+### 高频考点题 3：apply 还是向量化
+
+要给每行加一列"是否超过 512 token"，推荐写法是？
+
+- A. 用 iterrows 逐行判断
+- B. 用 apply 传入 lambda 逐行判断
+- C. 直接对整列做比较运算，得到布尔列
+- D. 先转成字典，循环后再转回 DataFrame
+
+**答案：C。** 能向量化就不用 apply；apply 适合复杂逻辑或多列联合计算。
+
 ## 参考资料
 
 - [pandas 10 minutes to pandas](https://pandas.pydata.org/docs/user_guide/10min.html)
