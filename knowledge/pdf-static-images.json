@@ -2224,7 +2224,7 @@
       "id": "llm-cost-optimize:mermaid:346",
       "kind": "mermaid",
       "articlePath": "knowledge/llm/production/llm-cost-optimize.md",
-      "articleSha256": "d004ab4c68e5ccb9a74d96318e1e1718484c3d0392e0409a1b5891c40e79e048",
+      "articleSha256": "7cc974cbe71e78c1fc920691c310c8e0d8c91085fa3e3f60908c7337b3aec274",
       "line": 353,
       "sourceText": "flowchart TD\n    A[用户请求] --> B{规则预筛\\n关键词/长度}\n    B -->|简单规则命中| C[路由到小模型]\n    B -->|需要 LLM 分类| D[轻量分类器\\nclaude-haiku]\n    D -->|Simple| C\n    D -->|Medium| E[中等模型]\n    D -->|Complex| F[强模型]\n\n    C --> G{语义缓存\\n查询}\n    E --> G\n    F --> G\n\n    G -->|超过已校准阈值| H[返回缓存结果\\n跳过本次模型生成]\n    G -->|未命中| I[Prompt 压缩\\n去冗余 + 结构化]\n\n    I --> J{实时 or 离线?}\n    J -->|离线任务| K[评估 Batch API\\n核对当前契约]\n    J -->|实时请求| L[上下文裁剪\\n滑动窗口 + 摘要]\n\n    L --> M[LLM 调用]\n    K --> M\n    M --> N[写入语义缓存]\n    N --> O[返回结果]\n    H --> O\n\n    style H fill:#d4edda,stroke:#28a745\n    style K fill:#cce5ff,stroke:#004085\n    style M fill:#fff3cd,stroke:#856404\n",
       "sourceSha256": "85e4c968d622870f7597eb55c65826c49938932f1cad9c7e69af14d222c7cfb7",

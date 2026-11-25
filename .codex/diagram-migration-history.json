@@ -1544,7 +1544,7 @@
       "label": "图像、OCR 与多模态检索",
       "articlePath": "knowledge/llm/rag/rag-image-retrieval.md",
       "baselineArticleSha256": "78bd4726ed78ed0502f4d311294bade8489dc574cc29743fc633b2219fa9be70",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/rag-image-retrieval-multimodal-evidence-v1.webp",
@@ -1552,10 +1552,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-40pct-batch1",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/rag-image-retrieval-derived-channels-v2.aj.mjs",
+          "sourceSha256": "9d1f37aa99fdc46d60b6249ae6c8c1b030bb543ed65c28496a3761ee5e37198b",
+          "darkPng": "images/rag-image-retrieval-derived-channels-v2.dark.png",
+          "lightPng": "images/rag-image-retrieval-derived-channels-v2.light.png",
+          "darkSha256": "da98929b28b92505571257b40085645faee319c12aebed3e65dd1428e08c7847",
+          "lightSha256": "aed60d1774eabacc654872dcaf6f8c28812442fb18918723aa1f2ba6c85dcc3a"
+        }
+      ]
     },
     {
       "key": "rag-query-rewrite",
@@ -1682,7 +1692,7 @@
       "label": "RAG 失败诊断：数据、召回、排序与生成",
       "articlePath": "knowledge/llm/rag/rag-failure-debugging.md",
       "baselineArticleSha256": "e9d0a0c1cabf278af35b0c0f41b470ba9f9a07febff4c829b4d2ccb6bb058d94",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/rag-failure-debugging-stage-funnel-v1.webp",
@@ -1690,10 +1700,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-40pct-batch1",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/rag-failure-debugging-reverse-chain-v2.aj.mjs",
+          "sourceSha256": "29439f3abcd28e8a147504d13b1bfe906c8f6067afbada2c38d6542e51ef13d5",
+          "darkPng": "images/rag-failure-debugging-reverse-chain-v2.dark.png",
+          "lightPng": "images/rag-failure-debugging-reverse-chain-v2.light.png",
+          "darkSha256": "ccb276162679e10cc5ac894380744d0e456bd19ad690151361ad66bd11ea21c4",
+          "lightSha256": "fa3b038e9495925112e4d94e2488eb6b66765b15d3b6414955f294ce359fe137"
+        }
+      ]
     },
     {
       "key": "rag-code-retrieval",
@@ -2680,7 +2700,7 @@
       "label": "模型、工具、检索与结果缓存",
       "articlePath": "knowledge/llm/production/agent-cache.md",
       "baselineArticleSha256": "093a5890d69076197aed672a9af2ddb02aad2ef8dbb0f62e63ee26c7f1af1e20",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-cache-layered-keys-v1.webp",
@@ -2688,14 +2708,24 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": "excalidraw",
-      "diagramType": "architecture",
-      "batchId": null,
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-40pct-batch1",
       "publishedEvidence": null,
       "priority": 9,
       "reason": "Explain distinct cache ownership and keyed isolation boundaries.",
       "plannedWave": "first-10",
-      "resumeExistingDiagramMigration": false
+      "resumeExistingDiagramMigration": false,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-cache-layered-keys-v2.aj.mjs",
+          "sourceSha256": "dfca99a83d51b5671388d47afeb77a827ed4de32878887f44426b6c81647eb95",
+          "darkPng": "images/agent-cache-layered-keys-v2.dark.png",
+          "lightPng": "images/agent-cache-layered-keys-v2.light.png",
+          "darkSha256": "94c48e25c55618a0d6c98808ddf41770cfbabf6b66f9b7307ab556a91aa1d9a2",
+          "lightSha256": "9ce06293e83fd19d3f58bb81dff113252a5b94f01935fdfca46666dda66f41bd"
+        }
+      ]
     },
     {
       "key": "agent-concurrency",
@@ -2730,7 +2760,7 @@
       "label": "Trace、Span、Run 与工具调用事件模型",
       "articlePath": "knowledge/llm/production/agent-trace-model.md",
       "baselineArticleSha256": "c30a36f6609b45059d224bd2cc0c2ba34b22c5c491e8f98c380933174e600073",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-trace-model-trace-waterfall-v1.webp",
@@ -2738,17 +2768,27 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-40pct-batch1",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-trace-model-span-waterfall-v2.aj.mjs",
+          "sourceSha256": "dee23ed3636dd0f5e09a119ce657b01747ea9dce87beca2168e74ca6d0b0a9e7",
+          "darkPng": "images/agent-trace-model-span-waterfall-v2.dark.png",
+          "lightPng": "images/agent-trace-model-span-waterfall-v2.light.png",
+          "darkSha256": "3a5a5a27def4193bc0f27cf8f21440f715bb05f497021b4e85bddcf197dc5c77",
+          "lightSha256": "5dc6004c2a37adf379bda755f43d9a5dfa4aa87b4471e3413c45e8e012b27887"
+        }
+      ]
     },
     {
       "key": "agent-secrets-management",
       "label": "密钥、凭证与 Secret 生命周期",
       "articlePath": "knowledge/llm/production/agent-secrets-management.md",
       "baselineArticleSha256": "513e940b931ace87f3403868d6cf03b18c547fefdef7cbf0a9eec4f11db4a5db",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-secrets-management-secret-lifecycle-v1.webp",
@@ -2756,10 +2796,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-40pct-batch1",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-secrets-management-runtime-lifecycle-v2.aj.mjs",
+          "sourceSha256": "bfb3ff7125e40f8ade6c9b301ca22ec1397c28969fe49c12f786c9ea026f2cf3",
+          "darkPng": "images/agent-secrets-management-runtime-lifecycle-v2.dark.png",
+          "lightPng": "images/agent-secrets-management-runtime-lifecycle-v2.light.png",
+          "darkSha256": "45f60414bc67522cac7290eafc0b14b6f824a60834b14e156a8507a553a05f9d",
+          "lightSha256": "48d5b98a7271640d39533075fb3b42d43c543e0398b5afc45a306a03cb1ddf93"
+        }
+      ]
     },
     {
       "key": "ai-observability",
@@ -2794,7 +2844,7 @@
       "label": "队列、Worker 与长任务执行",
       "articlePath": "knowledge/llm/production/agent-queue-worker.md",
       "baselineArticleSha256": "5d4055ed77ea1d1a6f168196ef5715f60f5112dc4db7d8bf95d7740ea3913166",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-queue-worker-job-lifecycle-v1.webp",
@@ -2802,10 +2852,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-40pct-batch1",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-queue-worker-lease-ack-v2.aj.mjs",
+          "sourceSha256": "4a3f600c4a8f8f1ea6a1a3a51c31c973155dad5d5fd3abc9497db22dae53329d",
+          "darkPng": "images/agent-queue-worker-lease-ack-v2.dark.png",
+          "lightPng": "images/agent-queue-worker-lease-ack-v2.light.png",
+          "darkSha256": "0ad951142a4ed78d9d571fe5c1d6ba227397aaef466c8709ab6b5d5a702d6fb5",
+          "lightSha256": "b626964b74eaa20d89b1aed3974a7ce0d2d52f0dcacf2c0c9d39e18455b8937b"
+        }
+      ]
     },
     {
       "key": "agent-idempotency",
@@ -2848,7 +2908,7 @@
       "label": "Token、延迟与成本优化",
       "articlePath": "knowledge/llm/production/llm-cost-optimize.md",
       "baselineArticleSha256": "b40e3a494ebd326c9145049bc9815649d18b4fc6ba67063d6f72c06787639c7e",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/llm-cost-latency-levers-v1.webp",
@@ -2856,10 +2916,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-40pct-batch1",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/llm-cost-levers-v2.aj.mjs",
+          "sourceSha256": "834ea3dbe7872bfd9ce9f77941edd60072f130ff60dd1dace00930314affc25f",
+          "darkPng": "images/llm-cost-levers-v2.dark.png",
+          "lightPng": "images/llm-cost-levers-v2.light.png",
+          "darkSha256": "6ca2a3eee836a73e7fd5b463a807fc09a2d26022a7555001839bca25380a8a85",
+          "lightSha256": "2f2fffe60bfa5d2f24a16bb958bc5d6f74e4c185834d17a1b5ce0e1e236306c6"
+        }
+      ]
     },
     {
       "key": "agent-timeout-budget",

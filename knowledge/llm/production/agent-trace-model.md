@@ -2,7 +2,7 @@ Agent 的一次回答并不是一个不可分割的“模型调用”，而是�
 
 [OpenTelemetry 对信号的定义](https://opentelemetry.io/docs/concepts/signals/)把 Trace 描述为请求穿过系统的路径，把 Span 描述为其中一段有开始和结束的工作。Agent 工程可以沿用这套稳定心智模型，但还要额外表达 Run、模型轮次、工具副作用和人工审批等业务语义。
 
-![Agent Run 中 Trace、Span 与点事件的因果层级](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-trace-model-trace-waterfall-v1.webp)
+![一次带工具的 Agent 回答画成 Trace 瀑布图。整棵树共享同一个 Trace ID。agent.invoke 是根 Span，覆盖整个时间轴；它下面依次是 planner.decide、retrieval.search、model.generate、tool.execute 和 response.validate；tool.execute 下面还有 approval.wait 和 http.client 两个子 Span。圆点表示 Event，是 Span 内某一刻的事实：model.generate 里的首 token 到达、approval.wait 结束时的审批通过、http.client 里的重试被调度。下方区分三个对象：Run 是产品语义上的一次执行，可以跨多条 Trace，用 runId 关联；Span 是有开始和结束的一段工作，有自己的 spanId 和父 Span；Event 是 Span 内某一刻的点状事实，不要伪装成瞬时 Span。划分 Span 的判断法：某段工作只要有独立的依赖、超时、重试、成本、权限或失败责任中的任一项，就值得单独成 Span](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-trace-model-span-waterfall-v2.dark.png)
 
 图中最重要的不是瀑布图外观，而是三条约束：同一条 Trace 共享 Trace ID；每个 Span 有自己的 Span ID；Event 只是 Span 内某一时刻发生的事实，不是假装成瞬时 Span 的另一段工作。
 
