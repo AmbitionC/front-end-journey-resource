@@ -23,6 +23,10 @@ def reliability(runs: dict[str, list[bool]]) -> dict:
     }
 ```
 
+![示意：4 条任务各跑 5 次。任务 A 五次全过，任务 B 过三次，任务 C 过两次，任务 D 一次没过。至少成功一次的任务占 75%，每次都成功的只占 25%，平均通过率 50% 这一个数分不出这两种情况](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-ee-reliability-repeat-runs-v1.dark.png)
+
+*图：数字是示意。任务 B 和 C 是差距的来源，它们有时过有时不过。*
+
 两个数之间的差距就是不稳定的部分。差距很大时，改进的重点是稳定性而不是能力。对用户来说，一个十次里错三次的助手和一个不会做的助手差别不大。
 
 k 取多少取决于预算。本项目默认 5 次，这是在成本和稳定之间取的起步值。
