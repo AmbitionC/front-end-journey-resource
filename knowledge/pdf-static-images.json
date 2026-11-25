@@ -2124,7 +2124,7 @@
       "id": "prompt-injection-defense:mermaid:60",
       "kind": "mermaid",
       "articlePath": "knowledge/llm/production/prompt-injection-defense.md",
-      "articleSha256": "99a978d0fb36302bfa0dd9f35dd2becd676e5fafc0d416d7c5a4353512cb5f71",
+      "articleSha256": "3669d69463b4d72c8e66388644c5445f70c1e8d376f54aa68a7c3d8223652b2e",
       "line": 60,
       "sourceText": "flowchart TB\n    subgraph 攻击向量[\"攻击向量 Attack Vectors\"]\n        A1[直接注入\\nDirect Injection]\n        A2[间接注入\\nIndirect Injection]\n        A3[越狱\\nJailbreak]\n    end\n\n    subgraph 数据入口[\"数据入口 Data Entry Points\"]\n        D1[用户消息\\nUser Message]\n        D2[外部网页 / 文件\\nWeb / File Content]\n        D3[工具返回值\\nTool Results]\n        D4[第三方 API 响应\\n3rd-party API]\n    end\n\n    subgraph 防御层[\"防御层 Defense Layers\"]\n        L1[\"① 输入隔离\\nInput Isolation\"]\n        L2[\"② 输入校验与清洗\\nInput Validation\"]\n        L3[\"③ 最小权限\\nLeast Privilege\"]\n        L4[\"④ 输出过滤\\nOutput Filtering\"]\n        L5[\"⑤ 双重 LLM 校验\\nDual-LLM Pattern\"]\n        L6[\"⑥ 人工确认\\nHuman-in-the-Loop\"]\n    end\n\n    subgraph 资产[\"被保护资产 Protected Assets\"]\n        R1[用户数据]\n        R2[系统操作权限]\n        R3[模型行为意图]\n    end\n\n    A1 --> D1\n    A2 --> D2 & D3 & D4\n    A3 --> D1\n\n    D1 --> L1 --> L2\n    D2 & D3 & D4 --> L1 --> L2\n\n    L2 --> L3 --> L4 --> L5 --> L6\n\n    L6 --> R1 & R2 & R3\n\n    style 攻击向量 fill:#fee2e2,stroke:#ef4444\n    style 防御层 fill:#dcfce7,stroke:#22c55e\n    style 资产 fill:#dbeafe,stroke:#3b82f6\n",
       "sourceSha256": "945775458b7eacc8c4f3fbada0c44fad448ab71c09a1476a0809fed2efc722e4",

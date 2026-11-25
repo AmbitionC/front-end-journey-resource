@@ -1006,7 +1006,7 @@
       "label": "视觉理解与图像生成应用",
       "articlePath": "knowledge/llm/dev/llm-vision-app.md",
       "baselineArticleSha256": "b5317fe3eec4b3c4fa3c985ecd555e279e85cdc1f45bdef8c31f2628bbe3d530",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/llm-vision-app-understand-generate-loop-v1.webp",
@@ -1014,10 +1014,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-40pct-batch4",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/llm-vision-app-two-pipelines-v2.aj.mjs",
+          "sourceSha256": "bbf55ef6866ec744b9b16e2a81585a1fe589309e3385d13863e4d906bb2b8080",
+          "darkPng": "images/llm-vision-app-two-pipelines-v2.dark.png",
+          "lightPng": "images/llm-vision-app-two-pipelines-v2.light.png",
+          "darkSha256": "81567764a5523637d8dcaba57acda9de085d11b833c298c5e143a2d97435ffb5",
+          "lightSha256": "fdfa88fc7476884dfdf6030db97d7d9e65a722e1ab4cf673f79b9c33e040d54b"
+        }
+      ]
     },
     {
       "key": "llm-conversation-state",
@@ -2902,7 +2912,7 @@
       "label": "幂等性、重复执行与副作用控制",
       "articlePath": "knowledge/llm/production/agent-idempotency.md",
       "baselineArticleSha256": "3860d0218619c03d3fd85c753b485792f39998902e29733229e23a4271f822ac",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-idempotency-operation-ledger-v1.webp",
@@ -2910,17 +2920,27 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-40pct-batch4",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-idempotency-ledger-v2.aj.mjs",
+          "sourceSha256": "b9badc124b2e9b1c85a36b6e0112e3e8d04c76ba2d0eb44c554f3e8d56151679",
+          "darkPng": "images/agent-idempotency-ledger-v2.dark.png",
+          "lightPng": "images/agent-idempotency-ledger-v2.light.png",
+          "darkSha256": "7fa93942a8517dc7e01ce589a29af05c08cb7c666625076090730a38804b3f4f",
+          "lightSha256": "6a000ad33a9e8c0dce647b2df46df3361b10b36c707f5290f1d08fb0f62ea0d2"
+        }
+      ]
     },
     {
       "key": "prompt-injection-defense",
       "label": "Prompt Injection 与间接注入防御",
       "articlePath": "knowledge/llm/production/prompt-injection-defense.md",
       "baselineArticleSha256": "99a978d0fb36302bfa0dd9f35dd2becd676e5fafc0d416d7c5a4353512cb5f71",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/prompt-injection-defense-layers-v2.png",
@@ -2928,10 +2948,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-40pct-batch4",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/prompt-injection-defense-boundary-v3.aj.mjs",
+          "sourceSha256": "99d1f0b13cd690f2489bcee77a3d5cf07105ed5fa849f835f1a1226a554db75f",
+          "darkPng": "images/prompt-injection-defense-boundary-v3.dark.png",
+          "lightPng": "images/prompt-injection-defense-boundary-v3.light.png",
+          "darkSha256": "93341bc6f713e783eecc3264e8dc50022620b872999fb0ad92f2a868b0dc99c7",
+          "lightSha256": "8b66d89040292a2cf16a63fdd3435abb9942973580100b3e114a6b19e8c652e7"
+        }
+      ]
     },
     {
       "key": "llm-cost-optimize",
@@ -2966,7 +2996,7 @@
       "label": "端到端超时预算与 Deadline 传播",
       "articlePath": "knowledge/llm/production/agent-timeout-budget.md",
       "baselineArticleSha256": "85f3e9478a764e925373bdf8d1e1c7028e8c08aed5e1ec07777bf56bfbd30fe0",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-timeout-budget-deadline-chain-v1.webp",
@@ -2974,10 +3004,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-40pct-batch4",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-timeout-budget-deadline-v2.aj.mjs",
+          "sourceSha256": "93feae9417c8b19b146b32a1639bceba2d891c4fae86c6dfd1786ec963581e5c",
+          "darkPng": "images/agent-timeout-budget-deadline-v2.dark.png",
+          "lightPng": "images/agent-timeout-budget-deadline-v2.light.png",
+          "darkSha256": "5117fc0dc22089ee9730270e4f36ed2abdff05ed9f2fe81380bcb66968f37c4b",
+          "lightSha256": "e4c89eac000810e1c85ffe0462d8b7376a0423ce00f88079fdc0f9f2a99d61fa"
+        }
+      ]
     },
     {
       "key": "agent-guardrails",
@@ -3076,7 +3116,7 @@
       "label": "模型降级、Fallback 与熔断",
       "articlePath": "knowledge/llm/production/agent-model-fallback.md",
       "baselineArticleSha256": "d10f5b8d0dafd408c81cd0303e9e4292a79666b04a5f5d85512f42f08d5227f6",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-model-fallback-circuit-state-v1.webp",
@@ -3084,10 +3124,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-40pct-batch4",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-model-fallback-decision-v2.aj.mjs",
+          "sourceSha256": "6684ca08488e2cb550d90bdfb57067f8f5ae166874ef19113f3c47c4cdf36132",
+          "darkPng": "images/agent-model-fallback-decision-v2.dark.png",
+          "lightPng": "images/agent-model-fallback-decision-v2.light.png",
+          "darkSha256": "3f655e6630d9e972111bcff3fc5eec1ed75259d9926eca3b3f911976797685a0",
+          "lightSha256": "f59c1dec216de2b77f669569d36b03033f733b2d61a17d110cefd535e1081518"
+        }
+      ]
     },
     {
       "key": "agent-data-privacy",
@@ -3152,7 +3202,7 @@
       "label": "Agent 服务部署、扩缩容与版本发布",
       "articlePath": "knowledge/llm/production/agent-deployment.md",
       "baselineArticleSha256": "5a9a920ee06f74620f927dadb6266d64e70adcd3e820e876544ff73e8223a708",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-deployment-versioned-rollout-v1.webp",
@@ -3160,10 +3210,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-40pct-batch4",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-deployment-bundle-rollout-v2.aj.mjs",
+          "sourceSha256": "27da29ee5f9bab81865e6eca458365025bac55681bdee92b22ff1bbd59353d79",
+          "darkPng": "images/agent-deployment-bundle-rollout-v2.dark.png",
+          "lightPng": "images/agent-deployment-bundle-rollout-v2.light.png",
+          "darkSha256": "f4cc3710282daf0a283db50e193ce12505e530bacfce3f0cb3386cdfab5be710",
+          "lightSha256": "879efb8bc9e24504a269f81e608cfbdcd03fb632f79ca74c22c8fccd98580896"
+        }
+      ]
     },
     {
       "key": "agent-prompt-regression",
@@ -3188,7 +3248,7 @@
       "label": "Agent Gateway 与统一接入层",
       "articlePath": "knowledge/llm/production/agent-api-gateway.md",
       "baselineArticleSha256": "29e0f949404ced62963c76e691933a9da3c89fcc3095eaf2e9876954d9abd81b",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-api-gateway-policy-routing-v1.webp",
@@ -3196,14 +3256,24 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": "excalidraw",
-      "diagramType": "architecture",
-      "batchId": null,
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-40pct-batch4",
       "publishedEvidence": null,
       "priority": 8,
       "reason": "Explain identity, policy and downstream service boundaries.",
       "plannedWave": "first-10",
-      "resumeExistingDiagramMigration": false
+      "resumeExistingDiagramMigration": false,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-api-gateway-pipeline-v2.aj.mjs",
+          "sourceSha256": "7b522d9d3344bfe2cbc0cb647b95cdb4bb25c2a263bd1ed132983fe6641b370d",
+          "darkPng": "images/agent-api-gateway-pipeline-v2.dark.png",
+          "lightPng": "images/agent-api-gateway-pipeline-v2.light.png",
+          "darkSha256": "e12b703b7b22cbf509389d24611f1fd6ecfe6b11ff7026f08901fb3e0a9b4b1e",
+          "lightSha256": "efa83bd1a2ddb6e6ebadbf938c84cad5532e23a669ded2113accd448b2652741"
+        }
+      ]
     },
     {
       "key": "agent-ab-testing",

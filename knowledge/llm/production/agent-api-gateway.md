@@ -2,7 +2,7 @@ Agent Gateway 是所有外部请求进入 Agent 平台的统一边界。它验�
 
 作为 HTTP 中间层，Gateway 必须尊重方法、状态码、表示、缓存和条件请求等语义。[RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html)是这些语义的基础；“统一接入”不意味着把所有错误都改成 200，也不意味着任意重试非幂等请求。
 
-![客户端请求在 Agent Gateway 内依次经过认证、授权、配额、策略和路由，再进入模型或工具执行平面，响应返回前经过统一过滤](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-api-gateway-policy-routing-v1.webp)
+![Agent Gateway 是所有外部请求进入平台的统一边界，内部按固定顺序处理请求。第一步限制请求大小，拒绝解析歧义；第二步认证，校验令牌签名、受众、有效期和防重放；第三步解析 tenant、principal 和 workload identity；第四步授权，依据资源、动作、主体和策略版本；第五步做配额与成本准入，放在昂贵调用之前；第六步路由，从已批准的后端里选出满足约束的一个；第七步接续 Trace，只转发允许列表里的头。之后请求进入执行平面：模型后端、工具，以及任务服务，长任务由 Gateway 返回 202 和 jobId，状态查询和取消由任务服务承载。响应离开前经过第八步出口检查：Schema、内容、敏感数据和流式边界。下方两点：每次路由决策记录 routeId、policyVersion、modelBundle 和 reason，长对话保持版本粘性；过载时先拒绝新的低优先级工作，用租户桶加操作桶，返回 429 或 503 并带 Retry-After，不在 Gateway 里无限排队](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-api-gateway-pipeline-v2.dark.png)
 *图：Gateway 是策略决策与流量控制点，Agent 的持久状态和长任务生命周期留在执行平面。*
 
 ## 请求进入时的处理顺序
