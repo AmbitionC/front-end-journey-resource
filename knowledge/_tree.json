@@ -141,11 +141,11 @@
             "isLeaf": true,
             "filePath": "llm/basics",
             "contentStatus": "published",
-            "heat": 9,
+            "heat": 10,
             "currRank": 5,
             "updatedAt": "2026-07-15",
             "interviewBaseHeat": 6,
-            "interviewCount": 3,
+            "interviewCount": 4,
             "interviewCountBasis": "verified-public-posts",
             "quickRead": {
               "text": "长窗口能容纳更多 token，不保证模型可靠利用全部内容。先区分声明窗口、资源可运行长度与任务上的有效上下文，再固定版本和负载检查首 Token、总延迟与质量；按目标筛选证据、保留来源并验证压缩后的正确性。"
@@ -370,14 +370,14 @@
             "isLeaf": true,
             "filePath": "llm/prompt",
             "contentStatus": "published",
-            "heat": 15,
+            "heat": 16,
             "currRank": 5,
             "updatedAt": "2026-10-29",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "结构化输出用明确数据合同约束模型结果，让程序按字段消费。合法 JSON、符合 Schema 和业务事实正确是不同层次，应用仍须校验结构、语义与权限，并处理拒答、截断和接口失败；平台支持的 Schema 子集与版本不能默认等同完整标准。"
             },
-            "interviewCount": 9,
+            "interviewCount": 10,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1300,14 +1300,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 68,
+            "heat": 69,
             "currRank": 5,
             "updatedAt": "2026-11-22",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Coding Agent 让模型在循环里反复读代码、改代码、跑命令、看结果，由执行循环、工具、项目说明文件（AGENTS.md / CLAUDE.md）、权限沙箱和验证五块组成。判断它做对没有，看测试结果和最终 diff，不看它自称完成。企业使用还要核对获准的账号、入口、模型和数据去向；内容排除不等同于文件系统隔离。"
             },
-            "interviewCount": 62,
+            "interviewCount": 63,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1380,14 +1380,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 29,
+            "heat": 30,
             "currRank": 5,
             "updatedAt": "2026-07-14",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "智能体围绕目标感知、行动并读取结果，模型只是可能的决策组件。用PEAS界定绩效、环境、执行器和观察，循环还需状态、权限、预算与终止条件；路径固定时普通工作流也可能更可靠。"
             },
-            "interviewCount": 23,
+            "interviewCount": 24,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1412,14 +1412,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 25,
+            "heat": 26,
             "currRank": 5,
             "updatedAt": "2026-08-29",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "确定性步骤用显式节点和依赖表达，不确定决策放入受控 Agent 节点。状态、失败出口、恢复和人工接管需共同设计，步骤多不意味着必须采用多智能体。"
             },
-            "interviewCount": 19,
+            "interviewCount": 20,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1923,14 +1923,14 @@
             "isLeaf": true,
             "filePath": "llm/production",
             "contentStatus": "published",
-            "heat": 35,
+            "heat": 36,
             "currRank": 5,
             "updatedAt": "2026-10-28",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Agent 验收分开读取任务要求、执行轨迹和实际环境结果。确定条件用程序，开放质量用经校准的模型或人工判断；固定初始状态、版本和统计分母，不能只相信最终回复中的成功声明。"
             },
-            "interviewCount": 29,
+            "interviewCount": 30,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -5082,14 +5082,14 @@
             "isLeaf": true,
             "filePath": "career",
             "contentStatus": "published",
-            "heat": 44,
+            "heat": 45,
             "currRank": 5,
-            "updatedAt": "2026-11-24",
+            "updatedAt": "2026-11-25",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "介绍项目按「问题、我负责什么、关键取舍、指标和基线、踩过的坑」五步讲，每个数字都要能说清来源。跟着教程做的项目别说成自己从零设计，重点讲你在教程之外改了什么、测了什么。"
             },
-            "interviewCount": 38,
+            "interviewCount": 39,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -5098,14 +5098,14 @@
             "isLeaf": true,
             "filePath": "career",
             "contentStatus": "published",
-            "heat": 28,
+            "heat": 29,
             "currRank": 5,
             "updatedAt": "2026-11-04",
             "quickRead": {
               "text": "用真实问题、个人职责、关键取舍和可核验产物介绍项目。评估需给任务、基线、样本与分母；展示脱敏的工具和状态轨迹，不把固定题数、工具数量或虚构收益当作能力证明。"
             },
             "interviewBaseHeat": 6,
-            "interviewCount": 22,
+            "interviewCount": 23,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -5146,14 +5146,14 @@
             "isLeaf": true,
             "filePath": "career",
             "contentStatus": "published",
-            "heat": 19,
+            "heat": 20,
             "currRank": 5,
             "updatedAt": "2026-10-28",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Agent相关岗位覆盖应用、平台、评测、安全与研究工程，名称并不统一。按团队实际产出和工作任务判断方向，工程基础、状态工具与质量验证常有交集；岗位热度不能代替自身能力证据和团队要求。"
             },
-            "interviewCount": 13,
+            "interviewCount": 14,
             "interviewCountBasis": "verified-public-posts"
           },
           {
