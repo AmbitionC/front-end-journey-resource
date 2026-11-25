@@ -69,3 +69,18 @@ test('small pinned image-resync group stays together, large manifests fail close
   await writeFile(join(f.root,'.codex/image-resync.txt'),names.join('\n')+'\n');git(f.root,'add','.');git(f.root,'commit','-qm','oversize resync');
   await assert.rejects(buildSyncBatches(f.root,after,git(f.root,'rev-parse','HEAD')),/上限/u);
 }));
+
+test('renamed public files still count as real deletions so batch totals match the commit diff',()=>reviewFixture(async f=>{
+  await mkdir(join(f.root,'images/diagram-sources'),{recursive:true});
+  await writeFile(join(f.root,'images/diagram-sources/figure-v2.aj.mjs'),'export default () => "figure source";\n'.repeat(20));
+  git(f.root,'add','.');git(f.root,'commit','-qm','add source');const before=git(f.root,'rev-parse','HEAD');
+  git(f.root,'mv','images/diagram-sources/figure-v2.aj.mjs','images/diagram-sources/figure-v3.aj.mjs');
+  git(f.root,'commit','-qm','rename source');const after=git(f.root,'rev-parse','HEAD');
+  const plan=await buildSyncBatches(f.root,before,after);
+  const removed=plan.batches.flatMap(b=>b.files).filter(x=>x.status==='removed').map(x=>x.path);
+  assert.deepEqual(removed,['images/diagram-sources/figure-v2.aj.mjs']);
+  assert.equal(plan.batches.reduce((n,b)=>n+b.expected.counts.deleted,0),plan.expected.counts.deleted);
+  let index=0;
+  const actual=await runSyncBatches(plan,async()=>result(plan.batches[index++]));
+  assert.equal(actual.data.deleted,plan.expected.counts.deleted);
+}));
