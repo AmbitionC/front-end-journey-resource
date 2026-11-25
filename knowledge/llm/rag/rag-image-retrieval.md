@@ -28,8 +28,8 @@ type ImageAsset = {
 
 派生记录通过 `assetId + regionId` 返回原图，不覆盖原图字段。这样 OCR 修正或模型升级时，可以只重建对应通道。
 
-![原图先经过隐私过滤，再派生 OCR 区域、Caption 与视觉向量，多模态融合结果保留 Asset ID 和坐标](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-image-retrieval-multimodal-evidence-v1.webp)
-*图：OCR、caption 和向量均标为 DERIVED；证据最终回到原始图片与 PAGE/BBOX。*
+![图像 RAG 以原图为根对象，派生出多条检索通道。原图 asset 记录 assetId、sourceVersion、contentHash 和 aclVersion，所有派生记录都指回它。原图先经过隐私与授权过滤：这一步要在 OCR、caption、视觉向量和缓存之前完成，敏感内容先遮挡或拒绝索引。之后派生出四条通道，都是观测而不是原始证据：OCR 区域保存文字、bbox 和置信度，适合精确编号；Caption 是生成的描述，用来补召回，不能直接当事实；视觉向量分整图和区域，外观相似不等于同一事实；版面关系记录图片与标题、段落、表格、页码的关系。四条通道分别检索后做晚融合，用 RRF 或在标注集上校准的权重，不直接相加不同模型的原始分数，并按问题类型调整权重。最终引用回到原图，带 assetId、页码、bbox，并标明来自像素、OCR 还是 caption。图里的文字也是不可信数据，截图里写的「忽略指令」只能当检索证据，不能升级为系统指令](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-image-retrieval-derived-channels-v2.dark.png)
+*图：原图是根，先过隐私与授权过滤，再派生 OCR、caption、视觉向量和版面关系四条通道；晚融合后的引用要回到原图的页码和 bbox。*
 
 ## OCR 检索：精确文字与空间位置
 

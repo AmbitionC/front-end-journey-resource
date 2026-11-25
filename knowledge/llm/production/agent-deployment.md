@@ -17,8 +17,8 @@
 
 把 bundle ID 注入每个 trace 和结果。只记录“模型名”不足以复现：provider routing、temperature、system prompt、工具描述和政策变化都会改变行为。[NIST Generative AI Profile](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf)强调对生成式 AI 风险进行治理、映射、测量与管理，版本证据是闭环基础。
 
-![模型、Prompt、工具 Schema、策略与评估集组成版本包，经构建、离线评估、影子、5% 金丝雀、25% 放量到全量；质量、安全、延迟、成本和错误率门控，异常暂停并回滚](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-deployment-versioned-rollout-v1.webp)
-*图：Startup、Readiness、Liveness 分别处理启动、接流量和重启；队列与并发驱动扩缩容。*
+![Agent 的发布单元是一个版本化 bundle，包含模型与 routing、Prompt、工具 Schema、策略、检索索引、运行时和评估集，bundle ID 写进每条 trace。发布按五步推进：第一步构建，固定依赖、镜像 digest、生成 SBOM 并签名；第二步离线门，跑单元、安全、回归和任务评测，并与生产基线比较；第三步 Shadow，把脱敏的真实请求复制给候选版本，写工具换成 dry-run，不产生真实副作用；第四步 Canary，小比例真实流量，按会话粘性路由，避免同一会话在两个版本间跳；第五步逐步放量到全量，门槛要在观察窗口内连续满足才放大。每一步都要过质量、安全、延迟、成本和错误率门禁；异常时先 Pause 停止放量，再 Rollback 回旧 bundle，或做 Forward fix。长任务要绑定启动时的 bundle，执行中途不要悄悄换 Prompt 或工具策略；滚动期间新旧版本并存，状态要外置或保持兼容](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-deployment-bundle-rollout-v2.dark.png)
+*图：模型、Prompt、工具 Schema、策略、索引和评估集组成一个版本包，经构建、离线门、Shadow、Canary 逐步放量；每一步都过门禁，异常先暂停再回滚。*
 
 ## 本地与云端同时覆盖大量设备
 

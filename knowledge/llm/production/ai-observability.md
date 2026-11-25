@@ -1,5 +1,5 @@
-![一次 Agent 请求的 trace 瀑布图：根 span 是用户请求，带全局 trace_id；下面有规划和回答两个 agent step；规划步骤里有一次模型调用，记录模型版本、token、首 token 延迟和成本；回答步骤里依次是检索（记录索引版本和 top_k）、工具调用 search（记录状态和重试次数，其下还有一次数据库查询）和生成答案的模型调用。缩进表示父子关系，横条表示各 span 在时间线上的起止。指标按用户和功能拆分，看首 token 延迟 P95、每请求 token、每会话成本和工具调用次数；日志带 trace_id 和 span_id 关联，prompt 和正文等敏感字段要先脱敏再记录](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/ai-observability-trace-waterfall-v2.dark.png)
-*图：缩进表示父子 span，横条是各自的起止时间；token、成本和版本挂在对应 span 上，日志靠 trace_id 和 span_id 关联，指标按用户和功能拆分，敏感正文先脱敏再记录。*
+![一次 Agent 请求的 trace 瀑布图：根 span 是用户请求，带全局 trace_id；下面有规划和回答两个 agent step；规划步骤里有一次模型调用，记录模型版本、token、首 token 延迟和成本；回答步骤里依次是检索 rag-retrieval（记录配置的 top_k 和返回文档数）、工具调用 tool-search（记录输入校验、执行状态和耗时）和生成答案的模型调用。缩进表示父子关系，横条表示各 span 在时间线上的起止。指标按用户和功能拆分，看首 token 延迟 P95、每请求 token、每会话成本和工具调用次数；手机号、身份证号等 PII 不直接写进 span 输入，上报前脱敏或配置字段过滤](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/ai-observability-trace-waterfall-v3.dark.png)
+*图：缩进表示父子 span，横条是各自的起止时间；token、成本和版本挂在对应 span 上，指标按用户和功能拆分，手机号、身份证号等 PII 上报前先脱敏。*
 
 ---
 

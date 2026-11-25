@@ -1,6 +1,6 @@
 对象存储不是“可以放文件的远程磁盘”。它以 bucket、object key 和版本为核心，通常通过 HTTP 访问，适合不可变或整体替换的大对象。设计时应同时处理对象身份、上传完整性、授权、版本、生命周期与元数据；只做一个上传接口，很快会遇到越权、覆盖、垃圾对象和费用失控。
 
-![对象存储从受控签名、直传、校验到版本保留和生命周期清理的完整链路](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/object-storage-presigned-lifecycle-v1.webp)
+![对象存储的受控直传流程，三方是客户端、业务服务和对象存储。第一步客户端向业务服务申请上传。第二步业务服务认证用户、检查配额，创建 pending object，key 用 tenant 加不可猜测的随机 ID 而不是文件名，签名锁定 method、key、类型和大小。第三步业务服务把短期 PUT 或 multipart 签名返回给客户端。第四步客户端直接把对象传到对象存储，不经过业务服务。第五步客户端提交完成通知，这个通知可能重复，状态转换要幂等。第六步业务服务用 HEAD 校验对象的大小、类型、hash 和 versionId。第七步才标记 ready，恶意文件扫描完成前隔离下载，上传返回 200 不等于业务对象可用。下方两条策略：版本化后普通删除只留下 delete marker，旧版本可恢复，数据库记录正在使用的 versionId；生命周期规则从业务保留期倒推，清理过期的 pending 上传和未完成的 multipart，设定非当前版本的恢复窗口，低频存储层有最短存储期和取回费用](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/object-storage-presigned-upload-v2.dark.png)
 *图：应用只签发受限能力，客户端直传后由服务端验证并登记；版本与生命周期共同决定恢复窗口和成本。*
 
 ## 对象身份与业务身份分离

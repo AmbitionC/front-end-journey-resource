@@ -19,8 +19,8 @@ type RagTrace = {
 
 没有这些版本，事故复现会误用当前索引和 Prompt，得到“我这里没问题”的假结论。
 
-![从答案症状沿 Generation、Context、Rerank、Recall、Index、Source 逐级逆向检查，Trace ID 连接回放、反事实实验和责任归属](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-failure-debugging-stage-funnel-v1.webp)
-*图：最终答案是症状，不是默认根因；示例 Root Cause 可以落在任一阶段。*
+![RAG 故障诊断是一条逆向证据链。先冻结可回放现场：记录 query、用户权限摘要、route、source 与 index version、候选与分数、rerank、最终 context、Prompt 与 model、答案和 citation，用 Trace ID 关联。然后从答案往回逐层检查，每层做一个单变量反事实实验：Generation 换确定性抽取答案或换 Prompt，context 完整而多个生成器都失败才是生成问题；Context 装配强制插入 gold evidence、保持生成配置不变，恢复说明装配或上游选择有问题；Rerank 跳过重排或把 gold 放第一，gold 根本没召回时不要调 rerank；Recall 用 gold query、分别跑 BM25 和向量，绝不为诊断绕过 ACL；Index 按 ID 直读、新旧索引分别查询、重算单条 embedding；Source 与 Parser 看原文件、换 parser、对比 checksum，事实本来不在语料时补数据或 abstain，而不是让模型猜。最终根因以反事实证据确认，并把事故固化进 Golden Set](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-failure-debugging-reverse-chain-v2.dark.png)
+*图：最终答案是症状，不是默认根因；从 Generation 往回查到 Source，每层只改一个变量，根因可能落在任一层。*
 
 ## Stage 1：Generation
 
