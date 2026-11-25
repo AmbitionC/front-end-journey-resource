@@ -68,57 +68,15 @@
 
 知识导航：[Parent-Child 与 Small-to-Big Retrieval](../../../knowledge/llm/rag/rag-parent-child.md)、[RAG 评估与优化](../../../knowledge/llm/rag/rag-evaluation.md)。
 
-## 手写题：先约定类型冲突，再证明递归会结束
+## 手写题：先约定类型冲突，再写递归
 
-原帖没有给出冲突规则，下面先约定规则：只有两个 JSON 对象才递归合并；数组、标量、null 或异类型冲突一律用右值替换；null 表示值，不表示删除。JSON 格式标准没有替应用规定这套 deep merge 语义；[RFC 8259 §3–5](https://www.rfc-editor.org/rfc/rfc8259.html)定义值、对象与数组，§4还提醒重复键的互操作风险。注意这和 [RFC 7396 JSON Merge Patch](https://www.rfc-editor.org/rfc/rfc7396) 不同：在 Merge Patch 里，null 表示删除这个键。
+原帖没有给出冲突规则，开写前先和面试官确认三件事：数组是替换还是合并、null 算值还是删除、类型不一致听谁的。短答里的约定是「两边都是对象才递归，其余用右边」。追问时补三个要点：
 
-注意：这种通用合并不能用来覆盖服务端的授权字段。
+- **和 [RFC 7396 JSON Merge Patch](https://www.rfc-editor.org/rfc/rfc7396) 的区别**：那里的 null 表示删除这个键，这里 null 是普通值。
+- **单侧子树也要深拷贝**，否则改结果会改到输入。
+- **授权字段不走通用合并**：右边的 JSON 把 `tenant` 改掉，合并会照做，所以租户、权限这类字段由服务端单独管。
 
-```json
-{
-  "left": {
-    "scope": {"tenant": "A", "filters": {"status": "paid", "exclude_refunded": true}},
-    "channels": ["web"],
-    "limit": 20,
-    "note": "old"
-  },
-  "right": {
-    "scope": {"filters": {"exclude_refunded": false}},
-    "channels": {"primary": "app"},
-    "limit": {"soft": 10},
-    "note": null
-  }
-}
-```
-
-`scope` 两侧都是对象，继续进入 `filters`；`status` 只在左侧，保留；退款开关两侧都是布尔值，取右侧 false。`channels` 是数组与对象冲突，整个右对象替换左数组；`limit` 同理，数字替换为对象；`note` 变为 null。因此预期输出为：
-
-```json
-{
-  "scope": {"tenant": "A", "filters": {"status": "paid", "exclude_refunded": false}},
-  "channels": {"primary": "app"},
-  "limit": {"soft": 10},
-  "note": null
-}
-```
-
-下面是伪代码。输入先验证为有限、无循环、无重复对象键的 JSON 树，限制深度与总大小；对象判断必须排除数组和 null。若落实到 JavaScript 对象，使用安全字典或明确拒绝 `__proto__` 等危险键，不把任意实例当普通 JSON 对象。
-
-```text
-merge(left, right):
-    if left 和 right 不同时为 JSON 对象:
-        return deepClone(right)
-    out = 新的安全字典
-    for key in 两侧自有键的并集:
-        if key 只在 left:  out[key] = deepClone(left[key])
-        if key 只在 right: out[key] = deepClone(right[key])
-        if key 两侧都有:   out[key] = merge(left[key], right[key])
-    return out
-```
-
-每次递归下降到子值，有限树最终到达非双对象分支，所以终止。对只出现一侧的子树也深复制，才能让输出与输入没有可修改的共享子对象；仅“不直接改输入”还不够。以节点和字符串等载荷总大小计，在键查找平均常数时间、每棵子树不重复复制的实现中，时间为 `O(S_left + S_right + S_out)`，输出空间为 `O(S_out)`，额外递归栈为最大深度 `O(D)`。过深输入要拒绝或改显式栈，不依赖宿主语言无限递归。
-
-若右侧只给 `channels:["app"]`，按上面的约定，输出就是这个数组，不能偷偷拼接；若业务要按元素 ID 合并数组，必须另定去重、顺序和冲突规则。危险键、空对象、null、异类型、深度和输入不变性都是实现前要明确的边界。
+完整例子、可运行代码、复杂度和测试清单见下面的知识点。
 
 知识导航：[递归、分治与搜索](../../../knowledge/data-structure/algorithm/algorithm-loop.md)。
 
@@ -180,7 +138,6 @@ GRPO 省掉的是价值函数近似与训练，评分仍需要奖励模型或规
 - [OWASP：Authorization，最小权限及逐请求校验](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html)
 - [LangChain：Parent retriever 的小块索引与父块返回机制](https://www.langchain.com/blog/implementing-advanced-retrieval-rag-strategies-with-neo4j)
 - [Anthropic：Demystifying evals，评分器与能力/回归评测](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents)
-- [RFC 8259：JSON Values、Objects、Arrays 与 Parsers](https://www.rfc-editor.org/rfc/rfc8259.html)
 - [RFC 7396：JSON Merge Patch](https://www.rfc-editor.org/rfc/rfc7396)
 - [PPO 原论文：§3、§5](https://arxiv.org/pdf/1707.06347)
 - [DeepSeekMath：§4.1.1–4.1.3](https://arxiv.org/html/2402.03300v3)

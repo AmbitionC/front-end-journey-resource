@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
-  "updatedAt": "2026-11-24",
+  "updatedAt": "2026-11-25",
   "records": [
     {
       "key": "transformer-arch",
@@ -677,50 +677,60 @@
       "key": "llm-capability-boundaries",
       "label": "大模型的能力边界、幻觉与不确定性",
       "filePath": "llm/basics",
-      "status": "pending",
       "action": "update",
-      "recordedAt": "2026-11-24",
-      "batch": "conversion-polish-20261124",
-      "reason": "Re-audit corrections after the 2026-11-20 conversion polish: factual fixes and reviewer-flagged wording. Final independent review and same-SHA publication pending.",
+      "batch": "interview-binding-fix-20261125",
+      "recordedAt": "2026-11-25",
+      "status": "pending",
+      "reason": "Added the section on what people remain responsible for when AI writes code, so tencent-base-1 question 3 has a matching body. Publication pending.",
       "previousRecord": {
         "key": "llm-capability-boundaries",
         "label": "大模型的能力边界、幻觉与不确定性",
         "filePath": "llm/basics",
-        "action": "update",
-        "batch": "conversion-polish-20261120",
-        "recordedAt": "2026-11-20",
         "status": "pending",
-        "reason": "Hot-article readability rewrite for free-to-paid conversion: interview-ready summary up front, hedges and reviewer notes removed, current practice added; final independent review and same-SHA publication pending.",
+        "action": "update",
+        "recordedAt": "2026-11-24",
+        "batch": "conversion-polish-20261124",
+        "reason": "Re-audit corrections after the 2026-11-20 conversion polish: factual fixes and reviewer-flagged wording. Final independent review and same-SHA publication pending.",
         "previousRecord": {
           "key": "llm-capability-boundaries",
           "label": "大模型的能力边界、幻觉与不确定性",
           "filePath": "llm/basics",
+          "action": "update",
+          "batch": "conversion-polish-20261120",
+          "recordedAt": "2026-11-20",
           "status": "pending",
-          "action": "audited",
-          "recordedAt": "2026-10-29",
-          "batch": "agentjourney-plus-thirty-175-20261029",
-          "reason": "Actual source-question processing; final independent review and online release are pending.",
+          "reason": "Hot-article readability rewrite for free-to-paid conversion: interview-ready summary up front, hedges and reviewer notes removed, current practice added; final independent review and same-SHA publication pending.",
           "previousRecord": {
             "key": "llm-capability-boundaries",
             "label": "大模型的能力边界、幻觉与不确定性",
             "filePath": "llm/basics",
             "status": "pending",
-            "action": "updated",
-            "recordedAt": "2026-10-28",
-            "batch": "agentjourney-thirty-20261028",
-            "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+            "action": "audited",
+            "recordedAt": "2026-10-29",
+            "batch": "agentjourney-plus-thirty-175-20261029",
+            "reason": "Actual source-question processing; final independent review and online release are pending.",
             "previousRecord": {
               "key": "llm-capability-boundaries",
               "label": "大模型的能力边界、幻觉与不确定性",
               "filePath": "llm/basics",
               "status": "pending",
-              "action": "audited",
+              "action": "updated",
               "recordedAt": "2026-10-28",
-              "batch": "historical-source-bindings-20261028",
-              "previousPublication": {
-                "status": "published",
-                "batch": "llm-foundations-next-10-2026-07-14",
-                "recordedAt": "2026-07-14"
+              "batch": "agentjourney-thirty-20261028",
+              "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+              "previousRecord": {
+                "key": "llm-capability-boundaries",
+                "label": "大模型的能力边界、幻觉与不确定性",
+                "filePath": "llm/basics",
+                "status": "pending",
+                "action": "audited",
+                "recordedAt": "2026-10-28",
+                "batch": "historical-source-bindings-20261028",
+                "previousPublication": {
+                  "status": "published",
+                  "batch": "llm-foundations-next-10-2026-07-14",
+                  "recordedAt": "2026-07-14"
+                }
               }
             }
           }
@@ -6098,50 +6108,60 @@
       "key": "algorithm-loop",
       "label": "递归、分治与搜索",
       "filePath": "data-structure/algorithm",
+      "action": "update",
+      "batch": "interview-binding-fix-20261125",
+      "recordedAt": "2026-11-25",
       "status": "pending",
-      "action": "updated",
-      "recordedAt": "2026-11-04",
-      "batch": "daily-content-20261104",
-      "reason": "Actual interview-question driven teaching additions or accuracy corrections; final release and synchronization pending.",
+      "reason": "Moved the JSON deep-merge walkthrough here from bytedance-base-21 question 5, with runnable code and tests. Publication pending.",
       "previousRecord": {
         "key": "algorithm-loop",
         "label": "递归、分治与搜索",
         "filePath": "data-structure/algorithm",
         "status": "pending",
         "action": "updated",
-        "recordedAt": "2026-10-31",
-        "batch": "nowcoder-next-twenty-20261031",
-        "reason": "New interview knowledge processing; publication pending.",
+        "recordedAt": "2026-11-04",
+        "batch": "daily-content-20261104",
+        "reason": "Actual interview-question driven teaching additions or accuracy corrections; final release and synchronization pending.",
         "previousRecord": {
           "key": "algorithm-loop",
           "label": "递归、分治与搜索",
           "filePath": "data-structure/algorithm",
-          "status": "published",
+          "status": "pending",
           "action": "updated",
           "recordedAt": "2026-10-31",
-          "batch": "nowcoder-available-20261031",
-          "reason": "Source-bounded interview knowledge processing; resource PR publication pending.",
+          "batch": "nowcoder-next-twenty-20261031",
+          "reason": "New interview knowledge processing; publication pending.",
           "previousRecord": {
             "key": "algorithm-loop",
             "label": "递归、分治与搜索",
             "filePath": "data-structure/algorithm",
-            "status": "pending",
-            "action": "audited",
-            "recordedAt": "2026-10-28",
-            "batch": "historical-source-bindings-20261028",
-            "previousPublication": {
-              "status": "published",
-              "batch": "next-twenty-source-increments-20261004",
-              "recordedAt": "2026-10-04",
-              "publishedAt": "2026-10-05T09:27:13Z",
-              "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-              "publishedBySyncRun": 37289136872
+            "status": "published",
+            "action": "updated",
+            "recordedAt": "2026-10-31",
+            "batch": "nowcoder-available-20261031",
+            "reason": "Source-bounded interview knowledge processing; resource PR publication pending.",
+            "previousRecord": {
+              "key": "algorithm-loop",
+              "label": "递归、分治与搜索",
+              "filePath": "data-structure/algorithm",
+              "status": "pending",
+              "action": "audited",
+              "recordedAt": "2026-10-28",
+              "batch": "historical-source-bindings-20261028",
+              "previousPublication": {
+                "status": "published",
+                "batch": "next-twenty-source-increments-20261004",
+                "recordedAt": "2026-10-04",
+                "publishedAt": "2026-10-05T09:27:13Z",
+                "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+                "publishedBySyncRun": 37289136872
+              }
+            },
+            "publication": {
+              "commit": "1b4f0baf424d87f6016e4c203ca900c28ab56fab",
+              "pullRequest": 70,
+              "syncRunId": 41111246573
             }
-          },
-          "publication": {
-            "commit": "1b4f0baf424d87f6016e4c203ca900c28ab56fab",
-            "pullRequest": 70,
-            "syncRunId": 41111246573
           }
         }
       }
@@ -6265,13 +6285,23 @@
       "key": "design-state",
       "label": "前端状态管理与服务端状态",
       "filePath": "fe/design",
-      "status": "published",
-      "action": "updated",
-      "recordedAt": "2026-10-04",
-      "batch": "next-twenty-source-increments-20261004",
-      "publishedAt": "2026-10-05T09:27:13Z",
-      "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
-      "publishedBySyncRun": 37289136872
+      "action": "update",
+      "batch": "interview-binding-fix-20261125",
+      "recordedAt": "2026-11-25",
+      "status": "pending",
+      "reason": "Added the data-to-UI refresh chain with React and Vue comparison, so bytedance-base-44 questions 10 and 11 have a matching body. Publication pending.",
+      "previousRecord": {
+        "key": "design-state",
+        "label": "前端状态管理与服务端状态",
+        "filePath": "fe/design",
+        "status": "published",
+        "action": "updated",
+        "recordedAt": "2026-10-04",
+        "batch": "next-twenty-source-increments-20261004",
+        "publishedAt": "2026-10-05T09:27:13Z",
+        "publishedByCommit": "b01cdfdda648a8915cfc4b7444f972852391e3c9",
+        "publishedBySyncRun": 37289136872
+      }
     },
     {
       "key": "agent-role-landscape",

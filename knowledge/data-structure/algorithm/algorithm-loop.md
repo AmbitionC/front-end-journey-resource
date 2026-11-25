@@ -298,6 +298,84 @@ def count_identical_placements(m, n):
 
 `count_identical_placements(4,2)` 为 3，对应 `[4,0]`、`[3,1]`、`[2,2]`；`(7,3)` 为 8。这里把 `(0,0)` 定义为一种空安排，零盘但有苹果则为 0。状态数至多 O(m·min(m,n))，缓存空间同阶；加法成本还取决于方案数的位数。递归深度随参数增长，受 [Python 解释器递归上限](https://docs.python.org/3.14/library/sys.html#sys.getrecursionlimit)约束，大输入可按同一依赖改写为迭代表，不能只增加缓存就宣称没有栈风险。
 
+## 手写 JSON 深合并：先约定冲突规则，再写递归
+
+「把两个多层嵌套的 JSON 深度合并，类型冲突怎么办」没有标准答案。[RFC 8259](https://www.rfc-editor.org/rfc/rfc8259.html)只定义 JSON 的值、对象与数组，不规定怎样合并，所以动手前先说清规则。这里约定：
+
+- 两侧都是对象才递归合并；
+- 数组、标量、null，以及类型不一致，一律用右侧的值替换；
+- 只在一侧出现的键，深拷贝后保留；
+- null 是普通值，不表示删除。
+
+最后一条容易和 [RFC 7396 JSON Merge Patch](https://www.rfc-editor.org/rfc/rfc7396)混淆：Merge Patch 也是对象递归、数组整体替换，但补丁里的 null 表示删除这个键。
+
+```json
+{
+  "left": {
+    "scope": {"tenant": "A", "filters": {"status": "paid", "exclude_refunded": true}},
+    "channels": ["web"],
+    "limit": 20,
+    "note": "old"
+  },
+  "right": {
+    "scope": {"filters": {"exclude_refunded": false}},
+    "channels": {"primary": "app"},
+    "limit": {"soft": 10},
+    "note": null
+  }
+}
+```
+
+`scope` 两侧都是对象，继续进入 `filters`：`status` 只在左侧，保留；`exclude_refunded` 取右侧的 false。`channels` 是数组遇到对象，`limit` 是数字遇到对象，都整体替换；`note` 变为 null。结果是：
+
+```json
+{
+  "scope": {"tenant": "A", "filters": {"status": "paid", "exclude_refunded": false}},
+  "channels": {"primary": "app"},
+  "limit": {"soft": 10},
+  "note": null
+}
+```
+
+```javascript
+const isObject = v => v !== null && typeof v === 'object' && !Array.isArray(v);
+const BLOCKED = new Set(['__proto__', 'constructor', 'prototype']);
+
+function cloneJson(v, depth = 0) {
+  if (depth > 100) throw new RangeError('too deep');
+  if (Array.isArray(v)) return v.map(x => cloneJson(x, depth + 1));
+  if (!isObject(v)) return v;
+  const out = {};
+  for (const k of Object.keys(v)) {
+    if (BLOCKED.has(k)) throw new TypeError(`blocked key: ${k}`);
+    out[k] = cloneJson(v[k], depth + 1);
+  }
+  return out;
+}
+
+function mergeJson(left, right, depth = 0) {
+  if (depth > 100) throw new RangeError('too deep');
+  if (!isObject(left) || !isObject(right)) return cloneJson(right, depth);
+  const out = {};
+  for (const k of new Set([...Object.keys(left), ...Object.keys(right)])) {
+    if (BLOCKED.has(k)) throw new TypeError(`blocked key: ${k}`);
+    const inL = Object.hasOwn(left, k), inR = Object.hasOwn(right, k);
+    out[k] = inL && inR ? mergeJson(left[k], right[k], depth + 1)
+      : cloneJson(inL ? left[k] : right[k], depth + 1);
+  }
+  return out;
+}
+```
+
+输入按 `JSON.parse` 得到的普通数据理解，不处理 Date、Map 或循环引用。写的时候要能说清四点：
+
+1. **为什么会终止**：每次递归都进入更小的子树，有限的树最终会走到「不是两个对象」的分支。
+2. **为什么要深拷贝**：只出现在一侧的子树如果直接引用，改结果就会改到输入。
+3. **复杂度**：键查找按平均常数时间算，每棵子树只处理一次，时间是两侧节点总数的线性级，输出占同级空间，递归栈是最大深度；输入太深要设上限（这里是 100），或改成显式栈。
+4. **危险键**：来自外部的 `__proto__` 等键可能造成[原型污染](https://developer.mozilla.org/en-US/docs/Web/Security/Attacks/Prototype_pollution)，示例直接拒绝。也可以用 `Object.create(null)` 或 Map 存结果。
+
+业务若要按元素 ID 合并数组，必须另定去重、顺序和冲突规则，不能偷偷拼接。授权、租户这类服务端字段也不该走通用合并，否则请求里的值会覆盖它们。测试至少覆盖空对象、null、三种类型冲突、单侧子树、危险键、超深输入，以及合并后修改结果不影响输入。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
@@ -323,6 +401,9 @@ def count_identical_placements(m, n):
 - [NIST Dictionary of Algorithms and Data Structures: recursion](https://xlinux.nist.gov/dads/HTML/recursion.html)
 - [NIST Dictionary of Algorithms and Data Structures: backtracking](https://xlinux.nist.gov/dads/HTML/backtrack.html)
 - [NIST Dictionary of Algorithms and Data Structures: memoization](https://xlinux.nist.gov/dads/HTML/memoize.html)
+- [RFC 8259：JSON](https://www.rfc-editor.org/rfc/rfc8259.html)
+- [RFC 7396：JSON Merge Patch](https://www.rfc-editor.org/rfc/rfc7396)
+- [MDN：Prototype pollution](https://developer.mozilla.org/en-US/docs/Web/Security/Attacks/Prototype_pollution)
 - [NIST DLMF §26.9：限制部分个数的整数划分](https://dlmf.nist.gov/26.9)
 - [NIST DLMF §26.8：集合划分与第二类 Stirling 数](https://dlmf.nist.gov/26.8)
 - [Python 3.14：combinations_with_replacement](https://docs.python.org/3.14/library/itertools.html#itertools.combinations_with_replacement)
