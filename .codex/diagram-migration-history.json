@@ -2954,7 +2954,7 @@
       "label": "输入、输出与工具 Guardrails",
       "articlePath": "knowledge/llm/production/agent-guardrails.md",
       "baselineArticleSha256": "370a63785b2c8aa670909d6fccfde9516488367e08892c42a30761c891f3b7c6",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-guardrails-layered-controls-v1.webp",
@@ -2962,10 +2962,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-40pct-batch2",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-guardrails-five-boundaries-v2.aj.mjs",
+          "sourceSha256": "0e133cf49687a7bff3019d2a112d3707e30a2345968b27b86df232730cce2d0d",
+          "darkPng": "images/agent-guardrails-five-boundaries-v2.dark.png",
+          "lightPng": "images/agent-guardrails-five-boundaries-v2.light.png",
+          "darkSha256": "46740cf22e7549f74f45b08b1ae5e09f1178b8b1a1055f927b92abb59bc7e9e8",
+          "lightSha256": "eb711ab781cb4817106407d95b6c4f964c02dd6e5f8124aa7e30a2cf9cac48d5"
+        }
+      ]
     },
     {
       "key": "agent-canary-release",
@@ -3188,7 +3198,7 @@
       "label": "成功率、质量、延迟、成本与业务指标",
       "articlePath": "knowledge/llm/production/agent-metrics.md",
       "baselineArticleSha256": "89b51cf4878947238269df684a37e052a4fbf37fc563140435b08bb4713a12a4",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-metrics-metric-stack-v1.webp",
@@ -3196,10 +3206,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-40pct-batch2",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-metrics-five-layers-v2.aj.mjs",
+          "sourceSha256": "2bbebf77988fc9b8cc9dfe321e03efefd9d54706247bac0fe87e926d4f13215e",
+          "darkPng": "images/agent-metrics-five-layers-v2.dark.png",
+          "lightPng": "images/agent-metrics-five-layers-v2.light.png",
+          "darkSha256": "27b6d49b292ced423d709f63d3a9a9ee56f376da42a8d194dcd8c3c4ef7a0f7b",
+          "lightSha256": "251f498c08695395a0236936062fd8eeeba5d5183b50e656440fcb49c62b7c75"
+        }
+      ]
     },
     {
       "key": "ai-rate-limiting",
@@ -3454,7 +3474,7 @@
       "label": "Node.js 事件循环与异步 I/O",
       "articlePath": "knowledge/backend/nodejs/node-event-loop-deep.md",
       "baselineArticleSha256": "a646e50dc27b25ce425a5fe73eeedc9608a1abe4328e4713d7c0b1d7a04f94da",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/node-event-loop-libuv-phases-v1.webp",
@@ -3462,10 +3482,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-40pct-batch2",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/node-event-loop-phases-v2.aj.mjs",
+          "sourceSha256": "01d961681000ef113a771c04559a538ef77569610238ceb250ef5cc71e92be4b",
+          "darkPng": "images/node-event-loop-phases-v2.dark.png",
+          "lightPng": "images/node-event-loop-phases-v2.light.png",
+          "darkSha256": "b9c35a0e4c7af77da77ca0c899077593359e1fbe43370453d9401c25d5cfa1d8",
+          "lightSha256": "38335f9d55f886f976338b350d2d0c3e2e5a9fdacb5b7ad0c1020867479f653f"
+        }
+      ]
     },
     {
       "key": "node-knowledge",
@@ -3954,7 +3984,7 @@
       "label": "对象存储、预签名 URL 与生命周期",
       "articlePath": "knowledge/backend/storage/object-storage.md",
       "baselineArticleSha256": "072631ee77c76c5a9f09032f98af15964bcff0b79d6afd9840f79f28bd87edcf",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/object-storage-presigned-lifecycle-v1.webp",
@@ -3962,10 +3992,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-40pct-batch2",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/object-storage-presigned-upload-v2.aj.mjs",
+          "sourceSha256": "b95be83fa4f74df2e97ea0ac61411896ba2efe3881c1ae0d150e0ba50e998852",
+          "darkPng": "images/object-storage-presigned-upload-v2.dark.png",
+          "lightPng": "images/object-storage-presigned-upload-v2.light.png",
+          "darkSha256": "49b241868c4d7832d44cbf3ebbf3ff53d3aef4cb10ee8415ece55bbefcb84ba7",
+          "lightSha256": "bada2b196a6c4ff82ad8b707b541c62ad777aa0a1488f19ffdc1d8d6a734fc4e"
+        }
+      ]
     },
     {
       "key": "database-migration",
@@ -4072,7 +4112,7 @@
       "label": "接口限流、熔断与降级",
       "articlePath": "knowledge/backend/auth/rate-limit-circuit.md",
       "baselineArticleSha256": "817a7a80ff1eb0a8ade1d7ce1f8815af99fec296f3bd3cef627e52b7b396c89a",
-      "status": "provenance_pending",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/rate-limit-circuit-breaker-states-v1.webp",
@@ -4080,10 +4120,20 @@
           "provenance": "legacy_raster_provenance_pending"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-40pct-batch2",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/rate-limit-circuit-breaker-v2.aj.mjs",
+          "sourceSha256": "efa54574163178a5971193c7a1ec206b86e991892097d368b2a9cf2654608cd4",
+          "darkPng": "images/rate-limit-circuit-breaker-v2.dark.png",
+          "lightPng": "images/rate-limit-circuit-breaker-v2.light.png",
+          "darkSha256": "9b4dd332c1fd0e8d57b12d12235df38293b2aa28865b5886db8caa3e5c88ad3a",
+          "lightSha256": "e46dbb5cbe5b42a691a9728ea0214ca12a67d9661d5b2d5af653f1e726915296"
+        }
+      ]
     },
     {
       "key": "logging-monitoring",
@@ -4298,7 +4348,7 @@
       "label": "Python 异步编程（asyncio）",
       "articlePath": "knowledge/data/python/python-async.md",
       "baselineArticleSha256": "493f2e8e4e8658671279685aeffb654278cabef057596ce2acbc1e6686fc7a4d",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/python-asyncio-task-scheduling-cancel-v1.webp",
@@ -4306,10 +4356,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-40pct-batch2",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/python-asyncio-taskgroup-timeline-v2.aj.mjs",
+          "sourceSha256": "c18762e7910306afdf8a0f282d87a5d3b41a2166cffd3d07ff0d350e8296cd51",
+          "darkPng": "images/python-asyncio-taskgroup-timeline-v2.dark.png",
+          "lightPng": "images/python-asyncio-taskgroup-timeline-v2.light.png",
+          "darkSha256": "c5c3629fa8caa34192efdc95091f3e4ec07dae7c0a3fad1b402b8c2e68d506f5",
+          "lightSha256": "83a0d5de3a1b41a5a8de9f4bca7339b9e02da66017c3caa77f1484fd85750ec7"
+        }
+      ]
     },
     {
       "key": "python-env",
@@ -5302,7 +5362,7 @@
       "label": "排序算法、稳定性与外部排序",
       "articlePath": "knowledge/cs/algorithm/algorithm-sorting.md",
       "baselineArticleSha256": "424e0c996b8d81854f18720799dbef0b6d14847a19bd99fa21de07ac07ec9728",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/algorithm-sorting-stability-external-merge-v1.webp",
@@ -5310,10 +5370,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-40pct-batch2",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/algorithm-sorting-stability-external-v2.aj.mjs",
+          "sourceSha256": "56970eb1e0919da92c7c5649f0ac49ba73f9b0d1d9b97ed4e062de73a16c06f1",
+          "darkPng": "images/algorithm-sorting-stability-external-v2.dark.png",
+          "lightPng": "images/algorithm-sorting-stability-external-v2.light.png",
+          "darkSha256": "5581464b34cff28023734e8d2c2f49f7857362265f1a9c27b921113f857146cd",
+          "lightSha256": "c4fcf3e728f824a32b1ca09ee54652292d93396839cdd59f791f63241b6ee62e"
+        }
+      ]
     },
     {
       "key": "algorithm-graph",
