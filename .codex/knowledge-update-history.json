@@ -7513,8 +7513,58 @@
       "action": "create",
       "batch": "frontier-weekly-20261125",
       "recordedAt": "2026-11-25",
-      "status": "pending",
+      "status": "published",
       "reason": "Weekly frontier digest issue 1; sources read at origin; self-checked per owner instruction, no separate independent review."
+    },
+    {
+      "key": "frontier-agent-eval",
+      "label": "评测专题：需求不清时的交付、评测作弊与评测方法",
+      "filePath": "frontier",
+      "action": "create",
+      "batch": "frontier-backfill-20261125",
+      "recordedAt": "2026-11-25",
+      "status": "pending",
+      "reason": "Frontier digest themed backfill requested by owner; sources read at origin."
+    },
+    {
+      "key": "frontier-agent-memory",
+      "label": "记忆专题：分层记忆、离线整理与记忆带偏答案",
+      "filePath": "frontier",
+      "action": "create",
+      "batch": "frontier-backfill-20261125",
+      "recordedAt": "2026-11-25",
+      "status": "pending",
+      "reason": "Frontier digest themed backfill requested by owner; sources read at origin."
+    },
+    {
+      "key": "frontier-multi-agent-skill",
+      "label": "多 Agent 与 Skill 专题：子 Agent 往回收、Skill 路由成瓶颈",
+      "filePath": "frontier",
+      "action": "create",
+      "batch": "frontier-backfill-20261125",
+      "recordedAt": "2026-11-25",
+      "status": "pending",
+      "reason": "Frontier digest themed backfill requested by owner; sources read at origin."
+    },
+    {
+      "key": "frontier-harness-long-running",
+      "label": "Harness 与长任务专题：三角色分工、大脑和手分离、只改 Harness 省 token",
+      "filePath": "frontier",
+      "action": "create",
+      "batch": "frontier-backfill-20261125",
+      "recordedAt": "2026-11-25",
+      "status": "pending",
+      "reason": "Frontier digest themed backfill requested by owner; sources read at origin."
+    },
+    {
+      "key": "frontier-permission-sandbox",
+      "label": "权限与沙箱专题：分类器代替弹窗、隔离强度、凭证不进沙箱",
+      "filePath": "frontier",
+      "action": "create",
+      "batch": "frontier-backfill-20261125",
+      "recordedAt": "2026-11-25",
+      "status": "pending",
+      "reason": "Frontier digest themed backfill requested by owner; sources read at origin."
     }
   ],
   "deliveryEvidence": {
