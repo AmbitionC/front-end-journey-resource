@@ -111,6 +111,34 @@ server cache 是远端真相的客户端副本，不应与本地领域 state 复
 
 状态原则也适用于 Native/Lynx，但运行宿主不同：Native 通常指平台原生 UI；[Lynx 官方快速开始](https://lynxjs.org/guide/start/quick-start.html)展示跨平台 UI 的运行方式。浏览器的 localStorage、History 或 DOM API 不能直接当作原生存储与导航实现。先确认宿主，临时状态放内存，需要跨启动恢复时采用该平台支持的持久化接口并定义有效期。未确认的产品名称不按读音猜测。
 
+### 从数据下发到界面刷新：一条完整链路
+
+服务端数据变成屏幕上的变化，要经过六步，每一步都可能出错：
+
+1. **接收与解析**：检查状态码，把响应解析成对象；解析失败走错误状态，不要把半截数据写进去。
+2. **校验与转换**：按约定检查字段，把接口结构转成页面需要的结构，例如分转成元、时间戳转成展示文本所需的值。
+3. **写入状态**：核对请求编号或版本，只有最新的请求才能写；旧响应晚到就丢弃。
+4. **找出要更新的部分**：框架决定哪些组件受影响，重新计算界面描述。
+5. **提交更新**：把新旧界面的差异应用到真实的 DOM 或原生视图上。
+6. **布局与绘制**：浏览器或宿主计算位置、绘制并合成。后半段见[浏览器导航与渲染](../browser/browser-navigation-rendering.md)。
+
+第 4、5 步怎样知道「哪里变了」，常见有两种架构：
+
+| | React：显式更新 + diff | Vue：依赖追踪 + patch |
+| --- | --- | --- |
+| 怎样触发 | 调用 `setState`，把更新排队 | 写入响应式数据，触发读过它的副作用 |
+| 重新计算什么 | 默认重新渲染该组件及其子组件 | 重跑依赖该数据的组件渲染 |
+| 怎样落到界面 | 对比前后结果，提交有差异的节点 | 对比新旧虚拟 DOM，编译期标记可跳过静态部分 |
+
+React 官方把过程分为[触发、渲染、提交](https://react.dev/learn/render-and-commit)三步：「渲染」只是调用组件函数算出结果，不等于改 DOM，算出来没有差异就不会动 DOM。Vue 的组件渲染是一个响应式副作用，[渲染时读到的数据会被记录，变化后重新运行并 patch](https://vuejs.org/guide/extras/rendering-mechanism.html)。不管哪一种，状态都要有唯一的所有者，界面由状态推出。
+
+两个高频坑：
+
+- **列表 key 要稳定**：[React 要求 key 在兄弟节点中唯一且不改变](https://react.dev/learn/rendering-lists)。用会变的下标当 key，插入或排序后，输入框内容、展开状态会跑到别的条目上。
+- **异步结果会乱序**：先发的请求可能后回来。给请求编号并在写状态前核对，或在发新请求时取消旧的。
+
+例如商品页先请求规格 A，用户立刻切到规格 B，B 先返回、A 后返回。没有第 3 步的核对，页面会显示 B 的选中态和 A 的价格。
+
 ### Vue 响应式数据如何保存
 
 [Vue 3 响应式核心 API](https://vuejs.org/api/reactivity-core.html)中 ref 用 `.value` 包装值，reactive 为对象建立响应式代理；computed 从依赖计算派生值，变化后由框架调度相关消费更新。reactive 不是任意原始值的包装器，把对象字段解构成普通变量可能失去响应式连接，应按需要保留引用或使用对应接口。共享 composable 代码不意味着每次调用共享同一状态实例；持久化又是独立合同，刷新后恢复需要序列化、版本与授权边界。
@@ -118,6 +146,9 @@ server cache 是远端真相的客户端副本，不应与本地领域 state 复
 ## 参考资料
 
 - [React choosing the state structure](https://react.dev/learn/choosing-the-state-structure)
+- [React：Render and Commit](https://react.dev/learn/render-and-commit)
+- [React：Rendering Lists，key 的规则](https://react.dev/learn/rendering-lists)
+- [Vue：Rendering Mechanism](https://vuejs.org/guide/extras/rendering-mechanism.html)
 - [TanStack Query important defaults](https://tanstack.com/query/latest/docs/framework/react/guides/important-defaults)
 
 ## 出现于（热度来源）
