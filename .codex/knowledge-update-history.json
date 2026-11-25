@@ -7523,7 +7523,7 @@
       "action": "create",
       "batch": "frontier-backfill-20261125",
       "recordedAt": "2026-11-25",
-      "status": "pending",
+      "status": "published",
       "reason": "Frontier digest themed backfill requested by owner; sources read at origin."
     },
     {
@@ -7533,7 +7533,7 @@
       "action": "create",
       "batch": "frontier-backfill-20261125",
       "recordedAt": "2026-11-25",
-      "status": "pending",
+      "status": "published",
       "reason": "Frontier digest themed backfill requested by owner; sources read at origin."
     },
     {
@@ -7543,7 +7543,7 @@
       "action": "create",
       "batch": "frontier-backfill-20261125",
       "recordedAt": "2026-11-25",
-      "status": "pending",
+      "status": "published",
       "reason": "Frontier digest themed backfill requested by owner; sources read at origin."
     },
     {
@@ -7553,7 +7553,7 @@
       "action": "create",
       "batch": "frontier-backfill-20261125",
       "recordedAt": "2026-11-25",
-      "status": "pending",
+      "status": "published",
       "reason": "Frontier digest themed backfill requested by owner; sources read at origin."
     },
     {
@@ -7563,8 +7563,28 @@
       "action": "create",
       "batch": "frontier-backfill-20261125",
       "recordedAt": "2026-11-25",
-      "status": "pending",
+      "status": "published",
       "reason": "Frontier digest themed backfill requested by owner; sources read at origin."
+    },
+    {
+      "key": "frontier-deepseek-super-agent",
+      "label": "DeepSeek Super-agent：一个 Router 带一群 Worker，让人少盯会话",
+      "filePath": "frontier",
+      "action": "create",
+      "batch": "frontier-hot-20261125",
+      "recordedAt": "2026-11-25",
+      "status": "pending",
+      "reason": "Frontier digest hot-topic issues requested by owner; sources read at origin."
+    },
+    {
+      "key": "frontier-rsi-self-improving-harness",
+      "label": "RSI 递归自我改进：让 Agent 自己改自己的 Harness",
+      "filePath": "frontier",
+      "action": "create",
+      "batch": "frontier-hot-20261125",
+      "recordedAt": "2026-11-25",
+      "status": "pending",
+      "reason": "Frontier digest hot-topic issues requested by owner; sources read at origin."
     }
   ],
   "deliveryEvidence": {
