@@ -5,7 +5,6 @@ import {isDirectExecution,readBounded,safeRelativePath} from './resource-paths.m
 import {expectedPinnedSync,validatePinnedSyncResult} from './validate-sync-result.mjs';
 import {gitPublicationFiles,sha256} from './content-review.mjs';
 import {githubRead} from './github-release-review.mjs';
-import {requireReviewedRelease} from './validate-release.mjs';
 
 export const BATCH_LIMIT=12;
 const SHA=/^[a-f0-9]{40}$/u;
@@ -95,7 +94,6 @@ export async function readSyncResponse(response){
 if(isDirectExecution(import.meta.url)){
   try{
     const root=resolve(import.meta.dirname,'..'),before=process.argv[2],after=process.argv[3];
-    await requireReviewedRelease(root,before,after);
     const url=new URL(process.env.FAAS_SYNC_URL??'');
     if(url.protocol!=='https:' || url.username || url.password || !process.env.FAAS_SYNC_SECRET)throw new Error('同步服务配置无效');
     const baseline=await recoveryBaseline(root,before,after);

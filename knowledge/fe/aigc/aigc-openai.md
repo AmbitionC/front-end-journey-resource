@@ -254,6 +254,41 @@ Responses 输出可能混合文本、工具调用等多种条目。纯文本使�
 - [ ] 日志包含 request ID、usage 和延迟，但敏感内容已脱敏。
 - [ ] 模型或提示升级前运行固定评测集。
 
+## 练一练
+
+### 高频考点题 1：环境变量前缀
+
+在 Vite 项目里，OpenAI 密钥能不能放进 `VITE_OPENAI_KEY`？
+
+- A. 不能，VITE_ 前缀会把变量注入前端代码
+- B. 可以，Vite 会自动帮你加密环境变量
+- C. 可以，只要不提交到 Git 仓库就安全
+- D. 不能，因为 Vite 不支持读取环境变量
+
+**答案：A。** `NEXT_PUBLIC_` 同理。密钥只能存在服务端，模型名也建议用 `OPENAI_MODEL` 配置。
+
+### 高频考点题 2：读取输出
+
+读取 Responses API 的结果时，下面哪种写法不可靠？
+
+- A. 使用 SDK 提供的 output_text 字段
+- B. 按 output 里每项的 type 分别处理
+- C. 假设 `output[0]` 一定是文本
+- D. 记录响应 id 以便排查问题
+
+**答案：C。** output 还可能包含工具调用、推理项等，第一项不一定是文本消息。
+
+### 高频考点题 3：OpenAPI 和 OpenAI
+
+「GPT 的 OpenAPI」这个说法，严格来讲应该是？
+
+- A. OpenAPI 就是 OpenAI 的官方 API 名字
+- B. OpenAPI 是 OpenAI 的开源版本
+- C. 调用 OpenAI API，OpenAPI 是规范
+- D. 两个词完全一样，只是拼写习惯不同
+
+**答案：C。** OpenAPI 是描述 HTTP 接口的规范，和 OpenAI 公司无关。
+
 ## 参考资料
 
 - [OpenAI：Text generation](https://developers.openai.com/api/docs/guides/text)
