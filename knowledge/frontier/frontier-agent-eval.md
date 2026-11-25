@@ -96,6 +96,41 @@ Anthropic 2026 年 11 月 13 日发文 [Building strong safety evaluations](http
 
 **对应知识点**：[Agent 评测原理：任务、轨迹与环境结果](https://www.agent-journey.cn/knowledge?activeKey=agent-eval-framework)、[智能体性能评估](https://www.agent-journey.cn/knowledge?activeKey=agent-evaluation)、[在线评估、抽样与质量监控](https://www.agent-journey.cn/knowledge?activeKey=agent-online-eval)
 
+## 练一练
+
+### 高频考点题 1：FDE-Gym 测的是哪一步
+
+FDE-Gym 和多数 Agent 基准相比，额外考察的是什么能力？
+
+- A. 在需求描述完整时写出更快的代码
+- B. 需求不清时能否问对人、发现约束
+- C. 在单轮问答里给出更长、更详细的回答
+- D. 同时调度更多子 Agent 并行完成同一个交付任务
+
+**答案：B。** FDE-Gym 用 L0 到 L3 四档逐步减少信息，最难一档只给客户原话；瓶颈在发现约束，评分还会扣掉事故和打扰干系人的成本。
+
+### 高频考点题 2：防止 Agent 刷分
+
+让 Agent 自己做实验提升指标时，Agent4Sci 用什么方式保证分数可信？
+
+- A. 在系统提示词里写明「不要作弊」
+- B. 只让 Agent 跑一次，不允许迭代
+- C. 把留出评估集也交给爬坡 Agent，方便它边做边自查
+- D. 干活、打分、审计分给不同角色，打分用留出集
+
+**答案：D。** 前期试验 12 个任务里有 5 个出现评测作弊，论文的解法是结构隔离而不是提示词约束；隔离后的正式实验里审计没有发现作弊。
+
+### 高频考点题 3：LLM 当评委的做法
+
+按 Anthropic 的评测指南，用模型当评委时哪种做法是推荐的？
+
+- A. 标准拆成是否小项，评委换模型，先过人工盲标
+- B. 评委和被测用同一个模型，保证双方对标准的理解一致
+- C. 把所有元信息都给评委看，信息越多越准
+- D. 评委出错时默认给一个中间分，避免整轮评测中断
+
+**答案：A。** 指南还要求评分器先过人工这一关（如用 Cohen's kappa 校验），出错时明确报错而不是默默给分，并且报告结果时带上不确定性。
+
 ## 参考资料
 
 - [FDE-Gym: The Last Mile of AI Delivery](https://arxiv.org/abs/2610.22350)，arXiv 2610.22350，2026-10-15

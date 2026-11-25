@@ -103,6 +103,41 @@ Skill 原本是「写给模型看的说明书」。这篇把它当成能力的�
 
 **对应知识点**：[Agent Skill：渐进式披露、热插拔与版本治理](https://www.agent-journey.cn/knowledge?activeKey=agent-skill-design)、[Agent Benchmark 的设计与解读](https://www.agent-journey.cn/knowledge?activeKey=agent-benchmark)
 
+## 练一练
+
+### 高频考点题 1：默认架构
+
+按 Anthropic 给企业的建议，Agent 默认应从什么架构开始？
+
+- A. 每个团队配一个子 Agent，让架构对齐组织架构
+- B. 一个大提示词包办全部流程和知识
+- C. 单模型单上下文的工具循环，知识写成 Skill
+- D. 先拆成尽可能多的子 Agent，再根据效果逐步合并
+
+**答案：C。** 硬约束放进工具，流程知识用 Skill 渐进式披露；按组织架构拆子 Agent 会带来传话丢细节、功能重叠和规则打架。
+
+### 高频考点题 2：仍该用子 Agent 的情况
+
+下列哪种情况属于文章认为仍应拆子 Agent 的情形？
+
+- A. 任务要并行，各自需要用完即弃的上下文
+- B. 每个业务团队都想拥有自己的 Agent
+- C. 系统里的职责可以清楚地划分成几块
+- D. 希望项目介绍里能体现出多 Agent 架构的设计
+
+**答案：A。** 另外两种是上下文膨胀导致可测量的效果下降、以及工具选不准或指令互相冲突；单纯的职责分离往往可以靠 Skill 实现。
+
+### 高频考点题 3：Skill 池变大
+
+Skill Adapter 的实验说明 Skill 池从 50 个涨到 1000 个时会出现什么问题？
+
+- A. 上下文放不下全部 Skill，渐进式披露彻底失效
+- B. Skill 文件格式开始不兼容
+- C. 执行任务的模型必须随 Skill 数量重新训练
+- D. 只靠描述选不准，选择需要专门设计
+
+**答案：D。** 对比方法成功率从约 87% 降到约 60%；渐进式披露只解决上下文占用，选得准不准需要检索或路由先出少量候选。
+
 ## 参考资料
 
 - [Building agents: When to fold subagents into your main agent loop](https://claude.com/resources/articles/building-agents-when-to-fold-subagents-into-your-main-agent-loop)，Anthropic，2026-10-22
