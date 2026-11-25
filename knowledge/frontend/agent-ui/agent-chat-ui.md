@@ -1,6 +1,6 @@
 Agent Chat UI 不是把字符串按时间堆成气泡。它要同时表达会话、用户 turn、一次模型 run、消息内容片段和工具活动，并在乐观提交、流式更新、重连、分支与持久化之间保持同一身份。数据模型先正确，视觉层才能稳定。
 
-![Agent Chat UI 中 Conversation、Turn、Message、Content Part 与 Run 状态的关系](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-chat-ui-message-state-model-v1.webp)
+![Agent Chat UI 的数据模型与发送状态。Conversation 是长期容器，保存 title、owner、branch head 和最近活动；它下面是 Turn，表示一次用户意图及其响应范围。一个 Turn 可以有多个 Run：Run 1 是一次有终态的执行；用户点重新生成时创建 Run 2，作为 sibling run，不覆盖 Run 1。Run 产出 Message，Message 记录 author 和 status，内容按 part 结构化，分为 text、citation、tool、attachment 四类，不从 Markdown 反向解析。Run 有自己的状态：queued、running、awaiting approval、cancelling、completed、failed、cancelled，和 Message 的展示状态分开。发送消息时先乐观插入一条 sending 状态的用户消息，带 clientRequestId；服务端确认后换成 canonical ID 和序号；网络失败时标记 failed，保留输入，重试复用同一个 clientRequestId。消息排序看服务端序号，不按本地时间，因为设备时钟和多个标签页让本地时间不可信](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-chat-ui-message-model-v2.dark.png)
 *图：用户 turn 可触发一个或多个 run；message 与 run 分离，内容按 part 结构化，服务端序号负责最终排序。*
 
 ## 分离 Conversation、Turn 与 Run

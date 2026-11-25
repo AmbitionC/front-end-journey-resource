@@ -2,8 +2,8 @@ Agent 缓存并不是在模型调用前放一个 Redis。模型输出、工具�
 
 [RFC 9111](https://www.rfc-editor.org/rfc/rfc9111.html)给出了 HTTP 缓存最重要的两个思想：可复用对象必须有完整身份，陈旧响应只能在明确规则下使用并可通过验证器重新验证。Agent 缓存可以借用这些原则，但必须加入模型、Prompt、工具、索引和授权等领域维度。
 
-![请求经统一 Key Builder 加入租户、主体、模型、Prompt、工具、索引和策略版本后，分别进入模型、工具、检索和结果缓存，并由失效事件统一驱动](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-cache-layered-keys-v1.webp)
-*图：不同缓存层有不同命中语义，不能用一个 TTL 解决所有一致性问题。*
+![Agent 缓存分四层，共用一个 Key Builder。请求先规范化输入、去掉 traceId 这类瞬时字段，再由 Key Builder 加入租户与主体作用域、模型与 revision、Prompt 模板版本、工具 Schema 版本、索引版本与 filters 与 embedding 版本、策略与输出 Schema 版本、locale 与新鲜度等级，计算摘要作为 key。之后分别进入四层缓存：模型缓存只在确定输入下复用，答案含时间敏感事实时要带数据快照或不缓存；工具缓存遵循工具自身的新鲜度，有 ETag 或版本号时用条件请求重新验证；检索缓存绑定索引版本和过滤条件，新索引发布自然换 key；结果缓存绑定工作流、用户上下文和策略，命中后返回前仍要重新检查授权。四层由同一组失效事件驱动：数据变更、策略撤销、工具 Schema、模型与 Prompt、索引和安全事件，按版本或 tag 失效；先发布新的不可变版本让 key 自然切换，关键缓存另设最大 TTL 并周期对账。写操作、支付、发信这类副作用不进缓存，用幂等账本防重复](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-cache-layered-keys-v2.dark.png)
+*图：四层缓存共用一个 Key Builder，但命中语义各不相同；同一组失效事件按版本驱动四层，不能靠一个 TTL 解决一致性。*
 
 ## 先判断什么可以复用
 

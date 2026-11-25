@@ -2,7 +2,7 @@ Agent 链路的 timeout 不能由每个组件各写一个“30 秒”。如果 G
 
 更可靠的模型是一个绝对 deadline：入口根据产品 SLO 计算最终时刻，每一跳用“deadline 减当前时间”得到剩余预算，再扣除返回、持久化和清理预留。所有重试、排队和降级共享同一笔预算。
 
-![客户端总预算沿 Gateway、Agent 和工具逐跳减少，每个节点检查绝对截止时间并传播取消，末尾保留清理与提交时间](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-timeout-budget-deadline-chain-v1.webp)
+![Agent 链路的超时是一笔沿路径递减的预算。上排从用户 SLO 反推：交互式回答 P95 为 8 秒，预留 0.5 秒网络与响应、0.5 秒状态提交，剩下 7 秒给模型与工具，排队、重试和并行都从这 7 秒里出，图中宽度是示意，不按比例。中排是每一跳都用同一个绝对 deadline 计算剩余预算：Gateway 算出绝对 deadline 并随请求往下传；Agent 用截止时间减去现在得到剩余预算，再扣掉响应和提交的预留；模型调用把首 token 超时、空闲超时和总 deadline 三种信号分开；工具在提交前再查一次 deadline，副作用带幂等键。deadline 向下传播，取消也沿链路向下传播。下排两条规则：重试共用同一个 deadline，例如还剩 3 秒、调用 P95 为 1.2 秒时可以试一次，失败后只剩 0.9 秒就不再启动同类重试；最低有效窗口，只剩 80 毫秒时不要启动通常要 2 秒的调用，直接返回超时或走更快的合格路径。deadline 和 lease 不要混用：deadline 是业务不再需要结果的时刻，lease 是当前 Worker 的所有权](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-timeout-budget-deadline-v2.dark.png)
 *图：剩余预算是每一跳的快照，不是给每个组件重新发一份完整超时。*
 
 ## Timeout、deadline 与预算

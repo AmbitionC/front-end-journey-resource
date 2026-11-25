@@ -6,7 +6,7 @@ Guardrail 判断内容或行为是否满足规则；permission model 决定主�
 
 [OpenAI Guardrails 与 approvals 文档](https://developers.openai.com/api/docs/guides/agents/guardrails-approvals)把 guardrail 放在 input、output 和 tool 等边界，并区分 blocking 与 parallel 模式。Blocking 检查先通过才继续；parallel 可以降低感知延迟，但工作可能在检查完成前已经开始，不能用于不可逆副作用。
 
-![用户输入、Agent、工具调用、不可信工具结果和最终输出依次经过输入验证、注入检测、schema/权限/审批/沙箱、结果验证、输出策略和 PII 脱敏，观测与评估覆盖全链路](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-guardrails-layered-controls-v1.webp)
+![Agent Guardrails 分布在五个边界上，按请求经过的顺序排列。输入边界检查长度、编码、文件类型和 schema，把外部网页、邮件、文档标记为 untrusted。模型决策边界：模型只提出 action proposal，由受信任的 orchestrator 校验后才执行。工具调用边界依次检查工具 allowlist、参数 schema、授权、风险审批、速率与预算、幂等键和沙箱。工具结果边界：返回同样不可信，要做 schema、大小和恶意文件检查，不能拼回 system prompt，声称写入成功时要回读权威状态核实。最终输出边界检查泄密、个人信息、越权内容和引用证据，按渠道转义，被拦截时给安全替代。右侧说明四种控制互补、谁也替不了谁：Guardrail 判断内容和行为是否合规，权限模型决定主体有没有权，沙箱限制获权后能碰到什么，人工审批把高影响决定交还给人。观测覆盖全链路，每个 guardrail 返回 pass、block 或 review，以及规则 ID、版本和理由码。Block 在副作用发生前阻断，Alert 只负责发现和响应，不能代替预防控制](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-guardrails-five-boundaries-v2.dark.png)
 *图：Block 在副作用前阻断；Alert 负责发现和响应，不能代替预防控制。*
 
 ## 输入边界

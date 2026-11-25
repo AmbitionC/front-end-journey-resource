@@ -2,7 +2,7 @@ Agent 需要调用模型、数据库和工具，但不应“知道”长期密�
 
 [NIST Key Management Guidelines](https://csrc.nist.gov/projects/key-management/key-management-guidelines)把密钥材料的类型、保护要求、生成、使用与生命周期作为系统性管理问题。API token、OAuth 凭证和数据库密码虽不全是同一种密码学密钥，也应采用类似的完整生命周期思维，而非只在部署时“放进环境变量”。
 
-![Agent 工作负载从 Secret Manager 获取短期凭证并完成轮换撤销销毁](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-secrets-management-secret-lifecycle-v1.webp)
+![Agent 密钥管理分运行时和生命周期两部分。运行时：Agent 规划层只看到已授权的能力，看不到秘密值；安全 SDK 在真正发请求时才用工作负载身份向 Secret Manager 申请凭证，Secret Manager 认证身份后签发几分钟有效、绑定 audience 和 scope 的短期凭证；SDK 只把它发给绑定的目标服务，目标服务拒收发给别人的 token。秘密值永不出现在 Prompt、工具参数和结果、日志、Trace、错误信息里，也尽量不放环境变量。生命周期依次是 Create 随机生成、Store 加密托管、Issue 短期签发、Deliver 经 TLS 拉取、Use 用完即清、Rotate 发新版本、Revoke 让旧的失效、Destroy 清除材料；Audit 贯穿全程，记录谁读了哪个秘密 ID 和版本、目的、受众和 Run，但不记录值。Rotate、Revoke、Destroy 含义不同：Rotate 发行替代凭证并留重叠窗口，Revoke 让旧凭证失效，Destroy 清除材料和可恢复副本](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-secrets-management-runtime-lifecycle-v2.dark.png)
 
 图中 Create、Store、Issue、Deliver、Use、Rotate、Revoke、Destroy 和 Audit 是连续生命周期。Rotate 发行替代凭证，Revoke 使旧凭证失效，Destroy 清除材料；三者含义不同。
 
