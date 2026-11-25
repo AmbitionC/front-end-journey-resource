@@ -1,7 +1,7 @@
 本期专题是 Harness 与长任务。Harness 指包在模型外面的那一层：循环、工具、上下文管理、检查和恢复。同一个模型，Harness 不同，能连续干多久、干成什么样差别很大。
 
 > **本期 30 秒版**
-> 1. 长任务靠分工和验收撑住，但 Harness 要跟着模型变：Anthropic 用规划、生成、评估三个角色做出了单 Agent 做不出的应用，换了更强的模型后又把其中一部分拆掉了。
+> 1. 长任务靠分工和验收撑住，但 Harness 要跟着模型变：Anthropic 用规划、生成、评估三个角色做出了单 Agent 那次没做成的应用，换了更强的模型后又把其中一部分拆掉了。
 > 2. 把「大脑」和「手」分开：Anthropic 的 Managed Agents 把模型循环、执行环境和会话日志拆成三块，首个 token 的等待时间中位数降了约 60%。
 > 3. 不训练模型，只改 Harness 也能省一半 token：SoL-Pi 论文在 EdgeBench 上少用 49.0% 的 token，保住了原方案 93.7% 的得分。
 
@@ -34,7 +34,7 @@ Anthropic 2026 年 3 月 24 日发文 [Harness design for long-running applicati
 | 任务 | 做法 | 时间 | 花费 | 结果 |
 | --- | --- | --- | --- | --- |
 | 做一个游戏制作工具 | 单 Agent | 20 分钟 | 9 美元 | 核心功能是坏的 |
-| 同上 | 三角色 Harness | 6 小时 | 200 美元 | 10 轮冲刺，做出 16 个功能 |
+| 同上 | 三角色 Harness | 6 小时 | 200 美元 | 规划成 10 轮冲刺、16 个功能，核心玩法能用，仍有瑕疵 |
 | 做一个音乐制作工具（Opus 4.6，精简后的 Harness） | 去掉冲刺，评估只在最后做一次 | 3 小时 50 分钟 | 124.70 美元 | 完成 |
 
 文章的总结是：Harness 里的每个部件都对应着一个「模型做不到某件事」的假设，模型每升级一次，这些假设都要重新检查，过时的就拆掉。
@@ -47,7 +47,7 @@ Anthropic 2026 年 3 月 24 日发文 [Harness design for long-running applicati
 
 被问「怎么让 Agent 完成几个小时的长任务」时：
 
-> 我会从三方面入手。一是把规划、执行、验收分给不同角色，验收方要真的去操作产物，按事先约定的标准判，不能让执行方自评。二是管上下文，跑久了要么压缩要么带着交接文档重开对话，有的模型快到上限会急着收尾，必须重开才行。三是每一轮开工前先约定做完的标准。Anthropic 公布过对比，同一个任务单 Agent 20 分钟花 9 美元但核心功能是坏的，带 Harness 跑 6 小时花 200 美元才真正可用。还有一点，Harness 的每个部件都是在补模型的短板，换了更强的模型要重新评估哪些可以拆掉。
+> 我会从三方面入手。一是把规划、执行、验收分给不同角色，验收方要真的去操作产物，按事先约定的标准判，不能让执行方自评。二是管上下文，跑久了要么压缩要么带着交接文档重开对话，有的模型快到上限会急着收尾，必须重开才行。三是每一轮开工前先约定做完的标准。Anthropic 公布过对比，同一个任务单 Agent 20 分钟花 9 美元但核心功能是坏的，带 Harness 跑 6 小时花 200 美元，核心功能能用了。还有一点，Harness 的每个部件都是在补模型的短板，换了更强的模型要重新评估哪些可以拆掉。
 
 **对应知识点**：[Agent Run Loop、轮次与终止条件](https://www.agent-journey.cn/knowledge?activeKey=agent-run-loop)、[上下文工程（Context Engineering）](https://www.agent-journey.cn/knowledge?activeKey=context-engineering)、[上下文压缩、摘要与裁剪](https://www.agent-journey.cn/knowledge?activeKey=prompt-context-compression)、[多智能体协作与适用边界](https://www.agent-journey.cn/knowledge?activeKey=multi-agent)
 
@@ -70,7 +70,7 @@ Anthropic 2026 年 4 月 8 日发文 [Scaling Managed Agents: Decoupling the bra
 几个细节：
 
 - 容器挂了不是系统故障，而是作为一次工具调用的错误返回给模型，由模型决定是否重试。
-- 凭证放在保险库里，通过代理使用，Harness 和沙箱都接触不到。
+- 凭证不让沙箱里的生成代码碰到：MCP 工具的 OAuth 令牌放在保险库里，由代理取用；Git 令牌在初始化沙箱时接到仓库上，Agent 自己不经手。Harness 始终不知道任何凭证。
 - 拆开之后，不需要等容器启动就可以开始推理。首个 token 的等待时间，中位数降了约 60%，95 分位降了 90% 以上。
 
 **和以前有什么不同**
@@ -89,7 +89,7 @@ Anthropic 2026 年 4 月 8 日发文 [Scaling Managed Agents: Decoupling the bra
 
 **发生了什么**
 
-NVIDIA、南洋理工大学、MIT 的论文 [SoL-Pi](https://arxiv.org/abs/2609.20519)（arXiv，2026-09-17）用一个自动研究的循环去反复改进一个现成的 Agent Harness（Pi），全程不训练模型。
+NVIDIA、NTU、MIT 的论文 [SoL-Pi](https://arxiv.org/abs/2609.20519)（arXiv，2026-09-17）用一个自动研究的循环去反复改进一个现成的 Agent Harness（Pi），全程不训练模型。
 
 最终留下的改动有四类：
 

@@ -1,7 +1,7 @@
 本期专题是 Agent 评测。评测是面经里提及最多的方向，而「你怎么评测你的 Agent」最常见的回答还停在「跑基准、看成功率」。这三条给了更具体的说法。
 
 > **本期 30 秒版**
-> 1. 任务说不清楚时，最强的模型也交付不了：FDE-Gym 模拟真实客户交付，在只给客户原话的最难一档，没有模型能解决 95 个任务中的 15 个以上。
+> 1. 任务说不清楚时，最强的模型也只能交付一小部分：FDE-Gym 模拟真实客户交付，在只给客户原话的最难一档，没有模型能解决 95 个任务中的 15 个以上。
 > 2. 让 Agent 自己爬指标，它会去钻评测的空子：Agent4Sci 的前期试验里，12 个任务中有 5 个出现了评测作弊，所以评测要和干活的 Agent 隔开。
 > 3. 评测先要想清楚测的是什么：Anthropic 的评测指南给出样本量下限、评分器的做法，以及只做三件事时该做哪三件。
 
@@ -31,7 +31,7 @@
 
 被问「现有 Agent 基准有什么不足」或「怎么评测一个面向业务的 Agent」时：
 
-> 多数基准把需求写得很完整，但真实交付里需求往往是不清楚的。FDE-Gym 专门测这一点，在只给客户原话的那一档，最好的模型也只解决了 95 个任务里的 15 个，而且瓶颈在发现约束这一步。所以我做评测集时会放一批信息不完整的用例，考察 Agent 会不会澄清；评分除了看结果，还要扣掉造成的事故和不必要的打扰。
+> 多数基准把需求写得很完整，但真实交付里需求往往是不清楚的。FDE-Gym 专门测这一点，在只给客户原话的那一档，解决最多的模型也只完成 95 个任务里的 15 个，而且瓶颈在发现约束这一步。所以我做评测集时会放一批信息不完整的用例，考察 Agent 会不会澄清；评分除了看结果，还要扣掉造成的事故和不必要的打扰。
 
 **对应知识点**：[Agent Benchmark 的设计与解读](https://www.agent-journey.cn/knowledge?activeKey=agent-benchmark)、[智能体性能评估](https://www.agent-journey.cn/knowledge?activeKey=agent-evaluation)、[用业务指标证明 Agent 项目价值](https://www.agent-journey.cn/knowledge?activeKey=agent-project-evaluation)
 
@@ -39,7 +39,7 @@
 
 **发生了什么**
 
-论文 [Automating ML for Science](https://arxiv.org/abs/2610.28763)（arXiv，2026-10-22，作者来自 Anthropic 及其 Fellows 项目）让 Agent 在真实的科学机器学习任务上自己做实验、提升指标。共 20 个基准、25 个任务、11 个领域，每次给 8 块 H200 显卡和 12 小时。
+论文 [Automating ML for Science](https://arxiv.org/abs/2610.28763)（arXiv，2026-10-20，作者来自 Anthropic 及其 Fellows 项目）让 Agent 在真实的科学机器学习任务上自己做实验、提升指标。共 20 个基准、25 个任务、11 个领域，每次给 8 块 H200 显卡和 12 小时。
 
 它的流程里有三个角色：
 
@@ -49,8 +49,8 @@
 
 **关键数字**
 
-- 相对已发表最好结果的平均提升：Claude Opus 4.6 为 10.4%，Claude Sonnet 4.6 为 9.6%，Gemini 3.1 Pro 为 6.8%，Codex（GPT-5.4）为 4.4%。
-- 前期试验里，12 个任务中有 5 个出现了评测作弊。这也是流程里要单独设评估和审计角色的原因。
+- 相对复现基线的平均提升：Claude Opus 4.6 为 10.4%，Claude Sonnet 4.6 为 9.6%，Gemini 3.1 Pro 为 6.8%，Codex（GPT-5.4）为 4.4%。
+- 前期试验里，12 个任务中有 5 个出现了评测作弊。这也是流程里要单独设评估和审计角色的原因；隔离之后的正式实验里，审计没有发现作弊。
 - 加上可插拔的 Skill 后，Opus 从 10.4% 升到 20.1%，Codex 从 4.4% 升到 8.1%。
 - 论文归纳了三种常见毛病：对创新性判断失准、没用满给的资源、探索越走越窄。
 - 论文自己的判断是：这些提升主要还是来自机器学习工程，而不是科学推理。
@@ -71,7 +71,7 @@
 
 **发生了什么**
 
-Anthropic 2026 年 11 月 13 日发文 [Building strong safety evaluations](https://www.anthropic.com/research/building-strong-safety-evaluations)。文章讲的是安全评测，但里面的方法对任何 Agent 评测都适用。
+Anthropic 2026 年 11 月 13 日发文 [Building strong safety evaluations](https://www.anthropic.com/research/building-strong-safety-evaluations)。文章讲的是安全评测，但里面不少方法也能用在一般的 Agent 评测上。
 
 **几条可以直接用的做法**
 
@@ -80,7 +80,7 @@ Anthropic 2026 年 11 月 13 日发文 [Building strong safety evaluations](http
 - **样本量有下限。** 多轮至少 100 条，单轮至少 1000 条。样本少的时候置信区间可以超过正负 10 个百分点。
 - **评分器的选择。** 有明确标准答案的用程序检查；用模型当评委时，把标准拆成一条条只需回答是或否的小项，评委用和被测不同的模型，不给它看无关的元信息，出错要明确报错而不是默默给分。
 - **评分器要先过人工这一关。** 用盲标的人工结果校验评分器（文中用 Cohen's kappa），不同评分器打出的分数不要直接比较。
-- **配置会改变结果。** 同一个模型，直接调 API 和在 claude.ai 里测，最多相差 34 个百分点。文中举的一个例子里，API 上是 60%，claude.ai 上是 94%，文章把差别归到系统提示词里的一行。
+- **配置会改变结果。** 同一个模型（Claude Fable 5.1），多轮安全评测在 API 和 claude.ai 上的得分最多相差 34 个百分点。文中的自伤话题评测里，API 上是 60%，claude.ai 加上针对性的系统提示词修改后是 94%。
 
 文章最后说，如果只做三件事：写下要测的是什么，用人工标注校验评分器，报告不确定性。
 
@@ -92,14 +92,14 @@ Anthropic 2026 年 11 月 13 日发文 [Building strong safety evaluations](http
 
 被问「你怎么设计评测」或「LLM 当评委靠谱吗」时：
 
-> 我先写清楚要测的行为是什么，再决定怎么打分。有标准答案的用程序判，没有的才用模型当评委，并且把标准拆成是或否的小项，评委用另一个模型。评委上线前先和人工盲标对一遍一致性。样本量上，多轮对话至少一百条，单轮至少一千条，报告时带置信区间，因为样本少的时候误差可以超过十个点。另外评测要带着线上的真实配置跑，同一个模型换一句系统提示词，分数可以差几十个点。
+> 我先写清楚要测的行为是什么，再决定怎么打分。有标准答案的用程序判，没有的才用模型当评委，并且把标准拆成是或否的小项，评委用另一个模型。评委上线前先和人工盲标对一遍一致性。样本量上，多轮对话至少一百条，单轮至少一千条，报告时带置信区间，因为样本少的时候误差可以超过十个点。另外评测要带着线上的真实配置跑，同一个模型，系统提示词等配置不同，分数可以差几十个点。
 
 **对应知识点**：[Agent 评测原理：任务、轨迹与环境结果](https://www.agent-journey.cn/knowledge?activeKey=agent-eval-framework)、[智能体性能评估](https://www.agent-journey.cn/knowledge?activeKey=agent-evaluation)、[在线评估、抽样与质量监控](https://www.agent-journey.cn/knowledge?activeKey=agent-online-eval)
 
 ## 参考资料
 
 - [FDE-Gym: The Last Mile of AI Delivery](https://arxiv.org/abs/2610.22350)，arXiv 2610.22350，2026-10-15
-- [Automating ML for Science: Can Frontier Agents Climb Scientific Hills in the Wild?](https://arxiv.org/abs/2610.28763)，arXiv 2610.28763，2026-10-22
+- [Automating ML for Science: Can Frontier Agents Climb Scientific Hills in the Wild?](https://arxiv.org/abs/2610.28763)，arXiv 2610.28763，2026-10-20
 - [Building strong safety evaluations](https://www.anthropic.com/research/building-strong-safety-evaluations)，Anthropic，2026-11-13
 
 文中数字均取自以上原文，模型名称和数值以原文发布时为准。

@@ -42,7 +42,7 @@ Anthropic 2026 年 10 月 22 日发了一篇面向企业的实践文章 [When to
 
 **和以前有什么不同**
 
-以前被问「为什么用多 Agent」，回答「职责分离、各司其职」就够了。现在这个理由不成立了：职责分离可以靠 Skill 实现，不需要独立的上下文。子 Agent 的正当理由只剩上面三条，都和上下文有关，而且要有评测数据支持。
+以前被问「为什么用多 Agent」，回答「职责分离、各司其职」就够了。现在只靠这个理由就不够了：职责分离往往可以靠 Skill 实现，不一定需要独立的上下文。按这篇文章的建议，拆子 Agent 要落在上面三种情况里，并且用评测验证。
 
 **面试里怎么用**
 
@@ -56,9 +56,9 @@ Anthropic 2026 年 10 月 22 日发了一篇面向企业的实践文章 [When to
 
 **发生了什么**
 
-南京大学和江南大学的论文 [Skill Adapter](https://arxiv.org/abs/2611.17007)（arXiv，2026-11-13）处理两个问题：通用 Skill 怎么适配到具体用户，以及 Skill 很多时怎么选。
+南京大学和江南大学的论文 [Skill Adapter](https://arxiv.org/abs/2611.17007)（arXiv，2026-11-12）处理两个问题：通用 Skill 怎么适配到具体用户，以及 Skill 很多时怎么选。
 
-做法是把通用 Skill 和每个用户的「适配器」分开存，执行任务时先把任务拆成有依赖关系的步骤，再由一个路由 Agent 为每一步挑出最多 8 组 Skill 和适配器的搭配。路由和适配两个策略是训练出来的，执行任务的模型不动。
+做法是把通用 Skill 和每个用户的「适配器」分开存，执行任务时先把任务拆成有依赖关系的步骤，再由一个路由 Agent 按当前步骤挑 Skill 和适用的适配器，路由最多选 8 个通用 Skill。路由和适配两个策略是训练出来的，执行任务的模型不动。
 
 **关键数字**
 
@@ -69,7 +69,7 @@ Anthropic 2026 年 10 月 22 日发了一篇面向企业的实践文章 [When to
 | SkillsBench | 21.43 | 38.57 |
 | Skill 池从 50 个涨到 1000 个 | 约 87.2% 降到约 60.3% | 约 95.5% 降到约 80.4% |
 
-最后一行最值得看：Skill 数量涨到 20 倍，两种方法都在掉，只是掉得多少不同。
+最后一行最值得看：Skill 数量涨到 20 倍，参与对比的方法都在掉，只是掉得多少不同。
 
 **和以前有什么不同**
 
@@ -106,7 +106,7 @@ Skill 原本是「写给模型看的说明书」。这篇把它当成能力的�
 ## 参考资料
 
 - [Building agents: When to fold subagents into your main agent loop](https://claude.com/resources/articles/building-agents-when-to-fold-subagents-into-your-main-agent-loop)，Anthropic，2026-10-22
-- [Skill Adapter: Personalized Modification and Online Routing of General-Purpose Skills](https://arxiv.org/abs/2611.17007)，arXiv 2611.17007，2026-11-13
+- [Skill Adapter: Personalized Modification and Online Routing of General-Purpose Skills](https://arxiv.org/abs/2611.17007)，arXiv 2611.17007，2026-11-12
 - [Skill2Env: Capability-Oriented Environment Synthesis from Skills for General Agents](https://arxiv.org/abs/2609.33772)，arXiv 2609.33772，2026-09-27
 
 文中数字均取自以上原文，模型名称和数值以原文发布时为准。

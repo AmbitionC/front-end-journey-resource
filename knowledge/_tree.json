@@ -2620,7 +2620,7 @@
             "updatedAt": "2026-11-25",
             "interviewBaseHeat": 0,
             "quickRead": {
-              "text": "本期三条：Claude Code 的 auto mode 用分类器逐个审动作，真实流量误拦率 0.4%，但真实的过度热心危险动作仍漏掉 17%；Anthropic 三个产品分别用容器、系统级沙箱和虚拟机隔离，出网白名单曾被用来外传文件；OpenAI Agents SDK 把循环和执行环境分开，凭证不进运行模型生成代码的环境。"
+              "text": "本期三条：Claude Code 的 auto mode 用分类器逐个审动作，真实流量误拦率 0.4%，但真实的过度热心危险动作仍漏掉 17%；Anthropic 三个产品分别用容器、系统级沙箱和虚拟机隔离，第三方披露过文件可借出网白名单外传的漏洞；OpenAI Agents SDK 把循环和执行环境分开，凭证不进运行模型生成代码的环境。"
             }
           },
           {

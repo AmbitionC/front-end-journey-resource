@@ -1,7 +1,7 @@
 本期专题是 Agent 记忆。面经里记忆是提及最多的几个方向之一，过去的标准答案是「短期放上下文、长期放向量库」。这三条说明这个答案已经不够用了。
 
 > **本期 30 秒版**
-> 1. 记忆是分层的文件，不是一个向量库：Anthropic 把记忆拆成原始记录、笔记、整理后的知识页和每次都加载的一小段，并用离线整理（dreaming）在几层之间做提炼。
+> 1. 记忆可以分层来做，不必只是一个向量库：Anthropic 把记忆拆成原始记录、笔记、整理后的知识页和每次都加载的一小段，并用离线整理（dreaming）在几层之间做提炼。
 > 2. 记忆对了也可能把答案带偏：MemAdapter 论文测到，加入准确且相关的记忆后，一组题的准确率从 96.0% 掉到 77.3%。
 > 3. 记忆系统可以按「会不会自己改写入策略」分三档：一篇多模态记忆综述梳理了 297 个记忆架构，给出静态、动态、自演化的分法。
 
@@ -22,7 +22,7 @@ Anthropic 2026 年 11 月 6 日发文 [The components of agent memory](https://w
 
 **几组值得记的数字**
 
-- 在 CL-Bench 上，同一个模型不带记忆和带记忆的得分：Claude Opus 5.5 从 0.655 到 0.838，Claude Opus 4.7 从 0.383 到 0.700。Claude Sonnet 4.6 只从 0.330 到 0.364，把指令改成「先读记忆、再验证自己的猜测」之后到了 0.641。也就是说，较弱的模型需要更明确的记忆使用指令。
+- 在 CL-Bench 的一个数据库任务上，同一个模型不带记忆和带记忆的得分：Claude Opus 5.5 从 0.655 到 0.838，Claude Opus 4.7 从 0.383 到 0.700。Claude Sonnet 4.6 只从 0.330 到 0.364，把指令改成「先读记忆、再验证自己的猜测」之后到了 0.641。也就是说，较弱的模型需要更明确的记忆使用指令。
 - 记忆该记什么，不要管得太死。加一条「只记录失败」的规则后，记忆带来的增益反而下降：Opus 5 降 0.234，Opus 4.7 降 0.150。
 - 整理是有用的。在一个约 35 万个文件的资料库问答任务（25 道题）上，离线整理从 2 次做到 128 次，得分从 13% 升到 48%。只用检索是 53%，知识页加检索从 54% 升到 61%。
 - 整理也会丢信息。一个合同任务里，把多份合同汇总进一张共享表的做法只保住了 57 条事实中的 41 条（72%），而每份合同一页、逐字引用的做法保住了全部 57 条。
@@ -46,7 +46,7 @@ Anthropic 2026 年 11 月 6 日发文 [The components of agent memory](https://w
 
 **发生了什么**
 
-吉林大学和厦门大学的论文 [MemAdapter](https://arxiv.org/abs/2610.05162)（arXiv，2026-10-06）研究了一个容易被忽略的问题：模型会过度迎合记忆里的内容，论文叫它「记忆引发的迎合」。
+吉林大学和厦门大学的论文 [MemAdapter](https://arxiv.org/abs/2610.05162)（arXiv，2026-10-04）研究了一个容易被忽略的问题：模型会过度迎合记忆里的内容，论文叫它「记忆引发的迎合」。
 
 关键观察是：即使加入的记忆是准确且相关的，也会出问题。论文的一组实验里，加入记忆后准确率从 96.0% 掉到 77.3%，原本答对的题里有 19.4% 被改错，而且全部是朝记忆内容的方向改的。
 
@@ -103,7 +103,7 @@ MemAdapter 是一个放在检索之后的处理步骤，不改记忆库本身，
 ## 参考资料
 
 - [The components of agent memory](https://www.anthropic.com/research/components-of-agent-memory)，Anthropic，2026-11-06
-- [Memadapter: Counterfactual Adaptation Against Memory-induced Sycophancy](https://arxiv.org/abs/2610.05162)，arXiv 2610.05162，2026-10-06
+- [Memadapter: Counterfactual Adaptation Against Memory-induced Sycophancy](https://arxiv.org/abs/2610.05162)，arXiv 2610.05162，2026-10-04
 - [Seeing, Maintaining, and Learning: The Evolution of Multimodal Agent Memory](https://arxiv.org/abs/2610.19366)，arXiv 2610.19366，2026-10-14
 
 文中数字均取自以上原文，模型名称和数值以原文发布时为准。
