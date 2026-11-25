@@ -86,6 +86,7 @@ Transformer 的自注意力本身没有天然顺序，需要位置编码告诉�
 <!-- interview-source-history:start -->
 - [字节 Agent 暑期一面：优化证据、指令偏差与长上下文](../../../interview/bytedance/base/bytedance-base-59.md)
 - [腾讯云智二面：Spring、Java 内存模型与 IO 多路复用](../../../interview/tencent/ai/tencent-ai-32.md)
+- [华为 AI 应用三面：工程项目与 AI 编程](../../../interview/huawei/ai/huawei-ai-5.md)
 - [字节后端与 Agent 开发一面：Java、数据库治理与系统设计](../../../interview/bytedance/base/bytedance-base-82.md)
 <!-- interview-source-history:end -->
 

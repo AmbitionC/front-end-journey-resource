@@ -265,6 +265,7 @@ Coding Agent 接到一个修 bug 的任务，发现工作区里有几个用户�
 - [小红书 AI 全栈实习二面：工具服务选择与开发闭环](../../../interview/redbook/ai/redbook-ai-12.md)
 - [OPPO AI 全栈一面：AI Coding、Skill 与数据结构](../../../interview/oppo/ai/oppo-ai-1.md)
 - [蚂蚁暑期面经：线程池、数据来源与多 Agent 评测](../../../interview/antfin/ai/antfin-ai-14.md)
+- [华为 AI 应用三面：工程项目与 AI 编程](../../../interview/huawei/ai/huawei-ai-5.md)
 - [阿里国际 Java 二面：RAG 数据评测、微调与代码生成](../../../interview/alibaba/ai/alibaba-ai-26.md)
 - [快手 AI 全栈一面：Skill 成本、Agent 链路与开发验收](../../../interview/kuaishou/ai/kuaishou-ai-9.md)
 - [美团 AI 全栈二面：AI Coding 复盘与测试边界](../../../interview/meituan/ai/meituan-ai-14.md)

@@ -193,6 +193,7 @@ Agent 的改动可能影响工具选择、提示词、检索、上下文管理�
 - [腾讯 CSIG 元宝内容安全日常实习：评测集、输出校验与问题归因](../../../interview/tencent/ai/tencent-ai-15.md)
 - [字节 TikTok Shop 质量方向一面：LLM Judge 与测试集覆盖](../../../interview/bytedance/base/bytedance-base-66.md)
 - [腾讯企业微信测开实习一面：工作流取舍与离线评测](../../../interview/tencent/ai/tencent-ai-26.md)
+- [华为 AI 应用三面：工程项目与 AI 编程](../../../interview/huawei/ai/huawei-ai-5.md)
 - [美团业务后台综合面：本体建模、Agent 评测与一致性](../../../interview/meituan/ai/meituan-ai-13.md)
 - [字节 Agent 全栈一面：工具、评测与编码](../../../interview/bytedance/base/bytedance-base-40.md)
 - [字节 Agent：AI Coding、技能设计与模型工程](../../../interview/bytedance/base/bytedance-base-49.md)

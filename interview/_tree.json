@@ -4528,6 +4528,20 @@
             "contentFormat": "short-qa-v2",
             "department": "其他",
             "updatedAt": "2026-11-15"
+          },
+          {
+            "label": "华为 AI 应用三面：工程项目与 AI 编程",
+            "key": "huawei-ai-5",
+            "isLeaf": true,
+            "filePath": "huawei/ai",
+            "tags": [
+              "Agent",
+              "AI Coding",
+              "工程化",
+              "项目面试"
+            ],
+            "updatedAt": "2026-11-25",
+            "contentFormat": "short-qa-v2"
           }
         ]
       },

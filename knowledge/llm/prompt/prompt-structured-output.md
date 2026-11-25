@@ -166,6 +166,7 @@ if (!validate(parsed)) {
 - [字节财经保险 AI 全栈实习一面：项目设计、AI Coding 与 Diff](../../../interview/bytedance/base/bytedance-base-34.md)
 - [字节 Agent 开发一面：评分、Harness 与任务可靠性](../../../interview/bytedance/base/bytedance-base-57.md)
 - [小红书 AI 全栈暑期二面：MCP 更新安全与 JSON 验收](../../../interview/redbook/ai/redbook-ai-11.md)
+- [华为 AI 应用三面：工程项目与 AI 编程](../../../interview/huawei/ai/huawei-ai-5.md)
 - [字节搜广推引擎架构一面：JSON 输出、并发与系统基础](../../../interview/bytedance/base/bytedance-base-74.md)
 <!-- interview-source-history:end -->
 

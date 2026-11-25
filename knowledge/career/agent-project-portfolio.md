@@ -163,6 +163,7 @@ Orchestrator 解析 PR diff，分发给各专项 Agent，收集结果后合并�
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../interview/bytedance/base/bytedance-base-53.md)
 - [字节后端与 Agent HR 面：能力复用、主动性与日常 AI 实践](../../interview/bytedance/base/bytedance-base-83.md)
 - [字节 TRAE 后端秋招二面：项目逻辑、工具与编辑距离](../../interview/bytedance/base/bytedance-base-76.md)
+- [华为 AI 应用三面：工程项目与 AI 编程](../../interview/huawei/ai/huawei-ai-5.md)
 - [腾讯元宝风控实习一面：内容安全评测与 RAG 切分](../../interview/tencent/ai/tencent-ai-33.md)
 - [字节前端全栈实习一面：渲染、Worker 与认证](../../interview/bytedance/base/bytedance-base-38.md)
 - [字节全栈：预请求、列表复用与 ThreadLocal](../../interview/bytedance/base/bytedance-base-44.md)

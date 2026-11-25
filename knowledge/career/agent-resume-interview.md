@@ -39,6 +39,14 @@ AI 项目描述最常见的错误，是写成工具清单："使用 LangChain + 
 
 > LLM 应用工程（RAG 系统设计与评估、Multi-Agent 编排、Prompt 调优）；工程化（LLM 可观测性、Token 成本管控、Eval Pipeline 搭建）
 
+## 简历附件与口头经历怎样对齐
+
+面试官发现附件没有你刚介绍的一段经历时，先确认他看到的是哪次投递、哪版附件，再按实际发生的先后解释：当时尚未开始、尚未形成可说明的成果，还是后来补充了材料。这里只列核对方向，不能把其中一种当作自己的理由，也不能把对方没有看到理解为自己已经提交过。没有确认附件版本时，可以先说明需要核对，避免越解释越偏离事实。
+
+[MIT 的 STAR 指南](https://capd.mit.edu/resources/the-star-method-for-behavioral-interviews/)强调使用真实经历、明确个人行动，并保持回答与申请材料一致。可据此为每段经历准备一条简短的核对记录：发生时间、材料版本、自己负责的工作、可说明的产物和当前阶段。时间线只能说明何时做过什么，项目是否上线、是否带来收益仍需各自的验证依据。
+
+例如，**以下仅是虚构表达结构**：“您看到的附件可能是项目开始前提交的版本，我需要核对提交记录。我后来负责了字段抽取后的校验和入库接口，模型接入由同事完成；目前能确认的是内部用例通过，还没有正式上线的结果。”真实回答应删去未经确认的推测，只保留自己确实做过且可核对的部分；需要补交材料时使用对方允许的渠道，并去掉内部代码和业务隐私。
+
 ## 面试考点方向
 
 AI/Agent 岗位面试通常覆盖以下几个方向。题目年年在变，但考察的底层能力是稳定的。
@@ -214,6 +222,7 @@ AI/Agent 岗位面试通常覆盖以下几个方向。题目年年在变，但�
 - [字节 Agent 实习：生成质量、多智能体与缓存](../../interview/bytedance/base/bytedance-base-52.md)
 - [网易后端开发秋招一面：缓存一致性、死锁与分布式锁](../../interview/netease/base/netease-base-1.md)
 - [字节 Agent：任务取消、Spring 配置与并发执行](../../interview/bytedance/base/bytedance-base-45.md)
+- [华为 AI 应用三面：工程项目与 AI 编程](../../interview/huawei/ai/huawei-ai-5.md)
 - [蚂蚁 Agent 实习一面：缓存、消息与 RAG](../../interview/antfin/ai/antfin-ai-6.md)
 - [字节前端全栈实习一面：渲染、Worker 与认证](../../interview/bytedance/base/bytedance-base-38.md)
 - [滴滴后端二面：CR Agent、Spec 与 AI Coding 场景](../../interview/didi/ai/didi-ai-1.md)
