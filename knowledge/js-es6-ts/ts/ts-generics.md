@@ -1,6 +1,6 @@
 TypeScript 泛型的目的不是把类型写得更抽象，而是在调用者传入的具体类型之间保留关系。`any` 会切断关系，联合类型可能丢失对应关系，泛型则能表达“输入是什么，输出仍是什么”“key 必须属于这个对象”“返回值取决于参数”。
 
-![TypeScript 泛型在输入输出间保持类型，并通过推断、约束、keyof 与默认类型表达关系](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/ts-generics-type-relationship-v1.webp)
+![TypeScript 泛型的作用是保留输入和输出之间的类型关系。上排对比同一个 identity 函数的三种写法：参数和返回都写 any 时，identity(42) 的结果是 any，类型关系断了；写成 number 或 string 的联合类型时，传 42 得到的仍是联合类型，输入和输出对不上；写成泛型 T 时，传 42 得到 number，输入是什么输出就是什么。下排是泛型表达关系的三种工具：约束 T extends HasLength，longest 传入字符串数组返回的仍是 string 数组而不是 HasLength，约束只说明最低能力；keyof，K extends keyof T，getProperty(user, name) 返回 string，也就是 T[name]，K 只能是 id 或 name；默认类型参数 Box<T = unknown>，省略时给安全默认，不要默认成 any，带默认的参数放在尾部。key 来自运行时字符串输入时要先验证缩窄，不能用 as keyof T 骗过编译器](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/ts-generics-type-relationship-v2.dark.png)
 *图：类型参数承载调用点的具体信息；constraint 限制能力，不应把 T 粗化成约束本身。*
 
 ## 从 identity 看关系

@@ -1,6 +1,6 @@
 前端状态设计不是选择 Redux、Context 或某个 store，而是确定 source of truth、所有者、生命周期和同步协议。模型正确后，库只是承载方式；模型错误时，全局化只会扩大不一致。
 
-![URL、组件 UI、表单、客户端领域状态和服务器缓存分别由不同 owner 管理，通过事件与失效规则同步而不是复制彼此](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/frontend-state-ownership-synchronization-v1.webp)
+![前端状态先按所有权分六类，每类写明例子、放在哪里、怎样同步。URL state 是筛选、分页这类可分享、可书签的状态，放在路由和 query string，前进后退自然同步。local UI state 是焦点、展开、弹窗，放在最近的组件里，不外传。form draft 是未提交的输入、dirty 和校验，由表单 owner 管理，提交后才进入服务端。client domain state 是只在客户端存在的跨组件流程，放 Context 或 store 并按变化频率拆分，通过事件和 selector 同步。server state 是远端实体的客户端副本，放 query cache，key 要包含请求参数和身份边界，按 stale、invalidate、refetch 管理新鲜度。external state 是浏览器 API、WebSocket 和第三方组件，经订阅适配层接入，卸载时清理。派生值不存第二份：fullName、过滤后列表、总价、完成数都是从单一真相源算出的 selector，昂贵时可以 memo，但 memo 不拥有真相。状态放在能覆盖所有消费者的最低 owner，只有跨远距离组件时才提升；全局不等于持久化，持久化也不等于权威](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/frontend-state-ownership-v2.dark.png)
 *图：状态先按所有权分层；派生 selector 从单一真相源生成视图，server state 通过 stale/invalidate/refetch 管理时间维度。*
 
 ---

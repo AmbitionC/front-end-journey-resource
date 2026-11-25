@@ -246,7 +246,7 @@
       "label": "长上下文、注意力稀释与有效利用",
       "articlePath": "knowledge/llm/basics/llm-long-context.md",
       "baselineArticleSha256": "8ade6feff74f402bab5889576811ac4806372702e6eec040cf079d69660ae562",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/llm-long-context-effective-context-loop-v1.webp",
@@ -254,10 +254,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-40pct-batch3",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/llm-long-context-working-context-v2.aj.mjs",
+          "sourceSha256": "c63c23b30b64efdb090a80c296bebea3a5a5094e4d580ceb66e94591d7f83661",
+          "darkPng": "images/llm-long-context-working-context-v2.dark.png",
+          "lightPng": "images/llm-long-context-working-context-v2.light.png",
+          "darkSha256": "3ccbbe575c9094ee365a2fd4a8c514bf07ac21321831a0c70eee6a7c10cfee55",
+          "lightSha256": "2da562cff82c5a7d0eed81f71ddfc8d18bad931e7fdff31131cc9f525639bddb"
+        }
+      ]
     },
     {
       "key": "llm-alignment",
@@ -904,7 +914,7 @@
       "label": "流式请求取消、续传与状态恢复",
       "articlePath": "knowledge/llm/dev/llm-stream-cancel-resume.md",
       "baselineArticleSha256": "27cf8a880d984f8a185f19e7cfbb170bc48245282457edac76fa4fbd1f291308",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/llm-stream-cancel-resume-event-log-v1.webp",
@@ -912,10 +922,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-40pct-batch3",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/llm-stream-cancel-resume-layers-v2.aj.mjs",
+          "sourceSha256": "74fbabb45d42dfe36ce42d31b812f6b94c1398c9a183e4469c4eacf1af3e9bbc",
+          "darkPng": "images/llm-stream-cancel-resume-layers-v2.dark.png",
+          "lightPng": "images/llm-stream-cancel-resume-layers-v2.light.png",
+          "darkSha256": "6a961fc5b3efd2dd6171429543717ad8f5f47a8a1c52e3f3d6c3f3f7ae10049d",
+          "lightSha256": "3448943cdc1a13769bde7e66f9d3561e72bb6c9b5d5e94563f13028cd1abcdcf"
+        }
+      ]
     },
     {
       "key": "llm-token-budget",
@@ -958,7 +978,7 @@
       "label": "超时、重试、Fallback 与错误处理",
       "articlePath": "knowledge/llm/dev/llm-error-retry-fallback.md",
       "baselineArticleSha256": "afae0e97bdb870bd7c2e296440517291e753a9719139af4e8385e162e8cd2779",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/llm-error-retry-fallback-reliability-ladder-v1.webp",
@@ -966,10 +986,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-40pct-batch3",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/llm-error-retry-fallback-ladder-v2.aj.mjs",
+          "sourceSha256": "3181c2a57c8b188385a53acd18ec41f4417950ed9cfcf7658bfcb2ab3ce57104",
+          "darkPng": "images/llm-error-retry-fallback-ladder-v2.dark.png",
+          "lightPng": "images/llm-error-retry-fallback-ladder-v2.light.png",
+          "darkSha256": "ec9b25d60a8f034768bda6fe1367bb4fe6eb1782c4414f441c0d45940a017c0b",
+          "lightSha256": "385f642adda2b49a4f469712eda5973fa5976d4ab79ccb47d4f28506ad93c576"
+        }
+      ]
     },
     {
       "key": "llm-vision-app",
@@ -5852,7 +5882,7 @@
       "label": "TypeScript 泛型与可复用类型",
       "articlePath": "knowledge/js-es6-ts/ts/ts-generics.md",
       "baselineArticleSha256": "850f2b0a2bf08a8a03d7ae99353d42961c5a22f1966f7ab2b10dac8e73b8b8c4",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/ts-generics-type-relationship-v1.webp",
@@ -5860,17 +5890,27 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-40pct-batch3",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/ts-generics-type-relationship-v2.aj.mjs",
+          "sourceSha256": "0f920eefadf8944fe55d052cdbfea8cd6061597bbc89af6425e6553a1a921d5f",
+          "darkPng": "images/ts-generics-type-relationship-v2.dark.png",
+          "lightPng": "images/ts-generics-type-relationship-v2.light.png",
+          "darkSha256": "d2bc8f9ea1222fac3f01d73a786a7bd225f84f0bf11e1e0b44b22514ed4ea4da",
+          "lightSha256": "7bbe60e19679f31bfd0610af8d27e7efde306bed0b79efffdc81dafc4f2f4adc"
+        }
+      ]
     },
     {
       "key": "useCallback-useMemo",
       "label": "React 渲染、Memo 与性能优化",
       "articlePath": "knowledge/framework/react/useCallback-useMemo.md",
       "baselineArticleSha256": "a5c5b8faf11a55aaa331cc96fde0a95f4fc05b9ee058d5c6e5c577feae06b55e",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/usecallback-usememo-render-dependency-v1.webp",
@@ -5878,17 +5918,27 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-40pct-batch3",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/usecallback-usememo-memo-compare-v2.aj.mjs",
+          "sourceSha256": "ec347a1a54379497ca4a4327fd22d8ec7c6ec1a70bf8667159f64971aeb2dc00",
+          "darkPng": "images/usecallback-usememo-memo-compare-v2.dark.png",
+          "lightPng": "images/usecallback-usememo-memo-compare-v2.light.png",
+          "darkSha256": "80f24ecc842846e55ed447f7f14425f959822e82a460c5c31e3cd8ddd3e7ef0e",
+          "lightSha256": "b95d1498d5f13637f1339ec562859f1ca82445369bd3b8321bc60717c2f03566"
+        }
+      ]
     },
     {
       "key": "design-state",
       "label": "前端状态管理与服务端状态",
       "articlePath": "knowledge/fe/design/design-state.md",
       "baselineArticleSha256": "926864627f972ffc621d10e9e5ee639eddc14134f81124aa07c3fe854f6e9c56",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/frontend-state-ownership-synchronization-v1.webp",
@@ -5896,10 +5946,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-40pct-batch3",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/frontend-state-ownership-v2.aj.mjs",
+          "sourceSha256": "323a323cd77d2902d44e1d40d311a4dfc3d17f8e9bd1928c1858029048af9590",
+          "darkPng": "images/frontend-state-ownership-v2.dark.png",
+          "lightPng": "images/frontend-state-ownership-v2.light.png",
+          "darkSha256": "4249a1e93634d9b8f7c6e5a13d86e18c365d3b1677253cbd64f586c3c3e0de83",
+          "lightSha256": "86a60f4fd975badf375011aa741b26557ab366d04819f0a0e3dc16f20383ba22"
+        }
+      ]
     },
     {
       "key": "vite-testing",
@@ -5970,7 +6030,7 @@
       "label": "Agent Chat UI、消息模型与会话列表",
       "articlePath": "knowledge/frontend/agent-ui/agent-chat-ui.md",
       "baselineArticleSha256": "71ae99d7514f59bcf1454c1c1f43161ecfd9048af9fe1df641cd8b8c8cf2f0a6",
-      "status": "queued",
+      "status": "rendered",
       "legacyAssets": [
         {
           "path": "images/agent-chat-ui-message-state-model-v1.webp",
@@ -5978,10 +6038,20 @@
           "provenance": "legacy_generation_supported"
         }
       ],
-      "renderer": null,
-      "diagramType": null,
-      "batchId": null,
-      "publishedEvidence": null
+      "renderer": "aj-diagrams",
+      "diagramType": "themed-svg",
+      "batchId": "aj-diagrams-heat-40pct-batch3",
+      "publishedEvidence": null,
+      "replacementAssets": [
+        {
+          "source": "images/diagram-sources/agent-chat-ui-message-model-v2.aj.mjs",
+          "sourceSha256": "dc9076adf11877e2de8b80d7411cbfa0aa318594616152532ad1b1df99a916cf",
+          "darkPng": "images/agent-chat-ui-message-model-v2.dark.png",
+          "lightPng": "images/agent-chat-ui-message-model-v2.light.png",
+          "darkSha256": "daf3f1f679a547d1aa0660bf26adeca2a16afc7846fe2069de8fc15cc799426e",
+          "lightSha256": "797c8c694453feffd57d29e8b089b11a8e01337003b2bd942d74828de8e18969"
+        }
+      ]
     },
     {
       "key": "agent-streaming-ui",
