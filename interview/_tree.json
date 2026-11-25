@@ -19,7 +19,7 @@
               "数据库",
               "Go"
             ],
-            "updatedAt": "2026-11-21",
+            "updatedAt": "2026-11-24",
             "contentFormat": "short-qa-v2",
             "department": "飞书",
             "roleCategory": "Agent 与后端工程",
@@ -33,7 +33,8 @@
             "contentFormat": "short-qa-v2",
             "department": "飞书",
             "roleCategory": "Agent 与后端工程",
-            "role": "AI全栈"
+            "role": "AI全栈",
+            "updatedAt": "2026-11-24"
           },
           {
             "label": "飞书后端一面：锁粒度与混合检索",
@@ -67,7 +68,7 @@
               "GRPO",
               "JSON"
             ],
-            "updatedAt": "2026-10-02",
+            "updatedAt": "2026-11-24",
             "department": "抖音电商",
             "roleCategory": "Agent 与后端工程",
             "role": "Agent 开发",
@@ -1583,7 +1584,7 @@
               "Agent",
               "大模型的能力边界、幻觉与不确定性"
             ],
-            "updatedAt": "2026-11-20",
+            "updatedAt": "2026-11-24",
             "contentFormat": "short-qa-v2"
           },
           {
