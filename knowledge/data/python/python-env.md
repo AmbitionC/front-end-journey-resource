@@ -403,6 +403,41 @@ uv 用 Rust 实现，主要优势：① 无 Python 解释器启动开销；② �
 **Q：pyproject.toml 相比 setup.py 有哪些优势？**
 `pyproject.toml` 是 PEP 517/518 定义的现代标准，将构建系统声明、项目元数据、依赖声明统一在一个文件中，工具无关（pip、uv、poetry、hatch 均支持）；`setup.py` 是命令式脚本，存在安全风险（执行任意代码），pip 已逐步放弃对其的支持。
 
+## 练一练
+
+### 高频考点题 1：pip freeze 的定位
+
+pip freeze 的输出适合拿来做什么？
+
+- A. 锁定全部依赖、保证复现
+- B. 作为项目直接依赖的声明文件，越简越好
+- C. 用来升级所有包到最新版
+- D. 用来卸载不需要的包
+
+**答案：A。** 它包含所有传递依赖，适合部署复现；直接依赖声明和锁文件最好分开维护。
+
+### 高频考点题 2：conda 的优势
+
+AI 项目需要 CUDA toolkit、cuDNN 等二进制库，conda 相比 pip 加 venv 的优势是？
+
+- A. conda 下载速度一定更快
+- B. conda 不需要虚拟环境
+- C. 能管理 CUDA 等二进制库依赖
+- D. conda 只能安装纯 Python 写的包
+
+**答案：C。** conda 是跨语言的环境管理器，适合 PyTorch 与 CUDA 版本必须精确匹配的场景。
+
+### 高频考点题 3：可编辑安装
+
+开发自己的内部工具包时用 pip install -e .，好处是？
+
+- A. 安装包会被压缩得更小
+- B. 包会被安装到全局环境
+- C. 改源码后无需重装即可生效
+- D. 自动生成 requirements.txt
+
+**答案：C。** 可编辑模式让环境指向源码目录，适合边开发边调试本地包。
+
 ## 参考资料
 
 - [Python venv](https://docs.python.org/3/library/venv.html)

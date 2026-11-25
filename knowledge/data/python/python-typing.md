@@ -381,6 +381,41 @@ A：`mode="before"` 在字段验证前触发，接收原始输入数据（通常
 **Q：`Protocol` 和 `ABC` 的区别，在 Agent 框架中如何选择？**
 A：`Protocol` 实现结构化子类型（静态版本的 duck typing），无需显式继承，适合定义工具接口、检索器接口等——只要对象有对应方法就满足协议；`ABC` 需要显式继承并实现抽象方法，适合强制子类实现某些行为。Agent 框架中 `Protocol` 更灵活，第三方工具无需修改代码即可适配。（参见 [Python typing module](https://docs.python.org/3/library/typing.html)）
 
+## 练一练
+
+### 高频考点题 1：注解会检查吗
+
+函数参数注解为 age: int，运行时传入字符串会怎样？
+
+- A. 立即抛出 TypeError
+- B. 自动把字符串转成整数
+- C. 照常运行，注解不做检查
+- D. 编译阶段就报错，程序根本无法运行
+
+**答案：C。** 注解只是存储在 `__annotations__` 里的元数据，要靠类型检查器或 Pydantic 这类运行时校验。
+
+### 高频考点题 2：Pydantic 的类型转换
+
+Pydantic v2 模型的 int 字段默认收到字符串 "42"，会怎样？
+
+- A. 抛出 ValidationError
+- B. 变成 None
+- C. 保留为字符串
+- D. 转换成整数 42
+
+**答案：D。** 默认开启宽松转换；需要严格校验时在配置里打开 strict 模式。
+
+### 高频考点题 3：跨字段校验
+
+要校验"结束时间必须晚于开始时间"这种跨字段规则，应使用？
+
+- A. 只给每个字段加 Field 约束
+- B. 只能在路由函数里手动判断
+- C. 在类型注解里写比较表达式
+- D. model_validator
+
+**答案：D。** field_validator 校验单个字段；model_validator 在所有字段赋值完成后运行，适合联合校验。
+
 ## 参考资料
 
 - [Python typing module](https://docs.python.org/3/library/typing.html)
