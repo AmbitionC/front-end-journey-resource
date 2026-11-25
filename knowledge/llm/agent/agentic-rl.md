@@ -127,10 +127,10 @@ Agentic RL 的核心挑战是长轨迹上的信用分配与分布控制。PPO �
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [小米汽车大模型算法一二面：奖励投机、采样与线上验证](../../../interview/xiaomi/ai/xiaomi-ai-1.md)
 - [美团北斗大模型算法一至四面：过程监督、GRPO 与工具参数](../../../interview/meituan/ai/meituan-ai-3.md)
 - [字节抖音电商 Agent 一面：分层、上下文与 GRPO](../../../interview/bytedance/base/bytedance-base-21.md)
 - [腾讯 AI Agent 应用开发一面：上下文、强化学习与系统基础](../../../interview/tencent/ai/tencent-ai-11.md)
+- [小米汽车大模型算法一二面：奖励投机、采样与线上验证](../../../interview/xiaomi/ai/xiaomi-ai-1.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

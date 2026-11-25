@@ -59,6 +59,7 @@ Go 当前调度实现结合每 P 的本地队列、全局队列、工作窃取�
 
 <!-- interview-source-history:start -->
 - [MiniMax 平台研发一面：数据可靠性、反馈闭环与 GMP](../../../interview/minimax/ai/minimax-ai-1.md)
+- [字节飞书 AI 应用一面：Runtime、评测与后端基础](../../../interview/bytedance/base/bytedance-base-24.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

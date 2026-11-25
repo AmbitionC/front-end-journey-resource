@@ -17,7 +17,7 @@
 <details data-knowledge-key="algorithm-loop"><summary>（5）两个多层 JSON 深度合并，异类型冲突怎样处理</summary></details>
 <p>先和面试官约定规则，因为 JSON 标准没有规定深度合并怎么做。我的约定是：两边都是对象就递归合并，其他情况（数组、数字、null、类型不一样）都用右边的值替换；只出现在一边的键直接深拷贝过来，保证结果不和输入共享对象。每次递归都进入更小的子树，所以一定会结束；输入太深要设上限或改成显式栈。如果业务要按元素合并数组，或者把 null 当删除，都需要另外约定。</p>
 
-<details data-knowledge-key="agent-eval-framework"><summary>（6）怎样搭 Agent benchmark</summary></details>
+<details data-knowledge-key="agent-benchmark"><summary>（6）怎样搭 Agent benchmark</summary></details>
 <p>每条用例要定义清楚：输入、初始环境、允许的动作、什么算合法的最终结果、怎么判分。能用程序判的（金额对不对、有没有越权、有没有只读）都用程序判，说明写得好不好再交给模型评分，模糊的地方人工校准。用例要分切片：正常任务、缺字段、跨租户诱导、工具失败。模型、提示词、工具和数据版本都要冻结，同一条用例跑多次看稳定性，同时记录成本和延迟。</p>
 
 <details data-knowledge-key="agent-state-storage"><summary>（7）多 Agent 上下文和状态怎样隔离</summary></details>
