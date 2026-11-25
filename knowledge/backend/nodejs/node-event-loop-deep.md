@@ -234,6 +234,41 @@ Agent 服务的吞吐量瓶颈往往不在 LLM 调用速度，而在于：
 4. **libuv 线程池处理哪些操作？** 文件 I/O、DNS lookup、部分 crypto；网络 I/O 不走线程池。
 5. **如何诊断事件循环阻塞？** 使用 `perf_hooks.monitorEventLoopDelay`、`--prof` 火焰图、或 Clinic.js Doctor。
 
+## 练一练
+
+### 高频考点题 1：timers 阶段
+
+事件循环的 timers 阶段执行什么？
+
+- A. 所有的文件 I/O 完成后的回调
+- B. 进程退出前的清理逻辑
+- C. 所有的 Promise 回调，不管是否到期
+- D. 到期的定时器回调
+
+**答案：D。** 「到期」是指达到设定的最短延迟，不保证精确按时执行。
+
+### 高频考点题 2：单线程的优势
+
+Node.js 单线程非阻塞 I/O 模型的核心优势是？
+
+- A. 等 I/O 时可处理其他请求
+- B. CPU 密集计算特别快
+- C. 不需要操作系统支持
+- D. 每个请求都会分配一个独立的线程
+
+**答案：A。** 传统多线程服务器为每个请求开一个线程，连接多了切换和内存开销大。
+
+### 高频考点题 3：idle / prepare
+
+事件循环的 idle / prepare 阶段，用户代码会在这里执行吗？
+
+- A. 会，用来执行 setImmediate
+- B. 不会，仅供 libuv 内部使用
+- C. 会，用来执行 process.nextTick
+- D. 会，用来执行所有定时器
+
+**答案：B。** setImmediate 在 check 阶段执行。
+
 ## 参考资料
 
 - [Node.js event loop, timers, and process.nextTick](https://nodejs.org/learn/asynchronous-work/event-loop-timers-and-nexttick)

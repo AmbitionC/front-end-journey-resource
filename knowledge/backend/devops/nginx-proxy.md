@@ -305,6 +305,41 @@ gzip_vary on;
 - **`keepalive` 在 upstream 中的意义**：缓存可复用的空闲上游连接，减少重复建连；它不是活动连接或请求总量限制，实际收益要测量。
 - **`worker_processes` 怎么配置**：`auto` 可按可用处理器自动选择 worker 数；`worker_connections` 包含客户端和上游等连接，还受文件描述符限制。两者乘积不能直接当最大业务请求并发。[NGINX worker 配置](https://nginx.org/en/docs/ngx_core_module.html#worker_connections)
 
+## 练一练
+
+### 高频考点题 1：正向和反向代理
+
+关于反向代理，下面说法正确的是？
+
+- A. 代理服务端，对客户端隐藏后端
+- B. 代理客户端，对服务端隐藏客户端
+- C. 只能用于翻墙访问外网
+- D. 和正向代理是同一个东西
+
+**答案：A。** 正向代理代表客户端出去，反向代理代表服务端接收请求。
+
+### 高频考点题 2：真实客户端 IP
+
+Nginx 反代后，后端 Express 拿到的 `req.ip` 总是 Nginx 的地址。应该怎么做？
+
+- A. 直接信任任何请求头里的 X-Forwarded-For
+- B. 让用户在请求参数里自己传 IP
+- C. Nginx 设置转发头，后端只信任受控代理
+- D. 不需要真实 IP，全部记成 Nginx 的地址
+
+**答案：C。** 无条件信任 X-Forwarded-For 会让客户端伪造 IP。
+
+### 高频考点题 3：location 匹配
+
+同层 location 中，`=` 修饰的规则精确命中后会怎样？
+
+- A. 继续匹配其他正则规则
+- B. 随机选择一个规则
+- C. 被前缀规则覆盖
+- D. 立即使用，匹配结束
+
+**答案：D。** 否则才继续比较前缀和正则规则。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->

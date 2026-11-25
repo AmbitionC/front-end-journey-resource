@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { spawnSync } from 'node:child_process';
@@ -29,10 +30,10 @@ test('FaaS result parser checks actual contract and rejects nested errors or mer
   for(const value of [{success:false,data:{errors:[]}},{success:true,data:{errors:['failed article'],manifests:0,articles:0,images:0,deleted:0}},{success:true,errors:[]},{message:'success: true'},{success:true,data:{errors:[],manifests:0,articles:-1,images:0,deleted:0}}]) assert.throws(()=>validateSyncResult(value));
 });
 
-test('direct PDF CLI fails before browser launch or upload when genuine final proof is missing',()=>{
-  const result=spawnSync(process.execPath,[join(import.meta.dirname,'../scripts/build-materials.mjs')],{encoding:'utf8',timeout:20000,env:{...process.env,RELEASE_AFTER_SHA:'0'.repeat(40)}});
-  assert.equal(result.status,1);assert.match(result.stderr,/正式 PDF 生成\/上传失败/u);
-  assert.doesNotMatch(result.stdout,/built |已上传 OSS/u);
+test('PDF CLI no longer requires release authorization and is not run by unit tests',()=>{
+  // 2026-11-25 起发布授权闸门已删除；单测不再真跑出册脚本（会生成十几 MB 的 PDF，配了 OSS 密钥时还会上传）。
+  const src=readFileSync(join(import.meta.dirname,'../scripts/build-materials.mjs'),'utf8');
+  assert.doesNotMatch(src,/requireReviewedRelease/u);
 });
 
 test('unsupported iframe or active media cannot silently vanish from approved PDF',()=>{

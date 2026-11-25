@@ -275,6 +275,41 @@ trivy image my-agent:1.0
 - **ENTRYPOINT 与 CMD 的区别**：ENTRYPOINT 定义容器主进程，CMD 提供可覆盖的默认参数；两者配合使用实现灵活的容器入口
 - **容器数据持久化**：Volume（由 Docker 管理，适合生产）vs Bind Mount（绑定宿主机目录，适合开发调试）
 
+## 练一练
+
+### 高频考点题 1：容器和虚拟机
+
+容器和虚拟机最本质的区别是？
+
+- A. 容器更安全，虚拟机更不安全
+- B. 共享宿主内核，靠 namespace 隔离
+- C. 容器只能运行 Linux 程序，虚拟机只能运行 Windows
+- D. 两者没有区别
+
+**答案：B。** 虚拟机有独立的内核，隔离更强、开销也更大。
+
+### 高频考点题 2：多阶段构建
+
+Node.js 应用使用多阶段构建，主要好处是？
+
+- A. 构建速度一定更快
+- B. 可以跳过测试
+- C. 最终镜像不含编译器、源码和开发依赖
+- D. 镜像可以在 Windows 上直接运行
+
+**答案：C。** 构建环境和运行环境分开，镜像更小、攻击面更少。
+
+### 高频考点题 3：.dockerignore
+
+`.dockerignore` 里务必排除哪个文件？
+
+- A. package.json
+- B. src 目录
+- C. Dockerfile
+- D. .env
+
+**答案：D。** .env 含密钥，进了 build context 就可能被打进镜像；node_modules 也应排除。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->

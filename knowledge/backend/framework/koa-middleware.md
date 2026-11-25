@@ -315,6 +315,41 @@ router.use('/public', loggingMiddleware);
 - **Q：为什么 Koa 适合 AI Agent 流式接口？**  
   A：Koa 对 Node.js Stream 有原生支持（`ctx.body` 可以直接赋值为可读流），配合 `async/await` 可以干净地编写异步流处理逻辑，避免了 Express 中需要手动调用 `res.write`/`res.end` 并管理各种生命周期事件的复杂度。
 
+## 练一练
+
+### 高频考点题 1：洋葱模型
+
+Koa 中间件 `await next()` 之后的代码什么时候执行？
+
+- A. 下游全部执行完返回后
+- B. 永远不会执行
+- C. 在下游中间件开始执行之前
+- D. 和下游并行执行
+
+**答案：A。** 所以计时、日志、追踪这类横切逻辑写在 next 前后很自然。
+
+### 高频考点题 2：多次调用 next
+
+同一个 Koa 中间件里调用两次 `next()`，koa-compose 会怎样？
+
+- A. 下游中间件执行两次
+- B. 进入死循环
+- C. 自动忽略第二次
+- D. 抛出错误
+
+**答案：D。** compose 用 index 检测重复调用，这是常见 bug。
+
+### 高频考点题 3：Koa 和 Express
+
+Koa 相比 Express 的一个主要特点是？
+
+- A. 内置路由和 Body 解析
+- B. 内核极简，路由等都靠中间件
+- C. 不支持 async/await
+- D. 只能运行在浏览器里
+
+**答案：B。** Koa 刻意保持小内核，按需组合中间件。
+
 ## 参考资料
 
 - [Koa official documentation](https://koajs.com/)

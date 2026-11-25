@@ -505,6 +505,41 @@ TypeORM 在每次应用启动时比较 Entity 定义与数据库结构差异并�
 **如何在 NestJS 中使用 Repository？**
 通过 `@InjectRepository(Entity)` 装饰器注入，配合 `TypeOrmModule.forFeature([Entity])` 注册。建议将 Repository 操作封装在独立的 Repository 类或 Service 中，不直接在 Controller 操作数据库。
 
+## 练一练
+
+### 高频考点题 1：外键声明在哪
+
+TypeORM 一对多关系里，`@JoinColumn` 声明在哪一侧？
+
+- A. OneToMany 那一侧
+- B. 不需要声明，TypeORM 会自动在两张表都建外键
+- C. 两侧都要声明一次
+- D. ManyToOne 那一侧
+
+**答案：D。** 外键列在「多」的一侧。
+
+### 高频考点题 2：两种级联
+
+`onDelete: 'CASCADE'` 和 `cascade: true` 的区别是？
+
+- A. 前者是库级联删除，后者是 ORM 级联保存
+- B. 两者完全一样，写哪个都行
+- C. 前者是 ORM 行为，后者是数据库行为
+- D. 两者都只在开发环境生效，生产环境会被忽略
+
+**答案：A。** 前者删除父记录时数据库删除子记录，后者在 save 父对象时一并保存关联对象。
+
+### 高频考点题 3：列类型
+
+`@Column` 的 type 在不同数据库之间，下面说法正确的是？
+
+- A. 所有数据库的映射都完全一样
+- B. 只能使用 string 和 number 两种类型
+- C. TypeORM 不支持 PostgreSQL
+- D. 映射因数据库而异，需按目标库确认
+
+**答案：D。** MySQL、PostgreSQL、SQLite 的类型映射不同，迁移数据库时要重新核对。
+
 ## 参考资料
 
 - [TypeORM entities](https://typeorm.io/docs/entity/entities/)
