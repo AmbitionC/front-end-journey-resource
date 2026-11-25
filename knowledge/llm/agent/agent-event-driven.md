@@ -88,6 +88,41 @@ payload 只携带必要数据。大文档使用不可变对象引用、hash、�
 
 事件驱动编排把等待和跨服务协作变成持久事实流。标准信封提供身份与类型，correlation 建立业务链，至少一次交付要求去重和幂等，版本化投影抵御乱序，Retry/DLQ 支持可审计恢复。只有明确这些契约，异步 Agent 才不会把“最终到达”变成“重复执行”。
 
+## 练一练
+
+### 高频考点题 1：命令、事件和查询
+
+下面哪个名字表示「事件」？
+
+- A. `GenerateReport`
+- B. `ReportGenerated`
+- C. `GetReportStatus`
+- D. `AgentTask`
+
+**答案：B。** 事件陈述已经发生的事实；`GenerateReport` 是命令，请某个能力做事；`GetReportStatus` 是查询，不应产生副作用。把所有消息都叫 `AgentTask`，就分不清是事实还是命令。
+
+### 高频考点题 2：三个 ID
+
+关于 event ID、correlation ID 和 causation ID，下面说法正确的是？
+
+- A. 三者可以合并成一个 messageId
+- B. correlation ID 用来对同一事件去重，event ID 用来串联流程
+- C. event ID 标识事实，correlation 关联流程，causation 指向原因
+- D. causation ID 和 event ID 永远相同
+
+**答案：C。** 同一流程里有很多唯一事件，重放时还要保留因果链，所以三个 ID 各管一件事。去重靠的是 source + event ID。
+
+### 高频考点题 3：DLQ 重放
+
+修复了根因后，要重放死信队列里的一条命令。正确做法是？
+
+- A. 用新 event ID 重放，保留原始 ID，并先确认重放安全
+- B. 沿用原 event ID 原样重放，消费者就能识别出这是同一条消息
+- C. 直接修改原事件内容后重放
+- D. DLQ 里的消息直接删掉
+
+**答案：A。** 沿用原 ID 会被消费者去重忽略；改原事件会断掉审计链。DLQ 不是垃圾桶，重放前要确认旧命令在新的现实里生效是否安全。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->

@@ -92,6 +92,41 @@ Trace 保存 run/step/attempt、checkpoint seq、lease、intent、effect ID、re
 
 Agent 工作流可靠性来自事件驱动状态和副作用协议：run/step ID 标识进度，checkpoint 保存可继续边界，write intent 与幂等键包围外部操作，commit result 后再推进。Lease、补偿、schema migration 和 replay 让任务跨崩溃与升级继续，而不把重试误当 exactly-once。
 
+## 练一练
+
+### 高频考点题 1：副作用前后的恢复边界
+
+工作流在「付款请求已成功、结果还没写回状态」时崩溃。恢复时应该怎么做？
+
+- A. 从头重新执行付款
+- B. 用幂等键查询操作状态，再决定复用或重试
+- C. 默认这次付款失败，通知用户重新发起一次付款
+- D. 跳过付款步骤继续往下走
+
+**答案：B。** 崩溃可能发生在效果成功、结果未提交之间。执行前先记录 intent 和幂等键（如 `runId:stepId:logicalOperation`），恢复时据此查询，而不是重放付款。
+
+### 高频考点题 2：Retry、Resume、Replay
+
+关于 Replay，下面说法正确的是？
+
+- A. Replay 会按历史输入重新调用模型，生成一份新的计划
+- B. Replay 和 Retry 是一回事
+- C. 按历史事件重建状态，通常不重复真实副作用
+- D. Replay 会重新发送所有外部请求
+
+**答案：C。** 工作流代码要对 replay 确定。重新调用模型得到不同计划，那是 fork，不是复现。Retry 是重新执行某个失败操作，Resume 是从持久状态继续未完成流程。
+
+### 高频考点题 3：两个 worker 同时恢复
+
+两个 worker 同时去恢复同一个 run，怎样防止重复推进？
+
+- A. 用带 fencing token 的 lease，每次提交都校验 token
+- B. 靠 heartbeat 判断哪个 worker 还活着，活着的就算完成
+- C. 让两个 worker 都执行，最后结果取后到的
+- D. 不用处理，概率很低
+
+**答案：A。** 过期的 worker 即使重新上线，fencing token 也会让它无法覆盖新 owner 的结果。heartbeat 只延长 lease，不等于业务完成。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->

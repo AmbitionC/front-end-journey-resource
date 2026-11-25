@@ -112,6 +112,41 @@ TARGET_FAILED
 
 Router 决定去哪，Agent-as-Tool 委派子任务但 manager 保持最终责任，Handoff 转移用户可见控制。三者都需要最小 Context Envelope、独立权限检查、明确 return/error 和统一 trace。把“谁能做、谁可做、谁负责回答”分别建模，协作才不会变成无边界广播。
 
+## 练一练
+
+### 高频考点题 1：三种控制模式
+
+翻译、代码审查这类边界清楚的子任务，manager 需要拿到结果后自己生成最终回答。最适合哪种模式？
+
+- A. Agent-as-Tool：manager 调用专家，自己保留最终责任
+- B. Handoff：把会话交给专家，由专家直接面对用户继续回答
+- C. 把完整历史广播给所有专家
+- D. 让两个 Agent 轮流回答
+
+**答案：A。** Agent-as-Tool 适合有界子任务，控制始终在 manager。Handoff 是转移用户可见的会话所有权，适合目标 Agent 需要连续追问或承担用户关系的场景，比如售后转退款专家。
+
+### 高频考点题 2：Handoff 传什么上下文
+
+售后 Agent 把会话 handoff 给退款专家，上下文应该怎么传？
+
+- A. 把完整对话历史和所有工具结果都传过去，避免专家缺信息
+- B. 什么都不传，让专家重新问用户
+- C. 只传最小且充分的 envelope，去掉无关对话和私密字段
+- D. 把来源 Agent 的内部推理一起传过去
+
+**答案：C。** 默认传递完整历史会扩大隐私和权限暴露。Envelope 只放完成任务必需的信息，证据用受控引用，目标 Agent 按自己的权限读取。
+
+### 高频考点题 3：Handoff 后的权限
+
+目标 Agent 在 handoff 后需要执行一次新的外部写入，下面说法正确的是？
+
+- A. 来源 Agent 有权限，目标 Agent 自动继承
+- B. 不继承更高权限，新增写入要重新审批
+- C. envelope 里列在 allowedTools 中的工具，目标 Agent 就一定能执行
+- D. 被拒绝后可以换一个权限更宽的 Agent 重试
+
+**答案：B。** Handoff 前要对用户授权、来源可委派范围、目标工具 scope 和资源 ACL 求交集。allowedTools 只是上限；permission denied 不能靠换更宽权限的 Agent 绕过去。
+
 ## 参考资料
 
 - [OpenAI Agents SDK — Tools](https://openai.github.io/openai-agents-python/tools/)
