@@ -7573,7 +7573,7 @@
       "action": "create",
       "batch": "frontier-hot-20261125",
       "recordedAt": "2026-11-25",
-      "status": "pending",
+      "status": "published",
       "reason": "Frontier digest hot-topic issues requested by owner; sources read at origin."
     },
     {
@@ -7583,8 +7583,38 @@
       "action": "create",
       "batch": "frontier-hot-20261125",
       "recordedAt": "2026-11-25",
-      "status": "pending",
+      "status": "published",
       "reason": "Frontier digest hot-topic issues requested by owner; sources read at origin."
+    },
+    {
+      "key": "frontier-mcp-skills-tasks-elicitation",
+      "label": "MCP 两周年更新：服务器自带 Skill、后台任务、中途向用户提问",
+      "filePath": "frontier",
+      "action": "create",
+      "batch": "frontier-hot-20261125-b2",
+      "recordedAt": "2026-11-25",
+      "status": "pending",
+      "reason": "Frontier digest hot-topic issues; sources read at origin."
+    },
+    {
+      "key": "frontier-google-semantic-governance",
+      "label": "Google 语义治理策略：工具调用执行前先问一句「用户要求过吗」",
+      "filePath": "frontier",
+      "action": "create",
+      "batch": "frontier-hot-20261125-b2",
+      "recordedAt": "2026-11-25",
+      "status": "pending",
+      "reason": "Frontier digest hot-topic issues; sources read at origin."
+    },
+    {
+      "key": "frontier-openai-dots-always-on-agent",
+      "label": "OpenAI dot：常驻 Agent 的三层权限设计",
+      "filePath": "frontier",
+      "action": "create",
+      "batch": "frontier-hot-20261125-b2",
+      "recordedAt": "2026-11-25",
+      "status": "pending",
+      "reason": "Frontier digest hot-topic issues; sources read at origin."
     }
   ],
   "deliveryEvidence": {

@@ -2559,6 +2559,45 @@
         "key": "frontier-weekly",
         "children": [
           {
+            "label": "MCP 两周年更新：服务器自带 Skill、后台任务、中途向用户提问",
+            "key": "frontier-mcp-skills-tasks-elicitation",
+            "isLeaf": true,
+            "filePath": "frontier",
+            "contentStatus": "published",
+            "heat": 0,
+            "updatedAt": "2026-11-25",
+            "interviewBaseHeat": 0,
+            "quickRead": {
+              "text": "11 月 24 日 Anthropic 宣布 Claude 支持三项 MCP 能力：Skills over MCP 公测，服务器可以把工具的用法作为 Skill 一起提供；Tasks 正式可用，一次工具调用可以变成先返回编号、之后轮询的后台任务；Elicitation 正式可用，服务器可以在执行中向用户提问，密码和支付这类信息必须走跳转链接而不是表单。"
+            }
+          },
+          {
+            "label": "Google 语义治理策略：工具调用执行前先问一句「用户要求过吗」",
+            "key": "frontier-google-semantic-governance",
+            "isLeaf": true,
+            "filePath": "frontier",
+            "contentStatus": "published",
+            "heat": 0,
+            "updatedAt": "2026-11-25",
+            "interviewBaseHeat": 0,
+            "quickRead": {
+              "text": "Google 在 Agent Gateway 上拦住 Agent 的每个工具调用，由一个模型裁判对照用户请求和自然语言规则决定放行还是拒绝。官方在 AgentDojo 上测得攻击成功率从 48.7% 降到 0.9%，正常任务完成率下降 2.6 个百分点；但攻击没有针对这层防护适配，流式响应不检查，裁判本身也会判错。"
+            }
+          },
+          {
+            "label": "OpenAI dot：常驻 Agent 的三层权限设计",
+            "key": "frontier-openai-dots-always-on-agent",
+            "isLeaf": true,
+            "filePath": "frontier",
+            "contentStatus": "published",
+            "heat": 0,
+            "updatedAt": "2026-11-25",
+            "interviewBaseHeat": 0,
+            "quickRead": {
+              "text": "OpenAI 在 ChatGPT 里上线常驻 Agent「dot」，有自己的云端电脑，在两次对话之间继续推进。官方文档里的权限设计分三层：后台主动研究用的工具只读；有影响的动作过自动审查，结果分直接做、要批准、只能由人做；用户自定义规则是软约束，不能授予权限也不能绕过内置安全要求。"
+            }
+          },
+          {
             "label": "DeepSeek Super-agent：一个 Router 带一群 Worker，让人少盯会话",
             "key": "frontier-deepseek-super-agent",
             "isLeaf": true,
