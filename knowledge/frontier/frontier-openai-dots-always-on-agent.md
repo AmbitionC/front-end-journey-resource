@@ -78,7 +78,7 @@ dot 主动研究已接入应用里的信息时，文档写明所用的工具不�
 ## 目前还不清楚的
 
 - Plus 放开的规模和时间表，帮助中心没有说明，只说在逐步放开。
-- 用量怎么算：帮助中心写了 Enterprise 的 dot 在 2027 年 1 月 13 日之前不收费，1 月 14 日起计费，委派给 ChatGPT Work 或 Codex 的工作另按标准价算；个人套餐的用量规则这一页没有写清。
+- 用量怎么算：帮助中心写了 Enterprise 的 dot 在 2027 年 1 月 13 日之前不收费，1 月 14 日起计费，委派给 ChatGPT Work 或 Codex 的工作另按标准价算；另一份[官方介绍](https://learn.chatgpt.com/docs/dots.md)写明，Pro 和 Business Premium 与 dot 的对话不计入 ChatGPT 用量上限，它在 Work 或 Codex 里发起的任务照常计入；Plus 怎么算没有看到说明。
 - 它由哪些触发器驱动、内部怎么调度，官方没有披露工程细节。本期关于架构的内容只限于文档写明的部分。
 
 ## 练一练
@@ -120,6 +120,7 @@ dot 主动研究已接入应用里的信息时，文档写明所用的工具不�
 
 - [Getting started with your dot](https://help.openai.com/en/articles/20001530-getting-started-with-your-dot)，OpenAI 帮助中心
 - [Dots controls](https://learn.chatgpt.com/docs/dots/controls.md)，OpenAI 文档
+- [Meet dots](https://learn.chatgpt.com/docs/dots.md)，OpenAI 文档
 - [Manage dots permissions and capabilities](https://learn.chatgpt.com/docs/enterprise/dots-admin-guide.md)，OpenAI 文档
 - [OpenAI is testing Dots personal agents on its $20 per month Plus tier](https://www.engadget.com/2322656/openai-is-testing-dots-personal-agents-on-its-20-per-month-plus-tier/)，Engadget，2026-11-20
 
