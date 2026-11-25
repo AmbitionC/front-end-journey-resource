@@ -77,8 +77,9 @@ RecyclerView 的回收则复用视图实例：[Android 文档](https://developer
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节全栈：预请求、列表复用与 ThreadLocal](../../../interview/bytedance/base/bytedance-base-44.md)
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
+- [字节全栈一二面：调度器、流式恢复与浏览器网络](../../../interview/bytedance/base/bytedance-base-53.md)
+- [字节全栈：预请求、列表复用与 ThreadLocal](../../../interview/bytedance/base/bytedance-base-44.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

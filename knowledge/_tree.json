@@ -898,14 +898,14 @@
             "isLeaf": true,
             "filePath": "llm/rag",
             "contentStatus": "published",
-            "heat": 29,
+            "heat": 28,
             "currRank": 5,
             "updatedAt": "2026-11-17",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "RAG 评估先看相关证据是否被召回与正确排序，再看生成结论是否得到证据支持，最后检查真实任务效果。固定数据和版本、保留失败切片并校准模型评分，不能把答案流畅或单一总分当有效证明。"
             },
-            "interviewCount": 23,
+            "interviewCount": 22,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1380,14 +1380,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 30,
+            "heat": 29,
             "currRank": 5,
             "updatedAt": "2026-07-14",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "智能体围绕目标感知、行动并读取结果，模型只是可能的决策组件。用PEAS界定绩效、环境、执行器和观察，循环还需状态、权限、预算与终止条件；路径固定时普通工作流也可能更可靠。"
             },
-            "interviewCount": 24,
+            "interviewCount": 23,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1923,14 +1923,14 @@
             "isLeaf": true,
             "filePath": "llm/production",
             "contentStatus": "published",
-            "heat": 36,
+            "heat": 35,
             "currRank": 5,
             "updatedAt": "2026-10-28",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Agent 验收分开读取任务要求、执行轨迹和实际环境结果。确定条件用程序，开放质量用经校准的模型或人工判断；固定初始状态、版本和统计分母，不能只相信最终回复中的成功声明。"
             },
-            "interviewCount": 30,
+            "interviewCount": 29,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -2809,6 +2809,26 @@
             }
           },
           {
+            "key": "go-gmp-scheduling",
+            "filePath": "backend/runtime",
+            "label": "Go GMP 调度：G、M、P 与阻塞恢复",
+            "tags": [
+              "Go",
+              "GMP",
+              "运行时"
+            ],
+            "quickRead": {
+              "text": "G 是 goroutine，M 是系统线程，P 管理执行用户 Go 代码所需的资源。队列、阻塞、唤醒和工作窃取共同组织调度；goroutine 不等于线程，sleep 也不表示每个 G 独占一个系统线程。"
+            },
+            "isLeaf": true,
+            "contentStatus": "published",
+            "interviewBaseHeat": 0,
+            "interviewCount": 2,
+            "heat": 2,
+            "currRank": 2,
+            "updatedAt": "2026-10-31"
+          },
+          {
             "label": "请求上下文与洋葱模型",
             "key": "koa-middleware",
             "isLeaf": true,
@@ -2844,26 +2864,6 @@
             ],
             "quickRead": {
               "text": "先区分服务进程、线程、CPU 权重与设备上下文，再根据负载选择并发。预加载和 fork 不能无条件共享 GPU 权重；用内存、显存、排队与尾延迟验证 Worker 数量。"
-            },
-            "isLeaf": true,
-            "contentStatus": "published",
-            "interviewBaseHeat": 0,
-            "interviewCount": 1,
-            "heat": 1,
-            "currRank": 1,
-            "updatedAt": "2026-10-31"
-          },
-          {
-            "key": "go-gmp-scheduling",
-            "filePath": "backend/runtime",
-            "label": "Go GMP 调度：G、M、P 与阻塞恢复",
-            "tags": [
-              "Go",
-              "GMP",
-              "运行时"
-            ],
-            "quickRead": {
-              "text": "G 是 goroutine，M 是系统线程，P 管理执行用户 Go 代码所需的资源。队列、阻塞、唤醒和工作窃取共同组织调度；goroutine 不等于线程，sleep 也不表示每个 G 独占一个系统线程。"
             },
             "isLeaf": true,
             "contentStatus": "published",
@@ -4184,14 +4184,14 @@
             "isLeaf": true,
             "filePath": "network/tcpIp",
             "contentStatus": "published",
-            "heat": 21,
+            "heat": 22,
             "currRank": 5,
             "updatedAt": "2026-10-31",
             "interviewBaseHeat": 10,
             "quickRead": {
               "text": "TCP 建连、关闭、状态与拥塞控制各有合同，经典握手和挥手不是 TLS 握手。丢失后的重传与窗口调整依算法和信号决定，不能认为窗口始终翻倍或所有错误同样恢复。"
             },
-            "interviewCount": 11,
+            "interviewCount": 12,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -4216,14 +4216,14 @@
             "isLeaf": true,
             "filePath": "cs/os",
             "contentStatus": "published",
-            "heat": 16,
+            "heat": 15,
             "currRank": 5,
             "updatedAt": "2026-11-20",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "进程承载地址空间与资源，内核线程是系统调度的执行流，协程由语言运行时挂起与恢复。Linux/POSIX经典启动路径中fork创建子进程，exec替换映像且不改变PID；普通Python脚本与JVM业务代码在运行时所在进程内执行。C++20协程机制与调度器职责、等待和就绪积压仍需分别理解。"
             },
-            "interviewCount": 15,
+            "interviewCount": 14,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -4248,14 +4248,14 @@
             "isLeaf": true,
             "filePath": "network/tcpIp",
             "contentStatus": "published",
-            "heat": 14,
+            "heat": 13,
             "currRank": 5,
             "updatedAt": "2026-07-18",
             "interviewBaseHeat": 10,
             "quickRead": {
               "text": "TCP 提供有序可靠字节流，UDP 提供数据报；QUIC 在 UDP 上自行实现可靠流、恢复与拥塞控制。HTTP/2 的 TCP 丢包可阻塞后续字节交付，QUIC 独立流仍共享部分连接资源。"
             },
-            "interviewCount": 4,
+            "interviewCount": 3,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -4942,14 +4942,14 @@
             "isLeaf": true,
             "filePath": "fe/design",
             "contentStatus": "published",
-            "heat": 3,
+            "heat": 4,
             "currRank": 3,
             "updatedAt": "2026-07-17",
             "quickRead": {
               "text": "组件先定义输入、输出、状态与可访问行为，再选择实现；逻辑复用与视图实例复用不同。Vue composable 可组合功能，RecyclerView 重新绑定须完整重设外观与事件，防止旧状态泄漏。"
             },
             "interviewBaseHeat": 1,
-            "interviewCount": 2,
+            "interviewCount": 3,
             "interviewCountBasis": "verified-public-posts"
           }
         ]
@@ -5057,14 +5057,14 @@
             "isLeaf": true,
             "filePath": "career",
             "contentStatus": "published",
-            "heat": 43,
+            "heat": 44,
             "currRank": 5,
             "updatedAt": "2026-11-24",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "介绍项目按「问题、我负责什么、关键取舍、指标和基线、踩过的坑」五步讲，每个数字都要能说清来源。跟着教程做的项目别说成自己从零设计，重点讲你在教程之外改了什么、测了什么。"
             },
-            "interviewCount": 37,
+            "interviewCount": 38,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -5073,14 +5073,14 @@
             "isLeaf": true,
             "filePath": "career",
             "contentStatus": "published",
-            "heat": 29,
+            "heat": 28,
             "currRank": 5,
             "updatedAt": "2026-11-04",
             "quickRead": {
               "text": "用真实问题、个人职责、关键取舍和可核验产物介绍项目。评估需给任务、基线、样本与分母；展示脱敏的工具和状态轨迹，不把固定题数、工具数量或虚构收益当作能力证明。"
             },
             "interviewBaseHeat": 6,
-            "interviewCount": 23,
+            "interviewCount": 22,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -5089,14 +5089,14 @@
             "isLeaf": true,
             "filePath": "career",
             "contentStatus": "published",
-            "heat": 24,
+            "heat": 23,
             "currRank": 5,
             "updatedAt": "2026-11-04",
             "quickRead": {
               "text": "从具体用户流程、痛点、基线和风险收敛最小可验收产品。KANO 分析功能满足与满意的关系，四象限须先定义两轴，再结合成本、依赖与证据验证排序；员工反馈报告还需防小群体与自由文本重新识别。"
             },
             "interviewBaseHeat": 6,
-            "interviewCount": 18,
+            "interviewCount": 17,
             "interviewCountBasis": "verified-public-posts"
           },
           {
