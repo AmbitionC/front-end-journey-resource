@@ -4,11 +4,22 @@ import { gitPublicationFiles, publicInventory, sha256, validateContentReview, re
 const REPOSITORY = 'AmbitionC/front-end-journey-resource';
 const SHA = /^[a-f0-9]{40}$/u;
 
-export async function githubRead(path) {
-  // This repository uses public read endpoints. No token, new permission,
-  // configurable API host or caller-supplied response file is accepted.
-  const response = await fetch(`https://api.github.com/repos/${REPOSITORY}${path?`/${path}`:''}`, {
-    headers: { Accept:'application/vnd.github+json' }, redirect:'error',
+export function githubReadHeaders(env=process.env) {
+  // Public read endpoints only. The API host and repository stay fixed, and no
+  // caller-supplied response file is accepted. An optional read-only workflow
+  // token (GITHUB_RELEASE_READ_TOKEN) is sent only to lift the rate limit:
+  // anonymous calls from shared GitHub-hosted runner IPs get 60 requests/hour,
+  // which made the PDF gate fail with HTTP 403 on 2026-11-17. The token changes
+  // no check below; every validation stays fail-closed with or without it.
+  const headers = { Accept:'application/vnd.github+json', 'X-GitHub-Api-Version':'2022-11-28' };
+  const token = env.GITHUB_RELEASE_READ_TOKEN?.trim();
+  if (token) headers.Authorization = `Bearer ${token}`;
+  return headers;
+}
+
+export async function githubRead(path, {env=process.env, fetchImpl=fetch}={}) {
+  const response = await fetchImpl(`https://api.github.com/repos/${REPOSITORY}${path?`/${path}`:''}`, {
+    headers: githubReadHeaders(env), redirect:'error',
     signal: AbortSignal.timeout(20000),
   });
   if (!response.ok) throw new Error(`GitHub 审核证据无法读取（HTTP ${response.status}）`);
