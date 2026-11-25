@@ -381,6 +381,41 @@ A：典型流程：① Pydantic 校验请求（问题 + 可选的上下文窗口
 **Q：`response_model` 的作用是什么？**
 A：两个作用：1) 文档生成，Swagger UI 会展示响应体的字段和类型；2) 数据过滤，FastAPI 会按 `response_model` 的字段裁剪响应，即使 handler 返回了多余字段也不会输出，防止内部数据泄露。`response_model_exclude_unset=True` 只控制序列化时是否省略未显式设置的字段，不关闭响应校验。`response_model=None` 则关闭这条路径的自动响应模型处理，也不会自动保留原模型的 OpenAPI 响应结构；若有独立文档需求，应另行明确声明。[FastAPI 响应模型与编码参数](https://fastapi.tiangolo.com/tutorial/response-model/)
 
+## 练一练
+
+### 高频考点题 1：response_model 的作用
+
+路由函数内部返回的字典里含有 api_key 字段，但声明了不含该字段的 response_model。客户端会收到 api_key 吗？
+
+- A. 会，返回什么就输出什么
+- B. 不会，按模型字段裁剪
+- C. 会直接报错，因为返回值和模型字段不一致
+- D. 只有在调试模式下才会收到
+
+**答案：B。** response_model 是一道安全边界，同时负责响应校验和文档生成。
+
+### 高频考点题 2：async 路由里的阻塞调用
+
+在 async def 路由里直接用同步 HTTP 客户端调用 LLM，会怎样？
+
+- A. 没影响，FastAPI 会自动转成异步
+- B. 会让响应变成流式输出
+- C. 请求会自动并行到多个 CPU 核
+- D. 阻塞事件循环，其他请求也跟着卡住
+
+**答案：D。** 应使用可等待的非阻塞客户端，例如 httpx 的异步客户端；同步依赖和 CPU 密集任务需要单独安排。
+
+### 高频考点题 3：Depends 的好处
+
+鉴权、数据库会话用 Depends 注入，相比写在装饰器里的一大优势是？
+
+- A. 运行速度更快
+- B. 测试时可以替换依赖
+- C. 不需要写任何类型注解和参数声明
+- D. 可以绕过中间件
+
+**答案：B。** 依赖注入适合鉴权、会话、配置、限流等横切关注点，依赖函数也可以是 async def。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->

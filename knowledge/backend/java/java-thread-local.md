@@ -43,6 +43,41 @@ void handle(String id) {
 
 测试应让同一 worker 顺序运行两次任务，第一次含异常，第二次确认读不到旧值；另让两个线程分别设置不同值，再检查各自读取结果。共享对象测试应明确证明：绑定隔离不等于对象隔离。内存问题还需观察引用链，不能仅以执行过 GC 判断是否泄漏。
 
+## 练一练
+
+### 高频考点题 1：线程池里读到旧值
+
+在线程池中使用 ThreadLocal 存请求身份，偶尔读到上一个请求的用户。原因是？
+
+- A. worker 被复用，上次没有 remove
+- B. ThreadLocal 会在线程间自动共享值
+- C. ThreadLocal 的 key 是强引用
+- D. 线程池每次都新建线程，导致不同请求的值错乱
+
+**答案：A。** worker 比单次请求活得久；应在请求边界的 finally 中清理，包括异常路径。
+
+### 高频考点题 2：set 了就线程安全吗
+
+把同一个可变对象分别 set 到两个线程的 ThreadLocal，这个对象就线程安全了吗？
+
+- A. 是，ThreadLocal 会为每个线程复制一份对象
+- B. 是，ThreadLocal 自带同步锁
+- C. 不是，两个绑定仍指向同一个对象
+- D. 不是，ThreadLocal 只能存基本类型
+
+**答案：C。** 隔离的是绑定而不是对象；对象内部的并发访问仍需同步，或改用不可变数据。
+
+### 高频考点题 3：弱 key 与强 value
+
+ThreadLocalMap 的 Entry 使用弱引用 key、强引用 value，可能带来什么问题？
+
+- A. key 被回收后 value 仍被线程持有
+- B. value 会被 GC 立刻回收，之后读到的都是 null
+- C. 所有线程共享同一个 Entry
+- D. key 永远不会被回收
+
+**答案：A。** 失去外部强引用的 key 可能被回收，但 value 仍经 Entry 被线程持有；清理失效 Entry 的机会不等于立即回收。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->

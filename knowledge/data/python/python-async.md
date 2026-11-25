@@ -369,6 +369,41 @@ Jupyter 已有运行中的事件循环，`asyncio.run()` 会报错。在 noteboo
 
 三种常见方式：① 将包装函数改为 `async def`，由已有异步调用链 `await`；② 在普通脚本的同步顶层使用 `asyncio.run(coro)`；③ 仅当同步代码**拥有一个尚未运行的 loop** 时，才可调用 `loop.run_until_complete(coro)`。不要对已经运行的 loop 调用 `run_until_complete`，也不要在协程内嵌套 `asyncio.run()`；Notebook 或异步框架中应使用其现有 loop 提供的 `await`/调度入口。（参见 [Python asyncio documentation](https://docs.python.org/3/library/asyncio.html)）
 
+## 练一练
+
+### 高频考点题 1：适合异步的场景
+
+asyncio 能明显提升哪类任务的吞吐？
+
+- A. 大量矩阵乘法这类 CPU 密集计算
+- B. 大量等待响应的 API 调用
+- C. 单个超大文件的压缩
+- D. 纯 Python 的数值循环
+
+**答案：B。** 协程在等待 I/O 时让出控制权；CPU 密集任务仍被 GIL 和单线程限制，需要多进程等方案。
+
+### 高频考点题 2：协程里的同步阻塞
+
+一个协程里调用了 time.sleep(5)，会怎样？
+
+- A. 只暂停这一个协程
+- B. 自动转为 asyncio.sleep
+- C. 整个事件循环卡住 5 秒
+- D. 抛出 RuntimeError
+
+**答案：C。** 事件循环单线程运行，协程靠 await 主动让出；同步阻塞调用会挡住所有协程，应改用 await asyncio.sleep。
+
+### 高频考点题 3：gather 与 wait
+
+需要先处理最快返回的结果，并取消剩下的任务，应选？
+
+- A. asyncio.wait 只等第一个完成
+- B. asyncio.gather
+- C. asyncio.run 嵌套调用
+- D. 用 for 循环逐个 await，再手动取消
+
+**答案：A。** gather 按传入顺序返回全部结果，适合统一处理；wait 返回已完成和未完成两个集合，可以部分取消。
+
 ## 参考资料
 
 - [Python asyncio documentation](https://docs.python.org/3/library/asyncio.html)

@@ -53,6 +53,41 @@ Map 的 value 可以重复，例如 A 和 B 都映射到同一个分类；“key
 
 这段回答交代分类口径，也给追问留下清楚路径。问 HashMap 时转向哈希结构，问队列时说明队首规则，问‘有序’时澄清位置、遍历顺序与排序，避免把不同问题塞进同一张口诀表。
 
+## 练一练
+
+### 高频考点题 1：Map 在哪个体系
+
+关于 Java 集合框架的继承关系，下面说法正确的是？
+
+- A. Map 继承自 Collection
+- B. Set 继承自 List，只是去掉了重复元素
+- C. Queue 不属于 Collection 体系
+- D. Map 不继承 Collection
+
+**答案：D。** List、Set、Map 是常见的入门分组，但 Map 不属于 Collection 继承体系；Collection 还包括 Queue，Deque 支持双端操作。
+
+### 高频考点题 2：List 的有序
+
+说"List 是有序的"，这里的"有序"指什么？
+
+- A. 元素会按数值大小自动排序
+- B. 元素按哈希值排列，所以查找快
+- C. 元素按插入时间倒序排列
+- D. 元素有位置，遍历顺序确定
+
+**答案：D。** 有序指位置和遍历顺序，不等于自动排序；Queue 也不一律先进先出，优先队列就是反例。
+
+### 高频考点题 3：同一个 key 存多条
+
+业务要求同一个 key 下保留多条记录，用 Map 应该怎样设计？
+
+- A. 直接 put 多次，Map 会自动保留全部
+- B. 改用 Set，它能按 key 存多条
+- C. 让 value 存一个 List
+- D. 把 key 和 value 拼成一个字符串，再存进 List
+
+**答案：C。** 一个 key 至多对应一个 value，重复 put 会覆盖；value 可以重复，但 key 不会。
+
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
