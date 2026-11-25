@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "failedAfterSha": "1d8fd99f9598044a772f99c58789d3421fc84084",
-  "baselineSha": "29f2a91a142c6ac620eda2f2a2b5e6876292d70c",
-  "failedRunId": 45534863358,
-  "publicationDigest": "3d95a429ab58e396f15dbc1f9e6ee369dcbfc68b6142f19bb439d0452d4af60b",
-  "reason": "PR #133 was reviewed and authorized at a330e05, which did not include #139 (29f2a91). The merged snapshot 1d8fd99 therefore had no matching receipt and sync run 45534863358 refused it. Recover 29f2a91..next reviewed release commit with the same public bytes."
+  "failedAfterSha": "0724c1c4187d895382f295a98c1bddea06816ce6",
+  "baselineSha": "35b56145624ebcb1d48d3adb768563766b70a2c9",
+  "failedRunId": 45603053917,
+  "publicationDigest": "c88d0256d580c9b0105eb0225fd705272572418f1b4ccf12ce35f775e520feac",
+  "reason": "PR #136 renamed 12 diagram sources (git mv v2->v3). sync-content-batches.mjs listed deletions with rename detection on, so the 12 old paths showed as renames and were never sent, while the expected totals counted 12 deletions; run 45603053917 failed on the count check. Fixed with --no-renames; recover 35b5614..next reviewed release commit with the same public bytes."
 }
