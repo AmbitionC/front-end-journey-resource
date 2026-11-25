@@ -197,6 +197,41 @@ interface LlmProvider {
 
 接入 Qwen 的正确起点不是复制一段固定 URL，而是先确定地域、Workspace 和所需能力。OpenAI 兼容接口适合快速迁移和统一框架，DashScope 原生接口适合使用完整厂商能力。无论选择哪条路径，都要把差异显式建模，把密钥与权限留在服务端，并用当前文档、集成测试和可观测性保证线上可靠。
 
+## 练一练
+
+### 高频考点题 1：兼容接口能完全替换吗
+
+已有 OpenAI SDK 的应用，改了 baseURL 接入通义千问兼容接口。下面说法正确的是？
+
+- A. 接口兼容就是完全一样，其他代码一行都不用改
+- B. 兼容接口只能调用 OpenAI 的模型，不能调用通义千问
+- C. 参数范围、工具支持、错误码等仍可能不同
+- D. 兼容接口不支持流式输出，必须改用原生接口
+
+**答案：C。** 多供应商适配器只暴露验证过的公共子集，并为每个供应商保留 capability map。
+
+### 高频考点题 2：接入前先定什么
+
+接入阿里云 Model Studio 之前，首先要确认的是？
+
+- A. 资源地域、Workspace 和接口形态
+- B. 模型名是 turbo 还是 plus 还是 max 这个档位
+- C. 用 Python 还是 Node.js 来写调用代码
+- D. 公司内部的服务器机房选在哪个城市比较好
+
+**答案：A。** API Key、Workspace、模型可用性和端点要属于匹配的地域。旧的 turbo / plus / max 档位表不要再沿用。
+
+### 高频考点题 3：流式用量在哪
+
+开启 `stream_options.include_usage` 后，用量数据通常在哪里？
+
+- A. 第一个 chunk 的 choices 里
+- B. 每个 chunk 都带一份完整用量
+- C. 响应头里的某个字段
+- D. 最后一个没有 choices 的 chunk 里
+
+**答案：D。** 所以解析时不能假设每个 chunk 都有 choices，否则最后一个 chunk 会让代码报错。
+
 ## 参考资料
 
 - [Alibaba Cloud Model Studio：Text Generation API Reference](https://www.alibabacloud.com/help/en/model-studio/qwen-api-reference/)
