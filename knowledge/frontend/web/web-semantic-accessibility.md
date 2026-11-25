@@ -51,6 +51,41 @@
 
 语义化和可访问性最终是在建立一个稳定的交互 API：视觉用户通过像素使用它，辅助技术通过 accessibility tree 使用它，两者应表达同一内容、状态和动作。
 
+## 练一练
+
+### 高频考点题 1：div 还是 button
+
+做一个可点击的按钮，推荐用什么？
+
+- A. `div` 加 onClick
+- B. 原生 `button`
+- C. `span` 加 role
+- D. `a` 不带 href
+
+**答案：B。** button 天然可聚焦，支持 Enter 和 Space 激活，并向辅助技术暴露按钮角色。
+
+### 高频考点题 2：装饰图片
+
+一张纯装饰的图片，alt 应该怎么写？
+
+- A. `alt=""`
+- B. 不写 alt 属性
+- C. `alt="图片"`
+- D. 写上文件名
+
+**答案：A。** 空 alt 让屏幕阅读器跳过；传达信息的图片要描述其功能或结论。
+
+### 高频考点题 3：「已保存」提示
+
+页面上弹出「已保存」这样的状态消息，推荐用什么？
+
+- A. `role="alert"`
+- B. `role="status"`
+- C. 只把文字颜色改成绿色就行
+- D. 弹一个 alert 对话框
+
+**答案：B。** 普通状态用 polite 的 status，紧急错误才用 alert。
+
 ## 参考资料
 
 - [WAI-ARIA APG：Read Me First](https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/)
