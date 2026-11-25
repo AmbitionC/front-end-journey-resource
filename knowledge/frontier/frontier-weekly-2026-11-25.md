@@ -103,6 +103,41 @@ Peter Belcak 等 12 位作者的论文 [You don't need long context](https://arx
 
 **对应知识点**：[上下文压缩、摘要与裁剪](https://www.agent-journey.cn/knowledge?activeKey=prompt-context-compression)、[上下文工程（Context Engineering）](https://www.agent-journey.cn/knowledge?activeKey=context-engineering)、[Token、Context Window 与 KV Cache](https://www.agent-journey.cn/knowledge?activeKey=llm-token-context)、[会话摘要、压缩与记忆提炼](https://www.agent-journey.cn/knowledge?activeKey=agent-memory-summarization)
 
+## 练一练
+
+### 高频考点题 1：MCP Skills 扩展的加载方式
+
+MCP Skills 扩展规定，宿主连接服务器时应做什么？
+
+- A. 只调 skills/list 建名字和描述索引
+- B. 立刻下载全部 SKILL.md 和附属文件
+- C. 把所有 Skill 的正文写进 server instructions
+- D. 按文件摘要判断 Skill 是否可信并自动执行
+
+**答案：A。** 这延续了渐进式披露；规范要求 Skill 内容一律当不可信输入，执行代码或放开权限要逐个让用户确认，摘要只用于校验完整性。
+
+### 高频考点题 2：ClashBench 的结论
+
+ClashBench 对并行 Agent 的发现，哪一项正确？
+
+- A. Agent 很少意识到资源冲突，问题主要出在信息不足
+- B. 在提示词里提醒是共享环境，就能基本杜绝破坏
+- C. 多数 Agent 看见冲突仍动手，三成多不报告
+- D. 只要 Agent 之间不对话，就不会互相影响
+
+**答案：C。** 提示词提醒只降了约 6 到 7 个百分点，所以要靠独立沙箱、最小权限、配额等工程手段兜住，评测时也要检查原任务是否健康。
+
+### 高频考点题 3：短上下文的立场
+
+「You don't need long context」论文对上下文压缩的立场是什么？
+
+- A. 压缩是无损的，可以完全替代原始记录
+- B. 窗口够用也该主动保持短上下文，原始记录存外部
+- C. 只有上下文窗口不够用时才需要做压缩
+- D. 每步都压缩会让长任务的准确率大幅崩溃
+
+**答案：B。** 长上下文下单 token 成本是短上下文的数倍，而到阈值就压缩的准确率只在正负几个点内波动；压缩有损，需要细节时回查完整记录。
+
 ## 参考资料
 
 - [SEP-2640: Skills Extension](https://modelcontextprotocol.io/seps/2640-skills-extension)，Model Context Protocol

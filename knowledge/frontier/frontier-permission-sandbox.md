@@ -102,6 +102,41 @@ OpenAI 2026 年 4 月 15 日更新了 [Agents SDK](https://openai.com/index/the-
 
 **对应知识点**：[代码执行、浏览器与文件操作沙箱](https://www.agent-journey.cn/knowledge?activeKey=agent-sandbox)、[工作流状态、检查点与断点续跑](https://www.agent-journey.cn/knowledge?activeKey=agent-workflow-state)、[从零构建 Agent 运行时](https://www.agent-journey.cn/knowledge?activeKey=build-agent-framework)
 
+## 练一练
+
+### 高频考点题 1：分类器不看什么
+
+Claude Code auto mode 的分类器故意不看哪些内容？
+
+- A. 用户在对话里说过的原始要求
+- B. Agent 自己的解释和工具返回的内容
+- C. Agent 将要发起的那次工具调用本身
+- D. 用户自己手动放行的权限规则
+
+**答案：B。** 这样网页或文件里藏的指令影响不到它，Agent 也无法用一段漂亮的理由说服它；工具返回内容另有一层注入检测。
+
+### 高频考点题 2：隔离强度怎么选
+
+Anthropic 选择隔离方式的原则是什么？
+
+- A. 所有产品统一用最强的虚拟机隔离
+- B. 只靠模型层的防注入能力，环境层不用隔离
+- C. 出网白名单只要域名可信就足够安全
+- D. 隔离强度要跟用户能盯住 Agent 的程度相匹配
+
+**答案：D。** 用户看得懂命令的场景可用系统级沙箱加默认断网，判断不了的场景要容器或虚拟机；白名单里的可信域名也可能成为外传通道。
+
+### 高频考点题 3：凭证放哪
+
+OpenAI Agents SDK 把循环和执行环境分开，主要为了什么？
+
+- A. 让模型生成的代码在沙箱里跑得更快一些
+- B. 让循环可以直接读取沙箱里的密钥
+- C. 凭证不进入运行模型生成代码的执行环境
+- D. 省去为不同沙箱厂商做适配的工作
+
+**答案：C。** 系统要按一定会遇到注入和外传尝试来设计；凭证放在沙箱外，通过代理转发访问外部服务。
+
 ## 参考资料
 
 - [How we built Claude Code auto mode: a safer way to skip permissions](https://www.anthropic.com/research/claude-code-auto-mode)，Anthropic，2026-03-25

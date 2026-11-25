@@ -121,6 +121,41 @@ NVIDIA、NTU、MIT 的论文 [SoL-Pi](https://arxiv.org/abs/2609.20519)（arXiv�
 
 **对应知识点**：[Token、延迟与成本优化](https://www.agent-journey.cn/knowledge?activeKey=llm-cost-optimize)、[上下文压缩、摘要与裁剪](https://www.agent-journey.cn/knowledge?activeKey=prompt-context-compression)、[Agent Run Loop、轮次与终止条件](https://www.agent-journey.cn/knowledge?activeKey=agent-run-loop)
 
+## 练一练
+
+### 高频考点题 1：为什么要单独的评估者
+
+Anthropic 的长任务 Harness 为什么要设一个独立的评估者角色？
+
+- A. 让生成者少写代码、少跑轮次，从而降低 token 用量
+- B. 自评总说做得好，验收要另一个角色真实操作
+- C. 评估者负责把一句话需求展开成产品规格
+- D. 评估者替代上下文重置，解决上下文焦虑
+
+**答案：B。** 评估者用 Playwright 实际操作应用来验收，每轮开工前先和生成者谈好冲刺合约；展开需求是规划者的职责。
+
+### 高频考点题 2：大脑和手分开
+
+Managed Agents 新架构里，哪一部分是恢复会话的依据？
+
+- A. 跑模型循环的大脑，因为它保存全部状态
+- B. 沙箱容器，因为工具执行结果都在里面
+- C. 系统提示词，因为它描述了任务
+- D. 独立存放、只追加的会话事件日志
+
+**答案：D。** 大脑无状态，挂了按会话编号读日志重新拉起；沙箱可随时丢弃重建，容器挂了只作为一次工具调用错误返回给模型。
+
+### 高频考点题 3：Harness 的保质期
+
+关于 Harness 部件，文章给出的态度是什么？
+
+- A. 部件对应模型的短板，模型升级后要重新检查
+- B. Harness 越完善越好，部件只增不减
+- C. 强模型不需要 Harness，直接单 Agent 跑即可
+- D. 部件一旦验证有效就应该固定下来，避免后续回归
+
+**答案：A。** 为弱模型加的拐杖到强模型上是纯成本；例如换到 Opus 4.6 后去掉了冲刺，评估只在最后做一次，仍然完成了音乐制作工具。
+
 ## 参考资料
 
 - [Harness design for long-running application development](https://www.anthropic.com/research/harness-design-long-running-apps)，Anthropic，2026-03-24
