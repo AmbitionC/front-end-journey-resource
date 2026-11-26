@@ -2,7 +2,7 @@
 
 ## 窗口里有什么
 
-![一次模型调用的上下文从上到下依次是系统提示词、工具定义、项目说明与长期记忆摘要、历史摘要、最近若干轮对话、本轮用户输入；越靠上越稳定，超过预算时先丢弃工具结果正文，再把早期对话合成摘要](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-general-agent-context-window-v1.png)
+![一次模型调用的上下文从上到下依次是系统提示词、工具定义、项目说明与长期记忆摘要、历史摘要、最近若干轮对话、本轮用户输入；越靠上越稳定，超过预算时先丢弃工具结果正文，再把早期对话合成摘要](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-general-agent-context-window-v2.dark.png)
 
 拼装顺序有讲究：稳定不变的内容放前面，变化快的放后面。多数模型接口支持对相同的前缀做缓存，命中缓存的部分计费更低、响应更快。如果把每轮都变的内容，比如当前时间，插在最前面，后面所有内容的缓存都会失效。
 

@@ -2,7 +2,7 @@
 
 ## 总体架构
 
-![电商营销增长助手架构：营销任务进入活动主管 Agent，主管与投放看板双向交互；生产区包含商品理解、人群分层、素材生成和合规与调性审核；试投区包含预算分配、试投环境、效果归因和素材进化；审核通过的素材进入试投，进化后的素材重新送审；底部是商品库、人群画像库、素材库、规则库和投放日志组成的数据层](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-ecom-growth-architecture-v1.png)
+![电商营销增长助手架构：营销任务进入活动主管 Agent，主管与投放看板双向交互；生产区包含商品理解、人群分层、素材生成和合规与调性审核；试投区包含预算分配、试投环境、效果归因和素材进化；审核通过的素材进入试投，进化后的素材重新送审；底部是商品库、人群画像库、素材库、规则库和投放日志组成的数据层](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-ecom-growth-architecture-v2.dark.png)
 
 系统分四块。
 

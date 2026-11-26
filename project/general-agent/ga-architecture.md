@@ -2,7 +2,7 @@
 
 ## 总体架构
 
-![通用 Agent 系统架构：交互层在上，内核层包含执行循环、上下文管理器、权限闸门和子任务调度器，能力层通过工具注册表挂载编程工具、研究工具、技能加载器和 MCP 客户端，左侧为状态层，右侧为外部依赖](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-general-agent-architecture-v1.png)
+![通用 Agent 系统架构：交互层在上，内核层包含执行循环、上下文管理器、权限闸门和子任务调度器，能力层通过工具注册表挂载编程工具、研究工具、技能加载器和 MCP 客户端，左侧为状态层，右侧为外部依赖](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-general-agent-architecture-v2.dark.png)
 
 系统分成五块。
 
