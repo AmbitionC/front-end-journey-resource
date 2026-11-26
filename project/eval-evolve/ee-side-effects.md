@@ -21,15 +21,9 @@
 
 把进化集按任务类型分成两三组，依次进化，每一阶段结束后回头测所有组：
 
-```mermaid
-flowchart LR
-    A[初始版本] --> B[只用 A 类任务进化]
-    B --> C[测 A、B、C 三类的留出任务]
-    C --> D[只用 B 类任务进化]
-    D --> E[再测 A、B、C]
-    E --> F[只用 C 类任务进化]
-    F --> G[再测 A、B、C]
-```
+![分阶段进化并回头测所有组：从初始版本出发，先只用 A 类任务进化，然后测 A、B、C 三类的留出任务；再只用 B 类任务进化，再测三类；最后只用 C 类任务进化，再测三类](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-ee-side-effects-staged-evolve-v1.dark.png)
+
+*每个阶段只用一类任务进化，但每次都回头测全部三类的留出任务。*
 
 例如 A 是定位并修复 bug，B 是按要求新增功能，C 是只回答问题不改代码。
 

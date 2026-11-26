@@ -1,0 +1,35 @@
+export const meta = {
+  name: "project-ga-permission-decision-flow-v1",
+  article: "project/general-agent/ga-permission.md",
+  alt: "权限判定流程：工具调用先看是否命中拒绝规则，命中就拒绝并把原因作为工具结果交回模型；否则看是否命中放行规则，命中就放行；否则看工具是否只读，只读就放行；否则看当前是否无界面模式，是就拒绝；否则向用户展示要做的事并询问，同意这一次就放行，同意且以后同类不再问就写入放行规则后放行，拒绝就拒绝",
+};
+
+export default (k) => k.figure({
+  h: 720,
+  title: "权限判定：规则判不了的，才去问人",
+  subtitle: "拒绝规则排在放行规则前面",
+  body: [
+    k.box({"x": 220, "y": 120, "w": 340, "h": 48, "title": "工具调用"}),
+    k.arrow({"points": [[390, 168], [390, 192]]}),
+    k.box({"x": 220, "y": 196, "w": 340, "h": 52, "title": "命中拒绝规则吗", "tone": "warn"}),
+    k.arrow({"points": [[390, 248], [390, 280]], "label": "否", "labelAt": [402, 270], "labelAnchor": "start"}),
+    k.box({"x": 220, "y": 284, "w": 340, "h": 52, "title": "命中放行规则吗", "tone": "warn"}),
+    k.arrow({"points": [[390, 336], [390, 368]], "label": "否", "labelAt": [402, 358], "labelAnchor": "start"}),
+    k.box({"x": 220, "y": 372, "w": 340, "h": 52, "title": "工具是只读的吗", "tone": "warn"}),
+    k.arrow({"points": [[390, 424], [390, 456]], "label": "否", "labelAt": [402, 446], "labelAnchor": "start"}),
+    k.box({"x": 220, "y": 460, "w": 340, "h": 52, "title": "当前是无界面模式吗", "tone": "warn"}),
+    k.arrow({"points": [[390, 512], [390, 544]], "label": "否", "labelAt": [402, 534], "labelAnchor": "start"}),
+    k.box({"x": 220, "y": 548, "w": 340, "h": 52, "title": "向用户展示要做的事并询问", "tone": "accent"}),
+    k.box({"x": 40, "y": 196, "w": 120, "h": 404, "title": "拒绝", "sub": "原因作为\n工具结果\n交回模型", "tone": "bad"}),
+    k.arrow({"points": [[220, 222], [164, 222]], "label": "是", "labelAt": [192, 212], "labelAnchor": "middle"}),
+    k.arrow({"points": [[220, 486], [164, 486]], "label": "是", "labelAt": [192, 476], "labelAnchor": "middle"}),
+    k.arrow({"points": [[220, 574], [164, 574]], "label": "拒绝", "labelAt": [192, 564], "labelAnchor": "middle"}),
+    k.box({"x": 720, "y": 284, "w": 200, "h": 316, "title": "放行", "tone": "ok"}),
+    k.arrow({"points": [[560, 310], [716, 310]], "label": "是", "labelAt": [638, 300], "labelAnchor": "middle"}),
+    k.arrow({"points": [[560, 398], [716, 398]], "label": "是", "labelAt": [638, 388], "labelAnchor": "middle"}),
+    k.arrow({"points": [[560, 574], [716, 574]], "label": "同意这一次", "labelAt": [638, 564], "labelAnchor": "middle"}),
+    k.arrow({"points": [[390, 600], [390, 636]], "label": "同意，且以后同类不再问", "labelAt": [402, 624], "labelAnchor": "start"}),
+    k.box({"x": 220, "y": 640, "w": 340, "h": 52, "title": "写入放行规则"}),
+    k.arrow({"points": [[560, 666], [820, 666], [820, 604]]}),
+  ].join(''),
+});

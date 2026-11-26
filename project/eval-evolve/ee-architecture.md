@@ -55,30 +55,9 @@ class AgentVersion:
 
 ## 一轮进化的完整流程
 
-```mermaid
-sequenceDiagram
-    participant R as 运行器
-    participant G as 评分器
-    participant D as 失败分析
-    participant P as 提案器
-    participant A as 准入闸门
-    participant V as 版本库
-    R->>G: 当前版本在进化集上的运行结果
-    G-->>D: 失败任务的轨迹和判定理由
-    D->>P: 归因结果：失败集中在哪些环节
-    P->>P: 生成若干候选版本
-    loop 每个候选版本
-        P->>A: 提交候选
-        A->>R: 在验收集和回归集上运行
-        R->>G: 运行结果
-        G-->>A: 得分
-        alt 验收集更好 且 回归集不退步
-            A->>V: 合入为新版本
-        else
-            A-->>P: 拒绝，附上退步的任务
-        end
-    end
-```
+![一轮进化的完整流程：运行器让当前版本跑进化集，评分器给出判定理由，失败分析归因到具体环节，提案器生成若干候选版本；每个候选提交给准入闸门，在验收集和回归集上运行并评分，验收集更好且回归集不退步的合入版本库，否则拒绝并把退步的任务交回提案器](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-ee-architecture-evolve-round-v1.dark.png)
+
+*上面一行只用进化集；框里的验证对每个候选各跑一遍，用的是验收集和回归集。*
 
 被拒绝的候选不会被丢弃，拒绝理由会进入下一轮提案器的输入，避免重复提出同样的修改。
 

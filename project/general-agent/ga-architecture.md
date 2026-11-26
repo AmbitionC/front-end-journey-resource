@@ -35,34 +35,9 @@
 
 以“修一条挂掉的测试”为例，一次任务在各部件之间这样流转：
 
-```mermaid
-sequenceDiagram
-    participant U as 用户
-    participant L as 执行循环
-    participant C as 上下文管理器
-    participant M as 模型接口
-    participant P as 权限闸门
-    participant T as 工具注册表
-    U->>L: 输入任务
-    loop 直到模型不再要求调用工具
-        L->>C: 取本轮消息
-        C-->>L: 系统提示词 + 记忆 + 历史 + 最新输入
-        L->>M: 发送消息和工具定义
-        M-->>L: 回复文本或工具调用
-        alt 模型要求调用工具
-            L->>P: 这次调用能执行吗
-            alt 需要确认
-                P->>U: 展示要做的事并询问
-                U-->>P: 同意或拒绝
-            end
-            P-->>L: 放行或拒绝
-            L->>T: 执行工具
-            T-->>L: 工具结果
-            L->>C: 追加调用和结果
-        end
-    end
-    L-->>U: 最终回复
-```
+![一次任务在各部件之间的流转：用户输入任务后进入执行循环，上下文管理器取出本轮消息，发给模型接口，模型回复文本或工具调用；要求调用工具时先过权限闸门，需要确认时先问用户，放行后由工具注册表执行，调用和结果追加回上下文进入下一轮；模型不再要求调用工具时把最终回复交给用户](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-ga-architecture-task-flow-v1.dark.png)
+
+*顺着箭头转一圈就是一轮；模型不再要求调用工具时，循环从左下角退出。*
 
 几个容易忽略的细节：
 

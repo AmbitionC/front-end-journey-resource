@@ -18,18 +18,9 @@
 
 MCP 规定了客户端和工具服务之间怎么对话。对本项目来说只需要三个动作：
 
-```mermaid
-sequenceDiagram
-    participant A as Agent（MCP 客户端）
-    participant S as MCP 服务
-    A->>S: 初始化，交换协议版本和能力
-    S-->>A: 服务信息
-    A->>S: 列出工具
-    S-->>A: 每个工具的名称、用途、参数格式
-    Note over A: 把这些工具登记进工具注册表
-    A->>S: 调用工具（名称、参数）
-    S-->>A: 结果
-```
+![Agent 作为 MCP 客户端和 MCP 服务之间的三次往返：先初始化并交换协议版本和能力，服务返回服务信息；再列出工具，服务返回每个工具的名称、用途和参数格式，Agent 把这些工具登记进工具注册表；之后调用工具时发送名称和参数，服务返回结果](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-ga-extension-mcp-three-calls-v1.dark.png)
+
+*实线是 Agent 发出的请求，虚线是服务的应答；登记进注册表之后，外部工具和内置工具走同一条路。*
 
 连接方式有两种：本地服务用标准输入输出通信，客户端负责把它作为子进程拉起来；远程服务走 HTTP。两种都用官方 SDK 处理底层细节，你写的部分是把它接进自己的注册表。
 
@@ -128,17 +119,9 @@ description: 为本仓库写提交说明。用户要求提交代码或写提交�
 
 技能的核心设计是分级，目的和上下文管理一章完全一致：窗口里只留索引。
 
-```mermaid
-flowchart TD
-    A[会话开始] --> B[第一级：读入每个技能的 name 和 description]
-    B --> C{模型判断当前任务匹配某个技能吗}
-    C -- 否 --> D[不加载，零额外开销]
-    C -- 是 --> E[第二级：调用技能工具，读入 SKILL.md 全文]
-    E --> F{正文里提到了其他文件吗}
-    F -- 需要 --> G[第三级：用读文件工具读 examples.md，或执行 check.py]
-    F -- 不需要 --> H[按说明完成任务]
-    G --> H
-```
+![技能的三级加载：会话开始时只读入每个技能的 name 和 description；模型判断当前任务匹配某个技能时才调用技能工具读入 SKILL.md 全文，不匹配就不加载；正文里提到其他文件且需要时，再用读文件工具读 examples.md 或执行 check.py，最后按说明完成任务](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-ga-extension-skill-three-levels-v1.dark.png)
+
+*窗口里常驻的只有第一级的名称和描述，后两级都是用到才读。*
 
 装了二十个技能，常驻上下文的也只有二十行简介。
 
