@@ -324,7 +324,7 @@
     ]
   },
   {
-    "label": "Agent 评测与自进化平台",
+    "label": "RSI 自进化 Agent",
     "key": "project-eval-evolve",
     "children": [
       {
@@ -334,9 +334,21 @@
         "filePath": "eval-evolve",
         "heat": 0,
         "currRank": 0,
-        "updatedAt": "2026-11-24",
+        "updatedAt": "2026-11-26",
         "quickRead": {
-          "text": "为什么先评测再进化、做成什么样、分哪五件事、做完手里有什么，以及规模上的边界。"
+          "text": "Agent 上线后改好一个坏两个怎么办：让它自己复盘、自己改自己、考过才上线。做成什么样、分哪六件事、边界在哪。"
+        }
+      },
+      {
+        "label": "RSI 是什么：从 Gödel Machine 到让 Agent 改自己的外壳",
+        "key": "ee-rsi",
+        "isLeaf": true,
+        "filePath": "eval-evolve",
+        "heat": 0,
+        "currRank": 1,
+        "updatedAt": "2026-11-26",
+        "quickRead": {
+          "text": "递归自我改进的定义和来历，现在改的是外壳不是模型，一轮四步、连续多代，以及四个必须讲清的边界。"
         }
       },
       {
@@ -345,7 +357,7 @@
         "isLeaf": true,
         "filePath": "eval-evolve",
         "heat": 0,
-        "currRank": 1,
+        "currRank": 2,
         "updatedAt": "2026-11-18",
         "quickRead": {
           "text": "被测对象、评测、进化三块怎么连接，一个新版本从提出到合入经过什么。"
@@ -357,7 +369,7 @@
         "isLeaf": true,
         "filePath": "eval-evolve",
         "heat": 0,
-        "currRank": 2,
+        "currRank": 3,
         "updatedAt": "2026-11-22",
         "quickRead": {
           "text": "一条好任务的标准，进化集、验收集、回归集怎么划分，验收集为什么会被用旧。"
@@ -369,7 +381,7 @@
         "isLeaf": true,
         "filePath": "eval-evolve",
         "heat": 0,
-        "currRank": 3,
+        "currRank": 4,
         "updatedAt": "2026-11-18",
         "quickRead": {
           "text": "判结果不判过程，模型裁判怎样问小、校准和冻结版本。"
@@ -381,7 +393,7 @@
         "isLeaf": true,
         "filePath": "eval-evolve",
         "heat": 0,
-        "currRank": 4,
+        "currRank": 5,
         "updatedAt": "2026-11-18",
         "quickRead": {
           "text": "同一任务跑多次，区分有能力做到和每次都做到，判断两个版本的差距是不是真的。"
@@ -393,7 +405,7 @@
         "isLeaf": true,
         "filePath": "eval-evolve",
         "heat": 0,
-        "currRank": 5,
+        "currRank": 6,
         "updatedAt": "2026-11-18",
         "quickRead": {
           "text": "用已知答案的样本考评分器，发现误放后回放历史结果。"
@@ -405,7 +417,7 @@
         "isLeaf": true,
         "filePath": "eval-evolve",
         "heat": 0,
-        "currRank": 6,
+        "currRank": 7,
         "updatedAt": "2026-11-18",
         "quickRead": {
           "text": "读失败轨迹诊断并改写，保留各有所长的一组候选，先小批后完整地验证。"
@@ -417,7 +429,7 @@
         "isLeaf": true,
         "filePath": "eval-evolve",
         "heat": 0,
-        "currRank": 7,
+        "currRank": 8,
         "updatedAt": "2026-11-18",
         "quickRead": {
           "text": "执行、反思、整理三个角色，手册只增补不重写，怎样去重和淘汰。"
@@ -429,7 +441,7 @@
         "isLeaf": true,
         "filePath": "eval-evolve",
         "heat": 0,
-        "currRank": 8,
+        "currRank": 9,
         "updatedAt": "2026-11-18",
         "quickRead": {
           "text": "从轨迹里挖掘弱点，提出最小修改，按固定顺序验证。"
@@ -441,7 +453,7 @@
         "isLeaf": true,
         "filePath": "eval-evolve",
         "heat": 0,
-        "currRank": 9,
+        "currRank": 10,
         "updatedAt": "2026-11-18",
         "quickRead": {
           "text": "用你自己写的编程 Agent 当提案器，历史目录怎么组织，安全边界怎么划。"
@@ -453,10 +465,10 @@
         "isLeaf": true,
         "filePath": "eval-evolve",
         "heat": 0,
-        "currRank": 10,
-        "updatedAt": "2026-11-22",
+        "currRank": 11,
+        "updatedAt": "2026-11-26",
         "quickRead": {
-          "text": "学新忘旧怎么观察，准入的四条规则，闸门挡不住什么，怎样回退。"
+          "text": "学新忘旧怎么观察，准入的四条规则，连续多代时的编辑预算，闸门挡不住什么，怎样回退。"
         }
       },
       {
@@ -465,7 +477,7 @@
         "isLeaf": true,
         "filePath": "eval-evolve",
         "heat": 0,
-        "currRank": 11,
+        "currRank": 12,
         "updatedAt": "2026-11-22",
         "quickRead": {
           "text": "需求文档、任务清单和项目说明文件怎么写，按里程碑推进，每一步怎么验收和检查。"
