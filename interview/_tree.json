@@ -1993,6 +1993,23 @@
             "contentFormat": "short-qa-v2",
             "updatedAt": "2026-11-13",
             "department": "阿里云"
+          },
+          {
+            "key": "alibaba-ai-35",
+            "label": "阿里云 AI 应用二面：评测、工作流与日志分析",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "department": "阿里云",
+            "role": "AI 应用开发",
+            "roleCategory": "Agent 与 AI 应用",
+            "tags": [
+              "Agent",
+              "RAG",
+              "评测",
+              "日志分析"
+            ],
+            "updatedAt": "2026-11-26",
+            "contentFormat": "short-qa-v2"
           }
         ]
       },
@@ -4985,6 +5002,37 @@
             "roleCategory": "后端与 AI 应用",
             "role": "Java开发",
             "contentFormat": "short-qa-v2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "米哈游",
+    "key": "mihoyo",
+    "nodeType": "company",
+    "children": [
+      {
+        "key": "mihoyo-department-other",
+        "label": "其他",
+        "nodeType": "department",
+        "children": [
+          {
+            "label": "米哈游服务端线下直通面：合成、跨服交易与远程 Coding",
+            "key": "mihoyo-base-1",
+            "isLeaf": true,
+            "filePath": "mihoyo/base",
+            "tags": [
+              "服务端",
+              "系统设计",
+              "幂等",
+              "Coding Agent"
+            ],
+            "updatedAt": "2026-11-26",
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "role": "服务端",
+            "roleCategory": "后端与系统工程"
           }
         ]
       }

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
-  "updatedAt": "2026-11-25",
+  "updatedAt": "2026-11-26",
   "records": [
     {
       "key": "transformer-arch",
@@ -5357,47 +5357,47 @@
       "key": "logging-monitoring",
       "label": "日志、指标、Tracing 与告警",
       "filePath": "backend/devops",
+      "action": "update",
+      "batch": "daily-content-20261126-b02",
+      "recordedAt": "2026-11-26",
       "status": "pending",
-      "action": "updated",
-      "recordedAt": "2026-11-18",
-      "batch": "daily-content-20261118-b01",
-      "reason": "Source-grounded actual processing; awaiting reviewed publication.",
+      "reason": "Source-grounded log-analysis task: input contract, event windows, request denominators and aggregate validation. Final independent release and same-SHA synchronization pending.",
       "previousRecord": {
         "key": "logging-monitoring",
         "label": "日志、指标、Tracing 与告警",
         "filePath": "backend/devops",
         "status": "pending",
         "action": "updated",
-        "recordedAt": "2026-11-06",
-        "batch": "daily-content-20261106-second-publication",
-        "reason": "Bounded source-driven teaching additions actually completed; final independent review and exact-SHA online acceptance remain pending.",
+        "recordedAt": "2026-11-18",
+        "batch": "daily-content-20261118-b01",
+        "reason": "Source-grounded actual processing; awaiting reviewed publication.",
         "previousRecord": {
           "key": "logging-monitoring",
           "label": "日志、指标、Tracing 与告警",
           "filePath": "backend/devops",
           "status": "pending",
           "action": "updated",
-          "recordedAt": "2026-11-04",
-          "batch": "daily-content-20261104",
-          "reason": "Actual interview-question driven teaching additions or accuracy corrections; final release and synchronization pending.",
+          "recordedAt": "2026-11-06",
+          "batch": "daily-content-20261106-second-publication",
+          "reason": "Bounded source-driven teaching additions actually completed; final independent review and exact-SHA online acceptance remain pending.",
           "previousRecord": {
             "key": "logging-monitoring",
             "label": "日志、指标、Tracing 与告警",
             "filePath": "backend/devops",
             "status": "pending",
             "action": "updated",
-            "recordedAt": "2026-10-29",
-            "batch": "agentjourney-next-thirty-20261029",
-            "reason": "Actual source-question processing; final independent review and online release are pending.",
+            "recordedAt": "2026-11-04",
+            "batch": "daily-content-20261104",
+            "reason": "Actual interview-question driven teaching additions or accuracy corrections; final release and synchronization pending.",
             "previousRecord": {
               "key": "logging-monitoring",
               "label": "日志、指标、Tracing 与告警",
               "filePath": "backend/devops",
               "status": "pending",
               "action": "updated",
-              "recordedAt": "2026-10-28",
-              "batch": "agentjourney-thirty-20261028",
-              "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+              "recordedAt": "2026-10-29",
+              "batch": "agentjourney-next-thirty-20261029",
+              "reason": "Actual source-question processing; final independent review and online release are pending.",
               "previousRecord": {
                 "key": "logging-monitoring",
                 "label": "日志、指标、Tracing 与告警",
@@ -5405,11 +5405,21 @@
                 "status": "pending",
                 "action": "updated",
                 "recordedAt": "2026-10-28",
-                "batch": "historical-source-bindings-20261028",
-                "previousPublication": {
+                "batch": "agentjourney-thirty-20261028",
+                "reason": "Source-question processing and final independent publication review in progress; pending is not an online claim.",
+                "previousRecord": {
+                  "key": "logging-monitoring",
+                  "label": "日志、指标、Tracing 与告警",
+                  "filePath": "backend/devops",
                   "status": "pending",
-                  "batch": "complete-remaining-91-2026-07-18",
-                  "recordedAt": "2026-07-18"
+                  "action": "updated",
+                  "recordedAt": "2026-10-28",
+                  "batch": "historical-source-bindings-20261028",
+                  "previousPublication": {
+                    "status": "pending",
+                    "batch": "complete-remaining-91-2026-07-18",
+                    "recordedAt": "2026-07-18"
+                  }
                 }
               }
             }

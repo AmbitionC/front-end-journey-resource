@@ -882,14 +882,14 @@
             "isLeaf": true,
             "filePath": "llm/rag",
             "contentStatus": "published",
-            "heat": 42,
+            "heat": 43,
             "currRank": 5,
             "updatedAt": "2026-11-21",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "RAG 分离线和在线两条线：离线解析、切块、Embedding、建索引；在线改写问题、按权限过滤、混合召回、重排、按证据生成并标出处。效果不好就分段查：没召回查切块和召回，召回了答错查重排和生成。"
             },
-            "interviewCount": 36,
+            "interviewCount": 37,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1300,14 +1300,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 69,
+            "heat": 71,
             "currRank": 5,
             "updatedAt": "2026-11-22",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Coding Agent 让模型在循环里反复读代码、改代码、跑命令、看结果，由执行循环、工具、项目说明文件（AGENTS.md / CLAUDE.md）、权限沙箱和验证五块组成。判断它做对没有，看测试结果和最终 diff，不看它自称完成。企业使用还要核对获准的账号、入口、模型和数据去向；内容排除不等同于文件系统隔离。"
             },
-            "interviewCount": 63,
+            "interviewCount": 65,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1348,14 +1348,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 33,
+            "heat": 34,
             "currRank": 5,
             "updatedAt": "2026-11-21",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "默认用一个 Agent 加按需加载的技能，只有上下文装不下、需要并行、或要隔离权限时才拆子 Agent；按上下文切分，不按部门分工。Anthropic 的对比里，单 Agent 加技能常在质量和成本上都更好。"
             },
-            "interviewCount": 27,
+            "interviewCount": 28,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1923,14 +1923,14 @@
             "isLeaf": true,
             "filePath": "llm/production",
             "contentStatus": "published",
-            "heat": 36,
+            "heat": 37,
             "currRank": 5,
             "updatedAt": "2026-10-28",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Agent 验收分开读取任务要求、执行轨迹和实际环境结果。确定条件用程序，开放质量用经校准的模型或人工判断；固定初始状态、版本和统计分母，不能只相信最终回复中的成功声明。"
             },
-            "interviewCount": 30,
+            "interviewCount": 31,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -3153,14 +3153,14 @@
             "isLeaf": true,
             "filePath": "backend/api",
             "contentStatus": "published",
-            "heat": 9,
+            "heat": 10,
             "currRank": 5,
             "updatedAt": "2026-11-06",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "幂等键将同一逻辑请求的重试绑定到一次执行和可重放结果。服务端按租户与操作划定作用域，用原子账本取得执行权，并核对请求指纹；同键不同请求应冲突。外部副作用超时时先确认结果，不能删除记录后盲重试，保留期也限定重试保证。 释放执行锁不等于删除幂等结果，租约和结果保留期要分别设计。"
             },
-            "interviewCount": 8,
+            "interviewCount": 9,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -3489,6 +3489,23 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
+            "label": "Saga：跨服务一致性、补偿与隔离边界",
+            "key": "distributed-saga-consistency",
+            "isLeaf": true,
+            "filePath": "backend/storage",
+            "tags": [
+              "面试知识"
+            ],
+            "updatedAt": "2026-11-12",
+            "interviewBaseHeat": 0,
+            "quickRead": {
+              "text": "Saga把跨服务流程拆成本地事务，用状态推进与补偿恢复业务一致；它不提供全局隔离，补偿失败、并发和不可逆动作必须单独治理。"
+            },
+            "interviewCount": 2,
+            "heat": 2,
+            "currRank": 2
+          },
+          {
             "label": "ORM 实体、关系与查询边界",
             "key": "typeorm-entity",
             "isLeaf": true,
@@ -3532,23 +3549,6 @@
             "currRank": 1
           },
           {
-            "label": "Saga：跨服务一致性、补偿与隔离边界",
-            "key": "distributed-saga-consistency",
-            "isLeaf": true,
-            "filePath": "backend/storage",
-            "tags": [
-              "面试知识"
-            ],
-            "updatedAt": "2026-11-12",
-            "interviewBaseHeat": 0,
-            "quickRead": {
-              "text": "Saga把跨服务流程拆成本地事务，用状态推进与补偿恢复业务一致；它不提供全局隔离，补偿失败、并发和不可逆动作必须单独治理。"
-            },
-            "interviewCount": 1,
-            "heat": 1,
-            "currRank": 1
-          },
-          {
             "key": "database-performance-diagnosis",
             "label": "数据库整体性能诊断与共享实例治理",
             "filePath": "backend/database",
@@ -3576,7 +3576,7 @@
             "contentStatus": "published",
             "heat": 13,
             "currRank": 5,
-            "updatedAt": "2026-11-18",
+            "updatedAt": "2026-11-26",
             "interviewBaseHeat": 1,
             "interviewCount": 12,
             "interviewCountBasis": "verified-public-posts",
