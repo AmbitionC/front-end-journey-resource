@@ -256,6 +256,7 @@ Coding Agent 接到一个修 bug 的任务，发现工作区里有几个用户�
 - [米哈游服务端线下直通面：合成、跨服交易与远程 Coding](../../../interview/mihoyo/base/mihoyo-base-1.md)
 - [美团 AI 全栈二面：AI Coding 复盘与测试边界](../../../interview/meituan/ai/meituan-ai-14.md)
 - [滴滴后端二面：CR Agent、Spec 与 AI Coding 场景](../../../interview/didi/ai/didi-ai-1.md)
+- [Coding Agent 项目面试：工具、上下文与记忆治理](../../../interview/common/agent/common-agent-2.md)
 - [科大讯飞 Java 开发一面：Agent 项目与 AI 编程复盘](../../../interview/iflytek/java/iflytek-java-1.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)
 - [字节 Agent：AI Coding、技能设计与模型工程](../../../interview/bytedance/base/bytedance-base-49.md)

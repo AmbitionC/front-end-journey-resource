@@ -134,6 +134,12 @@ Agent 从对话中观察到一条新信息，写入长期记忆的正确方式�
 
 **答案：C。** 来源签名证明谁提供的，也不证明内容为真；置信要来自来源规则和验证。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [Coding Agent 项目面试：工具、上下文与记忆治理](../../../interview/common/agent/common-agent-2.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [OWASP：Agentic Threats Navigator](https://genai.owasp.org/resource/owasp-gen-ai-security-project-agentic-threats-navigator/)
