@@ -1,4 +1,4 @@
-![有序数组 1 3 4 6 8 11 找两数之和 10：left 和 right 从两端向中间移动，每一步都排除一个不可能的数，第五步找到 4 和 6；下方滑动窗口在出现重复字符时收缩左边界](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/algorithm-array-two-pointers-v1.dark.png)
+![有序数组 1 3 4 6 8 11 找两数之和 10：left 和 right 从两端向中间移动，每一步都排除一个不可能的数，第五步找到 4 和 6；下方滑动窗口在出现重复字符时收缩左边界](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/algorithm-array-two-pointers-anim.dark.png)
 *图：在有序数组 [1, 3, 4, 6, 8, 11] 里找和为 10 的两个数：和太大就左移 right，太小就右移 left，每一步都排除一个不可能的位置。下方滑动窗口先扩张、出了重复再收缩左边。*
 
 ---

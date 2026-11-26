@@ -38,7 +38,7 @@ function hexToRgba(hex, a) {
   return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`;
 }
 
-export function createKit(theme) {
+export function createKit(theme, { mode = 'still' } = {}) {
   const t = typeof theme === 'string' ? THEMES[theme] : theme;
   if (!t) throw new Error(`未知主题：${theme}`);
   const color = (tone) => (tone === 'default' || !tone ? t.line : t[tone] ?? tone);
@@ -46,7 +46,8 @@ export function createKit(theme) {
   const textTone = (tone) => (tone === 'default' || !tone ? t.text : tone === 'muted' ? t.muted : t[tone] ?? t.text);
   let uid = 0;
 
-  const k = { t, SIZE, color };
+  // mode：'still' 出静态 PNG 用的整图，'anim' 出阅读端播放用的 SVG（只有动效图才有区别）
+  const k = { t, SIZE, color, mode };
 
   /** 单行或多行文字。lines 用 \n 分隔。 */
   k.text = ({ x, y, text, size = 'body', tone, anchor = 'start', weight = 400, mono = false, box, lineGap = 1.35 }) => {
@@ -79,10 +80,10 @@ export function createKit(theme) {
   };
 
   /** 折线箭头。points: [[x,y],...]；label 写在 labelAt（默认第一段中点）。 */
-  k.arrow = ({ points, tone = 'line', dashed = false, label, labelAt, labelAnchor = 'middle', head = true, both = false, width = 1.7 }) => {
+  k.arrow = ({ points, tone = 'line', dashed = false, label, labelAt, labelAnchor = 'middle', head = true, both = false, width = 1.7, flow = false }) => {
     const d = points.map((p, i) => `${i ? 'L' : 'M'}${r1(p[0])},${r1(p[1])}`).join(' ');
     const m = `m-${TONES.includes(tone) ? tone : 'line'}`;
-    let s = `<path d="${d}" fill="none" stroke="${color(tone)}" stroke-width="${width}"${dashed ? ' stroke-dasharray="6 5"' : ''}${head ? ` marker-end="url(#${m})"` : ''}${both ? ` marker-start="url(#${m})"` : ''} stroke-linejoin="round" data-aj-arrow="1"/>`;
+    let s = `<path d="${d}" fill="none" stroke="${color(tone)}" stroke-width="${width}"${dashed ? ' stroke-dasharray="6 5"' : ''}${head ? ` marker-end="url(#${m})"` : ''}${both ? ` marker-start="url(#${m})"` : ''} stroke-linejoin="round" data-aj-arrow="1"${flow ? ' data-aj-flow="1"' : ''}/>`;
     if (label) {
       const [a, b] = [points[0], points[1]];
       const at = labelAt ?? [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2 - 8];
@@ -227,11 +228,21 @@ export function createKit(theme) {
   k.step = (n, parts, { mode = 'dim' } = {}) =>
     `<g data-aj-step="${n}"${mode === 'reveal' ? ' data-aj-mode="reveal"' : ''}>${Array.isArray(parts) ? parts.join('') : parts}</g>`;
 
+  /** 帧动画里跨帧追踪的图元：同一个 key 在相邻两帧位置不同，播放时会从旧位置滑到新位置。 */
+  k.keyed = (key, parts) => `<g data-aj-key="${esc(key)}">${Array.isArray(parts) ? parts.join('') : parts}</g>`;
+
   /** 整张图：标题 + 副标题 + 内容。h 由作者给定；宽固定 CANVAS_WIDTH（或 width 覆盖）。
-   *  steps：动效图每一步的说明（数组，第 i 项对应 k.step(i+1)），给了就会额外导出可播放的 SVG。 */
-  k.figure = ({ h, width = CANVAS_WIDTH, title, subtitle, body, steps }) => {
+   *  steps：分步点亮的动效图，每一步的说明（第 i 项对应 k.step(i+1)）。
+   *  frames：帧动画 [{ caption, body }]，每帧是一张完整的状态快照，body 是一直显示的底图；
+   *          still 是静态 PNG / PDF 用的整图内容（不给就用底图 + 最后一帧）。 */
+  k.figure = ({ h, width = CANVAS_WIDTH, title, subtitle, body = '', steps, frames, still }) => {
+    if (frames?.length) {
+      if (k.mode === 'still') return k.figure({ h, width, title, subtitle, body: still ?? body + frames[frames.length - 1].body });
+      steps = frames.map((f) => f.caption);
+      var framesSvg = frames.map((f, i) => `<g data-aj-frame="${i + 1}"${i ? ' display="none"' : ''}>${f.body}</g>`).join('');
+    }
     const markers = TONES.map((tn) => `<marker id="m-${tn}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="${color(tn)}"/></marker>`).join('');
-    let s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${h}" width="${width}" height="${h}" font-family="${FONT}" data-theme="${t.name}"${steps?.length ? ` data-aj-steps="${steps.length}"` : ''}><defs>${markers}</defs>`;
+    let s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${h}" width="${width}" height="${h}" font-family="${FONT}" data-theme="${t.name}"${steps?.length ? ` data-aj-steps="${steps.length}"` : ''}${frames?.length ? ' data-aj-mode="frames"' : ''}><defs>${markers}</defs>`;
     if (steps?.length) s += steps.map((c, i) => `<desc data-aj-caption="${i + 1}">${esc(c)}</desc>`).join('');
     s += `<rect width="${width}" height="${h}" rx="14" fill="${t.bg}"/>`;
     if (title) s += k.text({ x: 40, y: 50, text: title, size: 'title', weight: 600 });
@@ -239,7 +250,7 @@ export function createKit(theme) {
     // 面板是底板：不管源码里先写哪个，面板矩形一律最先画，免得盖住穿进面板的箭头
     const panels = [];
     const rest = body.replace(/<rect data-panel="1"[^>]*\/>/g, (m) => { panels.push(m); return ''; });
-    return s + panels.join('') + rest + '</svg>';
+    return s + panels.join('') + rest + (framesSvg ?? '') + '</svg>';
   };
 
   return k;

@@ -51,14 +51,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/llm-token-context-kv-cache-v1.aj.mjs",
-          "sourceSha256": "b914b750ead0729632c81dbce9f730b9aa552f835a380e5039dc03b532d0b75c",
-          "darkPng": "images/llm-token-context-kv-cache-v1.dark.png",
-          "lightPng": "images/llm-token-context-kv-cache-v1.light.png",
+          "source": "images/diagram-sources/llm-token-context-kv-cache-anim.aj.mjs",
+          "sourceSha256": "7445f66ac56ee01638ceca166c7c18a4caa7c4bbfaabdfd25258cc7e66649b14",
+          "darkPng": "images/llm-token-context-kv-cache-anim.dark.png",
+          "lightPng": "images/llm-token-context-kv-cache-anim.light.png",
           "darkSha256": "2ad102e8a827ab951723e6c297080447782ad5226a9574f67cf58476daacb4d3",
-          "lightSha256": "b334aa6e48d93f388630efc7df8eb0678416181739d4c92417132e5cc9ae60cc"
+          "lightSha256": "b334aa6e48d93f388630efc7df8eb0678416181739d4c92417132e5cc9ae60cc",
+          "darkSvg": "images/llm-token-context-kv-cache-anim.dark.svg",
+          "lightSvg": "images/llm-token-context-kv-cache-anim.light.svg",
+          "darkSvgSha256": "2bb82b9fd9399f0f0d13ea64257f8eb5d3d3f7ce52f0d154d974e82844fc065a",
+          "lightSvgSha256": "cbcfcff59e6d9472c524e4d0363925f30df57fcc94b564c0991849f3be31ee2a"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "llm-capability-boundaries",
@@ -5636,14 +5641,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/algorithm-array-two-pointers-v1.aj.mjs",
-          "sourceSha256": "059259fa699dd4ed270b34defad55e1e3fd00fbba33dfc6798d45eb4c4993641",
-          "darkPng": "images/algorithm-array-two-pointers-v1.dark.png",
-          "lightPng": "images/algorithm-array-two-pointers-v1.light.png",
+          "source": "images/diagram-sources/algorithm-array-two-pointers-anim.aj.mjs",
+          "sourceSha256": "2a1f12d5e4541108bf03d0142f00d5f6534e087786fb6a33a79deb5f17d2dc39",
+          "darkPng": "images/algorithm-array-two-pointers-anim.dark.png",
+          "lightPng": "images/algorithm-array-two-pointers-anim.light.png",
           "darkSha256": "19d897135952d426c1929e0236b7fdbcc90ce2c37f669e68465f47d440cd81dd",
-          "lightSha256": "ec6b71dce6614b9b3f2c7a141cea03c67e7836565e0fb64e24bf8fe836c3389e"
+          "lightSha256": "ec6b71dce6614b9b3f2c7a141cea03c67e7836565e0fb64e24bf8fe836c3389e",
+          "darkSvg": "images/algorithm-array-two-pointers-anim.dark.svg",
+          "lightSvg": "images/algorithm-array-two-pointers-anim.light.svg",
+          "darkSvgSha256": "72083691105ef2c7f50123fe571716b5362ac17f36d64224e935525f0b158694",
+          "lightSvgSha256": "c4ccfb1642fee8d998c3f21740157c7ea8dc14a4ff0f9603ac8985a3daea4c72"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "algorithm-tree",
@@ -5820,16 +5830,16 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/browser-event-loop-round-order-anim.aj.mjs",
-          "sourceSha256": "b982eeb39bf87dac7cf8039aea7369079dd127f5fc3916819a363bc0c565a094",
-          "darkPng": "images/browser-event-loop-round-order-anim.dark.png",
-          "lightPng": "images/browser-event-loop-round-order-anim.light.png",
-          "darkSha256": "1117586fef32e5ea040c52e77d6b36843ec4dc2ec3fa71b6a4868d3ed26252a0",
-          "lightSha256": "aa6f5ae9786058c092a1c67a1274a7e025d7e0b51a2b9d9568838f6e3a811ca7",
-          "darkSvg": "images/browser-event-loop-round-order-anim.dark.svg",
-          "lightSvg": "images/browser-event-loop-round-order-anim.light.svg",
-          "darkSvgSha256": "1fb31f2b84045fa60ae21ad2695fab493eb9cd8cc33742fbc2aeab1d7e7935ff",
-          "lightSvgSha256": "e5dda1714f0600aeaedcb3c1a942a535cef22a10a9b522ef0e1d6e663a230a8e"
+          "source": "images/diagram-sources/browser-event-loop-queues-anim.aj.mjs",
+          "sourceSha256": "d36e40df813446cf2d1409fb23cb24dad8daad7402d2864eb27a027f2ae6e7e3",
+          "darkPng": "images/browser-event-loop-queues-anim.dark.png",
+          "lightPng": "images/browser-event-loop-queues-anim.light.png",
+          "darkSha256": "40338b5bfbe59c7617dc47879c9f745f4256ce53d0b556803a89abdcf004245c",
+          "lightSha256": "3bb59b031914b65bc92c0c5f435f2403d68ff23c497ef67c45dee5a9a00cdb60",
+          "darkSvg": "images/browser-event-loop-queues-anim.dark.svg",
+          "lightSvg": "images/browser-event-loop-queues-anim.light.svg",
+          "darkSvgSha256": "83209771b2b1bfbaf550b229da1b2ad9954ac20d89a66a49961653236b5d3bdf",
+          "lightSvgSha256": "7aa31cec15ca91b55d8a0d8a233340d142534ee0391b34aff351c98bec0a2e26"
         }
       ],
       "animated": true
