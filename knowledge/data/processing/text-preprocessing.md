@@ -249,7 +249,7 @@ flowchart TD
     I --> J[Token 计数验证\ntiktoken · 过滤空/超长 chunk]
     J --> K[向量化\nEmbedding Model]
     K --> L[写入向量数据库\nChroma / Milvus / Weaviate]
-    L --> M[检索质量评估\nRecall@K · MRR · NDCG]
+    L --> M["检索质量评估\nRecall@K · MRR · NDCG"]
     M -->|指标不达标| D
 ```
 

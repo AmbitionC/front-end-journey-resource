@@ -26,7 +26,7 @@ graph TD
     end
     subgraph 后端层
         CREATE[FastAPI\nPOST /api/research\n幂等创建 job]
-        EVENTS[GET /api/research/{job_id}/events\nSSE 事件流]
+        EVENTS["GET /api/research/{job_id}/events\nSSE 事件流"]
         STORE[Job + Event Log\n状态与断点]
     end
     subgraph 智能体层
