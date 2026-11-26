@@ -173,6 +173,7 @@ Agent 的改动可能影响工具选择、提示词、检索、上下文管理�
 - [字节抖音电商 Agent 一至三面：AI Coding、证据校验与长文档](../../../interview/bytedance/base/bytedance-base-63.md)
 - [腾讯 CDG 金融科技二面：Agent 评估、协程与存储基础](../../../interview/tencent/ai/tencent-ai-29.md)
 - [字节 Agent 开发实习一面：自进化与评测](../../../interview/bytedance/base/bytedance-base-8.md)
+- [阿里云 AI 应用二面：评测、工作流与日志分析](../../../interview/alibaba/ai/alibaba-ai-35.md)
 - [腾讯 CSIG 元宝内容安全日常实习：评测集、输出校验与问题归因](../../../interview/tencent/ai/tencent-ai-15.md)
 - [字节 TikTok Shop 质量方向一面：LLM Judge 与测试集覆盖](../../../interview/bytedance/base/bytedance-base-66.md)
 - [腾讯企业微信测开实习一面：工作流取舍与离线评测](../../../interview/tencent/ai/tencent-ai-26.md)

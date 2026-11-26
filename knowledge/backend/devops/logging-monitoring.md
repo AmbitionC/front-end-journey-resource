@@ -287,6 +287,28 @@ grep -Fc -- 'error' app.log
 
 文件不存在或读取失败也不能当成“零错误”。GNU grep 在没有匹配行时输出计数 `0`，但退出状态为 `1`；通常匹配成功为 `0`、错误为 `2`，其他实现的错误码需核对。脚本应分别处理无匹配与执行失败，不宜用一条笼统的成功兜底吞掉读取错误。[GNU grep 退出状态](https://www.gnu.org/software/grep/manual/grep.html#Exit-Status)
 
+## 日志分析编程题：先确定输入与统计口径
+
+被要求“实现日志分析系统，计算关键指标”时，先问清日志格式、统计对象、时间窗口、错误判据与输出要求。原问没有给出的字段和数据规模不能自行补成题设。下面使用**自行定义的教学输入**说明实现思路，不是某道原题的完整还原。
+
+假设每条合法 JSON 记录代表一次请求的最终结果，含事件时间、规范化路由、结果状态和毫秒耗时，且同一次请求只出现一条最终记录。先逐行解析并校验必需字段，把格式错误、时间无效或负耗时的记录单独计入输入质量报告；不能把解析失败吞掉后宣布业务“零错误”。若实际日志包含开始、重试和结束等多类事件，应先选择请求终态，区分一次业务请求与多次调用尝试；只有来源提供了可靠事件标识时，才据它去重，不能按相同正文删除可能真实重复发生的请求。
+
+时间窗口也要成为明确的输入约定。例如采用 UTC 事件时间的半开区间 `[t, t + 60s)`，边界上的事件进入下一个窗口；日志迟到时，是补算、修订还是另行报告，需要明确策略。[OpenTelemetry 日志数据模型](https://opentelemetry.io/docs/specs/otel/logs/data-model/)区分事件发生的 `Timestamp` 与采集系统看到事件的 `ObservedTimestamp`，两者不能在未说明时混用。日志级别也须按来源格式映射；文本含有 `error` 不足以证明这次请求失败。
+
+对某一路由的一个完整 60 秒窗口，假设有三条合法终态记录，耗时分别为 100、200、300 ms，其中一条失败。按“全部请求，含失败请求”统计耗时，可以手算出下列验收结果：
+
+| 输出 | 本例结果 | 必须保留的约定 |
+| --- | --- | --- |
+| 请求数 | 3 | 每条记录确实对应一个请求终态 |
+| 请求速率 | 3 / 60 = 0.05 次/秒 | 分母是窗口宽度，不是首末日志的时间差 |
+| 请求错误率 | 1 / 3 | 失败状态的定义与分母使用同一请求集合 |
+| 平均耗时 | (100 + 200 + 300) / 3 = 200 ms | 聚合时保留耗时总和与样本数 |
+| P95 | 300 ms | 本例采用最近秩：排序后取第 `ceil(0.95 × n)` 项 |
+
+空窗口的请求数和速率可以为零，但错误率与平均耗时的分母为零，应输出未定义状态或缺失值，并在接口中说明。不同分位数算法可能产生不同的小样本结果；测试必须固定算法。跨窗口或实例聚合时，平均值用总耗时除以总请求数，不能简单平均各组均值；各组 P95 也不能再取平均当作总体 P95。[Prometheus 的直方图与摘要指南](https://prometheus.io/docs/practices/histograms/)解释了分布聚合与预计算分位数的差别。
+
+最小验收用例应覆盖乱序输入、窗口边界、空窗口、坏行、缺字段、重复终态与重试事件。数据量小且要求精确分位数时可以保留窗口样本后排序；大流量持续输入时再按精度要求选择有界窗口、直方图或摘要，并说明内存、迟到数据和近似误差。先证明统计口径正确，再讨论如何并行和提速。
+
 ## 没有错误日志时怎样继续定位
 
 没有找到错误日志，只能说明当前查询没有观察到事件。日志级别、采样、关联标识、采集链路和业务埋点都可能存在缺口；某些业务错误也不会抛异常。先核对用户实际看到的失败，再判断是服务没有执行、执行结果错误，还是观测数据没有到达。[Google SRE 的监控章节](https://sre.google/sre-book/monitoring-distributed-systems/)区分用户视角的黑盒检测与系统内部白盒信号，两者可以相互校验。
@@ -495,6 +517,8 @@ RED 方法指的是哪三个指标？
 - [Docker CLI: one-shot stats and memory accounting](https://docs.docker.com/reference/cli/docker/container/stats/)
 - [Docker CLI: exec starts an executable in a running container](https://docs.docker.com/reference/cli/docker/container/exec/)
 - [OpenTelemetry signals](https://opentelemetry.io/docs/concepts/signals/)
+- [OpenTelemetry：日志数据模型与时间、级别字段](https://opentelemetry.io/docs/specs/otel/logs/data-model/)
+- [Prometheus：直方图、摘要与分位数聚合](https://prometheus.io/docs/practices/histograms/)
 - [OpenTelemetry：采样概念](https://opentelemetry.io/docs/concepts/sampling/)
 - [OpenTelemetry Collector：Tail Sampling Processor](https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/processor/tailsamplingprocessor/README.md)
 - [OpenTelemetry semantic conventions](https://opentelemetry.io/docs/specs/semconv/)

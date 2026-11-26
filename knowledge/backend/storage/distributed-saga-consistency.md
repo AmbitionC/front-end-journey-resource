@@ -71,6 +71,7 @@ Saga 和数据库事务相比，缺少什么保证？
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [米哈游服务端线下直通面：合成、跨服交易与远程 Coding](../../../interview/mihoyo/base/mihoyo-base-1.md)
 - [美团业务后台综合面：本体建模、Agent 评测与一致性](../../../interview/meituan/ai/meituan-ai-13.md)
 <!-- interview-source-history:end -->
 

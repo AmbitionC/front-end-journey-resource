@@ -149,6 +149,7 @@ API 幂等需要一个原子账本，而不只是 Header。key 在明确作用�
 - [商盟支付 Java 开发实习一面：交易去重、并发与消息](../../../interview/shangmeng/ai/shangmeng-ai-1.md)
 - [字节生活服务 AI 全栈二面：AI 作业、接口幂等与树题](../../../interview/bytedance/base/bytedance-base-64.md)
 - [蚂蚁 Agent 实习一面：缓存、消息与 RAG](../../../interview/antfin/ai/antfin-ai-6.md)
+- [米哈游服务端线下直通面：合成、跨服交易与远程 Coding](../../../interview/mihoyo/base/mihoyo-base-1.md)
 - [快手 Agent 岗一面：CSS 能力边界与插入幂等](../../../interview/kuaishou/ai/kuaishou-ai-10.md)
 <!-- interview-source-history:end -->
 
