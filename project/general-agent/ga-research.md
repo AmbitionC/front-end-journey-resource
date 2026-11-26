@@ -2,7 +2,7 @@
 
 ## 部件关系
 
-![研究模式的部件关系：用户问题进入主管 Agent，主管拆出子问题派给三个并行的研究员，研究员调用搜索、读网页正文、压缩与摘录三个工具，并把来源登记到来源库；证据足够后由报告生成按编号引用来源库](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-general-agent-research-v1.png)
+![研究模式的部件关系：用户问题进入主管 Agent，主管拆出子问题派给三个并行的研究员，研究员调用搜索、读网页正文、压缩与摘录三个工具，并把来源登记到来源库；证据足够后由报告生成按编号引用来源库](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-general-agent-research-v2.dark.png)
 
 主管和研究员都是上一章的执行循环，区别只在提示词和工具集：
 

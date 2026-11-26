@@ -2,7 +2,7 @@
 
 ## 总体架构
 
-![Agent 评测与自进化平台架构：左侧是被测对象和版本库；上半部分是评测链路，任务集经运行器和评分器产出报告，结果写入结果库，评分器另有审计；下半部分是自进化链路，失败分析读取结果库，提案器分四级提出修改，候选版本经准入闸门后合入版本库](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-eval-evolve-architecture-v1.png)
+![Agent 评测与自进化平台架构：左侧是被测对象和版本库；上半部分是评测链路，任务集经运行器和评分器产出报告，结果写入结果库，评分器另有审计；下半部分是自进化链路，失败分析读取结果库，提案器分四级提出修改，候选版本经准入闸门后合入版本库](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-eval-evolve-architecture-v2.dark.png)
 
 平台分三块。
 
@@ -51,7 +51,7 @@ class AgentVersion:
 
 四个字段正好对应四级进化的作用对象。级别越高，能改的字段越多：
 
-![自进化的四个级别：第一级改提示词，对应 GEPA；第二级改经验手册，对应 ACE；第三级改配置与工具，对应 Self-Harness；第四级改外壳代码，对应 Meta-Harness；四级共用同一道准入闸门](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-eval-evolve-levels-v1.png)
+![自进化的四个级别：第一级改提示词，对应 GEPA；第二级改经验手册，对应 ACE；第三级改配置与工具，对应 Self-Harness；第四级改外壳代码，对应 Meta-Harness；四级共用同一道准入闸门](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-eval-evolve-levels-v2.dark.png)
 
 ## 一轮进化的完整流程
 
