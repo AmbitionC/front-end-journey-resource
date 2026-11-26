@@ -402,6 +402,7 @@ def calculate_relevance(content: str, query: str) -> float:
 - [字节抖音电商 Agent 一面：分层、上下文与 GRPO](../../../interview/bytedance/base/bytedance-base-21.md)
 - [腾讯 AI Agent 应用开发一面：上下文、强化学习与系统基础](../../../interview/tencent/ai/tencent-ai-11.md)
 - [海康威视 AI Agent 开发一面：可靠工具与任务状态](../../../interview/hikvision/ai/hikvision-ai-1.md)
+- [Coding Agent 项目面试：工具、上下文与记忆治理](../../../interview/common/agent/common-agent-2.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

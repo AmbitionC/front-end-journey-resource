@@ -126,6 +126,7 @@ SDK、工具适配器、Agent 和工作流各自重试 3 次，会怎样？
 - [腾讯微信支付后台开发日常实习一面](../../../interview/tencent/ai/tencent-ai-5.md)
 - [字节 AML / 火山方舟 AI Infra 一面：Agent Runtime、OS 与网络（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-17.md)
 - [阿里淘宝闪购 Agent 算法实习一面：框架、记忆与线上排障](../../../interview/alibaba/ai/alibaba-ai-6.md)
+- [Coding Agent 项目面试：工具、上下文与记忆治理](../../../interview/common/agent/common-agent-2.md)
 <!-- interview-source-history:end -->
 
 ## 补充学习阅读（不重复计次）
