@@ -1,0 +1,38 @@
+export const meta = {
+  name: "project-eg-architecture-campaign-flow-v1",
+  article: "project/ecom-growth/eg-architecture.md",
+  alt: "一次完整活动的流程：营销任务依次经过商品理解、人群分层、素材生成、合规与调性审核，审核拦截的带原因重写；通过后经人工确认开始试投，依次做预算分配、试投、效果归因，未达到停止条件就进入素材进化并重新送审，达到则输出报告",
+};
+
+export default (k) => k.figure({
+  h: 650,
+  title: "一次完整的活动：左边生产，右边试投",
+  subtitle: "进化出来的新素材要重新过审核，才能进下一轮试投",
+  body: [
+    k.box({"x": 70, "y": 120, "w": 290, "h": 64, "title": "营销任务", "sub": "商品、目标、预算"}),
+    k.box({"x": 70, "y": 204, "w": 290, "h": 64, "title": "商品理解"}),
+    k.box({"x": 70, "y": 288, "w": 290, "h": 64, "title": "人群分层"}),
+    k.box({"x": 70, "y": 372, "w": 290, "h": 64, "title": "素材生成"}),
+    k.box({"x": 70, "y": 456, "w": 290, "h": 64, "title": "合规与调性审核", "sub": "拦截就带原因重写，最多两次", "tone": "bad"}),
+    k.arrow({"points": [[215, 184], [215, 200]]}),
+    k.arrow({"points": [[215, 268], [215, 284]]}),
+    k.arrow({"points": [[215, 352], [215, 368]]}),
+    k.arrow({"points": [[215, 436], [215, 452]]}),
+    k.arrow({"points": [[70, 488], [46, 488], [46, 404], [66, 404]], "dashed": true}),
+    k.box({"x": 600, "y": 120, "w": 300, "h": 64, "title": "人工确认开始试投", "tone": "warn"}),
+    k.box({"x": 600, "y": 204, "w": 300, "h": 64, "title": "预算分配", "tone": "info"}),
+    k.box({"x": 600, "y": 288, "w": 300, "h": 64, "title": "试投环境", "tone": "info"}),
+    k.box({"x": 600, "y": 372, "w": 300, "h": 64, "title": "效果归因", "tone": "info"}),
+    k.box({"x": 600, "y": 456, "w": 300, "h": 64, "title": "达到停止条件吗", "tone": "warn"}),
+    k.arrow({"points": [[750, 184], [750, 200]]}),
+    k.arrow({"points": [[750, 268], [750, 284]]}),
+    k.arrow({"points": [[750, 352], [750, 368]]}),
+    k.arrow({"points": [[750, 436], [750, 452]]}),
+    k.arrow({"points": [[360, 472], [380, 472], [380, 152], [596, 152]], "label": "通过", "labelAt": [392, 320], "labelAnchor": "start"}),
+    k.arrow({"points": [[600, 504], [564, 504]], "label": "否", "labelAt": [582, 494], "labelAnchor": "middle"}),
+    k.box({"x": 400, "y": 472, "w": 160, "h": 64, "title": "素材进化", "sub": "淘汰与改写", "tone": "accent"}),
+    k.arrow({"points": [[400, 504], [364, 504]]}),
+    k.arrow({"points": [[750, 520], [750, 562]], "label": "是", "labelAt": [762, 546], "labelAnchor": "start"}),
+    k.box({"x": 600, "y": 566, "w": 300, "h": 56, "title": "输出报告", "tone": "ok"}),
+  ].join(''),
+});

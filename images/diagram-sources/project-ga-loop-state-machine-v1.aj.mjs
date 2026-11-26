@@ -1,0 +1,38 @@
+export const meta = {
+  name: "project-ga-loop-state-machine-v1",
+  article: "project/general-agent/ga-loop.md",
+  alt: "执行循环的状态流转：拼装上下文后调用模型；回复里没有工具调用就结束，接口报错或超时进入重试，未超过上限回到调用模型，超过则失败退出；回复里有工具调用时先做权限判定，放行则执行工具，拒绝则记录拒绝，两者都追加结果，然后检查出口，继续则回到拼装上下文，达到最大轮次或被中断则强制收尾后结束",
+};
+
+export default (k) => k.figure({
+  h: 770,
+  title: "执行循环的状态流转：一圈就是一轮",
+  subtitle: "三个出口：没有工具调用、重试超限、达到最大轮次或被中断",
+  body: [
+    k.box({"x": 300, "y": 120, "w": 300, "h": 52, "title": "拼装上下文"}),
+    k.arrow({"points": [[450, 172], [450, 208]]}),
+    k.box({"x": 300, "y": 212, "w": 300, "h": 52, "title": "调用模型", "tone": "accent"}),
+    k.arrow({"points": [[450, 264], [450, 316]], "label": "有工具调用", "labelAt": [462, 296], "labelAnchor": "start"}),
+    k.box({"x": 300, "y": 320, "w": 300, "h": 52, "title": "权限判定", "tone": "warn"}),
+    k.arrow({"points": [[330, 372], [330, 408]], "label": "放行", "labelAt": [342, 396], "labelAnchor": "start"}),
+    k.arrow({"points": [[570, 372], [570, 408]], "label": "拒绝", "labelAt": [582, 396], "labelAnchor": "start"}),
+    k.box({"x": 220, "y": 412, "w": 200, "h": 52, "title": "执行工具"}),
+    k.box({"x": 480, "y": 412, "w": 200, "h": 52, "title": "记录拒绝"}),
+    k.arrow({"points": [[330, 464], [330, 500]]}),
+    k.arrow({"points": [[570, 464], [570, 500]]}),
+    k.box({"x": 300, "y": 504, "w": 300, "h": 52, "title": "追加结果"}),
+    k.arrow({"points": [[450, 556], [450, 592]]}),
+    k.box({"x": 300, "y": 596, "w": 300, "h": 52, "title": "检查出口", "tone": "warn"}),
+    k.arrow({"points": [[300, 622], [180, 622], [180, 146], [296, 146]], "label": "继续", "labelAt": [192, 300], "labelAnchor": "start"}),
+    k.arrow({"points": [[450, 648], [450, 684]], "label": "达到最大轮次或被中断", "labelAt": [462, 672], "labelAnchor": "start"}),
+    k.box({"x": 300, "y": 688, "w": 300, "h": 52, "title": "强制收尾"}),
+    k.arrow({"points": [[600, 228], [716, 228]], "label": "报错或超时", "labelAt": [658, 218], "labelAnchor": "middle"}),
+    k.box({"x": 720, "y": 212, "w": 200, "h": 52, "title": "重试"}),
+    k.arrow({"points": [[720, 250], [604, 250]], "label": "未超上限", "labelAt": [658, 272], "labelAnchor": "middle", "dashed": true}),
+    k.arrow({"points": [[820, 264], [820, 316]], "label": "超过重试上限", "labelAt": [808, 296], "labelAnchor": "end"}),
+    k.box({"x": 720, "y": 320, "w": 200, "h": 52, "title": "失败退出", "tone": "bad"}),
+    k.arrow({"points": [[300, 238], [164, 238]], "label": "没有工具调用", "labelAt": [240, 228], "labelAnchor": "middle"}),
+    k.box({"x": 40, "y": 212, "w": 120, "h": 52, "title": "结束", "tone": "ok"}),
+    k.arrow({"points": [[300, 714], [100, 714], [100, 268]]}),
+  ].join(''),
+});
