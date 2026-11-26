@@ -13,7 +13,7 @@ flowchart LR
     App --> Router["Router\n(express.Router())"]
     Router --> MW["Route Middleware\n(router-level)"]
     MW --> Handler["Route Handler\n(req, res, next)"]
-    Handler -->|调用 next(err)| ErrMW["Error Middleware\n(err, req, res, next)"]
+    Handler -->|"调用 next(err)"| ErrMW["Error Middleware\n(err, req, res, next)"]
     Handler -->|res.send/json/end| Client
     ErrMW --> Client
 
