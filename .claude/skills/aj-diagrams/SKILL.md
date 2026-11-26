@@ -120,6 +120,19 @@ npm run diagram -- images/diagram-sources/<name>.aj.mjs --preview /tmp/preview.p
 5. 更新 `.codex/diagram-migration-history.json` 里对应旧图的状态。
 6. 跑 `npm test` 和 `npm run validate:tree`。
 
+## 6½. 动效图（可逐步播放）
+
+讲**流程、时序、状态流转、数据流**的图可以做成动效版：网站上一步步点亮，当前步的箭头上跑一个小圆点，右上角有重播 / 上一步 / 播放暂停 / 下一步，图下显示这一步的说明。架构图、组件边界、对比表、曲线不做动效。
+
+1. 源码里把每一步出现的图元包进 `k.step(n, [...])`（n 从 1 开始，同一步可以写多次）。
+   答案、输出这类不该提前露出的内容用 `k.step(n, [...], { mode: 'reveal' })`，未到时完全隐藏；默认未到时淡显。
+   框架、标题、底部结论条等一直显示的图元不包。
+2. `k.figure({ ..., steps: ['第 1 步说明', ...] })`：一句话说清这一步发生了什么、为什么，数量要和用到的 k.step 对上。
+3. `meta.name` 以 `-anim` 或 `-anim-vN` 结尾（阅读端靠它认出动效图），alt 里注明「可逐步播放」。
+4. render.mjs 会额外导出 `images/<name>.{dark,light}.svg`；PNG 是全部步骤显示的终态，PDF、加载失败和「减少动态效果」都看它。
+5. 文章照常引用 `<name>.dark.png`，不需要别的标记。台账里该条 `replacementAssets` 加上 svg 两个文件及哈希，并标 `"animated": true`。
+6. 写完在浏览器里逐步点一遍（示例：`front-end-journey/src/components/AnimatedDiagram.tsx`），确认每一步单独看也讲得通。
+
 ## 7. 手机端
 
 文章在手机上约 360px 宽，960 画布会缩到约 0.37 倍，15px 字变成约 5.6px——**手机上看不清是已知取舍**，靠点开大图（antd Image 预览）解决。所以：

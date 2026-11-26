@@ -82,7 +82,7 @@ export function createKit(theme) {
   k.arrow = ({ points, tone = 'line', dashed = false, label, labelAt, labelAnchor = 'middle', head = true, both = false, width = 1.7 }) => {
     const d = points.map((p, i) => `${i ? 'L' : 'M'}${r1(p[0])},${r1(p[1])}`).join(' ');
     const m = `m-${TONES.includes(tone) ? tone : 'line'}`;
-    let s = `<path d="${d}" fill="none" stroke="${color(tone)}" stroke-width="${width}"${dashed ? ' stroke-dasharray="6 5"' : ''}${head ? ` marker-end="url(#${m})"` : ''}${both ? ` marker-start="url(#${m})"` : ''} stroke-linejoin="round"/>`;
+    let s = `<path d="${d}" fill="none" stroke="${color(tone)}" stroke-width="${width}"${dashed ? ' stroke-dasharray="6 5"' : ''}${head ? ` marker-end="url(#${m})"` : ''}${both ? ` marker-start="url(#${m})"` : ''} stroke-linejoin="round" data-aj-arrow="1"/>`;
     if (label) {
       const [a, b] = [points[0], points[1]];
       const at = labelAt ?? [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2 - 8];
@@ -219,10 +219,20 @@ export function createKit(theme) {
     return s;
   };
 
-  /** 整张图：标题 + 副标题 + 内容。h 由作者给定；宽固定 CANVAS_WIDTH（或 width 覆盖）。 */
-  k.figure = ({ h, width = CANVAS_WIDTH, title, subtitle, body }) => {
+  /**
+   * 动效图的一步：把这一步出现的图元包起来。n 从 1 开始；mode 'dim'（默认，未到时淡显）或 'reveal'（未到时隐藏，
+   * 用于答案、输出这类不该提前露出的内容）。播放到这一步时，组内箭头上会跑一个小圆点。
+   * 静态 PNG 画的是全部步骤都显示的终态，所以 PDF 和不支持动效的地方照常可读。
+   */
+  k.step = (n, parts, { mode = 'dim' } = {}) =>
+    `<g data-aj-step="${n}"${mode === 'reveal' ? ' data-aj-mode="reveal"' : ''}>${Array.isArray(parts) ? parts.join('') : parts}</g>`;
+
+  /** 整张图：标题 + 副标题 + 内容。h 由作者给定；宽固定 CANVAS_WIDTH（或 width 覆盖）。
+   *  steps：动效图每一步的说明（数组，第 i 项对应 k.step(i+1)），给了就会额外导出可播放的 SVG。 */
+  k.figure = ({ h, width = CANVAS_WIDTH, title, subtitle, body, steps }) => {
     const markers = TONES.map((tn) => `<marker id="m-${tn}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="${color(tn)}"/></marker>`).join('');
-    let s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${h}" width="${width}" height="${h}" font-family="${FONT}" data-theme="${t.name}"><defs>${markers}</defs>`;
+    let s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${h}" width="${width}" height="${h}" font-family="${FONT}" data-theme="${t.name}"${steps?.length ? ` data-aj-steps="${steps.length}"` : ''}><defs>${markers}</defs>`;
+    if (steps?.length) s += steps.map((c, i) => `<desc data-aj-caption="${i + 1}">${esc(c)}</desc>`).join('');
     s += `<rect width="${width}" height="${h}" rx="14" fill="${t.bg}"/>`;
     if (title) s += k.text({ x: 40, y: 50, text: title, size: 'title', weight: 600 });
     if (subtitle) s += k.text({ x: 40, y: 80, text: subtitle, size: 'label', tone: 'muted' });

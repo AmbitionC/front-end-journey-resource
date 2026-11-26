@@ -3,6 +3,7 @@
 //   node scripts/diagram-kit/render.mjs images/diagram-sources/<name>.aj.mjs [...more] [--preview <out.png>]
 // 源文件：export const meta = { name, alt }; export default (k) => k.figure({...})
 // 输出：images/<name>.dark.png、images/<name>.light.png（2 倍图）。
+// 动效图（figure 传了 steps）另出 images/<name>.{dark,light}.svg 给阅读端播放；PNG 是全部步骤显示的终态。
 // 依赖：puppeteer（仓库已有）+ 字体 @fontsource/noto-sans-sc（见 SKILL.md 安装方式）。
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
@@ -97,6 +98,17 @@ try {
       const ok = await page.evaluate(() => [...document.fonts].some((f) => f.family.includes('Noto Sans SC') && f.status === 'loaded'));
       if (!ok) throw new Error('Noto Sans SC 没有加载，渲染结果不可信');
       const { W, H, problems } = await page.evaluate(lint, MIN_FONT);
+      const steps = Number(/data-aj-steps="(\d+)"/.exec(svg)?.[1] ?? 0);
+      if (steps) {
+        if (!/-anim(-v\d+)?$/.test(name)) problems.push('动效图的 meta.name 要以 -anim 或 -anim-vN 结尾，阅读端靠它认出动效图');
+        for (let i = 1; i <= steps; i++) {
+          if (!svg.includes(`data-aj-step="${i}"`)) problems.push(`第 ${i} 步没有 k.step(${i}, ...)`);
+          if (!svg.includes(`data-aj-caption="${i}"`)) problems.push(`第 ${i} 步缺说明`);
+        }
+        if (svg.includes(`data-aj-step="${steps + 1}"`)) problems.push(`k.step 用到了第 ${steps + 1} 步，但 steps 只有 ${steps} 条说明`);
+        if (/<script|<foreignObject|\son[a-z]+=/i.test(svg)) problems.push('动效 SVG 里不能有脚本、foreignObject 或事件属性');
+        writeFileSync(join(ROOT, 'images', `${name}.${theme}.svg`), svg);
+      }
       await page.setViewport({ width: Math.ceil(W), height: Math.ceil(H), deviceScaleFactor: 2 });
       const out = join(ROOT, 'images', `${name}.${theme}.png`);
       mkdirSync(dirname(out), { recursive: true });
