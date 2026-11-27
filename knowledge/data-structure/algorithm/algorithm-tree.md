@@ -1,4 +1,4 @@
-![同一张图从 A 出发：左侧 BFS 用队列按层扩展，访问顺序 A B C D F E；右侧 DFS 用递归或栈一路深入再回退，访问顺序 A B D C F E；图中有环，靠 visited 避免重复访问](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/algorithm-tree-bfs-dfs-v1.dark.png)
+![同一张图从 A 出发：左侧 BFS 用队列按层扩展，访问顺序 A B C D F E；右侧 DFS 用递归或栈一路深入再回退，访问顺序 A B D C F E；图中有环，靠 visited 避免重复访问](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/algorithm-tree-bfs-dfs-anim.dark.png)
 *图：同一张带环的图：BFS 用队列按层扩展，DFS 一条路走到底再回溯；角标是访问顺序。visited 阻止绕环重复访问，树是无环的特例。*
 
 ---
