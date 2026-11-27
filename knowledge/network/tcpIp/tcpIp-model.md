@@ -1,6 +1,6 @@
 TCP/IP 模型的价值不是背四层或七层名称，而是沿一次真实通信追踪：应用产生哪些字节，传输层怎样标识端点与可靠性，IP 怎样跨网络路由，链路层怎样把下一跳装进帧。名称、地址、端口、路由和 MAC 各自回答不同问题。
 
-![TCP/IP 的封装与端到端路径。左侧是发送端逐层封装：应用层只有应用字节；传输层加 TCP 头，含源和目的端口、序号和 flags；网络层再加 IP 头，含源和目的地址、Hop Limit；链路层最外面加帧头（下一跳链路地址）和末尾校验。接收端逐层验证和解封装，把字节交给正确进程。右侧是路径：客户端把帧交给默认网关，路由器按目的 IP 选下一跳，每一跳帧头都会换；NAT 会改写地址和端口并维护有超时的映射；服务器逐层解封装。源和目的 IP 通常端到端保持，除非 NAT 或隧道改写。三个要点：TCP 连接由协议加源、目的 IP 和端口标识，是有序字节流，一次 write 不等于对端一次 read，可靠也不等于请求只处理一次；QUIC 在 UDP 上实现加密和可靠 stream，仍受 MTU、NAT 和防火墙影响；应用 payload 加上各层头部可能超过路径 MTU，挡掉必要的 ICMP 会造成能连接但大包卡住。排障顺序：DNS、路由、ARP 或 NDP、TCP 或 QUIC 握手、TLS 证书和 SNI、HTTP 状态、应用下游；ping 通只说明某类 ICMP 路径可达](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/tcpip-model-encapsulation-path-v3.dark.png)
+![TCP/IP 的封装与端到端路径。左侧是发送端逐层封装：应用层只有应用字节；传输层加 TCP 头，含源和目的端口、序号和 flags；网络层再加 IP 头，含源和目的地址、Hop Limit；链路层最外面加帧头（下一跳链路地址）和末尾校验。接收端逐层验证和解封装，把字节交给正确进程。右侧是路径：客户端把帧交给默认网关，路由器按目的 IP 选下一跳，每一跳帧头都会换；NAT 会改写地址和端口并维护有超时的映射；服务器逐层解封装。源和目的 IP 通常端到端保持，除非 NAT 或隧道改写。三个要点：TCP 连接由协议加源、目的 IP 和端口标识，是有序字节流，一次 write 不等于对端一次 read，可靠也不等于请求只处理一次；QUIC 在 UDP 上实现加密和可靠 stream，仍受 MTU、NAT 和防火墙影响；应用 payload 加上各层头部可能超过路径 MTU，挡掉必要的 ICMP 会造成能连接但大包卡住。排障顺序：DNS、路由、ARP 或 NDP、TCP 或 QUIC 握手、TLS 证书和 SNI、HTTP 状态、应用下游；ping 通只说明某类 ICMP 路径可达](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/tcpip-model-encapsulation-path-anim.dark.png)
 *图：左边是逐层封装，右边是经过路由器和 NAT 的路径：帧头每跳都换，IP 通常端到端保持；最下面是一次 HTTPS 请求的排障顺序。*
 
 ## 模型是职责边界
