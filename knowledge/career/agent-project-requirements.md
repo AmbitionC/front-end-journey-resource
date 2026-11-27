@@ -149,6 +149,7 @@ Agent 项目第一版，最适合自动化哪类步骤？
 - [字节财经保险 AI 全栈实习一面：项目设计、AI Coding 与 Diff](../../interview/bytedance/base/bytedance-base-34.md)
 - [京东后端一面：交付标准、Agent 选型与跨语言数据边界](../../interview/jd/ai/jd-ai-1.md)
 - [网易游戏 AI 实习：体验实验、问题复现与交付取舍](../../interview/netease/ai/netease-ai-2.md)
+- [阿里 AI 应用开发二面：项目验证、多智能体与记忆治理](../../interview/alibaba/ai/alibaba-ai-36.md)
 - [京东金融推荐算法实习一面：画像图谱与研究选题](../../interview/jd/ai/jd-ai-6.md)
 - [阿里国际 Java 二面：RAG 数据评测、微调与代码生成](../../interview/alibaba/ai/alibaba-ai-26.md)
 - [字节前端全栈实习一面：渲染、Worker 与认证](../../interview/bytedance/base/bytedance-base-38.md)

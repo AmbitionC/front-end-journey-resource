@@ -216,6 +216,7 @@ AI/Agent 岗位面试通常覆盖以下几个方向。题目年年在变，但�
 - [腾讯 CDG 金融科技二面：Agent 评估、协程与存储基础](../../interview/tencent/ai/tencent-ai-29.md)
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../interview/bytedance/base/bytedance-base-56.md)
 - [字节 Agent 实习：生成质量、多智能体与缓存](../../interview/bytedance/base/bytedance-base-52.md)
+- [阿里 AI 应用开发二面：项目验证、多智能体与记忆治理](../../interview/alibaba/ai/alibaba-ai-36.md)
 - [网易后端开发秋招一面：缓存一致性、死锁与分布式锁](../../interview/netease/base/netease-base-1.md)
 - [字节 Agent：任务取消、Spring 配置与并发执行](../../interview/bytedance/base/bytedance-base-45.md)
 - [华为 AI 应用三面：工程项目与 AI 编程](../../interview/huawei/ai/huawei-ai-5.md)
