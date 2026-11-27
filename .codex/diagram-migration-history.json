@@ -2405,14 +2405,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/agent-workflow-side-effect-checkpoint-v2.aj.mjs",
-          "sourceSha256": "103166e5d50522b124081d1ee1f2ddacf4cf0bf70e05ae4d2d189d9df30f4a78",
-          "darkPng": "images/agent-workflow-side-effect-checkpoint-v2.dark.png",
-          "lightPng": "images/agent-workflow-side-effect-checkpoint-v2.light.png",
+          "source": "images/diagram-sources/agent-workflow-side-effect-checkpoint-anim.aj.mjs",
+          "sourceSha256": "c73106520bd0b70890822885038b8354af5c6c5beef6ef5e04c288fd9498b30f",
+          "darkPng": "images/agent-workflow-side-effect-checkpoint-anim.dark.png",
+          "lightPng": "images/agent-workflow-side-effect-checkpoint-anim.light.png",
           "darkSha256": "ec32af553ba1c417cbc6c028079186e684e30a095c815d8e333c2d787e763415",
-          "lightSha256": "97651f411b8b557b4f813c256abe02d474c8b4d04c57acf87792e42f8daf74f6"
+          "lightSha256": "97651f411b8b557b4f813c256abe02d474c8b4d04c57acf87792e42f8daf74f6",
+          "darkSvg": "images/agent-workflow-side-effect-checkpoint-anim.dark.svg",
+          "lightSvg": "images/agent-workflow-side-effect-checkpoint-anim.light.svg",
+          "darkSvgSha256": "8e75029d5f2bd2757bc1a636d8ee7dca7eebd63479499e72bb8a967ea1bd714d",
+          "lightSvgSha256": "d9daa3ec5b722d9847dbc28e7e589dc5898abf9f8741d3ccb6f4df824a4f6a08"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "agent-parallel-tools",
@@ -2437,12 +2442,16 @@
       "resumeExistingDiagramMigration": false,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/agent-parallel-tools-fanout-join-v4.aj.mjs",
-          "sourceSha256": "e1c6f1ffcf985fcfae15f8fcbec150f77b6e91a788bf5da2720f7ed4ae925e46",
-          "darkPng": "images/agent-parallel-tools-fanout-join-v4.dark.png",
-          "lightPng": "images/agent-parallel-tools-fanout-join-v4.light.png",
+          "source": "images/diagram-sources/agent-parallel-tools-fanout-join-anim.aj.mjs",
+          "sourceSha256": "f6b8bcf159b8a2e909a91d221ffc5ff5bd92c7de760062f1113d77ae65d8147c",
+          "darkPng": "images/agent-parallel-tools-fanout-join-anim.dark.png",
+          "lightPng": "images/agent-parallel-tools-fanout-join-anim.light.png",
           "darkSha256": "2a3079e9f563fe7e4f1b4aa04fd858ceedffb2393986ae91e5a20ce6fa0047d3",
-          "lightSha256": "277f76cc56c6209d8ed7d10c24667471d85fafd05b1998e9189368ed7e4756d1"
+          "lightSha256": "277f76cc56c6209d8ed7d10c24667471d85fafd05b1998e9189368ed7e4756d1",
+          "darkSvg": "images/agent-parallel-tools-fanout-join-anim.dark.svg",
+          "lightSvg": "images/agent-parallel-tools-fanout-join-anim.light.svg",
+          "darkSvgSha256": "6d36d5a9f357c81a1e5a6bbe03fa0b3ba37df48376dfedaab2cddcb4303e66ed",
+          "lightSvgSha256": "3babaed6bfeda55fd0fb9852ef6bcdd5223ee943d4004b4bc5b2d0f943931e5a"
         }
       ],
       "followUps": [
@@ -2450,7 +2459,8 @@
           "batchId": "aj-diagrams-pr131-followups",
           "note": "按 #131 独立审核的非阻塞意见修图，换新版本名，不覆盖已发布图片"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "agent-computer-use",
@@ -2873,14 +2883,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/agent-concurrency-admission-fair-backpressure-v2.aj.mjs",
-          "sourceSha256": "baacda9b5592c59c48b54e7e4fcaf2a36c45e6cf95cb53d354f580985a1ad10a",
-          "darkPng": "images/agent-concurrency-admission-fair-backpressure-v2.dark.png",
-          "lightPng": "images/agent-concurrency-admission-fair-backpressure-v2.light.png",
+          "source": "images/diagram-sources/agent-concurrency-admission-fair-backpressure-anim.aj.mjs",
+          "sourceSha256": "80d38183571384f7726112030ec06b9ec5a684600be29e056b28c482c71557fa",
+          "darkPng": "images/agent-concurrency-admission-fair-backpressure-anim.dark.png",
+          "lightPng": "images/agent-concurrency-admission-fair-backpressure-anim.light.png",
           "darkSha256": "a99b21e29febd2069e08f9ea9c6bf4846f3200ae2f09c1ee507fc71704626925",
-          "lightSha256": "39fd18042d90d70ba7d0b549be2f2848009ae6d9ba25a36dba0e62c38e145c6f"
+          "lightSha256": "39fd18042d90d70ba7d0b549be2f2848009ae6d9ba25a36dba0e62c38e145c6f",
+          "darkSvg": "images/agent-concurrency-admission-fair-backpressure-anim.dark.svg",
+          "lightSvg": "images/agent-concurrency-admission-fair-backpressure-anim.light.svg",
+          "darkSvgSha256": "dc91ddd4d6ee1f4e6979522e68dc00d2bd3af5fa805bbd58ec68f19556cc16e4",
+          "lightSvgSha256": "0c378843f4d957573d259119900f68060ab84bd6624e6d5e922609178bbe3193"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "agent-trace-model",
@@ -2957,12 +2972,16 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/ai-observability-trace-waterfall-v3.aj.mjs",
-          "sourceSha256": "362eb456fff36c8602d35ff26754dac8f2052e5feb332cb14c968c71304da7cb",
-          "darkPng": "images/ai-observability-trace-waterfall-v3.dark.png",
-          "lightPng": "images/ai-observability-trace-waterfall-v3.light.png",
+          "source": "images/diagram-sources/ai-observability-trace-waterfall-anim.aj.mjs",
+          "sourceSha256": "e31b292ef25670778392fb61a06f1bce5aa762b14463db1bdcc6697188750986",
+          "darkPng": "images/ai-observability-trace-waterfall-anim.dark.png",
+          "lightPng": "images/ai-observability-trace-waterfall-anim.light.png",
           "darkSha256": "19cbcb99ee0609c7d98af9a1af86c91db585277f08644e1ed94b7c7f83d284d0",
-          "lightSha256": "d04388e097897bcada5a931fe713d2b8f1d964ac3989bbb840ddf45ed11cd668"
+          "lightSha256": "d04388e097897bcada5a931fe713d2b8f1d964ac3989bbb840ddf45ed11cd668",
+          "darkSvg": "images/ai-observability-trace-waterfall-anim.dark.svg",
+          "lightSvg": "images/ai-observability-trace-waterfall-anim.light.svg",
+          "darkSvgSha256": "0f461d1aae332366ffe6636899b7acbeeb78e35ab0d72b8e918b047d2046dbea",
+          "lightSvgSha256": "db3004026aa0cb5f7ebc5ecfc03b071dbd5902191e13683f1c49e3f8b4ab2057"
         }
       ],
       "followUps": [
@@ -2970,7 +2989,8 @@
           "batchId": "aj-diagrams-pr131-followups",
           "note": "按 #131 独立审核的非阻塞意见修图，换新版本名，不覆盖已发布图片"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "agent-queue-worker",
@@ -5304,14 +5324,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/tcp-udp-stream-vs-datagram-v2.aj.mjs",
-          "sourceSha256": "08fdaf6103f27cf6aaa175077aaa83ece96203f0e208688e11c18adfdee0006b",
-          "darkPng": "images/tcp-udp-stream-vs-datagram-v2.dark.png",
-          "lightPng": "images/tcp-udp-stream-vs-datagram-v2.light.png",
+          "source": "images/diagram-sources/tcp-udp-stream-vs-datagram-anim.aj.mjs",
+          "sourceSha256": "1c4ddd8d4475de5122a3faeacd36dbb0aa26486514b8bd2596ebb1d910efef6d",
+          "darkPng": "images/tcp-udp-stream-vs-datagram-anim.dark.png",
+          "lightPng": "images/tcp-udp-stream-vs-datagram-anim.light.png",
           "darkSha256": "446e422baedebca1b0ff37495db112d4bea7783bc8e062274b8c720716e73bc1",
-          "lightSha256": "5133de0b0c194d8fd10ceeb8c505ab6020e5d94f3733e480f3849923662edfda"
+          "lightSha256": "5133de0b0c194d8fd10ceeb8c505ab6020e5d94f3733e480f3849923662edfda",
+          "darkSvg": "images/tcp-udp-stream-vs-datagram-anim.dark.svg",
+          "lightSvg": "images/tcp-udp-stream-vs-datagram-anim.light.svg",
+          "darkSvgSha256": "5f55898d18012c70425dfdaf8a1dc31eeb0945a088f257ef58bf3bf40484e2b6",
+          "lightSvgSha256": "850ed62164544c97c939d6fa55f11f0cfec7fdd7ce78cd5fe5e5bd0cd45b752f"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "dns-analysis",
@@ -5957,8 +5982,21 @@
           "lightPng": "images/promise-state-chain-combinators-cancel-v2.light.png",
           "darkSha256": "38e4a14041018d8908d68bf4ab1e208cc66601ec00c1f93ec4ea63574fb8e02c",
           "lightSha256": "5a07e571427e7acfbd36b5ed2a54ec4e1a79cc38d38dafab4757b04fe807f208"
+        },
+        {
+          "source": "images/diagram-sources/promise-combinators-timeline-anim.aj.mjs",
+          "sourceSha256": "c0522a1ffbe3ff6fec13eac5f4c8859ae93847b90c7882d9d21530ee073076f0",
+          "darkPng": "images/promise-combinators-timeline-anim.dark.png",
+          "lightPng": "images/promise-combinators-timeline-anim.light.png",
+          "darkSha256": "6036adc8176708d59e561cf7f791cbff933a31023340397439bb1cca9a2cd746",
+          "lightSha256": "4ec3c93f832a612088f477056debc925e4902e0649cd461223f7e6181de7aec1",
+          "darkSvg": "images/promise-combinators-timeline-anim.dark.svg",
+          "lightSvg": "images/promise-combinators-timeline-anim.light.svg",
+          "darkSvgSha256": "8c48878cb225834a5e4451bb4d8492abf274e9aeeb1434292539a648a305e206",
+          "lightSvgSha256": "4344492bd876a2572c9ab49ed649885d1cf3632c425459bc1449ca9be74ae128"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "responsive-layout",

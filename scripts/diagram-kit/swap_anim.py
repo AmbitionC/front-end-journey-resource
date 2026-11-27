@@ -1,4 +1,5 @@
 # 用法：python3 swap_anim.py key:old:new [...]（在资源仓根目录运行）
+# old 留空（key::new）表示新增一张动效图：文章里的图片要先手动插好，脚本只登记台账、刷新 PDF 映射哈希
 import json,hashlib,re,sys,glob
 sha=lambda f: hashlib.sha256(open(f,'rb').read()).hexdigest()
 pairs=[a.split(':') for a in sys.argv[1:]]
@@ -15,12 +16,15 @@ manifest=open('knowledge/pdf-static-images.json').read()
 for key,old,new in pairs:
   rec=recs[key][0]; art=rec['articlePath']
   t=open(art).read()
-  n=t.count(f'{old}.dark.png')
-  assert n==1, (key, old, n)
-  open(art,'w').write(t.replace(f'{old}.dark.png',f'{new}.dark.png'))
+  if old:
+    n=t.count(f'{old}.dark.png')
+    assert n==1, (key, old, n)
+    open(art,'w').write(t.replace(f'{old}.dark.png',f'{new}.dark.png'))
+  else:
+    assert t.count(f'{new}.dark.png')==1, (key, new)
   src=f'images/diagram-sources/{new}.aj.mjs'
   for r in recs[key]:
-    r['replacementAssets']=[x for x in r['replacementAssets'] if not x['source'].endswith(f'/{old}.aj.mjs')]+[{"source":src,"sourceSha256":sha(src),"darkPng":f"images/{new}.dark.png","lightPng":f"images/{new}.light.png","darkSha256":sha(f"images/{new}.dark.png"),"lightSha256":sha(f"images/{new}.light.png"),"darkSvg":f"images/{new}.dark.svg","lightSvg":f"images/{new}.light.svg","darkSvgSha256":sha(f"images/{new}.dark.svg"),"lightSvgSha256":sha(f"images/{new}.light.svg")}]
+    r['replacementAssets']=[x for x in r['replacementAssets'] if not (old and x['source'].endswith(f'/{old}.aj.mjs'))]+[{"source":src,"sourceSha256":sha(src),"darkPng":f"images/{new}.dark.png","lightPng":f"images/{new}.light.png","darkSha256":sha(f"images/{new}.dark.png"),"lightSha256":sha(f"images/{new}.light.png"),"darkSvg":f"images/{new}.dark.svg","lightSvg":f"images/{new}.light.svg","darkSvgSha256":sha(f"images/{new}.dark.svg"),"lightSvgSha256":sha(f"images/{new}.light.svg")}]
     r['animated']=True
   manifest,c=re.subn(r'("articlePath": "'+re.escape(art)+r'",\s*"articleSha256": ")[a-f0-9]{64}',lambda m:m.group(1)+sha(art),manifest)
   print(key, art, 'manifest', c)
