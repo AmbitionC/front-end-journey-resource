@@ -1,6 +1,6 @@
 `useMemo` 和 `useCallback` 只是在依赖不变时复用值或函数引用的性能工具，不会让组件“天然不渲染”，也不应承担正确性。优化顺序应是定位真实慢点、理解 render 与 commit、修复状态边界，再在有引用稳定需求的地方 memoize，并用 Profiler 验证收益。
 
-![父组件 state 更新后，父组件函数重跑，并为子组件重新创建 props。之后分三种情况。第一种：每次 render 都新建对象字面量或箭头函数，memo 子组件用 Object.is 做浅比较时引用不相等，子组件照样 render。第二种：用 useMemo 或 useCallback 且依赖不变，传下去的引用和上次相同，memo 浅比较通过，跳过子组件 render。第三种：用了 useCallback，但子组件没有包 memo，也没有别的 Hook 依赖这个函数，没有人比较引用，子组件照样 render，包装白做。底部说明 render 不等于 commit：render 只计算下一棵 UI，commit 才把差异改到 DOM；应先用 Profiler 找到真正的慢点，再决定要不要 memo。Hook 依赖要写全，漏掉会形成 stale closure；依赖频繁变化时 memo 没有意义，应该删掉](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/usecallback-usememo-memo-compare-v2.dark.png)
+![父组件 state 更新后，父组件函数重跑，并为子组件重新创建 props。之后分三种情况。第一种：每次 render 都新建对象字面量或箭头函数，memo 子组件用 Object.is 做浅比较时引用不相等，子组件照样 render。第二种：用 useMemo 或 useCallback 且依赖不变，传下去的引用和上次相同，memo 浅比较通过，跳过子组件 render。第三种：用了 useCallback，但子组件没有包 memo，也没有别的 Hook 依赖这个函数，没有人比较引用，子组件照样 render，包装白做。底部说明 render 不等于 commit：render 只计算下一棵 UI，commit 才把差异改到 DOM；应先用 Profiler 找到真正的慢点，再决定要不要 memo。Hook 依赖要写全，漏掉会形成 stale closure；依赖频繁变化时 memo 没有意义，应该删掉](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/usecallback-usememo-memo-compare-anim.dark.png)
 *图：父组件 render 不等于 DOM 更新；稳定引用只有在下游做相等比较或依赖它时才可能减少工作。*
 
 ## 先理解 React 的工作

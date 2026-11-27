@@ -19,7 +19,7 @@ type IdempotentRequest = {
 
 `intentHash` 由规范化后的业务参数计算。相同 key + 相同 intent 是重放；相同 key + 不同 intent 必须拒绝，不能返回第一次结果掩盖调用方错误。
 
-![Agent 幂等性靠服务端的操作账本。首次请求、网络重试、迟到或重复投递的请求，以及同一个 key 但意图已变的请求，都汇到同一处原子抢占：用 insert-if-absent 预留 key，key 的唯一范围包含租户、operation 和 key 本身，并比对 intentHash。抢到的请求在账本里从 NEW 进入 RUNNING，之后结束于 SUCCEEDED、FAILED_RETRYABLE 或 FAILED_TERMINAL。重复请求读账本：状态是 RUNNING 时返回进行中或等待；SUCCEEDED 时重放首次的语义结果；同一 key 而意图不同时拒绝，返回 parameter mismatch。调用外部服务时把自己的 operation ID 当作下游幂等键，并保存下游资源 ID；超时后状态是 unknown，要先查下游，证明原操作没生效才能重做；下游不支持幂等时，用单线程队列、业务唯一约束或发送前后对账降低风险。不要先查再写，两个并发请求都查到不存在就会各执行一次，要用原子插入争夺 ownership](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-idempotency-ledger-v2.dark.png)
+![Agent 幂等性靠服务端的操作账本。首次请求、网络重试、迟到或重复投递的请求，以及同一个 key 但意图已变的请求，都汇到同一处原子抢占：用 insert-if-absent 预留 key，key 的唯一范围包含租户、operation 和 key 本身，并比对 intentHash。抢到的请求在账本里从 NEW 进入 RUNNING，之后结束于 SUCCEEDED、FAILED_RETRYABLE 或 FAILED_TERMINAL。重复请求读账本：状态是 RUNNING 时返回进行中或等待；SUCCEEDED 时重放首次的语义结果；同一 key 而意图不同时拒绝，返回 parameter mismatch。调用外部服务时把自己的 operation ID 当作下游幂等键，并保存下游资源 ID；超时后状态是 unknown，要先查下游，证明原操作没生效才能重做；下游不支持幂等时，用单线程队列、业务唯一约束或发送前后对账降低风险。不要先查再写，两个并发请求都查到不存在就会各执行一次，要用原子插入争夺 ownership](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-idempotency-ledger-anim.dark.png)
 *图：重复和迟到请求汇聚到同一账本，在同库原子事务内一起提交业务效果与账本记录。跨外部系统仍需下游幂等与结果对账，不能仅凭占位或唯一 owner 保证一次效果。*
 
 ## 操作账本

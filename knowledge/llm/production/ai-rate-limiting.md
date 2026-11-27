@@ -32,6 +32,8 @@ available = min(C, previous + (t - last_refill) × r)
 
 **核心特性是受控突发**：空闲时令牌最多积累到 `C`，因此满桶可立即消费 `C` 个单位，长期补充速率则由 `r` 控制。令牌桶并不承诺任意一个长度为 `W` 的窗口都只允许 `r × W`；满桶开始时还可以消耗积累的额度。[RFC 3290 附录 A](https://www.rfc-editor.org/rfc/rfc3290.html#appendix-A)讨论了令牌桶与漏桶的计量、整形语义。
 
+![令牌桶逐步演示（可逐步播放，容量 C 为 10，每秒补充 2 个）：t 为 0 时满桶，权重 6 的请求放行剩 4；0.5 秒时补到 5，权重 5 的请求放行剩 0；1 秒时只补到 1，权重 3 的请求被拒并返回 429 和 Retry-After 1 秒，拒绝不扣额度；2 秒时补到 3，再次放行；空闲很久后最多也只积到 10，多出的补充被丢弃，所以突发上限就是 C](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/ai-rate-limit-token-bucket-anim.dark.png)
+
 ### 手写单机版：先保护状态不变量
 
 需要保证 `0 <= tokens <= capacity`，检查与扣减在同一把锁内完成。`rate`、`capacity` 和单次 `cost` 必须是有限正数：负数扣减会反向增发额度，NaN 会破坏比较，零速率会让等待时间计算失效；`cost > capacity` 永远不能入桶，应作为配置或请求错误拒绝，不能提示“稍后就能成功”。

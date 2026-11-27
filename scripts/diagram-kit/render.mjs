@@ -3,6 +3,7 @@
 //   node scripts/diagram-kit/render.mjs images/diagram-sources/<name>.aj.mjs [...more] [--preview <out.png>]
 // 源文件：export const meta = { name, alt }; export default (k) => k.figure({...})
 // 输出：images/<name>.dark.png、images/<name>.light.png（2 倍图）。
+// 动效图（figure 传了 steps）另出 images/<name>.{dark,light}.svg 给阅读端播放；PNG 是全部步骤显示的终态。
 // 依赖：puppeteer（仓库已有）+ 字体 @fontsource/noto-sans-sc（见 SKILL.md 安装方式）。
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
@@ -33,7 +34,8 @@ function lint(minFont) {
   const svg = document.querySelector('svg');
   const W = svg.viewBox.baseVal.width, H = svg.viewBox.baseVal.height;
   const problems = [];
-  const texts = [...svg.querySelectorAll('text')].filter((t) => t.textContent.trim());
+  const hidden = (el) => !!el.closest('[display="none"]'); // 帧动画里没在显示的帧不参与检查
+  const texts = [...svg.querySelectorAll('text')].filter((t) => t.textContent.trim() && !hidden(t));
   const boxes = texts.map((t) => {
     const b = t.getBBox();
     return { t, x: b.x, y: b.y, w: b.width, h: b.height, s: t.textContent.trim().slice(0, 24) };
@@ -56,7 +58,7 @@ function lint(minFont) {
       problems.push(`文字重叠：「${a.s}」×「${b.s}」`);
   }
   // 线条（箭头、边、方框描边）穿过文字：沿每条几何图形取点，落进文字框就报。
-  const geoms = [...svg.querySelectorAll('path,line,rect,circle,polyline')].filter((g) => !g.closest('defs') && !g.closest('marker'));
+  const geoms = [...svg.querySelectorAll('path,line,rect,circle,polyline')].filter((g) => !g.closest('defs') && !g.closest('marker') && !hidden(g));
   const bg = svg.querySelector(':scope > rect');
   for (const g of geoms) {
     if (g === bg) continue;
@@ -97,6 +99,33 @@ try {
       const ok = await page.evaluate(() => [...document.fonts].some((f) => f.family.includes('Noto Sans SC') && f.status === 'loaded'));
       if (!ok) throw new Error('Noto Sans SC 没有加载，渲染结果不可信');
       const { W, H, problems } = await page.evaluate(lint, MIN_FONT);
+      const anim = mod.default(createKit(theme, { mode: 'anim' }));
+      const steps = Number(/data-aj-steps="(\d+)"/.exec(anim)?.[1] ?? 0);
+      if (steps) {
+        if (!/-anim(-v\d+)?$/.test(name)) problems.push('动效图的 meta.name 要以 -anim 或 -anim-vN 结尾，阅读端靠它认出动效图');
+        const frames = anim.includes('data-aj-mode="frames"');
+        for (let i = 1; i <= steps; i++) {
+          if (!anim.includes(frames ? `data-aj-frame="${i}"` : `data-aj-step="${i}"`)) problems.push(`第 ${i} 步没有对应的${frames ? '帧' : ' k.step'}`);
+          if (!anim.includes(`data-aj-caption="${i}"`)) problems.push(`第 ${i} 步缺说明`);
+        }
+        if (!frames && anim.includes(`data-aj-step="${steps + 1}"`)) problems.push(`k.step 用到了第 ${steps + 1} 步，但 steps 只有 ${steps} 条说明`);
+        if (/<script|<foreignObject|\son[a-z]+=/i.test(anim)) problems.push('动效 SVG 里不能有脚本、foreignObject 或事件属性');
+        if (frames) {
+          // 帧动画逐帧检查：每次只显示一帧，跑同一套字号 / 越界 / 压字检查
+          writeFileSync(html, `<!doctype html><meta charset="utf-8">${fontCss}<style>body{margin:0}</style>${anim}`);
+          await page.goto(pathToFileURL(html).href, { waitUntil: 'load' });
+          await page.evaluate(async () => { await document.fonts.ready; });
+          for (let i = 1; i <= steps; i++) {
+            await page.evaluate((n) => document.querySelectorAll('g[data-aj-frame]').forEach((g) => (Number(g.getAttribute('data-aj-frame')) === n ? g.removeAttribute('display') : g.setAttribute('display', 'none'))), i);
+            const r = await page.evaluate(`(${lint.toString()})(${MIN_FONT})`);
+            problems.push(...r.problems.map((x) => `第 ${i} 帧 ${x}`));
+          }
+          writeFileSync(html, `<!doctype html><meta charset="utf-8">${fontCss}<style>body{margin:0;background:${THEMES[theme].page}}</style>${svg}`);
+          await page.goto(pathToFileURL(html).href, { waitUntil: 'load' });
+          await page.evaluate(async () => { await document.fonts.ready; });
+        }
+        writeFileSync(join(ROOT, 'images', `${name}.${theme}.svg`), anim);
+      }
       await page.setViewport({ width: Math.ceil(W), height: Math.ceil(H), deviceScaleFactor: 2 });
       const out = join(ROOT, 'images', `${name}.${theme}.png`);
       mkdirSync(dirname(out), { recursive: true });

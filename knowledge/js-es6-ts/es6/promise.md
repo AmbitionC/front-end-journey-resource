@@ -61,6 +61,8 @@ async function loadDashboard() {
 
 `Promise.all` 全部 fulfilled 才成功，任一 rejection 立即让组合 Promise rejected，但其他操作不会被自动取消。`allSettled` 等待全部并返回每项状态，适合批量报告；`race` 采用第一个 settle；`any` 采用第一个 fulfill，全部拒绝时给 AggregateError。
 
+![Promise 组合器时间线（可逐步播放）：三个请求同时发出，p1 在 300ms 成功得到 a，p2 在 500ms 失败抛出 E，p3 在 800ms 成功得到 c；race 和 any 在 300ms 就以 a 结束；all 在 500ms 遇到第一个失败立即 rejected，但 p3 仍在继续跑、没有被取消；allSettled 等到 800ms 三个都结束，按输入顺序报告三项状态；每个 Promise 只 settle 一次，之后的结果不再改变它](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/promise-combinators-timeline-anim.dark.png)
+
 超时常用 `race`，但 timer 胜出不会停止底层 fetch。要把 AbortSignal 传入实际操作并清理 timer。组合器输入顺序决定输出数组顺序，不是完成顺序。
 
 ## 错误边界

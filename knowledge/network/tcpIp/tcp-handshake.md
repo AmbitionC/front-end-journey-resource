@@ -24,7 +24,7 @@ SYN 中可以携带 MSS、窗口扩大、SACK permitted、时间戳等选项。�
 
 TCP 是全双工字节流，两个方向可以独立关闭。主动关闭方发送 FIN 只表示“我不会再发送新字节”，仍可继续接收对方的数据，这叫 half-close。
 
-![无丢包且 FIN 与 ACK 分开发送的常规主动关闭：A 发 FIN 进入 FIN-WAIT-1，收到 ACK 进入 FIN-WAIT-2；B 收到 FIN 回 ACK 进入 CLOSE-WAIT，应用 close 后发 FIN 进入 LAST-ACK；A 收到 FIN 并发送最后 ACK 后进入 TIME-WAIT，等待 2MSL 后关闭，B 收到最后 ACK 后关闭](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/tcp-active-close-time-wait-v4.dark.png)
+![无丢包且 FIN 与 ACK 分开发送的常规主动关闭：A 发 FIN 进入 FIN-WAIT-1，收到 ACK 进入 FIN-WAIT-2；B 收到 FIN 回 ACK 进入 CLOSE-WAIT，应用 close 后发 FIN 进入 LAST-ACK；A 收到 FIN 并发送最后 ACK 后进入 TIME-WAIT，等待 2MSL 后关闭，B 收到最后 ACK 后关闭](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/tcp-active-close-time-wait-anim.dark.png)
 *图：报文端点对齐相应事件，状态标签表示该事件处理后的状态。B 发送 FIN 即进入 LAST-ACK，收到最后 ACK 才进入 CLOSED；A 收到对端 FIN 并发送最后 ACK 才进入 TIME-WAIT。垂直间距仅为示意，2MSL 只标这条 TIME-WAIT 路径；同时关闭、报文合并或重传应按实际状态机判断，不能把它当所有连接关闭的固定耗时。*
 
 典型流程如下：

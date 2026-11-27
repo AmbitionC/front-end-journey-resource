@@ -1,6 +1,6 @@
 选择排序算法不能只比较平均时间复杂度。还要问：是否需要稳定、能用多少额外内存、数据是否部分有序、key 是否有界、结果是否全部需要，以及数据能否放进内存。排序是对顺序契约的实现，不是算法名称竞赛。
 
-![左边演示排序稳定性。四条记录已经按姓名排好：研发 Amy、销售 Bob、研发 Cat、销售 Dan。再按部门排序时，稳定排序保留相等 key 的原始顺序，结果是研发 Amy、研发 Cat、销售 Bob、销售 Dan，同部门内仍按姓名；不稳定排序可能得到研发 Cat、研发 Amy、销售 Dan、销售 Bob，第一次按姓名排好的顺序被打乱。右边演示外部归并排序：数据超出内存时，第一阶段把文件分块读进内存排好，写成有序的 run，例如 1 5 9、2 6 7、3 4 8；第二阶段用小根堆做 k 路归并，每次弹出各 run 头元素中最小的一个，顺序写出 1 到 9 的完整有序结果。需要稳定时，run 内排序和归并遇到相等 key 都按原始序号决定先后](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/algorithm-sorting-stability-external-v2.dark.png)
+![左边演示排序稳定性。四条记录已经按姓名排好：研发 Amy、销售 Bob、研发 Cat、销售 Dan。再按部门排序时，稳定排序保留相等 key 的原始顺序，结果是研发 Amy、研发 Cat、销售 Bob、销售 Dan，同部门内仍按姓名；不稳定排序可能得到研发 Cat、研发 Amy、销售 Dan、销售 Bob，第一次按姓名排好的顺序被打乱。右边演示外部归并排序：数据超出内存时，第一阶段把文件分块读进内存排好，写成有序的 run，例如 1 5 9、2 6 7、3 4 8；第二阶段用小根堆做 k 路归并，每次弹出各 run 头元素中最小的一个，顺序写出 1 到 9 的完整有序结果。需要稳定时，run 内排序和归并遇到相等 key 都按原始序号决定先后](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/algorithm-sorting-stability-external-anim.dark.png)
 *图：稳定性保留同 key 的原始顺序；外部排序用内存内 runs 和顺序 I/O 处理超内存数据。*
 
 ## 比较模型与下界

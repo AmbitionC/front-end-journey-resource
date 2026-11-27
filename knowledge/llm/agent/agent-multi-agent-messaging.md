@@ -6,7 +6,7 @@
 
 [CloudEvents 规范](https://github.com/cloudevents/spec/blob/ce@stable/cloudevents/spec.md)把 event 与承载它的 message 分开，并定义 `id`、`source`、`specversion`、`type` 等上下文属性；`source + id` 可用于识别重复事件。Agent 协议可借用这种 envelope，而不是把路由信息混入自然语言正文。
 
-![Planner 经消息中间件向 Researcher 发出 task.requested，信封带 messageId、correlationId、causationId、type 和 planVersion；Researcher 回 received 只表示收到；中间件重投同一条消息，Researcher 按 messageId 去重丢弃；随后回报 running；Planner 改计划到版本 6 后，按版本 5 生成的结果迟到，只记录不覆盖新计划](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-multi-agent-messaging-dedup-late-v2.dark.png)
+![Planner 经消息中间件向 Researcher 发出 task.requested，信封带 messageId、correlationId、causationId、type 和 planVersion；Researcher 回 received 只表示收到；中间件重投同一条消息，Researcher 按 messageId 去重丢弃；随后回报 running；Planner 改计划到版本 6 后，按版本 5 生成的结果迟到，只记录不覆盖新计划](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-multi-agent-messaging-dedup-late-anim.dark.png)
 *图：received 只确认收到，running 是进度，result 才是结果；重投靠 messageId 去重，迟到结果按 planVersion 对账。*
 
 ## 一个可审计的消息信封
