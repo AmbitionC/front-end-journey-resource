@@ -372,6 +372,7 @@ Redis 里的 key 已删除，进程内 L1 缓存却还是旧值。原因可能�
 - [快手二面：事务快照、缓存与 Agent 项目复盘](../../../interview/kuaishou/ai/kuaishou-ai-23.md)
 - [字节 Agent 实习：生成质量、多智能体与缓存](../../../interview/bytedance/base/bytedance-base-52.md)
 - [快手主站 SRE 一二三面：Agent Skill、性能排障与数据链路](../../../interview/kuaishou/ai/kuaishou-ai-5.md)
+- [阿里 AI 应用开发二面：项目验证、多智能体与记忆治理](../../../interview/alibaba/ai/alibaba-ai-36.md)
 - [蚂蚁暑期面经：线程池、数据来源与多 Agent 评测](../../../interview/antfin/ai/antfin-ai-14.md)
 - [腾讯混元后台开发二面：推理调度、队列与缓存故障](../../../interview/tencent/ai/tencent-ai-30.md)
 - [网易后端开发秋招一面：缓存一致性、死锁与分布式锁](../../../interview/netease/base/netease-base-1.md)

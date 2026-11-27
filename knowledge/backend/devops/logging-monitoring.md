@@ -505,6 +505,7 @@ RED 方法指的是哪三个指标？
 - [百度后端一面：延迟诊断、工具恢复与滑动窗口](../../../interview/baidu/ai/baidu-ai-10.md)
 - [腾讯 CDG 金融科技二面：Agent 评估、协程与存储基础](../../../interview/tencent/ai/tencent-ai-29.md)
 - [腾讯云智武汉多轮：运行时、索引、锁与消息消费](../../../interview/tencent/base/tencent-base-4.md)
+- [阿里 AI 应用开发二面：项目验证、多智能体与记忆治理](../../../interview/alibaba/ai/alibaba-ai-36.md)
 - [腾讯后端多轮复盘：热 Key、缓存一致性与库存](../../../interview/tencent/base/tencent-base-2.md)
 - [快手商业化 Java 实习一二面：缓存、JVM 与 AI Coding](../../../interview/kuaishou/ai/kuaishou-ai-25.md)
 <!-- interview-source-history:end -->

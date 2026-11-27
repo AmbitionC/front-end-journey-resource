@@ -129,6 +129,12 @@
 
 **答案：D。** 静默删节点可能让下游在不完整输入上提交结果；worker 临时加节点、原地改已批准计划都会绕过验证。修复次数要有上限，重新规划必须产生新版本并重新验证。
 
+## 出现于（热度来源）
+
+<!-- interview-source-history:start -->
+- [阿里 AI 应用开发二面：项目验证、多智能体与记忆治理](../../../interview/alibaba/ai/alibaba-ai-36.md)
+<!-- interview-source-history:end -->
+
 ## 参考资料
 
 - [JSON Schema — Draft 2020-12 Core](https://json-schema.org/draft/2020-12/json-schema-core)

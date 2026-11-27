@@ -2367,6 +2367,25 @@
             "roleCategory": "AI 与 Agent 工程",
             "role": "Agent 开发",
             "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "阿里 AI 应用开发二面：项目验证、多智能体与记忆治理",
+            "key": "alibaba-ai-36",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "role": "AI 应用开发",
+            "roleCategory": "AI 与 Agent 工程",
+            "tags": [
+              "Agent",
+              "项目表达",
+              "缓存",
+              "测试",
+              "多智能体",
+              "记忆"
+            ],
+            "contentFormat": "short-qa-v2",
+            "updatedAt": "2026-11-27",
+            "department": "其他"
           }
         ]
       },
