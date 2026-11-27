@@ -3459,8 +3459,21 @@
           "lightPng": "images/ai-rate-limit-admission-pipeline-v2.light.png",
           "darkSha256": "72cddc81e3f2d3cab78eb000db12603d47bd7af788997ba0080b66f0688fa94d",
           "lightSha256": "bf999493fb176180e3a9aba290b9a6ef338852e67ae5b84aa81bb0d022beb05b"
+        },
+        {
+          "source": "images/diagram-sources/ai-rate-limit-token-bucket-anim.aj.mjs",
+          "sourceSha256": "64999a496c0ade7a87f65b7c00a044db9a52c7fc076f1331e944323feead68e5",
+          "darkPng": "images/ai-rate-limit-token-bucket-anim.dark.png",
+          "lightPng": "images/ai-rate-limit-token-bucket-anim.light.png",
+          "darkSha256": "f8acb9895bc30dc80766c43ca1f33c05649dd4ffc58ec8ee01e409b75f6d07a4",
+          "lightSha256": "031e81140a19cd8029cc4fd878b91d365131deb46d5f91126529da8fc3b79a4e",
+          "darkSvg": "images/ai-rate-limit-token-bucket-anim.dark.svg",
+          "lightSvg": "images/ai-rate-limit-token-bucket-anim.light.svg",
+          "darkSvgSha256": "b72592543a2317c3f39ff657cbf150d30c3d17ded05bd92d177be841dd20782c",
+          "lightSvgSha256": "6f8b64c88a29de94ef55c353e1c0a507cfbf842849ae3981a6cbaae69333a1b7"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "agent-audit-log",
@@ -3891,14 +3904,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/websocket-handshake-frame-lifecycle-v2.aj.mjs",
-          "sourceSha256": "6a83ab95ef3a26ecf2f946d6ea8707068444a70228b2c82ca4a05f7dddd142e3",
-          "darkPng": "images/websocket-handshake-frame-lifecycle-v2.dark.png",
-          "lightPng": "images/websocket-handshake-frame-lifecycle-v2.light.png",
+          "source": "images/diagram-sources/websocket-handshake-frame-lifecycle-anim.aj.mjs",
+          "sourceSha256": "be994aec11ae489211c8b86b7063f602209ebf27b9dabc583d4102bd16a9bf5f",
+          "darkPng": "images/websocket-handshake-frame-lifecycle-anim.dark.png",
+          "lightPng": "images/websocket-handshake-frame-lifecycle-anim.light.png",
           "darkSha256": "f90376ceffd4923bd2ba1d070526ced42e168e39f887231d84baa6b711ee392f",
-          "lightSha256": "199eb6cb5b946386282da341ad82fbce991da7dd5807be08290f89f3237913d4"
+          "lightSha256": "199eb6cb5b946386282da341ad82fbce991da7dd5807be08290f89f3237913d4",
+          "darkSvg": "images/websocket-handshake-frame-lifecycle-anim.dark.svg",
+          "lightSvg": "images/websocket-handshake-frame-lifecycle-anim.light.svg",
+          "darkSvgSha256": "6360cde4d7039f1b12d03cf25a0a2c00d1e9cc9141797ae9e5aafb26077a2d3e",
+          "lightSvgSha256": "1e3825b832400809e0b89ba87dce4ed65e86f28386788554a2337cb45ad7c895"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "file-upload-service",
@@ -4165,14 +4183,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/event-store-outbox-rebuild-flow-v2.aj.mjs",
-          "sourceSha256": "2e9ee4e89b29e78ad58bf30ff1e1ee50f4715c853ffc8d2992cb8a8cde0a7dec",
-          "darkPng": "images/event-store-outbox-rebuild-flow-v2.dark.png",
-          "lightPng": "images/event-store-outbox-rebuild-flow-v2.light.png",
+          "source": "images/diagram-sources/event-store-outbox-rebuild-flow-anim.aj.mjs",
+          "sourceSha256": "63744fe9867d7bcec32bff034d2519fce5cb14f4d2281bff95160df5e2ad4eee",
+          "darkPng": "images/event-store-outbox-rebuild-flow-anim.dark.png",
+          "lightPng": "images/event-store-outbox-rebuild-flow-anim.light.png",
           "darkSha256": "f88bf3f56d72c4e7c306246b73f4fb6a98a91b7eced7ee39d2be2f4f217c0f94",
-          "lightSha256": "4a75e5a9eb15b6deadf0e724205899a2f7dcb12cb89d98286c6addaad0d81f37"
+          "lightSha256": "4a75e5a9eb15b6deadf0e724205899a2f7dcb12cb89d98286c6addaad0d81f37",
+          "darkSvg": "images/event-store-outbox-rebuild-flow-anim.dark.svg",
+          "lightSvg": "images/event-store-outbox-rebuild-flow-anim.light.svg",
+          "darkSvgSha256": "9eadfaa571569fc6e67e4d8bc51e668abc2f2c1591e5f17e20c56f6b1934e923",
+          "lightSvgSha256": "cb746c95c33ea1bd4b4a023b21b625a6562924e07b667f96cb9927a06b7e7f76"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "redis-data-structure",
@@ -5357,12 +5380,16 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/dns-analysis-resolution-cache-failover-v3.aj.mjs",
-          "sourceSha256": "f775ac7b6821aff3f80a5a6a38cde5c2b4f5cb976265d70722ec2d913d4611d4",
-          "darkPng": "images/dns-analysis-resolution-cache-failover-v3.dark.png",
-          "lightPng": "images/dns-analysis-resolution-cache-failover-v3.light.png",
+          "source": "images/diagram-sources/dns-analysis-resolution-cache-failover-anim.aj.mjs",
+          "sourceSha256": "39a9ae4578415cbd09251ff949fb9ce18243514204124356690b1ce277d78a78",
+          "darkPng": "images/dns-analysis-resolution-cache-failover-anim.dark.png",
+          "lightPng": "images/dns-analysis-resolution-cache-failover-anim.light.png",
           "darkSha256": "07dd87277b0fe8e1b701ac8659dfdfb33dbb0994d13ec83972b4628314c958ab",
-          "lightSha256": "2f3d3b807e2bfbb40d236814deb2e7e099e0078ea44009094c77b7524f47daea"
+          "lightSha256": "2f3d3b807e2bfbb40d236814deb2e7e099e0078ea44009094c77b7524f47daea",
+          "darkSvg": "images/dns-analysis-resolution-cache-failover-anim.dark.svg",
+          "lightSvg": "images/dns-analysis-resolution-cache-failover-anim.light.svg",
+          "darkSvgSha256": "cfc3ea8c84bc59121702afa76371f6525b97f9e58bd84cd68dcc1e55bee9ee93",
+          "lightSvgSha256": "02a80b040eade3b4301ede3f53fc4687f7bb8ae5959619c6800c3650083b8122"
         }
       ],
       "followUps": [
@@ -5370,7 +5397,8 @@
           "batchId": "aj-diagrams-pr131-followups",
           "note": "按 #131 独立审核的非阻塞意见修图，换新版本名，不覆盖已发布图片"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "tcpIp-model",
@@ -5670,14 +5698,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/algorithm-graph-traversal-topo-v1.aj.mjs",
-          "sourceSha256": "66a49be3205606bd09ed703a8625030c404e52c619298f4f81d44e9e44ff8c04",
-          "darkPng": "images/algorithm-graph-traversal-topo-v1.dark.png",
-          "lightPng": "images/algorithm-graph-traversal-topo-v1.light.png",
+          "source": "images/diagram-sources/algorithm-graph-traversal-topo-anim.aj.mjs",
+          "sourceSha256": "fe4adb3c3a21c80ec66be13dc8256d2f087a4bb679491fdcca48bf416888ea7f",
+          "darkPng": "images/algorithm-graph-traversal-topo-anim.dark.png",
+          "lightPng": "images/algorithm-graph-traversal-topo-anim.light.png",
           "darkSha256": "d18de49f1813fd1bfdb52663ed9643bdb081a781219f9e05d6ab546a2c25d466",
-          "lightSha256": "bce9fd0c4c4074d0b635b2e3c1038c4a70c17d418e3591e2636ce5e43340835f"
+          "lightSha256": "bce9fd0c4c4074d0b635b2e3c1038c4a70c17d418e3591e2636ce5e43340835f",
+          "darkSvg": "images/algorithm-graph-traversal-topo-anim.dark.svg",
+          "lightSvg": "images/algorithm-graph-traversal-topo-anim.light.svg",
+          "darkSvgSha256": "71fb002cc9f787337a161873f886ff5eb0e04a4f43aa4709ee41f996534a2659",
+          "lightSvgSha256": "184bb05f783944cf7c4ebbfcd7b537beaa16f46dafbc3dd14f08003c4c5ee9a5"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "algorithm-complexity",
@@ -6127,14 +6160,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/react-render-state-effect-cycle-v2.aj.mjs",
-          "sourceSha256": "c9a6caa61dbae6e999e36b093daaab748f18932397880275603e7a8c6aa9ff4d",
-          "darkPng": "images/react-render-state-effect-cycle-v2.dark.png",
-          "lightPng": "images/react-render-state-effect-cycle-v2.light.png",
+          "source": "images/diagram-sources/react-render-state-effect-cycle-anim.aj.mjs",
+          "sourceSha256": "de65c706547d795e928ca8cc2817ed744b3a1dc2b2ad2fd280242cea80fd871f",
+          "darkPng": "images/react-render-state-effect-cycle-anim.dark.png",
+          "lightPng": "images/react-render-state-effect-cycle-anim.light.png",
           "darkSha256": "7c3756859ea3ecec713f52ef9931d10fee34d39024e78e6c5999aac13139e473",
-          "lightSha256": "7d9d9ba1f45bd2384c1110419296d03dbdd01e8faf2f50fdc8098d084e76e7f1"
+          "lightSha256": "7d9d9ba1f45bd2384c1110419296d03dbdd01e8faf2f50fdc8098d084e76e7f1",
+          "darkSvg": "images/react-render-state-effect-cycle-anim.dark.svg",
+          "lightSvg": "images/react-render-state-effect-cycle-anim.light.svg",
+          "darkSvgSha256": "95660a524d6bc535440e6d9fec114b8106090266594f7e861f074ba736b03ba2",
+          "lightSvgSha256": "332346b4c4657dc56384a87146a9af17fa4149e25b91b7799de6864900f30590"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "ts-generics",
