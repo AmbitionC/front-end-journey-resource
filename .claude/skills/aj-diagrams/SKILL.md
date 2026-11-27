@@ -120,6 +120,30 @@ npm run diagram -- images/diagram-sources/<name>.aj.mjs --preview /tmp/preview.p
 5. 更新 `.codex/diagram-migration-history.json` 里对应旧图的状态。
 6. 跑 `npm test` 和 `npm run validate:tree`。
 
+## 6½. 动效图（可逐步播放）
+
+动画要多讲清一件事才做：图里的**状态会随时间变化**（指针移动、缓存增长、回调在队列间搬家、连接状态切换、令牌桶增减）优先做；普通流程只按顺序点亮，收益小；架构、分层、对比、清单不做。网站上右上角有重播 / 上一步 / 播放暂停 / 下一步，图下显示这一步的说明。
+
+两种写法：
+
+**帧动画（首选，状态推演类）**：`k.figure({ body, frames: [{ caption, body }, ...] })`。
+- `body` 是一直显示的底图（面板、标签、结论条），每帧 `body` 是这一刻的完整状态，不是增量。
+- 跨帧要「移动」的东西用 `k.keyed('名字', [...])` 包起来：同一个名字在相邻两帧位置不同，播放时会从旧位置滑过去（例：指针、队列里的回调卡片）。内容变了但位置没变的会淡入。
+- 源码开头 `if (k.mode === 'still') return still(k);`：静态 PNG / PDF 直接用原来那张静态图的源码（import 进来），因为单独一帧讲不全。
+- 箭头要跑流动点就加 `flow: true`。
+- render.mjs 会逐帧跑字号 / 越界 / 压字检查。示例：`algorithm-array-two-pointers-anim`、`llm-token-context-kv-cache-anim`、`browser-event-loop-queues-anim`。
+
+**分步点亮（流程类）**：
+
+1. 源码里把每一步出现的图元包进 `k.step(n, [...])`（n 从 1 开始，同一步可以写多次）。
+   答案、输出这类不该提前露出的内容用 `k.step(n, [...], { mode: 'reveal' })`，未到时完全隐藏；默认未到时淡显。
+   框架、标题、底部结论条等一直显示的图元不包。
+2. `k.figure({ ..., steps: ['第 1 步说明', ...] })`：一句话说清这一步发生了什么、为什么，数量要和用到的 k.step 对上。
+3. `meta.name` 以 `-anim` 或 `-anim-vN` 结尾（阅读端靠它认出动效图），alt 里注明「可逐步播放」。
+4. render.mjs 会额外导出 `images/<name>.{dark,light}.svg`；PNG 是全部步骤显示的终态，PDF、加载失败和「减少动态效果」都看它。
+5. 文章照常引用 `<name>.dark.png`，不需要别的标记。台账里该条 `replacementAssets` 加上 svg 两个文件及哈希，并标 `"animated": true`。
+6. 写完在浏览器里逐步点一遍（示例：`front-end-journey/src/components/AnimatedDiagram.tsx`），确认每一步单独看也讲得通。
+
 ## 7. 手机端
 
 文章在手机上约 360px 宽，960 画布会缩到约 0.37 倍，15px 字变成约 5.6px——**手机上看不清是已知取舍**，靠点开大图（antd Image 预览）解决。所以：

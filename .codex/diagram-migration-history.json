@@ -51,14 +51,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/llm-token-context-kv-cache-v1.aj.mjs",
-          "sourceSha256": "b914b750ead0729632c81dbce9f730b9aa552f835a380e5039dc03b532d0b75c",
-          "darkPng": "images/llm-token-context-kv-cache-v1.dark.png",
-          "lightPng": "images/llm-token-context-kv-cache-v1.light.png",
+          "source": "images/diagram-sources/llm-token-context-kv-cache-anim.aj.mjs",
+          "sourceSha256": "7445f66ac56ee01638ceca166c7c18a4caa7c4bbfaabdfd25258cc7e66649b14",
+          "darkPng": "images/llm-token-context-kv-cache-anim.dark.png",
+          "lightPng": "images/llm-token-context-kv-cache-anim.light.png",
           "darkSha256": "2ad102e8a827ab951723e6c297080447782ad5226a9574f67cf58476daacb4d3",
-          "lightSha256": "b334aa6e48d93f388630efc7df8eb0678416181739d4c92417132e5cc9ae60cc"
+          "lightSha256": "b334aa6e48d93f388630efc7df8eb0678416181739d4c92417132e5cc9ae60cc",
+          "darkSvg": "images/llm-token-context-kv-cache-anim.dark.svg",
+          "lightSvg": "images/llm-token-context-kv-cache-anim.light.svg",
+          "darkSvgSha256": "2bb82b9fd9399f0f0d13ea64257f8eb5d3d3f7ce52f0d154d974e82844fc065a",
+          "lightSvgSha256": "cbcfcff59e6d9472c524e4d0363925f30df57fcc94b564c0991849f3be31ee2a"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "llm-capability-boundaries",
@@ -868,14 +873,19 @@
       "resumeExistingDiagramMigration": false,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/function-calling-propose-validate-execute-v5.aj.mjs",
-          "sourceSha256": "3e72252d534e30982207cc8eba5837fa357fa39b7f3f60e323ddc7201110353b",
-          "darkPng": "images/function-calling-propose-validate-execute-v5.dark.png",
-          "lightPng": "images/function-calling-propose-validate-execute-v5.light.png",
-          "darkSha256": "943a302822b3dcac0932ad6b49f63914b990a9962b2fed70c5bbd4bcb72abade",
-          "lightSha256": "9fa8a389fda55aa458729e4db892f0f3136afdbe64220f03a5f609ca66edb717"
+          "source": "images/diagram-sources/function-calling-propose-validate-execute-anim.aj.mjs",
+          "sourceSha256": "6a3c3301b5ad7d234b910791c09711810a9869bfc2147a04b836e99d15cdd6f7",
+          "darkPng": "images/function-calling-propose-validate-execute-anim.dark.png",
+          "lightPng": "images/function-calling-propose-validate-execute-anim.light.png",
+          "darkSha256": "474813087064142bb3ab7103cd050b529e355a3bdaca2602570d34e5e76a55d3",
+          "lightSha256": "b9978da5017919d34c505d1ae70927bcdd4be3c20edc1c5f75254be4038ec146",
+          "darkSvg": "images/function-calling-propose-validate-execute-anim.dark.svg",
+          "lightSvg": "images/function-calling-propose-validate-execute-anim.light.svg",
+          "darkSvgSha256": "b96adf104177ace5a98b1f87886782c177059c9b44aa262ee5afd6ebc2785ef6",
+          "lightSvgSha256": "310d4e5d4e32e67cce0d79d13fb59a04a0a184b36ed4a8ef66988032b891f8e3"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "aigc-openai",
@@ -2080,14 +2090,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/agent-react-loop-runtime-boundary-v2.aj.mjs",
-          "sourceSha256": "b924fa8deb814ece848fc301a3aa5556f886889149c9d84066d44e0b44850556",
-          "darkPng": "images/agent-react-loop-runtime-boundary-v2.dark.png",
-          "lightPng": "images/agent-react-loop-runtime-boundary-v2.light.png",
-          "darkSha256": "8f825fff82fb37b437f14267d956d29ff2dfa24d92d8f287381c8d3206beea32",
-          "lightSha256": "a0c0f4cae532b91b4ec872970f0b3489f4d32a0fc6d3dddc57b1e8ebe502d6e2"
+          "source": "images/diagram-sources/agent-react-loop-runtime-boundary-anim.aj.mjs",
+          "sourceSha256": "8480fa01d1d364015124d762bb834b3af2e28e047718203ac1134a9f64723ad6",
+          "darkPng": "images/agent-react-loop-runtime-boundary-anim.dark.png",
+          "lightPng": "images/agent-react-loop-runtime-boundary-anim.light.png",
+          "darkSha256": "8255234e3d9898e8073eeb4248eab521aa245a3a9cb4f7afe06b0b1ca5123a4c",
+          "lightSha256": "0e4e22aa5c0e32135305353cb3df339d39a05ad0b89e94e1f311ef1c544866f9",
+          "darkSvg": "images/agent-react-loop-runtime-boundary-anim.dark.svg",
+          "lightSvg": "images/agent-react-loop-runtime-boundary-anim.light.svg",
+          "darkSvgSha256": "96e21665c547c4f7497e1c9ba379e5596ae907316a734c1f9178be3b0befa543",
+          "lightSvgSha256": "1cbdb6665dee0c3c48c7b311b14261cfc9b646ecc474e53f10c3c8901df76a05"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "agent-memory",
@@ -5626,14 +5641,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/algorithm-array-two-pointers-v1.aj.mjs",
-          "sourceSha256": "059259fa699dd4ed270b34defad55e1e3fd00fbba33dfc6798d45eb4c4993641",
-          "darkPng": "images/algorithm-array-two-pointers-v1.dark.png",
-          "lightPng": "images/algorithm-array-two-pointers-v1.light.png",
+          "source": "images/diagram-sources/algorithm-array-two-pointers-anim.aj.mjs",
+          "sourceSha256": "2a1f12d5e4541108bf03d0142f00d5f6534e087786fb6a33a79deb5f17d2dc39",
+          "darkPng": "images/algorithm-array-two-pointers-anim.dark.png",
+          "lightPng": "images/algorithm-array-two-pointers-anim.light.png",
           "darkSha256": "19d897135952d426c1929e0236b7fdbcc90ce2c37f669e68465f47d440cd81dd",
-          "lightSha256": "ec6b71dce6614b9b3f2c7a141cea03c67e7836565e0fb64e24bf8fe836c3389e"
+          "lightSha256": "ec6b71dce6614b9b3f2c7a141cea03c67e7836565e0fb64e24bf8fe836c3389e",
+          "darkSvg": "images/algorithm-array-two-pointers-anim.dark.svg",
+          "lightSvg": "images/algorithm-array-two-pointers-anim.light.svg",
+          "darkSvgSha256": "72083691105ef2c7f50123fe571716b5362ac17f36d64224e935525f0b158694",
+          "lightSvgSha256": "c4ccfb1642fee8d998c3f21740157c7ea8dc14a4ff0f9603ac8985a3daea4c72"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "algorithm-tree",
@@ -5810,14 +5830,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/browser-event-loop-round-order-v2.aj.mjs",
-          "sourceSha256": "f9f2448ef0f14728cdaa705a77529814ccff51dc2b981d241338a2583f22ea8e",
-          "darkPng": "images/browser-event-loop-round-order-v2.dark.png",
-          "lightPng": "images/browser-event-loop-round-order-v2.light.png",
+          "source": "images/diagram-sources/browser-event-loop-queues-anim.aj.mjs",
+          "sourceSha256": "d36e40df813446cf2d1409fb23cb24dad8daad7402d2864eb27a027f2ae6e7e3",
+          "darkPng": "images/browser-event-loop-queues-anim.dark.png",
+          "lightPng": "images/browser-event-loop-queues-anim.light.png",
           "darkSha256": "40338b5bfbe59c7617dc47879c9f745f4256ce53d0b556803a89abdcf004245c",
-          "lightSha256": "3bb59b031914b65bc92c0c5f435f2403d68ff23c497ef67c45dee5a9a00cdb60"
+          "lightSha256": "3bb59b031914b65bc92c0c5f435f2403d68ff23c497ef67c45dee5a9a00cdb60",
+          "darkSvg": "images/browser-event-loop-queues-anim.dark.svg",
+          "lightSvg": "images/browser-event-loop-queues-anim.light.svg",
+          "darkSvgSha256": "83209771b2b1bfbaf550b229da1b2ad9954ac20d89a66a49961653236b5d3bdf",
+          "lightSvgSha256": "7aa31cec15ca91b55d8a0d8a233340d142534ee0391b34aff351c98bec0a2e26"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "localStorage-sessionStorage",
