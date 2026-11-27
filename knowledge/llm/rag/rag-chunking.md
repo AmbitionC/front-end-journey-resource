@@ -15,7 +15,7 @@
 - 保留标题、来源、位置和权限等必要背景。
 - 边界稳定，源文档更新后可以增量重建。
 
-![同一段 560 token 的文档用三种方式切分：固定 200 token 会把句子从中间切开；递归结构切分按段落切成两块并都带上标题路径，操作步骤和“仅限管理员”留在同一块；滑动窗口每块 200、重叠 40，边界附近内容出现两次。每个 chunk 带着 doc_id、标题路径、页码和权限一起向量化入库](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-chunking-boundaries-overlap-v4.dark.png)
+![同一段 560 token 的文档用三种方式切分：固定 200 token 会把句子从中间切开；递归结构切分按段落切成两块并都带上标题路径，操作步骤和“仅限管理员”留在同一块；滑动窗口每块 200、重叠 40，边界附近内容出现两次。每个 chunk 带着 doc_id、标题路径、页码和权限一起向量化入库](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rag-chunking-boundaries-overlap-anim.dark.png)
 *图：看红线：固定窗口会把句子切开；按结构切分让操作步骤和“仅管理员”留在同一块，每块都带标题路径。*
 
 ## 二、长度必须按 token 评估

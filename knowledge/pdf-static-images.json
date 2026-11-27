@@ -5854,7 +5854,7 @@
       "id": "os-thread-sync:mermaid:196",
       "kind": "mermaid",
       "articlePath": "knowledge/cs/os/os-thread-sync.md",
-      "articleSha256": "df190dfbe619a1ce1a3deb8b805302c4a85591f02182b61cb0dd0cdc9305528b",
+      "articleSha256": "ec2d4d0a0a69c049a34d146f7326665f16d50479be829a0aded6b2d0911908b2",
       "line": 263,
       "sourceText": "graph LR\n    A[线程 A<br/>持有锁1] -->|等待锁2| L2[锁2]\n    B[线程 B<br/>持有锁2] -->|等待锁1| L1[锁1]\n    L1 -.持有.-> A\n    L2 -.持有.-> B\n",
       "sourceSha256": "9734abf03ef72d79bcb989da67ca5c0f11cf32ae06bf695645746707491f422c",

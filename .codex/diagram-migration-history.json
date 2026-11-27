@@ -207,22 +207,27 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/transformer-arch-causal-attention-v1.aj.mjs",
-          "sourceSha256": "35ff65b211dab04529cc1212836203e7eaf09863de37b3f5e820d0ae147549b2",
-          "darkPng": "images/transformer-arch-causal-attention-v1.dark.png",
-          "lightPng": "images/transformer-arch-causal-attention-v1.light.png",
-          "darkSha256": "341c03949e30c1de49c8c677b85c578b69a237e99ac2837721486f1194f65468",
-          "lightSha256": "4fa90bc1364c3b9b96e0b99212a478d390bd9d4a02ffcab3aa2097d25050da88"
-        },
-        {
           "source": "images/diagram-sources/transformer-arch-decoder-block-v1.aj.mjs",
           "sourceSha256": "da1b03cf88ec202094e3b298731a35c62070a96aee0d7530ed2d95862876d7df",
           "darkPng": "images/transformer-arch-decoder-block-v1.dark.png",
           "lightPng": "images/transformer-arch-decoder-block-v1.light.png",
           "darkSha256": "f81aff9677142fbd062f3bb73335a994ce1d20289b00dde9ce5ab3438dc18769",
           "lightSha256": "98f1a4e006751a6485f55bd0bc6ebba5f166f0e45dfd6359bd27fb72dbfa204b"
+        },
+        {
+          "source": "images/diagram-sources/transformer-arch-causal-attention-anim.aj.mjs",
+          "sourceSha256": "52593450b17b697109dc4fdae513a3b686da66bfe996c1abe18b00ee4daed965",
+          "darkPng": "images/transformer-arch-causal-attention-anim.dark.png",
+          "lightPng": "images/transformer-arch-causal-attention-anim.light.png",
+          "darkSha256": "341c03949e30c1de49c8c677b85c578b69a237e99ac2837721486f1194f65468",
+          "lightSha256": "4fa90bc1364c3b9b96e0b99212a478d390bd9d4a02ffcab3aa2097d25050da88",
+          "darkSvg": "images/transformer-arch-causal-attention-anim.dark.svg",
+          "lightSvg": "images/transformer-arch-causal-attention-anim.light.svg",
+          "darkSvgSha256": "96da911d221e4d2173cf388ee6b707092db1cd99e78830039658b797dfa2764f",
+          "lightSvgSha256": "bcd0439d3591c361f801df42201747540d5b577628ba83ee227abd01390dddd5"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "llm-rlhf-dpo",
@@ -1446,14 +1451,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/rag-chunking-boundaries-overlap-v4.aj.mjs",
-          "sourceSha256": "19d5731d372b023f34766d4339dd64bd9330e59c60ea69eb7153f045b9d703b4",
-          "darkPng": "images/rag-chunking-boundaries-overlap-v4.dark.png",
-          "lightPng": "images/rag-chunking-boundaries-overlap-v4.light.png",
+          "source": "images/diagram-sources/rag-chunking-boundaries-overlap-anim.aj.mjs",
+          "sourceSha256": "59006dc373fce6a7e04787d143569c12d14ad30d2b6e0e64987ace885913bad8",
+          "darkPng": "images/rag-chunking-boundaries-overlap-anim.dark.png",
+          "lightPng": "images/rag-chunking-boundaries-overlap-anim.light.png",
           "darkSha256": "3df50b7622da6e6b12626e36dc188c9b9181607912ddc0ed633739d903a520e9",
-          "lightSha256": "8c3e17b07b09b28c009e159d829d37febde0e53e2cb030c01023fb22a5f84cb7"
+          "lightSha256": "8c3e17b07b09b28c009e159d829d37febde0e53e2cb030c01023fb22a5f84cb7",
+          "darkSvg": "images/rag-chunking-boundaries-overlap-anim.dark.svg",
+          "lightSvg": "images/rag-chunking-boundaries-overlap-anim.light.svg",
+          "darkSvgSha256": "3e9249180ee61f290fa95fbe547eb57bf51e6be3c06636eeaf24746d71c554fa",
+          "lightSvgSha256": "3d2b095d1dbf5882ea2a85edabc5d08f1f5e844ad7a039e3efdfd18b87ae27aa"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "rag-citation-grounding",
@@ -2217,14 +2227,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/agent-multi-agent-messaging-dedup-late-v2.aj.mjs",
-          "sourceSha256": "fcdc3c104061f9027cd486dbce3dbdacfa6e0dc4f17d7a1241dd7cec6f8b3807",
-          "darkPng": "images/agent-multi-agent-messaging-dedup-late-v2.dark.png",
-          "lightPng": "images/agent-multi-agent-messaging-dedup-late-v2.light.png",
+          "source": "images/diagram-sources/agent-multi-agent-messaging-dedup-late-anim.aj.mjs",
+          "sourceSha256": "0392026474e8a3ffc6645e3a59c126e77e7d7f5f03baf2027728c29d5ee7c5ed",
+          "darkPng": "images/agent-multi-agent-messaging-dedup-late-anim.dark.png",
+          "lightPng": "images/agent-multi-agent-messaging-dedup-late-anim.light.png",
           "darkSha256": "d5c754eb7cdebddd89c05a7e169ce06952770fffb0b34136c6c1591da69fa2f2",
-          "lightSha256": "997f79f928464fa3aaad48da8f26b9999de25bfc260fc37890adaac117a0a11e"
+          "lightSha256": "997f79f928464fa3aaad48da8f26b9999de25bfc260fc37890adaac117a0a11e",
+          "darkSvg": "images/agent-multi-agent-messaging-dedup-late-anim.dark.svg",
+          "lightSvg": "images/agent-multi-agent-messaging-dedup-late-anim.light.svg",
+          "darkSvgSha256": "48409b10bf6c65dd31ed2e6fdb5e6254ceef825a504454c60546979bf286badb",
+          "lightSvgSha256": "1861a8e8517a5f5ba89da0ed527941faa4bb9ef0d6a196048ec5b02f7f75fdcd"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "agent-tool-timeout",
@@ -2245,14 +2260,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/agent-tool-timeout-cancel-reconcile-v2.aj.mjs",
-          "sourceSha256": "90abeeb18831ed80494138a04c25777166fe024c5d4b5197d437eebbf4931c9f",
-          "darkPng": "images/agent-tool-timeout-cancel-reconcile-v2.dark.png",
-          "lightPng": "images/agent-tool-timeout-cancel-reconcile-v2.light.png",
+          "source": "images/diagram-sources/agent-tool-timeout-cancel-reconcile-anim.aj.mjs",
+          "sourceSha256": "39b03a56854c5b22f2aacee232d6b00ce47f1da5f49c45d5e66357be1abcb35c",
+          "darkPng": "images/agent-tool-timeout-cancel-reconcile-anim.dark.png",
+          "lightPng": "images/agent-tool-timeout-cancel-reconcile-anim.light.png",
           "darkSha256": "9b22827376d6f68c42b5300c5faeeaeda246146cb39666b6a5085ae46423c9f0",
-          "lightSha256": "57d3882bee50a0ceca7908d945650a4c1462f3d4e69362afd88aa47e1b6f51f4"
+          "lightSha256": "57d3882bee50a0ceca7908d945650a4c1462f3d4e69362afd88aa47e1b6f51f4",
+          "darkSvg": "images/agent-tool-timeout-cancel-reconcile-anim.dark.svg",
+          "lightSvg": "images/agent-tool-timeout-cancel-reconcile-anim.light.svg",
+          "darkSvgSha256": "9f567395f01a3cf87d9afdd18cfeef99d7fcac9aee2d8724bc9867ff319dd514",
+          "lightSvgSha256": "167033d61a6d96007869f3949cc14296f1149a5e93f5bab7c3eab84e6783bbe6"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "agent-evaluation",
@@ -4092,14 +4112,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/agent-state-worker-migration-recovery-v3.aj.mjs",
-          "sourceSha256": "82deba5711b2d6067bd5e94c90931b68334d410baca5998d47fcf59165f879aa",
-          "darkPng": "images/agent-state-worker-migration-recovery-v3.dark.png",
-          "lightPng": "images/agent-state-worker-migration-recovery-v3.light.png",
+          "source": "images/diagram-sources/agent-state-worker-migration-recovery-anim.aj.mjs",
+          "sourceSha256": "9ee729c282c7291e3812357a4796d093e94168ee910a27e2e0232046386f1fb3",
+          "darkPng": "images/agent-state-worker-migration-recovery-anim.dark.png",
+          "lightPng": "images/agent-state-worker-migration-recovery-anim.light.png",
           "darkSha256": "769a85949f1afa81ca08ebf44ece7a35d1daa2b4b2d9a1d398b98a71bad48e89",
-          "lightSha256": "258c7674341a4d0f8308a93bd65391cff6bc5a3f0a9b753f932c1ec3fbcb0bcd"
+          "lightSha256": "258c7674341a4d0f8308a93bd65391cff6bc5a3f0a9b753f932c1ec3fbcb0bcd",
+          "darkSvg": "images/agent-state-worker-migration-recovery-anim.dark.svg",
+          "lightSvg": "images/agent-state-worker-migration-recovery-anim.light.svg",
+          "darkSvgSha256": "4300443397a9d7bbdd906d9c23e664656e740ae594cc6cb78eb86854b451e7b3",
+          "lightSvgSha256": "ef13697de5e8e5ca5ad74fa1a01f79cd8200035123b050e2e137f4fbd8cfafa4"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "event-store",
@@ -5403,14 +5428,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/thread-sync-mutex-condvar-semaphore-v2.aj.mjs",
-          "sourceSha256": "edf6b1183e1119d2fb39456d830584df6ecadba7ef8b46604d81540f8074cc0c",
-          "darkPng": "images/thread-sync-mutex-condvar-semaphore-v2.dark.png",
-          "lightPng": "images/thread-sync-mutex-condvar-semaphore-v2.light.png",
+          "source": "images/diagram-sources/thread-sync-mutex-condvar-semaphore-anim.aj.mjs",
+          "sourceSha256": "b37af0c1a38d2c9ca4068f31426f0a233e9667521c571df439aeb5490755f559",
+          "darkPng": "images/thread-sync-mutex-condvar-semaphore-anim.dark.png",
+          "lightPng": "images/thread-sync-mutex-condvar-semaphore-anim.light.png",
           "darkSha256": "79c21863918664084b839d6c185d38172481d9a3e518fc868a52bba30890a73d",
-          "lightSha256": "6e78683f19c2c1f82ff6ee5ac53c3d44bafbf27f68730e2510c6be8db85ce2c5"
+          "lightSha256": "6e78683f19c2c1f82ff6ee5ac53c3d44bafbf27f68730e2510c6be8db85ce2c5",
+          "darkSvg": "images/thread-sync-mutex-condvar-semaphore-anim.dark.svg",
+          "lightSvg": "images/thread-sync-mutex-condvar-semaphore-anim.light.svg",
+          "darkSvgSha256": "495ac22d446fe51c055464472b5cfc97eb0e0e457b83cf17f65743fb08866773",
+          "lightSvgSha256": "1f2da6f414526cd4d39bcad594df91013a6a589e8e0ab432f275c8cafa03ff69"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "os-deadlock",
