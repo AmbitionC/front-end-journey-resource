@@ -20,7 +20,7 @@ function reduce(state: StreamState, event: GenerationEvent): StreamState {
 
 纯字符串拼接会丢失 item 边界、工具调用、拒绝和终态。网络 EOF 也不能当成功：只有收到供应商定义的完成事件，且所有必需 item 通过校验，结果才可提交。
 
-![把 LLM 流当成有类型的事件，而不是拼字符串。一次流依次有响应开始、text 增量、工具参数增量、item 完成、usage 和 completed 事件；网络 EOF 不等于成功，只有收到 completed 且所有 item 校验通过才能提交。取消要分三件事：前端取消是不再渲染、不再等待，并释放 reader 和连接；上游取消是调用 API 尝试停止模型任务，成没成功要确认；业务撤销是拦住尚未执行的工具副作用，已经发生的只能补偿。确认点分四层：UI 内存保存所有 delta，可以丢；临时快照是标记为 incomplete 的草稿；持久事件包括 item 完成、工具调用确认和整体完成；业务事实在验证通过后单独写入。续传有三种含义：传输层重连要求服务端保留事件并认 Last-Event-ID；查询同一后台任务要供应商支持，按任务 ID 重新订阅；应用级恢复从确认点发起新请求，用幂等键防止重复工具操作。恢复点只认协议给的事件 ID，字节偏移、最后一个 token 或 UI 已显示的字都不可靠](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-stream-cancel-resume-layers-v2.dark.png)
+![把 LLM 流当成有类型的事件，而不是拼字符串。一次流依次有响应开始、text 增量、工具参数增量、item 完成、usage 和 completed 事件；网络 EOF 不等于成功，只有收到 completed 且所有 item 校验通过才能提交。取消要分三件事：前端取消是不再渲染、不再等待，并释放 reader 和连接；上游取消是调用 API 尝试停止模型任务，成没成功要确认；业务撤销是拦住尚未执行的工具副作用，已经发生的只能补偿。确认点分四层：UI 内存保存所有 delta，可以丢；临时快照是标记为 incomplete 的草稿；持久事件包括 item 完成、工具调用确认和整体完成；业务事实在验证通过后单独写入。续传有三种含义：传输层重连要求服务端保留事件并认 Last-Event-ID；查询同一后台任务要供应商支持，按任务 ID 重新订阅；应用级恢复从确认点发起新请求，用幂等键防止重复工具操作。恢复点只认协议给的事件 ID，字节偏移、最后一个 token 或 UI 已显示的字都不可靠](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-stream-cancel-resume-layers-anim.dark.png)
 *图：传输取消与服务端取消是两件事；恢复依赖持久应用状态，而不是随意接回半个字节流。*
 
 ## 浏览器与服务端的背压

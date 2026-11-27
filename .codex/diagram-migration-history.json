@@ -982,14 +982,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/llm-stream-cancel-resume-layers-v2.aj.mjs",
-          "sourceSha256": "74fbabb45d42dfe36ce42d31b812f6b94c1398c9a183e4469c4eacf1af3e9bbc",
-          "darkPng": "images/llm-stream-cancel-resume-layers-v2.dark.png",
-          "lightPng": "images/llm-stream-cancel-resume-layers-v2.light.png",
+          "source": "images/diagram-sources/llm-stream-cancel-resume-layers-anim.aj.mjs",
+          "sourceSha256": "f3b967c5b96575c06dcccfb3f5296dfeeab557047e6bbdba9114e920347acb1f",
+          "darkPng": "images/llm-stream-cancel-resume-layers-anim.dark.png",
+          "lightPng": "images/llm-stream-cancel-resume-layers-anim.light.png",
           "darkSha256": "6a961fc5b3efd2dd6171429543717ad8f5f47a8a1c52e3f3d6c3f3f7ae10049d",
-          "lightSha256": "3448943cdc1a13769bde7e66f9d3561e72bb6c9b5d5e94563f13028cd1abcdcf"
+          "lightSha256": "3448943cdc1a13769bde7e66f9d3561e72bb6c9b5d5e94563f13028cd1abcdcf",
+          "darkSvg": "images/llm-stream-cancel-resume-layers-anim.dark.svg",
+          "lightSvg": "images/llm-stream-cancel-resume-layers-anim.light.svg",
+          "darkSvgSha256": "fbf48e7a9ae18685192837a95e700514ecaf524d1e4479b44e91b7da115054bf",
+          "lightSvgSha256": "a77d932ec9ef90a9b4ac9b8eba084a76db701d456c29b618039f66486f2f848a"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "llm-token-budget",
@@ -1046,14 +1051,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/llm-error-retry-fallback-ladder-v2.aj.mjs",
-          "sourceSha256": "3181c2a57c8b188385a53acd18ec41f4417950ed9cfcf7658bfcb2ab3ce57104",
-          "darkPng": "images/llm-error-retry-fallback-ladder-v2.dark.png",
-          "lightPng": "images/llm-error-retry-fallback-ladder-v2.light.png",
+          "source": "images/diagram-sources/llm-error-retry-fallback-ladder-anim.aj.mjs",
+          "sourceSha256": "29661ac5665cfa7caab0dd5511dec32debf80113ea4ecc89e012afb5469e5e90",
+          "darkPng": "images/llm-error-retry-fallback-ladder-anim.dark.png",
+          "lightPng": "images/llm-error-retry-fallback-ladder-anim.light.png",
           "darkSha256": "ec9b25d60a8f034768bda6fe1367bb4fe6eb1782c4414f441c0d45940a017c0b",
-          "lightSha256": "385f642adda2b49a4f469712eda5973fa5976d4ab79ccb47d4f28506ad93c576"
+          "lightSha256": "385f642adda2b49a4f469712eda5973fa5976d4ab79ccb47d4f28506ad93c576",
+          "darkSvg": "images/llm-error-retry-fallback-ladder-anim.dark.svg",
+          "lightSvg": "images/llm-error-retry-fallback-ladder-anim.light.svg",
+          "darkSvgSha256": "8862beaf784b8d643fb00c83d4af0186f9d80e1686ec9c3b61db854bbba118c7",
+          "lightSvgSha256": "deeadf71c9876d992806385603cd45204cc7fdca94a127da019db33bcbf98349"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "llm-vision-app",
@@ -3054,14 +3064,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/agent-idempotency-ledger-v2.aj.mjs",
-          "sourceSha256": "b9badc124b2e9b1c85a36b6e0112e3e8d04c76ba2d0eb44c554f3e8d56151679",
-          "darkPng": "images/agent-idempotency-ledger-v2.dark.png",
-          "lightPng": "images/agent-idempotency-ledger-v2.light.png",
+          "source": "images/diagram-sources/agent-idempotency-ledger-anim.aj.mjs",
+          "sourceSha256": "e31d8af32cb071c0eefc479ba68413c68d070b29efe6039e8dbea87a4b1c8107",
+          "darkPng": "images/agent-idempotency-ledger-anim.dark.png",
+          "lightPng": "images/agent-idempotency-ledger-anim.light.png",
           "darkSha256": "7fa93942a8517dc7e01ce589a29af05c08cb7c666625076090730a38804b3f4f",
-          "lightSha256": "6a000ad33a9e8c0dce647b2df46df3361b10b36c707f5290f1d08fb0f62ea0d2"
+          "lightSha256": "6a000ad33a9e8c0dce647b2df46df3361b10b36c707f5290f1d08fb0f62ea0d2",
+          "darkSvg": "images/agent-idempotency-ledger-anim.dark.svg",
+          "lightSvg": "images/agent-idempotency-ledger-anim.light.svg",
+          "darkSvgSha256": "01d4c691a1f32b635787f9dd86bc18147dbd5aff4395feca8ff57cc8aac76e50",
+          "lightSvgSha256": "bd745cdd45777d4438d2dc0b6ff5bd7a4e5adc3aa6a18b8a228c3672843006af"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "prompt-injection-defense",
@@ -5449,12 +5464,16 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/tcpip-model-encapsulation-path-v3.aj.mjs",
-          "sourceSha256": "d38c50b2a287bbaba7def06a04db15c74f2f597584e5b297392bfbff5ed3f0a6",
-          "darkPng": "images/tcpip-model-encapsulation-path-v3.dark.png",
-          "lightPng": "images/tcpip-model-encapsulation-path-v3.light.png",
+          "source": "images/diagram-sources/tcpip-model-encapsulation-path-anim.aj.mjs",
+          "sourceSha256": "0c36fcdc58fdd9b09d7f967bba79d895d97fc36dd84415f35aa76b13ead747c3",
+          "darkPng": "images/tcpip-model-encapsulation-path-anim.dark.png",
+          "lightPng": "images/tcpip-model-encapsulation-path-anim.light.png",
           "darkSha256": "c86c1ce2c88ad676fc57c153d7538c02bd691ad13500c73f54ead258726baaa7",
-          "lightSha256": "a50fcd03c0e28ab3c5ac8b53703150a9d4471078c0e064f520395bff85c5692b"
+          "lightSha256": "a50fcd03c0e28ab3c5ac8b53703150a9d4471078c0e064f520395bff85c5692b",
+          "darkSvg": "images/tcpip-model-encapsulation-path-anim.dark.svg",
+          "lightSvg": "images/tcpip-model-encapsulation-path-anim.light.svg",
+          "darkSvgSha256": "bbde5cc55832a27e9f0ac03b6fde6742913118bc39de3506c01e9350ecac428d",
+          "lightSvgSha256": "f05c25ae26e1dc40e7c9795be5fda7a42903809df97c2a681f4165cafe990339"
         }
       ],
       "followUps": [
@@ -5462,7 +5481,8 @@
           "batchId": "aj-diagrams-pr131-followups",
           "note": "按 #131 独立审核的非阻塞意见修图，换新版本名，不覆盖已发布图片"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "os-process-thread",
@@ -5700,14 +5720,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/algorithm-sorting-stability-external-v2.aj.mjs",
-          "sourceSha256": "56970eb1e0919da92c7c5649f0ac49ba73f9b0d1d9b97ed4e062de73a16c06f1",
-          "darkPng": "images/algorithm-sorting-stability-external-v2.dark.png",
-          "lightPng": "images/algorithm-sorting-stability-external-v2.light.png",
+          "source": "images/diagram-sources/algorithm-sorting-stability-external-anim.aj.mjs",
+          "sourceSha256": "3d876b60d25d7220eeae8f6316ad2e14b75aaecc2376d8ea0722e02bcb83f53e",
+          "darkPng": "images/algorithm-sorting-stability-external-anim.dark.png",
+          "lightPng": "images/algorithm-sorting-stability-external-anim.light.png",
           "darkSha256": "5581464b34cff28023734e8d2c2f49f7857362265f1a9c27b921113f857146cd",
-          "lightSha256": "c4fcf3e728f824a32b1ca09ee54652292d93396839cdd59f791f63241b6ee62e"
+          "lightSha256": "c4fcf3e728f824a32b1ca09ee54652292d93396839cdd59f791f63241b6ee62e",
+          "darkSvg": "images/algorithm-sorting-stability-external-anim.dark.svg",
+          "lightSvg": "images/algorithm-sorting-stability-external-anim.light.svg",
+          "darkSvgSha256": "e069cc7389a3b4293d8f30d535f9d1e2af676a44a9b441910301933d81512fc7",
+          "lightSvgSha256": "ebd6e04d8ab835322b758558f53c4166ee15d12d8022e76eebe2df2c8dae90f3"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "algorithm-graph",
@@ -6251,14 +6276,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/usecallback-usememo-memo-compare-v2.aj.mjs",
-          "sourceSha256": "ec347a1a54379497ca4a4327fd22d8ec7c6ec1a70bf8667159f64971aeb2dc00",
-          "darkPng": "images/usecallback-usememo-memo-compare-v2.dark.png",
-          "lightPng": "images/usecallback-usememo-memo-compare-v2.light.png",
+          "source": "images/diagram-sources/usecallback-usememo-memo-compare-anim.aj.mjs",
+          "sourceSha256": "4dfb5ee4361a30159867cddb6efd39bcb7c9b6d04f16feefd8dfca0f415e1bbe",
+          "darkPng": "images/usecallback-usememo-memo-compare-anim.dark.png",
+          "lightPng": "images/usecallback-usememo-memo-compare-anim.light.png",
           "darkSha256": "80f24ecc842846e55ed447f7f14425f959822e82a460c5c31e3cd8ddd3e7ef0e",
-          "lightSha256": "b95d1498d5f13637f1339ec562859f1ca82445369bd3b8321bc60717c2f03566"
+          "lightSha256": "b95d1498d5f13637f1339ec562859f1ca82445369bd3b8321bc60717c2f03566",
+          "darkSvg": "images/usecallback-usememo-memo-compare-anim.dark.svg",
+          "lightSvg": "images/usecallback-usememo-memo-compare-anim.light.svg",
+          "darkSvgSha256": "aa8891fe72ca8aa7e574549e76b7a298df11533b7af1a215d3a3036d1ea7b1d0",
+          "lightSvgSha256": "62d154ce7632986b6bf34b1024afddec5a535abdad8195114eccfadb0623211b"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "design-state",
