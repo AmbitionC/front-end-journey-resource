@@ -3153,14 +3153,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/agent-timeout-budget-deadline-v2.aj.mjs",
-          "sourceSha256": "93feae9417c8b19b146b32a1639bceba2d891c4fae86c6dfd1786ec963581e5c",
-          "darkPng": "images/agent-timeout-budget-deadline-v2.dark.png",
-          "lightPng": "images/agent-timeout-budget-deadline-v2.light.png",
+          "source": "images/diagram-sources/agent-timeout-budget-deadline-anim.aj.mjs",
+          "sourceSha256": "f7fab10205eccbf78c35bd8620afd7a888400627e06886fd39a2f62bf189ca4c",
+          "darkPng": "images/agent-timeout-budget-deadline-anim.dark.png",
+          "lightPng": "images/agent-timeout-budget-deadline-anim.light.png",
           "darkSha256": "5117fc0dc22089ee9730270e4f36ed2abdff05ed9f2fe81380bcb66968f37c4b",
-          "lightSha256": "e4c89eac000810e1c85ffe0462d8b7376a0423ce00f88079fdc0f9f2a99d61fa"
+          "lightSha256": "e4c89eac000810e1c85ffe0462d8b7376a0423ce00f88079fdc0f9f2a99d61fa",
+          "darkSvg": "images/agent-timeout-budget-deadline-anim.dark.svg",
+          "lightSvg": "images/agent-timeout-budget-deadline-anim.light.svg",
+          "darkSvgSha256": "f6c6ccec4b3aaf4975117d5f91f0416df9739d2967c6b07554ce7da2a54068cf",
+          "lightSvgSha256": "86068bcec95764d8436e3eb48ebb31ce26c830faee45f67573e5cd58f76264a3"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "agent-guardrails",
@@ -5847,14 +5852,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/algorithm-tree-bfs-dfs-v1.aj.mjs",
-          "sourceSha256": "1dbea0367b04641e04cd99bbe13d2525ad5923d485ddb83deacec77d8bbceefe",
-          "darkPng": "images/algorithm-tree-bfs-dfs-v1.dark.png",
-          "lightPng": "images/algorithm-tree-bfs-dfs-v1.light.png",
+          "source": "images/diagram-sources/algorithm-tree-bfs-dfs-anim.aj.mjs",
+          "sourceSha256": "874ef457d94550d917ffd742f06a04fa1237d23fbaab4307fffb93b7189fa00e",
+          "darkPng": "images/algorithm-tree-bfs-dfs-anim.dark.png",
+          "lightPng": "images/algorithm-tree-bfs-dfs-anim.light.png",
           "darkSha256": "db03eb3e13e02337c1f01c925fae0030169ac2d50bfd4c1dc0e168f7c16b700f",
-          "lightSha256": "e4f1c2a73f988dfd88699bbc3d156078cab000c4667b5806f73d5d7fd0e0da7e"
+          "lightSha256": "e4f1c2a73f988dfd88699bbc3d156078cab000c4667b5806f73d5d7fd0e0da7e",
+          "darkSvg": "images/algorithm-tree-bfs-dfs-anim.dark.svg",
+          "lightSvg": "images/algorithm-tree-bfs-dfs-anim.light.svg",
+          "darkSvgSha256": "d78366ff3711f2f8a937f60a7cd85801bb0a3438daa2de191d63c320981440fc",
+          "lightSvgSha256": "276b52f239afdc424420f5aaa4d3a8d8fdaf73d35cd626b385bfc828663bb678"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "algorithm-stack-queue",
@@ -5875,14 +5885,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/algorithm-stack-queue-model-v1.aj.mjs",
-          "sourceSha256": "f0f3317431e36ece0ec6391d6ec6b2ae5e27e92f728c1373192caaad0c0caeb5",
-          "darkPng": "images/algorithm-stack-queue-model-v1.dark.png",
-          "lightPng": "images/algorithm-stack-queue-model-v1.light.png",
+          "source": "images/diagram-sources/algorithm-stack-queue-model-anim.aj.mjs",
+          "sourceSha256": "98e080df0b901ba9e19f533b455deda314e27b6af3c2fb66632fcf61be21a826",
+          "darkPng": "images/algorithm-stack-queue-model-anim.dark.png",
+          "lightPng": "images/algorithm-stack-queue-model-anim.light.png",
           "darkSha256": "d06469df36f30cdd560752205a24cdaa9b6c971c55ec850100a4f66656e15b77",
-          "lightSha256": "dd7a62486993e030e631180fbc317e1542534626ed6dfd8b30315d8c84734af6"
+          "lightSha256": "dd7a62486993e030e631180fbc317e1542534626ed6dfd8b30315d8c84734af6",
+          "darkSvg": "images/algorithm-stack-queue-model-anim.dark.svg",
+          "lightSvg": "images/algorithm-stack-queue-model-anim.light.svg",
+          "darkSvgSha256": "8a81247008e72927da4fc7824c04a3303df28be2c2daed580107902dd39984cd",
+          "lightSvgSha256": "385168b2f560f203f69d17d619a00261a59206e08c15d6525f44e6b00092ad80"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "algorithm-backtracking",
@@ -5903,14 +5918,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/algorithm-backtracking-four-queens-v1.aj.mjs",
-          "sourceSha256": "e011693b6fe57d077c0e2667f9f02d8d0ddbe15b863e5bf814ebed3447c1ae90",
-          "darkPng": "images/algorithm-backtracking-four-queens-v1.dark.png",
-          "lightPng": "images/algorithm-backtracking-four-queens-v1.light.png",
+          "source": "images/diagram-sources/algorithm-backtracking-four-queens-anim.aj.mjs",
+          "sourceSha256": "cb8680e8a54a33dbcd6acb17d22ea6b2b0a0eb4ef4b69c8a13e5f8fd4e08ff4e",
+          "darkPng": "images/algorithm-backtracking-four-queens-anim.dark.png",
+          "lightPng": "images/algorithm-backtracking-four-queens-anim.light.png",
           "darkSha256": "e5136a3a4c8fccee52a193ab427c8f113c7ed2b443d4c6e855e76488e2b72265",
-          "lightSha256": "6ab075bb1fcdf9218d15f2af501cc27a201eef1e907bdacdd44ade75e1f903d6"
+          "lightSha256": "6ab075bb1fcdf9218d15f2af501cc27a201eef1e907bdacdd44ade75e1f903d6",
+          "darkSvg": "images/algorithm-backtracking-four-queens-anim.dark.svg",
+          "lightSvg": "images/algorithm-backtracking-four-queens-anim.light.svg",
+          "darkSvgSha256": "79e153083164f85c6f5300f3c20eaf415cef17c58a1e844d3f0b9d7d01077cd2",
+          "lightSvgSha256": "c3bbfd73c7f65ef933fe5b35883e470aae221e7c2c6bec66f84d950f92a5b3b9"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "algorithm-string",
