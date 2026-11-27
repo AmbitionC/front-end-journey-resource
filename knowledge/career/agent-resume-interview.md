@@ -209,6 +209,7 @@ AI/Agent 岗位面试通常覆盖以下几个方向。题目年年在变，但�
 - [字节全栈实习：Session、权限与前端基础](../../interview/bytedance/base/bytedance-base-46.md)
 - [字节抖音 Agent 一面：Skill、MCP 与记忆](../../interview/bytedance/base/bytedance-base-39.md)
 - [字节财经保险 AI 全栈实习一面：项目设计、AI Coding 与 Diff](../../interview/bytedance/base/bytedance-base-34.md)
+- [优酷 AI 应用二面：业务数据、编排、上下文与评测](../../interview/alibaba/ai/alibaba-ai-37.md)
 - [小红书增长方向一、二面：Harness、ReAct 与研究贡献](../../interview/redbook/ai/redbook-ai-23.md)
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../interview/bytedance/base/bytedance-base-53.md)
 - [字节后端与 Agent HR 面：能力复用、主动性与日常 AI 实践](../../interview/bytedance/base/bytedance-base-83.md)

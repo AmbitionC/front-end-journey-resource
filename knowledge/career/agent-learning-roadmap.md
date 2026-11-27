@@ -212,6 +212,7 @@
 - [字节全栈：多智能体导购、客户端与系统评测](../../interview/bytedance/base/bytedance-base-43.md)
 - [字节后端与 Agent 开发二面：本体平台、延迟任务与注意力](../../interview/bytedance/base/bytedance-base-81.md)
 - [vivo Agent 秋招线下面：Harness 与工程诊断](../../interview/vivo/ai/vivo-ai-1.md)
+- [优酷 AI 应用二面：业务数据、编排、上下文与评测](../../interview/alibaba/ai/alibaba-ai-37.md)
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../interview/bytedance/base/bytedance-base-53.md)
 - [字节后端与 Agent HR 面：能力复用、主动性与日常 AI 实践](../../interview/bytedance/base/bytedance-base-83.md)
 - [阿里 AI 应用开发二面：项目验证、多智能体与记忆治理](../../interview/alibaba/ai/alibaba-ai-36.md)

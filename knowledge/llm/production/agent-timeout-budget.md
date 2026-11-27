@@ -102,9 +102,10 @@ deadline 只剩 80ms，下一步是一个通常要 2 秒的模型调用。应该
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 Agent 一面：生成代码质量与限时 AI Coding](../../../interview/bytedance/base/bytedance-base-67.md)
 - [百度 Agent 秋招二三面：记忆、工具可靠性与运行循环](../../../interview/baidu/ai/baidu-ai-6.md)
+- [优酷 AI 应用二面：业务数据、编排、上下文与评测](../../../interview/alibaba/ai/alibaba-ai-37.md)
 - [海康威视 AI Agent 开发一面：可靠工具与任务状态](../../../interview/hikvision/ai/hikvision-ai-1.md)
+- [字节 Agent 一面：生成代码质量与限时 AI Coding](../../../interview/bytedance/base/bytedance-base-67.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

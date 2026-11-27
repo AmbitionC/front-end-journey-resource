@@ -88,6 +88,22 @@
             }
           },
           {
+            "label": "模型能力评估与选型",
+            "key": "llm-model-selection",
+            "isLeaf": true,
+            "filePath": "llm/basics",
+            "contentStatus": "published",
+            "heat": 12,
+            "currRank": 5,
+            "updatedAt": "2026-11-17",
+            "interviewBaseHeat": 6,
+            "quickRead": {
+              "text": "用固定任务集比较模型质量、工具行为、时延与成本，再按业务约束选型。先建立可接受基线和失败分类，不能凭排行榜、单次体感或参数量决定所有场景。"
+            },
+            "interviewCount": 6,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
             "label": "开源模型选型、推理与本地部署",
             "key": "llm-open-source-deployment",
             "isLeaf": true,
@@ -118,22 +134,6 @@
             "quickRead": {
               "text": "SFT 用示范教授行为，偏好学习塑造选择，安全还依赖运行时边界与独立评测。Agent 轨迹先核验版本、上下文和终态，再清洗、同源切分并按成功、失败与人工修正分流；工程故障优先修链路，失败动作不能直接当正确示范。"
             }
-          },
-          {
-            "label": "模型能力评估与选型",
-            "key": "llm-model-selection",
-            "isLeaf": true,
-            "filePath": "llm/basics",
-            "contentStatus": "published",
-            "heat": 11,
-            "currRank": 5,
-            "updatedAt": "2026-11-17",
-            "interviewBaseHeat": 6,
-            "quickRead": {
-              "text": "用固定任务集比较模型质量、工具行为、时延与成本，再按业务约束选型。先建立可接受基线和失败分类，不能凭排行榜、单次体感或参数量决定所有场景。"
-            },
-            "interviewCount": 5,
-            "interviewCountBasis": "verified-public-posts"
           },
           {
             "label": "长上下文、注意力稀释与有效利用",
@@ -338,14 +338,14 @@
             "isLeaf": true,
             "filePath": "llm/prompt",
             "contentStatus": "published",
-            "heat": 34,
+            "heat": 35,
             "currRank": 5,
             "updatedAt": "2026-11-04",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "上下文压缩先保护目标、约束、事实与出处，再通过裁剪、抽取或摘要控制预算。OpenClaw 示例区分持久摘要、请求内工具结果裁剪与可选记忆写入；磁盘保留不等于本轮已读，压缩仍需验证保真和继续任务的效果。"
             },
-            "interviewCount": 28,
+            "interviewCount": 29,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1412,14 +1412,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 26,
+            "heat": 27,
             "currRank": 5,
             "updatedAt": "2026-08-29",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "确定性步骤用显式节点和依赖表达，不确定决策放入受控 Agent 节点。状态、失败出口、恢复和人工接管需共同设计，步骤多不意味着必须采用多智能体。"
             },
-            "interviewCount": 20,
+            "interviewCount": 21,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1668,14 +1668,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 12,
+            "heat": 13,
             "currRank": 5,
             "updatedAt": "2026-10-19",
             "quickRead": {
               "text": "长任务用持久事件、状态版本和关联ID驱动；消费者校验来源、去重并原子更新状态，跨系统副作用仍需幂等与对账。明确重复、乱序、超时、失败和join条件，不能把至少一次投递说成只执行一次。"
             },
             "interviewBaseHeat": 10,
-            "interviewCount": 2
+            "interviewCount": 3
           },
           {
             "label": "Human-in-the-loop 审批与人工接管",
@@ -1683,14 +1683,14 @@
             "isLeaf": true,
             "filePath": "llm/agent",
             "contentStatus": "published",
-            "heat": 12,
+            "heat": 13,
             "currRank": 5,
             "updatedAt": "2026-07-16",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "在需要授权、信息不足或高影响节点暂停，向人展示具体动作、参数和证据。可提前授权明确范围内的自主动作，但不能用提示绕过工具权限；恢复还要绑定被批准的版本。"
             },
-            "interviewCount": 6,
+            "interviewCount": 7,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1928,14 +1928,14 @@
             "isLeaf": true,
             "filePath": "llm/production",
             "contentStatus": "published",
-            "heat": 38,
+            "heat": 39,
             "currRank": 5,
             "updatedAt": "2026-10-28",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "Agent 验收分开读取任务要求、执行轨迹和实际环境结果。确定条件用程序，开放质量用经校准的模型或人工判断；固定初始状态、版本和统计分母，不能只相信最终回复中的成功声明。"
             },
-            "interviewCount": 32,
+            "interviewCount": 33,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -2210,6 +2210,21 @@
             "interviewCount": 4
           },
           {
+            "label": "端到端超时预算与 Deadline 传播",
+            "key": "agent-timeout-budget",
+            "isLeaf": true,
+            "filePath": "llm/production",
+            "contentStatus": "published",
+            "heat": 10,
+            "currRank": 5,
+            "updatedAt": "2026-10-19",
+            "interviewBaseHeat": 6,
+            "quickRead": {
+              "text": "端到端deadline由排队、调用、重试、退避和汇总共同消耗；每层使用剩余预算，传播取消并限制并发。超时可能结果未知，副作用先对账；降低延迟须同时检查完成率与成本。"
+            },
+            "interviewCount": 4
+          },
+          {
             "label": "幂等性、重复执行与副作用控制",
             "key": "agent-idempotency",
             "isLeaf": true,
@@ -2253,21 +2268,6 @@
               "text": "模型降级要在同一任务和剩余预算内区分重试、熔断与替代路径；备用模型只有同时满足上下文、工具与输出格式、模态、数据策略和任务质量要求才能接管。切换前核对已产生的副作用，恢复时受控探测，不能因主服务失败就默认换模型成功。"
             },
             "interviewBaseHeat": 6,
-            "interviewCount": 3
-          },
-          {
-            "label": "端到端超时预算与 Deadline 传播",
-            "key": "agent-timeout-budget",
-            "isLeaf": true,
-            "filePath": "llm/production",
-            "contentStatus": "published",
-            "heat": 9,
-            "currRank": 5,
-            "updatedAt": "2026-10-19",
-            "interviewBaseHeat": 6,
-            "quickRead": {
-              "text": "端到端deadline由排队、调用、重试、退避和汇总共同消耗；每层使用剩余预算，传播取消并限制并发。超时可能结果未知，副作用先对账；降低延迟须同时检查完成率与成本。"
-            },
             "interviewCount": 3
           },
           {
@@ -4108,6 +4108,21 @@
         "key": "data-pipeline-core",
         "children": [
           {
+            "label": "Data Contract 与上下游协作",
+            "key": "data-contracts",
+            "isLeaf": true,
+            "filePath": "data/pipeline",
+            "contentStatus": "published",
+            "heat": 3,
+            "currRank": 3,
+            "updatedAt": "2026-07-17",
+            "quickRead": {
+              "text": "数据契约将字段结构、业务含义、主键、单位、时间口径、质量与时效要求一起版本化。生产者和消费者明确负责人、兼容与迁移规则，CI 检查结构与变更，运行时验证实际数据；格式通过不等于口径正确，缺少定义应先澄清。"
+            },
+            "interviewBaseHeat": 1,
+            "interviewCount": 2
+          },
+          {
             "label": "ETL / ELT 流程设计",
             "key": "etl-design",
             "isLeaf": true,
@@ -4135,21 +4150,6 @@
             },
             "interviewCount": 1,
             "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "Data Contract 与上下游协作",
-            "key": "data-contracts",
-            "isLeaf": true,
-            "filePath": "data/pipeline",
-            "contentStatus": "published",
-            "heat": 2,
-            "currRank": 2,
-            "updatedAt": "2026-07-17",
-            "quickRead": {
-              "text": "数据契约将字段结构、业务含义、主键、单位、时间口径、质量与时效要求一起版本化。生产者和消费者明确负责人、兼容与迁移规则，CI 检查结构与变更，运行时验证实际数据；格式通过不等于口径正确，缺少定义应先澄清。"
-            },
-            "interviewBaseHeat": 1,
-            "interviewCount": 1
           },
           {
             "label": "数据血缘、元数据与可追溯性",
@@ -5222,14 +5222,14 @@
             "isLeaf": true,
             "filePath": "career",
             "contentStatus": "published",
-            "heat": 47,
+            "heat": 48,
             "currRank": 5,
             "updatedAt": "2026-11-26",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "用岗位相关的真实经历介绍自己，分清个人职责、结果与当前阶段。求职方向和择业因素要有事实与优先级，反问用于确认岗位目标、培养支持和后续流程；薪资、学业与家庭情况不能由模板代填。"
             },
-            "interviewCount": 41,
+            "interviewCount": 42,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -5254,14 +5254,14 @@
             "isLeaf": true,
             "filePath": "career",
             "contentStatus": "published",
-            "heat": 24,
+            "heat": 25,
             "currRank": 5,
             "updatedAt": "2026-11-04",
             "quickRead": {
               "text": "从具体用户流程、痛点、基线和风险收敛最小可验收产品。KANO 分析功能满足与满意的关系，四象限须先定义两轴，再结合成本、依赖与证据验证排序；员工反馈报告还需防小群体与自由文本重新识别。"
             },
             "interviewBaseHeat": 6,
-            "interviewCount": 18,
+            "interviewCount": 19,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -5270,14 +5270,14 @@
             "isLeaf": true,
             "filePath": "career",
             "contentStatus": "published",
-            "heat": 23,
+            "heat": 24,
             "currRank": 5,
             "updatedAt": "2026-07-17",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "项目价值应在可比较任务和基线下衡量真实完成质量、风险、延迟、成本与使用负担。离线、shadow、canary和持续监控各自回答不同问题，不把演示成功或未校准总分当收益证明。"
             },
-            "interviewCount": 17,
+            "interviewCount": 18,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -5302,14 +5302,14 @@
             "isLeaf": true,
             "filePath": "career",
             "contentStatus": "published",
-            "heat": 14,
+            "heat": 15,
             "currRank": 5,
             "updatedAt": "2026-10-16",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "按目标任务和依赖补基础，用官方资料、固定版本代码与原始研究建立理解，再以最小实现和失败练习验证。学习资料、实现、环境、结果与局限一起留存，以能否解释和修正边界检查掌握程度，框架名或固定周数不能代替证据。"
             },
-            "interviewCount": 8,
+            "interviewCount": 9,
             "interviewCountBasis": "verified-public-posts"
           },
           {
