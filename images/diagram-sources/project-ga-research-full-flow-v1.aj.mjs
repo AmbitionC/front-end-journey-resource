@@ -1,0 +1,38 @@
+export const meta = {
+  name: "project-ga-research-full-flow-v1",
+  article: "project/general-agent/ga-research.md",
+  alt: "研究模式的完整流程：用户问题不够明确时先向用户提 1 到 3 个澄清问题；明确后生成由若干子问题组成的研究计划并展示给用户修改，然后并行派出研究员，收回各子问题的结论和来源编号；证据不够且未超预算时补充新的子问题再派研究员，证据足够或已到预算上限时按提纲生成报告，校验每条引用都能对上来源后输出报告",
+};
+
+export default (k) => k.figure({
+  h: 770,
+  title: "研究模式的完整流程：两个回路，一道校验",
+  subtitle: "证据不够就补子问题再查，预算到了就停",
+  body: [
+    k.box({"x": 60, "y": 120, "w": 380, "h": 48, "title": "用户问题"}),
+    k.arrow({"points": [[250, 168], [250, 192]]}),
+    k.box({"x": 60, "y": 196, "w": 380, "h": 52, "title": "问题够明确吗", "tone": "warn"}),
+    k.arrow({"points": [[440, 212], [556, 212]], "label": "否", "labelAt": [498, 202], "labelAnchor": "middle"}),
+    k.box({"x": 560, "y": 196, "w": 340, "h": 52, "title": "向用户提 1 到 3 个澄清问题"}),
+    k.arrow({"points": [[560, 236], [444, 236]], "dashed": true}),
+    k.arrow({"points": [[250, 248], [250, 280]], "label": "是", "labelAt": [262, 270], "labelAnchor": "start"}),
+    k.box({"x": 60, "y": 284, "w": 380, "h": 52, "title": "生成研究计划：若干子问题"}),
+    k.arrow({"points": [[250, 336], [250, 356]]}),
+    k.box({"x": 60, "y": 360, "w": 380, "h": 52, "title": "展示计划，用户可修改"}),
+    k.arrow({"points": [[250, 412], [250, 432]]}),
+    k.box({"x": 60, "y": 436, "w": 380, "h": 52, "title": "并行派出研究员", "tone": "accent"}),
+    k.arrow({"points": [[250, 488], [250, 508]]}),
+    k.box({"x": 60, "y": 512, "w": 380, "h": 52, "title": "收回各子问题的结论和来源编号"}),
+    k.arrow({"points": [[250, 564], [250, 584]]}),
+    k.box({"x": 60, "y": 588, "w": 380, "h": 52, "title": "证据足够回答原问题吗", "tone": "warn"}),
+    k.arrow({"points": [[440, 614], [730, 614], [730, 530]], "label": "否，且未超预算", "labelAt": [540, 604], "labelAnchor": "middle"}),
+    k.box({"x": 560, "y": 474, "w": 340, "h": 52, "title": "补充新的子问题"}),
+    k.arrow({"points": [[730, 474], [730, 462], [444, 462]]}),
+    k.arrow({"points": [[250, 640], [250, 686]], "label": "是，或已到预算上限", "labelAt": [262, 670], "labelAnchor": "start"}),
+    k.box({"x": 60, "y": 690, "w": 270, "h": 52, "title": "按提纲生成报告", "tone": "accent"}),
+    k.arrow({"points": [[330, 716], [346, 716]]}),
+    k.box({"x": 350, "y": 690, "w": 290, "h": 52, "title": "校验每条引用都能对上来源"}),
+    k.arrow({"points": [[640, 716], [656, 716]]}),
+    k.box({"x": 660, "y": 690, "w": 240, "h": 52, "title": "输出报告", "tone": "ok"}),
+  ].join(''),
+});

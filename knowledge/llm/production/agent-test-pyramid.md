@@ -127,6 +127,16 @@ Agent 输出常没有唯一正确字符串，需要确定性规则、模型评�
 
 因此，“保证生成的单测覆盖全”应改成可核验的范围：需求与风险矩阵有哪些行、每行由哪层测试覆盖、哪些边界与历史故障仍未验证。保留独立预期、初次失败与修复证据，不能靠重复生成更多测试、一次绿色结果或一个覆盖率数字宣称完整。
 
+## 高并发验证：负载模型与业务状态分开验收
+
+“模拟很多并发”还需要说明用户怎样到达。先固定接口比例、数据规模、热点分布、缓存冷热、环境与停止条件，再选择负载模型。[k6的开放与封闭模型说明](https://grafana.com/docs/k6/latest/using-k6/scenarios/concepts/open-vs-closed/)区分两种方式：封闭模型中的虚拟用户完成一次迭代才开始下一次，系统变慢会降低到达率；到达率模型把迭代启动与完成时间解耦。前者可用于固定活跃用户场景，后者适合检查约定到达压力，两者不能只凭相同并发数直接比较。
+
+先低负载建立基线，再分阶段增加压力，记录发起与实际完成的请求、成功吞吐、尾延迟、错误、排队和资源饱和。还要确认发压端能按计划产生负载；例如[k6的dropped_iterations](https://grafana.com/docs/k6/latest/using-k6/scenarios/concepts/dropped-iterations/)会记录未发出的迭代，原因需要结合配置与被测系统检查。否则服务“没有变慢”可能只是压力没有送达。阈值应来自业务目标与容量合同；[k6 thresholds](https://grafana.com/docs/k6/latest/using-k6/thresholds/)可以把指标写成通过或失败条件，但HTTP成功率与延迟门槛本身不能证明业务状态正确。
+
+[AWS的幂等API设计说明](https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/)讨论了响应丢失、重复副作用和调用方请求标识；它说明重试需要独立合同，而不是看到超时就认定没有执行。一致性另设可判定合同。例如在**自行定义的库存教学场景**中，同一业务幂等键的并发重试最多形成一笔订单，库存变化与实际接受的订单数量一致；具体预占、释放和扣减时机必须先由业务定义。让请求同时竞争同一资源，注入提交前失败、提交后响应丢失、重复与迟到请求，再根据请求标识对账权威数据库、订单状态及实际副作用，不能把全部返回200当作一致性通过。缓存与索引若允许延迟，另外约定可接受的旧值窗口和恢复期限。
+
+最终报告把性能与正确性分别列出：负载模型与参数、有效样本与持续时间、成功和失败分布，以及不变量、对账结果与未验证故障。只有在同口径条件下复测，才能讨论某项优化是否改善瓶颈。这里是测试设计方法，本段没有运行真实服务、发压或测得吞吐，也不表示某篇面经项目已实现该方案；原有分层测试负责把确定性规则放到底层，把真实并发与恢复留给足够现实的集成或场景环境。
+
 ## 常见误区
 
 - 把所有测试都写成端到端聊天脚本，慢且难定位。
@@ -184,11 +194,16 @@ Agent 测试金字塔的最底层（单元与契约测试）适合覆盖什么�
 - [美团后端 Agent 暑期一面：约束、工作流与 AI 开发验证](../../../interview/meituan/ai/meituan-ai-16.md)
 - [理想汽车 IT 全栈交付培养生一面：Skill、测试与工作流](../../../interview/liauto/fullstack/liauto-fullstack-1.md)
 - [腾讯搜狗输入法后台二至四面：AI 代码可靠性与测试](../../../interview/tencent/base/tencent-base-1.md)
+- [阿里 AI 应用开发二面：项目验证、多智能体与记忆治理](../../../interview/alibaba/ai/alibaba-ai-36.md)
 - [快手商业化 Java 实习一二面：缓存、JVM 与 AI Coding](../../../interview/kuaishou/ai/kuaishou-ai-25.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料
 
+- [Grafana k6：开放与封闭负载模型](https://grafana.com/docs/k6/latest/using-k6/scenarios/concepts/open-vs-closed/)
+- [Grafana k6：性能指标阈值](https://grafana.com/docs/k6/latest/using-k6/thresholds/)
+- [Grafana k6：未发出迭代与负载不足](https://grafana.com/docs/k6/latest/using-k6/scenarios/concepts/dropped-iterations/)
+- [AWS Builders’ Library：让API重试具有幂等语义](https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/)
 - [Kent Beck：Canon TDD，一次一个场景的小步循环](https://newsletter.kentbeck.com/p/canon-tdd)
 - [pytest：参数化测试的输入与预期组织](https://docs.pytest.org/en/stable/how-to/parametrize.html)
 - [PIT：变异、检测结果与等价变异](https://pitest.org/quickstart/basic_concepts/)

@@ -178,6 +178,7 @@ InMemorySaver 适合内存内示范，不保证进程重启后恢复；持久 sa
 - [小红书 AI 后端一面：执行模式、Memory、意图与 RAG](../../../interview/redbook/ai/redbook-ai-8.md)
 - [蚂蚁财富技术部一面：协作式 Agent、交付门禁与后端基础](../../../interview/antfin/ai/antfin-ai-4.md)
 - [华为 AI 训推实习一面：模型评估、Agent 架构与记忆](../../../interview/huawei/ai/huawei-ai-3.md)
+- [阿里 AI 应用开发二面：项目验证、多智能体与记忆治理](../../../interview/alibaba/ai/alibaba-ai-36.md)
 - [美团 AI 应用开发实习一面：多路检索、半开熔断与记忆](../../../interview/meituan/ai/meituan-ai-8.md)
 - [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
 - [字节中国交易与广告 AI 全栈实习一面：Skill、MCP 与回文](../../../interview/bytedance/base/bytedance-base-79.md)

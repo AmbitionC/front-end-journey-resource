@@ -4,20 +4,9 @@
 
 子任务就是一个全新的执行循环：自己的系统提示词、自己的消息列表、自己的一组工具。主任务通过一个工具启动它，等它结束后只收到一段文字。
 
-```mermaid
-sequenceDiagram
-    participant Main as 主任务的执行循环
-    participant S as 子任务调度器
-    participant Sub as 子任务的执行循环
-    Main->>S: 调用“派发子任务”工具（任务说明）
-    S->>Sub: 新建循环，上下文里只有任务说明
-    loop 子任务自己的多轮工具调用
-        Sub->>Sub: 读文件、搜索……
-    end
-    Sub-->>S: 最终结论（一段文字）
-    S-->>Main: 作为工具结果返回
-    Note over Main: 主任务的上下文只增加了这一段结论
-```
+![子任务的派发与返回：主任务的执行循环调用派发子任务工具并传入任务说明，子任务调度器新建一个循环，上下文里只有任务说明；子任务的执行循环自己做多轮工具调用，结束后把最终结论作为一段文字交给调度器，调度器把它作为工具结果返回，主任务的上下文只增加这一段结论](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-ga-subagent-isolated-loop-v1.dark.png)
+
+*上面一行是派出去，下面一行是收回来；子任务中间读了多少文件，主任务都看不到。*
 
 子任务读了三十个文件，这些内容全部留在它自己的消息列表里，随子任务结束而丢弃。主任务的窗口只多了几百字。
 

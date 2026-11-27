@@ -163,8 +163,9 @@ created → validated → dispatched → streaming/tool_wait → completed
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
 - [字节 Agent：任务取消、Spring 配置与并发执行](../../../interview/bytedance/base/bytedance-base-45.md)
+- [Coding Agent 项目面试：工具、上下文与记忆治理](../../../interview/common/agent/common-agent-2.md)
+- [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
 <!-- interview-source-history:end -->
 
 ## 参考资料

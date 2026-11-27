@@ -119,6 +119,18 @@ AI/Agent 岗位面试通常覆盖以下几个方向。题目年年在变，但�
 
 教育背景、经历空档和技术栈确认也遵循同一原则：回答与岗位有关的事实，说明阶段选择与后续行动，记不清的数据先核对。实习收获应以具体案例说明认识如何变化；“用了某语言”本身不能证明语言熟练度，也不能证明大模型项目已经创造业务价值。
 
+### 自我介绍与毕设：先说相关事实，再说当前阶段
+
+[Harvard MCS 的面试指南](https://careerservices.fas.harvard.edu/resources/interviewing/)建议熟悉简历中的经历，包括毕业课题，并说明它们与申请岗位的关系。准备自我介绍时，可以先交代当前方向，选一段相关经历说明自己的工作和结果，再说明申请动机；不必把简历从头复述一遍。
+
+毕设介绍则分别回答“研究什么、自己做什么、做到哪一步”。论文进度和学校要求应按已确认的节点说明，分清已完成工作、待验证结果与后续计划。能否按时毕业或到岗仍取决于实际安排，不能用计划代替完成证明。
+
+### 求职方向、择业因素与反问怎样连起来
+
+选择 Agent、后端或算法方向时，先看目标岗位要交付什么，再用真实经历说明自己为什么愿意且能够承担这些任务。方向名称可能交叉；“没有投算法岗”需要本人说明真实考虑，不能从项目标签替人推断。可结合[Agent 工程师的职责与岗位方向](agent-role-landscape.md)核对任务差异。
+
+择业因素可先选两三项排序，说明工作内容、成长支持或地点等条件怎样影响选择，再区分必须满足的约束和可以讨论的偏好。把尚不清楚的条件变成反问，例如“入职初期希望我解决什么问题”“新人如何获得反馈”，最后确认下一步流程。Harvard MCS 将反问视为获得决策信息的机会；以上组织方法是编辑建议，不是某家公司的评分标准，也不能代替个人事实。
+
 ## 没有实习项目，跟着教程做的项目怎么讲
 
 很多同学的项目是跟着教程做的。这没问题，面试官也看得出来，问题在于讲法：
@@ -204,10 +216,12 @@ AI/Agent 岗位面试通常覆盖以下几个方向。题目年年在变，但�
 - [腾讯 CDG 金融科技二面：Agent 评估、协程与存储基础](../../interview/tencent/ai/tencent-ai-29.md)
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../interview/bytedance/base/bytedance-base-56.md)
 - [字节 Agent 实习：生成质量、多智能体与缓存](../../interview/bytedance/base/bytedance-base-52.md)
+- [阿里 AI 应用开发二面：项目验证、多智能体与记忆治理](../../interview/alibaba/ai/alibaba-ai-36.md)
 - [网易后端开发秋招一面：缓存一致性、死锁与分布式锁](../../interview/netease/base/netease-base-1.md)
 - [字节 Agent：任务取消、Spring 配置与并发执行](../../interview/bytedance/base/bytedance-base-45.md)
 - [华为 AI 应用三面：工程项目与 AI 编程](../../interview/huawei/ai/huawei-ai-5.md)
 - [蚂蚁 Agent 实习一面：缓存、消息与 RAG](../../interview/antfin/ai/antfin-ai-6.md)
+- [拼多多 HR 面：求职方向、毕业安排与双向沟通](../../interview/pinduoduo/hr/pdd-hr-1.md)
 - [字节前端全栈实习一面：渲染、Worker 与认证](../../interview/bytedance/base/bytedance-base-38.md)
 - [滴滴后端二面：CR Agent、Spec 与 AI Coding 场景](../../interview/didi/ai/didi-ai-1.md)
 - [字节 Agent 全栈一面：工具、评测与编码](../../interview/bytedance/base/bytedance-base-40.md)
@@ -223,3 +237,5 @@ AI/Agent 岗位面试通常覆盖以下几个方向。题目年年在变，但�
 
 - [Using the STAR method for your next behavioral interview — MIT CAPD](https://capd.mit.edu/resources/the-star-method-for-behavioral-interviews)
 - [An Amazon recruiting manager offers his 3 best tips for a successful job interview — About Amazon](https://www.aboutamazon.com/news/workplace/amazon-interview-best-tips)
+
+- [Interviewing — Harvard Mignone Center for Career Success](https://careerservices.fas.harvard.edu/resources/interviewing/)

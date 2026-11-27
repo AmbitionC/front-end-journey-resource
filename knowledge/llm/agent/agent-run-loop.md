@@ -149,6 +149,7 @@ Agent 连续几轮都在换个说法重复查同一件事。用什么判断它�
 - [腾讯元宝风控实习一面：内容安全评测与 RAG 切分](../../../interview/tencent/ai/tencent-ai-33.md)
 - [快手 AI 全栈一面：Skill 成本、Agent 链路与开发验收](../../../interview/kuaishou/ai/kuaishou-ai-9.md)
 - [字节 Agent 全栈一面：工具、评测与编码](../../../interview/bytedance/base/bytedance-base-40.md)
+- [Coding Agent 项目面试：工具、上下文与记忆治理](../../../interview/common/agent/common-agent-2.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)
 <!-- interview-source-history:end -->
 

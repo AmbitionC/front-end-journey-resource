@@ -2,7 +2,7 @@
 
 ## 总体架构
 
-![Agent 评测与自进化平台架构：左侧是被测对象和版本库；上半部分是评测链路，任务集经运行器和评分器产出报告，结果写入结果库，评分器另有审计；下半部分是自进化链路，失败分析读取结果库，提案器分四级提出修改，候选版本经准入闸门后合入版本库](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-eval-evolve-architecture-v1.png)
+![Agent 评测与自进化平台架构：左侧是被测对象和版本库；上半部分是评测链路，任务集经运行器和评分器产出报告，结果写入结果库，评分器另有审计；下半部分是自进化链路，失败分析读取结果库，提案器分四级提出修改，候选版本经准入闸门后合入版本库](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-eval-evolve-architecture-v2.dark.png)
 
 平台分三块。
 
@@ -51,34 +51,13 @@ class AgentVersion:
 
 四个字段正好对应四级进化的作用对象。级别越高，能改的字段越多：
 
-![自进化的四个级别：第一级改提示词，对应 GEPA；第二级改经验手册，对应 ACE；第三级改配置与工具，对应 Self-Harness；第四级改外壳代码，对应 Meta-Harness；四级共用同一道准入闸门](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-eval-evolve-levels-v1.png)
+![自进化的四个级别：第一级改提示词，对应 GEPA；第二级改经验手册，对应 ACE；第三级改配置与工具，对应 Self-Harness；第四级改外壳代码，对应 Meta-Harness；四级共用同一道准入闸门](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-eval-evolve-levels-v2.dark.png)
 
 ## 一轮进化的完整流程
 
-```mermaid
-sequenceDiagram
-    participant R as 运行器
-    participant G as 评分器
-    participant D as 失败分析
-    participant P as 提案器
-    participant A as 准入闸门
-    participant V as 版本库
-    R->>G: 当前版本在进化集上的运行结果
-    G-->>D: 失败任务的轨迹和判定理由
-    D->>P: 归因结果：失败集中在哪些环节
-    P->>P: 生成若干候选版本
-    loop 每个候选版本
-        P->>A: 提交候选
-        A->>R: 在验收集和回归集上运行
-        R->>G: 运行结果
-        G-->>A: 得分
-        alt 验收集更好 且 回归集不退步
-            A->>V: 合入为新版本
-        else
-            A-->>P: 拒绝，附上退步的任务
-        end
-    end
-```
+![一轮进化的完整流程：运行器让当前版本跑进化集，评分器给出判定理由，失败分析归因到具体环节，提案器生成若干候选版本；每个候选提交给准入闸门，在验收集和回归集上运行并评分，验收集更好且回归集不退步的合入版本库，否则拒绝并把退步的任务交回提案器](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-ee-architecture-evolve-round-v1.dark.png)
+
+*上面一行只用进化集；框里的验证对每个候选各跑一遍，用的是验收集和回归集。*
 
 被拒绝的候选不会被丢弃，拒绝理由会进入下一轮提案器的输入，避免重复提出同样的修改。
 

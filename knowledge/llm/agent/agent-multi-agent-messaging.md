@@ -118,16 +118,17 @@ Agent B 对一条任务消息返回了 ACK。这能说明什么？
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
-- [小红书 Agent 算法一面：研究停止、协作与租户](../../../interview/redbook/ai/redbook-ai-15.md)
+- [字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)
 - [快手 AI 应用服务端日常实习一面：协作、上下文与评测](../../../interview/kuaishou/ai/kuaishou-ai-7.md)
 - [快手 AI 应用服务端秋招三面：分布式 Agent、通信与 Lua](../../../interview/kuaishou/ai/kuaishou-ai-6.md)
-- [快手 Agent 面试：多智能体通信与推理模型](../../../interview/kuaishou/ai/kuaishou-ai-11.md)
-- [字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)
 - [字节后端与 Agent：运行链路、数据库与网络](../../../interview/bytedance/base/bytedance-base-55.md)
 - [小红书与百度 Agent 面试合并记录：LangGraph 子图、Skill 与工程校验](../../../interview/redbook/ai/redbook-ai-2.md)
 - [字节豆包 Seed Agent 开发一面：状态、容错与效果评测（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-20.md)
 - [快手商业化效果营销一面：多 Agent 协作、Netty 与限流](../../../interview/kuaishou/ai/kuaishou-ai-4.md)
 - [百度后端 Go / Agent 一面：会话恢复、记忆冲突与评测](../../../interview/baidu/ai/baidu-ai-2.md)
+- [快手 Agent 面试：多智能体通信与推理模型](../../../interview/kuaishou/ai/kuaishou-ai-11.md)
+- [小红书 Agent 算法一面：研究停止、协作与租户](../../../interview/redbook/ai/redbook-ai-15.md)
+- [阿里 AI 应用开发二面：项目验证、多智能体与记忆治理](../../../interview/alibaba/ai/alibaba-ai-36.md)
 - [小红书 AI 研发一面：观测回放、多智能体与数据库](../../../interview/redbook/ai/redbook-ai-21.md)
 <!-- interview-source-history:end -->
 

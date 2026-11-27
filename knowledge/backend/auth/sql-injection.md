@@ -60,13 +60,13 @@ SELECT * FROM users WHERE username = '' OR '1'='1' -- ' AND password = 'anything
 
 ```mermaid
 flowchart LR
-    subgraph 危险：字符串拼接
+    subgraph danger["危险：字符串拼接"]
         A1[用户输入] --> B1["拼接成 SQL 字符串\nSELECT * WHERE name='${input}'"]
         B1 --> C1[数据库解析执行\n输入被当作 SQL 指令]
         C1 --> D1["💥 注入成功"]
     end
 
-    subgraph 安全：参数化查询
+    subgraph safe["安全：参数化查询"]
         A2[用户输入] --> B2["发送预编译语句\nSELECT * WHERE name = ?"]
         B2 --> C2["输入作为独立参数传递\n数据库只当纯数据处理"]
         C2 --> D2["✅ 查询安全执行"]

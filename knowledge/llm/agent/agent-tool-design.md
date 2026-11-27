@@ -182,6 +182,7 @@ MCP 解决发现与调用协议，不替代工具本身的生产契约。把一�
 - [淘天 Agent 一面：工具调用、上下文与记忆更新](../../../interview/alibaba/ai/alibaba-ai-11.md)
 - [快手大模型应用 Java 实习一面：Agent、SkillHub 与 Vibe Coding](../../../interview/kuaishou/ai/kuaishou-ai-1.md)
 - [美团业务后台综合面：本体建模、Agent 评测与一致性](../../../interview/meituan/ai/meituan-ai-13.md)
+- [Coding Agent 项目面试：工具、上下文与记忆治理](../../../interview/common/agent/common-agent-2.md)
 - [腾讯 Agent 实习一面：RAG、工具与通信](../../../interview/tencent/ai/tencent-ai-10.md)
 - [字节 Agent 与全栈：视频工作流、工具权限与 RAG](../../../interview/bytedance/base/bytedance-base-42.md)
 <!-- interview-source-history:end -->

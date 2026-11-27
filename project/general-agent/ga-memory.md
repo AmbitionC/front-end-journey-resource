@@ -72,14 +72,9 @@ CREATE VIRTUAL TABLE memory_fts USING fts5(title, content);
 
 ### 读取：索引常驻，正文按需
 
-```mermaid
-flowchart LR
-    A[会话开始] --> B[取出当前项目和全局范围的标题，最多 30 条]
-    B --> C[标题列表放进上下文]
-    C --> D{模型判断某条相关}
-    D -- 是 --> E[调用记忆读取工具取正文]
-    D -- 否 --> F[不取]
-```
+![长期记忆的读取：会话开始时取出当前项目和全局范围的标题，最多 30 条，把标题列表放进上下文；模型判断某条相关时才调用记忆读取工具取正文，不相关就不取](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-ga-memory-read-index-then-body-v1.dark.png)
+
+*常驻上下文的只有标题列表，正文要模型判断相关才去取。*
 
 标题列表条数有上限，常驻上下文的代价很小。正文只在模型认为相关时才取。这和技能的按需加载是同一个思路。
 

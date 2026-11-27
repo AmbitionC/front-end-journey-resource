@@ -2,7 +2,7 @@
 
 ## 窗口里有什么
 
-![一次模型调用的上下文从上到下依次是系统提示词、工具定义、项目说明与长期记忆摘要、历史摘要、最近若干轮对话、本轮用户输入；越靠上越稳定，超过预算时先丢弃工具结果正文，再把早期对话合成摘要](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-general-agent-context-window-v1.png)
+![一次模型调用的上下文从上到下依次是系统提示词、工具定义、项目说明与长期记忆摘要、历史摘要、最近若干轮对话、本轮用户输入；越靠上越稳定，超过预算时先丢弃工具结果正文，再把早期对话合成摘要](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-general-agent-context-window-v2.dark.png)
 
 拼装顺序有讲究：稳定不变的内容放前面，变化快的放后面。多数模型接口支持对相同的前缀做缓存，命中缓存的部分计费更低、响应更快。如果把每轮都变的内容，比如当前时间，插在最前面，后面所有内容的缓存都会失效。
 
@@ -21,18 +21,9 @@
 
 ## 三道防线
 
-```mermaid
-flowchart TD
-    A[工具返回结果] --> B[第一道：进入上下文前截断]
-    B --> C[追加到消息列表]
-    C --> D{总量超过窗口的 80% 吗}
-    D -- 否 --> Z[正常调用模型]
-    D -- 是 --> E[第二道：清理旧的工具结果正文]
-    E --> F{降到阈值以下了吗}
-    F -- 是 --> Z
-    F -- 否 --> G[第三道：把早期对话压缩成摘要]
-    G --> Z
-```
+![上下文的三道防线：工具返回结果在进入上下文前先截断，追加到消息列表后检查总量是否超过窗口的 80%，没超过就正常调用模型；超过则清理旧的工具结果正文，降到阈值以下就调用模型，否则把早期对话压缩成摘要后再调用模型](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-ga-context-three-defenses-v1.dark.png)
+
+*三道防线从便宜到贵：截断每次都做，清理和压缩只在超限时才触发。*
 
 80% 是本项目的默认阈值，留出的余量用于放模型的下一次回复，可以按模型调整。
 

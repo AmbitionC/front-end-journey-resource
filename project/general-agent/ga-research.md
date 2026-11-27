@@ -2,7 +2,7 @@
 
 ## 部件关系
 
-![研究模式的部件关系：用户问题进入主管 Agent，主管拆出子问题派给三个并行的研究员，研究员调用搜索、读网页正文、压缩与摘录三个工具，并把来源登记到来源库；证据足够后由报告生成按编号引用来源库](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-general-agent-research-v1.png)
+![研究模式的部件关系：用户问题进入主管 Agent，主管拆出子问题派给三个并行的研究员，研究员调用搜索、读网页正文、压缩与摘录三个工具，并把来源登记到来源库；证据足够后由报告生成按编号引用来源库](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-general-agent-research-v2.dark.png)
 
 主管和研究员都是上一章的执行循环，区别只在提示词和工具集：
 
@@ -15,20 +15,9 @@
 
 ## 完整流程
 
-```mermaid
-flowchart TD
-    A[用户问题] --> B{问题够明确吗}
-    B -- 否 --> C[向用户提 1 到 3 个澄清问题] --> B
-    B -- 是 --> D[生成研究计划：若干子问题]
-    D --> E[展示计划，用户可修改]
-    E --> F[并行派出研究员]
-    F --> G[收回各子问题的结论和来源编号]
-    G --> H{证据足够回答原问题吗}
-    H -- 否，且未超预算 --> I[补充新的子问题] --> F
-    H -- 是，或已到预算上限 --> J[按提纲生成报告]
-    J --> K[校验每条引用都能对上来源]
-    K --> L[输出报告]
-```
+![研究模式的完整流程：用户问题不够明确时先向用户提 1 到 3 个澄清问题；明确后生成由若干子问题组成的研究计划并展示给用户修改，然后并行派出研究员，收回各子问题的结论和来源编号；证据不够且未超预算时补充新的子问题再派研究员，证据足够或已到预算上限时按提纲生成报告，校验每条引用都能对上来源后输出报告](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/project-ga-research-full-flow-v1.dark.png)
+
+*有两个回路：问题不明确时回去问用户，证据不够时补子问题再查，后一个受预算限制。*
 
 ### 澄清和计划
 

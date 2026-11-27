@@ -2367,6 +2367,25 @@
             "roleCategory": "AI 与 Agent 工程",
             "role": "Agent 开发",
             "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "阿里 AI 应用开发二面：项目验证、多智能体与记忆治理",
+            "key": "alibaba-ai-36",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "role": "AI 应用开发",
+            "roleCategory": "AI 与 Agent 工程",
+            "tags": [
+              "Agent",
+              "项目表达",
+              "缓存",
+              "测试",
+              "多智能体",
+              "记忆"
+            ],
+            "contentFormat": "short-qa-v2",
+            "updatedAt": "2026-11-27",
+            "department": "其他"
           }
         ]
       },
@@ -3528,6 +3547,21 @@
               "权限"
             ],
             "updatedAt": "2026-11-06",
+            "contentFormat": "short-qa-v2"
+          },
+          {
+            "label": "拼多多 HR 面：求职方向、毕业安排与双向沟通",
+            "key": "pdd-hr-1",
+            "isLeaf": true,
+            "filePath": "pinduoduo/hr",
+            "tags": [
+              "HR",
+              "求职方向",
+              "校招"
+            ],
+            "updatedAt": "2026-11-26",
+            "department": "其他",
+            "roleCategory": "HR 与求职沟通",
             "contentFormat": "short-qa-v2"
           }
         ]
@@ -5033,6 +5067,36 @@
             "department": "其他",
             "role": "服务端",
             "roleCategory": "后端与系统工程"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "common",
+    "label": "综合面经",
+    "nodeType": "company",
+    "children": [
+      {
+        "key": "common-department-other",
+        "label": "公司未明确",
+        "nodeType": "department",
+        "children": [
+          {
+            "key": "common-agent-2",
+            "label": "Coding Agent 项目面试：工具、上下文与记忆治理",
+            "isLeaf": true,
+            "filePath": "common/agent",
+            "department": "公司未明确",
+            "roleCategory": "Agent 项目面试",
+            "tags": [
+              "Coding Agent",
+              "上下文",
+              "记忆",
+              "工具"
+            ],
+            "updatedAt": "2026-11-26",
+            "contentFormat": "short-qa-v2"
           }
         ]
       }
