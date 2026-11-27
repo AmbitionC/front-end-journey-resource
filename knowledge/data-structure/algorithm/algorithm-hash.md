@@ -1,6 +1,6 @@
 哈希表把“按 key 查找”转化为“计算桶位置，再解决冲突”。平均 O(1) 不是魔法，也不是无条件保证；它依赖哈希函数、负载因子、冲突策略和扩容行为。
 
-![key 经过哈希函数取模落进桶；apple 和 grape 都落在 5 号桶发生碰撞，拉链法串成链，开放寻址则探测下一个空槽；负载因子到阈值后扩容，并按新容量重新定位](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/algorithm-hash-buckets-resize-v1.dark.png)
+![key 经过哈希函数取模落进桶；apple 和 grape 都落在 5 号桶发生碰撞，拉链法串成链，开放寻址则探测下一个空槽；负载因子到阈值后扩容，并按新容量重新定位](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/algorithm-hash-buckets-resize-anim.dark.png)
 *图：apple 和 grape 都落进 5 号桶形成碰撞：拉链法把它们串在同一个桶里，开放寻址让 grape 探测到下一个空槽。负载因子到阈值后扩容，所有 key 要按新容量重新定位，不能沿用旧下标。*
 
 ---
