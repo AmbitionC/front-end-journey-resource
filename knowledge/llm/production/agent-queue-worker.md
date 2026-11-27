@@ -2,7 +2,7 @@
 
 [RabbitMQ Reliability Guide](https://www.rabbitmq.com/docs/reliability)区分发布确认与消费者确认：前者确认生产者到 Broker 的责任转移，后者确认 Broker 到消费者的处理结果。两段确认都成功，也不等于业务副作用天然 exactly-once；网络在提交后断开时，重复投递仍然可能发生。
 
-![长任务的队列与 Worker 设计。客户端提交后拿到 jobId，之后轮询或订阅进度。提交接口在一个本地事务里写 job 行和 outbox 事件，大 Prompt、文件和工具结果放对象存储。Broker 里的消息只带 jobId、tenant、deadline 和 trace context。Worker 按固定顺序执行：第一步用条件更新拿租约和递增的 fencing token；第二步执行可重放的计算，在安全点写检查点；第三步对外部副作用使用 operationId 或幂等键；第四步原子保存结果、检查点和终态；第五步最后才 ACK 消息。执行失败先分类，不是一律重试：瞬态和限流退避加 jitter 后重投，Retry-After 优先；参数、权限和永久业务错误直接进入终态，不消耗重试次数；副作用状态未知时先用 operationId 对账，判断不了转人工；超过最大次数进入 DLQ 隔离，仍需有人处理。如果第四步完成、ACK 前断线，消息会重投，新 Worker 读到 job 已 completed 就直接 ACK，不会再发邮件或扣款](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-queue-worker-lease-ack-v2.dark.png)
+![长任务的队列与 Worker 设计。客户端提交后拿到 jobId，之后轮询或订阅进度。提交接口在一个本地事务里写 job 行和 outbox 事件，大 Prompt、文件和工具结果放对象存储。Broker 里的消息只带 jobId、tenant、deadline 和 trace context。Worker 按固定顺序执行：第一步用条件更新拿租约和递增的 fencing token；第二步执行可重放的计算，在安全点写检查点；第三步对外部副作用使用 operationId 或幂等键；第四步原子保存结果、检查点和终态；第五步最后才 ACK 消息。执行失败先分类，不是一律重试：瞬态和限流退避加 jitter 后重投，Retry-After 优先；参数、权限和永久业务错误直接进入终态，不消耗重试次数；副作用状态未知时先用 operationId 对账，判断不了转人工；超过最大次数进入 DLQ 隔离，仍需有人处理。如果第四步完成、ACK 前断线，消息会重投，新 Worker 读到 job 已 completed 就直接 ACK，不会再发邮件或扣款](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-queue-worker-lease-ack-anim.dark.png)
 *图：检查点只是执行中的可恢复点，不代表任务已提交；副作用完成后先原子保存结果和终态，最后才 ACK，完整顺序见下文。*
 
 ## 任务记录先于消息
