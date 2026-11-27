@@ -1,6 +1,6 @@
 图把“对象”和“关系”作为一等公民。选算法前先识别有向/无向、加权/无权、是否可能有负权、是否应为 DAG，以及图是否稀疏。BFS、DFS、拓扑排序和最短路回答的是不同问题，不能因为都能遍历就互换。
 
-![左侧 BFS 在无向无权图上从 A 分层：A，B 和 C，D，E；中间 DFS 首次访问顺序 A B D C E，访问 E 前从 C 回溯到 D；右侧另一张有向无环图 A 到 C、B 到 C、C 到 D，A 和 B 可交换顺序](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/algorithm-graph-traversal-topo-v1.dark.png)
+![左侧 BFS 在无向无权图上从 A 分层：A，B 和 C，D，E；中间 DFS 首次访问顺序 A B D C E，访问 E 前从 C 回溯到 D；右侧另一张有向无环图 A 到 C、B 到 C、C 到 D，A 和 B 可交换顺序](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/algorithm-graph-traversal-topo-anim.dark.png)
 *图：左、中两图仅有 AB、AC、BD、CD、DE 五条无向边；BFS 按边数分层，DFS 标记首次访问次序，序列相邻不代表存在直接边。右图是另一张有向图，A、B 可交换顺序，但都必须先于 C。加权最短路的条件另见下文。*
 
 ## 表示决定基础成本
