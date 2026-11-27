@@ -1,4 +1,4 @@
-![Cache-aside 时序：读路径先查 Redis，未命中再读数据库并带 TTL 回填；写路径先更新数据库，提交后删除缓存。右侧说明慢读请求在删除之后回填旧值造成的不一致窗口，以及并发 miss 用 single-flight 合并成一次查库](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/redis-cache-aside-consistency-window-v2.dark.png)
+![Cache-aside 时序：读路径先查 Redis，未命中再读数据库并带 TTL 回填；写路径先更新数据库，提交后删除缓存。右侧说明慢读请求在删除之后回填旧值造成的不一致窗口，以及并发 miss 用 single-flight 合并成一次查库](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/redis-cache-aside-consistency-window-anim.dark.png)
 *图：读路径未命中才查库，并带 TTL 回填；写路径先改库再删缓存。删缓存挡不住慢请求把旧值回填，所以 TTL 是兜底。*
 
 ---

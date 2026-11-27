@@ -499,14 +499,19 @@
       "resumeExistingDiagramMigration": false,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/prompt-context-compression-budget-pipeline-v2.aj.mjs",
-          "sourceSha256": "7a9a43e3c6ae8fb031a18144cb0ad52955a1542fe6c189ed5ed11be1e91b3f91",
-          "darkPng": "images/prompt-context-compression-budget-pipeline-v2.dark.png",
-          "lightPng": "images/prompt-context-compression-budget-pipeline-v2.light.png",
+          "source": "images/diagram-sources/prompt-context-compression-budget-anim.aj.mjs",
+          "sourceSha256": "a8e64ccc71f4d2d1de07d26c139fcfff13299603165120b7de083c0f053d7988",
+          "darkPng": "images/prompt-context-compression-budget-anim.dark.png",
+          "lightPng": "images/prompt-context-compression-budget-anim.light.png",
           "darkSha256": "512dd870ba24d8c1c87eb64094fe2b7bfd36760058670d6be2722a1b6d715049",
-          "lightSha256": "ac7db2ad35ca3abeb8555d15dad722173131f6c01a4ea0eec43eb7edb836ee31"
+          "lightSha256": "ac7db2ad35ca3abeb8555d15dad722173131f6c01a4ea0eec43eb7edb836ee31",
+          "darkSvg": "images/prompt-context-compression-budget-anim.dark.svg",
+          "lightSvg": "images/prompt-context-compression-budget-anim.light.svg",
+          "darkSvgSha256": "ee538e22bca45ef90e78d9012c7ca13bf482eef0f74d597eab1e2b053c632209",
+          "lightSvgSha256": "2dafcd6a8d55e729fc99a092b70f8accc00658bdb89136e1b7654142b21c4bc4"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "context-engineering",
@@ -841,14 +846,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/llm-sse-chunk-vs-event-boundaries-v4.aj.mjs",
-          "sourceSha256": "958c488558b7d255e44ace540318fd2dfdf0ef027f572ea61bf9bf11261c7017",
-          "darkPng": "images/llm-sse-chunk-vs-event-boundaries-v4.dark.png",
-          "lightPng": "images/llm-sse-chunk-vs-event-boundaries-v4.light.png",
+          "source": "images/diagram-sources/llm-sse-chunk-vs-event-boundaries-anim.aj.mjs",
+          "sourceSha256": "0ad16407366344615c267951fb99bb783fe48893e6a33395c2b708e857b19863",
+          "darkPng": "images/llm-sse-chunk-vs-event-boundaries-anim.dark.png",
+          "lightPng": "images/llm-sse-chunk-vs-event-boundaries-anim.light.png",
           "darkSha256": "7f39c32c9e1f484c03d62087895f68ea393fe0051f9fdada36418ba1e27ee326",
-          "lightSha256": "49e50d33357be7e4331e467130d8f388d0d3830c68438209d3a60c8f3ef0cee4"
+          "lightSha256": "49e50d33357be7e4331e467130d8f388d0d3830c68438209d3a60c8f3ef0cee4",
+          "darkSvg": "images/llm-sse-chunk-vs-event-boundaries-anim.dark.svg",
+          "lightSvg": "images/llm-sse-chunk-vs-event-boundaries-anim.light.svg",
+          "darkSvgSha256": "21bf6ce0ebf3f7d423b532b8904372f0ecb5ecb6b1393545b86cb32693122f44",
+          "lightSvgSha256": "39ef9bdf62a4ff23e62839db2264e87c46b6ad7fc0d0915dc026723ac36e1d81"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "function-calling",
@@ -4049,14 +4059,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/redis-cache-aside-consistency-window-v2.aj.mjs",
-          "sourceSha256": "faea28d760b0df4a82b1073ef4d84ad16866094c31e3ae5905bf60243a7eec43",
-          "darkPng": "images/redis-cache-aside-consistency-window-v2.dark.png",
-          "lightPng": "images/redis-cache-aside-consistency-window-v2.light.png",
+          "source": "images/diagram-sources/redis-cache-aside-consistency-window-anim.aj.mjs",
+          "sourceSha256": "6fe74d45ce0007e39b57406440f59b98dff0d68b0d6925a4671f6f4cc6011add",
+          "darkPng": "images/redis-cache-aside-consistency-window-anim.dark.png",
+          "lightPng": "images/redis-cache-aside-consistency-window-anim.light.png",
           "darkSha256": "f92ea26443f7439faa475af8c307888172bef38ac0b789da658683853e8002e6",
-          "lightSha256": "63982aa273b368f41408fec8b5ccff77a75413e3bc283a1c5a2e26674f76258d"
+          "lightSha256": "63982aa273b368f41408fec8b5ccff77a75413e3bc283a1c5a2e26674f76258d",
+          "darkSvg": "images/redis-cache-aside-consistency-window-anim.dark.svg",
+          "lightSvg": "images/redis-cache-aside-consistency-window-anim.light.svg",
+          "darkSvgSha256": "acbb82651271411ca3bfb429cc2b4c39182accd5e95583491380a7a727bc5c63",
+          "lightSvgSha256": "3ac9f1eda2b42d2171e036cf9b3d760b172d529a540fd7deb4a362794b2a63a5"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "agent-state-storage",
@@ -5203,14 +5218,19 @@
       "resumeExistingDiagramMigration": false,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/tcp-active-close-time-wait-v4.aj.mjs",
-          "sourceSha256": "4710f7583d314755c88776bce1b9388807a8a5dff3d43be7e1d5023b8cebb15c",
-          "darkPng": "images/tcp-active-close-time-wait-v4.dark.png",
-          "lightPng": "images/tcp-active-close-time-wait-v4.light.png",
+          "source": "images/diagram-sources/tcp-active-close-time-wait-anim.aj.mjs",
+          "sourceSha256": "023f1d5d74c05e1070c14ae7350fcc50e38828ba81223d4363eee526653937b9",
+          "darkPng": "images/tcp-active-close-time-wait-anim.dark.png",
+          "lightPng": "images/tcp-active-close-time-wait-anim.light.png",
           "darkSha256": "60986e8eb722f15341ec66aaaf4fe1438b7660e47ec16c139c1b8959d9d2ce6e",
-          "lightSha256": "2a7c03892840c11c49e0845a915e3ad216a87f36492398e199eefc86d9de64c3"
+          "lightSha256": "2a7c03892840c11c49e0845a915e3ad216a87f36492398e199eefc86d9de64c3",
+          "darkSvg": "images/tcp-active-close-time-wait-anim.dark.svg",
+          "lightSvg": "images/tcp-active-close-time-wait-anim.light.svg",
+          "darkSvgSha256": "de207aee4c0afd7330049fe2a1019dad5c1153ce62562ea986f46c8d0bb0b249",
+          "lightSvgSha256": "34f189570267531a154b138fe52514b70fe19db218b0f2b1898a1cac6a2dd9d3"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "http-message",
@@ -5501,14 +5521,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/algorithm-hash-buckets-resize-v1.aj.mjs",
-          "sourceSha256": "af727c45ccea7293f8b66f54349a29f06b3d8b3bbb3875c05f3339b6733e5d76",
-          "darkPng": "images/algorithm-hash-buckets-resize-v1.dark.png",
-          "lightPng": "images/algorithm-hash-buckets-resize-v1.light.png",
+          "source": "images/diagram-sources/algorithm-hash-buckets-resize-anim.aj.mjs",
+          "sourceSha256": "e329f3a214226016d362eaa8a41677bd35ef98dca105edaa4f8fd9db4c406433",
+          "darkPng": "images/algorithm-hash-buckets-resize-anim.dark.png",
+          "lightPng": "images/algorithm-hash-buckets-resize-anim.light.png",
           "darkSha256": "a9c160b9de15a28604a1421663e5e9aa87011fb333e8bfcd96df26d114491b3d",
-          "lightSha256": "d6a752f386059279b7c9cddefb584d5f33cff308974f879e89ef469db139de2f"
+          "lightSha256": "d6a752f386059279b7c9cddefb584d5f33cff308974f879e89ef469db139de2f",
+          "darkSvg": "images/algorithm-hash-buckets-resize-anim.dark.svg",
+          "lightSvg": "images/algorithm-hash-buckets-resize-anim.light.svg",
+          "darkSvgSha256": "1993a516f5134b79b22cf9589ee117ce68e10a65b7051a5da707626ada1c5f20",
+          "lightSvgSha256": "b256983aec511e0599a11b48cdb0a9355fdac1a5184824afd7c418fa4f7f5f8c"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "algorithm-loop",
@@ -5529,14 +5554,19 @@
       "publishedEvidence": null,
       "replacementAssets": [
         {
-          "source": "images/diagram-sources/recursion-divide-conquer-memo-v2.aj.mjs",
-          "sourceSha256": "ae5285e4deb2a9a07c93df3a7ef61a406aaafeea92c916ab5833a08ccf546a02",
-          "darkPng": "images/recursion-divide-conquer-memo-v2.dark.png",
-          "lightPng": "images/recursion-divide-conquer-memo-v2.light.png",
+          "source": "images/diagram-sources/recursion-fib-memo-anim.aj.mjs",
+          "sourceSha256": "80a781445b7c0ab050e3cd75de9e13ca4c369b768882b8e1434b12bae77265d7",
+          "darkPng": "images/recursion-fib-memo-anim.dark.png",
+          "lightPng": "images/recursion-fib-memo-anim.light.png",
           "darkSha256": "bce84fd096f2665432194d8207d5527a410f249f802156228184e7c07e82d56b",
-          "lightSha256": "94933feb42b5b06dbed8af8bdf9cee2cd2b5b0469451d292485aa2c5667d190b"
+          "lightSha256": "94933feb42b5b06dbed8af8bdf9cee2cd2b5b0469451d292485aa2c5667d190b",
+          "darkSvg": "images/recursion-fib-memo-anim.dark.svg",
+          "lightSvg": "images/recursion-fib-memo-anim.light.svg",
+          "darkSvgSha256": "35b0cba9532cdbd9f329f03974341db18e4f80918bf9646a44bb546322751682",
+          "lightSvgSha256": "af1a8958b1aab7605fc77f6787c8215b7fd2fd62c79a43f651246a70cbdbea03"
         }
-      ]
+      ],
+      "animated": true
     },
     {
       "key": "algorithm-sorting",
