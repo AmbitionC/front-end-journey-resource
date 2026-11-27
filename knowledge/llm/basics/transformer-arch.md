@@ -99,7 +99,7 @@ $$
 
 Softmax 后，上三角被屏蔽位置的权重变为 0。这样，即使训练时整段文本一次送入模型，每个位置也无法看到未来 Token。
 
-![Token 向量投影为 Q、K、V；Q 与 K 打分后经过因果掩码和 Softmax 得到下三角注意力权重，再对 V 加权求和得到每个位置的新表示](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/transformer-arch-causal-attention-v1.dark.png)
+![Token 向量投影为 Q、K、V；Q 与 K 打分后经过因果掩码和 Softmax 得到下三角注意力权重，再对 V 加权求和得到每个位置的新表示](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/transformer-arch-causal-attention-anim.dark.png)
 
 *图：V 不参与 QK 相似度计算，而是在注意力权重确定后被加权聚合。*
 

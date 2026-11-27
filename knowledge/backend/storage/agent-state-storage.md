@@ -2,7 +2,7 @@ Agent 状态不是一段可以无限追加的聊天记录。生产系统至少�
 
 [LangGraph Persistence](https://docs.langchain.com/oss/python/langgraph/persistence)用 thread 组织连续执行，并在图步骤边界保存 checkpoint。这是一个具体框架的实现，但它清晰展示了“会话容器”和“某次执行快照”不是同一概念。
 
-![旧 Worker 把检查点快照、追加事件和制品、幂等账本写到容器之外；崩溃或迁移后，新 Worker 先拿新 lease 和 fencing token 挡住旧 Worker，再载入可信快照、从事件序号往后重放、逐个查询外部操作状态，已提交的取回结果、未知的先对账，验收通过后才继续](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-state-worker-migration-recovery-v3.dark.png)
+![旧 Worker 把检查点快照、追加事件和制品、幂等账本写到容器之外；崩溃或迁移后，新 Worker 先拿新 lease 和 fencing token 挡住旧 Worker，再载入可信快照、从事件序号往后重放、逐个查询外部操作状态，已提交的取回结果、未知的先对账，验收通过后才继续](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-state-worker-migration-recovery-anim.dark.png)
 *图：运行时可以替换，任务身份、版本化状态和已提交副作用必须留在容器之外；图中的账本状态用于指导恢复，不能单独保证跨系统恰好一次。*
 
 ## 聚合与标识

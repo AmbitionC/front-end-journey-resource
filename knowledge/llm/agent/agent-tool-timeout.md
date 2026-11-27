@@ -17,7 +17,7 @@ attemptTimeout <= remaining - validationReserve - responseReserve
 
 因此状态至少区分 `timeout_observed`、`cancel_requested`、`cancelled_confirmed`、`committed` 与 `unknown`。本地 Promise 抛出 `AbortError` 只能证明本地等待结束，不能把订单标为“未创建”。
 
-![每次尝试前先算全局剩余时间，再带稳定 operationId 调用工具；成功就校验结果后完成；超时则请求取消并查询操作状态：已提交就取回原结果校验、不重做，状态未知就隔离对账或转人工，确认已取消才进入重试闸门，暂时性错误、幂等或可去重、时间和次数都够时退避加抖动后再试，任一不满足就停止或升级](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-tool-timeout-cancel-reconcile-v2.dark.png)
+![每次尝试前先算全局剩余时间，再带稳定 operationId 调用工具；成功就校验结果后完成；超时则请求取消并查询操作状态：已提交就取回原结果校验、不重做，状态未知就隔离对账或转人工，确认已取消才进入重试闸门，暂时性错误、幂等或可去重、时间和次数都够时退避加抖动后再试，任一不满足就停止或升级](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/agent-tool-timeout-cancel-reconcile-anim.dark.png)
 *图：取消不是回滚；已提交和迟到结果进入获取/对账，未知状态进入隔离或人工处理。*
 
 ## 为副作用建立 Operation ID

@@ -1,4 +1,4 @@
-![三种同步原语：互斥锁中 T1 加锁、改 count、解锁，T2 等到随后成功加同一把锁才读，T1 解锁前的写对 T2 可见；条件变量中等待方加锁后谓词不成立就 wait 并原子放锁，通知方加锁改谓词、解锁再 notify，等待方被唤醒后重新拿锁并用 while 重查谓词；信号量用 N 个许可控制有限资源，wait 在计数为 0 时阻塞，post 归还许可且可由别的线程调用；不加锁并发 count++ 会因读、加、写交错丢失更新](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/thread-sync-mutex-condvar-semaphore-v2.dark.png)
+![三种同步原语：互斥锁中 T1 加锁、改 count、解锁，T2 等到随后成功加同一把锁才读，T1 解锁前的写对 T2 可见；条件变量中等待方加锁后谓词不成立就 wait 并原子放锁，通知方加锁改谓词、解锁再 notify，等待方被唤醒后重新拿锁并用 while 重查谓词；信号量用 N 个许可控制有限资源，wait 在计数为 0 时阻塞，post 归还许可且可由别的线程调用；不加锁并发 count++ 会因读、加、写交错丢失更新](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/thread-sync-mutex-condvar-semaphore-anim.dark.png)
 *图：左栏虚线是 unlock(m) 到随后成功获取同一把锁的 lock(m)，读写本身不建立同步；中栏等待方醒来后重新拿锁并用 while 重查谓词，notify 本身不建立可见性；右栏是没有所有者的计数信号量。Java 的 notify 必须持有同一对象的 monitor，数据竞争后果按 JMM 分析。*
 
 ---
