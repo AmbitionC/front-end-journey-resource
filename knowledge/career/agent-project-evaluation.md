@@ -107,6 +107,7 @@ Canary 让少量合格用户真实使用，限制工具和预算，设置自动�
 - [淘天 AI 应用开发暑期实习二面：RAG 评测、工具与成本控制](../../interview/alibaba/ai/alibaba-ai-31.md)
 - [字节后端与 Agent 开发三面：领域建模、项目评测与基础](../../interview/bytedance/base/bytedance-base-80.md)
 - [阿里国际 AI 应用研发一面：JDK 8、消息可靠性与 RAG](../../interview/alibaba/ai/alibaba-ai-25.md)
+- [优酷 AI 应用二面：业务数据、编排、上下文与评测](../../interview/alibaba/ai/alibaba-ai-37.md)
 - [字节后端与 Agent HR 面：能力复用、主动性与日常 AI 实践](../../interview/bytedance/base/bytedance-base-83.md)
 - [字节 Agent 后端实习一面：LangGraph、评测集与混合检索](../../interview/bytedance/base/bytedance-base-22.md)
 - [字节 TRAE 后端秋招二面：项目逻辑、工具与编辑距离](../../interview/bytedance/base/bytedance-base-76.md)

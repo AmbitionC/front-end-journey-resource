@@ -195,6 +195,7 @@ usage 是提供商对这次调用的计量结果，tokenizer 的事前估算用�
 - [百度 AI 应用社招一面：工作区权限、工具发现与上下文](../../../interview/baidu/ai/baidu-ai-7.md)
 - [百度大模型研发一面：Context、Harness 与 RAG](../../../interview/baidu/ai/baidu-ai-1.md)
 - [字节 Agent 开发一面：评分、Harness 与任务可靠性](../../../interview/bytedance/base/bytedance-base-57.md)
+- [优酷 AI 应用二面：业务数据、编排、上下文与评测](../../../interview/alibaba/ai/alibaba-ai-37.md)
 - [腾讯混元 AI 后台开发暑期实习一面：数据安全、OpenClaw 与并发手写](../../../interview/tencent/ai/tencent-ai-27.md)
 - [腾讯营销后端一面：Skill 加载、上下文压缩与多路归并](../../../interview/tencent/ai/tencent-ai-21.md)
 - [腾讯微信支付后台开发日常实习一面](../../../interview/tencent/ai/tencent-ai-5.md)

@@ -2386,6 +2386,24 @@
             "contentFormat": "short-qa-v2",
             "updatedAt": "2026-11-27",
             "department": "其他"
+          },
+          {
+            "label": "优酷 AI 应用二面：业务数据、编排、上下文与评测",
+            "key": "alibaba-ai-37",
+            "isLeaf": true,
+            "filePath": "alibaba/ai",
+            "department": "其他",
+            "role": "AI 应用开发工程师",
+            "roleCategory": "AI 与 Agent 工程",
+            "tags": [
+              "Agent",
+              "Workflow",
+              "上下文",
+              "评测",
+              "项目表达"
+            ],
+            "contentFormat": "short-qa-v2",
+            "updatedAt": "2026-11-27"
           }
         ]
       },
