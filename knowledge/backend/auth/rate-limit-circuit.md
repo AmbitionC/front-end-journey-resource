@@ -1,4 +1,4 @@
-![请求先经过限流器，再经过熔断器，最后到 LLM 或下游服务。限流器保护容量，可按 IP、用户、API Key 和模型分层限制，令牌桶允许受控突发；超限返回 429，可以附 Retry-After，但不是必带。分层维度的用途：IP 防爬虫和 DDoS，用户与 API Key 控制单方消耗，模型维度控制高成本模型用量。熔断器隔离故障，它看下游错误率，不限制总量。熔断器有三个状态：Closed 时正常放行，错误率超过阈值且样本量足够就转为 Open；Open 时直接快速失败，等待 resetTimeout 后进入 Half-open；Half-open 只放行少量探测请求，探测成功回到 Closed，探测失败回到 Open。Open 时走降级：返回缓存结果、换更小的模型、排队，或返回带 retryAfter 的友好错误；降级是为了保住核心功能，不是掩盖故障](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rate-limit-circuit-breaker-v2.dark.png)
+![请求先经过限流器，再经过熔断器，最后到 LLM 或下游服务。限流器保护容量，可按 IP、用户、API Key 和模型分层限制，令牌桶允许受控突发；超限返回 429，可以附 Retry-After，但不是必带。分层维度的用途：IP 防爬虫和 DDoS，用户与 API Key 控制单方消耗，模型维度控制高成本模型用量。熔断器隔离故障，它看下游错误率，不限制总量。熔断器有三个状态：Closed 时正常放行，错误率超过阈值且样本量足够就转为 Open；Open 时直接快速失败，等待 resetTimeout 后进入 Half-open；Half-open 只放行少量探测请求，探测成功回到 Closed，探测失败回到 Open。Open 时走降级：返回缓存结果、换更小的模型、排队，或返回带 retryAfter 的友好错误；降级是为了保住核心功能，不是掩盖故障](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/rate-limit-circuit-breaker-anim.dark.png)
 *图：限流保护容量，熔断隔离故障，降级保住核心功能。429 可以附 Retry-After，但不是必带；Half-open 只用有限的探测请求判断下游是否恢复。*
 
 ---
