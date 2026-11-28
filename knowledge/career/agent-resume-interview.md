@@ -201,6 +201,7 @@ AI/Agent 岗位面试通常覆盖以下几个方向。题目年年在变，但�
 - [字节全栈一面：RAG、Java 与线程池](../../interview/bytedance/base/bytedance-base-37.md)
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../interview/bytedance/base/bytedance-base-48.md)
 - [字节全栈：多智能体导购、客户端与系统评测](../../interview/bytedance/base/bytedance-base-43.md)
+- [美团大模型应用实习一面：归一化、QLoRA 与推理](../../interview/meituan/ai/meituan-ai-17.md)
 - [字节 Agent：幻觉、任务恢复与 Java 基础](../../interview/bytedance/base/bytedance-base-50.md)
 - [字节 Agent 实习：异步消息、上下文与容器隔离](../../interview/bytedance/base/bytedance-base-41.md)
 - [字节全栈二、三面：幂等、索引与字符串匹配](../../interview/bytedance/base/bytedance-base-32.md)

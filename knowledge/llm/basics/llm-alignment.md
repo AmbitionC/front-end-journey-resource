@@ -148,6 +148,7 @@ SFT 使用“输入—理想输出”示范继续训练模型。它适合教授�
 
 <!-- interview-source-history:start -->
 - [阿里国际 Accio Agent 算法一面：数据合成、任务环境与 GUI Agent](../../../interview/alibaba/ai/alibaba-ai-3.md)
+- [美团大模型应用实习一面：归一化、QLoRA 与推理](../../../interview/meituan/ai/meituan-ai-17.md)
 - [阿里大模型算法校招：Attention、后训练与 Agent 评测](../../../interview/alibaba/ai/alibaba-ai-24.md)
 - [淘天 AI Agent / 大模型应用研发二面：幻觉治理、Action 与轨迹偏好](../../../interview/alibaba/ai/alibaba-ai-30.md)
 - [华为后训练与强化学习实习一面：分类模型、训练并行与排序](../../../interview/huawei/ai/huawei-ai-4.md)
