@@ -1151,6 +1151,22 @@
             "department": "其他",
             "updatedAt": "2026-11-16",
             "role": "后端开发 / Agent 开发"
+          },
+          {
+            "label": "字节 AIDP 后端实习二面：多 Agent、RAG 与字符串",
+            "key": "bytedance-base-84",
+            "isLeaf": true,
+            "filePath": "bytedance/base",
+            "tags": [
+              "Agent",
+              "RAG",
+              "项目表达",
+              "算法"
+            ],
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "role": "后端开发实习",
+            "updatedAt": "2026-11-28"
           }
         ]
       },

@@ -208,6 +208,7 @@
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节 AIDP 后端实习二面：多 Agent、RAG 与字符串](../../interview/bytedance/base/bytedance-base-84.md)
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../interview/bytedance/base/bytedance-base-48.md)
 - [字节全栈：多智能体导购、客户端与系统评测](../../interview/bytedance/base/bytedance-base-43.md)
 - [字节后端与 Agent 开发二面：本体平台、延迟任务与注意力](../../interview/bytedance/base/bytedance-base-81.md)

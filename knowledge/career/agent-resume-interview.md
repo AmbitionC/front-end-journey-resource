@@ -190,6 +190,7 @@ AI/Agent 岗位面试通常覆盖以下几个方向。题目年年在变，但�
 - [阿里淘宝闪购 Agent 算法实习一面：框架、记忆与线上排障](../../interview/alibaba/ai/alibaba-ai-6.md)
 
 <!-- interview-source-history:start -->
+- [字节 AIDP 后端实习二面：多 Agent、RAG 与字符串](../../interview/bytedance/base/bytedance-base-84.md)
 - [阿里云后端与 Agent HR 面：个人贡献、协作与求职动机](../../interview/alibaba/ai/alibaba-ai-29.md)
 - [字节全栈一二面：调度器、流式恢复与浏览器网络](../../interview/bytedance/base/bytedance-base-53.md)
 - [字节 AI 应用一、二面：MySQL、Redis 与编程基础](../../interview/bytedance/base/bytedance-base-36.md)
