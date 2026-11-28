@@ -21,6 +21,40 @@ function balanced(text) {
 }
 ```
 
+## 最长有效括号：用下标栈界定连续区间
+
+“判断整串括号是否匹配”和“找最长连续有效括号子串”是不同任务。仅统计左右括号总数，无法排除先出现右括号的非法前缀；只保存括号字符，也不足以计算连续区间的长度。这里自选教学合同：输入只含 ASCII `(`、`)` 的字符串，返回最长连续有效括号子串的长度，空串为 0，非法字符拒绝。原面经仅给题名，没有输入规模、语言和完整现场约束，以下是编辑整理的解法。
+
+栈保存**下标**：底部是最近一个无法匹配的右括号位置，初始设为 -1；其上是尚未匹配的左括号位置。遇左括号入栈；遇右括号，弹掉栈顶。若弹完栈空，当前右括号成为新的非法边界；否则当前下标减去栈顶，就是以当前位置结尾的最长有效区间长度。
+
+以 `)()())` 为例：
+
+| 当前下标与字符 | 操作后的栈 | 本次有效长度 | 当前最长 |
+| --- | --- | --- | --- |
+| 初始 | `[-1]` | — | 0 |
+| `0: )` | `[0]`，重设非法边界 | — | 0 |
+| `1: (` | `[0,1]` | — | 0 |
+| `2: )` | `[0]` | `2-0=2` | 2 |
+| `3: (` | `[0,3]` | — | 2 |
+| `4: )` | `[0]` | `4-0=4` | 4 |
+| `5: )` | `[5]`，重设非法边界 | — | 4 |
+
+每个右括号要么匹配最近的未匹配左括号，要么形成新的非法边界。匹配后剩余栈顶是当前有效后缀不能越过的位置；栈顶之后到当前位置都已匹配，因此差值既给出一个合法区间，也排除了跨越未匹配符号的更长连续区间。这是本教学实现的不变量论证。
+
+```javascript
+function longestValidParentheses(s){
+ if(typeof s!=='string'||/[^()]/u.test(s))throw new TypeError('Expected a string containing only parentheses');
+ const stack=[-1];let best=0;
+ for(let i=0;i<s.length;i++){
+  if(s[i]==='(')stack.push(i);
+  else{stack.pop();if(stack.length===0)stack.push(i);else best=Math.max(best,i-stack[stack.length-1]);}
+ }
+ return best;
+}
+```
+
+每个下标至多入栈、出栈一次，时间 O(n)、最坏额外空间 O(n)，不修改输入。`(()` 返回 2，`()(())` 返回 6；前者还有未匹配左括号，后者说明相邻和嵌套的有效片段可以连成一个连续区间。代码已与独立枚举所有子串的参考实现对照，穷举长度 0 至 15 的 65,535 个括号串，并检查非法输入和长串；这证明了这些测试范围内的行为，不能代替上述不变量与现场题目确认。
+
 ## 队列：两端分工
 
 队列在 tail enqueue，从 head dequeue。链表维护 head/tail 可 O(1)；环形数组用 head、tail 和 size 避免移动元素。JavaScript 数组 `shift()` 可能重排索引，频繁出队不宜用它模拟高吞吐队列。
@@ -103,6 +137,7 @@ dequeue():
 
 <!-- interview-source-history:start -->
 - [阿里云 Agent Infra 一面：SGX、吞吐与日志写入](../../../interview/alibaba/ai/alibaba-ai-8.md)
+- [美团大模型应用实习一面：归一化、QLoRA 与推理](../../../interview/meituan/ai/meituan-ai-17.md)
 - [淘天 AI 应用研发实习：后端基础、Transformer 与训练](../../../interview/alibaba/ai/alibaba-ai-32.md)
 <!-- interview-source-history:end -->
 

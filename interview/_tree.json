@@ -4479,6 +4479,22 @@
             "contentFormat": "short-qa-v2",
             "department": "其他",
             "updatedAt": "2026-11-15"
+          },
+          {
+            "label": "美团大模型应用实习一面：归一化、QLoRA 与推理",
+            "key": "meituan-ai-17",
+            "isLeaf": true,
+            "filePath": "meituan/ai",
+            "tags": [
+              "大模型",
+              "微调",
+              "推理",
+              "算法"
+            ],
+            "contentFormat": "short-qa-v2",
+            "department": "其他",
+            "role": "大模型应用实习",
+            "updatedAt": "2026-11-28"
           }
         ]
       },

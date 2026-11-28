@@ -83,6 +83,19 @@ $$
 - MQA 让多个 Query 头共享一组 K/V 头，缓存最省，但可能影响质量。
 - GQA 把 Query 头分组，每组共享 K/V，折中质量与推理效率。原始 GQA 论文报告其质量接近 MHA，同时速度接近 MQA。
 
+## PagedAttention：逻辑连续，物理按块分配
+
+一个请求的 Token 在逻辑上按位置排列，K/V 不必在显存中为整个最大长度预留一段连续大空间。分页缓存把位置划为固定大小的逻辑块，再由块表找到物理块；新增 Token 用尽当前块后才需要更多块。注意力计算按映射读取 K/V，仍须尊重原有序列位置与掩码。
+
+自选教学例子：每块容纳 4 个 Token，一个已有 7 个 Token 的请求需要 2 块。逻辑块 0、1 可映射到物理块 5、2；逻辑位置 6 对应 `floor(6/4)=1`、块内偏移 2，于是读取物理块 2 的偏移 2。物理编号不表示时间顺序，也不能直接把两个物理块的编号排序后读取。最后一块在此例空余 1 个槽位；分页并没有让碎片完全消失。
+
+![七个Token以四个一块划成逻辑块0和1，经块表映射到物理块5和2；位置6读取物理块2偏移2，尾块仍有一个空槽](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/llm-token-context-paged-block-map-v1.dark.png)
+*图：按逻辑位置查块表，再取块内偏移；物理编号不代表时间顺序。*
+
+收益来自减少最大长度预留与连续分配带来的浪费，从而可能提高同等显存下的并发容量；它不改变每个 Token 的 K/V 元素数量，也不把全量注意力变成线性时间。还要付出块表、分配管理和相关内核的成本，最终收益由负载与实现决定。它也不等于操作系统把推理缓存自动换到 CPU。
+
+[vLLM 的 Paged Attention 设计文档](https://docs.vllm.ai/en/latest/design/paged_attention/)解释了分页 K/V 布局，同时明确提醒：其中逐步讲解的旧独立内核已不是当前实现，现有实现通过注意力后端和缓存管理器生成的块表协作。理解布局时可以参考历史示意，不能照抄旧文件名当作当前代码路径。
+
 ## Prefix Caching 与 KV Cache 的区别
 
 KV Cache 通常指**一次请求内部**为自回归解码保存的状态；Prefix Caching 则尝试在**多个请求之间**复用相同前缀对应的已计算结果。要提高命中率，应把稳定内容放前面、动态内容放后面，并避免对前缀做无意义改写。
@@ -164,6 +177,7 @@ Llama 3 8B 有 32 层、8 个 KV 头、每头 128 维，用 FP16 存储。每个
 - [腾讯云智二面：Spring、Java 内存模型与 IO 多路复用](../../../interview/tencent/ai/tencent-ai-32.md)
 - [字节 Agent 开发日常实习一面（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-5.md)
 - [字节 AI 全栈实习：记忆提炼、群聊搜索与 AI Coding](../../../interview/bytedance/base/bytedance-base-48.md)
+- [美团大模型应用实习一面：归一化、QLoRA 与推理](../../../interview/meituan/ai/meituan-ai-17.md)
 - [字节 Agent 开发一面：上下文工程、协作与编程基础（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-19.md)
 - [阿里云后端与 Agent 二面：领域建模、训练并行与 Java 基础](../../../interview/alibaba/ai/alibaba-ai-28.md)
 - [字节 Agent 暑期实习一面：摘要、工具预算与链表](../../../interview/bytedance/base/bytedance-base-27.md)
@@ -181,3 +195,5 @@ Llama 3 8B 有 32 层、8 个 KV 头、每头 128 维，用 FP16 存储。每个
 - [OpenAI API：Prompt caching](https://developers.openai.com/api/docs/guides/prompt-caching)
 - [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180)
 - [Mooncake: A KVCache-centric Disaggregated Architecture for LLM Serving](https://arxiv.org/abs/2407.00079)
+
+- [vLLM：Paged Attention 布局与历史内核说明](https://docs.vllm.ai/en/latest/design/paged_attention/)

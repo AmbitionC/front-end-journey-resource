@@ -196,6 +196,14 @@ Pre-Norm 往往更容易稳定训练很深的网络，但不能简单理解为�
 
 很多现代语言模型还用 RMSNorm 替代 LayerNorm。RMSNorm 只依据均方根做缩放，不执行减均值操作，计算更简单；其原始研究见 [Root Mean Square Layer Normalization](https://arxiv.org/abs/1910.07467)。
 
+## LayerNorm 与 BatchNorm：统计的是哪些位置
+
+在常见语言模型输入形状 `(batch, sequence, hidden)` 下，`LayerNorm(hidden)` 对每个 Token 的隐藏维计算均值与方差；某个 Token 的归一化不依赖同批其他样本，也不需要跨时间位置收集统计量。[PyTorch LayerNorm 文档](https://docs.pytorch.org/docs/2.15/generated/torch.nn.LayerNorm.html)明确规定其统计范围为 `normalized_shape` 对应的末尾维度，训练和评估都使用当前输入统计量。
+
+BatchNorm 则按通道汇总批次等维度的统计量。例如对 `(N,C,L)` 使用 BatchNorm1d，会在每个通道的 `(N,L)` 切片上统计；默认训练时更新运行统计量，评估时使用它们，关闭 `track_running_stats` 后行为又不同。不能把“训练时统计当前批次”和“推理时一定重新统计批次”混为一谈。[BatchNorm1d 文档](https://docs.pytorch.org/docs/2.15/generated/torch.nn.BatchNorm1d.html)给出了这些前提。
+
+因此，语言模型采用逐 Token 的 LayerNorm，便于处理变化的批次、长度和自回归生成，不把一个请求的尺度绑定到其他请求；这是从统计范围得到的工程解释，不是断言 Transformer 在数学上绝不能使用其他归一化。还要区分两个独立选择：**LayerNorm / BatchNorm** 决定统计范围，**Pre-Norm / Post-Norm** 决定归一化放在子层之前还是残差相加之后。上节两条公式回答后一个问题，不能拿“Pre-Norm”代替前一个问题的解释。
+
 ## 训练为什么能并行，生成为什么仍然串行
 
 这两个阶段经常被混为一谈。
@@ -336,6 +344,7 @@ Transformer 训练时能并行处理整段序列，但生成时还是一个 toke
 - [字节 Agent 实习：模型选择与可信通信](../../../interview/bytedance/base/bytedance-base-54.md)
 - [阿里云 AI Infra 一面：FlashAttention 与 AI Coding](../../../interview/alibaba/ai/alibaba-ai-22.md)
 - [阿里云 AI 产品一面：模型基础、需求优先级与产品定位](../../../interview/alibaba/ai/alibaba-ai-27.md)
+- [美团大模型应用实习一面：归一化、QLoRA 与推理](../../../interview/meituan/ai/meituan-ai-17.md)
 - [字节后端与 Agent 开发二面：本体平台、延迟任务与注意力](../../../interview/bytedance/base/bytedance-base-81.md)
 - [阿里大模型算法校招：Attention、后训练与 Agent 评测](../../../interview/alibaba/ai/alibaba-ai-24.md)
 - [阿里云后端与 Agent 二面：领域建模、训练并行与 Java 基础](../../../interview/alibaba/ai/alibaba-ai-28.md)
@@ -359,3 +368,6 @@ Transformer 训练时能并行处理整段序列，但生成时还是一个 toke
 - [Hugging Face TRL：指令微调与 EOS / 聊天模板对齐](https://huggingface.co/docs/trl/sft_trainer#instruction-tuning-example)
 
 <!-- content-sync: 2026-07-13-verified -->
+
+- [PyTorch 2.15：LayerNorm 的统计范围](https://docs.pytorch.org/docs/2.15/generated/torch.nn.LayerNorm.html)
+- [PyTorch 2.15：BatchNorm1d 的统计范围与运行统计量](https://docs.pytorch.org/docs/2.15/generated/torch.nn.BatchNorm1d.html)

@@ -38,6 +38,21 @@ $$
 
 例如“用 LoRA 做客服任务的 SFT，同时在运行时检索最新政策”是一组可以组合的选择。它们分别解决不同问题。仅做检索不会更新模型参数，量化也不等同于学会一项新任务。前置概念可参照[训练全流程](./llm-training-overview.md)、[模型量化](./llm-quantization.md)和[RAG 流程](../rag/rag-pipeline.md)。
 
+## QLoRA：量化基座与可训练增量各省什么
+
+普通 LoRA 已减少可训练参数，但仍要保存基座。QLoRA 进一步将冻结基座以 4-bit 表示保存，再训练 LoRA 增量；计算精度与存储精度分开选择。它不是直接把所有参数、激活和梯度都改成 4-bit。[PEFT 量化训练文档](https://huggingface.co/docs/peft/main/en/developer_guides/quantization)说明了这条组合路径。
+
+| 机制 | 主要针对的开销 | 不能据此推出的结论 |
+| --- | --- | --- |
+| NF4 保存量化基座 | 基座权重；表示设计针对近似正态分布的权重 | 所有中间计算都只用 4-bit |
+| 嵌套量化 | 再压缩第一层量化所需的元数据 | 模型又被无条件缩小四倍 |
+| LoRA 增量 | 只训练较小的增量参数及其训练状态 | 激活和临时缓冲区不再占显存 |
+| Paged optimizer | 用统一内存分页缓解优化器状态的显存压力 | CPU/GPU 换页没有传输代价 |
+
+[Transformers 的 NF4 与嵌套量化说明](https://huggingface.co/docs/transformers/main/quantization/bitsandbytes#qlora)区分了存储格式、计算 dtype 和嵌套量化配置。[bitsandbytes 的分页优化器说明](https://huggingface.co/docs/bitsandbytes/main/en/explanations/optimizers#paged-optimizers)则强调统一内存与换页开销。分页优化器与推理 KV Cache 的 PagedAttention 是两件事。
+
+回答“消费级显卡能省多少”时，先明确比较口径。若只算 8B 个基座参数的理想载荷，16-bit 是 16 GB，4-bit 是 4 GB，减少 75%；这是十进制字节估算，没有包含量化元数据、非量化模块、适配器、激活和临时空间。实际峰值还取决于序列长度、批大小、梯度检查点、目标模块与优化器，不能承诺整次训练固定节省 75%，也不能仅凭显卡容量保证能运行。应在同一任务和质量门槛下比较实测峰值与吞吐。
+
 ## 怎样设计一个可比较的适配实验
 
 先固定基座版本、任务与验收集，再比较全量或其他适配基线。LoRA 需要明确目标模块、秩、缩放、训练精度、学习率和数据覆盖；这些是实验变量，不存在对所有任务都合适的一组常数。
@@ -98,6 +113,7 @@ LoRA 里的「低秩」指的是？
 
 <!-- interview-source-history:start -->
 - [百度搜索框架 Agent 日常实习一二面：上下文、工程选型与评测](../../../interview/baidu/ai/baidu-ai-14.md)
+- [美团大模型应用实习一面：归一化、QLoRA 与推理](../../../interview/meituan/ai/meituan-ai-17.md)
 - [蚂蚁数字支付 AI 应用研发二面：数据分层、迁移与微调](../../../interview/antfin/ai/antfin-ai-13.md)
 - [淘天 AI 应用研发实习：后端基础、Transformer 与训练](../../../interview/alibaba/ai/alibaba-ai-32.md)
 <!-- interview-source-history:end -->
@@ -106,3 +122,7 @@ LoRA 里的「低秩」指的是？
 
 - [Hugging Face PEFT：LoRA 概念与适配器管理](https://huggingface.co/docs/peft/main/en/conceptual_guides/lora)（滚动文档，核验于 2026-10-31）。
 
+
+- [Hugging Face PEFT：量化训练](https://huggingface.co/docs/peft/main/en/developer_guides/quantization)
+- [Transformers：NF4、计算精度与嵌套量化](https://huggingface.co/docs/transformers/main/quantization/bitsandbytes#qlora)
+- [bitsandbytes：Paged optimizers](https://huggingface.co/docs/bitsandbytes/main/en/explanations/optimizers#paged-optimizers)

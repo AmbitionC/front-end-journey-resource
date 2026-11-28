@@ -29,14 +29,30 @@
             "isLeaf": true,
             "filePath": "llm/basics",
             "contentStatus": "published",
-            "heat": 19,
+            "heat": 20,
             "currRank": 5,
-            "updatedAt": "2026-11-20",
+            "updatedAt": "2026-11-28",
             "interviewBaseHeat": 11,
             "quickRead": {
-              "text": "Token 是分词器切出的单位，计费、窗口和延迟都按它算；上下文窗口是一次请求的总预算，输入输出共用；KV Cache 缓存每层历史的 Key 和 Value 让生成只算新位置，代价是显存随长度线性增长。"
+              "text": "Token 决定序列表示与预算，KV Cache 避免重复计算历史 K/V。PagedAttention 用块表把逻辑位置映射到物理 KV 块，减少预留和碎片浪费；它不减少每个 Token 的 K/V 元素，尾块仍可能有空槽。"
             },
-            "interviewCount": 8,
+            "interviewCount": 9,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
+            "label": "Transformer 架构原理",
+            "key": "transformer-arch",
+            "isLeaf": true,
+            "filePath": "llm/basics",
+            "contentStatus": "published",
+            "heat": 18,
+            "currRank": 5,
+            "updatedAt": "2026-11-28",
+            "interviewBaseHeat": 6,
+            "quickRead": {
+              "text": "从 Embedding、因果 Attention、FFN、残差与归一化理解 Decoder-only。LayerNorm 的统计范围与 Pre/Post-Norm 的位置选择是两个维度；训练并行不等于生成并行，FlashAttention 优化 IO 与中间显存，不把全量注意力变成线性复杂度。"
+            },
+            "interviewCount": 12,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -51,22 +67,6 @@
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "训练从数据治理、预训练走向 SFT、偏好优化、独立评估和上线监控。训练集更新参数，验证集辅助选择，测试集检查泛化；训练 loss 改善不能独自证明业务能力提升。欠拟合和过拟合需要结合未见数据、指标及泄漏排查，不能只凭模型大小或训练轮次判断。"
-            },
-            "interviewCount": 11,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "Transformer 架构原理",
-            "key": "transformer-arch",
-            "isLeaf": true,
-            "filePath": "llm/basics",
-            "contentStatus": "published",
-            "heat": 17,
-            "currRank": 5,
-            "updatedAt": "2026-11-21",
-            "interviewBaseHeat": 6,
-            "quickRead": {
-              "text": "Transformer 由相同的层堆成：Self-Attention 让每个位置按相关度读取其他位置，FFN 再逐位置做变换，外面套残差和归一化。训练时整段并行，生成时逐 Token 串行，所以推理要靠 KV Cache。"
             },
             "interviewCount": 11,
             "interviewCountBasis": "verified-public-posts"
@@ -104,6 +104,22 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
+            "label": "模型对齐：SFT、偏好数据与安全",
+            "key": "llm-alignment",
+            "isLeaf": true,
+            "filePath": "llm/basics",
+            "contentStatus": "published",
+            "heat": 12,
+            "currRank": 5,
+            "updatedAt": "2026-11-16",
+            "interviewBaseHeat": 6,
+            "interviewCount": 6,
+            "interviewCountBasis": "verified-public-posts",
+            "quickRead": {
+              "text": "SFT 用示范教授行为，偏好学习塑造选择，安全还依赖运行时边界与独立评测。Agent 轨迹先核验版本、上下文和终态，再清洗、同源切分并按成功、失败与人工修正分流；工程故障优先修链路，失败动作不能直接当正确示范。"
+            }
+          },
+          {
             "label": "开源模型选型、推理与本地部署",
             "key": "llm-open-source-deployment",
             "isLeaf": true,
@@ -118,22 +134,6 @@
             "interviewBaseHeat": 6,
             "interviewCount": 5,
             "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "模型对齐：SFT、偏好数据与安全",
-            "key": "llm-alignment",
-            "isLeaf": true,
-            "filePath": "llm/basics",
-            "contentStatus": "published",
-            "heat": 11,
-            "currRank": 5,
-            "updatedAt": "2026-11-16",
-            "interviewBaseHeat": 6,
-            "interviewCount": 5,
-            "interviewCountBasis": "verified-public-posts",
-            "quickRead": {
-              "text": "SFT 用示范教授行为，偏好学习塑造选择，安全还依赖运行时边界与独立评测。Agent 轨迹先核验版本、上下文和终态，再清洗、同源切分并按成功、失败与人工修正分流；工程故障优先修链路，失败动作不能直接当正确示范。"
-            }
           },
           {
             "label": "长上下文、注意力稀释与有效利用",
@@ -259,6 +259,25 @@
             "updatedAt": "2026-07-14"
           },
           {
+            "key": "llm-lora-peft",
+            "label": "LoRA 与参数高效微调：目标、增量与资源",
+            "filePath": "llm/basics",
+            "tags": [
+              "LoRA",
+              "SFT",
+              "微调"
+            ],
+            "quickRead": {
+              "text": "SFT 定目标，LoRA 训练低秩增量；QLoRA 再量化冻结基座。NF4、嵌套量化与分页优化器分别影响不同资源，4-bit 基座载荷不等于总训练峰值降低四倍。比较同任务质量、峰值和吞吐，明确硬件与训练设置。"
+            },
+            "isLeaf": true,
+            "interviewBaseHeat": 0,
+            "interviewCount": 4,
+            "heat": 4,
+            "currRank": 3,
+            "updatedAt": "2026-11-28"
+          },
+          {
             "key": "diffusion-basics",
             "label": "Diffusion 基础：加噪训练与去噪采样",
             "filePath": "llm/basics",
@@ -269,25 +288,6 @@
             ],
             "quickRead": {
               "text": "以噪声预测式 DDPM 区分训练与采样：训练用真实样本、随机时间步和已知噪声学习，采样用固定模型与调度器逐步生成。时间步不是训练轮次，潜空间模型还需编码和解码。"
-            },
-            "isLeaf": true,
-            "interviewBaseHeat": 0,
-            "interviewCount": 3,
-            "heat": 3,
-            "currRank": 3,
-            "updatedAt": "2026-10-31"
-          },
-          {
-            "key": "llm-lora-peft",
-            "label": "LoRA 与参数高效微调：目标、增量与资源",
-            "filePath": "llm/basics",
-            "tags": [
-              "LoRA",
-              "SFT",
-              "微调"
-            ],
-            "quickRead": {
-              "text": "SFT 定义示范数据与学习目标，LoRA 定义冻结基座后的低秩参数增量，两者可以组合。按矩阵维度理解参数节省，并用固定任务评估质量、资源、数据规模和合并推理边界。"
             },
             "isLeaf": true,
             "interviewBaseHeat": 0,
@@ -4709,14 +4709,14 @@
             "isLeaf": true,
             "filePath": "data-structure/algorithm",
             "contentStatus": "published",
-            "heat": 6,
+            "heat": 7,
             "currRank": 4,
             "updatedAt": "2026-11-04",
             "interviewBaseHeat": 1,
             "quickRead": {
               "text": "树和一般图共享 DFS、BFS 思路，但一般图还需处理重复访问与环。理解遍历顺序、递归区间和状态后，可推导二叉树重建、子结构、宽度及树上动态规划；重建前先确认节点标识唯一，并检查序列一致性与深链栈风险。"
             },
-            "interviewCount": 5,
+            "interviewCount": 6,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -4741,14 +4741,14 @@
             "isLeaf": true,
             "filePath": "cs/algorithm",
             "contentStatus": "published",
-            "heat": 5,
+            "heat": 6,
             "currRank": 4,
-            "updatedAt": "2026-07-17",
+            "updatedAt": "2026-11-28",
             "interviewBaseHeat": 3,
-            "interviewCount": 2,
+            "interviewCount": 3,
             "interviewCountBasis": "verified-public-posts",
             "quickRead": {
-              "text": "栈后进先出，队列先进先出；数组、链表和双栈实现的复杂度边界不同。生产缓冲还须明确容量、满空行为、确认、重复处理与背压，不能把顺序抽象直接当成可靠消息系统。"
+              "text": "栈后进先出，队列先进先出；选择结构要从不变量与访问顺序出发。最长有效括号用下标栈保存未匹配左括号和非法边界，求连续区间；生产队列还须定义容量、确认、重投、幂等与背压。"
             }
           },
           {
@@ -5222,14 +5222,14 @@
             "isLeaf": true,
             "filePath": "career",
             "contentStatus": "published",
-            "heat": 49,
+            "heat": 50,
             "currRank": 5,
             "updatedAt": "2026-11-26",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "用岗位相关的真实经历介绍自己，分清个人职责、结果与当前阶段。求职方向和择业因素要有事实与优先级，反问用于确认岗位目标、培养支持和后续流程；薪资、学业与家庭情况不能由模板代填。"
             },
-            "interviewCount": 43,
+            "interviewCount": 44,
             "interviewCountBasis": "verified-public-posts"
           },
           {
