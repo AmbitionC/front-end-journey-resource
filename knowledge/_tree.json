@@ -898,14 +898,14 @@
             "isLeaf": true,
             "filePath": "llm/rag",
             "contentStatus": "published",
-            "heat": 28,
+            "heat": 29,
             "currRank": 5,
             "updatedAt": "2026-11-17",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "RAG 评估先看相关证据是否被召回与正确排序，再看生成结论是否得到证据支持，最后检查真实任务效果。固定数据和版本、保留失败切片并校准模型评分，不能把答案流畅或单一总分当有效证明。"
             },
-            "interviewCount": 22,
+            "interviewCount": 23,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -1327,6 +1327,22 @@
             "interviewCountBasis": "verified-public-posts"
           },
           {
+            "label": "多智能体协作与适用边界",
+            "key": "multi-agent",
+            "isLeaf": true,
+            "filePath": "llm/agent",
+            "contentStatus": "published",
+            "heat": 35,
+            "currRank": 5,
+            "updatedAt": "2026-11-21",
+            "interviewBaseHeat": 6,
+            "quickRead": {
+              "text": "默认用一个 Agent 加按需加载的技能，只有上下文装不下、需要并行、或要隔离权限时才拆子 Agent；按上下文切分，不按部门分工。Anthropic 的对比里，单 Agent 加技能常在质量和成本上都更好。"
+            },
+            "interviewCount": 29,
+            "interviewCountBasis": "verified-public-posts"
+          },
+          {
             "label": "MCP / A2A 智能体通信协议",
             "key": "mcp-protocol",
             "isLeaf": true,
@@ -1338,22 +1354,6 @@
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "MCP 约定宿主、客户端与服务端之间的能力发现和调用，工具、资源与提示各有合同且可按能力实现。先固定协议版本和传输，再校验参数、授权、错误与实际结果；模型提出调用、协议返回成功都不自动证明业务完成。"
-            },
-            "interviewCount": 28,
-            "interviewCountBasis": "verified-public-posts"
-          },
-          {
-            "label": "多智能体协作与适用边界",
-            "key": "multi-agent",
-            "isLeaf": true,
-            "filePath": "llm/agent",
-            "contentStatus": "published",
-            "heat": 34,
-            "currRank": 5,
-            "updatedAt": "2026-11-21",
-            "interviewBaseHeat": 6,
-            "quickRead": {
-              "text": "默认用一个 Agent 加按需加载的技能，只有上下文装不下、需要并行、或要隔离权限时才拆子 Agent；按上下文切分，不按部门分工。Anthropic 的对比里，单 Agent 加技能常在质量和成本上都更好。"
             },
             "interviewCount": 28,
             "interviewCountBasis": "verified-public-posts"
@@ -4725,14 +4725,14 @@
             "isLeaf": true,
             "filePath": "data-structure/algorithm",
             "contentStatus": "published",
-            "heat": 5,
+            "heat": 6,
             "currRank": 4,
-            "updatedAt": "2026-11-14",
+            "updatedAt": "2026-11-28",
             "interviewBaseHeat": 1,
             "quickRead": {
-              "text": "先定义字符口径，再选扫描、窗口或匹配；JS 下标、code point 与用户感知字素不同。最小编辑距离先固定插入、删除、替换代价，以两串前缀 DP 取最小；本文按 code point 比较，不含一步交换。版本号逐数字段去前导零、补缺失零后比较长度与字典序，避免浮点或整数溢出；不等于完整 SemVer。"
+              "text": "先定义字符口径，再选扫描、窗口或匹配；JS 下标、code point 与字素不同。每种字符至少出现 k 次时，按当前区间的低频字符切分并重新计数，不能直接套无重复窗口。编辑距离以两串前缀 DP 比较插入、删除、替换，不含一步交换；版本号逐数字段去前导零、补零后比较长度与字典序，不等于完整 SemVer。"
             },
-            "interviewCount": 4,
+            "interviewCount": 5,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -5222,14 +5222,14 @@
             "isLeaf": true,
             "filePath": "career",
             "contentStatus": "published",
-            "heat": 48,
+            "heat": 49,
             "currRank": 5,
             "updatedAt": "2026-11-26",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "用岗位相关的真实经历介绍自己，分清个人职责、结果与当前阶段。求职方向和择业因素要有事实与优先级，反问用于确认岗位目标、培养支持和后续流程；薪资、学业与家庭情况不能由模板代填。"
             },
-            "interviewCount": 42,
+            "interviewCount": 43,
             "interviewCountBasis": "verified-public-posts"
           },
           {
@@ -5302,14 +5302,14 @@
             "isLeaf": true,
             "filePath": "career",
             "contentStatus": "published",
-            "heat": 15,
+            "heat": 16,
             "currRank": 5,
             "updatedAt": "2026-10-16",
             "interviewBaseHeat": 6,
             "quickRead": {
               "text": "按目标任务和依赖补基础，用官方资料、固定版本代码与原始研究建立理解，再以最小实现和失败练习验证。学习资料、实现、环境、结果与局限一起留存，以能否解释和修正边界检查掌握程度，框架名或固定周数不能代替证据。"
             },
-            "interviewCount": 9,
+            "interviewCount": 10,
             "interviewCountBasis": "verified-public-posts"
           },
           {

@@ -61,6 +61,60 @@ function longestUnique(text) {
 
 更新 `left` 时取 max，避免窗口因遇到窗口外的旧字符而向左倒退。若语义是 grapheme cluster，先分段再应用相同窗口。
 
+## 每种字符至少出现 k 次：按低频字符分治
+
+“没有重复字符”与“出现的每种字符都至少重复 k 次”是两份不同的约束。后者不能直接套用“当前窗口不合法，就立即收缩左边界”：例如 k=2 时，`a` 不合法，扩张成 `aa` 后合法，再扩张成 `aab` 又不合法，继续到 `aabb` 又恢复合法。字符尚未达到 k 次，并不意味着它应该立即被移出窗口。
+
+下面采用明确的**教学合同**：输入字符串和正整数 k，返回最长连续子串的长度，要求子串中每个出现的字符都至少出现 k 次；无解或空串返回 0。按 Unicode code point 计数，不做大小写折叠或归一化。这不是对只提供题号、题名的面试记录补写完整输入约束。
+
+[NIST 对分治的定义](https://xlinux.nist.gov/dads/HTML/divideAndConquer.html)强调拆成更小的子问题再组合答案。在此合同下，可以用当前区间内的**低频字符作为分隔点**：
+
+1. 统计当前区间中每种字符的频次。若某字符出现次数小于 k，则当前区间的任何子串也不可能把它增加到 k 次，所以合法子串不能包含它。
+2. 按这些字符的所有位置切开，只在剩下的连续片段中继续求解。一个合法子串不可能跨越被排除的位置，因此不会漏掉答案。
+3. 每个片段都要重新计数。没有低频字符时，整段已经合法，取整段长度；否则取各子问题答案的最大值。长度小于 k 的片段可直接排除。
+
+![左边 ababbc 在 k 等于 2 时按只出现一次的 c 切开，剩余 ababb 中 a 出现 2 次、b 出现 3 次，答案为 5；右边 aabcabb 在 k 等于 3 时也按 c 切开，但 aab 与 abb 必须重新计数，两段均不合法，答案为 0](https://font-end-journey-resources.oss-cn-hangzhou.aliyuncs.com/images/algorithm-string-frequency-split-v1.dark.png)
+*图：右例中 a、b 在原串各出现 3 次，切开后却都不够；不能把原串频次直接当成子问题的频次。*
+
+下面用显式栈保存待处理区间，避免深层函数调用。区间采用左闭右开 `[lo, hi)`，不复制每段子串：
+
+```javascript
+function longestAtLeastK(text, k) {
+  if (typeof text !== 'string' || !Number.isSafeInteger(k) || k < 1) {
+    throw new TypeError('Expected a string and a positive safe integer');
+  }
+  const chars = Array.from(text);
+  const pending = [[0, chars.length]];
+  let best = 0;
+
+  while (pending.length) {
+    const [lo, hi] = pending.pop();
+    if (hi - lo < k || hi - lo <= best) continue;
+    const frequency = new Map();
+    for (let i = lo; i < hi; i++) {
+      frequency.set(chars[i], (frequency.get(chars[i]) ?? 0) + 1);
+    }
+
+    let start = lo;
+    let split = false;
+    for (let i = lo; i < hi; i++) {
+      if (frequency.get(chars[i]) < k) {
+        split = true;
+        if (i - start >= k) pending.push([start, i]);
+        start = i + 1;
+      }
+    }
+    if (!split) best = Math.max(best, hi - lo);
+    else if (hi - start >= k) pending.push([start, hi]);
+  }
+  return best;
+}
+```
+
+例如 `('ababbc', 2)` 返回 5，`('aabcabb', 3)` 返回 0，`('😀😀a', 2)` 返回 2。k=1 时整串合法；k 大于字符数时无解。这里的“字符”仍不是 grapheme cluster，需要按用户感知字符处理时，应先按前面的分段合同调整输入。
+
+设长度为 n、不同字符数为 D。同一分治深度的区间互不重叠，总扫描量至多 O(n)；每次继续分割都会从该路径上删除至少一种字符，深度至多 D，因此时间上界为 O(nD)，一般输入最坏可达 O(n²)。字符数组、待处理区间和频次表的存活额外空间合计 O(n)。只有字符集大小被明确固定时，才能把 D 当作常数，不能仅因“用了分治”就声称 O(n log n)。
+
 ## 最长回文子串的长度：枚举奇偶中心
 
 回文子串要求一段**连续**字符正反相同，不能跳过中间字符；最长回文子序列是另一个问题。只要求 $O(N^2)$ 时间并返回长度时，可以枚举中心，再向左右扩展，不必先建立整张动态规划表。输入字符范围、最大长度和空串规则仍须先确认，不能从题名补成某道题的约束。
@@ -250,6 +304,7 @@ JavaScript 里 `'😀'.length` 是多少？
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节 AIDP 后端实习二面：多 Agent、RAG 与字符串](../../../interview/bytedance/base/bytedance-base-84.md)
 - [字节全栈实习：Session、权限与前端基础](../../../interview/bytedance/base/bytedance-base-46.md)
 - [字节全栈与测试：JVM、并发与 SQL 排查](../../../interview/bytedance/base/bytedance-base-56.md)
 - [字节中国交易与广告 AI 全栈实习一面：Skill、MCP 与回文](../../../interview/bytedance/base/bytedance-base-79.md)
@@ -258,6 +313,7 @@ JavaScript 里 `'😀'.length` 是多少？
 
 ## 参考资料
 
+- [NIST：Divide and conquer](https://xlinux.nist.gov/dads/HTML/divideAndConquer.html)：分治的一般定义；本文频次约束解法在明确的教学合同下给出证明与示例。
 - [Fast Pattern Matching in Strings](https://www.cs.jhu.edu/~misha/ReadingSeminar/Papers/Knuth77.pdf)
 - [Unicode Standard Annex #29: Text Segmentation](https://unicode.org/reports/tr29/)
 - [NIST：Levenshtein distance](https://xlinux.nist.gov/dads/HTML/Levenshtein.html)

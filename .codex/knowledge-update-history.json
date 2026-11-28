@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "selectionRule": "Before selecting a batch, exclude records with status=published or pending unless the user explicitly requests an audit, refresh, or exact key/title.",
-  "updatedAt": "2026-11-26",
+  "updatedAt": "2026-11-28",
   "records": [
     {
       "key": "transformer-arch",
@@ -6181,10 +6181,10 @@
       "label": "字符串、匹配与文本处理",
       "filePath": "data-structure/algorithm",
       "status": "pending",
-      "action": "updated",
-      "recordedAt": "2026-11-14",
-      "batch": "daily-content-20261114-reviewed-cohorts",
-      "reason": "Source-grounded actual semantic processing and primary-source teaching supplement; current release pending.",
+      "action": "update",
+      "recordedAt": "2026-11-28",
+      "batch": "daily-content-20261128-b01",
+      "reason": "补充每种字符至少出现 k 次的连续子串：非单调窗口反例、低频字符分治证明、显式栈代码及复杂度；新增可编辑深浅主题图。",
       "previousRecord": {
         "key": "algorithm-string",
         "label": "字符串、匹配与文本处理",

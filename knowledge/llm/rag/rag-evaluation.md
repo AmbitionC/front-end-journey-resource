@@ -230,6 +230,7 @@ RAG 评估是一套诊断系统，而不是排行榜。先用检索指标判断�
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节 AIDP 后端实习二面：多 Agent、RAG 与字符串](../../../interview/bytedance/base/bytedance-base-84.md)
 - [小红书 AI 应用一面：RAG 评测、Skill 与平方根](../../../interview/redbook/ai/redbook-ai-20.md)
 - [字节 Agent 日常实习一面：Coding项目与记忆（2026 年 8 月）](../../../interview/bytedance/base/bytedance-base-10.md)
 - [字节全栈一面：RAG、Java 与线程池](../../../interview/bytedance/base/bytedance-base-37.md)

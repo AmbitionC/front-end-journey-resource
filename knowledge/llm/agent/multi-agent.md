@@ -142,6 +142,7 @@
 ## 出现于（热度来源）
 
 <!-- interview-source-history:start -->
+- [字节 AIDP 后端实习二面：多 Agent、RAG 与字符串](../../../interview/bytedance/base/bytedance-base-84.md)
 - [小红书 AI 应用一面：RAG 评测、Skill 与平方根](../../../interview/redbook/ai/redbook-ai-20.md)
 - [快手测开二面：Agent 交接、轨迹评测与业务测试](../../../interview/kuaishou/ai/kuaishou-ai-24.md)
 - [小红书 Agent 开发二面：结论正确性、安全边界与本地云端扩展](../../../interview/redbook/ai/redbook-ai-3.md)
